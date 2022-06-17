@@ -51,9 +51,11 @@
           justify-content: center;
           align-items: center;
           width: calc(100% / 3);
-          img {
+          img,
+          .svg-icon svg {
             width: 24px;
-            margin-right: 12px;
+            height: auto;
+            margin-right: 24px;
           }
         }
         .practice {

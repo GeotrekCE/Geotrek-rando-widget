@@ -2,12 +2,14 @@ import { Component, Host, h, Prop } from '@stencil/core';
 import state from 'store/store';
 import { Difficulty, Practice, Route, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
+import ascentImage from '../../assets/ascent.svg';
+import durationImage from '../../assets/duration.svg';
+import lengthImage from '../../assets/length.svg';
 
 @Component({
   tag: 'grw-trek-card',
   styleUrl: 'grw-trek-card.scss',
   shadow: true,
-  assetsDirs: ['../../assets'],
 })
 export class GrwTrekCard {
   @Prop() trek: Trek;
@@ -24,10 +26,6 @@ export class GrwTrekCard {
   }
 
   render() {
-    const ascentImage = `./assets/ascent.svg`;
-    const durationImage = `./assets/duration.svg`;
-    const lengthImage = `./assets/length.svg`;
-
     return (
       <Host>
         <div class="trek-card-container">
@@ -42,7 +40,7 @@ export class GrwTrekCard {
                   {this.difficulty.label}
                 </div>
                 <div class="icon-label duration">
-                  <img src={durationImage} />
+                  <div class="svg-icon" innerHTML={durationImage}></div>
                   {formatDuration(this.currentTrek.duration)}
                 </div>
                 <div class="icon-label route">
@@ -52,11 +50,11 @@ export class GrwTrekCard {
               </div>
               <div class="row">
                 <div class="icon-label length">
-                  <img src={lengthImage} />
+                  <div class="svg-icon" innerHTML={lengthImage}></div>
                   {formatLength(this.currentTrek.length_2d)}
                 </div>
                 <div class="icon-label ascent">
-                  <img src={ascentImage} />
+                  <div class="svg-icon" innerHTML={ascentImage}></div>
                   {formatAscent(this.currentTrek.ascent)}
                 </div>
                 <div class="icon-label practice">
