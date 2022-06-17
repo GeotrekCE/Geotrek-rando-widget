@@ -10,6 +10,9 @@ export namespace Components {
     interface GrwTrekCard {
         "trek": Trek;
     }
+    interface GrwTrekDetail {
+        "trek": Trek;
+    }
     interface GrwTrekProvider {
         "api": string;
         "trekId": string;
@@ -26,6 +29,12 @@ declare global {
     var HTMLGrwTrekCardElement: {
         prototype: HTMLGrwTrekCardElement;
         new (): HTMLGrwTrekCardElement;
+    };
+    interface HTMLGrwTrekDetailElement extends Components.GrwTrekDetail, HTMLStencilElement {
+    }
+    var HTMLGrwTrekDetailElement: {
+        prototype: HTMLGrwTrekDetailElement;
+        new (): HTMLGrwTrekDetailElement;
     };
     interface HTMLGrwTrekProviderElement extends Components.GrwTrekProvider, HTMLStencilElement {
     }
@@ -47,6 +56,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "grw-trek-card": HTMLGrwTrekCardElement;
+        "grw-trek-detail": HTMLGrwTrekDetailElement;
         "grw-trek-provider": HTMLGrwTrekProviderElement;
         "grw-treks-list": HTMLGrwTreksListElement;
         "grw-treks-provider": HTMLGrwTreksProviderElement;
@@ -54,6 +64,9 @@ declare global {
 }
 declare namespace LocalJSX {
     interface GrwTrekCard {
+        "trek"?: Trek;
+    }
+    interface GrwTrekDetail {
         "trek"?: Trek;
     }
     interface GrwTrekProvider {
@@ -67,6 +80,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "grw-trek-card": GrwTrekCard;
+        "grw-trek-detail": GrwTrekDetail;
         "grw-trek-provider": GrwTrekProvider;
         "grw-treks-list": GrwTreksList;
         "grw-treks-provider": GrwTreksProvider;
@@ -77,6 +91,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
+            "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
             "grw-trek-provider": LocalJSX.GrwTrekProvider & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;
             "grw-treks-list": LocalJSX.GrwTreksList & JSXBase.HTMLAttributes<HTMLGrwTreksListElement>;
             "grw-treks-provider": LocalJSX.GrwTreksProvider & JSXBase.HTMLAttributes<HTMLGrwTreksProviderElement>;

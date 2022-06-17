@@ -4,6 +4,7 @@ export type Trek = {
   id: number;
   name: string;
   attachments: Attachments;
+  description?: string;
   description_teaser: string;
   difficulty: number;
   route: number;

@@ -1,0 +1,56 @@
+.trek-detail-container {
+  display: flex;
+  flex-direction: column;
+  .name {
+    color: var(--primary-color);
+    font-size: 48px;
+    font-weight: bold;
+    padding: 24px;
+  }
+  .image {
+    align-self: center;
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.25);
+  }
+  .sub-container {
+    padding: 24px;
+    .icons-labels-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        &:not(:last-child) {
+          margin-bottom: 24px;
+        }
+        .icon-label {
+          &:nth-child(2) {
+            margin: 0px 8px;
+          }
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: calc(100% / 3);
+          img {
+            width: 24px;
+            margin-right: 24px;
+          }
+        }
+        .practice {
+          img {
+            background-color: var(--primary-color);
+          }
+        }
+      }
+    }
+  }
+  .description {
+    padding: 0px 24px 24px 24px;
+  }
+}
