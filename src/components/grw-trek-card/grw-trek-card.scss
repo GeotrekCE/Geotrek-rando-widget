@@ -1,0 +1,67 @@
+.trek-card-container {
+  width: 350px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  .image {
+    width: 100%;
+    height: auto;
+  }
+  .sub-container {
+    padding: 12px;
+    .name {
+      color: var(--primary-color);
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .description {
+      max-height: 24px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 12px;
+      p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+      }
+    }
+    .icons-labels-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        &:not(:last-child) {
+          margin-bottom: 12px;
+        }
+        .icon-label {
+          &:nth-child(2) {
+            margin: 0px 4px;
+          }
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: calc(100% / 3);
+          img {
+            width: 24px;
+            margin-right: 12px;
+          }
+        }
+        .practice {
+          img {
+            background-color: var(--primary-color);
+          }
+        }
+      }
+    }
+  }
+}

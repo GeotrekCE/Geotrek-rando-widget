@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media screen and (min-width: 664px) {
+    justify-content: space-between;
+  }
+  @media screen and (min-width: 996px) {
+    justify-content: flex-start;
+  }
+}
+
+grw-trek-card {
+  margin: 6px;
+}

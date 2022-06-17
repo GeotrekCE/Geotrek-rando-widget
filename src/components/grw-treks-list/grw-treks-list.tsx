@@ -11,9 +11,7 @@ export class GrwTreksList {
     return (
       <Host>
         {state.treks.map(trek => (
-          <div>
-            <grw-trek-card trek={trek}></grw-trek-card>
-          </div>
+          <grw-trek-card trek={trek}></grw-trek-card>
         ))}
       </Host>
     );

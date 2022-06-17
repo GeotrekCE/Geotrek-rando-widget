@@ -1,3 +1,4 @@
+import "../dist/geotrek-rando-widget/geotrek-rando-widget.css";
 import { defineCustomElements } from "../loader/index";
 defineCustomElements();
 

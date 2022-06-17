@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                            | Default     |
-| -------- | --------- | ----------- | ------------------------------- | ----------- |
-| `trek`   | --        |             | `{ id: number; name: string; }` | `undefined` |
+| Property | Attribute | Description | Type                                                                                                                                                                                            | Default     |
+| -------- | --------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `trek`   | --        |             | `{ id: number; name: string; attachments: Attachments; description_teaser: string; difficulty: number; route: number; practice: number; duration: number; length_2d: number; ascent: number; }` | `undefined` |
 
 
 ## Dependencies

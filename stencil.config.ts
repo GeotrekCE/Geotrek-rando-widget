@@ -20,4 +20,5 @@ export const config: Config = {
     },
   ],
   plugins: [sass()],
+  globalStyle: 'src/global/global.scss',
 };
