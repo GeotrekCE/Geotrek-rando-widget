@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, getAssetPath } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
 import state from 'store/store';
 import { Difficulty, Practice, Route, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
@@ -24,9 +24,9 @@ export class GrwTrekCard {
   }
 
   render() {
-    const ascentImage = getAssetPath(`../../assets/ascent.svg`);
-    const durationImage = getAssetPath(`../../assets/duration.svg`);
-    const lengthImage = getAssetPath(`../../assets/length.svg`);
+    const ascentImage = `./assets/ascent.svg`;
+    const durationImage = `./assets/duration.svg`;
+    const lengthImage = `./assets/length.svg`;
 
     return (
       <Host>
