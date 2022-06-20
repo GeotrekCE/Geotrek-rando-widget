@@ -12,6 +12,6 @@ const Template = ({ label, ...args }) => {
 export const TreksList = Template.bind({});
 
 TreksList.args = {
-  api: "https://randoadmin.parc-haut-jura.fr/api/v2/",
+  api: 'https://randoadmin.parc-haut-jura.fr/api/v2/',
 };
-TreksList.storyName = "Treks list";
+TreksList.storyName = 'Treks list';

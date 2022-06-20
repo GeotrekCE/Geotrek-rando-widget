@@ -29,7 +29,8 @@
     "deploy-storybook": "storybook-to-ghpages"
   },
   "dependencies": {
-    "@stencil/core": "^2.13.0"
+    "@stencil/core": "^2.13.0",
+    "leaflet": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

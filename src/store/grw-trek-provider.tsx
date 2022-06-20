@@ -10,7 +10,7 @@ export class GrwTrekProvider {
 
   componentWillLoad() {
     return Promise.all([
-      fetch(`${this.api}trek/${this.trekId}/?language=fr&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,route`),
+      fetch(`${this.api}trek/${this.trekId}/?language=fr&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,route,geometry`),
       fetch(`${this.api}trek_difficulty/?language=fr`),
       fetch(`${this.api}trek_route/?language=fr`),
       fetch(`${this.api}trek_practice/?language=fr`),

@@ -12,6 +12,7 @@ export type Trek = {
   duration: number;
   length_2d: number;
   ascent: number;
+  geometry: { type: string; coordinates: number[][] };
 };
 
 export type Attachments = Attachment[];

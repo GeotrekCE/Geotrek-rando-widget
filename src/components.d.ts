@@ -7,6 +7,11 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Trek } from "types/types";
 export namespace Components {
+    interface GrwMap {
+        "arrivalIconColor": string;
+        "departureIconColor": string;
+        "trekLineColor": string;
+    }
     interface GrwTrekCard {
         "trek": Trek;
     }
@@ -24,6 +29,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLGrwMapElement extends Components.GrwMap, HTMLStencilElement {
+    }
+    var HTMLGrwMapElement: {
+        prototype: HTMLGrwMapElement;
+        new (): HTMLGrwMapElement;
+    };
     interface HTMLGrwTrekCardElement extends Components.GrwTrekCard, HTMLStencilElement {
     }
     var HTMLGrwTrekCardElement: {
@@ -55,6 +66,7 @@ declare global {
         new (): HTMLGrwTreksProviderElement;
     };
     interface HTMLElementTagNameMap {
+        "grw-map": HTMLGrwMapElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
         "grw-trek-detail": HTMLGrwTrekDetailElement;
         "grw-trek-provider": HTMLGrwTrekProviderElement;
@@ -63,6 +75,11 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface GrwMap {
+        "arrivalIconColor"?: string;
+        "departureIconColor"?: string;
+        "trekLineColor"?: string;
+    }
     interface GrwTrekCard {
         "trek"?: Trek;
     }
@@ -79,6 +96,7 @@ declare namespace LocalJSX {
         "api"?: string;
     }
     interface IntrinsicElements {
+        "grw-map": GrwMap;
         "grw-trek-card": GrwTrekCard;
         "grw-trek-detail": GrwTrekDetail;
         "grw-trek-provider": GrwTrekProvider;
@@ -90,6 +108,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
             "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
             "grw-trek-provider": LocalJSX.GrwTrekProvider & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;
