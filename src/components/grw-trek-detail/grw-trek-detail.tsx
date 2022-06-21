@@ -13,6 +13,7 @@ import lengthImage from '../../assets/length.svg';
 })
 export class GrwTrekDetail {
   @Prop() trek: Trek;
+
   currentTrek: Trek;
   difficulty: Difficulty;
   route: Route;
@@ -30,7 +31,7 @@ export class GrwTrekDetail {
       <Host>
         <div class="trek-detail-container">
           <div class="name">{this.currentTrek.name}</div>
-          <img class="image" src={this.currentTrek.attachments[0].url} />
+          <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />
           <div class="sub-container">
             <div class="icons-labels-container">
               <div class="row">

@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 import state from 'store/store';
 import { Difficulty, Practice, Route, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
@@ -13,6 +13,8 @@ import lengthImage from '../../assets/length.svg';
 })
 export class GrwTrekCard {
   @Prop() trek: Trek;
+  @Event() trekCardPress: EventEmitter<number>;
+
   currentTrek: Trek;
   difficulty: Difficulty;
   route: Route;
@@ -27,9 +29,9 @@ export class GrwTrekCard {
 
   render() {
     return (
-      <Host>
+      <Host onClick={() => this.trekCardPress.emit(this.currentTrek.id)}>
         <div class="trek-card-container">
-          <img class="image" src={this.currentTrek.attachments[0].url} />
+          <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />
           <div class="sub-container">
             <div class="name">{this.currentTrek.name}</div>
             <div class="description" innerHTML={this.currentTrek.description_teaser}></div>

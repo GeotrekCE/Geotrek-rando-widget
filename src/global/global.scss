@@ -1,5 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto');
+
 :root {
-  --primary-color: #6b0030;
-  --departure-icon-color: #006b3b;
-  --arrival-icon-color: #85003b;
+  --color-primary: #6b0030;
+  --color-primary-tint: #d2b2c0;
+  --color-departure-icon: #006b3b;
+  --color-arrival-icon: #85003b;
+}
+
+body {
+  font-family: 'Roboto';
 }

@@ -2,8 +2,7 @@
 
 grw-map {
   display: block;
-  width: 100%;
-  height: 100%;
+  height: 400px;
 }
 
 .departure-icon svg,
@@ -17,9 +16,9 @@ grw-map {
 }
 
 .departure-icon {
-  color: var(--departure-icon-color);
+  color: var(--color-departure-icon);
 }
 
 .arrival-icon {
-  color: var(--arrival-icon-color);
+  color: var(--color-arrival-icon);
 }

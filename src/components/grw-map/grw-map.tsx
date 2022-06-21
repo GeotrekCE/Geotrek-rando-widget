@@ -9,14 +9,15 @@ import departureArrivalImage from '../../assets/departure-arrival.svg';
 })
 export class GrwMap {
   @Element() element: HTMLElement;
-  @Prop() trekLineColor: string;
-  @Prop() departureIconColor: string;
-  @Prop() arrivalIconColor: string;
+  @Prop() colorTrekLine: string = '#6b0030';
+  @Prop() colorDepartureIcon: string = '#006b3b';
+  @Prop() colorArrivalIcon: string = '#85003b';
 
   componentDidLoad() {
     const map = L.map(this.element, {
       center: [1, 1],
       zoom: 10,
+      scrollWheelZoom: false,
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -32,7 +33,7 @@ export class GrwMap {
 
     L.geoJSON(trekFeature, {
       style: () => ({
-        color: this.trekLineColor,
+        color: this.colorTrekLine,
       }),
     }).addTo(map);
 
@@ -76,10 +77,6 @@ export class GrwMap {
   }
 
   render() {
-    return (
-      <Host style={{ '--departure-icon-color': this.departureIconColor, '--arrival-icon-color': this.arrivalIconColor }}>
-        <slot></slot>
-      </Host>
-    );
+    return <Host style={{ '--color-departure-icon': this.colorDepartureIcon, '--color-arrival-icon': this.colorArrivalIcon }}></Host>;
   }
 }

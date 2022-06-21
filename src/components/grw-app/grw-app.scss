@@ -1,0 +1,48 @@
+.appbar-container {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-primary);
+  height: 64px;
+  .title {
+    color: #ffffff;
+    font-size: 48px;
+    margin-left: 24px;
+  }
+  .arrow-back-icon {
+    width: 48px;
+    height: auto;
+    margin-left: 24px;
+    svg {
+      cursor: pointer;
+      width: 48px;
+      height: auto;
+    }
+  }
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  .loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid var(--color-primary-tint);
+    border-bottom-color: var(--color-primary);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

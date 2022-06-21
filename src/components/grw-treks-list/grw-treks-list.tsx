@@ -10,9 +10,11 @@ export class GrwTreksList {
   render() {
     return (
       <Host>
-        {state.treks.map(trek => (
-          <grw-trek-card trek={trek}></grw-trek-card>
-        ))}
+        <div class="treks-list-container">
+          {state.treks.map(trek => (
+            <grw-trek-card trek={trek}></grw-trek-card>
+          ))}
+        </div>
       </Host>
     );
   }

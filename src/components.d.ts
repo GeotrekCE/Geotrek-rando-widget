@@ -7,10 +7,14 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Trek } from "types/types";
 export namespace Components {
+    interface GrwApp {
+        "api": string;
+        "appName": string;
+    }
     interface GrwMap {
-        "arrivalIconColor": string;
-        "departureIconColor": string;
-        "trekLineColor": string;
+        "colorArrivalIcon": string;
+        "colorDepartureIcon": string;
+        "colorTrekLine": string;
     }
     interface GrwTrekCard {
         "trek": Trek;
@@ -28,7 +32,17 @@ export namespace Components {
         "api": string;
     }
 }
+export interface GrwTrekCardCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwTrekCardElement;
+}
 declare global {
+    interface HTMLGrwAppElement extends Components.GrwApp, HTMLStencilElement {
+    }
+    var HTMLGrwAppElement: {
+        prototype: HTMLGrwAppElement;
+        new (): HTMLGrwAppElement;
+    };
     interface HTMLGrwMapElement extends Components.GrwMap, HTMLStencilElement {
     }
     var HTMLGrwMapElement: {
@@ -66,6 +80,7 @@ declare global {
         new (): HTMLGrwTreksProviderElement;
     };
     interface HTMLElementTagNameMap {
+        "grw-app": HTMLGrwAppElement;
         "grw-map": HTMLGrwMapElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
         "grw-trek-detail": HTMLGrwTrekDetailElement;
@@ -75,12 +90,17 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface GrwApp {
+        "api"?: string;
+        "appName"?: string;
+    }
     interface GrwMap {
-        "arrivalIconColor"?: string;
-        "departureIconColor"?: string;
-        "trekLineColor"?: string;
+        "colorArrivalIcon"?: string;
+        "colorDepartureIcon"?: string;
+        "colorTrekLine"?: string;
     }
     interface GrwTrekCard {
+        "onTrekCardPress"?: (event: GrwTrekCardCustomEvent<number>) => void;
         "trek"?: Trek;
     }
     interface GrwTrekDetail {
@@ -96,6 +116,7 @@ declare namespace LocalJSX {
         "api"?: string;
     }
     interface IntrinsicElements {
+        "grw-app": GrwApp;
         "grw-map": GrwMap;
         "grw-trek-card": GrwTrekCard;
         "grw-trek-detail": GrwTrekDetail;
@@ -108,6 +129,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
             "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
