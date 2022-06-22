@@ -1,6 +1,6 @@
 export const createTreksList = ({ api }) => {
-  const trek = document.createElement('grw-treks-provider');
-  trek.setAttribute('api', api);
-  trek.appendChild(document.createElement('grw-treks-list'));
-  return trek;
+  const treks = document.createElement('grw-treks-provider');
+  treks.setAttribute('api', api);
+  treks.appendChild(document.createElement('grw-treks-list'));
+  return treks;
 };

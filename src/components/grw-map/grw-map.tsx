@@ -29,7 +29,11 @@ export class GrwMap {
       attribution: '© OpenStreetMap',
     }).addTo(this.map);
 
-    this.addTreks();
+    if (state.currentTrek) {
+      this.addTrek();
+    } else {
+      this.addTreks();
+    }
 
     onChange('currentTrek', () => {
       if (state.currentTrek) {
