@@ -10,6 +10,7 @@ export namespace Components {
     interface GrwApp {
         "api": string;
         "appName": string;
+        "portals": string;
     }
     interface GrwMap {
         "colorArrivalIcon": string;
@@ -30,6 +31,7 @@ export namespace Components {
     }
     interface GrwTreksProvider {
         "api": string;
+        "portals": string;
     }
 }
 export interface GrwTrekCardCustomEvent<T> extends CustomEvent<T> {
@@ -93,6 +95,7 @@ declare namespace LocalJSX {
     interface GrwApp {
         "api"?: string;
         "appName"?: string;
+        "portals"?: string;
     }
     interface GrwMap {
         "colorArrivalIcon"?: string;
@@ -114,6 +117,7 @@ declare namespace LocalJSX {
     }
     interface GrwTreksProvider {
         "api"?: string;
+        "portals"?: string;
     }
     interface IntrinsicElements {
         "grw-app": GrwApp;

@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `api`    | `api`     |             | `string` | `undefined` |
+| Property  | Attribute | Description | Type     | Default     |
+| --------- | --------- | ----------- | -------- | ----------- |
+| `api`     | `api`     |             | `string` | `undefined` |
+| `portals` | `portals` |             | `string` | `undefined` |
 
 
 ## Dependencies

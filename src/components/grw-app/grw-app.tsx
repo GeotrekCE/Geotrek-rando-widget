@@ -12,8 +12,7 @@ export class GrwApp {
   @State() currentTrekId: number;
   @Prop() api: string;
   @Prop() appName: string = 'Geotrek Rando Widget';
-
-  componentWillLoad() {}
+  @Prop() portals: string;
 
   @Listen('trekCardPress')
   onTrekCardPress(event: CustomEvent<number>) {
@@ -29,7 +28,7 @@ export class GrwApp {
   render() {
     return (
       <Host>
-        <grw-treks-provider api={this.api}>
+        <grw-treks-provider api={this.api} portals={this.portals}>
           <div class="header-container">
             {this.showTrek ? <div onClick={() => this.onTrekDetailsClose()} class="arrow-back-icon" innerHTML={arrowBackImage}></div> : <div class="title">{this.appName}</div>}
           </div>

@@ -62,8 +62,10 @@ export class GrwMap {
       });
     }
 
-    const bounds = L.latLngBounds(treksDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-    this.map.fitBounds(bounds);
+    if (treksDepartureCoordinates.length > 0) {
+      const bounds = L.latLngBounds(treksDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      this.map.fitBounds(bounds);
+    }
 
     this.treksLayer = L.geoJSON(treksFeatureCollection, {
       pointToLayer: (_geoJsonPoint, latlng) =>

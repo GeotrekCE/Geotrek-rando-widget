@@ -31,23 +31,23 @@ export class GrwTrekCard {
     return (
       <Host onClick={() => this.trekCardPress.emit(this.currentTrek.id)}>
         <div class="trek-card-container">
-          <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />
+          {this.currentTrek.attachments[0] && <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />}
           <div class="sub-container">
-            <div class="name">{this.currentTrek.name}</div>
-            <div class="description" innerHTML={this.currentTrek.description_teaser}></div>
+            <div class="name">{this.currentTrek?.name}</div>
+            <div class="description" innerHTML={this.currentTrek?.description_teaser}></div>
             <div class="icons-labels-container">
               <div class="row">
                 <div class="icon-label difficulty">
-                  <img src={this.difficulty.pictogram} />
-                  {this.difficulty.label}
+                  <img src={this.difficulty?.pictogram} />
+                  {this.difficulty?.label}
                 </div>
                 <div class="icon-label duration">
                   <div class="svg-icon" innerHTML={durationImage}></div>
                   {formatDuration(this.currentTrek.duration)}
                 </div>
                 <div class="icon-label route">
-                  <img src={this.route.pictogram} />
-                  {this.route.route}
+                  <img src={this.route?.pictogram} />
+                  {this.route?.route}
                 </div>
               </div>
               <div class="row">
@@ -60,8 +60,8 @@ export class GrwTrekCard {
                   {formatAscent(this.currentTrek.ascent)}
                 </div>
                 <div class="icon-label practice">
-                  <img src={this.practice.pictogram} />
-                  {this.practice.name}
+                  <img src={this.practice?.pictogram} />
+                  {this.practice?.name}
                 </div>
               </div>
             </div>

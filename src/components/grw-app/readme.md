@@ -11,6 +11,7 @@
 | --------- | ---------- | ----------- | -------- | ------------------------ |
 | `api`     | `api`      |             | `string` | `undefined`              |
 | `appName` | `app-name` |             | `string` | `'Geotrek Rando Widget'` |
+| `portals` | `portals`  |             | `string` | `undefined`              |
 
 
 ## Dependencies
