@@ -2,7 +2,7 @@
 
 grw-map {
   display: block;
-  height: 400px;
+  height: 100%;
 }
 
 .departure-icon svg,
@@ -21,4 +21,9 @@ grw-map {
 
 .arrival-icon {
   color: var(--color-arrival-icon);
+}
+
+.trek-marker {
+  background-color: var(--color-primary);
+  border-radius: 50%;
 }

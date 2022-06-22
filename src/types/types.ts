@@ -1,3 +1,5 @@
+import { LineString, Position } from 'geojson';
+
 export type Treks = Trek[];
 
 export type Trek = {
@@ -12,7 +14,8 @@ export type Trek = {
   duration: number;
   length_2d: number;
   ascent: number;
-  geometry: { type: string; coordinates: number[][] };
+  geometry?: LineString;
+  departure_geom?: Position;
 };
 
 export type Attachments = Attachment[];

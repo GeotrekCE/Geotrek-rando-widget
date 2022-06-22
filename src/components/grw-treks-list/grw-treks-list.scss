@@ -1,13 +1,20 @@
-.treks-list-container {
+.treks-list-container,
+.app-treks-list-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  max-height: calc(100vh - 64px);
+  overflow-y: auto;
   @media screen and (min-width: 664px) {
     justify-content: space-between;
   }
   @media screen and (min-width: 996px) {
     justify-content: flex-start;
   }
+}
+
+.app-treks-list-container {
+  width: 50%;
 }
 
 grw-trek-card {

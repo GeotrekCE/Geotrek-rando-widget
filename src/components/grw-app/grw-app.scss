@@ -1,4 +1,4 @@
-.appbar-container {
+.header-container {
   display: flex;
   align-items: center;
   background-color: var(--color-primary);
@@ -24,7 +24,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 50vw;
   height: 100%;
   .loader {
     width: 48px;
@@ -45,4 +45,20 @@
       transform: rotate(360deg);
     }
   }
+}
+
+.content-container {
+  display: flex;
+  height: calc(100vh - 64px);
+}
+
+.app-treks-list-container,
+.app-trek-detail-container {
+  width: 50vw;
+  height: 100%;
+}
+
+.app-map-container {
+  width: 50vw;
+  height: 100%;
 }

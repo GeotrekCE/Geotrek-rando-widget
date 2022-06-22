@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                                                                                                                                                                                                                                        | Default     |
-| -------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `trek`   | --        |             | `{ id: number; name: string; attachments: Attachments; description?: string; description_teaser: string; difficulty: number; route: number; practice: number; duration: number; length_2d: number; ascent: number; geometry: { type: string; coordinates: number[][]; }; }` | `undefined` |
+| Property | Attribute | Description | Type                                                                                                                                                                                                                                                                    | Default     |
+| -------- | --------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `trek`   | --        |             | `{ id: number; name: string; attachments: Attachments; description?: string; description_teaser: string; difficulty: number; route: number; practice: number; duration: number; length_2d: number; ascent: number; geometry?: LineString; departure_geom?: Position; }` | `undefined` |
 
 
 ## Events
