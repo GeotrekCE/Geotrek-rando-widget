@@ -11,8 +11,10 @@ export class GrwApp {
   @State() showTrek: boolean;
   @State() currentTrekId: number;
   @Prop() api: string;
-  @Prop() appName: string = 'Geotrek Rando Widget';
   @Prop() portals: string;
+  @Prop() appName: string = 'Geotrek Rando Widget';
+  @Prop() colorPrimary: string = '#6b0030';
+  @Prop() colorPrimaryTint: string = '#d2b2c0';
 
   @Listen('trekCardPress')
   onTrekCardPress(event: CustomEvent<number>) {
@@ -27,7 +29,7 @@ export class GrwApp {
 
   render() {
     return (
-      <Host>
+      <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
         <grw-treks-provider api={this.api} portals={this.portals}>
           <div class="header-container">
             {this.showTrek ? <div onClick={() => this.onTrekDetailsClose()} class="arrow-back-icon" innerHTML={arrowBackImage}></div> : <div class="title">{this.appName}</div>}

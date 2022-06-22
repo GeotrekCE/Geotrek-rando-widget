@@ -10,6 +10,8 @@ export namespace Components {
     interface GrwApp {
         "api": string;
         "appName": string;
+        "colorPrimary": string;
+        "colorPrimaryTint": string;
         "portals": string;
     }
     interface GrwMap {
@@ -95,6 +97,8 @@ declare namespace LocalJSX {
     interface GrwApp {
         "api"?: string;
         "appName"?: string;
+        "colorPrimary"?: string;
+        "colorPrimaryTint"?: string;
         "portals"?: string;
     }
     interface GrwMap {

@@ -13,7 +13,9 @@ export const App = Template.bind({});
 
 App.args = {
   api: 'https://randoadmin.parc-haut-jura.fr/api/v2/',
-  appName: 'Geotrek Rando Widget',
   portals: '',
+  appName: 'Geotrek Rando Widget',
+  colorPrimary: '#6b0030',
+  colorPrimaryTint: '#d2b2c0',
 };
 App.storyName = 'App';

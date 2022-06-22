@@ -7,11 +7,13 @@
 
 ## Properties
 
-| Property  | Attribute  | Description | Type     | Default                  |
-| --------- | ---------- | ----------- | -------- | ------------------------ |
-| `api`     | `api`      |             | `string` | `undefined`              |
-| `appName` | `app-name` |             | `string` | `'Geotrek Rando Widget'` |
-| `portals` | `portals`  |             | `string` | `undefined`              |
+| Property           | Attribute            | Description | Type     | Default                  |
+| ------------------ | -------------------- | ----------- | -------- | ------------------------ |
+| `api`              | `api`                |             | `string` | `undefined`              |
+| `appName`          | `app-name`           |             | `string` | `'Geotrek Rando Widget'` |
+| `colorPrimary`     | `color-primary`      |             | `string` | `'#6b0030'`              |
+| `colorPrimaryTint` | `color-primary-tint` |             | `string` | `'#d2b2c0'`              |
+| `portals`          | `portals`            |             | `string` | `undefined`              |
 
 
 ## Dependencies
