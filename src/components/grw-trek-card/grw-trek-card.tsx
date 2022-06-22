@@ -38,7 +38,7 @@ export class GrwTrekCard {
             <div class="icons-labels-container">
               <div class="row">
                 <div class="icon-label difficulty">
-                  <img src={this.difficulty?.pictogram} />
+                  {this.difficulty?.pictogram && <img src={this.difficulty.pictogram} />}
                   {this.difficulty?.label}
                 </div>
                 <div class="icon-label duration">
@@ -46,7 +46,7 @@ export class GrwTrekCard {
                   {formatDuration(this.currentTrek.duration)}
                 </div>
                 <div class="icon-label route">
-                  <img src={this.route?.pictogram} />
+                  {this.route?.pictogram && <img src={this.route.pictogram} />}
                   {this.route?.route}
                 </div>
               </div>
@@ -60,7 +60,7 @@ export class GrwTrekCard {
                   {formatAscent(this.currentTrek.ascent)}
                 </div>
                 <div class="icon-label practice">
-                  <img src={this.practice?.pictogram} />
+                  {this.practice?.pictogram && <img src={this.practice.pictogram} />}
                   {this.practice?.name}
                 </div>
               </div>

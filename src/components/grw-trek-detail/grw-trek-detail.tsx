@@ -31,21 +31,21 @@ export class GrwTrekDetail {
       <Host>
         <div class="trek-detail-container">
           <div class="name">{this.currentTrek.name}</div>
-          <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />
+          {this.currentTrek.attachments[0] && <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />}
           <div class="sub-container">
             <div class="icons-labels-container">
               <div class="row">
                 <div class="icon-label difficulty">
-                  <img src={this.difficulty.pictogram} />
-                  {this.difficulty.label}
+                  {this.difficulty?.pictogram && <img src={this.difficulty.pictogram} />}
+                  {this.difficulty?.label}
                 </div>
                 <div class="icon-label duration">
                   <div class="svg-icon" innerHTML={durationImage}></div>
-                  {formatDuration(this.currentTrek.duration)}
+                  {formatDuration(this.currentTrek?.duration)}
                 </div>
                 <div class="icon-label route">
-                  <img src={this.route.pictogram} />
-                  {this.route.route}
+                  {this.route?.pictogram && <img src={this.route.pictogram} />}
+                  {this.route?.route}
                 </div>
               </div>
               <div class="row">
@@ -58,8 +58,8 @@ export class GrwTrekDetail {
                   {formatAscent(this.currentTrek.ascent)}
                 </div>
                 <div class="icon-label practice">
-                  <img src={this.practice.pictogram} />
-                  {this.practice.name}
+                  {this.practice?.pictogram && <img src={this.practice.pictogram} />}
+                  {this.practice?.name}
                 </div>
               </div>
             </div>
