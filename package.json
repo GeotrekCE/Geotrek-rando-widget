@@ -1,5 +1,5 @@
 {
-  "name": "geotrek-rando-widget",
+  "name": "@geotrekce/geotrek-rando-widget",
   "version": "0.0.1",
   "description": "Geotrek Rando Widget",
   "main": "dist/index.cjs.js",
@@ -10,10 +10,7 @@
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/geotrek-rando-widget/geotrek-rando-widget.esm.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ionic-team/stencil-component-starter.git"
-  },
+  "repository": "github:GeotrekCE/Geotrek-rando-widget",
   "files": [
     "dist/",
     "loader/"
@@ -26,7 +23,8 @@
     "generate": "stencil generate",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "deploy-storybook": "storybook-to-ghpages"
+    "deploy-storybook": "storybook-to-ghpages",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@stencil/core": "^2.13.0",
@@ -54,5 +52,6 @@
     "puppeteer": "^10.0.0",
     "stencil-inline-svg": "^1.1.0"
   },
+  "author": "bastien.alvez@makina-corpus.com",
   "license": "MIT"
 }
