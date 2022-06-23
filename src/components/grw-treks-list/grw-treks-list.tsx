@@ -10,14 +10,22 @@ import { Treks } from 'types/types';
 export class GrwTreksList {
   @Element() element: HTMLElement;
   @State() treksToDisplay: Treks = [];
+  handleInfiniteScrollBind: (event) => void = this.handleInfiniteScroll.bind(this);
   step = 10;
+
   componentWillLoad() {
     this.treksToDisplay = state.treks.slice(0, this.step);
-    this.element.addEventListener('scroll', event => {
-      if ((event as any).path[0].scrollTop + (event as any).path[0].scrollHeight / 2 >= (event as any).path[0].scrollHeight) {
-        this.treksToDisplay = state.treks.slice(0, this.treksToDisplay.length + this.step);
+    this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
+  }
+
+  handleInfiniteScroll(event) {
+    if ((event as any).path[0].scrollTop + (event as any).path[0].scrollHeight / 2 >= (event as any).path[0].scrollHeight) {
+      if (this.treksToDisplay.length < state.treks.length) {
+        this.treksToDisplay = state.treks.slice(0, this.treksToDisplay.length + this.step >= state.treks.length ? state.treks.length : this.treksToDisplay.length + this.step);
+      } else {
+        this.element.removeEventListener('scroll', this.handleInfiniteScrollBind);
       }
-    });
+    }
   }
 
   render() {
