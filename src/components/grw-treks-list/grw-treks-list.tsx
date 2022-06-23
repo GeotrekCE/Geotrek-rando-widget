@@ -18,8 +18,8 @@ export class GrwTreksList {
     this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
   }
 
-  handleInfiniteScroll(event) {
-    if ((event as any).path[0].scrollTop + (event as any).path[0].scrollHeight / 2 >= (event as any).path[0].scrollHeight) {
+  handleInfiniteScroll(event: any) {
+    if (event.composedPath()[0].scrollTop + event.composedPath()[0].scrollHeight / 2 >= event.composedPath()[0].scrollHeight) {
       if (this.treksToDisplay.length < state.treks.length) {
         this.treksToDisplay = state.treks.slice(0, this.treksToDisplay.length + this.step >= state.treks.length ? state.treks.length : this.treksToDisplay.length + this.step);
       } else {
