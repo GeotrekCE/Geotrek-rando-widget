@@ -15,7 +15,7 @@ export class GrwTreksProvider {
     if (this.portals) {
       treksRequest += `&portals=${this.portals}`;
     }
-    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,route,departure_geom&page_size=5`;
+    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,route,departure_geom&page_size=999`;
 
     return Promise.all([
       fetch(treksRequest),

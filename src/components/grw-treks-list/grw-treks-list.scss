@@ -1,5 +1,4 @@
-.treks-list-container,
-.app-treks-list-container {
+:host {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -11,10 +10,6 @@
   @media screen and (min-width: 996px) {
     justify-content: flex-start;
   }
-}
-
-.app-treks-list-container {
-  width: 50%;
 }
 
 grw-trek-card {
