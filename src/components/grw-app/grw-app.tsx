@@ -67,7 +67,7 @@ export class GrwApp {
             </div>
           </div>
           <div class="map-visibility-button">
-            <div onClick={() => (this.showMap = !this.showMap)}>{this.showMap ? 'Voir la liste' : 'Voir la carte'}</div>
+            <div onClick={() => (this.showMap = !this.showMap)}>{this.showMap ? (this.showTrek ? 'Voir la fiche' : 'Voir la liste') : 'Voir la carte'}</div>
           </div>
         </grw-treks-provider>
       </Host>

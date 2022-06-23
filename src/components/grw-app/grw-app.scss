@@ -74,6 +74,7 @@
   bottom: 24px;
   width: 100%;
   z-index: 400;
+  user-select: none;
   div {
     background-color: var(--color-primary);
     color: #ffffff;
