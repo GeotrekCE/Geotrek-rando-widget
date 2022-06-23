@@ -9,6 +9,7 @@ import arrowBackImage from '../../assets/arrow-back.svg';
 })
 export class GrwApp {
   @State() showTrek: boolean;
+  @State() showMap: boolean;
   @State() currentTrekId: number;
   @Prop() api: string;
   @Prop() portals: string;
@@ -22,9 +23,18 @@ export class GrwApp {
     this.showTrek = !this.showTrek;
   }
 
+  @Listen('resize', { target: 'window' })
+  onWindowResize(event: any) {
+    this.showMap = !(event.composedPath()[0].innerWidth < 664);
+  }
+
   onTrekDetailsClose() {
     this.currentTrekId = null;
     this.showTrek = !this.showTrek;
+  }
+
+  componentWillLoad() {
+    this.showMap = !(window.innerWidth < 664);
   }
 
   render() {
@@ -35,11 +45,9 @@ export class GrwApp {
             {this.showTrek ? <div onClick={() => this.onTrekDetailsClose()} class="arrow-back-icon" innerHTML={arrowBackImage}></div> : <div class="title">{this.appName}</div>}
           </div>
           <div class="content-container">
-            {!this.showTrek && (
-              <div class="app-treks-list-container">
-                <grw-treks-list></grw-treks-list>
-              </div>
-            )}
+            <div class="app-treks-list-container" style={{ visibility: this.showTrek ? 'hidden' : 'visible', position: this.showTrek ? 'absolute' : 'relative' }}>
+              <grw-treks-list></grw-treks-list>
+            </div>
             {this.showTrek && !state.currentTrek && (
               <div class="loader-container">
                 <span class="loader"></span>
@@ -54,9 +62,12 @@ export class GrwApp {
                 )}
               </grw-trek-provider>
             )}
-            <div class="app-map-container">
+            <div class="app-map-container" style={{ visibility: this.showMap ? 'visible' : 'hidden' }}>
               <grw-map></grw-map>
             </div>
+          </div>
+          <div class="map-visibility-button">
+            <div onClick={() => (this.showMap = !this.showMap)}>{this.showMap ? 'Voir la liste' : 'Voir la carte'}</div>
           </div>
         </grw-treks-provider>
       </Host>
