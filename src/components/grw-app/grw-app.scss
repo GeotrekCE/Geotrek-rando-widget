@@ -90,8 +90,10 @@
     display: none;
   }
 
-  .title {
-    font-size: 48px;
+  .header-container {
+    .title {
+      font-size: 32px;
+    }
   }
 
   .loader-container {
