@@ -1,5 +1,5 @@
 import { Component, Host, h, Element, State } from '@stencil/core';
-import state from 'store/store';
+import state, { onChange } from 'store/store';
 import { Treks } from 'types/types';
 
 @Component({
@@ -14,8 +14,10 @@ export class GrwTreksList {
   step = 10;
 
   componentWillLoad() {
-    this.treksToDisplay = state.treks.slice(0, this.step);
     this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
+    onChange('treks', () => {
+      this.treksToDisplay = state.treks.slice(0, this.step);
+    });
   }
 
   handleInfiniteScroll(event: any) {
@@ -30,7 +32,7 @@ export class GrwTreksList {
 
   render() {
     return (
-      <Host class="treks-list-container">
+      <Host>
         {this.treksToDisplay.map(trek => (
           <grw-trek-card trek={trek}></grw-trek-card>
         ))}

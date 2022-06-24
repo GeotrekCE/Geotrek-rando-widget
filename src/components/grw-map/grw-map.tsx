@@ -31,9 +31,17 @@ export class GrwMap {
 
     if (state.currentTrek) {
       this.addTrek();
-    } else {
+    } else if (state.currentTrek) {
       this.addTreks();
     }
+
+    onChange('treks', () => {
+      if (state.currentTrek) {
+        this.addTrek();
+      } else if (state.treks) {
+        this.addTreks();
+      }
+    });
 
     onChange('currentTrek', () => {
       if (state.currentTrek) {

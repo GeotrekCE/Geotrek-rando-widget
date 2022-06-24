@@ -1,11 +1,16 @@
-.header-container {
+.app-container {
+  position: relative;
+  height: 100%;
+}
+
+.header-container,
+.large-view-header-container {
   display: flex;
   align-items: center;
   background-color: var(--color-primary);
   height: 64px;
   .title {
     color: #ffffff;
-    font-size: 24px;
     margin-left: 24px;
   }
   .arrow-back-icon {
@@ -20,12 +25,11 @@
   }
 }
 
-.loader-container {
-  position: absolute;
+.loader-container,
+.large-view-loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
   height: 100%;
   .loader {
     width: 48px;
@@ -50,19 +54,20 @@
 
 .content-container {
   display: flex;
-  height: calc(100vh - 64px);
+  height: calc(100% - 64px);
 }
 
 .app-treks-list-container,
-.app-trek-detail-container {
-  width: 100vw;
+.app-trek-detail-container,
+.large-view-app-treks-list-container,
+.large-view-app-trek-detail-container {
   height: 100%;
 }
 
-.app-map-container {
-  position: absolute;
-  width: 100vw;
-  height: calc(100vh - 64px);
+.app-map-container,
+.large-view-app-map-container {
+  width: 100%;
+  height: 100%;
 }
 
 .map-visibility-button {
@@ -85,31 +90,45 @@
   }
 }
 
-@media (min-width: 664px) {
-  .map-visibility-button {
-    display: none;
+.header-container {
+  .title {
+    font-size: 24px;
   }
+}
 
-  .header-container {
-    .title {
-      font-size: 32px;
-    }
-  }
+.loader-container {
+  position: absolute;
+  width: 100%;
+}
 
-  .loader-container {
-    position: relative;
-    width: 50vw;
-  }
+.app-treks-list-container,
+.app-trek-detail-container {
+  width: 100%;
+}
 
-  .app-treks-list-container,
-  .app-trek-detail-container {
-    width: 50vw;
-    height: 100%;
-  }
+.app-map-container {
+  position: relative;
+  width: 100%;
+  position: absolute;
+}
 
-  .app-map-container {
-    position: relative;
-    width: 50vw;
-    height: 100%;
+.large-view-header-container {
+  .title {
+    font-size: 32px;
   }
+}
+
+.large-view-loader-container {
+  position: relative;
+  width: 50%;
+}
+
+.large-view-app-treks-list-container,
+.large-view-app-trek-detail-container {
+  width: 50%;
+}
+
+.large-view-app-map-container {
+  position: relative;
+  width: 50%;
 }

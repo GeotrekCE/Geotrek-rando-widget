@@ -3,6 +3,7 @@ import state from 'store/store';
 
 @Component({
   tag: 'grw-treks-provider',
+  shadow: true,
 })
 export class GrwTreksProvider {
   @Prop() api: string;

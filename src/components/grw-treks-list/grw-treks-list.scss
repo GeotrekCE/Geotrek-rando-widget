@@ -1,15 +1,9 @@
 :host {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  max-height: calc(100vh - 64px);
+  justify-content: space-around;
+  height: 100%;
   overflow-y: auto;
-  @media (min-width: 664px) {
-    justify-content: space-between;
-  }
-  @media (min-width: 996px) {
-    justify-content: flex-start;
-  }
 }
 
 grw-trek-card {
