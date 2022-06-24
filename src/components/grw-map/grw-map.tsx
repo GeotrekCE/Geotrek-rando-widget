@@ -18,7 +18,7 @@ export class GrwMap {
   trekLayer: L.GeoJSON<any>;
   departureArrivalLayer: L.GeoJSON<any>;
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.map = L.map(this.element, {
       center: [1, 1],
       zoom: 10,
@@ -63,9 +63,10 @@ export class GrwMap {
 
     for (const trek of state.treks) {
       treksDepartureCoordinates.push(trek.departure_geom);
+      console.log(state.practices.find(practice => practice.id === trek.practice)?.pictogram);
       treksFeatureCollection.features.push({
         type: 'Feature',
-        properties: {},
+        properties: { practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram },
         geometry: { type: 'Point', coordinates: trek.departure_geom },
       });
     }
@@ -76,12 +77,12 @@ export class GrwMap {
     }
 
     this.treksLayer = L.geoJSON(treksFeatureCollection, {
-      pointToLayer: (_geoJsonPoint, latlng) =>
+      pointToLayer: (geoJsonPoint, latlng) =>
         L.marker(latlng, {
           icon: L.divIcon({
             className: 'trek-marker',
             iconSize: 48,
-            iconAnchor: [0, 48],
+            html: geoJsonPoint.properties.practice ? `<img src=${geoJsonPoint.properties.practice} />` : '',
           } as any),
           autoPanOnFocus: false,
         } as any),

@@ -26,4 +26,10 @@ grw-map {
 .trek-marker {
   background-color: var(--color-primary);
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 36px !important;
+  }
 }

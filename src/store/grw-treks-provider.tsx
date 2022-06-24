@@ -19,17 +19,17 @@ export class GrwTreksProvider {
     treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,route,departure_geom&page_size=999`;
 
     return Promise.all([
-      fetch(treksRequest),
       fetch(`${this.api}trek_difficulty/?language=fr`),
       fetch(`${this.api}trek_route/?language=fr`),
       fetch(`${this.api}trek_practice/?language=fr`),
+      fetch(treksRequest),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([treks, difficulties, routes, practices]) => {
-        state.treks = treks.results;
+      .then(([difficulties, routes, practices, treks]) => {
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results;
+        state.treks = treks.results;
       });
   }
 
