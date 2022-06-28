@@ -13,6 +13,7 @@ export const TreksList = Template.bind({});
 
 TreksList.args = {
   api: 'https://randoadmin.parc-haut-jura.fr/api/v2/',
+  language: 'fr',
   inBbox: '',
   cities: '',
   districts: '',

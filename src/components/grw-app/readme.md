@@ -21,6 +21,7 @@
 | `colorTrekLine`      | `color-trek-line`      |             | `string` | `'#6b0030'`              |
 | `districts`          | `districts`            |             | `string` | `undefined`              |
 | `inBbox`             | `in-bbox`              |             | `string` | `undefined`              |
+| `language`           | `language`             |             | `string` | `'fr'`                   |
 | `portals`            | `portals`              |             | `string` | `undefined`              |
 | `practices`          | `practices`            |             | `string` | `undefined`              |
 | `routes`             | `routes`               |             | `string` | `undefined`              |

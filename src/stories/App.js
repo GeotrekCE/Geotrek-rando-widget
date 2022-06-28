@@ -1,5 +1,6 @@
 export const createApp = ({
   api,
+  language,
   inBbox,
   cities,
   districts,
@@ -19,6 +20,7 @@ export const createApp = ({
 }) => {
   const app = document.createElement('grw-app');
   app.setAttribute('api', api);
+  app.setAttribute('language', language);
   app.setAttribute('in-bbox', inBbox);
   app.setAttribute('cities', cities);
   app.setAttribute('districts', districts);

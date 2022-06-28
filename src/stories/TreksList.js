@@ -1,7 +1,8 @@
-export const createTreksList = ({ api, inBbox, cities, districts, structures, themes, portals, routes, practices, colorPrimary, colorPrimaryTint }) => {
+export const createTreksList = ({ api, language, inBbox, cities, districts, structures, themes, portals, routes, practices, colorPrimary, colorPrimaryTint }) => {
   const container = document.createElement('div');
   const treks = document.createElement('grw-treks-provider');
   treks.setAttribute('api', api);
+  treks.setAttribute('language', language);
   treks.setAttribute('in-bbox', inBbox);
   treks.setAttribute('cities', cities);
   treks.setAttribute('districts', districts);

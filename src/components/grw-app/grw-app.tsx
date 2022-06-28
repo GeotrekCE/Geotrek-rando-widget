@@ -14,6 +14,7 @@ export class GrwApp {
   @State() isLargeView = false;
   @State() currentTrekId: number;
   @Prop() api: string;
+  @Prop() language: string = 'fr';
   @Prop() inBbox: string;
   @Prop() cities: string;
   @Prop() districts: string;
@@ -69,6 +70,7 @@ export class GrwApp {
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
         <grw-treks-provider
           api={this.api}
+          language={this.language}
           in-bbox={this.inBbox}
           cities={this.cities}
           districts={this.districts}
@@ -78,7 +80,7 @@ export class GrwApp {
           routes={this.routes}
           practices={this.practices}
         ></grw-treks-provider>
-        {this.showTrek && this.currentTrekId && <grw-trek-provider api={state.api} trek-id={this.currentTrekId}></grw-trek-provider>}
+        {this.showTrek && this.currentTrekId && <grw-trek-provider api={state.api} language={this.language} trek-id={this.currentTrekId}></grw-trek-provider>}
         <div class="app-container">
           <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
             {this.showTrek ? <div onClick={() => this.onTrekDetailsClose()} class="arrow-back-icon" innerHTML={arrowBackImage}></div> : <div class="title">{this.appName}</div>}

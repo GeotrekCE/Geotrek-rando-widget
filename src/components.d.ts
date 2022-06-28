@@ -20,6 +20,7 @@ export namespace Components {
         "colorTrekLine": string;
         "districts": string;
         "inBbox": string;
+        "language": string;
         "portals": string;
         "practices": string;
         "routes": string;
@@ -142,6 +143,7 @@ declare namespace LocalJSX {
         "colorTrekLine"?: string;
         "districts"?: string;
         "inBbox"?: string;
+        "language"?: string;
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
