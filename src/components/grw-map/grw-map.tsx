@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop } from '@stencil/core';
+import { Component, Host, h, Element, Prop, State } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import state, { onChange } from 'store/store';
@@ -10,23 +10,31 @@ import departureArrivalImage from '../../assets/departure-arrival.svg';
 })
 export class GrwMap {
   @Element() element: HTMLElement;
+  @State() mapIsReady = false;
+  @Prop() urlLayer: string;
+  @Prop() attribution: string;
+  @Prop() center: string = '1, 1';
+  @Prop() zoom = 10;
   @Prop() colorTrekLine: string = '#6b0030';
   @Prop() colorDepartureIcon: string = '#006b3b';
   @Prop() colorArrivalIcon: string = '#85003b';
+  @Prop() colorPrimary: string = '#6b0030';
+  @Prop() colorPrimaryTint: string = '#d2b2c0';
   map: L.Map;
+  currentBounds: L.LatLngBoundsExpression;
   treksLayer: L.GeoJSON<any>;
   trekLayer: L.GeoJSON<any>;
   departureArrivalLayer: L.GeoJSON<any>;
 
-  componentWillLoad() {
+  componentDidLoad() {
     this.map = L.map(this.element, {
-      center: [1, 1],
-      zoom: 10,
+      center: this.center.split(',').map(Number) as L.LatLngExpression,
+      zoom: this.zoom,
     });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer(this.urlLayer, {
       maxZoom: 19,
-      attribution: '© OpenStreetMap',
+      attribution: this.attribution,
     }).addTo(this.map);
 
     if (state.currentTrek) {
@@ -63,7 +71,6 @@ export class GrwMap {
 
     for (const trek of state.treks) {
       treksDepartureCoordinates.push(trek.departure_geom);
-      console.log(state.practices.find(practice => practice.id === trek.practice)?.pictogram);
       treksFeatureCollection.features.push({
         type: 'Feature',
         properties: { practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram },
@@ -73,7 +80,8 @@ export class GrwMap {
 
     if (treksDepartureCoordinates.length > 0) {
       const bounds = L.latLngBounds(treksDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-      this.map.fitBounds(bounds);
+      this.currentBounds = bounds;
+      this.map.fitBounds(this.currentBounds);
     }
 
     this.treksLayer = L.geoJSON(treksFeatureCollection, {
@@ -87,11 +95,15 @@ export class GrwMap {
           autoPanOnFocus: false,
         } as any),
     }).addTo(this.map);
+
+    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
 
   removeTreks() {
-    this.map.removeLayer(this.treksLayer);
-    this.treksLayer = null;
+    if (this.treksLayer) {
+      this.map.removeLayer(this.treksLayer);
+      this.treksLayer = null;
+    }
   }
 
   addTrek() {
@@ -108,7 +120,8 @@ export class GrwMap {
     }).addTo(this.map);
 
     const bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-    this.map.fitBounds(bounds);
+    this.currentBounds = bounds;
+    this.map.fitBounds(this.currentBounds);
 
     const departureCoordinates = [state.currentTrek.geometry.coordinates.at(0)[0], state.currentTrek.geometry.coordinates.at(0)[1]];
     const arrivalCoordinates = [state.currentTrek.geometry.coordinates.at(-1)[0], state.currentTrek.geometry.coordinates.at(-1)[1]];
@@ -143,16 +156,37 @@ export class GrwMap {
           autoPanOnFocus: false,
         } as any),
     }).addTo(this.map);
+
+    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
 
   removeTrek() {
-    this.map.removeLayer(this.trekLayer);
-    this.map.removeLayer(this.departureArrivalLayer);
-    this.trekLayer = null;
-    this.departureArrivalLayer = null;
+    if (this.trekLayer) {
+      this.map.removeLayer(this.trekLayer);
+      this.trekLayer = null;
+    }
+    if (this.departureArrivalLayer) {
+      this.map.removeLayer(this.departureArrivalLayer);
+      this.departureArrivalLayer = null;
+    }
   }
 
   render() {
-    return <Host style={{ '--color-departure-icon': this.colorDepartureIcon, '--color-arrival-icon': this.colorArrivalIcon }}></Host>;
+    return (
+      <Host
+        style={{
+          '--color-primary': this.colorPrimary,
+          '--color-primary-tint': this.colorPrimaryTint,
+          '--color-departure-icon': this.colorDepartureIcon,
+          '--color-arrival-icon': this.colorArrivalIcon,
+        }}
+      >
+        {!this.mapIsReady && (
+          <div class="map-loader-container">
+            <span class="loader"></span>
+          </div>
+        )}
+      </Host>
+    );
   }
 }

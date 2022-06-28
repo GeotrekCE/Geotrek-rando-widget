@@ -9,9 +9,15 @@
 
 | Property             | Attribute              | Description | Type     | Default     |
 | -------------------- | ---------------------- | ----------- | -------- | ----------- |
+| `attribution`        | `attribution`          |             | `string` | `undefined` |
+| `center`             | `center`               |             | `string` | `'1, 1'`    |
 | `colorArrivalIcon`   | `color-arrival-icon`   |             | `string` | `'#85003b'` |
 | `colorDepartureIcon` | `color-departure-icon` |             | `string` | `'#006b3b'` |
+| `colorPrimary`       | `color-primary`        |             | `string` | `'#6b0030'` |
+| `colorPrimaryTint`   | `color-primary-tint`   |             | `string` | `'#d2b2c0'` |
 | `colorTrekLine`      | `color-trek-line`      |             | `string` | `'#6b0030'` |
+| `urlLayer`           | `url-layer`            |             | `string` | `undefined` |
+| `zoom`               | `zoom`                 |             | `number` | `10`        |
 
 
 ## Dependencies

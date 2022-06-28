@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, State } from '@stencil/core';
+import { Component, Host, h, Element, State, Prop } from '@stencil/core';
 import state, { onChange } from 'store/store';
 import { Treks } from 'types/types';
 
@@ -10,6 +10,9 @@ import { Treks } from 'types/types';
 export class GrwTreksList {
   @Element() element: HTMLElement;
   @State() treksToDisplay: Treks = [];
+  @Prop() colorPrimary: string = '#6b0030';
+  @Prop() colorPrimaryTint: string = '#d2b2c0';
+
   handleInfiniteScrollBind: (event) => void = this.handleInfiniteScroll.bind(this);
   step = 10;
 
@@ -32,9 +35,9 @@ export class GrwTreksList {
 
   render() {
     return (
-      <Host>
+      <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.treksToDisplay.map(trek => (
-          <grw-trek-card trek={trek}></grw-trek-card>
+          <grw-trek-card trek={trek} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-trek-card>
         ))}
       </Host>
     );

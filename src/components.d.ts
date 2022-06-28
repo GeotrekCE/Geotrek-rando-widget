@@ -10,30 +10,65 @@ export namespace Components {
     interface GrwApp {
         "api": string;
         "appName": string;
-        "colorPrimary": string;
-        "colorPrimaryTint": string;
-        "portals": string;
-    }
-    interface GrwMap {
+        "attribution": string;
+        "center": string;
+        "cities": string;
         "colorArrivalIcon": string;
         "colorDepartureIcon": string;
+        "colorPrimary": string;
+        "colorPrimaryTint": string;
         "colorTrekLine": string;
+        "districts": string;
+        "inBbox": string;
+        "portals": string;
+        "practices": string;
+        "routes": string;
+        "structures": string;
+        "themes": string;
+        "urlLayer": string;
+        "zoom": any;
+    }
+    interface GrwMap {
+        "attribution": string;
+        "center": string;
+        "colorArrivalIcon": string;
+        "colorDepartureIcon": string;
+        "colorPrimary": string;
+        "colorPrimaryTint": string;
+        "colorTrekLine": string;
+        "urlLayer": string;
+        "zoom": number;
     }
     interface GrwTrekCard {
+        "colorPrimary": string;
+        "colorPrimaryTint": string;
         "trek": Trek;
     }
     interface GrwTrekDetail {
+        "colorPrimary": string;
+        "colorPrimaryTint": string;
         "trek": Trek;
     }
     interface GrwTrekProvider {
         "api": string;
+        "language": string;
         "trekId": string;
     }
     interface GrwTreksList {
+        "colorPrimary": string;
+        "colorPrimaryTint": string;
     }
     interface GrwTreksProvider {
         "api": string;
+        "cities": string;
+        "districts": string;
+        "inBbox": string;
+        "language": string;
         "portals": string;
+        "practices": string;
+        "routes": string;
+        "structures": string;
+        "themes": string;
     }
 }
 export interface GrwTrekCardCustomEvent<T> extends CustomEvent<T> {
@@ -97,31 +132,66 @@ declare namespace LocalJSX {
     interface GrwApp {
         "api"?: string;
         "appName"?: string;
-        "colorPrimary"?: string;
-        "colorPrimaryTint"?: string;
-        "portals"?: string;
-    }
-    interface GrwMap {
+        "attribution"?: string;
+        "center"?: string;
+        "cities"?: string;
         "colorArrivalIcon"?: string;
         "colorDepartureIcon"?: string;
+        "colorPrimary"?: string;
+        "colorPrimaryTint"?: string;
         "colorTrekLine"?: string;
+        "districts"?: string;
+        "inBbox"?: string;
+        "portals"?: string;
+        "practices"?: string;
+        "routes"?: string;
+        "structures"?: string;
+        "themes"?: string;
+        "urlLayer"?: string;
+        "zoom"?: any;
+    }
+    interface GrwMap {
+        "attribution"?: string;
+        "center"?: string;
+        "colorArrivalIcon"?: string;
+        "colorDepartureIcon"?: string;
+        "colorPrimary"?: string;
+        "colorPrimaryTint"?: string;
+        "colorTrekLine"?: string;
+        "urlLayer"?: string;
+        "zoom"?: number;
     }
     interface GrwTrekCard {
+        "colorPrimary"?: string;
+        "colorPrimaryTint"?: string;
         "onTrekCardPress"?: (event: GrwTrekCardCustomEvent<number>) => void;
         "trek"?: Trek;
     }
     interface GrwTrekDetail {
+        "colorPrimary"?: string;
+        "colorPrimaryTint"?: string;
         "trek"?: Trek;
     }
     interface GrwTrekProvider {
         "api"?: string;
+        "language"?: string;
         "trekId"?: string;
     }
     interface GrwTreksList {
+        "colorPrimary"?: string;
+        "colorPrimaryTint"?: string;
     }
     interface GrwTreksProvider {
         "api"?: string;
+        "cities"?: string;
+        "districts"?: string;
+        "inBbox"?: string;
+        "language"?: string;
         "portals"?: string;
+        "practices"?: string;
+        "routes"?: string;
+        "structures"?: string;
+        "themes"?: string;
     }
     interface IntrinsicElements {
         "grw-app": GrwApp;
