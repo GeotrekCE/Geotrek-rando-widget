@@ -20,6 +20,13 @@
 | `zoom`               | `zoom`                 |             | `number` | `10`        |
 
 
+## Events
+
+| Event           | Description | Type                  |
+| --------------- | ----------- | --------------------- |
+| `trekCardPress` |             | `CustomEvent<number>` |
+
+
 ## Dependencies
 
 ### Used by

@@ -64,3 +64,28 @@ grw-map {
     }
   }
 }
+
+.leaflet-popup-content {
+  width: 144px;
+  margin: 0;
+}
+
+.trek-departure-popup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  height: auto;
+  padding: 24px;
+  img {
+    border-radius: 8px;
+  }
+  .trek-name {
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .trek-name-margin-top {
+    margin-top: 12px;
+  }
+}

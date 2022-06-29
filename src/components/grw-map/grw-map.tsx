@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop, State } from '@stencil/core';
+import { Component, Host, h, Element, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import state, { onChange } from 'store/store';
@@ -10,6 +10,7 @@ import departureArrivalImage from '../../assets/departure-arrival.svg';
 })
 export class GrwMap {
   @Element() element: HTMLElement;
+  @Event() trekCardPress: EventEmitter<number>;
   @State() mapIsReady = false;
   @Prop() urlLayer: string;
   @Prop() attribution: string;
@@ -73,8 +74,13 @@ export class GrwMap {
       treksDepartureCoordinates.push(trek.departure_geom);
       treksFeatureCollection.features.push({
         type: 'Feature',
-        properties: { practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram },
         geometry: { type: 'Point', coordinates: trek.departure_geom },
+        properties: {
+          id: trek.id,
+          name: trek.name,
+          practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram,
+          imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].url,
+        },
       });
     }
 
@@ -94,6 +100,22 @@ export class GrwMap {
           } as any),
           autoPanOnFocus: false,
         } as any),
+      onEachFeature: (geoJsonPoint, layer) => {
+        const trekDeparturePopup = document.createElement('div');
+        trekDeparturePopup.className = 'trek-departure-popup ';
+        trekDeparturePopup.onclick = () => this.trekCardPress.emit(geoJsonPoint.properties.id);
+        const trekName = document.createElement('div');
+        trekName.innerHTML = geoJsonPoint.properties.name;
+        trekName.className = 'trek-name';
+        if (geoJsonPoint.properties.imgSrc) {
+          const trekImg = document.createElement('img');
+          trekImg.src = geoJsonPoint.properties.imgSrc;
+          trekDeparturePopup.appendChild(trekImg);
+          trekName.className += ' trek-name-margin-top';
+        }
+        trekDeparturePopup.appendChild(trekName);
+        layer.once('click', () => layer.bindPopup(trekDeparturePopup, { interactive: true } as any).openPopup());
+      },
     }).addTo(this.map);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);

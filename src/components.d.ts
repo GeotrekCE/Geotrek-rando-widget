@@ -72,6 +72,10 @@ export namespace Components {
         "themes": string;
     }
 }
+export interface GrwMapCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwMapElement;
+}
 export interface GrwTrekCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwTrekCardElement;
@@ -160,6 +164,7 @@ declare namespace LocalJSX {
         "colorPrimary"?: string;
         "colorPrimaryTint"?: string;
         "colorTrekLine"?: string;
+        "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "urlLayer"?: string;
         "zoom"?: number;
     }
