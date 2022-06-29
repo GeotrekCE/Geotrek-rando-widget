@@ -10,6 +10,7 @@
     padding: 24px;
   }
   .image {
+    border-radius: 8px;
     align-self: center;
     width: 100%;
     max-width: 700px;
@@ -50,6 +51,33 @@
           img {
             background-color: var(--color-primary);
           }
+        }
+      }
+    }
+  }
+  .downloads-container {
+    padding: 0px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .download-title {
+      color: var(--color-primary);
+      font-size: 18px;
+      margin-bottom: 18px;
+    }
+    .links-container {
+      a {
+        background-color: var(--color-primary);
+        padding: 8px;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 8px;
+        &:nth-child(2) {
+          margin: 0px 12px;
+        }
+        &:hover {
+          background-color: var(--color-primary-shade);
         }
       }
     }

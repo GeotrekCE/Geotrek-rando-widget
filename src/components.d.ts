@@ -16,6 +16,7 @@ export namespace Components {
         "colorArrivalIcon": string;
         "colorDepartureIcon": string;
         "colorPrimary": string;
+        "colorPrimaryShade": string;
         "colorPrimaryTint": string;
         "colorTrekLine": string;
         "districts": string;
@@ -47,6 +48,7 @@ export namespace Components {
     }
     interface GrwTrekDetail {
         "colorPrimary": string;
+        "colorPrimaryShade": string;
         "colorPrimaryTint": string;
         "trek": Trek;
     }
@@ -143,6 +145,7 @@ declare namespace LocalJSX {
         "colorArrivalIcon"?: string;
         "colorDepartureIcon"?: string;
         "colorPrimary"?: string;
+        "colorPrimaryShade"?: string;
         "colorPrimaryTint"?: string;
         "colorTrekLine"?: string;
         "districts"?: string;
@@ -176,6 +179,7 @@ declare namespace LocalJSX {
     }
     interface GrwTrekDetail {
         "colorPrimary"?: string;
+        "colorPrimaryShade"?: string;
         "colorPrimaryTint"?: string;
         "trek"?: Trek;
     }

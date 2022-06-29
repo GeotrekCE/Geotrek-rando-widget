@@ -17,7 +17,7 @@ export class GrwTrekProvider {
       fetch(`${this.api}trek_route/?language=${this.language}`),
       fetch(`${this.api}trek_practice/?language=${this.language}`),
       fetch(
-        `${this.api}trek/${this.trekId}/?language=${this.language}&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,route,geometry`,
+        `${this.api}trek/${this.trekId}/?language=${this.language}&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,route,geometry,gpx,kml,pdf`,
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))

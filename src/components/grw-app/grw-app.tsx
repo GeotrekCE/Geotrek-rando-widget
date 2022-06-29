@@ -29,7 +29,8 @@ export class GrwApp {
   @Prop() zoom;
   @Prop() attribution: string;
   @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryTint: string = '#d2b2c0';
+  @Prop() colorPrimaryShade: string = '#4a0021';
+  @Prop() colorPrimaryTint: string = '#974c6e';
   @Prop() colorTrekLine: string = '#6b0030';
   @Prop() colorDepartureIcon: string = '#006b3b';
   @Prop() colorArrivalIcon: string = '#85003b';
@@ -99,7 +100,7 @@ export class GrwApp {
             )}
             {state.currentTrek && (
               <div class={this.isLargeView ? 'large-view-app-trek-detail-container' : 'app-trek-detail-container'}>
-                <grw-trek-detail color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-trek-detail>
+                <grw-trek-detail color-primary={this.colorPrimary} color-primary-shade={this.colorPrimaryShade} color-primary-tint={this.colorPrimaryTint}></grw-trek-detail>
               </div>
             )}
             <grw-map

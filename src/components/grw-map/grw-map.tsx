@@ -20,7 +20,7 @@ export class GrwMap {
   @Prop() colorDepartureIcon: string = '#006b3b';
   @Prop() colorArrivalIcon: string = '#85003b';
   @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryTint: string = '#d2b2c0';
+  @Prop() colorPrimaryTint: string = '#974c6e';
   map: L.Map;
   currentBounds: L.LatLngBoundsExpression;
   treksLayer: L.GeoJSON<any>;

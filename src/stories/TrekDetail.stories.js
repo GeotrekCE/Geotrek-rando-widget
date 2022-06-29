@@ -16,6 +16,7 @@ TrekDetail.args = {
   language: 'fr',
   trekId: 242872,
   colorPrimary: '#6b0030',
-  colorPrimaryTint: '#d2b2c0',
+  colorPrimaryShade: '4a0021',
+  colorPrimaryTint: '#974c6e',
 };
 TrekDetail.storyName = 'Trek detail';

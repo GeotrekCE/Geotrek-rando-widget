@@ -1,7 +1,5 @@
 # grw-app
 
-
-
 <!-- Auto Generated Below -->
 
 
@@ -17,7 +15,8 @@
 | `colorArrivalIcon`   | `color-arrival-icon`   |             | `string` | `'#85003b'`              |
 | `colorDepartureIcon` | `color-departure-icon` |             | `string` | `'#006b3b'`              |
 | `colorPrimary`       | `color-primary`        |             | `string` | `'#6b0030'`              |
-| `colorPrimaryTint`   | `color-primary-tint`   |             | `string` | `'#d2b2c0'`              |
+| `colorPrimaryShade`  | `color-primary-shade`  |             | `string` | `'#4a0021'`              |
+| `colorPrimaryTint`   | `color-primary-tint`   |             | `string` | `'#974c6e'`              |
 | `colorTrekLine`      | `color-trek-line`      |             | `string` | `'#6b0030'`              |
 | `districts`          | `districts`            |             | `string` | `undefined`              |
 | `inBbox`             | `in-bbox`              |             | `string` | `undefined`              |

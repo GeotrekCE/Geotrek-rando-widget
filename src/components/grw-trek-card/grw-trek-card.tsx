@@ -15,7 +15,7 @@ export class GrwTrekCard {
   @Event() trekCardPress: EventEmitter<number>;
   @Prop() trek: Trek;
   @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryTint: string = '#d2b2c0';
+  @Prop() colorPrimaryTint: string = '#974c6e';
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;

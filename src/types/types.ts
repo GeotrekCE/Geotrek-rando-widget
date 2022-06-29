@@ -16,6 +16,9 @@ export type Trek = {
   ascent: number;
   geometry?: LineString;
   departure_geom?: Position;
+  gpx?: string;
+  kml?: string;
+  pdf?: string;
 };
 
 export type Attachments = Attachment[];

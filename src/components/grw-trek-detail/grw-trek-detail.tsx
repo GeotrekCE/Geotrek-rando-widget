@@ -14,7 +14,8 @@ import lengthImage from '../../assets/length.svg';
 export class GrwTrekDetail {
   @Prop() trek: Trek;
   @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryTint: string = '#d2b2c0';
+  @Prop() colorPrimaryShade: string = '#4a0021';
+  @Prop() colorPrimaryTint: string = '#974c6e';
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;
@@ -39,7 +40,7 @@ export class GrwTrekDetail {
 
   render() {
     return (
-      <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
+      <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-shade': this.colorPrimaryShade, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (
           <div class="trek-detail-container">
             <div class="name">{this.currentTrek.name}</div>
@@ -74,6 +75,14 @@ export class GrwTrekDetail {
                     {this.practice?.name}
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="downloads-container">
+              <div class="download-title">Téléchargements</div>
+              <div class="links-container">
+                <a href={`${this.currentTrek.gpx}`}>GPX</a>
+                <a href={`${this.currentTrek.kml}`}>KML</a>
+                <a href={`${this.currentTrek.pdf}`}>PDF</a>
               </div>
             </div>
             <div class="description" innerHTML={this.currentTrek.description ? this.currentTrek.description : this.currentTrek.description_teaser}></div>

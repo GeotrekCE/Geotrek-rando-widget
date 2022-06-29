@@ -16,6 +16,6 @@ TrekCard.args = {
   language: 'fr',
   trekId: 242872,
   colorPrimary: '#6b0030',
-  colorPrimaryTint: '#d2b2c0',
+  colorPrimaryTint: '#974c6e',
 };
 TrekCard.storyName = 'Trek card';

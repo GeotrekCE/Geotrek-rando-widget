@@ -6,7 +6,7 @@ export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
-      color: /(colorPrimary|colorPrimaryTint)$/i,
+      color: /(colorPrimary|colorPrimaryShade|colorPrimaryTint|trekLineColor|departureIconColor|arrivalIconColor)$/i,
     },
   },
 };

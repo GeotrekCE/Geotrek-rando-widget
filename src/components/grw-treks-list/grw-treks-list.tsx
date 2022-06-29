@@ -11,7 +11,7 @@ export class GrwTreksList {
   @Element() element: HTMLElement;
   @State() treksToDisplay: Treks = [];
   @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryTint: string = '#d2b2c0';
+  @Prop() colorPrimaryTint: string = '#974c6e';
 
   handleInfiniteScrollBind: (event) => void = this.handleInfiniteScroll.bind(this);
   step = 10;

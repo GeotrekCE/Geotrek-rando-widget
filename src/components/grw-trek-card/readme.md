@@ -1,17 +1,15 @@
 # grw-trek-card
 
-
-
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property           | Attribute            | Description | Type                                                                                                                                                                                                                                                                    | Default     |
-| ------------------ | -------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `colorPrimary`     | `color-primary`      |             | `string`                                                                                                                                                                                                                                                                | `'#6b0030'` |
-| `colorPrimaryTint` | `color-primary-tint` |             | `string`                                                                                                                                                                                                                                                                | `'#d2b2c0'` |
-| `trek`             | --                   |             | `{ id: number; name: string; attachments: Attachments; description?: string; description_teaser: string; difficulty: number; route: number; practice: number; duration: number; length_2d: number; ascent: number; geometry?: LineString; departure_geom?: Position; }` | `undefined` |
+| Property           | Attribute            | Description | Type                                                                                                                                                                                                                                                                                                              | Default     |
+| ------------------ | -------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `colorPrimary`     | `color-primary`      |             | `string`                                                                                                                                                                                                                                                                                                          | `'#6b0030'` |
+| `colorPrimaryTint` | `color-primary-tint` |             | `string`                                                                                                                                                                                                                                                                                                          | `'#974c6e'` |
+| `trek`             | --                   |             | `{ id: number; name: string; attachments: Attachments; description?: string; description_teaser: string; difficulty: number; route: number; practice: number; duration: number; length_2d: number; ascent: number; geometry?: LineString; departure_geom?: Position; gpx?: string; kml?: string; pdf?: string; }` | `undefined` |
 
 
 ## Events

@@ -13,6 +13,7 @@ export const createApp = ({
   urlLayer,
   attribution,
   colorPrimary,
+  colorPrimaryShade,
   colorPrimaryTint,
   trekLineColor,
   departureIconColor,
@@ -33,6 +34,7 @@ export const createApp = ({
   app.setAttribute('url-layer', urlLayer);
   app.setAttribute('attribution', attribution);
   app.setAttribute('color-primary', colorPrimary);
+  app.setAttribute('color-primary-shade', colorPrimaryShade);
   app.setAttribute('color-primary-tint', colorPrimaryTint);
   app.setAttribute('trek-line-color', trekLineColor);
   app.setAttribute('departure-icon-color', departureIconColor);

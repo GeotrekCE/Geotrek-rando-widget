@@ -26,6 +26,6 @@ TreksMap.args = {
   zoom: 8,
   attribution: '© OpenStreetMap',
   colorPrimary: '#6b0030',
-  colorPrimaryTint: '#d2b2c0',
+  colorPrimaryTint: '#974c6e',
 };
 TreksMap.storyName = 'Treks map';
