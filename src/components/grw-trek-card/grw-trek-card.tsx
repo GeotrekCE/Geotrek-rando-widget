@@ -43,8 +43,8 @@ export class GrwTrekCard {
       <Host onClick={() => this.trekCardPress.emit(this.currentTrek.id)} style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (
           <div class="trek-card-container">
-            {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].url && (
-              <img class="image" src={`${this.currentTrek.attachments[0].url}.400x0_q85.${this.currentTrek.attachments[0].url.slice(-3).toLowerCase()}`} loading="lazy" />
+            {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].thumbnail && (
+              <img class="image" src={`${this.currentTrek.attachments[0].thumbnail}`} loading="lazy" />
             )}
             <div class="sub-container">
               <div class="name">{this.currentTrek?.name}</div>
