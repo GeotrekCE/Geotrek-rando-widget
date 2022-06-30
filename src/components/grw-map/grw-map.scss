@@ -90,3 +90,22 @@ grw-map {
     margin-top: 12px;
   }
 }
+
+.sensitiveAreasCheckboxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 4px;
+  user-select: none;
+  input,
+  label {
+    cursor: pointer;
+  }
+  input {
+    margin: 0;
+  }
+  label {
+    padding-left: 4px;
+  }
+}

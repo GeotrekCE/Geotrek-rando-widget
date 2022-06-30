@@ -1,4 +1,4 @@
-import { LineString, Position } from 'geojson';
+import { LineString, Geometry, Position } from 'geojson';
 
 export type Treks = Trek[];
 
@@ -38,7 +38,6 @@ export type Difficulties = Difficulty[];
 
 export type Difficulty = {
   id: number;
-  cirkwi_level: number;
   label: string;
   pictogram: string;
 };
@@ -56,6 +55,12 @@ export type Practices = Practice[];
 export type Practice = {
   id: number;
   name: string;
-  order: number;
   pictogram: string;
+};
+
+export type SensitiveAreas = SensitiveArea[];
+
+export type SensitiveArea = {
+  id: number;
+  geometry: Geometry;
 };

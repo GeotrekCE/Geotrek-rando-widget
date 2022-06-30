@@ -18,6 +18,7 @@ export const createApp = ({
   trekLineColor,
   departureIconColor,
   arrivalIconColor,
+  sensitiveAreasColor,
 }) => {
   const app = document.createElement('grw-app');
   app.setAttribute('api', api);
@@ -39,5 +40,6 @@ export const createApp = ({
   app.setAttribute('trek-line-color', trekLineColor);
   app.setAttribute('departure-icon-color', departureIconColor);
   app.setAttribute('arrival-icon-color', arrivalIconColor);
+  app.setAttribute('sensitive-areas-color', sensitiveAreasColor);
   return app;
 };

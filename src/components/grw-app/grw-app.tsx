@@ -34,6 +34,7 @@ export class GrwApp {
   @Prop() colorTrekLine: string = '#6b0030';
   @Prop() colorDepartureIcon: string = '#006b3b';
   @Prop() colorArrivalIcon: string = '#85003b';
+  @Prop() sensitiveAreasColor: string = '#4974a5';
   largeViewSize = 664;
 
   @Listen('trekCardPress')
@@ -113,6 +114,7 @@ export class GrwApp {
               color-trek-line={this.colorTrekLine}
               color-departure-icon={this.colorDepartureIcon}
               color-arrival-icon={this.colorArrivalIcon}
+              sensitive-areas-color={this.sensitiveAreasColor}
             ></grw-map>
           </div>
           <div class="map-visibility-button" style={{ display: this.isLargeView ? 'none' : 'flex' }}>

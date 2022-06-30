@@ -29,5 +29,6 @@ TrekMap.args = {
   trekLineColor: '#6b0030',
   departureIconColor: '#006b3b',
   arrivalIconColor: '#85003b',
+  sensitiveAreasColor: '#4974a5',
 };
 TrekMap.storyName = 'Trek map';

@@ -25,6 +25,7 @@ export namespace Components {
         "portals": string;
         "practices": string;
         "routes": string;
+        "sensitiveAreasColor": string;
         "structures": string;
         "themes": string;
         "urlLayer": string;
@@ -38,6 +39,7 @@ export namespace Components {
         "colorPrimary": string;
         "colorPrimaryTint": string;
         "colorTrekLine": string;
+        "sensitiveAreasColor": string;
         "urlLayer": string;
         "zoom": number;
     }
@@ -154,6 +156,7 @@ declare namespace LocalJSX {
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
+        "sensitiveAreasColor"?: string;
         "structures"?: string;
         "themes"?: string;
         "urlLayer"?: string;
@@ -168,6 +171,7 @@ declare namespace LocalJSX {
         "colorPrimaryTint"?: string;
         "colorTrekLine"?: string;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
+        "sensitiveAreasColor"?: string;
         "urlLayer"?: string;
         "zoom"?: number;
     }
