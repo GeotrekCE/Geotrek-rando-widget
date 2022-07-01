@@ -19,6 +19,7 @@ export type Trek = {
   gpx?: string;
   kml?: string;
   pdf?: string;
+  parking_location?: Position;
 };
 
 export type Attachments = Attachment[];

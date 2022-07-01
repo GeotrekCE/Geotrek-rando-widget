@@ -23,7 +23,6 @@ export class GrwMap {
   @Prop() colorArrivalIcon: string = '#85003b';
   @Prop() colorSensitiveArea: string = '	#4974a5';
   @Prop() colorPoiIcon: string = '#974c6e';
-
   map: L.Map;
   sensitiveAreasControl;
   currentBounds: L.LatLngBoundsExpression;
@@ -32,6 +31,7 @@ export class GrwMap {
   departureArrivalLayer: L.GeoJSON<any>;
   sensitiveAreasLayer: L.GeoJSON<any>;
   currentPoisLayer: L.GeoJSON<any>;
+  parkingLayer: L.GeoJSON<any>;
 
   componentDidLoad() {
     this.map = L.map(this.element, {
@@ -191,6 +191,27 @@ export class GrwMap {
         } as any),
     }).addTo(this.map);
 
+    if (state.currentTrek.parking_location) {
+      const parking: Feature = {
+        type: 'Feature',
+        properties: {},
+        geometry: { type: 'Point', coordinates: state.currentTrek.parking_location },
+      };
+      this.parkingLayer = L.geoJSON(parking, {
+        pointToLayer: (_geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: '<div>P</div>',
+              className: 'parking-icon',
+              iconSize: 48,
+              iconAnchor: [0, 48],
+            } as any),
+            autoPanOnFocus: false,
+            interactive: false,
+          } as any),
+      }).addTo(this.map);
+    }
+
     if (state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0) {
       const sensitiveAreasFeatureCollection: FeatureCollection = {
         type: 'FeatureCollection',
@@ -287,6 +308,11 @@ export class GrwMap {
     if (this.departureArrivalLayer) {
       this.map.removeLayer(this.departureArrivalLayer);
       this.departureArrivalLayer = null;
+    }
+
+    if (this.parkingLayer) {
+      this.map.removeLayer(this.parkingLayer);
+      this.parkingLayer = null;
     }
 
     if (this.sensitiveAreasLayer) {
