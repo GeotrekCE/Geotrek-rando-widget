@@ -21,7 +21,9 @@ export class GrwMap {
   @Prop() colorTrekLine: string = '#6b0030';
   @Prop() colorDepartureIcon: string = '#006b3b';
   @Prop() colorArrivalIcon: string = '#85003b';
-  @Prop() sensitiveAreasColor: string = '	#4974a5';
+  @Prop() colorSensitiveArea: string = '	#4974a5';
+  @Prop() colorPoiIcon: string = '#974c6e';
+
   map: L.Map;
   sensitiveAreasControl;
   currentBounds: L.LatLngBoundsExpression;
@@ -29,6 +31,7 @@ export class GrwMap {
   trekLayer: L.GeoJSON<any>;
   departureArrivalLayer: L.GeoJSON<any>;
   sensitiveAreasLayer: L.GeoJSON<any>;
+  currentPoisLayer: L.GeoJSON<any>;
 
   componentDidLoad() {
     this.map = L.map(this.element, {
@@ -99,16 +102,16 @@ export class GrwMap {
       pointToLayer: (geoJsonPoint, latlng) =>
         L.marker(latlng, {
           icon: L.divIcon({
+            html: geoJsonPoint.properties.practice && `<img src=${geoJsonPoint.properties.practice} />`,
             className: 'trek-marker',
             iconSize: 48,
-            html: geoJsonPoint.properties.practice && `<img src=${geoJsonPoint.properties.practice} />`,
           } as any),
           autoPanOnFocus: false,
         } as any),
       onEachFeature: (geoJsonPoint, layer) => {
         layer.once('click', () => {
           const trekDeparturePopup = L.DomUtil.create('div');
-          trekDeparturePopup.className = 'trek-departure-popup ';
+          trekDeparturePopup.className = 'trek-departure-popup';
           trekDeparturePopup.onclick = () => this.trekCardPress.emit(geoJsonPoint.properties.id);
           const trekName = L.DomUtil.create('div');
           trekName.innerHTML = geoJsonPoint.properties.name;
@@ -120,7 +123,7 @@ export class GrwMap {
             trekDeparturePopup.appendChild(trekImg);
           }
           trekDeparturePopup.appendChild(trekName);
-          layer.bindPopup(trekDeparturePopup, { interactive: true } as any).openPopup();
+          layer.bindPopup(trekDeparturePopup, { interactive: true, autoPan: false } as any).openPopup();
         });
       },
     }).addTo(this.map);
@@ -188,13 +191,13 @@ export class GrwMap {
         } as any),
     }).addTo(this.map);
 
-    if (state.sensitiveAreas && state.sensitiveAreas.length > 0) {
+    if (state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0) {
       const sensitiveAreasFeatureCollection: FeatureCollection = {
         type: 'FeatureCollection',
         features: [],
       };
 
-      for (const sensitiveArea of state.sensitiveAreas) {
+      for (const sensitiveArea of state.currentSensitiveAreas) {
         sensitiveAreasFeatureCollection.features.push({
           type: 'Feature',
           properties: {},
@@ -202,7 +205,7 @@ export class GrwMap {
         });
       }
 
-      this.sensitiveAreasLayer = L.geoJSON(sensitiveAreasFeatureCollection, { style: () => ({ color: this.sensitiveAreasColor }) }).addTo(this.map);
+      this.sensitiveAreasLayer = L.geoJSON(sensitiveAreasFeatureCollection, { style: () => ({ color: this.colorSensitiveArea }) }).addTo(this.map);
 
       (L.Control as any).SensitiveAreasCheckboxContainer = L.Control.extend({
         onAdd: () => {
@@ -234,6 +237,44 @@ export class GrwMap {
       this.sensitiveAreasControl = (L.control as any).sensitiveAreasCheckboxContainer({ position: 'topright' }).addTo(this.map);
     }
 
+    if (state.currentPois && state.currentPois.length > 0) {
+      const currentPoisFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const currentPoi of state.currentPois) {
+        currentPoisFeatureCollection.features.push({
+          type: 'Feature',
+          properties: { name: currentPoi.name, type_pictogram: currentPoi.type_pictogram },
+          geometry: currentPoi.geometry,
+        });
+      }
+
+      this.currentPoisLayer = L.geoJSON(currentPoisFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: geoJsonPoint.properties.type_pictogram && `<img src=${geoJsonPoint.properties.type_pictogram} />`,
+              className: 'poi-icon',
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('mouseover', () => {
+            const poiTooltip = L.DomUtil.create('div');
+            poiTooltip.className = 'poi-tooltip';
+            const poiName = L.DomUtil.create('div');
+            poiName.innerHTML = geoJsonPoint.properties.name;
+            poiName.className = 'poi-name';
+            poiTooltip.appendChild(poiName);
+            layer.bindTooltip(poiTooltip).openTooltip();
+          });
+        },
+      }).addTo(this.map);
+    }
+
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
 
@@ -254,6 +295,11 @@ export class GrwMap {
       this.map.removeControl(this.sensitiveAreasControl);
       this.sensitiveAreasControl = null;
     }
+
+    if (this.currentPoisLayer) {
+      this.map.removeLayer(this.currentPoisLayer);
+      this.currentPoisLayer = null;
+    }
   }
 
   render() {
@@ -264,6 +310,7 @@ export class GrwMap {
           '--color-primary-tint': this.colorPrimaryTint,
           '--color-departure-icon': this.colorDepartureIcon,
           '--color-arrival-icon': this.colorArrivalIcon,
+          '--color-poi-icon': this.colorPoiIcon,
         }}
       >
         {!this.mapIsReady && (

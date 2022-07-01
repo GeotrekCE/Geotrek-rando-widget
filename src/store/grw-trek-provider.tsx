@@ -18,15 +18,19 @@ export class GrwTrekProvider {
       fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`),
       fetch(`${this.api}sensitivearea/?language=${this.language}&trek=${this.trekId}&fields=id,geometry`),
       fetch(
+        `${this.api}poi/?language=${this.language}&trek=${this.trekId}&fields=id,name,description,attachments,type,type_label,type_pictogram,url,published,geometry&page_size=999`,
+      ),
+      fetch(
         `${this.api}trek/${this.trekId}/?language=${this.language}&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,route,geometry,gpx,kml,pdf`,
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, sensitiveAreas, trek]) => {
+      .then(([difficulties, routes, practices, sensitiveAreas, pois, trek]) => {
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results;
-        state.sensitiveAreas = sensitiveAreas.results;
+        state.currentSensitiveAreas = sensitiveAreas.results;
+        state.currentPois = pois.results;
         state.currentTrek = trek;
       });
   }

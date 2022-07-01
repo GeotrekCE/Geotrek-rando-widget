@@ -13,8 +13,8 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
-  return createTrekMap({ label, ...args });
+const Template = ({ ...args }) => {
+  return createTrekMap({ ...args });
 };
 
 export const TrekMap = Template.bind({});
@@ -26,9 +26,10 @@ TrekMap.args = {
   center: '46.50761080179829, 5.927117067721017',
   zoom: 8,
   attribution: '© OpenStreetMap',
-  trekLineColor: '#6b0030',
-  departureIconColor: '#006b3b',
-  arrivalIconColor: '#85003b',
-  sensitiveAreasColor: '#4974a5',
+  colorTrekLine: '#6b0030',
+  colorDepartureIcon: '#006b3b',
+  colorArrivalIcon: '#85003b',
+  colorSensitiveArea: '#4974a5',
+  colorPoiIcon: '#974c6e',
 };
 TrekMap.storyName = 'Trek map';

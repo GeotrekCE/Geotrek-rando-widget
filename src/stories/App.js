@@ -15,10 +15,11 @@ export const createApp = ({
   colorPrimary,
   colorPrimaryShade,
   colorPrimaryTint,
-  trekLineColor,
-  departureIconColor,
-  arrivalIconColor,
-  sensitiveAreasColor,
+  colorTrekLine,
+  colorDepartureIcon,
+  colorArrivalIcon,
+  colorSensitiveArea,
+  colorPoiIcon,
 }) => {
   const app = document.createElement('grw-app');
   app.setAttribute('api', api);
@@ -37,9 +38,10 @@ export const createApp = ({
   app.setAttribute('color-primary', colorPrimary);
   app.setAttribute('color-primary-shade', colorPrimaryShade);
   app.setAttribute('color-primary-tint', colorPrimaryTint);
-  app.setAttribute('trek-line-color', trekLineColor);
-  app.setAttribute('departure-icon-color', departureIconColor);
-  app.setAttribute('arrival-icon-color', arrivalIconColor);
-  app.setAttribute('sensitive-areas-color', sensitiveAreasColor);
+  app.setAttribute('color-trek-line', colorTrekLine);
+  app.setAttribute('color-departure-icon', colorDepartureIcon);
+  app.setAttribute('color-arrival-icon', colorArrivalIcon);
+  app.setAttribute('color-sensitive-area', colorSensitiveArea);
+  app.setAttribute('color-poi-icon', colorPoiIcon);
   return app;
 };

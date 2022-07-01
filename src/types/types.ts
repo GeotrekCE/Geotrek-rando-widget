@@ -64,3 +64,18 @@ export type SensitiveArea = {
   id: number;
   geometry: Geometry;
 };
+
+export type Pois = Poi[];
+
+export type Poi = {
+  id: number;
+  name: string;
+  description: string;
+  attachments: Attachments;
+  type: any;
+  type_label: any;
+  type_pictogram: any;
+  url: string;
+  published: boolean;
+  geometry: Geometry;
+};

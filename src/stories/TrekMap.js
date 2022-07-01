@@ -1,4 +1,4 @@
-export const createTrekMap = ({ api, trekId, urlLayer, center, zoom, attribution, trekLineColor, departureIconColor, arrivalIconColor, sensitiveAreasColor }) => {
+export const createTrekMap = ({ api, trekId, urlLayer, center, zoom, attribution, colorTrekLine, colorDepartureIcon, colorArrivalIcon, colorSensitiveArea, colorPoiIcon }) => {
   const container = document.createElement('div');
   container.style = 'height: 100%';
   const trek = document.createElement('grw-trek-provider');
@@ -10,10 +10,11 @@ export const createTrekMap = ({ api, trekId, urlLayer, center, zoom, attribution
   trekMap.setAttribute('center', center);
   trekMap.setAttribute('zoom', zoom);
   trekMap.setAttribute('attribution', attribution);
-  trekMap.setAttribute('trek-line-color', trekLineColor);
-  trekMap.setAttribute('departure-icon-color', departureIconColor);
-  trekMap.setAttribute('arrival-icon-color', arrivalIconColor);
-  trekMap.setAttribute('sensitive-areas-color', sensitiveAreasColor);
+  trekMap.setAttribute('color-trek-line', colorTrekLine);
+  trekMap.setAttribute('color-departure-icon', colorDepartureIcon);
+  trekMap.setAttribute('color-arrival-icon', colorArrivalIcon);
+  trekMap.setAttribute('color-sensitive-area', colorSensitiveArea);
+  trekMap.setAttribute('color-poi-icon', colorPoiIcon);
   container.appendChild(trekMap);
   return container;
 };

@@ -13,8 +13,8 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
-  return createTreksMap({ label, ...args });
+const Template = ({ ...args }) => {
+  return createTreksMap({ ...args });
 };
 
 export const TreksMap = Template.bind({});

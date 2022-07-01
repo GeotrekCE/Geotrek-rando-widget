@@ -5,8 +5,8 @@ export default {
   argTypes: {},
 };
 
-const Template = ({ label, ...args }) => {
-  return createTrekDetail({ label, ...args });
+const Template = ({ ...args }) => {
+  return createTrekDetail({ ...args });
 };
 
 export const TrekDetail = Template.bind({});

@@ -13,8 +13,8 @@ export default {
   },
 };
 
-const Template = ({ label, ...args }) => {
-  return createApp({ label, ...args });
+const Template = ({ ...args }) => {
+  return createApp({ ...args });
 };
 
 export const App = Template.bind({});
@@ -36,9 +36,10 @@ App.args = {
   colorPrimary: '#6b0030',
   colorPrimaryShade: '4a0021',
   colorPrimaryTint: '#974c6e',
-  trekLineColor: '#6b0030',
-  departureIconColor: '#006b3b',
-  arrivalIconColor: '#85003b',
-  sensitiveAreasColor: '#4974a5',
+  colorTrekLine: '#6b0030',
+  colorDepartureIcon: '#006b3b',
+  colorArrivalIcon: '#85003b',
+  colorSensitiveArea: '#4974a5',
+  colorPoiIcon: '#974c6e',
 };
 App.storyName = 'App';

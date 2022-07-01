@@ -15,9 +15,11 @@ export namespace Components {
         "cities": string;
         "colorArrivalIcon": string;
         "colorDepartureIcon": string;
+        "colorPoiIcon": string;
         "colorPrimary": string;
         "colorPrimaryShade": string;
         "colorPrimaryTint": string;
+        "colorSensitiveArea": string;
         "colorTrekLine": string;
         "districts": string;
         "inBbox": string;
@@ -25,7 +27,6 @@ export namespace Components {
         "portals": string;
         "practices": string;
         "routes": string;
-        "sensitiveAreasColor": string;
         "structures": string;
         "themes": string;
         "urlLayer": string;
@@ -36,10 +37,11 @@ export namespace Components {
         "center": string;
         "colorArrivalIcon": string;
         "colorDepartureIcon": string;
+        "colorPoiIcon": string;
         "colorPrimary": string;
         "colorPrimaryTint": string;
+        "colorSensitiveArea": string;
         "colorTrekLine": string;
-        "sensitiveAreasColor": string;
         "urlLayer": string;
         "zoom": number;
     }
@@ -146,9 +148,11 @@ declare namespace LocalJSX {
         "cities"?: string;
         "colorArrivalIcon"?: string;
         "colorDepartureIcon"?: string;
+        "colorPoiIcon"?: string;
         "colorPrimary"?: string;
         "colorPrimaryShade"?: string;
         "colorPrimaryTint"?: string;
+        "colorSensitiveArea"?: string;
         "colorTrekLine"?: string;
         "districts"?: string;
         "inBbox"?: string;
@@ -156,7 +160,6 @@ declare namespace LocalJSX {
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
-        "sensitiveAreasColor"?: string;
         "structures"?: string;
         "themes"?: string;
         "urlLayer"?: string;
@@ -167,11 +170,12 @@ declare namespace LocalJSX {
         "center"?: string;
         "colorArrivalIcon"?: string;
         "colorDepartureIcon"?: string;
+        "colorPoiIcon"?: string;
         "colorPrimary"?: string;
         "colorPrimaryTint"?: string;
+        "colorSensitiveArea"?: string;
         "colorTrekLine"?: string;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
-        "sensitiveAreasColor"?: string;
         "urlLayer"?: string;
         "zoom"?: number;
     }
