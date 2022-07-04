@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 8px 8px 8px;
+}
+
+.poi-img {
+  width: 180px;
+  img {
+    width: 180px;
+    border-radius: 8px;
+  }
+}
+
+.poi-right-container {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+}
+
+.poi-name {
+  color: var(--color-primary);
+  font-size: 24px;
+  font-weight: bold;
+  padding: 0px 0px 8px 0px;
+}
+
+.poi-description {
+  font-size: 16px;
+}

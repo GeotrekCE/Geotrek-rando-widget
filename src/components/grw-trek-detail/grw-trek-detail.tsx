@@ -35,6 +35,7 @@ export class GrwTrekDetail {
         this.route = state.routes.find(route => route.id === this.currentTrek.route);
         this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
       }
+      console.log(state.currentPois);
     });
   }
 
@@ -88,6 +89,12 @@ export class GrwTrekDetail {
               </div>
             </div>
             <div class="description" innerHTML={this.currentTrek.description ? this.currentTrek.description : this.currentTrek.description_teaser}></div>
+            <div>
+              <div class="pois-title">Points d'intérêts</div>
+              {state.currentPois.map(poi => (
+                <grw-poi-detail poi={poi}></grw-poi-detail>
+              ))}
+            </div>
           </div>
         )}
       </Host>

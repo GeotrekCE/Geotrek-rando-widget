@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Trek } from "types/types";
+import { Poi, Trek } from "types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
@@ -44,6 +44,9 @@ export namespace Components {
         "colorTrekLine": string;
         "urlLayer": string;
         "zoom": number;
+    }
+    interface GrwPoiDetail {
+        "poi": Poi;
     }
     interface GrwTrekCard {
         "colorPrimary": string;
@@ -99,6 +102,12 @@ declare global {
         prototype: HTMLGrwMapElement;
         new (): HTMLGrwMapElement;
     };
+    interface HTMLGrwPoiDetailElement extends Components.GrwPoiDetail, HTMLStencilElement {
+    }
+    var HTMLGrwPoiDetailElement: {
+        prototype: HTMLGrwPoiDetailElement;
+        new (): HTMLGrwPoiDetailElement;
+    };
     interface HTMLGrwTrekCardElement extends Components.GrwTrekCard, HTMLStencilElement {
     }
     var HTMLGrwTrekCardElement: {
@@ -132,6 +141,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "grw-app": HTMLGrwAppElement;
         "grw-map": HTMLGrwMapElement;
+        "grw-poi-detail": HTMLGrwPoiDetailElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
         "grw-trek-detail": HTMLGrwTrekDetailElement;
         "grw-trek-provider": HTMLGrwTrekProviderElement;
@@ -179,6 +189,9 @@ declare namespace LocalJSX {
         "urlLayer"?: string;
         "zoom"?: number;
     }
+    interface GrwPoiDetail {
+        "poi"?: Poi;
+    }
     interface GrwTrekCard {
         "colorPrimary"?: string;
         "colorPrimaryTint"?: string;
@@ -215,6 +228,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "grw-app": GrwApp;
         "grw-map": GrwMap;
+        "grw-poi-detail": GrwPoiDetail;
         "grw-trek-card": GrwTrekCard;
         "grw-trek-detail": GrwTrekDetail;
         "grw-trek-provider": GrwTrekProvider;
@@ -228,6 +242,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
+            "grw-poi-detail": LocalJSX.GrwPoiDetail & JSXBase.HTMLAttributes<HTMLGrwPoiDetailElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
             "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
             "grw-trek-provider": LocalJSX.GrwTrekProvider & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;
