@@ -64,6 +64,8 @@ export type SensitiveAreas = SensitiveArea[];
 export type SensitiveArea = {
   id: number;
   geometry: Geometry;
+  name: string;
+  description: string;
 };
 
 export type Pois = Poi[];

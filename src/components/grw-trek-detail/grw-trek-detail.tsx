@@ -35,7 +35,6 @@ export class GrwTrekDetail {
         this.route = state.routes.find(route => route.id === this.currentTrek.route);
         this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
       }
-      console.log(state.currentPois);
     });
   }
 
@@ -89,7 +88,15 @@ export class GrwTrekDetail {
               </div>
             </div>
             <div class="description" innerHTML={this.currentTrek.description ? this.currentTrek.description : this.currentTrek.description_teaser}></div>
-            <div>
+            {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
+              <div class="sensitive-areas-container">
+                <div class="sensitive-areas-title">Zones sensibles</div>
+                {state.currentSensitiveAreas.map(sensitiveArea => (
+                  <grw-sensitive-area-detail sensitive-area={sensitiveArea}></grw-sensitive-area-detail>
+                ))}
+              </div>
+            )}
+            <div class="pois-container">
               <div class="pois-title">Points d'intérêts</div>
               {state.currentPois.map(poi => (
                 <grw-poi-detail poi={poi}></grw-poi-detail>

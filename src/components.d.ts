@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Poi, Trek } from "types/types";
+import { Poi, SensitiveArea, Trek } from "types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
@@ -47,6 +47,9 @@ export namespace Components {
     }
     interface GrwPoiDetail {
         "poi": Poi;
+    }
+    interface GrwSensitiveAreaDetail {
+        "sensitiveArea": SensitiveArea;
     }
     interface GrwTrekCard {
         "colorPrimary": string;
@@ -108,6 +111,12 @@ declare global {
         prototype: HTMLGrwPoiDetailElement;
         new (): HTMLGrwPoiDetailElement;
     };
+    interface HTMLGrwSensitiveAreaDetailElement extends Components.GrwSensitiveAreaDetail, HTMLStencilElement {
+    }
+    var HTMLGrwSensitiveAreaDetailElement: {
+        prototype: HTMLGrwSensitiveAreaDetailElement;
+        new (): HTMLGrwSensitiveAreaDetailElement;
+    };
     interface HTMLGrwTrekCardElement extends Components.GrwTrekCard, HTMLStencilElement {
     }
     var HTMLGrwTrekCardElement: {
@@ -142,6 +151,7 @@ declare global {
         "grw-app": HTMLGrwAppElement;
         "grw-map": HTMLGrwMapElement;
         "grw-poi-detail": HTMLGrwPoiDetailElement;
+        "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
         "grw-trek-detail": HTMLGrwTrekDetailElement;
         "grw-trek-provider": HTMLGrwTrekProviderElement;
@@ -192,6 +202,9 @@ declare namespace LocalJSX {
     interface GrwPoiDetail {
         "poi"?: Poi;
     }
+    interface GrwSensitiveAreaDetail {
+        "sensitiveArea"?: SensitiveArea;
+    }
     interface GrwTrekCard {
         "colorPrimary"?: string;
         "colorPrimaryTint"?: string;
@@ -229,6 +242,7 @@ declare namespace LocalJSX {
         "grw-app": GrwApp;
         "grw-map": GrwMap;
         "grw-poi-detail": GrwPoiDetail;
+        "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
         "grw-trek-card": GrwTrekCard;
         "grw-trek-detail": GrwTrekDetail;
         "grw-trek-provider": GrwTrekProvider;
@@ -243,6 +257,7 @@ declare module "@stencil/core" {
             "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-poi-detail": LocalJSX.GrwPoiDetail & JSXBase.HTMLAttributes<HTMLGrwPoiDetailElement>;
+            "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
             "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
             "grw-trek-provider": LocalJSX.GrwTrekProvider & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;

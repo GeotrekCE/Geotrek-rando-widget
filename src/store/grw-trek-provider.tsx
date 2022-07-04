@@ -16,7 +16,7 @@ export class GrwTrekProvider {
       fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`),
       fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`),
       fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`),
-      fetch(`${this.api}sensitiveareas/?language=${this.language}&trek=${this.trekId}&fields=id,geometry`).catch(() => new Response('[]')),
+      fetch(`${this.api}sensitivearea/?language=${this.language}&trek=${this.trekId}&fields=id,geometry,name,description`).catch(() => new Response('[]')),
       fetch(
         `${this.api}poi/?language=${this.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,type_label,type_pictogram,url,published,geometry&page_size=999`,
       ),
@@ -26,6 +26,7 @@ export class GrwTrekProvider {
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(([difficulties, routes, practices, sensitiveAreas, pois, trek]) => {
+        console.log(sensitiveAreas);
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results;
