@@ -12,9 +12,9 @@ export function formatDuration(duration: number) {
 }
 
 export function formatLength(length: number) {
-  return `${Math.round(length / 1000)} km`;
+  return `${Math.round(length / 1000)}km`;
 }
 
 export function formatAscent(ascent: number) {
-  return `${ascent} m`;
+  return `${ascent}m`;
 }
