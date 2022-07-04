@@ -21,17 +21,20 @@ export class GrwTrekProvider {
         `${this.api}poi/?language=${this.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,type_label,type_pictogram,url,published,geometry&page_size=999`,
       ),
       fetch(
+        `${this.api}informationdesk/?language=${this.language}&near_trek=${this.trekId}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
+      ),
+      fetch(
         `${this.api}trek/${this.trekId}/?language=${this.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,route,geometry,gpx,kml,pdf,parking_location`,
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, sensitiveAreas, pois, trek]) => {
-        console.log(sensitiveAreas);
+      .then(([difficulties, routes, practices, sensitiveAreas, pois, informationDesks, trek]) => {
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results;
         state.currentSensitiveAreas = sensitiveAreas.results;
         state.currentPois = pois.results;
+        state.currentInformationDesks = informationDesks.results;
         state.currentTrek = trek;
       });
   }

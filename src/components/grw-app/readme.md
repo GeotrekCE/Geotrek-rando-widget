@@ -52,6 +52,7 @@ graph TD;
   grw-app --> grw-map
   grw-treks-list --> grw-trek-card
   grw-trek-detail --> grw-sensitive-area-detail
+  grw-trek-detail --> grw-information-desk-detail
   grw-trek-detail --> grw-poi-detail
   style grw-app fill:#f9f,stroke:#333,stroke-width:4px
 ```

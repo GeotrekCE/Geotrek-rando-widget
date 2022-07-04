@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Poi, SensitiveArea, Trek } from "types/types";
+import { InformationDesk, Poi, SensitiveArea, Trek } from "types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
@@ -31,6 +31,9 @@ export namespace Components {
         "themes": string;
         "urlLayer": string;
         "zoom": any;
+    }
+    interface GrwInformationDeskDetail {
+        "informationDesk": InformationDesk;
     }
     interface GrwMap {
         "attribution": string;
@@ -99,6 +102,12 @@ declare global {
         prototype: HTMLGrwAppElement;
         new (): HTMLGrwAppElement;
     };
+    interface HTMLGrwInformationDeskDetailElement extends Components.GrwInformationDeskDetail, HTMLStencilElement {
+    }
+    var HTMLGrwInformationDeskDetailElement: {
+        prototype: HTMLGrwInformationDeskDetailElement;
+        new (): HTMLGrwInformationDeskDetailElement;
+    };
     interface HTMLGrwMapElement extends Components.GrwMap, HTMLStencilElement {
     }
     var HTMLGrwMapElement: {
@@ -149,6 +158,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "grw-app": HTMLGrwAppElement;
+        "grw-information-desk-detail": HTMLGrwInformationDeskDetailElement;
         "grw-map": HTMLGrwMapElement;
         "grw-poi-detail": HTMLGrwPoiDetailElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
@@ -184,6 +194,9 @@ declare namespace LocalJSX {
         "themes"?: string;
         "urlLayer"?: string;
         "zoom"?: any;
+    }
+    interface GrwInformationDeskDetail {
+        "informationDesk"?: InformationDesk;
     }
     interface GrwMap {
         "attribution"?: string;
@@ -240,6 +253,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "grw-app": GrwApp;
+        "grw-information-desk-detail": GrwInformationDeskDetail;
         "grw-map": GrwMap;
         "grw-poi-detail": GrwPoiDetail;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
@@ -255,6 +269,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
+            "grw-information-desk-detail": LocalJSX.GrwInformationDeskDetail & JSXBase.HTMLAttributes<HTMLGrwInformationDeskDetailElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-poi-detail": LocalJSX.GrwPoiDetail & JSXBase.HTMLAttributes<HTMLGrwPoiDetailElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;

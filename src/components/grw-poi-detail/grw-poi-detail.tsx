@@ -8,6 +8,7 @@ import { Poi } from 'types/types';
 })
 export class GrwPoiDetail {
   @Prop() poi: Poi;
+
   render() {
     return (
       <Host>

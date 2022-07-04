@@ -92,8 +92,10 @@ grw-map {
   }
 }
 
-.poi-tooltip {
-  .poi-name {
+.poi-tooltip,
+.information-desks-tooltip {
+  .poi-name,
+  .information-desks-name {
     color: var(--color-primary);
     font-weight: bold;
     font-size: 12px;
@@ -120,7 +122,8 @@ grw-map {
   }
 }
 
-.poi-icon {
+.poi-icon,
+.information-desks-icon {
   background-color: var(--color-poi-icon);
   border-radius: 50%;
   display: flex;

@@ -82,3 +82,27 @@ export type Poi = {
   published: boolean;
   geometry: Geometry;
 };
+
+export type InformationDesks = InformationDesk[];
+
+export type InformationDesk = {
+  id: number;
+  name: string;
+  description: string;
+  type: InformationDeskType;
+  phone: string;
+  email: string;
+  website: string;
+  municipality: string;
+  postal_code: string;
+  street: string;
+  photo_url: string;
+  latitude: string;
+  longitude: string;
+};
+
+export type InformationDeskType = {
+  id: number;
+  label: string;
+  pictogram: string;
+};

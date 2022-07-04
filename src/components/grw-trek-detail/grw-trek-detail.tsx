@@ -92,16 +92,26 @@ export class GrwTrekDetail {
               <div class="sensitive-areas-container">
                 <div class="sensitive-areas-title">Zones sensibles</div>
                 {state.currentSensitiveAreas.map(sensitiveArea => (
-                  <grw-sensitive-area-detail sensitive-area={sensitiveArea}></grw-sensitive-area-detail>
+                  <grw-sensitive-area-detail sensitiveArea={sensitiveArea}></grw-sensitive-area-detail>
                 ))}
               </div>
             )}
-            <div class="pois-container">
-              <div class="pois-title">Points d'intérêts</div>
-              {state.currentPois.map(poi => (
-                <grw-poi-detail poi={poi}></grw-poi-detail>
-              ))}
-            </div>
+            {state.currentInformationDesks && state.currentInformationDesks.length > 0 && (
+              <div class="information-desks-container">
+                <div class="information-desks-title">Lieux de renseignement</div>
+                {state.currentInformationDesks.map(informationDesk => (
+                  <grw-information-desk-detail informationDesk={informationDesk}></grw-information-desk-detail>
+                ))}
+              </div>
+            )}
+            {state.currentPois && state.currentPois.length > 0 && (
+              <div class="pois-container">
+                <div class="pois-title">Points d'intérêts</div>
+                {state.currentPois.map(poi => (
+                  <grw-poi-detail poi={poi}></grw-poi-detail>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </Host>

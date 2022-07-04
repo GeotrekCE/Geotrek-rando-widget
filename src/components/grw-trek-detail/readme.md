@@ -22,12 +22,14 @@
 ### Depends on
 
 - [grw-sensitive-area-detail](../grw-sensitive-area-detail)
+- [grw-information-desk-detail](../grw-information-desk-detail)
 - [grw-poi-detail](../grw-poi-detail)
 
 ### Graph
 ```mermaid
 graph TD;
   grw-trek-detail --> grw-sensitive-area-detail
+  grw-trek-detail --> grw-information-desk-detail
   grw-trek-detail --> grw-poi-detail
   grw-app --> grw-trek-detail
   style grw-trek-detail fill:#f9f,stroke:#333,stroke-width:4px
