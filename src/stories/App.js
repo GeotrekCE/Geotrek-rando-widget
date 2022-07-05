@@ -9,7 +9,6 @@ export const createApp = ({
   portals,
   routes,
   practices,
-  appName,
   urlLayer,
   attribution,
   colorPrimary,
@@ -32,7 +31,6 @@ export const createApp = ({
   app.setAttribute('portals', portals);
   app.setAttribute('routes', routes);
   app.setAttribute('practices', practices);
-  app.setAttribute('app-name', appName);
   app.setAttribute('url-layer', urlLayer);
   app.setAttribute('attribution', attribution);
   app.setAttribute('color-primary', colorPrimary);

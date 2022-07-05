@@ -57,6 +57,7 @@ export type Practice = {
   id: number;
   name: string;
   pictogram: string;
+  selected: boolean;
 };
 
 export type SensitiveAreas = SensitiveArea[];

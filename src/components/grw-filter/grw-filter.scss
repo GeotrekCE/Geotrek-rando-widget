@@ -1,0 +1,28 @@
+.filter-name {
+  margin: 0px 0px 8px 8px;
+  color: var(--color-primary);
+  font-size: 24px;
+  font-weight: bold;
+}
+.filter-button-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .filter-button,
+  .selected-filter-button {
+    user-select: none;
+    cursor: pointer;
+    border: 1px var(--color-primary) solid;
+    border-radius: 8px;
+    margin-left: 8px;
+    padding: 8px;
+  }
+  .filter-button {
+    color: var(--color-primary);
+    background-color: #ffffff;
+  }
+  .selected-filter-button {
+    color: #ffffff;
+    background-color: var(--color-primary);
+  }
+}

@@ -32,6 +32,12 @@ export namespace Components {
         "urlLayer": string;
         "zoom": any;
     }
+    interface GrwFilter {
+        "filterName": string;
+        "filterNameProperty": string;
+        "filterType": string;
+        "trekProperty": string;
+    }
     interface GrwInformationDeskDetail {
         "informationDesk": InformationDesk;
     }
@@ -102,6 +108,12 @@ declare global {
         prototype: HTMLGrwAppElement;
         new (): HTMLGrwAppElement;
     };
+    interface HTMLGrwFilterElement extends Components.GrwFilter, HTMLStencilElement {
+    }
+    var HTMLGrwFilterElement: {
+        prototype: HTMLGrwFilterElement;
+        new (): HTMLGrwFilterElement;
+    };
     interface HTMLGrwInformationDeskDetailElement extends Components.GrwInformationDeskDetail, HTMLStencilElement {
     }
     var HTMLGrwInformationDeskDetailElement: {
@@ -158,6 +170,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "grw-app": HTMLGrwAppElement;
+        "grw-filter": HTMLGrwFilterElement;
         "grw-information-desk-detail": HTMLGrwInformationDeskDetailElement;
         "grw-map": HTMLGrwMapElement;
         "grw-poi-detail": HTMLGrwPoiDetailElement;
@@ -194,6 +207,12 @@ declare namespace LocalJSX {
         "themes"?: string;
         "urlLayer"?: string;
         "zoom"?: any;
+    }
+    interface GrwFilter {
+        "filterName"?: string;
+        "filterNameProperty"?: string;
+        "filterType"?: string;
+        "trekProperty"?: string;
     }
     interface GrwInformationDeskDetail {
         "informationDesk"?: InformationDesk;
@@ -253,6 +272,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "grw-app": GrwApp;
+        "grw-filter": GrwFilter;
         "grw-information-desk-detail": GrwInformationDeskDetail;
         "grw-map": GrwMap;
         "grw-poi-detail": GrwPoiDetail;
@@ -269,6 +289,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
+            "grw-filter": LocalJSX.GrwFilter & JSXBase.HTMLAttributes<HTMLGrwFilterElement>;
             "grw-information-desk-detail": LocalJSX.GrwInformationDeskDetail & JSXBase.HTMLAttributes<HTMLGrwInformationDeskDetailElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-poi-detail": LocalJSX.GrwPoiDetail & JSXBase.HTMLAttributes<HTMLGrwPoiDetailElement>;

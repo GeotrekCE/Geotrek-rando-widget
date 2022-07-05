@@ -30,7 +30,6 @@ App.args = {
   portals: '',
   routes: '',
   practices: '',
-  appName: 'Geotrek Rando Widget',
   urlLayer: 'openstreetmap',
   attribution: '© OpenStreetMap',
   colorPrimary: '#6b0030',

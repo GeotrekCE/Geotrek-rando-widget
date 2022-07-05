@@ -43,8 +43,9 @@ export class GrwTreksProvider {
       .then(([difficulties, routes, practices, treks]) => {
         state.difficulties = difficulties.results;
         state.routes = routes.results;
-        state.practices = practices.results;
+        state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
         state.treks = treks.results;
+        state.currentTreks = treks.results;
       });
   }
 

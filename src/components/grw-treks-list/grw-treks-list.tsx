@@ -13,20 +13,24 @@ export class GrwTreksList {
   @Prop() colorPrimary: string = '#6b0030';
   @Prop() colorPrimaryTint: string = '#974c6e';
 
-  handleInfiniteScrollBind: (event) => void = this.handleInfiniteScroll.bind(this);
+  handleInfiniteScrollBind: (event: any) => void = this.handleInfiniteScroll.bind(this);
   step = 10;
 
   componentWillLoad() {
-    this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
-    onChange('treks', () => {
-      this.treksToDisplay = state.treks.slice(0, this.step);
+    onChange('currentTreks', () => {
+      this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
+      this.element.scroll({ top: 0 });
+      this.treksToDisplay = [...state.currentTreks.slice(0, this.step)];
     });
   }
 
   handleInfiniteScroll(event: any) {
     if (event.composedPath()[0].scrollTop + event.composedPath()[0].scrollHeight / 2 >= event.composedPath()[0].scrollHeight) {
       if (this.treksToDisplay.length < state.treks.length) {
-        this.treksToDisplay = state.treks.slice(0, this.treksToDisplay.length + this.step >= state.treks.length ? state.treks.length : this.treksToDisplay.length + this.step);
+        this.treksToDisplay = state.currentTreks.slice(
+          0,
+          this.treksToDisplay.length + this.step >= state.currentTreks.length ? state.currentTreks.length : this.treksToDisplay.length + this.step,
+        );
       } else {
         this.element.removeEventListener('scroll', this.handleInfiniteScrollBind);
       }
@@ -36,10 +40,10 @@ export class GrwTreksList {
   render() {
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
-        {state.treks.length > 0 && <div class="current-treks-length">{`${state.treks.length} randonnée${state.treks.length > 1 ? 's' : ''}`}</div>}
+        {state.currentTreks.length > 0 && <div class="current-treks-length">{`${state.currentTreks.length} randonnée${state.currentTreks.length > 1 ? 's' : ''}`}</div>}
         <div class="current-treks-container">
           {this.treksToDisplay.map(trek => (
-            <grw-trek-card trek={trek} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-trek-card>
+            <grw-trek-card key={`trek-${trek.id}`} trek={trek} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-trek-card>
           ))}
         </div>
       </Host>

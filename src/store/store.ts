@@ -4,6 +4,7 @@ import { Difficulties, InformationDesks, Pois, Practices, Routes, SensitiveAreas
 const { state, onChange } = createStore<{
   api: string;
   treks: Treks;
+  currentTreks: Treks;
   difficulties: Difficulties;
   routes: Routes;
   practices: Practices;
@@ -14,6 +15,7 @@ const { state, onChange } = createStore<{
 }>({
   api: '',
   treks: [],
+  currentTreks: [],
   difficulties: [],
   routes: [],
   practices: [],

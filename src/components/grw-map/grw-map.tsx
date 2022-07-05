@@ -53,10 +53,10 @@ export class GrwMap {
       this.addTreks();
     }
 
-    onChange('treks', () => {
+    onChange('currentTreks', () => {
       if (state.currentTrek) {
         this.addTrek();
-      } else if (state.treks) {
+      } else if (state.currentTreks) {
         this.addTreks();
       }
     });
@@ -79,7 +79,7 @@ export class GrwMap {
       features: [],
     };
 
-    for (const trek of state.treks) {
+    for (const trek of state.currentTreks) {
       trekscurrentDepartureCoordinates.push(trek.departure_geom);
       treksFeatureCollection.features.push({
         type: 'Feature',
@@ -88,7 +88,7 @@ export class GrwMap {
           id: trek.id,
           name: trek.name,
           practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram,
-          imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].url,
+          imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].thumbnail,
         },
       });
     }
@@ -99,35 +99,40 @@ export class GrwMap {
       this.map.fitBounds(this.currentBounds);
     }
 
-    this.treksLayer = L.geoJSON(treksFeatureCollection, {
-      pointToLayer: (geoJsonPoint, latlng) =>
-        L.marker(latlng, {
-          icon: L.divIcon({
-            html: geoJsonPoint.properties.practice && `<img src=${geoJsonPoint.properties.practice} />`,
-            className: 'trek-marker',
-            iconSize: 48,
+    if (!this.treksLayer) {
+      this.treksLayer = L.geoJSON(treksFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: geoJsonPoint.properties.practice && `<img src=${geoJsonPoint.properties.practice} />`,
+              className: 'trek-marker',
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
           } as any),
-          autoPanOnFocus: false,
-        } as any),
-      onEachFeature: (geoJsonPoint, layer) => {
-        layer.once('click', () => {
-          const trekDeparturePopup = L.DomUtil.create('div');
-          trekDeparturePopup.className = 'trek-departure-popup';
-          trekDeparturePopup.onclick = () => this.trekCardPress.emit(geoJsonPoint.properties.id);
-          const trekName = L.DomUtil.create('div');
-          trekName.innerHTML = geoJsonPoint.properties.name;
-          trekName.className = 'trek-name';
-          if (geoJsonPoint.properties.imgSrc) {
-            trekName.className += ' trek-name-margin-top';
-            const trekImg = L.DomUtil.create('img');
-            trekImg.src = geoJsonPoint.properties.imgSrc;
-            trekDeparturePopup.appendChild(trekImg);
-          }
-          trekDeparturePopup.appendChild(trekName);
-          layer.bindPopup(trekDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
-        });
-      },
-    }).addTo(this.map);
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('click', () => {
+            const trekDeparturePopup = L.DomUtil.create('div');
+            trekDeparturePopup.className = 'trek-departure-popup';
+            trekDeparturePopup.onclick = () => this.trekCardPress.emit(geoJsonPoint.properties.id);
+            const trekName = L.DomUtil.create('div');
+            trekName.innerHTML = geoJsonPoint.properties.name;
+            trekName.className = 'trek-name';
+            if (geoJsonPoint.properties.imgSrc) {
+              trekName.className += ' trek-name-margin-top';
+              const trekImg = L.DomUtil.create('img');
+              trekImg.src = geoJsonPoint.properties.imgSrc;
+              trekDeparturePopup.appendChild(trekImg);
+            }
+            trekDeparturePopup.appendChild(trekName);
+            layer.bindPopup(trekDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+          });
+        },
+      }).addTo(this.map);
+    } else {
+      this.treksLayer.clearLayers();
+      this.treksLayer.addData(treksFeatureCollection);
+    }
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }

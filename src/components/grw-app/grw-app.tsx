@@ -11,6 +11,7 @@ export class GrwApp {
   @Element() element: HTMLElement;
   @State() showTrek = false;
   @State() showMap = false;
+  @State() showFilters = false;
   @State() isLargeView = false;
   @State() currentTrekId: number;
   @Prop() api: string;
@@ -68,9 +69,13 @@ export class GrwApp {
     this.showMap = this.isLargeView;
   }
 
+  handleFilters() {
+    this.showFilters = !this.showFilters;
+  }
+
   render() {
     return (
-      <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
+      <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint, '--color-primary-shade': this.colorPrimaryShade }}>
         <grw-treks-provider
           api={this.api}
           language={this.language}
@@ -86,7 +91,24 @@ export class GrwApp {
         {this.showTrek && this.currentTrekId && <grw-trek-provider api={state.api} language={this.language} trek-id={this.currentTrekId}></grw-trek-provider>}
         <div class="app-container">
           <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
-            {this.showTrek ? <div onClick={() => this.onTrekDetailsClose()} class="arrow-back-icon" innerHTML={arrowBackImage}></div> : <div class="title">{this.appName}</div>}
+            {this.showTrek ? (
+              <div onClick={() => this.onTrekDetailsClose()} class="arrow-back-icon" innerHTML={arrowBackImage}></div>
+            ) : (
+              <div onClick={() => this.handleFilters()} class="handle-filters-button">
+                FILTRER
+              </div>
+            )}
+            {!this.showTrek && this.showFilters && (
+              <div class="options-container">
+                <div class="filters-container">
+                  <div onClick={() => this.handleFilters()} class="close-filters-button">
+                    X
+                  </div>
+                  <grw-filter filterName="Pratique" filterType="practices" trekProperty="practice" filterNameProperty="name"></grw-filter>
+                </div>
+                <div onClick={() => this.handleFilters()} class="back-filters-container"></div>
+              </div>
+            )}
           </div>
           <div class="content-container">
             <div
