@@ -36,9 +36,12 @@ export class GrwTreksList {
   render() {
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
-        {this.treksToDisplay.map(trek => (
-          <grw-trek-card trek={trek} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-trek-card>
-        ))}
+        {state.treks.length > 0 && <div class="current-treks-length">{`${state.treks.length} randonnée${state.treks.length > 1 ? 's' : ''}`}</div>}
+        <div class="current-treks-container">
+          {this.treksToDisplay.map(trek => (
+            <grw-trek-card trek={trek} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-trek-card>
+          ))}
+        </div>
       </Host>
     );
   }
