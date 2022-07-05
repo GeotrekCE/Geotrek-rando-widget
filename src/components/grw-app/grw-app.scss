@@ -48,13 +48,14 @@
   z-index: 1100;
   .close-filters-button {
     cursor: pointer;
+    font-weight: bold;
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 12px;
+    right: 12px;
+    padding: 12px;
+    border-radius: 12px;
     color: var(--color-primary);
     border: 1px var(--color-primary) solid;
-    padding: 16px;
-    border-radius: 8px;
     &:hover {
       background-color: var(--color-primary);
       color: #ffffff;
