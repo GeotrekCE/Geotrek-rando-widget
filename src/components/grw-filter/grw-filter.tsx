@@ -31,10 +31,18 @@ export class GrwFilter {
           if (filter.type === 'include') {
             filtersTreks = [...filtersTreks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
           } else if (filter.type === 'interval') {
+            let minValue: number;
+            let maxValue: number;
             for (const currentFilterId of currentFiltersId) {
               const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
-              filtersTreks = [...filtersTreks.filter(trek => trek[filter.trekProperty] >= currentFilter.minValue && trek[filter.trekProperty] <= currentFilter.maxValue)];
+              if (isNaN(minValue) || currentFilter.minValue < minValue) {
+                minValue = currentFilter.minValue;
+              }
+              if (isNaN(maxValue) || currentFilter.maxValue > maxValue) {
+                maxValue = currentFilter.maxValue;
+              }
             }
+            filtersTreks = [...filtersTreks.filter(trek => trek[filter.trekProperty] >= minValue && trek[filter.trekProperty] <= maxValue)];
           }
         } else {
           if (!isUsingFilter) {
@@ -43,10 +51,18 @@ export class GrwFilter {
           if (filter.type === 'include') {
             filtersTreks = [...state.treks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
           } else if (filter.type === 'interval') {
+            let minValue: number;
+            let maxValue: number;
             for (const currentFilterId of currentFiltersId) {
               const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
-              filtersTreks = [...state.treks.filter(trek => trek[filter.trekProperty] >= currentFilter.minValue && trek[filter.trekProperty] <= currentFilter.maxValue)];
+              if (isNaN(minValue) || currentFilter.minValue < minValue) {
+                minValue = currentFilter.minValue;
+              }
+              if (isNaN(maxValue) || currentFilter.maxValue > maxValue) {
+                maxValue = currentFilter.maxValue;
+              }
             }
+            filtersTreks = [...state.treks.filter(trek => trek[filter.trekProperty] >= minValue && trek[filter.trekProperty] <= maxValue)];
           }
         }
       }
