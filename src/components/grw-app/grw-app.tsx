@@ -104,7 +104,12 @@ export class GrwApp {
                   <div onClick={() => this.handleFilters()} class="close-filters-button">
                     X
                   </div>
-                  <grw-filter filterName="Pratique" filterType="practices" trekProperty="practice" filterNameProperty="name"></grw-filter>
+                  <div>
+                    <grw-filter filterName="Pratique" filterType="practices" filterNameProperty="name"></grw-filter>
+                  </div>
+                  <div class="filter-margin-top">
+                    <grw-filter filterName="Difficulté" filterType="difficulties" filterNameProperty="label"></grw-filter>
+                  </div>
                 </div>
                 <div onClick={() => this.handleFilters()} class="back-filters-container"></div>
               </div>

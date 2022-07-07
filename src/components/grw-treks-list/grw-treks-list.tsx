@@ -40,7 +40,7 @@ export class GrwTreksList {
   render() {
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
-        {state.currentTreks.length > 0 && <div class="current-treks-length">{`${state.currentTreks.length} randonnée${state.currentTreks.length > 1 ? 's' : ''}`}</div>}
+        {<div class="current-treks-length">{`${state.currentTreks.length} résultat${state.currentTreks.length > 1 ? 's' : ''}`}</div>}
         <div class="current-treks-container">
           {this.treksToDisplay.map(trek => (
             <grw-trek-card key={`trek-${trek.id}`} trek={trek} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-trek-card>

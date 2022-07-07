@@ -8,16 +8,34 @@ import state from 'store/store';
 })
 export class GrwFilter {
   @Prop() filterType: string;
-  @Prop() trekProperty: string;
   @Prop() filterName: string;
   @Prop() filterNameProperty: string;
+  filters = [
+    { filterType: 'practices', trekProperty: 'practice' },
+    { filterType: 'difficulties', trekProperty: 'difficulty' },
+  ];
 
   handleFilter(_event: any, filterToHandle: any) {
-    const filter = state[this.filterType];
-    filter.find(filter => filter.id === filterToHandle.id).selected = !filter.find(filter => filter.id === filterToHandle.id).selected;
-    state[this.filterType] = [...filter];
-    const currentFiltersId: number[] = state[this.filterType].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
-    state.currentTreks = currentFiltersId.length > 0 ? state.treks.filter(trek => currentFiltersId.includes(trek[this.trekProperty])) : state.treks;
+    const filterFromState = [...state[this.filterType]];
+    filterFromState.find(currentFilter => currentFilter.id === filterToHandle.id).selected = !filterFromState.find(currentFilter => currentFilter.id === filterToHandle.id)
+      .selected;
+    state[this.filterType] = filterFromState;
+    let isUsingFilter = false;
+    let filtersTreks = [];
+    for (const filter of this.filters) {
+      const currentFiltersId: number[] = state[filter.filterType].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
+      if (currentFiltersId.length > 0) {
+        if (filtersTreks.length > 0) {
+          filtersTreks = [...filtersTreks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
+        } else {
+          if (!isUsingFilter) {
+            isUsingFilter = true;
+            filtersTreks = [...state.treks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
+          }
+        }
+      }
+    }
+    state.currentTreks = isUsingFilter ? filtersTreks : state.treks;
   }
 
   render() {
