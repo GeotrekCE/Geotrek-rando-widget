@@ -139,6 +139,8 @@ export class GrwApp {
               center={this.center}
               zoom={this.zoom}
               attribution={this.attribution}
+              color-primary={this.colorPrimary}
+              color-primary-tint={this.colorPrimaryTint}
               color-trek-line={this.colorTrekLine}
               color-departure-icon={this.colorDepartureIcon}
               color-arrival-icon={this.colorArrivalIcon}
