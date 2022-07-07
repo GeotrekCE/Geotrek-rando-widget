@@ -60,6 +60,16 @@ export type Practice = {
   selected: boolean;
 };
 
+export type Durations = Duration[];
+
+export type Duration = {
+  id: number;
+  name: string;
+  minValue: number;
+  maxValue: number;
+  selected: boolean;
+};
+
 export type SensitiveAreas = SensitiveArea[];
 
 export type SensitiveArea = {
@@ -107,3 +117,7 @@ export type InformationDeskType = {
   label: string;
   pictogram: string;
 };
+
+export type Filters = Filter[];
+
+export type Filter = { property: string; trekProperty: string; type: string };

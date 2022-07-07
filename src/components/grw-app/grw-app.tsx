@@ -101,6 +101,7 @@ export class GrwApp {
             {!this.showTrek && this.showFilters && (
               <div class="options-container">
                 <div class="filters-container">
+                  <div class="current-treks-length">{`${state.currentTreks.length} résultat${state.currentTreks.length > 1 ? 's' : ''}`}</div>
                   <div onClick={() => this.handleFilters()} class="close-filters-button">
                     X
                   </div>
@@ -109,6 +110,9 @@ export class GrwApp {
                   </div>
                   <div class="filter-margin-top">
                     <grw-filter filterName="Difficulté" filterType="difficulties" filterNameProperty="label"></grw-filter>
+                  </div>
+                  <div class="filter-margin-top">
+                    <grw-filter filterName="Durée" filterType="durations" filterNameProperty="name"></grw-filter>
                   </div>
                 </div>
                 <div onClick={() => this.handleFilters()} class="back-filters-container"></div>

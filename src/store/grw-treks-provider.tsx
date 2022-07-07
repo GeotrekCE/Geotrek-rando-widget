@@ -44,6 +44,12 @@ export class GrwTreksProvider {
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
+        state.durations = [
+          { id: 1, name: '0 - 1h', minValue: 0, maxValue: 1, selected: false },
+          { id: 2, name: '1 - 2h', minValue: 1, maxValue: 2, selected: false },
+          { id: 3, name: '2 - 5h', minValue: 2, maxValue: 5, selected: false },
+          { id: 4, name: '5 - 10h', minValue: 5, maxValue: 10, selected: false },
+        ];
         state.treks = treks.results;
         state.currentTreks = treks.results;
       });
