@@ -31,19 +31,21 @@ export class GrwTreksProvider {
     this.routes && (treksRequest += `&routes=${this.routes}`);
     this.practices && (treksRequest += `&practices=${this.practices}`);
 
-    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,route,departure_geom&page_size=999`;
+    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_geom&page_size=999`;
 
     return Promise.all([
       fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`),
       fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`),
       fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`),
+      fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`),
       fetch(treksRequest),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, treks]) => {
+      .then(([difficulties, routes, practices, themes, treks]) => {
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
+        state.themes = themes.results;
         state.durations = [
           { id: 1, name: '0 - 1h', minValue: 0, maxValue: 1, selected: false },
           { id: 2, name: '1 - 2h', minValue: 1, maxValue: 2, selected: false },

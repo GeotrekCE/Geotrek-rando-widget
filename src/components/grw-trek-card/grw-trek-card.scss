@@ -1,35 +1,40 @@
-.trek-card-container {
+.trek-card-container,
+.trek-card-large-view-container {
   font-family: 'Roboto';
-  width: 350px;
-  height: auto;
   border-radius: 8px;
   box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   .image {
     border-radius: 8px 8px 0px 0px;
-    width: 100%;
-    height: auto;
-    box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.25);
+    object-fit: cover;
   }
   .sub-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 12px;
     .name {
       color: var(--color-primary);
       font-size: 24px;
       font-weight: bold;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
-    .description {
-      max-height: 24px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 12px;
-      p {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin: 0;
+    .departure {
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 16px;
+      margin: 4px 0px;
+    }
+    .themes-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      .theme {
+        background-color: var(--color-primary-tint);
+        color: #ffffff;
+        border-radius: 8px;
+        padding: 8px;
+        margin: 0px 8px 8px 0px;
       }
     }
     .icons-labels-container {
@@ -37,7 +42,6 @@
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
-
       .row {
         display: flex;
         justify-content: space-between;
@@ -51,14 +55,13 @@
             margin: 0px 4px;
           }
           display: flex;
-          justify-content: center;
           align-items: center;
-          width: calc(100% / 3);
+          width: 50%;
           img,
           .svg-icon svg {
             width: 24px;
             height: auto;
-            margin-right: 24px;
+            margin-right: 8px;
           }
         }
         .practice {
@@ -68,5 +71,23 @@
         }
       }
     }
+  }
+}
+
+.trek-card-container {
+  width: 350px;
+  height: auto;
+  .image {
+    width: 100%;
+  }
+}
+
+.trek-card-large-view-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  .image {
+    width: 250px;
   }
 }

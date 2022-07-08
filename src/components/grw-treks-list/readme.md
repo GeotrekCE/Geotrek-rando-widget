@@ -5,10 +5,11 @@
 
 ## Properties
 
-| Property           | Attribute            | Description | Type     | Default     |
-| ------------------ | -------------------- | ----------- | -------- | ----------- |
-| `colorPrimary`     | `color-primary`      |             | `string` | `'#6b0030'` |
-| `colorPrimaryTint` | `color-primary-tint` |             | `string` | `'#974c6e'` |
+| Property           | Attribute            | Description | Type      | Default     |
+| ------------------ | -------------------- | ----------- | --------- | ----------- |
+| `colorPrimary`     | `color-primary`      |             | `string`  | `'#6b0030'` |
+| `colorPrimaryTint` | `color-primary-tint` |             | `string`  | `'#974c6e'` |
+| `isLargeView`      | `is-large-view`      |             | `boolean` | `false`     |
 
 
 ## Dependencies

@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 import state, { onChange } from 'store/store';
-import { Difficulty, Practice, Route, Trek } from 'types/types';
+import { Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 import ascentImage from '../../assets/ascent.svg';
 import durationImage from '../../assets/duration.svg';
@@ -13,13 +13,15 @@ import lengthImage from '../../assets/length.svg';
 })
 export class GrwTrekCard {
   @Event() trekCardPress: EventEmitter<number>;
-  @Prop() trek: Trek;
-  @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryTint: string = '#974c6e';
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;
   @State() practice: Practice;
+  @State() themes: Themes;
+  @Prop() trek: Trek;
+  @Prop() colorPrimary: string = '#6b0030';
+  @Prop() colorPrimaryTint: string = '#974c6e';
+  @Prop() isLargeView = false;
 
   componentWillLoad() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -28,6 +30,7 @@ export class GrwTrekCard {
       this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
       this.route = state.routes.find(route => route.id === this.currentTrek.route);
       this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
+      this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
     }
 
     onChange('currentTrek', () => {
@@ -36,6 +39,7 @@ export class GrwTrekCard {
         this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
         this.route = state.routes.find(route => route.id === this.currentTrek.route);
         this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
+        this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
       }
     });
   }
@@ -44,13 +48,18 @@ export class GrwTrekCard {
     return (
       <Host onClick={() => this.trekCardPress.emit(this.currentTrek.id)} style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (
-          <div class="trek-card-container">
+          <div class={this.isLargeView ? 'trek-card-large-view-container' : 'trek-card-container'}>
             {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].thumbnail && (
               <img class="image" src={`${this.currentTrek.attachments[0].thumbnail}`} loading="lazy" />
             )}
             <div class="sub-container">
+              <div class="departure">{this.currentTrek?.departure}</div>
               <div class="name">{this.currentTrek?.name}</div>
-              <div class="description" innerHTML={this.currentTrek?.description_teaser}></div>
+              <div class="themes-container">
+                {this.themes.map(theme => (
+                  <div class="theme">{theme.label}</div>
+                ))}
+              </div>
               <div class="icons-labels-container">
                 <div class="row">
                   <div class="icon-label difficulty">
@@ -61,10 +70,6 @@ export class GrwTrekCard {
                     <div class="svg-icon" innerHTML={durationImage}></div>
                     {formatDuration(this.currentTrek.duration)}
                   </div>
-                  <div class="icon-label route">
-                    {this.route?.pictogram && <img src={this.route.pictogram} />}
-                    {this.route?.route}
-                  </div>
                 </div>
                 <div class="row">
                   <div class="icon-label length">
@@ -74,6 +79,12 @@ export class GrwTrekCard {
                   <div class="icon-label ascent">
                     <div class="svg-icon" innerHTML={ascentImage}></div>
                     {formatAscent(this.currentTrek.ascent)}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="icon-label route">
+                    {this.route?.pictogram && <img src={this.route.pictogram} />}
+                    {this.route?.route}
                   </div>
                   <div class="icon-label practice">
                     {this.practice?.pictogram && <img src={this.practice.pictogram} />}

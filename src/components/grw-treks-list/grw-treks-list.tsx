@@ -12,6 +12,7 @@ export class GrwTreksList {
   @State() treksToDisplay: Treks = [];
   @Prop() colorPrimary: string = '#6b0030';
   @Prop() colorPrimaryTint: string = '#974c6e';
+  @Prop() isLargeView = false;
 
   handleInfiniteScrollBind: (event: any) => void = this.handleInfiniteScroll.bind(this);
   step = 10;
@@ -43,7 +44,13 @@ export class GrwTreksList {
         {<div class="current-treks-length">{`${state.currentTreks.length} résultat${state.currentTreks.length > 1 ? 's' : ''}`}</div>}
         <div class="current-treks-container">
           {this.treksToDisplay.map(trek => (
-            <grw-trek-card key={`trek-${trek.id}`} trek={trek} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-trek-card>
+            <grw-trek-card
+              key={`trek-${trek.id}`}
+              trek={trek}
+              is-large-view={this.isLargeView}
+              color-primary={this.colorPrimary}
+              color-primary-tint={this.colorPrimaryTint}
+            ></grw-trek-card>
           ))}
         </div>
       </Host>

@@ -62,6 +62,7 @@ export namespace Components {
     interface GrwTrekCard {
         "colorPrimary": string;
         "colorPrimaryTint": string;
+        "isLargeView": boolean;
         "trek": Trek;
     }
     interface GrwTrekDetail {
@@ -78,6 +79,7 @@ export namespace Components {
     interface GrwTreksList {
         "colorPrimary": string;
         "colorPrimaryTint": string;
+        "isLargeView": boolean;
     }
     interface GrwTreksProvider {
         "api": string;
@@ -238,6 +240,7 @@ declare namespace LocalJSX {
     interface GrwTrekCard {
         "colorPrimary"?: string;
         "colorPrimaryTint"?: string;
+        "isLargeView"?: boolean;
         "onTrekCardPress"?: (event: GrwTrekCardCustomEvent<number>) => void;
         "trek"?: Trek;
     }
@@ -255,6 +258,7 @@ declare namespace LocalJSX {
     interface GrwTreksList {
         "colorPrimary"?: string;
         "colorPrimaryTint"?: string;
+        "isLargeView"?: boolean;
     }
     interface GrwTreksProvider {
         "api"?: string;

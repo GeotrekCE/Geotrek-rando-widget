@@ -37,7 +37,7 @@ export class GrwApp {
   @Prop() colorArrivalIcon: string = '#85003b';
   @Prop() colorSensitiveArea: string = '#4974a5';
   @Prop() colorPoiIcon: string = '#974c6e';
-  largeViewSize = 664;
+  largeViewSize = 1024;
 
   @Listen('trekCardPress')
   onTrekCardPress(event: CustomEvent<number>) {
@@ -124,7 +124,7 @@ export class GrwApp {
               class={this.isLargeView ? 'large-view-app-treks-list-container' : 'app-treks-list-container'}
               style={{ display: this.showTrek ? 'none' : 'flex', position: this.showTrek ? 'absolute' : 'relative' }}
             >
-              <grw-treks-list color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-treks-list>
+              <grw-treks-list is-large-view={this.isLargeView} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-treks-list>
             </div>
             {this.showTrek && !state.currentTrek && (
               <div class={this.isLargeView ? 'large-view-loader-container' : 'loader-container'}>

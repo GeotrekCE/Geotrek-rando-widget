@@ -16,6 +16,7 @@ export class GrwTrekProvider {
     requests.push(!state.difficulties ? fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`) : new Response('null'));
     requests.push(!state.routes ? fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`) : new Response('null'));
     requests.push(!state.practices ? fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`) : new Response('null'));
+    requests.push(!state.themes ? fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`) : new Response('null'));
     return Promise.all([
       ...requests,
       fetch(`${this.api}sensitivearea/?language=${this.language}&trek=${this.trekId}&fields=id,geometry,name,description`).catch(() => new Response('null')),
@@ -26,11 +27,11 @@ export class GrwTrekProvider {
         `${this.api}informationdesk/?language=${this.language}&near_trek=${this.trekId}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
       ),
       fetch(
-        `${this.api}trek/${this.trekId}/?language=${this.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,route,geometry,gpx,kml,pdf,parking_location`,
+        `${this.api}trek/${this.trekId}/?language=${this.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure`,
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, sensitiveAreas, pois, informationDesks, trek]) => {
+      .then(([difficulties, routes, practices, themes, sensitiveAreas, pois, informationDesks, trek]) => {
         if (difficulties) {
           state.difficulties = difficulties.results;
         }
@@ -39,6 +40,9 @@ export class GrwTrekProvider {
         }
         if (practices) {
           state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
+        }
+        if (themes) {
+          state.themes = themes.results;
         }
         if (sensitiveAreas) {
           state.currentSensitiveAreas = sensitiveAreas.results;

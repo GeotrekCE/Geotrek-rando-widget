@@ -11,9 +11,11 @@ export type Trek = {
   difficulty: number;
   route: number;
   practice: number;
+  themes: number[];
   duration: number;
   length_2d: number;
   ascent: number;
+  departure: string;
   geometry?: LineString;
   departure_geom?: Position;
   gpx?: string;
@@ -58,6 +60,14 @@ export type Practice = {
   name: string;
   pictogram: string;
   selected: boolean;
+};
+
+export type Themes = Theme[];
+
+export type Theme = {
+  id: number;
+  label: string;
+  pictogram: string;
 };
 
 export type Durations = Duration[];
