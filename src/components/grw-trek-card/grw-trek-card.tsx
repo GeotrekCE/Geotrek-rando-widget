@@ -46,7 +46,10 @@ export class GrwTrekCard {
 
   render() {
     return (
-      <Host onClick={() => this.trekCardPress.emit(this.currentTrek.id)} style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
+      <Host
+        onClick={() => this.trekCardPress.emit(this.currentTrek.id)}
+        style={{ 'width': this.isLargeView ? '100%' : 'auto', '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}
+      >
         {this.currentTrek && (
           <div class={this.isLargeView ? 'trek-card-large-view-container' : 'trek-card-container'}>
             {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].thumbnail && (
