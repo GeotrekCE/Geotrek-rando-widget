@@ -30,6 +30,14 @@
     border-radius: 8px;
     padding: 8px;
   }
+  .attribution-container {
+    position: absolute;
+    right: 24px;
+    a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+  }
 }
 
 .options-container {

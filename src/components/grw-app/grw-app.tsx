@@ -118,6 +118,11 @@ export class GrwApp {
                 <div onClick={() => this.handleFilters()} class="back-filters-container"></div>
               </div>
             )}
+            <div class="attribution-container">
+              <a target="_blank" href="https://geotrek.fr">
+                GEOTREK
+              </a>
+            </div>
           </div>
           <div class="content-container">
             <div
