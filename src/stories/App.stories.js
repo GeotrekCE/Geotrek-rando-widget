@@ -33,7 +33,7 @@ App.args = {
   routes: '',
   practices: '',
   urlLayer: 'openstreetmap',
-  attribution: '© OpenStreetMap',
+  attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
   colorPrimary: '#6b0030',
   colorPrimaryShade: '4a0021',
   colorPrimaryTint: '#974c6e',
