@@ -25,14 +25,12 @@ export class GrwTrekCard {
 
   componentWillLoad() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
-
     if (this.currentTrek) {
       this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
       this.route = state.routes.find(route => route.id === this.currentTrek.route);
       this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
       this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
     }
-
     onChange('currentTrek', () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
       if (this.currentTrek) {

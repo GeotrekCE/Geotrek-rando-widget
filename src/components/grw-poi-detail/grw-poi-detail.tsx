@@ -17,7 +17,7 @@ export class GrwPoiDetail {
             <img src={this.poi.attachments[0].thumbnail} loading="lazy" />
           </div>
         )}
-        <div class="poi-right-container">
+        <div class="poi-sub-container">
           <div class="poi-name">{this.poi.name}</div>
           <div class="poi-description" innerHTML={this.poi.description}></div>
         </div>

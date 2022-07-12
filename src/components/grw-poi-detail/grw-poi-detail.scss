@@ -1,7 +1,9 @@
 :host {
   display: flex;
   flex-direction: column;
-  padding: 0px 8px 8px 8px;
+  a {
+    color: var(--color-primary);
+  }
 }
 
 .poi-img {
@@ -12,17 +14,16 @@
   }
 }
 
-.poi-right-container {
+.poi-sub-container {
   display: flex;
   flex-direction: column;
-  padding: 8px;
 }
 
 .poi-name {
   color: var(--color-primary);
   font-size: 24px;
   font-weight: bold;
-  padding: 0px 0px 8px 0px;
+  padding: 12px 0px;
 }
 
 .poi-description {

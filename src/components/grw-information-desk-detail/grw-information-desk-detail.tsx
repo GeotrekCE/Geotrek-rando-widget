@@ -16,7 +16,7 @@ export class GrwInformationDeskDetail {
             <img src={this.informationDesk.photo_url} loading="lazy" />
           </div>
         )}
-        <div class="information-desk-right-container">
+        <div class="information-desk-sub-container">
           {this.informationDesk.name && <div class="information-desk-name">{this.informationDesk.name}</div>}
           {this.informationDesk.description && <div class="information-desk-description" innerHTML={this.informationDesk.description}></div>}
           {this.informationDesk.postal_code ||

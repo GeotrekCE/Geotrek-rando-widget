@@ -1,4 +1,4 @@
-import { LineString, Geometry, Position } from 'geojson';
+import { LineString, Geometry, Position, MultiPoint } from 'geojson';
 
 export type Treks = Trek[];
 
@@ -16,12 +16,24 @@ export type Trek = {
   length_2d: number;
   ascent: number;
   departure: string;
+  arrival?: string;
+  altimetric_profile?: string;
   geometry?: LineString;
   departure_geom?: Position;
   gpx?: string;
   kml?: string;
   pdf?: string;
   parking_location?: Position;
+  ambiance?: string;
+  access?: string;
+  public_transport?: string;
+  advice?: string;
+  advised_parking?: string;
+  gear?: string;
+  labels?: number[];
+  points_reference?: MultiPoint;
+  source?: number[];
+  structure?: number;
 };
 
 export type Attachments = Attachment[];
@@ -67,6 +79,24 @@ export type Themes = Theme[];
 export type Theme = {
   id: number;
   label: string;
+  pictogram: string;
+};
+
+export type Labels = Label[];
+
+export type Label = {
+  id: number;
+  name: string;
+  advice: string;
+  pictogram: string;
+};
+
+export type Sources = Source[];
+
+export type Source = {
+  id: number;
+  name: string;
+  website: string;
   pictogram: string;
 };
 

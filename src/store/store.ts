@@ -1,5 +1,5 @@
 import { createStore } from '@stencil/store';
-import { Difficulties, Durations, InformationDesks, Pois, Practices, Routes, SensitiveAreas, Themes, Trek, Treks } from 'types/types';
+import { Difficulties, Durations, InformationDesks, Labels, Pois, Practices, Routes, SensitiveAreas, Sources, Themes, Trek, Treks } from 'types/types';
 
 const { state, onChange } = createStore<{
   api: string;
@@ -11,6 +11,8 @@ const { state, onChange } = createStore<{
   themes: Themes;
   durations: Durations;
   currentSensitiveAreas: SensitiveAreas;
+  labels: Labels;
+  sources: Sources;
   currentPois: Pois;
   currentTrek: Trek;
   currentInformationDesks: InformationDesks;
@@ -24,6 +26,8 @@ const { state, onChange } = createStore<{
   themes: [],
   durations: [],
   currentSensitiveAreas: null,
+  labels: null,
+  sources: null,
   currentPois: null,
   currentTrek: null,
   currentInformationDesks: null,

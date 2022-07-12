@@ -20,6 +20,8 @@ export class GrwTrekProvider {
     return Promise.all([
       ...requests,
       fetch(`${this.api}sensitivearea/?language=${this.language}&trek=${this.trekId}&fields=id,geometry,name,description`).catch(() => new Response('null')),
+      fetch(`${this.api}label/?language=${this.language}&fields=id,name,advice,pictogram`),
+      fetch(`${this.api}source/?language=${this.language}&fields=id,name,website,pictogram`),
       fetch(
         `${this.api}poi/?language=${this.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,type_label,type_pictogram,url,published,geometry&page_size=999`,
       ),
@@ -27,11 +29,11 @@ export class GrwTrekProvider {
         `${this.api}informationdesk/?language=${this.language}&near_trek=${this.trekId}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
       ),
       fetch(
-        `${this.api}trek/${this.trekId}/?language=${this.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure`,
+        `${this.api}trek/${this.trekId}/?language=${this.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,arrival,altimetric_profile,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference`,
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, themes, sensitiveAreas, pois, informationDesks, trek]) => {
+      .then(([difficulties, routes, practices, themes, sensitiveAreas, labels, sources, pois, informationDesks, trek]) => {
         if (difficulties) {
           state.difficulties = difficulties.results;
         }
@@ -47,6 +49,8 @@ export class GrwTrekProvider {
         if (sensitiveAreas) {
           state.currentSensitiveAreas = sensitiveAreas.results;
         }
+        state.labels = labels.results;
+        state.sources = sources.results;
         state.currentPois = pois.results;
         state.currentInformationDesks = informationDesks.results;
         state.currentTrek = trek;

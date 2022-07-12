@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import state, { onChange } from 'store/store';
-import { Difficulty, Practice, Route, Trek } from 'types/types';
+import { Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 import ascentImage from '../../assets/ascent.svg';
 import durationImage from '../../assets/duration.svg';
@@ -12,14 +12,17 @@ import lengthImage from '../../assets/length.svg';
   shadow: true,
 })
 export class GrwTrekDetail {
+  @State() difficulty: Difficulty;
+  @State() route: Route;
+  @State() practice: Practice;
+  @State() themes: Themes;
+  @State() labels: Labels;
+  @State() sources: Sources;
   @Prop() trek: Trek;
   @Prop() colorPrimary: string = '#6b0030';
   @Prop() colorPrimaryShade: string = '#4a0021';
   @Prop() colorPrimaryTint: string = '#974c6e';
   @State() currentTrek: Trek;
-  @State() difficulty: Difficulty;
-  @State() route: Route;
-  @State() practice: Practice;
 
   componentWillLoad() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -27,6 +30,9 @@ export class GrwTrekDetail {
       this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
       this.route = state.routes.find(route => route.id === this.currentTrek.route);
       this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
+      this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
+      this.labels = state.labels.filter(label => this.currentTrek.labels.includes(label.id));
+      this.sources = state.sources.filter(source => this.currentTrek.source.includes(source.id));
     }
     onChange('currentTrek', () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -34,6 +40,9 @@ export class GrwTrekDetail {
         this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
         this.route = state.routes.find(route => route.id === this.currentTrek.route);
         this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
+        this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
+        this.labels = state.labels.filter(label => this.currentTrek.labels.includes(label.id));
+        this.sources = state.sources.filter(source => this.currentTrek.source.includes(source.id));
       }
     });
   }
@@ -87,7 +96,78 @@ export class GrwTrekDetail {
                 <a href={`${this.currentTrek.pdf}`}>PDF</a>
               </div>
             </div>
-            <div class="description" innerHTML={this.currentTrek.description ? this.currentTrek.description : this.currentTrek.description_teaser}></div>
+            {this.themes.length > 0 && (
+              <div class="themes-container">
+                {this.themes.map(theme => (
+                  <div class="theme">{theme.label}</div>
+                ))}
+              </div>
+            )}
+            {this.currentTrek.description_teaser && <div class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
+            {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
+            {this.currentTrek.description && (
+              <div class="description-container">
+                <div class="description-title">Description</div>
+                <div class="description" innerHTML={this.currentTrek.description}></div>
+              </div>
+            )}
+            {this.currentTrek.departure && (
+              <div class="departure-container">
+                <div class="departure-title">Départ :&nbsp;</div>
+                <div innerHTML={this.currentTrek.departure}></div>
+              </div>
+            )}
+            {this.currentTrek.arrival && (
+              <div class="arrival-container">
+                <div class="arrival-title">Arrivée :&nbsp;</div>
+                <div innerHTML={this.currentTrek.arrival}></div>
+              </div>
+            )}
+            {this.currentTrek.altimetric_profile && (
+              <div class="altimetric-profile-container">
+                <div class="altimetric-profile-title">Profil altimétrique</div>
+                <img src={this.currentTrek.altimetric_profile} />
+              </div>
+            )}
+            {this.currentTrek.access && (
+              <div class="access-container">
+                <div class="access-title">Accès routier</div>
+                <div class="access" innerHTML={this.currentTrek.access}></div>
+              </div>
+            )}
+            {this.currentTrek.public_transport && (
+              <div class="public-transport-container">
+                <div class="public-transport-title">Transport</div>
+                <div class="public-transport" innerHTML={this.currentTrek.public_transport}></div>
+              </div>
+            )}
+            {(this.currentTrek.advice || this.labels.length > 0) && (
+              <div class="advice-container">
+                <div class="advice-title">Recommandations</div>
+                {this.currentTrek.advice && <div class="advice" innerHTML={this.currentTrek.advice}></div>}
+                {this.labels.map(label => (
+                  <div class="label-container">
+                    <div class="label-sub-container">
+                      {label.pictogram && <img class="label-img" src={label.pictogram} />}
+                      <div class="label-name" innerHTML={label.name}></div>
+                    </div>
+                    <div class="label-advice" innerHTML={label.advice}></div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {this.currentTrek.advised_parking && (
+              <div class="advised-parking-container">
+                <div class="advised-parking-title">Parking conseillé</div>
+                <div class="advised_parking" innerHTML={this.currentTrek.advised_parking}></div>
+              </div>
+            )}
+            {this.currentTrek.gear && (
+              <div class="gear-container">
+                <div class="gear-title">Équipements</div>
+                <div class="gear" innerHTML={this.currentTrek.gear}></div>
+              </div>
+            )}
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
               <div class="sensitive-areas-container">
                 <div class="sensitive-areas-title">Zones sensibles</div>
@@ -109,6 +189,20 @@ export class GrwTrekDetail {
                 <div class="pois-title">Points d'intérêts</div>
                 {state.currentPois.map(poi => (
                   <grw-poi-detail poi={poi}></grw-poi-detail>
+                ))}
+              </div>
+            )}
+            {this.currentTrek.source && (
+              <div class="source-container">
+                <div class="source-title">Sources</div>
+                {this.sources.map(source => (
+                  <div class="source-sub-container">
+                    {source.pictogram && <img class="source-img" src={source.pictogram} />}
+                    <div>
+                      <div class="source-name" innerHTML={source.name}></div>
+                      <a class="source-advice" innerHTML={source.website}></a>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
