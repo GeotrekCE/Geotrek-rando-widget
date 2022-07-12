@@ -93,9 +93,11 @@ grw-map {
 }
 
 .poi-tooltip,
-.information-desks-tooltip {
+.information-desks-tooltip,
+.sensitive-area-tooltip {
   .poi-name,
-  .information-desks-name {
+  .information-desks-name,
+  .sensitive-area-name {
     color: var(--color-primary);
     font-weight: bold;
     font-size: 12px;
@@ -143,5 +145,18 @@ grw-map {
   width: 48px;
   height: 48px;
   font-size: 24px;
+  color: #ffffff;
+}
+
+.point-reference-icon {
+  background-color: #ff0000;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
   color: #ffffff;
 }

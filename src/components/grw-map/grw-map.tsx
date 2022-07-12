@@ -33,6 +33,7 @@ export class GrwMap {
   currentPoisLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
+  currentPointsReferenceLayer: L.GeoJSON<any>;
 
   componentDidLoad() {
     this.map = L.map(this.element, {
@@ -227,12 +228,25 @@ export class GrwMap {
       for (const sensitiveArea of state.currentSensitiveAreas) {
         currentSensitiveAreasFeatureCollection.features.push({
           type: 'Feature',
-          properties: {},
+          properties: { name: sensitiveArea.name },
           geometry: sensitiveArea.geometry,
         });
       }
 
-      this.currentSensitiveAreasLayer = L.geoJSON(currentSensitiveAreasFeatureCollection, { style: () => ({ color: this.colorSensitiveArea }) }).addTo(this.map);
+      this.currentSensitiveAreasLayer = L.geoJSON(currentSensitiveAreasFeatureCollection, {
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('mouseover', () => {
+            const sensitiveAreaTooltip = L.DomUtil.create('div');
+            sensitiveAreaTooltip.className = 'sensitive-area-tooltip';
+            const sensitiveAreaName = L.DomUtil.create('div');
+            sensitiveAreaName.innerHTML = geoJsonPoint.properties.name;
+            sensitiveAreaName.className = 'sensitive-area-name';
+            sensitiveAreaTooltip.appendChild(sensitiveAreaName);
+            layer.bindTooltip(sensitiveAreaTooltip).openTooltip();
+          });
+        },
+        style: () => ({ color: this.colorSensitiveArea }),
+      }).addTo(this.map);
 
       (L.Control as any).SensitiveAreasCheckboxContainer = L.Control.extend({
         onAdd: () => {
@@ -340,6 +354,35 @@ export class GrwMap {
       }).addTo(this.map);
     }
 
+    if (state.currentTrek.points_reference) {
+      const currentPointsReferenceFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      currentPointsReferenceFeatureCollection.features.push({
+        type: 'Feature',
+        properties: {},
+        geometry: state.currentTrek.points_reference,
+      });
+
+      let index = 0;
+      this.currentPointsReferenceLayer = L.geoJSON(currentPointsReferenceFeatureCollection, {
+        pointToLayer: (_geoJsonPoint, latlng) => {
+          index += 1;
+          return L.marker(latlng, {
+            icon: L.divIcon({
+              html: index,
+              className: 'point-reference-icon',
+              iconSize: 24,
+            } as any),
+            autoPanOnFocus: false,
+            interactive: false,
+          } as any);
+        },
+      }).addTo(this.map);
+    }
+
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
 
@@ -374,6 +417,11 @@ export class GrwMap {
     if (this.currentInformationDesksLayer) {
       this.map.removeLayer(this.currentInformationDesksLayer);
       this.currentInformationDesksLayer = null;
+    }
+
+    if (this.currentPointsReferenceLayer) {
+      this.map.removeLayer(this.currentPointsReferenceLayer);
+      this.currentPointsReferenceLayer = null;
     }
   }
 
