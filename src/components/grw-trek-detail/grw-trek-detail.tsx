@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
 import state, { onChange } from 'store/store';
-import { Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
+import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 import ascentImage from '../../assets/ascent.svg';
 import durationImage from '../../assets/duration.svg';
@@ -18,6 +18,8 @@ export class GrwTrekDetail {
   @State() themes: Themes;
   @State() labels: Labels;
   @State() sources: Sources;
+  @State() accessibilities: Accessibilities;
+  @State() accessibilityLevel: AccessibilityLevel;
   @Prop() trek: Trek;
   @Prop() colorPrimary: string = '#6b0030';
   @Prop() colorPrimaryShade: string = '#4a0021';
@@ -33,6 +35,8 @@ export class GrwTrekDetail {
       this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
       this.labels = state.labels.filter(label => this.currentTrek.labels.includes(label.id));
       this.sources = state.sources.filter(source => this.currentTrek.source.includes(source.id));
+      this.accessibilities = state.accessibilities.filter(accessibility => this.currentTrek.accessibilities.includes(accessibility.id));
+      this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
     }
     onChange('currentTrek', () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -148,7 +152,7 @@ export class GrwTrekDetail {
                 {this.labels.map(label => (
                   <div class="label-container">
                     <div class="label-sub-container">
-                      {label.pictogram && <img class="label-img" src={label.pictogram} />}
+                      {label.pictogram && <img src={label.pictogram} />}
                       <div class="label-name" innerHTML={label.name}></div>
                     </div>
                     <div class="label-advice" innerHTML={label.advice}></div>
@@ -184,6 +188,62 @@ export class GrwTrekDetail {
                 ))}
               </div>
             )}
+            {
+              <div class="accessibilities-container">
+                <div class="accessibilities-title">Accessibilité</div>
+                {this.currentTrek.disabled_infrastructure && <div innerHTML={this.currentTrek.disabled_infrastructure}></div>}
+                <div class="accessibilities-content-container">
+                  {this.accessibilities.map(accessibility => (
+                    <div class="accessibility-content-container">
+                      <img src={accessibility.pictogram}></img>
+                      <div innerHTML={accessibility.name}></div>
+                    </div>
+                  ))}
+                </div>
+                {this.currentTrek.accessibility_level && (
+                  <div class="accessibility-level-container">
+                    <div class="accessibility-level-title">Niveau d'accessibilité</div>
+                    <div innerHTML={this.accessibilityLevel.name}></div>
+                  </div>
+                )}
+                {this.currentTrek.accessibility_slope && (
+                  <div class="accessibility-slope-container">
+                    <div class="accessibility-slope-title">Pente</div>
+                    <div innerHTML={this.currentTrek.accessibility_slope}></div>
+                  </div>
+                )}
+                {this.currentTrek.accessibility_width && (
+                  <div class="accessibility-width-container">
+                    <div class="accessibility-width-title">Largeur</div>
+                    <div innerHTML={this.currentTrek.accessibility_width}></div>
+                  </div>
+                )}
+                {this.currentTrek.accessibility_signage && (
+                  <div class="accessibility-signage-container">
+                    <div class="accessibility-signage-title">Pente</div>
+                    <div innerHTML={this.currentTrek.accessibility_signage}></div>
+                  </div>
+                )}
+                {this.currentTrek.accessibility_covering && (
+                  <div class="accessibility-covering-container">
+                    <div class="accessibility-covering-title">Revêtement</div>
+                    <div innerHTML={this.currentTrek.accessibility_covering}></div>
+                  </div>
+                )}
+                {this.currentTrek.accessibility_exposure && (
+                  <div class="accessibility-exposure-container">
+                    <div class="accessibility-exposure-title">Exposition</div>
+                    <div innerHTML={this.currentTrek.accessibility_exposure}></div>
+                  </div>
+                )}
+                {this.currentTrek.accessibility_advice && (
+                  <div class="accessibility-advice-container">
+                    <div class="accessibility-advice-title">Conseils</div>
+                    <div innerHTML={this.currentTrek.accessibility_advice}></div>
+                  </div>
+                )}
+              </div>
+            }
             {state.currentPois && state.currentPois.length > 0 && (
               <div class="pois-container">
                 <div class="pois-title">Points d'intérêts</div>
@@ -192,12 +252,12 @@ export class GrwTrekDetail {
                 ))}
               </div>
             )}
-            {this.currentTrek.source && (
+            {this.currentTrek.source && this.currentTrek.source.length > 0 && (
               <div class="source-container">
                 <div class="source-title">Sources</div>
                 {this.sources.map(source => (
                   <div class="source-sub-container">
-                    {source.pictogram && <img class="source-img" src={source.pictogram} />}
+                    {source.pictogram && <img src={source.pictogram} />}
                     <div>
                       <div class="source-name" innerHTML={source.name}></div>
                       <a class="source-advice" innerHTML={source.website}></a>

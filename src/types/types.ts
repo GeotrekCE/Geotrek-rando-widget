@@ -34,6 +34,15 @@ export type Trek = {
   points_reference?: MultiPoint;
   source?: number[];
   structure?: number;
+  disabled_infrastructure?: string;
+  accessibilities?: number[];
+  accessibility_level?: number;
+  accessibility_slope?: string;
+  accessibility_width?: string;
+  accessibility_signage?: string;
+  accessibility_covering?: string;
+  accessibility_exposure?: string;
+  accessibility_advice?: string;
 };
 
 export type Attachments = Attachment[];
@@ -98,6 +107,21 @@ export type Source = {
   name: string;
   website: string;
   pictogram: string;
+};
+
+export type Accessibilities = Accessibility[];
+
+export type Accessibility = {
+  id: number;
+  name: string;
+  pictogram: string;
+};
+
+export type accessibilitiesLevel = AccessibilityLevel[];
+
+export type AccessibilityLevel = {
+  id: number;
+  name: string;
 };
 
 export type Durations = Duration[];

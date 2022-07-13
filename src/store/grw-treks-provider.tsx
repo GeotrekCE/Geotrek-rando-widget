@@ -20,7 +20,7 @@ export class GrwTreksProvider {
   componentWillLoad() {
     state.api = this.api;
 
-    let treksRequest = `${this.api}trek/?language=${this.language}`;
+    let treksRequest = `${this.api}trek/?language=${this.language}&published=true`;
 
     this.inBbox && (treksRequest += `&in_bbox=${this.inBbox}`);
     this.cities && (treksRequest += `&cities=${this.cities}`);

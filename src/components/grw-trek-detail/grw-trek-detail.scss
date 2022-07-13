@@ -110,7 +110,8 @@
   .pois-container,
   .sensitive-areas-container,
   .information-desks-container,
-  .source-container {
+  .source-container,
+  .accessibilities-container {
     padding: 0px 24px 24px 24px;
     a {
       color: var(--color-primary);
@@ -126,7 +127,8 @@
   .pois-title,
   .sensitive-areas-title,
   .information-desks-title,
-  .source-title {
+  .source-title,
+  .accessibilities-title {
     color: var(--color-primary);
     font-size: 36px;
     font-weight: bold;
@@ -137,13 +139,9 @@
   .label-sub-container {
     display: flex;
     align-items: center;
-    .label-img {
+    img {
+      width: 26px;
       margin-right: 16px;
-      width: 32px;
-      img {
-        width: 32px;
-        border-radius: 8px;
-      }
     }
     .label-name {
       color: var(--color-primary);
@@ -157,13 +155,9 @@
   .source-sub-container {
     display: flex;
     align-items: center;
-    .source-img {
+    img {
+      width: 26px;
       margin-right: 16px;
-      width: 32px;
-      img {
-        width: 32px;
-        border-radius: 8px;
-      }
     }
     .source-name {
       color: var(--color-primary);
@@ -182,5 +176,31 @@
   .arrival-title {
     color: var(--color-primary);
     font-weight: bold;
+  }
+}
+.accessibilities-container {
+  .accessibilities-content-container {
+    padding: 12px 0px 0px 0px;
+    display: flex;
+    .accessibility-content-container {
+      display: flex;
+      align-items: center;
+      margin: 0px 8px 8px 0px;
+      img {
+        margin-right: 16px;
+        width: 26px;
+      }
+    }
+  }
+  .accessibility-level-title,
+  .accessibility-slope-title,
+  .accessibility-width-title,
+  .accessibility-signage-title,
+  .accessibility-covering-title,
+  .accessibility-exposure-title,
+  .accessibility-advice-title {
+    color: var(--color-primary);
+    font-size: 24px;
+    padding: 12px 0px;
   }
 }
