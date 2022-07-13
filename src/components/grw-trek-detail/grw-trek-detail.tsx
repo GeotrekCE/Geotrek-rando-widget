@@ -170,7 +170,7 @@ export class GrwTrekDetail {
             )}
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
               <div class="sensitive-areas-container">
-                <div class="sensitive-areas-title">Zones sensibles</div>
+                <div class="sensitive-areas-title">Zones de sensibilité environnementale</div>
                 {state.currentSensitiveAreas.map(sensitiveArea => (
                   <grw-sensitive-area-detail sensitiveArea={sensitiveArea}></grw-sensitive-area-detail>
                 ))}

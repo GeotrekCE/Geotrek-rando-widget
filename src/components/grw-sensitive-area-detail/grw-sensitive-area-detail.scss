@@ -6,13 +6,28 @@
   }
 }
 
-.sensitive-area-name {
+.sensitive-area-title {
   color: var(--color-primary);
   font-size: 24px;
-  font-weight: bold;
   padding: 12px 0px;
 }
 
 .sensitive-area-description {
   font-size: 16px;
+}
+
+.sensitive-area-period-container,
+.sensitive-area-practice-container,
+.sensitive-area-contact-container {
+  .sensitive-area-period-title,
+  .sensitive-area-practice-title,
+  .sensitive-area-contact-title {
+    color: var(--color-primary);
+    font-size: 24px;
+    padding: 12px 0px;
+  }
+  .sensitive-area-period-values,
+  .sensitive-area-practice-values {
+    display: flex;
+  }
 }

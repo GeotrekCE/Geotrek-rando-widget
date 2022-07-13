@@ -19,7 +19,9 @@ export class GrwTrekProvider {
     requests.push(!state.themes ? fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`) : new Response('null'));
     return Promise.all([
       ...requests,
-      fetch(`${this.api}sensitivearea/?language=${this.language}&trek=${this.trekId}&fields=id,geometry,name,description`).catch(() => new Response('null')),
+      fetch(`${this.api}sensitivearea/?language=${this.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`).catch(
+        () => new Response('null'),
+      ),
       fetch(`${this.api}label/?language=${this.language}&fields=id,name,advice,pictogram`),
       fetch(`${this.api}source/?language=${this.language}&fields=id,name,website,pictogram`),
       fetch(
