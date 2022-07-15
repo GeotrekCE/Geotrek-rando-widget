@@ -10,7 +10,8 @@ import arrowBackImage from '../../assets/arrow-back.svg';
 export class GrwApp {
   @Element() element: HTMLElement;
   @State() showTrek = false;
-  @State() showMap = false;
+  @State() showTreksMap = false;
+  @State() showTrekMap = false;
   @State() showFilters = false;
   @State() isLargeView = false;
   @State() currentTrekId: number;
@@ -24,7 +25,6 @@ export class GrwApp {
   @Prop() portals: string;
   @Prop() routes: string;
   @Prop() practices: string;
-  @Prop() appName: string = 'Geotrek Rando Widget';
   @Prop() urlLayer: string;
   @Prop() center: string;
   @Prop() zoom;
@@ -37,12 +37,17 @@ export class GrwApp {
   @Prop() colorArrivalIcon: string = '#85003b';
   @Prop() colorSensitiveArea: string = '#4974a5';
   @Prop() colorPoiIcon: string = '#974c6e';
+  forwardTrekId: number;
+  handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
   largeViewSize = 1024;
 
   @Listen('trekCardPress')
   onTrekCardPress(event: CustomEvent<number>) {
     this.currentTrekId = event.detail;
     this.showTrek = !this.showTrek;
+    const url = new URL(window.location.toString());
+    url.searchParams.set('trek', this.currentTrekId.toString());
+    window.history.pushState({}, '', url);
   }
 
   @Listen('resize', { target: 'window' })
@@ -57,20 +62,45 @@ export class GrwApp {
 
   componentDidLoad() {
     this.handleView();
+    window.addEventListener('popstate', this.handlePopStateBind, false);
   }
 
   onTrekDetailsClose() {
+    this.forwardTrekId = this.currentTrekId;
     this.currentTrekId = null;
     this.showTrek = !this.showTrek;
   }
 
   handleView() {
     this.isLargeView = this.element.getBoundingClientRect().width >= this.largeViewSize;
-    this.showMap = this.isLargeView;
+    this.showTreksMap = this.isLargeView;
+    this.showTrekMap = this.isLargeView;
   }
 
   handleFilters() {
     this.showFilters = !this.showFilters;
+  }
+
+  handlePopState() {
+    if (this.showTrek) {
+      this.onTrekDetailsClose();
+    } else if (this.forwardTrekId) {
+      this.currentTrekId = this.forwardTrekId;
+      this.forwardTrekId = null;
+      this.showTrek = !this.showTrek;
+    }
+  }
+
+  handleShowMap() {
+    if (this.currentTrekId) {
+      this.showTrekMap = !this.showTrekMap;
+    } else {
+      this.showTreksMap = !this.showTreksMap;
+    }
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('popstate', this.handlePopStateBind);
   }
 
   render() {
@@ -92,7 +122,7 @@ export class GrwApp {
         <div class="app-container">
           <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
             {this.showTrek ? (
-              <div onClick={() => this.onTrekDetailsClose()} class="arrow-back-icon" innerHTML={arrowBackImage}></div>
+              <div onClick={() => window.history.back()} class="arrow-back-icon" innerHTML={arrowBackImage}></div>
             ) : (
               <div onClick={() => this.handleFilters()} class="handle-filters-button">
                 FILTRER
@@ -143,7 +173,7 @@ export class GrwApp {
             )}
             <grw-map
               class={this.isLargeView ? 'large-view-app-map-container' : 'app-map-container'}
-              style={{ visibility: this.showMap ? 'visible' : 'hidden' }}
+              style={{ visibility: (this.showTreksMap && !this.showTrek) || (this.showTrekMap && this.showTrek) ? 'visible' : 'hidden' }}
               url-layer={this.urlLayer}
               center={this.center}
               zoom={this.zoom}
@@ -158,7 +188,7 @@ export class GrwApp {
             ></grw-map>
           </div>
           <div class="map-visibility-button" style={{ display: this.isLargeView ? 'none' : 'flex' }}>
-            <div onClick={() => (this.showMap = !this.showMap)}>{this.showMap ? (this.showTrek ? 'Voir la fiche' : 'Voir la liste') : 'Voir la carte'}</div>
+            <div onClick={() => this.handleShowMap()}>{this.showTreksMap || this.showTrekMap ? (this.showTrek ? 'Voir la fiche' : 'Voir la liste') : 'Voir la carte'}</div>
           </div>
         </div>
       </Host>

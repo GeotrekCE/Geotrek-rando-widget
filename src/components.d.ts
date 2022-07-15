@@ -9,7 +9,6 @@ import { InformationDesk, Poi, SensitiveArea, Trek } from "types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
-        "appName": string;
         "attribution": string;
         "center": string;
         "cities": string;
@@ -186,7 +185,6 @@ declare global {
 declare namespace LocalJSX {
     interface GrwApp {
         "api"?: string;
-        "appName"?: string;
         "attribution"?: string;
         "center"?: string;
         "cities"?: string;
