@@ -1,6 +1,6 @@
 {
   "name": "@geotrekce/geotrek-rando-widget",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Geotrek Rando Widget",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -18,8 +18,8 @@
   "scripts": {
     "build": "stencil build --docs",
     "start": "stencil build --dev --watch --serve",
-    "test": "stencil test --spec --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll",
+    "test": "stencil test --spec --e2e --passWithNoTests",
+    "test.watch": "stencil test --spec --e2e --passWithNoTests --watchAll",
     "generate": "stencil generate",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -48,7 +48,8 @@
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
     "puppeteer": "^10.0.0",
-    "stencil-inline-svg": "^1.1.0"
+    "stencil-inline-svg": "^1.1.0",
+    "typescript": "^4.7.4"
   },
   "author": "bastien.alvez@makina-corpus.com",
   "license": "MIT"
