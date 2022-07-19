@@ -54,6 +54,7 @@ export class GrwTreksProvider {
         ];
         state.treks = treks.results;
         state.currentTreks = treks.results;
+        state.treksWithinBounds = treks.results;
       });
   }
 

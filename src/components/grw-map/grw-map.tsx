@@ -25,7 +25,6 @@ export class GrwMap {
   @Prop() colorPoiIcon: string = '#974c6e';
   map: L.Map;
   sensitiveAreasControl;
-  currentBounds: L.LatLngBoundsExpression;
   treksLayer: L.GeoJSON<any>;
   currentTrekLayer: L.GeoJSON<any>;
   currentDepartureArrivalLayer: L.GeoJSON<any>;
@@ -34,6 +33,7 @@ export class GrwMap {
   currentParkingLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
   currentPointsReferenceLayer: L.GeoJSON<any>;
+  handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
 
   componentDidLoad() {
     this.map = L.map(this.element, {
@@ -94,18 +94,18 @@ export class GrwMap {
       });
     }
 
-    if (trekscurrentDepartureCoordinates.length > 0) {
-      const bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-      this.currentBounds = bounds;
-      this.map.fitBounds(this.currentBounds);
-    }
-
     if (!this.treksLayer) {
+      if (trekscurrentDepartureCoordinates.length > 0 && !state.currentMapTreksBounds) {
+        const bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+        this.map.fitBounds(bounds);
+      } else {
+        this.map.fitBounds(state.currentMapTreksBounds);
+      }
       this.treksLayer = L.geoJSON(treksFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.practice && `<img src=${geoJsonPoint.properties.practice} />`,
+              html: geoJsonPoint.properties.practice ? `<img src=${geoJsonPoint.properties.practice} />` : `<img />`,
               className: 'trek-marker',
               iconSize: 48,
             } as any),
@@ -131,18 +131,30 @@ export class GrwMap {
         },
       }).addTo(this.map);
     } else {
+      if (trekscurrentDepartureCoordinates.length > 0) {
+        const bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+        this.map.fitBounds(bounds);
+      }
       this.treksLayer.clearLayers();
       this.treksLayer.addData(treksFeatureCollection);
     }
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+
+    this.map.on('moveend', this.handleTreksWithinBoundsBind);
   }
 
   removeTreks() {
     if (this.treksLayer) {
+      state.currentMapTreksBounds = this.map.getBounds();
       this.map.removeLayer(this.treksLayer);
       this.treksLayer = null;
+      this.map.off('moveend', this.handleTreksWithinBoundsBind);
     }
+  }
+
+  handleTreksWithinBounds() {
+    state.treksWithinBounds = state.currentTreks.filter(trek => this.map.getBounds().contains(L.latLng(trek.departure_geom[1], trek.departure_geom[0])));
   }
 
   addTrek() {
@@ -160,8 +172,7 @@ export class GrwMap {
     }).addTo(this.map);
 
     const bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-    this.currentBounds = bounds;
-    this.map.fitBounds(this.currentBounds);
+    this.map.fitBounds(bounds);
 
     const currentDepartureCoordinates = [state.currentTrek.geometry.coordinates.at(0)[0], state.currentTrek.geometry.coordinates.at(0)[1]];
     const currentArrivalCoordinates = [state.currentTrek.geometry.coordinates.at(-1)[0], state.currentTrek.geometry.coordinates.at(-1)[1]];

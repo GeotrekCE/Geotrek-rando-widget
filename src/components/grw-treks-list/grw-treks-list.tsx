@@ -23,14 +23,19 @@ export class GrwTreksList {
       this.element.scroll({ top: 0 });
       this.treksToDisplay = [...state.currentTreks.slice(0, this.step)];
     });
+    onChange('treksWithinBounds', () => {
+      this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
+      this.element.scroll({ top: 0 });
+      this.treksToDisplay = [...state.treksWithinBounds.slice(0, this.step)];
+    });
   }
 
   handleInfiniteScroll(event: any) {
     if (event.composedPath()[0].scrollTop + event.composedPath()[0].scrollHeight / 2 >= event.composedPath()[0].scrollHeight) {
-      if (this.treksToDisplay.length < state.treks.length) {
-        this.treksToDisplay = state.currentTreks.slice(
+      if (this.treksToDisplay.length < state.treksWithinBounds.length) {
+        this.treksToDisplay = state.treksWithinBounds.slice(
           0,
-          this.treksToDisplay.length + this.step >= state.currentTreks.length ? state.currentTreks.length : this.treksToDisplay.length + this.step,
+          this.treksToDisplay.length + this.step >= state.treksWithinBounds.length ? state.treksWithinBounds.length : this.treksToDisplay.length + this.step,
         );
       } else {
         this.element.removeEventListener('scroll', this.handleInfiniteScrollBind);
@@ -41,7 +46,7 @@ export class GrwTreksList {
   render() {
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
-        {<div class="current-treks-length">{`${state.currentTreks.length} résultat${state.currentTreks.length > 1 ? 's' : ''}`}</div>}
+        {<div class="current-treks-length">{`${state.treksWithinBounds.length} résultat${state.treksWithinBounds.length > 1 ? 's' : ''}`}</div>}
         <div class="current-treks-container">
           {this.treksToDisplay.map(trek => (
             <grw-trek-card

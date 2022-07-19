@@ -1,4 +1,5 @@
 import { createStore } from '@stencil/store';
+import { LatLngBounds } from 'leaflet';
 import {
   Accessibilities,
   accessibilitiesLevel,
@@ -19,6 +20,8 @@ import {
 const { state, onChange } = createStore<{
   api: string;
   treks: Treks;
+  treksWithinBounds: Treks;
+  currentMapTreksBounds: LatLngBounds;
   currentTreks: Treks;
   difficulties: Difficulties;
   routes: Routes;
@@ -37,6 +40,8 @@ const { state, onChange } = createStore<{
   api: '',
   treks: [],
   currentTreks: [],
+  treksWithinBounds: [],
+  currentMapTreksBounds: null,
   difficulties: [],
   routes: [],
   practices: [],
