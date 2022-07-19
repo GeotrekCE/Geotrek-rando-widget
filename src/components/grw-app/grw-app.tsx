@@ -37,7 +37,6 @@ export class GrwApp {
   @Prop() colorArrivalIcon: string = '#85003b';
   @Prop() colorSensitiveArea: string = '#4974a5';
   @Prop() colorPoiIcon: string = '#974c6e';
-  forwardTrekId: number;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
   largeViewSize = 1024;
 
@@ -63,10 +62,16 @@ export class GrwApp {
   componentDidLoad() {
     this.handleView();
     window.addEventListener('popstate', this.handlePopStateBind, false);
+    const url = new URL(window.location.toString());
+    const trekParam = url.searchParams.get('trek');
+    if (trekParam) {
+      window.history.replaceState({ isInitialHistoryWithTrek: true }, '', url);
+      this.currentTrekId = Number(trekParam);
+      this.showTrek = !this.showTrek;
+    }
   }
 
   onTrekDetailsClose() {
-    this.forwardTrekId = this.currentTrekId;
     this.currentTrekId = null;
     this.showTrek = !this.showTrek;
   }
@@ -81,13 +86,25 @@ export class GrwApp {
     this.showFilters = !this.showFilters;
   }
 
-  handlePopState() {
-    if (this.showTrek) {
+  handleBackButton() {
+    if (window.history.state.isInitialHistoryWithTrek) {
       this.onTrekDetailsClose();
-    } else if (this.forwardTrekId) {
-      this.currentTrekId = this.forwardTrekId;
-      this.forwardTrekId = null;
+      const url = new URL(window.location.toString());
+      url.searchParams.delete('trek');
+      window.history.pushState({}, '', url);
+    } else {
+      window.history.back();
+    }
+  }
+
+  handlePopState() {
+    const url = new URL(window.location.toString());
+    const trekParam = url.searchParams.get('trek');
+    if (trekParam) {
+      this.currentTrekId = Number(trekParam);
       this.showTrek = !this.showTrek;
+    } else {
+      this.onTrekDetailsClose();
     }
   }
 
@@ -122,7 +139,7 @@ export class GrwApp {
         <div class="app-container">
           <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
             {this.showTrek ? (
-              <div onClick={() => window.history.back()} class="arrow-back-icon" innerHTML={arrowBackImage}></div>
+              <div onClick={() => this.handleBackButton()} class="arrow-back-icon" innerHTML={arrowBackImage}></div>
             ) : (
               <div onClick={() => this.handleFilters()} class="handle-filters-button">
                 FILTRER
