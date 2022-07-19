@@ -188,7 +188,15 @@ export class GrwTrekDetail {
                 ))}
               </div>
             )}
-            {
+            {(this.currentTrek.disabled_infrastructure ||
+              (this.accessibilities && this.accessibilities.length > 0) ||
+              this.currentTrek.accessibility_level ||
+              this.currentTrek.accessibility_slope ||
+              this.currentTrek.accessibility_width ||
+              this.currentTrek.accessibility_signage ||
+              this.currentTrek.accessibility_covering ||
+              this.currentTrek.accessibility_exposure ||
+              this.currentTrek.accessibility_advice) && (
               <div class="accessibilities-container">
                 <div class="accessibilities-title">Accessibilité</div>
                 {this.currentTrek.disabled_infrastructure && <div innerHTML={this.currentTrek.disabled_infrastructure}></div>}
@@ -243,7 +251,7 @@ export class GrwTrekDetail {
                   </div>
                 )}
               </div>
-            }
+            )}
             {state.currentPois && state.currentPois.length > 0 && (
               <div class="pois-container">
                 <div class="pois-title">Points d'intérêts</div>
