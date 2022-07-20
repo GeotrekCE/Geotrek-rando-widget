@@ -130,7 +130,7 @@ export class GrwTrekDetail {
             {this.currentTrek.altimetric_profile && (
               <div class="altimetric-profile-container">
                 <div class="altimetric-profile-title">Profil altimétrique</div>
-                <img src={this.currentTrek.altimetric_profile} />
+                <img src={`${this.currentTrek.altimetric_profile}?format=svg`} />
               </div>
             )}
             {this.currentTrek.access && (
