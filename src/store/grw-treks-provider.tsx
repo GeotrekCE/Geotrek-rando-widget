@@ -16,6 +16,8 @@ export class GrwTreksProvider {
   @Prop() portals: string;
   @Prop() routes: string;
   @Prop() practices: string;
+  controller = new AbortController();
+  signal = this.controller.signal;
 
   componentWillLoad() {
     state.api = this.api;
@@ -34,11 +36,11 @@ export class GrwTreksProvider {
     treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_geom&page_size=999`;
 
     return Promise.all([
-      fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`),
-      fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`),
-      fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`),
-      fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`),
-      fetch(treksRequest),
+      fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }),
+      fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`, { signal: this.signal }),
+      fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }),
+      fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }),
+      fetch(treksRequest, { signal: this.signal }),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(([difficulties, routes, practices, themes, treks]) => {
@@ -56,6 +58,10 @@ export class GrwTreksProvider {
         state.currentTreks = treks.results;
         state.treksWithinBounds = treks.results;
       });
+  }
+
+  disconnectedCallback() {
+    this.controller.abort();
   }
 
   render() {

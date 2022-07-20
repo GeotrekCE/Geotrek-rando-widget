@@ -9,31 +9,36 @@ export class GrwTrekProvider {
   @Prop() language = 'fr';
   @Prop() api: string;
   @Prop() trekId: string;
+  controller = new AbortController();
+  signal = this.controller.signal;
 
   componentWillLoad() {
     state.api = this.api;
     const requests = [];
-    requests.push(!state.difficulties ? fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`) : new Response('null'));
-    requests.push(!state.routes ? fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`) : new Response('null'));
-    requests.push(!state.practices ? fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`) : new Response('null'));
-    requests.push(!state.themes ? fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`) : new Response('null'));
+    requests.push(!state.difficulties ? fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }) : new Response('null'));
+    requests.push(!state.routes ? fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`, { signal: this.signal }) : new Response('null'));
+    requests.push(!state.practices ? fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }) : new Response('null'));
+    requests.push(!state.themes ? fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }) : new Response('null'));
     return Promise.all([
       ...requests,
-      fetch(`${this.api}sensitivearea/?language=${this.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`).catch(
-        () => new Response('null'),
-      ),
-      fetch(`${this.api}label/?language=${this.language}&fields=id,name,advice,pictogram`),
-      fetch(`${this.api}source/?language=${this.language}&fields=id,name,website,pictogram`),
-      fetch(`${this.api}trek_accessibility/?language=${this.language}&fields=id,name,pictogram`),
-      fetch(`${this.api}trek_accessibility_level/?language=${this.language}&fields=id,name`),
+      fetch(`${this.api}sensitivearea/?language=${this.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`, {
+        signal: this.signal,
+      }).catch(() => new Response('null')),
+      fetch(`${this.api}label/?language=${this.language}&fields=id,name,advice,pictogram`, { signal: this.signal }),
+      fetch(`${this.api}source/?language=${this.language}&fields=id,name,website,pictogram`, { signal: this.signal }),
+      fetch(`${this.api}trek_accessibility/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }),
+      fetch(`${this.api}trek_accessibility_level/?language=${this.language}&fields=id,name`, { signal: this.signal }),
       fetch(
         `${this.api}poi/?language=${this.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,type_label,type_pictogram,url,published,geometry&page_size=999`,
+        { signal: this.signal },
       ),
       fetch(
         `${this.api}informationdesk/?language=${this.language}&near_trek=${this.trekId}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
+        { signal: this.signal },
       ),
       fetch(
         `${this.api}trek/${this.trekId}/?language=${this.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,arrival,altimetric_profile,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities`,
+        { signal: this.signal },
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
@@ -64,6 +69,7 @@ export class GrwTrekProvider {
   }
 
   disconnectedCallback() {
+    this.controller.abort();
     state.currentTrek = null;
   }
 
