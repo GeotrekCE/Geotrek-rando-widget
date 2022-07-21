@@ -27,7 +27,7 @@ export class GrwTrekProvider {
       fetch(`${this.api}label/?language=${this.language}&fields=id,name,advice,pictogram`, { signal: this.signal }),
       fetch(`${this.api}source/?language=${this.language}&fields=id,name,website,pictogram`, { signal: this.signal }),
       fetch(`${this.api}trek_accessibility/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }),
-      fetch(`${this.api}trek_accessibility_level/?language=${this.language}&fields=id,name`, { signal: this.signal }),
+      fetch(`${this.api}trek_accessibility_level/?language=${this.language}&fields=id,name`, { signal: this.signal }).catch(() => new Response('null')),
       fetch(
         `${this.api}poi/?language=${this.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,type_label,type_pictogram,url,published,geometry&page_size=999`,
         { signal: this.signal },
@@ -61,7 +61,9 @@ export class GrwTrekProvider {
         state.labels = labels.results;
         state.sources = sources.results;
         state.accessibilities = accessibilities.results;
-        state.accessibilitiesLevel = accessibilitiesLevel.results;
+        if (accessibilitiesLevel) {
+          state.accessibilitiesLevel = accessibilitiesLevel.results;
+        }
         state.currentPois = pois.results;
         state.currentInformationDesks = informationDesks.results;
         state.currentTrek = trek;

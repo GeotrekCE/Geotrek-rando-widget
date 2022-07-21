@@ -36,7 +36,9 @@ export class GrwTrekDetail {
       this.labels = state.labels.filter(label => this.currentTrek.labels.includes(label.id));
       this.sources = state.sources.filter(source => this.currentTrek.source.includes(source.id));
       this.accessibilities = state.accessibilities.filter(accessibility => this.currentTrek.accessibilities.includes(accessibility.id));
-      this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
+      if (state.accessibilitiesLevel) {
+        this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
+      }
     }
     onChange('currentTrek', () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -47,6 +49,10 @@ export class GrwTrekDetail {
         this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
         this.labels = state.labels.filter(label => this.currentTrek.labels.includes(label.id));
         this.sources = state.sources.filter(source => this.currentTrek.source.includes(source.id));
+        this.accessibilities = state.accessibilities.filter(accessibility => this.currentTrek.accessibilities.includes(accessibility.id));
+        if (state.accessibilitiesLevel) {
+          this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
+        }
       }
     });
   }
