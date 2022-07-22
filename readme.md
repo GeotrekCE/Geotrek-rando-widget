@@ -5,6 +5,8 @@ You can use a complete app or each component independantly.
 
 ## Usage
 
+**The api you want to use had to authorize your domain.**
+
 To use the latest version, copy-paste this inside `<head></head>`
 
 ```
@@ -16,6 +18,8 @@ To use the latest version, copy-paste this inside `<head></head>`
 You can replace _latest_ with a specific version.
 
 ## Explore
+
+**The api you want to use had to authorize geotrekce.github.io.**
 
 You can explore Geotrek Rando Widget and create your own component [here](https://geotrekce.github.io/Geotrek-rando-widget/).\
 Once you made your component, you can get the code to copy-paste by clicking on _Docs_ then _Show code_.
