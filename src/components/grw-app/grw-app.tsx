@@ -16,7 +16,7 @@ export class GrwApp {
   @State() isLargeView = false;
   @State() currentTrekId: number;
   @Prop() api: string;
-  @Prop() language: string = 'fr';
+  @Prop() language = 'fr';
   @Prop() inBbox: string;
   @Prop() cities: string;
   @Prop() districts: string;
@@ -27,18 +27,18 @@ export class GrwApp {
   @Prop() practices: string;
   @Prop() urlLayer: string;
   @Prop() center: string;
-  @Prop() zoom;
+  @Prop() zoom: number;
   @Prop() attribution: string;
-  @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryShade: string = '#4a0021';
-  @Prop() colorPrimaryTint: string = '#974c6e';
-  @Prop() colorTrekLine: string = '#6b0030';
-  @Prop() colorDepartureIcon: string = '#006b3b';
-  @Prop() colorArrivalIcon: string = '#85003b';
-  @Prop() colorSensitiveArea: string = '#4974a5';
-  @Prop() colorPoiIcon: string = '#974c6e';
-  handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
+  @Prop() colorPrimary = '#6b0030';
+  @Prop() colorPrimaryShade = '#4a0021';
+  @Prop() colorPrimaryTint = '#974c6e';
+  @Prop() colorTrekLine = '#6b0030';
+  @Prop() colorDepartureIcon = '#006b3b';
+  @Prop() colorArrivalIcon = '#85003b';
+  @Prop() colorSensitiveArea = '#4974a5';
+  @Prop() colorPoiIcon = '#974c6e';
   largeViewSize = 1024;
+  handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
   @Listen('trekCardPress')
   onTrekCardPress(event: CustomEvent<number>) {

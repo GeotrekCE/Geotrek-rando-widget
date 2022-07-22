@@ -29,7 +29,7 @@ export namespace Components {
         "structures": string;
         "themes": string;
         "urlLayer": string;
-        "zoom": any;
+        "zoom": number;
     }
     interface GrwFilter {
         "filterName": string;
@@ -205,7 +205,7 @@ declare namespace LocalJSX {
         "structures"?: string;
         "themes"?: string;
         "urlLayer"?: string;
-        "zoom"?: any;
+        "zoom"?: number;
     }
     interface GrwFilter {
         "filterName"?: string;

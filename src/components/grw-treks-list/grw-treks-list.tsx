@@ -10,12 +10,11 @@ import { Treks } from 'types/types';
 export class GrwTreksList {
   @Element() element: HTMLElement;
   @State() treksToDisplay: Treks = [];
-  @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryTint: string = '#974c6e';
+  @Prop() colorPrimary = '#6b0030';
+  @Prop() colorPrimaryTint = '#974c6e';
   @Prop() isLargeView = false;
-
-  handleInfiniteScrollBind: (event: any) => void = this.handleInfiniteScroll.bind(this);
   step = 10;
+  handleInfiniteScrollBind: (event: any) => void = this.handleInfiniteScroll.bind(this);
 
   componentWillLoad() {
     onChange('currentTreks', () => {

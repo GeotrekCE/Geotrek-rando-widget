@@ -19,8 +19,8 @@ export class GrwTrekCard {
   @State() practice: Practice;
   @State() themes: Themes;
   @Prop() trek: Trek;
-  @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryTint: string = '#974c6e';
+  @Prop() colorPrimary = '#6b0030';
+  @Prop() colorPrimaryTint = '#974c6e';
   @Prop() isLargeView = false;
 
   componentWillLoad() {

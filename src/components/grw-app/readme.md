@@ -28,7 +28,7 @@
 | `structures`         | `structures`           |             | `string` | `undefined` |
 | `themes`             | `themes`               |             | `string` | `undefined` |
 | `urlLayer`           | `url-layer`            |             | `string` | `undefined` |
-| `zoom`               | `zoom`                 |             | `any`    | `undefined` |
+| `zoom`               | `zoom`                 |             | `number` | `undefined` |
 
 
 ## Dependencies

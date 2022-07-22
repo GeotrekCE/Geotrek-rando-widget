@@ -8,6 +8,7 @@ import { InformationDesk } from 'types/types';
 })
 export class GrwInformationDeskDetail {
   @Prop() informationDesk: InformationDesk;
+
   render() {
     return (
       <Host>

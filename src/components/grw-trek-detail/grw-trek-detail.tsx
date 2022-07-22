@@ -21,9 +21,9 @@ export class GrwTrekDetail {
   @State() accessibilities: Accessibilities;
   @State() accessibilityLevel: AccessibilityLevel;
   @Prop() trek: Trek;
-  @Prop() colorPrimary: string = '#6b0030';
-  @Prop() colorPrimaryShade: string = '#4a0021';
-  @Prop() colorPrimaryTint: string = '#974c6e';
+  @Prop() colorPrimary = '#6b0030';
+  @Prop() colorPrimaryShade = '#4a0021';
+  @Prop() colorPrimaryTint = '#974c6e';
   @State() currentTrek: Trek;
 
   componentWillLoad() {
