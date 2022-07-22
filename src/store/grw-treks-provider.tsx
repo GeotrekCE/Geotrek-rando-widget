@@ -44,6 +44,7 @@ export class GrwTreksProvider {
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(([difficulties, routes, practices, themes, treks]) => {
+        state.treksNetworkError = false;
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
@@ -57,11 +58,13 @@ export class GrwTreksProvider {
         state.treks = treks.results;
         state.currentTreks = treks.results;
         state.treksWithinBounds = treks.results;
-      });
+      })
+      .catch(() => (state.treksNetworkError = true));
   }
 
   disconnectedCallback() {
     this.controller.abort();
+    state.treksNetworkError = false;
   }
 
   render() {

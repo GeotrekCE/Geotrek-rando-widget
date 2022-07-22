@@ -36,6 +36,8 @@ const { state, onChange } = createStore<{
   currentSensitiveAreas: SensitiveAreas;
   currentPois: Pois;
   currentInformationDesks: InformationDesks;
+  treksNetworkError: boolean;
+  trekNetworkError: boolean;
 }>({
   api: '',
   treks: [],
@@ -55,6 +57,8 @@ const { state, onChange } = createStore<{
   currentTrek: null,
   currentPois: null,
   currentInformationDesks: null,
+  treksNetworkError: false,
+  trekNetworkError: false,
 });
 
 export { onChange };

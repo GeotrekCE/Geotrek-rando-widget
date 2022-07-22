@@ -1,5 +1,5 @@
 import { Component, Host, h, Listen, State, Prop, Element, Watch } from '@stencil/core';
-import state from 'store/store';
+import state, { onChange } from 'store/store';
 import arrowBackImage from '../../assets/arrow-back.svg';
 
 @Component({
@@ -60,6 +60,14 @@ export class GrwApp {
   }
 
   componentDidLoad() {
+    onChange('trekNetworkError', () => {
+      if (state.trekNetworkError) {
+        const urlRedirect = new URL(window.location.toString());
+        urlRedirect.searchParams.delete('trek');
+        window.history.replaceState({}, '', urlRedirect);
+        this.onTrekDetailsClose();
+      }
+    });
     this.handleView();
     window.addEventListener('popstate', this.handlePopStateBind, false);
     const url = new URL(window.location.toString());

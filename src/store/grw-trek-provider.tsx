@@ -9,6 +9,7 @@ export class GrwTrekProvider {
   @Prop() language = 'fr';
   @Prop() api: string;
   @Prop() trekId: string;
+  trekNetworkError = false;
   controller = new AbortController();
   signal = this.controller.signal;
 
@@ -43,6 +44,7 @@ export class GrwTrekProvider {
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(([difficulties, routes, practices, themes, sensitiveAreas, labels, sources, accessibilities, accessibilitiesLevel, pois, informationDesks, trek]) => {
+        state.trekNetworkError = false;
         if (difficulties) {
           state.difficulties = difficulties.results;
         }
@@ -67,12 +69,16 @@ export class GrwTrekProvider {
         state.currentPois = pois.results;
         state.currentInformationDesks = informationDesks.results;
         state.currentTrek = trek;
+      })
+      .catch(() => {
+        state.trekNetworkError = true;
       });
   }
 
   disconnectedCallback() {
     this.controller.abort();
     state.currentTrek = null;
+    state.trekNetworkError = false;
   }
 
   render() {
