@@ -56,9 +56,11 @@ export class GrwMap {
 
     onChange('currentTreks', () => {
       if (state.currentTrek) {
+        this.removeTreks();
         this.addTrek();
       } else if (state.currentTreks) {
         this.addTreks();
+        this.removeTrek();
       }
     });
 
