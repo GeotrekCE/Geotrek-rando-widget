@@ -16,16 +16,22 @@ export class GrwTreksList {
   step = 10;
   handleInfiniteScrollBind: (event: any) => void = this.handleInfiniteScroll.bind(this);
 
-  componentWillLoad() {
-    onChange('currentTreks', () => {
-      this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
-      this.element.scroll({ top: 0 });
+  connectedCallback() {
+    this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
+    if (state.currentTreks) {
       this.treksToDisplay = [...state.currentTreks.slice(0, this.step)];
+    }
+    onChange('currentTreks', () => {
+      this.element.scroll({ top: 0 });
+      if (state.currentTreks) {
+        this.treksToDisplay = [...state.currentTreks.slice(0, this.step)];
+      }
     });
     onChange('treksWithinBounds', () => {
-      this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
       this.element.scroll({ top: 0 });
-      this.treksToDisplay = [...state.treksWithinBounds.slice(0, this.step)];
+      if (state.treksWithinBounds) {
+        this.treksToDisplay = [...state.treksWithinBounds.slice(0, this.step)];
+      }
     });
   }
 
@@ -40,6 +46,10 @@ export class GrwTreksList {
         this.element.removeEventListener('scroll', this.handleInfiniteScrollBind);
       }
     }
+  }
+
+  disconnectedCallback() {
+    this.element.removeEventListener('scroll', this.handleInfiniteScrollBind);
   }
 
   render() {

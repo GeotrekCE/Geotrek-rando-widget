@@ -19,7 +19,7 @@ export class GrwTreksProvider {
   controller = new AbortController();
   signal = this.controller.signal;
 
-  componentWillLoad() {
+  connectedCallback() {
     state.api = this.api;
 
     let treksRequest = `${this.api}trek/?language=${this.language}&published=true`;
@@ -35,7 +35,7 @@ export class GrwTreksProvider {
 
     treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_geom&page_size=999`;
 
-    return Promise.all([
+    Promise.all([
       fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }),
       fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`, { signal: this.signal }),
       fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }),

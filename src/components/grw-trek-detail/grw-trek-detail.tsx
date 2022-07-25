@@ -26,7 +26,7 @@ export class GrwTrekDetail {
   @Prop() colorPrimaryTint = '#974c6e';
   @State() currentTrek: Trek;
 
-  componentWillLoad() {
+  connectedCallback() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
     if (this.currentTrek) {
       this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);

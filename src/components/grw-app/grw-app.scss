@@ -92,6 +92,7 @@
   top: 64px;
 }
 
+.init-loader-container,
 .loader-container,
 .large-view-loader-container {
   display: flex;
@@ -164,8 +165,8 @@
   }
 }
 
+.init-loader-container,
 .loader-container {
-  position: absolute;
   width: 100%;
 }
 
@@ -187,7 +188,6 @@
 }
 
 .large-view-loader-container {
-  position: relative;
   width: 50%;
 }
 

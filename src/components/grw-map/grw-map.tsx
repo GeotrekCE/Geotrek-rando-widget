@@ -35,7 +35,7 @@ export class GrwMap {
   currentPointsReferenceLayer: L.GeoJSON<any>;
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
 
-  componentDidLoad() {
+  connectedCallback() {
     this.map = L.map(this.element, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
       zoom: this.zoom,
@@ -50,7 +50,7 @@ export class GrwMap {
 
     if (state.currentTrek) {
       this.addTrek();
-    } else if (state.currentTrek) {
+    } else if (state.currentTreks) {
       this.addTreks();
     }
 
@@ -80,18 +80,20 @@ export class GrwMap {
       features: [],
     };
 
-    for (const trek of state.currentTreks) {
-      trekscurrentDepartureCoordinates.push(trek.departure_geom);
-      treksFeatureCollection.features.push({
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: trek.departure_geom },
-        properties: {
-          id: trek.id,
-          name: trek.name,
-          practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram,
-          imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].thumbnail,
-        },
-      });
+    if (state.currentTreks) {
+      for (const trek of state.currentTreks) {
+        trekscurrentDepartureCoordinates.push(trek.departure_geom);
+        treksFeatureCollection.features.push({
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: trek.departure_geom },
+          properties: {
+            id: trek.id,
+            name: trek.name,
+            practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram,
+            imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].thumbnail,
+          },
+        });
+      }
     }
 
     if (!this.treksLayer) {
@@ -99,7 +101,9 @@ export class GrwMap {
         const bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
         this.map.fitBounds(bounds);
       } else {
-        this.map.fitBounds(state.currentMapTreksBounds);
+        if (state.currentMapTreksBounds) {
+          this.map.fitBounds(state.currentMapTreksBounds);
+        }
       }
       this.treksLayer = L.geoJSON(treksFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
@@ -134,6 +138,8 @@ export class GrwMap {
       if (trekscurrentDepartureCoordinates.length > 0) {
         const bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
         this.map.fitBounds(bounds);
+      } else {
+        this.map.fire('moveend');
       }
       this.treksLayer.clearLayers();
       this.treksLayer.addData(treksFeatureCollection);

@@ -40,9 +40,9 @@ const { state, onChange } = createStore<{
   trekNetworkError: boolean;
 }>({
   api: '',
-  treks: [],
-  currentTreks: [],
-  treksWithinBounds: [],
+  treks: null,
+  currentTreks: null,
+  treksWithinBounds: null,
   currentMapTreksBounds: null,
   difficulties: [],
   routes: [],

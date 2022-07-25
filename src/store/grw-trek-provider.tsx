@@ -13,14 +13,14 @@ export class GrwTrekProvider {
   controller = new AbortController();
   signal = this.controller.signal;
 
-  componentWillLoad() {
+  connectedCallback() {
     state.api = this.api;
     const requests = [];
     requests.push(!state.difficulties ? fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }) : new Response('null'));
     requests.push(!state.routes ? fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`, { signal: this.signal }) : new Response('null'));
     requests.push(!state.practices ? fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }) : new Response('null'));
     requests.push(!state.themes ? fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }) : new Response('null'));
-    return Promise.all([
+    Promise.all([
       ...requests,
       fetch(`${this.api}sensitivearea/?language=${this.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`, {
         signal: this.signal,
