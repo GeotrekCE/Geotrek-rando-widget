@@ -17,7 +17,7 @@ export class GrwFilter {
     { property: 'durations', trekProperty: 'duration', type: 'interval' },
   ];
 
-  handleFilter(_event: any, filterToHandle: any) {
+  handleFilter(_event: MouseEvent, filterToHandle: any) {
     const filterFromState = [...state[this.filterType]];
     filterFromState.find(currentFilter => currentFilter.id === filterToHandle.id).selected = !filterFromState.find(currentFilter => currentFilter.id === filterToHandle.id)
       .selected;
@@ -31,18 +31,17 @@ export class GrwFilter {
           if (filter.type === 'include') {
             filtersTreks = [...filtersTreks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
           } else if (filter.type === 'interval') {
-            let minValue: number;
-            let maxValue: number;
-            for (const currentFilterId of currentFiltersId) {
-              const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
-              if (isNaN(minValue) || currentFilter.minValue < minValue) {
-                minValue = currentFilter.minValue;
-              }
-              if (isNaN(maxValue) || currentFilter.maxValue > maxValue) {
-                maxValue = currentFilter.maxValue;
-              }
-            }
-            filtersTreks = [...filtersTreks.filter(trek => trek[filter.trekProperty] >= minValue && trek[filter.trekProperty] <= maxValue)];
+            filtersTreks = [
+              ...filtersTreks.filter(trek => {
+                for (const currentFilterId of currentFiltersId) {
+                  const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
+                  if (trek[filter.trekProperty] >= currentFilter.minValue && trek[filter.trekProperty] <= currentFilter.maxValue) {
+                    return true;
+                  }
+                }
+                return false;
+              }),
+            ];
           }
         } else {
           if (!isUsingFilter) {
