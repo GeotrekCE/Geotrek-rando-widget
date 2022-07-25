@@ -45,18 +45,15 @@ export class GrwTreksList {
   render() {
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
-        {<div class="current-treks-length">{`${state.treksWithinBounds.length} résultat${state.treksWithinBounds.length > 1 ? 's' : ''}`}</div>}
-        <div class="current-treks-container">
-          {this.treksToDisplay.map(trek => (
-            <grw-trek-card
-              key={`trek-${trek.id}`}
-              trek={trek}
-              is-large-view={this.isLargeView}
-              color-primary={this.colorPrimary}
-              color-primary-tint={this.colorPrimaryTint}
-            ></grw-trek-card>
-          ))}
-        </div>
+        {this.treksToDisplay.map(trek => (
+          <grw-trek-card
+            key={`trek-${trek.id}`}
+            trek={trek}
+            is-large-view={this.isLargeView}
+            color-primary={this.colorPrimary}
+            color-primary-tint={this.colorPrimaryTint}
+          ></grw-trek-card>
+        ))}
       </Host>
     );
   }

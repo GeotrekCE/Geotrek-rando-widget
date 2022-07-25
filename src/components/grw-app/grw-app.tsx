@@ -149,14 +149,16 @@ export class GrwApp {
             {this.showTrek ? (
               <div onClick={() => this.handleBackButton()} class="arrow-back-icon" innerHTML={arrowBackImage}></div>
             ) : (
-              <div onClick={() => this.handleFilters()} class="handle-filters-button">
-                FILTRER
+              <div class="handle-filters-container">
+                <div onClick={() => this.handleFilters()} class="handle-filters-button">
+                  FILTRER
+                </div>
+                <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} randonnée${state.treksWithinBounds.length > 1 ? 's' : ''}`}</div>
               </div>
             )}
             {!this.showTrek && this.showFilters && (
               <div class="options-container">
                 <div class="filters-container">
-                  <div class="current-treks-length">{`${state.currentTreks.length} résultat${state.currentTreks.length > 1 ? 's' : ''}`}</div>
                   <div onClick={() => this.handleFilters()} class="close-filters-button">
                     X
                   </div>

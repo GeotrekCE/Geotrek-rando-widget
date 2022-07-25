@@ -8,6 +8,7 @@
 .header-container,
 .large-view-header-container {
   display: flex;
+  flex-direction: row;
   align-items: center;
   background-color: var(--color-primary);
   height: 64px;
@@ -21,14 +22,22 @@
       height: auto;
     }
   }
-  .handle-filters-button {
-    user-select: none;
-    cursor: pointer;
-    color: var(--color-primary);
-    background-color: #ffffff;
-    margin-left: 36px;
-    border-radius: 8px;
-    padding: 8px;
+  .handle-filters-container {
+    display: flex;
+    align-items: center;
+    .handle-filters-button {
+      user-select: none;
+      cursor: pointer;
+      color: var(--color-primary);
+      background-color: #ffffff;
+      margin-left: 12px;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .current-treks-within-bounds-length {
+      margin-left: 12px;
+      color: #ffffff;
+    }
   }
   .attribution-container {
     position: absolute;
@@ -71,12 +80,6 @@
   }
   .filter-margin-top {
     margin-top: 24px;
-  }
-  .current-treks-length {
-    margin: 0px 0px 32px 8px;
-    color: var(--color-primary);
-    font-size: 24px;
-    font-weight: bold;
   }
 }
 
