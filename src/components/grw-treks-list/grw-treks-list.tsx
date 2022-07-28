@@ -15,19 +15,22 @@ export class GrwTreksList {
   @Prop() isLargeView = false;
   step = 10;
   handleInfiniteScrollBind: (event: any) => void = this.handleInfiniteScroll.bind(this);
+  shouldAddInfiniteScrollEvent = true;
 
   connectedCallback() {
-    this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
+    this.handleInfiniteScrollEvent(true);
     if (state.currentTreks) {
       this.treksToDisplay = [...state.currentTreks.slice(0, this.step)];
     }
     onChange('currentTreks', () => {
+      this.handleInfiniteScrollEvent(true);
       this.element.scroll({ top: 0 });
       if (state.currentTreks) {
         this.treksToDisplay = [...state.currentTreks.slice(0, this.step)];
       }
     });
     onChange('treksWithinBounds', () => {
+      this.handleInfiniteScrollEvent(true);
       this.element.scroll({ top: 0 });
       if (state.treksWithinBounds) {
         this.treksToDisplay = [...state.treksWithinBounds.slice(0, this.step)];
@@ -43,13 +46,25 @@ export class GrwTreksList {
           this.treksToDisplay.length + this.step >= state.treksWithinBounds.length ? state.treksWithinBounds.length : this.treksToDisplay.length + this.step,
         );
       } else {
-        this.element.removeEventListener('scroll', this.handleInfiniteScrollBind);
+        this.handleInfiniteScrollEvent(false);
       }
     }
   }
 
+  handleInfiniteScrollEvent(shouldAddInfiniteScrollEvent: boolean) {
+    if (shouldAddInfiniteScrollEvent) {
+      if (this.shouldAddInfiniteScrollEvent) {
+        this.element.addEventListener('scroll', this.handleInfiniteScrollBind);
+        this.shouldAddInfiniteScrollEvent = !shouldAddInfiniteScrollEvent;
+      }
+    } else {
+      this.element.removeEventListener('scroll', this.handleInfiniteScrollBind);
+      this.shouldAddInfiniteScrollEvent = !shouldAddInfiniteScrollEvent;
+    }
+  }
+
   disconnectedCallback() {
-    this.element.removeEventListener('scroll', this.handleInfiniteScrollBind);
+    this.handleInfiniteScrollEvent(false);
   }
 
   render() {

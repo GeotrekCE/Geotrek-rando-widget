@@ -59,8 +59,8 @@ export class GrwMap {
         this.removeTreks();
         this.addTrek();
       } else if (state.currentTreks) {
-        this.addTreks();
         this.removeTrek();
+        this.addTreks();
       }
     });
 
@@ -69,8 +69,8 @@ export class GrwMap {
         this.removeTreks();
         this.addTrek();
       } else {
-        this.addTreks();
         this.removeTrek();
+        this.addTreks();
       }
     });
   }
@@ -162,7 +162,9 @@ export class GrwMap {
   }
 
   handleTreksWithinBounds() {
-    state.treksWithinBounds = state.currentTreks.filter(trek => this.map.getBounds().contains(L.latLng(trek.departure_geom[1], trek.departure_geom[0])));
+    if (!state.currentMapTreksBounds || state.currentMapTreksBounds.toBBoxString() !== this.map.getBounds().toBBoxString()) {
+      state.treksWithinBounds = state.currentTreks.filter(trek => this.map.getBounds().contains(L.latLng(trek.departure_geom[1], trek.departure_geom[0])));
+    }
   }
 
   addTrek() {
