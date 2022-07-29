@@ -29,10 +29,10 @@ export class GrwTrekProvider {
       fetch(`${this.api}source/?language=${this.language}&fields=id,name,website,pictogram`, { signal: this.signal }),
       fetch(`${this.api}trek_accessibility/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }),
       fetch(`${this.api}trek_accessibility_level/?language=${this.language}&fields=id,name`, { signal: this.signal }).catch(() => new Response('null')),
-      fetch(
-        `${this.api}poi/?language=${this.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,type_label,type_pictogram,url,published,geometry&page_size=999`,
-        { signal: this.signal },
-      ),
+      fetch(`${this.api}poi/?language=${this.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, {
+        signal: this.signal,
+      }),
+      fetch(`${this.api}poi_type/?language=${this.language}&fields=id,pictogram`, { signal: this.signal }),
       fetch(
         `${this.api}informationdesk/?language=${this.language}&near_trek=${this.trekId}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
         { signal: this.signal },
@@ -43,7 +43,7 @@ export class GrwTrekProvider {
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, themes, sensitiveAreas, labels, sources, accessibilities, accessibilitiesLevel, pois, informationDesks, trek]) => {
+      .then(([difficulties, routes, practices, themes, sensitiveAreas, labels, sources, accessibilities, accessibilitiesLevel, pois, poiTypes, informationDesks, trek]) => {
         state.trekNetworkError = false;
         if (difficulties) {
           state.difficulties = difficulties.results;
@@ -67,6 +67,7 @@ export class GrwTrekProvider {
           state.accessibilitiesLevel = accessibilitiesLevel.results;
         }
         state.currentPois = pois.results;
+        state.poiTypes = poiTypes.results;
         state.currentInformationDesks = informationDesks.results;
         state.currentTrek = trek;
       })

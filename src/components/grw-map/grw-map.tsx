@@ -308,7 +308,7 @@ export class GrwMap {
       for (const currentPoi of state.currentPois) {
         currentPoisFeatureCollection.features.push({
           type: 'Feature',
-          properties: { name: currentPoi.name, type_pictogram: currentPoi.type_pictogram },
+          properties: { name: currentPoi.name, type_pictogram: state.poiTypes.find(poiType => poiType.id === currentPoi.type)?.pictogram },
           geometry: currentPoi.geometry,
         });
       }
@@ -317,7 +317,7 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type_pictogram && `<img src=${geoJsonPoint.properties.type_pictogram} />`,
+              html: geoJsonPoint.properties.type_pictogram ? `<img src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
               className: 'poi-icon',
               iconSize: 48,
             } as any),
@@ -355,7 +355,7 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type_pictogram && `<img src=${geoJsonPoint.properties.type_pictogram} />`,
+              html: geoJsonPoint.properties.type_pictogram ? `<img src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
               className: 'information-desks-icon',
               iconSize: 48,
             } as any),

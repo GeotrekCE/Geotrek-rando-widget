@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                                                                                                                                                 | Default     |
-| -------- | --------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
-| `poi`    | --        |             | `{ id: number; name: string; description: string; attachments: Attachments; type: any; type_label: any; type_pictogram: any; url: string; published: boolean; geometry: Geometry; }` | `undefined` |
+| Property | Attribute | Description | Type                                                                                                             | Default     |
+| -------- | --------- | ----------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
+| `poi`    | --        |             | `{ id: number; name: string; description: string; attachments: Attachments; type: number; geometry: Geometry; }` | `undefined` |
 
 
 ## Dependencies

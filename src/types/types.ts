@@ -154,12 +154,15 @@ export type Poi = {
   name: string;
   description: string;
   attachments: Attachments;
-  type: any;
-  type_label: any;
-  type_pictogram: any;
-  url: string;
-  published: boolean;
+  type: number;
   geometry: Geometry;
+};
+
+export type PoiTypes = PoiType[];
+
+export type PoiType = {
+  id: number;
+  pictogram: string;
 };
 
 export type InformationDesks = InformationDesk[];

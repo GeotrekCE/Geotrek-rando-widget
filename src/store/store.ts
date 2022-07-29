@@ -8,6 +8,7 @@ import {
   InformationDesks,
   Labels,
   Pois,
+  PoiTypes,
   Practices,
   Routes,
   SensitiveAreas,
@@ -32,6 +33,7 @@ const { state, onChange } = createStore<{
   sources: Sources;
   accessibilities: Accessibilities;
   accessibilitiesLevel: accessibilitiesLevel;
+  poiTypes: PoiTypes;
   currentTrek: Trek;
   currentSensitiveAreas: SensitiveAreas;
   currentPois: Pois;
@@ -54,6 +56,7 @@ const { state, onChange } = createStore<{
   sources: null,
   accessibilities: null,
   accessibilitiesLevel: null,
+  poiTypes: null,
   currentTrek: null,
   currentPois: null,
   currentInformationDesks: null,
