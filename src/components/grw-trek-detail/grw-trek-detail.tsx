@@ -63,8 +63,8 @@ export class GrwTrekDetail {
         {this.currentTrek && (
           <div class="trek-detail-container">
             <div class="name">{this.currentTrek.name}</div>
-            {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].thumbnail && (
-              <img class="image" src={this.currentTrek.attachments[0].thumbnail} loading="lazy" />
+            {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].url && (
+              <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />
             )}
             <div class="sub-container">
               <div class="icons-labels-container">
