@@ -9,7 +9,6 @@ export class GrwTrekProvider {
   @Prop() language = 'fr';
   @Prop() api: string;
   @Prop() trekId: string;
-  trekNetworkError = false;
   controller = new AbortController();
   signal = this.controller.signal;
 

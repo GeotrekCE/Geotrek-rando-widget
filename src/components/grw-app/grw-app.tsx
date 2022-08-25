@@ -59,6 +59,16 @@ export class GrwApp {
     window.dispatchEvent(new window.Event('resize'));
   }
 
+  componentWillLoad() {
+    const url = new URL(window.location.toString());
+    const trekParam = url.searchParams.get('trek');
+    if (trekParam) {
+      window.history.replaceState({ isInitialHistoryWithTrek: true }, '', url);
+      this.currentTrekId = Number(trekParam);
+      this.showTrek = !this.showTrek;
+    }
+  }
+
   componentDidLoad() {
     onChange('trekNetworkError', () => {
       if (state.trekNetworkError) {
@@ -68,15 +78,8 @@ export class GrwApp {
         this.onTrekDetailsClose();
       }
     });
-    this.handleView();
     window.addEventListener('popstate', this.handlePopStateBind, false);
-    const url = new URL(window.location.toString());
-    const trekParam = url.searchParams.get('trek');
-    if (trekParam) {
-      window.history.replaceState({ isInitialHistoryWithTrek: true }, '', url);
-      this.currentTrekId = Number(trekParam);
-      this.showTrek = !this.showTrek;
-    }
+    this.handleView();
   }
 
   onTrekDetailsClose() {
@@ -132,24 +135,26 @@ export class GrwApp {
   render() {
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint, '--color-primary-shade': this.colorPrimaryShade }}>
-        <grw-treks-provider
-          api={this.api}
-          language={this.language}
-          in-bbox={this.inBbox}
-          cities={this.cities}
-          districts={this.districts}
-          structures={this.structures}
-          themes={this.themes}
-          portals={this.portals}
-          routes={this.routes}
-          practices={this.practices}
-        ></grw-treks-provider>
         {!state.currentTreks && !state.currentTrek && (
           <div class="init-loader-container">
             <span class="loader"></span>
           </div>
         )}
-        {this.showTrek && this.currentTrekId && <grw-trek-provider api={state.api} language={this.language} trek-id={this.currentTrekId}></grw-trek-provider>}
+        {!this.showTrek && !state.treks && (
+          <grw-treks-provider
+            api={this.api}
+            language={this.language}
+            in-bbox={this.inBbox}
+            cities={this.cities}
+            districts={this.districts}
+            structures={this.structures}
+            themes={this.themes}
+            portals={this.portals}
+            routes={this.routes}
+            practices={this.practices}
+          ></grw-treks-provider>
+        )}
+        {this.showTrek && this.currentTrekId && <grw-trek-provider api={this.api} language={this.language} trek-id={this.currentTrekId}></grw-trek-provider>}
         {(state.currentTreks || state.currentTrek) && (
           <div class="app-container">
             <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
