@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
-import state, { onChange } from 'store/store';
+import state, { onChange, reset } from 'store/store';
 import { Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 import ascentImage from '../../assets/ascent.svg';
@@ -22,6 +22,7 @@ export class GrwTrekCard {
   @Prop() colorPrimary = '#6b0030';
   @Prop() colorPrimaryTint = '#974c6e';
   @Prop() isLargeView = false;
+  @Prop() resetStoreOnDisconnected = true;
 
   connectedCallback() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -40,6 +41,12 @@ export class GrwTrekCard {
         this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
       }
     });
+  }
+
+  disconnectedCallback() {
+    if (this.resetStoreOnDisconnected) {
+      reset();
+    }
   }
 
   render() {

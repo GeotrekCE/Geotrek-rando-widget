@@ -18,7 +18,7 @@ import {
   Treks,
 } from 'types/types';
 
-const { state, onChange } = createStore<{
+const { state, onChange, reset } = createStore<{
   api: string;
   treks: Treks;
   treksWithinBounds: Treks;
@@ -64,6 +64,6 @@ const { state, onChange } = createStore<{
   trekNetworkError: false,
 });
 
-export { onChange };
+export { onChange, reset };
 
 export default state;

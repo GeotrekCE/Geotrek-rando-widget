@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State } from '@stencil/core';
-import state, { onChange } from 'store/store';
+import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 import ascentImage from '../../assets/ascent.svg';
@@ -12,6 +12,7 @@ import lengthImage from '../../assets/length.svg';
   shadow: true,
 })
 export class GrwTrekDetail {
+  @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;
   @State() practice: Practice;
@@ -24,7 +25,7 @@ export class GrwTrekDetail {
   @Prop() colorPrimary = '#6b0030';
   @Prop() colorPrimaryShade = '#4a0021';
   @Prop() colorPrimaryTint = '#974c6e';
-  @State() currentTrek: Trek;
+  @Prop() resetStoreOnDisconnected = true;
 
   connectedCallback() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -55,6 +56,12 @@ export class GrwTrekDetail {
         }
       }
     });
+  }
+
+  disconnectedCallback() {
+    if (this.resetStoreOnDisconnected) {
+      reset();
+    }
   }
 
   render() {

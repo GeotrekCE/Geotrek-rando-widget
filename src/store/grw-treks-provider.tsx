@@ -55,9 +55,9 @@ export class GrwTreksProvider {
           { id: 3, name: '2 - 5h', minValue: 2, maxValue: 5, selected: false },
           { id: 4, name: '5 - 10h', minValue: 5, maxValue: 10, selected: false },
         ];
-        state.treks = treks.results;
         state.currentTreks = treks.results;
         state.treksWithinBounds = treks.results;
+        state.treks = treks.results;
       })
       .catch(() => (state.treksNetworkError = true));
   }

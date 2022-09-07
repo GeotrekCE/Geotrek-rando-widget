@@ -1,5 +1,5 @@
 import { Component, Host, h, Listen, State, Prop, Element, Watch } from '@stencil/core';
-import state, { onChange } from 'store/store';
+import state, { onChange, reset } from 'store/store';
 import arrowBackImage from '../../assets/arrow-back.svg';
 
 @Component({
@@ -129,6 +129,7 @@ export class GrwApp {
   }
 
   disconnectedCallback() {
+    reset();
     window.removeEventListener('popstate', this.handlePopStateBind);
   }
 
@@ -200,7 +201,12 @@ export class GrwApp {
                 class={this.isLargeView ? 'large-view-app-treks-list-container' : 'app-treks-list-container'}
                 style={{ display: this.showTrek ? 'none' : 'flex', position: this.showTrek ? 'absolute' : 'relative' }}
               >
-                <grw-treks-list is-large-view={this.isLargeView} color-primary={this.colorPrimary} color-primary-tint={this.colorPrimaryTint}></grw-treks-list>
+                <grw-treks-list
+                  reset-store-on-disconnected={false}
+                  is-large-view={this.isLargeView}
+                  color-primary={this.colorPrimary}
+                  color-primary-tint={this.colorPrimaryTint}
+                ></grw-treks-list>
               </div>
               {this.showTrek && !state.currentTrek && (
                 <div class={this.isLargeView ? 'large-view-loader-container' : 'loader-container'}>
@@ -209,7 +215,12 @@ export class GrwApp {
               )}
               {state.currentTrek && (
                 <div class={this.isLargeView ? 'large-view-app-trek-detail-container' : 'app-trek-detail-container'}>
-                  <grw-trek-detail color-primary={this.colorPrimary} color-primary-shade={this.colorPrimaryShade} color-primary-tint={this.colorPrimaryTint}></grw-trek-detail>
+                  <grw-trek-detail
+                    reset-store-on-disconnected={false}
+                    color-primary={this.colorPrimary}
+                    color-primary-shade={this.colorPrimaryShade}
+                    color-primary-tint={this.colorPrimaryTint}
+                  ></grw-trek-detail>
                 </div>
               )}
               <grw-map
@@ -226,6 +237,7 @@ export class GrwApp {
                 color-arrival-icon={this.colorArrivalIcon}
                 color-sensitive-area={this.colorSensitiveArea}
                 color-poi-icon={this.colorPoiIcon}
+                reset-store-on-disconnected={false}
               ></grw-map>
             </div>
             <div class="map-visibility-button" style={{ display: this.isLargeView ? 'none' : 'flex' }}>

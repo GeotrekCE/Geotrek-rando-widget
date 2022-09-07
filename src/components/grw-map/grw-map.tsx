@@ -1,7 +1,7 @@
 import { Component, Host, h, Element, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
-import state, { onChange } from 'store/store';
+import state, { onChange, reset } from 'store/store';
 import departureArrivalImage from '../../assets/departure-arrival.svg';
 
 @Component({
@@ -23,6 +23,7 @@ export class GrwMap {
   @Prop() colorArrivalIcon = '#85003b';
   @Prop() colorSensitiveArea = '	#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
+  @Prop() resetStoreOnDisconnected = true;
   map: L.Map;
   sensitiveAreasControl: any;
   treksLayer: L.GeoJSON<any>;
@@ -35,7 +36,7 @@ export class GrwMap {
   currentPointsReferenceLayer: L.GeoJSON<any>;
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
 
-  connectedCallback() {
+  componentDidLoad() {
     this.map = L.map(this.element, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
       zoom: this.zoom,
@@ -162,7 +163,10 @@ export class GrwMap {
   }
 
   handleTreksWithinBounds() {
-    if (!state.currentMapTreksBounds || state.currentMapTreksBounds.toBBoxString() !== this.map.getBounds().toBBoxString()) {
+    if (
+      (state.currentTreks && !state.currentMapTreksBounds) ||
+      (state.currentTreks && state.currentMapTreksBounds && state.currentMapTreksBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
+    ) {
       state.treksWithinBounds = state.currentTreks.filter(trek => this.map.getBounds().contains(L.latLng(trek.departure_geom[1], trek.departure_geom[0])));
     }
   }
@@ -443,6 +447,12 @@ export class GrwMap {
     if (this.currentPointsReferenceLayer) {
       this.map.removeLayer(this.currentPointsReferenceLayer);
       this.currentPointsReferenceLayer = null;
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.resetStoreOnDisconnected) {
+      reset();
     }
   }
 

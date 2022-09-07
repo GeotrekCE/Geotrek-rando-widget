@@ -1,5 +1,5 @@
 import { Component, Host, h, Element, State, Prop } from '@stencil/core';
-import state, { onChange } from 'store/store';
+import state, { onChange, reset } from 'store/store';
 import { Treks } from 'types/types';
 
 @Component({
@@ -13,6 +13,7 @@ export class GrwTreksList {
   @Prop() colorPrimary = '#6b0030';
   @Prop() colorPrimaryTint = '#974c6e';
   @Prop() isLargeView = false;
+  @Prop() resetStoreOnDisconnected = true;
   step = 10;
   handleInfiniteScrollBind: (event: any) => void = this.handleInfiniteScroll.bind(this);
   shouldAddInfiniteScrollEvent = true;
@@ -64,6 +65,9 @@ export class GrwTreksList {
   }
 
   disconnectedCallback() {
+    if (this.resetStoreOnDisconnected) {
+      reset();
+    }
     this.handleInfiniteScrollEvent(false);
   }
 
@@ -72,6 +76,7 @@ export class GrwTreksList {
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.treksToDisplay.map(trek => (
           <grw-trek-card
+            reset-store-on-disconnected={false}
             key={`trek-${trek.id}`}
             trek={trek}
             is-large-view={this.isLargeView}

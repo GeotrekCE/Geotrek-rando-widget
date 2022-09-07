@@ -49,6 +49,7 @@ export namespace Components {
         "colorPrimaryTint": string;
         "colorSensitiveArea": string;
         "colorTrekLine": string;
+        "resetStoreOnDisconnected": boolean;
         "urlLayer": string;
         "zoom": number;
     }
@@ -62,12 +63,14 @@ export namespace Components {
         "colorPrimary": string;
         "colorPrimaryTint": string;
         "isLargeView": boolean;
+        "resetStoreOnDisconnected": boolean;
         "trek": Trek;
     }
     interface GrwTrekDetail {
         "colorPrimary": string;
         "colorPrimaryShade": string;
         "colorPrimaryTint": string;
+        "resetStoreOnDisconnected": boolean;
         "trek": Trek;
     }
     interface GrwTrekProvider {
@@ -79,6 +82,7 @@ export namespace Components {
         "colorPrimary": string;
         "colorPrimaryTint": string;
         "isLargeView": boolean;
+        "resetStoreOnDisconnected": boolean;
     }
     interface GrwTreksProvider {
         "api": string;
@@ -226,6 +230,7 @@ declare namespace LocalJSX {
         "colorSensitiveArea"?: string;
         "colorTrekLine"?: string;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
+        "resetStoreOnDisconnected"?: boolean;
         "urlLayer"?: string;
         "zoom"?: number;
     }
@@ -240,12 +245,14 @@ declare namespace LocalJSX {
         "colorPrimaryTint"?: string;
         "isLargeView"?: boolean;
         "onTrekCardPress"?: (event: GrwTrekCardCustomEvent<number>) => void;
+        "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
     }
     interface GrwTrekDetail {
         "colorPrimary"?: string;
         "colorPrimaryShade"?: string;
         "colorPrimaryTint"?: string;
+        "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
     }
     interface GrwTrekProvider {
@@ -257,6 +264,7 @@ declare namespace LocalJSX {
         "colorPrimary"?: string;
         "colorPrimaryTint"?: string;
         "isLargeView"?: boolean;
+        "resetStoreOnDisconnected"?: boolean;
     }
     interface GrwTreksProvider {
         "api"?: string;
