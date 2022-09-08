@@ -76,7 +76,7 @@ export class GrwTreksList {
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.treksToDisplay.map(trek => (
           <grw-trek-card
-            reset-store-on-disconnected={false}
+            reset-store-on-disconnected="false"
             key={`trek-${trek.id}`}
             trek={trek}
             is-large-view={this.isLargeView}

@@ -202,7 +202,7 @@ export class GrwApp {
                 style={{ display: this.showTrek ? 'none' : 'flex', position: this.showTrek ? 'absolute' : 'relative' }}
               >
                 <grw-treks-list
-                  reset-store-on-disconnected={false}
+                  reset-store-on-disconnected="false"
                   is-large-view={this.isLargeView}
                   color-primary={this.colorPrimary}
                   color-primary-tint={this.colorPrimaryTint}
@@ -216,7 +216,7 @@ export class GrwApp {
               {state.currentTrek && (
                 <div class={this.isLargeView ? 'large-view-app-trek-detail-container' : 'app-trek-detail-container'}>
                   <grw-trek-detail
-                    reset-store-on-disconnected={false}
+                    reset-store-on-disconnected="false"
                     color-primary={this.colorPrimary}
                     color-primary-shade={this.colorPrimaryShade}
                     color-primary-tint={this.colorPrimaryTint}
@@ -224,6 +224,7 @@ export class GrwApp {
                 </div>
               )}
               <grw-map
+                reset-store-on-disconnected="false"
                 class={this.isLargeView ? 'large-view-app-map-container' : 'app-map-container'}
                 style={{ visibility: (this.showTreksMap && !this.showTrek) || (this.showTrekMap && this.showTrek) ? 'visible' : 'hidden' }}
                 url-layer={this.urlLayer}
@@ -237,7 +238,6 @@ export class GrwApp {
                 color-arrival-icon={this.colorArrivalIcon}
                 color-sensitive-area={this.colorSensitiveArea}
                 color-poi-icon={this.colorPoiIcon}
-                reset-store-on-disconnected={false}
               ></grw-map>
             </div>
             <div class="map-visibility-button" style={{ display: this.isLargeView ? 'none' : 'flex' }}>
