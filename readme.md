@@ -7,15 +7,13 @@ You can use a complete app or each component independantly.
 
 **The api you want to use had to authorize your domain.**
 
-To use the latest version, copy-paste this inside `<head></head>`
+Copy-paste this inside `<head></head>`
 
 ```
-<link rel="stylesheet" href="https://unpkg.com/@geotrekce/geotrek-rando-widget@latest/dist/geotrek-rando-widget/geotrek-rando-widget.css" />
-<script type="module" src="https://unpkg.com/@geotrekce/geotrek-rando-widget@latest/dist/geotrek-rando-widget/geotrek-rando-widget.esm.js"></script>
-<script nomodule src="https://unpkg.com/@geotrekce/geotrek-rando-widget@latest/dist/geotrek-rando-widget/geotrek-rando-widget.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.13/dist/geotrek-rando-widget/geotrek-rando-widget.css" />
+<script type="module" src="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.13/dist/geotrek-rando-widget/geotrek-rando-widget.esm.js"></script>
+<script nomodule src="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.13/dist/geotrek-rando-widget/geotrek-rando-widget.js"></script>
 ```
-
-You can replace _latest_ with a specific version.
 
 ## Explore
 
