@@ -19,6 +19,7 @@ export class GrwTrekProvider {
     requests.push(!state.routes ? fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`, { signal: this.signal }) : new Response('null'));
     requests.push(!state.practices ? fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }) : new Response('null'));
     requests.push(!state.themes ? fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }) : new Response('null'));
+    requests.push(!state.cities ? fetch(`${this.api}city/?language=${this.language}&fields=id,name&published=true`, { signal: this.signal }) : new Response('null'));
     Promise.all([
       ...requests,
       fetch(`${this.api}sensitivearea/?language=${this.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`, {
@@ -37,12 +38,12 @@ export class GrwTrekProvider {
         { signal: this.signal },
       ),
       fetch(
-        `${this.api}trek/${this.trekId}/?language=${this.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,arrival,altimetric_profile,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities`,
+        `${this.api}trek/${this.trekId}/?language=${this.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,altimetric_profile,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities`,
         { signal: this.signal },
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, themes, sensitiveAreas, labels, sources, accessibilities, accessibilitiesLevel, pois, poiTypes, informationDesks, trek]) => {
+      .then(([difficulties, routes, practices, themes, cities, sensitiveAreas, labels, sources, accessibilities, accessibilitiesLevel, pois, poiTypes, informationDesks, trek]) => {
         state.trekNetworkError = false;
         if (difficulties) {
           state.difficulties = difficulties.results;
@@ -55,6 +56,9 @@ export class GrwTrekProvider {
         }
         if (themes) {
           state.themes = themes.results;
+        }
+        if (cities) {
+          state.cities = cities.results;
         }
         if (sensitiveAreas) {
           state.currentSensitiveAreas = sensitiveAreas.results;

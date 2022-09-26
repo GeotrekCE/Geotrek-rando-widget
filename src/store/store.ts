@@ -14,6 +14,7 @@ import {
   SensitiveAreas,
   Sources,
   Themes,
+  Cities,
   Trek,
   Treks,
 } from 'types/types';
@@ -28,6 +29,7 @@ const { state, onChange, reset } = createStore<{
   routes: Routes;
   practices: Practices;
   themes: Themes;
+  cities: Cities;
   durations: Durations;
   labels: Labels;
   sources: Sources;
@@ -50,6 +52,7 @@ const { state, onChange, reset } = createStore<{
   routes: [],
   practices: [],
   themes: [],
+  cities: [],
   durations: [],
   currentSensitiveAreas: null,
   labels: null,

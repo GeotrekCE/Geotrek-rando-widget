@@ -33,22 +33,24 @@ export class GrwTreksProvider {
     this.routes && (treksRequest += `&routes=${this.routes}`);
     this.practices && (treksRequest += `&practices=${this.practices}`);
 
-    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_geom&page_size=999`;
+    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom&page_size=999`;
 
     Promise.all([
       fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }),
       fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`, { signal: this.signal }),
       fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }),
       fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }),
+      fetch(`${this.api}city/?language=${this.language}&fields=id,name&published=true`, { signal: this.signal }),
       fetch(treksRequest, { signal: this.signal }),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, themes, treks]) => {
+      .then(([difficulties, routes, practices, themes, cities, treks]) => {
         state.treksNetworkError = false;
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
         state.themes = themes.results;
+        state.cities = cities.results;
         state.durations = [
           { id: 1, name: '0 - 1h', minValue: 0, maxValue: 1, selected: false },
           { id: 2, name: '1 - 2h', minValue: 1, maxValue: 2, selected: false },

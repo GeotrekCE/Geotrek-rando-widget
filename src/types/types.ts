@@ -16,6 +16,7 @@ export type Trek = {
   length_2d: number;
   ascent: number;
   departure: string;
+  departure_city: string;
   arrival?: string;
   altimetric_profile?: string;
   geometry?: LineString;
@@ -89,6 +90,13 @@ export type Theme = {
   id: number;
   label: string;
   pictogram: string;
+};
+
+export type Cities = City[];
+
+export type City = {
+  id: string;
+  name: string;
 };
 
 export type Labels = Label[];

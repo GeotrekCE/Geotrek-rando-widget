@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
-import { Difficulty, Practice, Route, Themes, Trek } from 'types/types';
+import { City, Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 import ascentImage from '../../assets/ascent.svg';
 import durationImage from '../../assets/duration.svg';
@@ -18,6 +18,7 @@ export class GrwTrekCard {
   @State() route: Route;
   @State() practice: Practice;
   @State() themes: Themes;
+  @State() departureCity: City;
   @Prop() trek: Trek;
   @Prop() colorPrimary = '#6b0030';
   @Prop() colorPrimaryTint = '#974c6e';
@@ -31,6 +32,7 @@ export class GrwTrekCard {
       this.route = state.routes.find(route => route.id === this.currentTrek.route);
       this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
       this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
+      this.departureCity = state.cities.find(city => city.id === this.currentTrek.departure_city);
     }
     onChange('currentTrek', () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -39,6 +41,7 @@ export class GrwTrekCard {
         this.route = state.routes.find(route => route.id === this.currentTrek.route);
         this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
         this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
+        this.departureCity = state.cities.find(city => city.id === this.currentTrek.departure_city);
       }
     });
   }
@@ -61,7 +64,7 @@ export class GrwTrekCard {
               <img class="image" src={`${this.currentTrek.attachments[0].thumbnail}`} loading="lazy" />
             )}
             <div class="sub-container">
-              <div class="departure">{this.currentTrek?.departure}</div>
+              {this.departureCity && <div class="departure">{this.departureCity.name}</div>}
               <div class="name">{this.currentTrek?.name}</div>
               <div class="themes-container">
                 {this.themes.map(theme => (
