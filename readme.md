@@ -10,9 +10,9 @@ You can use a complete app or each component independantly.
 Copy-paste this inside `<head></head>`
 
 ```
-<link rel="stylesheet" href="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.14/dist/geotrek-rando-widget/geotrek-rando-widget.css" />
-<script type="module" src="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.14/dist/geotrek-rando-widget/geotrek-rando-widget.esm.js"></script>
-<script nomodule src="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.14/dist/geotrek-rando-widget/geotrek-rando-widget.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.15/dist/geotrek-rando-widget/geotrek-rando-widget.css" />
+<script type="module" src="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.15/dist/geotrek-rando-widget/geotrek-rando-widget.esm.js"></script>
+<script nomodule src="https://unpkg.com/@geotrekce/geotrek-rando-widget@0.0.15/dist/geotrek-rando-widget/geotrek-rando-widget.js"></script>
 ```
 
 ## Explore

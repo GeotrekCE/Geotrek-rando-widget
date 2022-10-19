@@ -1,6 +1,6 @@
 {
   "name": "@geotrekce/geotrek-rando-widget",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Geotrek Rando Widget",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -27,11 +27,11 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "@stencil/core": "^2.18.0",
-    "leaflet": "^1.9.1"
+    "@stencil/core": "^2.18.1",
+    "leaflet": "^1.9.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.1",
+    "@babel/core": "^7.19.3",
     "@stencil/sass": "^2.0.0",
     "@stencil/store": "^2.0.1",
     "@storybook/addon-controls": "^6.5.12",
@@ -43,7 +43,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/geojson": "^7946.0.10",
     "@types/jest": "^27.0.3",
-    "@types/leaflet": "^1.8.0",
+    "@types/leaflet": "^1.9.0",
     "babel-loader": "^8.2.5",
     "jest": "^27.4.5",
     "jest-cli": "^27.4.5",
