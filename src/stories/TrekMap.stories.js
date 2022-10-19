@@ -5,10 +5,11 @@ export default {
   argTypes: {
     urlLayer: {
       control: 'select',
-      options: ['openstreetmap', 'planignv2'],
+      options: ['planignv2', 'openstreetmap'],
       mapping: {
+        planignv2:
+          'https://wxs.ign.fr/cartes/geoportail/wmts?&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=normal&TILEMATRIXSET=PM&FORMAT=image/png&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
         openstreetmap: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        planignv2: 'https://wxs.ign.fr/cartes/geoportail/wmts?&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=normal&TILEMATRIXSET=PM&FORMAT=image/png&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
       },
     },
   },
@@ -26,7 +27,7 @@ TrekMap.args = {
   urlLayer: 'openstreetmap',
   center: '46.50761080179829, 5.927117067721017',
   zoom: 8,
-  attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+  attribution: '© IGN',
   colorTrekLine: '#6b0030',
   colorDepartureIcon: '#006b3b',
   colorArrivalIcon: '#85003b',
