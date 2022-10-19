@@ -1,6 +1,6 @@
 # Geotrek Rando Widget
 
-Web components of [Geotrek Rando](https://geotrek.fr/).\
+Web components of [Geotrek](https://geotrek.fr/).\
 You can use a complete app or each component independantly.
 
 ## Usage
