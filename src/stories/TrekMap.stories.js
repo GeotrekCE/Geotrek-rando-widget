@@ -24,7 +24,7 @@ export const TrekMap = Template.bind({});
 TrekMap.args = {
   api: 'https://randoadmin.parc-haut-jura.fr/api/v2/',
   trekId: 242872,
-  urlLayer: 'openstreetmap',
+  urlLayer: 'planignv2',
   center: '46.50761080179829, 5.927117067721017',
   zoom: 8,
   attribution: '© IGN',

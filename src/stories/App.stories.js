@@ -5,11 +5,11 @@ export default {
   argTypes: {
     urlLayer: {
       control: 'select',
-      options: ['openstreetmap', 'planignv2'],
+      options: ['planignv2', 'openstreetmap'],
       mapping: {
-        openstreetmap: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         planignv2:
           'https://wxs.ign.fr/cartes/geoportail/wmts?&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=normal&TILEMATRIXSET=PM&FORMAT=image/png&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+        openstreetmap: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       },
     },
   },
@@ -32,7 +32,7 @@ App.args = {
   portals: '',
   routes: '',
   practices: '',
-  urlLayer: 'openstreetmap',
+  urlLayer: 'planignv2',
   attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
   colorPrimary: '#6b0030',
   colorPrimaryShade: '4a0021',
