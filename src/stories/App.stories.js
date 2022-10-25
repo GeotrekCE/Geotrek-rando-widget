@@ -33,7 +33,7 @@ App.args = {
   routes: '',
   practices: '',
   urlLayer: 'planignv2',
-  attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors',
+  attribution: '© IGN',
   colorPrimary: '#6b0030',
   colorPrimaryShade: '4a0021',
   colorPrimaryTint: '#974c6e',
