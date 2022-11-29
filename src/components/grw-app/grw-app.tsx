@@ -37,6 +37,9 @@ export class GrwApp {
   @Prop() colorArrivalIcon = '#85003b';
   @Prop() colorSensitiveArea = '#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
+  @Prop() linkName = 'GEOTREK';
+  @Prop() linkTarget = 'https://geotrek.fr';
+
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
@@ -190,11 +193,13 @@ export class GrwApp {
                   <div onClick={() => this.handleFilters()} class="back-filters-container"></div>
                 </div>
               )}
-              <div class="attribution-container">
-                <a target="_blank" href="https://geotrek.fr">
-                  GEOTREK
-                </a>
-              </div>
+              {this.linkName && (
+                <div class="attribution-container">
+                  <a target="_blank" href={this.linkTarget}>
+                    {this.linkName}
+                  </a>
+                </div>
+              )}
             </div>
             <div class="content-container">
               <div

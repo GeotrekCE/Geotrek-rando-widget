@@ -42,5 +42,7 @@ App.args = {
   colorArrivalIcon: '#85003b',
   colorSensitiveArea: '#4974a5',
   colorPoiIcon: '#974c6e',
+  linkName: 'GEOTREK',
+  linkTarget: 'https://geotrek.fr',
 };
 App.storyName = 'App';

@@ -19,6 +19,8 @@ export const createApp = ({
   colorArrivalIcon,
   colorSensitiveArea,
   colorPoiIcon,
+  linkName,
+  linkTarget,
 }) => {
   const app = document.createElement('grw-app');
   app.setAttribute('api', api);
@@ -41,5 +43,7 @@ export const createApp = ({
   app.setAttribute('color-arrival-icon', colorArrivalIcon);
   app.setAttribute('color-sensitive-area', colorSensitiveArea);
   app.setAttribute('color-poi-icon', colorPoiIcon);
+  app.setAttribute('link-name', linkName);
+  app.setAttribute('link-target', linkTarget);
   return app;
 };

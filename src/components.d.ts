@@ -23,6 +23,8 @@ export namespace Components {
         "districts": string;
         "inBbox": string;
         "language": string;
+        "linkName": string;
+        "linkTarget": string;
         "portals": string;
         "practices": string;
         "routes": string;
@@ -203,6 +205,8 @@ declare namespace LocalJSX {
         "districts"?: string;
         "inBbox"?: string;
         "language"?: string;
+        "linkName"?: string;
+        "linkTarget"?: string;
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
