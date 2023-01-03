@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+      - run: npm ci
+      - run: |
+          install -d -m 700 ~/.ssh/
+          echo "${{secrets.target_host}} ${{secrets.ssh_host_fingerprint}}">~/.ssh/known_hosts
+          echo "${{secrets.ssh_private_key}}" >~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+      - run: rsync -a --delete -v www loader dist rando-widget@${{secrets.target_host}}:public_html/$GITHUB_REF/
+      - run: ssh rando-widget@${{secrets.target_host}} ln -sf $GITHUB_REF public_html/latest
