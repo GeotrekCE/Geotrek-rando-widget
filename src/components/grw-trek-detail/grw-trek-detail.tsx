@@ -287,7 +287,7 @@ export class GrwTrekDetail {
                     {source.pictogram && <img src={source.pictogram} />}
                     <div>
                       <div class="source-name" innerHTML={source.name}></div>
-                      <a class="source-advice" innerHTML={source.website}></a>
+                      <a class="source-advice" href={source.website} innerHTML={source.website}></a>
                     </div>
                   </div>
                 ))}
