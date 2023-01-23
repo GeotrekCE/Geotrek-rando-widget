@@ -1,6 +1,6 @@
 {
   "name": "@geotrekce/geotrek-rando-widget",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Geotrek Rando Widget",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
