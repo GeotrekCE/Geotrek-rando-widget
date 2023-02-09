@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { InformationDesk, Poi, SensitiveArea, Trek } from "types/types";
+export { InformationDesk, Poi, SensitiveArea, Trek } from "types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
