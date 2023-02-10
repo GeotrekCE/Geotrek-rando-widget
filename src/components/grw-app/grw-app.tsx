@@ -1,6 +1,5 @@
-import { Component, Host, h, Listen, State, Prop, Element, Watch } from '@stencil/core';
+import { Component, Host, h, Listen, State, Prop, Element, Watch, getAssetPath } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
-import arrowBackImage from '../../assets/arrow-back.svg';
 
 @Component({
   tag: 'grw-app',
@@ -137,6 +136,7 @@ export class GrwApp {
   }
 
   render() {
+    const arrowBackImageSrc = getAssetPath(`assets/arrow-back.svg`);
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint, '--color-primary-shade': this.colorPrimaryShade }}>
         {!state.currentTreks && !state.currentTrek && (
@@ -163,7 +163,9 @@ export class GrwApp {
           <div class="app-container">
             <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
               {this.showTrek ? (
-                <div onClick={() => this.handleBackButton()} class="arrow-back-icon" innerHTML={arrowBackImage}></div>
+                <div onClick={() => this.handleBackButton()} class="arrow-back-icon">
+                  <img src={arrowBackImageSrc} />
+                </div>
               ) : (
                 <div class="handle-filters-container">
                   <div onClick={() => this.handleFilters()} class="handle-filters-button">

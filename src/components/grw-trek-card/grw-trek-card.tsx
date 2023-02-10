@@ -1,10 +1,7 @@
-import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, State, getAssetPath } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
 import { City, Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
-import ascentImage from '../../assets/ascent.svg';
-import durationImage from '../../assets/duration.svg';
-import lengthImage from '../../assets/length.svg';
 
 @Component({
   tag: 'grw-trek-card',
@@ -53,6 +50,9 @@ export class GrwTrekCard {
   }
 
   render() {
+    const durationImageSrc = getAssetPath(`assets/duration.svg`);
+    const lengthImageSrc = getAssetPath(`assets/length.svg`);
+    const ascentImageSrc = getAssetPath(`assets/ascent.svg`);
     return (
       <Host
         onClick={() => this.trekCardPress.emit(this.currentTrek.id)}
@@ -78,17 +78,17 @@ export class GrwTrekCard {
                     {this.difficulty?.label}
                   </div>
                   <div class="icon-label duration">
-                    <div class="svg-icon" innerHTML={durationImage}></div>
+                    <img src={durationImageSrc} />
                     {formatDuration(this.currentTrek.duration)}
                   </div>
                 </div>
                 <div class="row">
                   <div class="icon-label length">
-                    <div class="svg-icon" innerHTML={lengthImage}></div>
+                    <img src={lengthImageSrc} />
                     {formatLength(this.currentTrek.length_2d)}
                   </div>
                   <div class="icon-label ascent">
-                    <div class="svg-icon" innerHTML={ascentImage}></div>
+                    <img src={ascentImageSrc} />
                     {formatAscent(this.currentTrek.ascent)}
                   </div>
                 </div>

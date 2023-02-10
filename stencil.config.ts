@@ -1,6 +1,5 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
-import { inlineSvg } from 'stencil-inline-svg';
 
 export const config: Config = {
   namespace: 'geotrek-rando-widget',
@@ -19,9 +18,13 @@ export const config: Config = {
     {
       type: 'dist',
       esmLoaderPath: '../loader',
-    },
-    {
-      type: 'dist-custom-elements',
+      copy: [
+        {
+          src: '**/*.svg',
+          dest: 'assets',
+          warn: true,
+        },
+      ],
     },
     {
       type: 'docs-readme',
@@ -31,6 +34,6 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
     },
   ],
-  plugins: [sass(), inlineSvg()],
+  plugins: [sass()],
   globalStyle: 'src/global/global.scss',
 };

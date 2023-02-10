@@ -1,8 +1,7 @@
-import { Component, Host, h, Element, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Element, Prop, State, Event, EventEmitter, getAssetPath } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import state, { onChange, reset } from 'store/store';
-import departureArrivalImage from '../../assets/departure-arrival.svg';
 
 @Component({
   tag: 'grw-map',
@@ -172,6 +171,7 @@ export class GrwMap {
   }
 
   addTrek() {
+    const departureArrivalImageSrc = getAssetPath(`assets/departure-arrival.svg`);
     const currentTrekFeature: Feature = {
       type: 'Feature',
       geometry: state.currentTrek.geometry,
@@ -213,7 +213,7 @@ export class GrwMap {
       pointToLayer: (geoJsonPoint, latlng) =>
         L.marker(latlng, {
           icon: L.divIcon({
-            html: departureArrivalImage,
+            html: `<img src=${departureArrivalImageSrc}>`,
             className: geoJsonPoint.properties.type === 'departure' ? 'departure-icon' : 'arrival-icon',
             iconSize: 48,
             iconAnchor: [0, 48],

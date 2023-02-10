@@ -1,10 +1,7 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, getAssetPath } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
-import ascentImage from '../../assets/ascent.svg';
-import durationImage from '../../assets/duration.svg';
-import lengthImage from '../../assets/length.svg';
 
 @Component({
   tag: 'grw-trek-detail',
@@ -65,6 +62,9 @@ export class GrwTrekDetail {
   }
 
   render() {
+    const durationImageSrc = getAssetPath(`assets/duration.svg`);
+    const lengthImageSrc = getAssetPath(`assets/length.svg`);
+    const ascentImageSrc = getAssetPath(`assets/ascent.svg`);
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-shade': this.colorPrimaryShade, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (
@@ -81,7 +81,7 @@ export class GrwTrekDetail {
                     {this.difficulty?.label}
                   </div>
                   <div class="icon-label duration">
-                    <div class="svg-icon" innerHTML={durationImage}></div>
+                    <img src={durationImageSrc} />
                     {formatDuration(this.currentTrek?.duration)}
                   </div>
                   <div class="icon-label route">
@@ -91,11 +91,13 @@ export class GrwTrekDetail {
                 </div>
                 <div class="row">
                   <div class="icon-label length">
-                    <div class="svg-icon" innerHTML={lengthImage}></div>
+                    <img src={lengthImageSrc} />
+
                     {formatLength(this.currentTrek.length_2d)}
                   </div>
                   <div class="icon-label ascent">
-                    <div class="svg-icon" innerHTML={ascentImage}></div>
+                    <img src={ascentImageSrc} />
+
                     {formatAscent(this.currentTrek.ascent)}
                   </div>
                   <div class="icon-label practice">
