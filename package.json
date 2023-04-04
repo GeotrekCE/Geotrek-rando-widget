@@ -26,13 +26,13 @@
     "prepare": "npm run build && npm run precompress"
   },
   "dependencies": {
-    "@stencil/core": "^3.0.0",
+    "@stencil/core": "^3.2.0",
     "leaflet": "^1.9.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
-    "@stencil/sass": "^2.0.3",
-    "@stencil/store": "^2.0.3",
+    "@stencil/sass": "^2.0.4",
+    "@stencil/store": "^2.0.5",
     "@storybook/addon-controls": "^6.5.12",
     "@storybook/addon-docs": "^6.5.12",
     "@storybook/builder-webpack4": "^6.5.12",
@@ -40,9 +40,9 @@
     "@storybook/manager-webpack4": "^6.5.12",
     "@storybook/storybook-deployer": "^2.8.12",
     "@types/geojson": "^7946.0.10",
-    "@types/leaflet": "^1.9.0",
+    "@types/leaflet": "^1.9.3",
     "babel-loader": "^8.3.0",
-    "glob": "^9.3.1",
+    "glob": "^9.3.4",
     "typescript": "^4.9.5"
   },
   "author": "bastien.alvez@makina-corpus.com",
