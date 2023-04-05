@@ -7,14 +7,14 @@ const precompress = async () => {
   files.forEach(file => {
     fs.writeFileSync(
       `${file}.br`,
-      zlib.brotliCompressSync(file, {
+      zlib.brotliCompressSync(fs.readFileSync(file), {
         params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 11 },
       }),
     );
 
     fs.writeFileSync(
       `${file}.gz`,
-      zlib.gzipSync(file, {
+      zlib.gzipSync(fs.readFileSync(file), {
         level: 9,
       }),
     );
