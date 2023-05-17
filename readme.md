@@ -23,3 +23,5 @@ You can explore Geotrek Rando Widget and create your own component [here](https:
 Once you made your component, you can get the code to copy-paste by clicking on _Docs_ then _Show code_.
 
 If you plan to use a component with a map, take care to place it inside an element with a px or vh height, otherwise the map will not be visible.
+
+[![](https://geotrek.fr/assets/img/logo_autonomens-h120m.png)](https://datatheca.com/)
