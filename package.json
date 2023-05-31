@@ -26,13 +26,13 @@
     "prepare": "npm run build && npm run precompress"
   },
   "dependencies": {
-    "@stencil/core": "^3.2.0",
-    "leaflet": "^1.9.3"
+    "@stencil/core": "^3.3.0",
+    "leaflet": "^1.9.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
-    "@stencil/sass": "^3.0.0",
-    "@stencil/store": "^2.0.5",
+    "@babel/core": "^7.22.1",
+    "@stencil/sass": "^3.0.3",
+    "@stencil/store": "^2.0.7",
     "@storybook/addon-controls": "^6.5.12",
     "@storybook/addon-docs": "^6.5.12",
     "@storybook/builder-webpack4": "^6.5.12",
