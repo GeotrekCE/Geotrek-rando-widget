@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Event, EventEmitter, State, getAssetPath } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, State, getAssetPath, Build } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
 import { City, Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
@@ -50,9 +50,9 @@ export class GrwTrekCard {
   }
 
   render() {
-    const durationImageSrc = getAssetPath(`assets/duration.svg`);
-    const lengthImageSrc = getAssetPath(`assets/length.svg`);
-    const ascentImageSrc = getAssetPath(`assets/ascent.svg`);
+    const durationImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/duration.svg`);
+    const lengthImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/length.svg`);
+    const ascentImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/ascent.svg`);
     return (
       <Host
         onClick={() => this.trekCardPress.emit(this.currentTrek.id)}

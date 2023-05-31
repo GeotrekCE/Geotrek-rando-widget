@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop, State, Event, EventEmitter, getAssetPath } from '@stencil/core';
+import { Component, Host, h, Element, Prop, State, Event, EventEmitter, getAssetPath, Build } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import state, { onChange, reset } from 'store/store';
@@ -171,7 +171,7 @@ export class GrwMap {
   }
 
   addTrek() {
-    const departureArrivalImageSrc = getAssetPath(`assets/departure-arrival.svg`);
+    const departureArrivalImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/departure-arrival.svg`);
     const currentTrekFeature: Feature = {
       type: 'Feature',
       geometry: state.currentTrek.geometry,

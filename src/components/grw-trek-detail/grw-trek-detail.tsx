@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, getAssetPath } from '@stencil/core';
+import { Component, Host, h, Prop, State, getAssetPath, Build } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
@@ -62,9 +62,9 @@ export class GrwTrekDetail {
   }
 
   render() {
-    const durationImageSrc = getAssetPath(`assets/duration.svg`);
-    const lengthImageSrc = getAssetPath(`assets/length.svg`);
-    const ascentImageSrc = getAssetPath(`assets/ascent.svg`);
+    const durationImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/duration.svg`);
+    const lengthImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/length.svg`);
+    const ascentImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/ascent.svg`);
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-shade': this.colorPrimaryShade, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (

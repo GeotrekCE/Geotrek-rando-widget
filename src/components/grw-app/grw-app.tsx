@@ -1,4 +1,4 @@
-import { Component, Host, h, Listen, State, Prop, Element, Watch, getAssetPath } from '@stencil/core';
+import { Component, Host, h, Listen, State, Prop, Element, Watch, getAssetPath, Build } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
 
 @Component({
@@ -136,7 +136,7 @@ export class GrwApp {
   }
 
   render() {
-    const arrowBackImageSrc = getAssetPath(`assets/arrow-back.svg`);
+    const arrowBackImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/arrow-back.svg`);
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint, '--color-primary-shade': this.colorPrimaryShade }}>
         {!state.currentTreks && !state.currentTrek && (
