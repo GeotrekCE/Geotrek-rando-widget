@@ -6,7 +6,7 @@ import state from 'store/store';
   shadow: true,
 })
 export class GrwTreksProvider {
-  @Prop() language = 'fr';
+  @Prop() languages = 'fr';
   @Prop() api: string;
   @Prop() inBbox: string;
   @Prop() cities: string;
@@ -20,9 +20,21 @@ export class GrwTreksProvider {
   signal = this.controller.signal;
 
   connectedCallback() {
-    state.api = this.api;
+    if (!state.api) {
+      state.api = this.api;
+      state.languages = this.languages.split(',');
+      state.language = state.languages[0];
+    }
+    this.handleTreks();
+  }
 
-    let treksRequest = `${this.api}trek/?language=${this.language}&published=true`;
+  disconnectedCallback() {
+    this.controller.abort();
+    state.treksNetworkError = false;
+  }
+
+  handleTreks() {
+    let treksRequest = `${this.api}trek/?language=${state.language}&published=true`;
 
     this.inBbox && (treksRequest += `&in_bbox=${this.inBbox}`);
     this.cities && (treksRequest += `&cities=${this.cities}`);
@@ -36,11 +48,11 @@ export class GrwTreksProvider {
     treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom&page_size=999`;
 
     Promise.all([
-      fetch(`${this.api}trek_difficulty/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }),
-      fetch(`${this.api}trek_route/?language=${this.language}&fields=id,route,pictogram`, { signal: this.signal }),
-      fetch(`${this.api}trek_practice/?language=${this.language}&fields=id,name,pictogram`, { signal: this.signal }),
-      fetch(`${this.api}theme/?language=${this.language}&fields=id,label,pictogram`, { signal: this.signal }),
-      fetch(`${this.api}city/?language=${this.language}&fields=id,name&published=true`, { signal: this.signal }),
+      fetch(`${state.api}trek_difficulty/?language=${state.language}&fields=id,label,pictogram`, { signal: this.signal }),
+      fetch(`${state.api}trek_route/?language=${state.language}&fields=id,route,pictogram`, { signal: this.signal }),
+      fetch(`${state.api}trek_practice/?language=${state.language}&fields=id,name,pictogram`, { signal: this.signal }),
+      fetch(`${state.api}theme/?language=${state.language}&fields=id,label,pictogram`, { signal: this.signal }),
+      fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true`, { signal: this.signal }),
       fetch(treksRequest, { signal: this.signal }),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
@@ -62,11 +74,6 @@ export class GrwTreksProvider {
         state.treks = treks.results;
       })
       .catch(() => (state.treksNetworkError = true));
-  }
-
-  disconnectedCallback() {
-    this.controller.abort();
-    state.treksNetworkError = false;
   }
 
   render() {

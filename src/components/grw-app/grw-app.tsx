@@ -1,4 +1,5 @@
 import { Component, Host, h, Listen, State, Prop, Element, Watch, getAssetPath, Build } from '@stencil/core';
+import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
 
 @Component({
@@ -15,7 +16,7 @@ export class GrwApp {
   @State() isLargeView = false;
   @State() currentTrekId: number;
   @Prop() api: string;
-  @Prop() language = 'fr';
+  @Prop() languages = 'fr';
   @Prop() inBbox: string;
   @Prop() cities: string;
   @Prop() districts: string;
@@ -147,7 +148,7 @@ export class GrwApp {
         {!this.showTrek && !state.treks && (
           <grw-treks-provider
             api={this.api}
-            language={this.language}
+            languages={this.languages}
             in-bbox={this.inBbox}
             cities={this.cities}
             districts={this.districts}
@@ -158,24 +159,30 @@ export class GrwApp {
             practices={this.practices}
           ></grw-treks-provider>
         )}
-        {this.showTrek && this.currentTrekId && <grw-trek-provider api={this.api} language={this.language} trek-id={this.currentTrekId}></grw-trek-provider>}
+        {this.showTrek && this.currentTrekId && !state.currentTrek && (
+          <grw-trek-provider api={this.api} languages={this.languages} trek-id={this.currentTrekId}></grw-trek-provider>
+        )}
         {(state.currentTreks || state.currentTrek) && (
           <div class="app-container">
             <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
-              {this.showTrek ? (
-                <div onClick={() => this.handleBackButton()} class="arrow-back-icon">
-                  <img src={arrowBackImageSrc} />
-                </div>
-              ) : (
-                <div class="handle-filters-container">
-                  <div onClick={() => this.handleFilters()} class="handle-filters-button">
-                    FILTRER
+              <div class="header-left-container">
+                {this.showTrek ? (
+                  <div onClick={() => this.handleBackButton()} class="arrow-back-icon">
+                    <img src={arrowBackImageSrc} />
                   </div>
-                  {state.treksWithinBounds && (
-                    <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} randonnée${state.treksWithinBounds.length > 1 ? 's' : ''}`}</div>
-                  )}
-                </div>
-              )}
+                ) : (
+                  <div class="handle-filters-container">
+                    <div onClick={() => this.handleFilters()} class="handle-filters-button">
+                      {translate[state.language].filter.toUpperCase()}
+                    </div>
+                    {state.treksWithinBounds && (
+                      <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
+                        state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek
+                      }`}</div>
+                    )}
+                  </div>
+                )}
+              </div>
               {!this.showTrek && this.showFilters && (
                 <div class="options-container">
                   <div class="filters-container">
@@ -183,25 +190,28 @@ export class GrwApp {
                       X
                     </div>
                     <div>
-                      <grw-filter filterName="Pratique" filterType="practices" filterNameProperty="name"></grw-filter>
+                      <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name"></grw-filter>
                     </div>
                     <div class="filter-margin-top">
-                      <grw-filter filterName="Difficulté" filterType="difficulties" filterNameProperty="label"></grw-filter>
+                      <grw-filter filterName={translate[state.language].difficulty} filterType="difficulties" filterNameProperty="label"></grw-filter>
                     </div>
                     <div class="filter-margin-top">
-                      <grw-filter filterName="Durée" filterType="durations" filterNameProperty="name"></grw-filter>
+                      <grw-filter filterName={translate[state.language].duration} filterType="durations" filterNameProperty="name"></grw-filter>
                     </div>
                   </div>
                   <div onClick={() => this.handleFilters()} class="back-filters-container"></div>
                 </div>
               )}
-              {this.linkName && (
-                <div class="attribution-container">
-                  <a target="_blank" href={this.linkTarget}>
-                    {this.linkName}
-                  </a>
-                </div>
-              )}
+              <div class="header-right-container">
+                {state.languages.length > 1 && <grw-select-language></grw-select-language>}
+                {this.linkName && (
+                  <div class="attribution-container">
+                    <a target="_blank" href={this.linkTarget}>
+                      {this.linkName}
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
             <div class="content-container">
               <div
@@ -249,7 +259,7 @@ export class GrwApp {
             </div>
             <div class="map-visibility-button" style={{ display: this.isLargeView ? 'none' : 'flex' }}>
               <div onClick={() => this.handleShowMap()}>
-                {this.showTrek ? (this.showTrekMap ? 'Voir la fiche' : 'Voir la carte') : this.showTreksMap ? 'Voir la liste' : 'Voir la carte'}
+                {this.showTrek ? (this.showTrekMap ? 'Voir la fiche' : translate[state.language].showMap) : this.showTreksMap ? 'Voir la liste' : translate[state.language].showMap}
               </div>
             </div>
           </div>

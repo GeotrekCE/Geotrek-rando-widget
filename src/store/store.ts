@@ -21,6 +21,8 @@ import {
 
 const { state, onChange, reset } = createStore<{
   api: string;
+  languages: string[];
+  language: string;
   treks: Treks;
   treksWithinBounds: Treks;
   currentMapTreksBounds: LatLngBounds;
@@ -44,6 +46,8 @@ const { state, onChange, reset } = createStore<{
   trekNetworkError: boolean;
 }>({
   api: '',
+  languages: [],
+  language: '',
   treks: null,
   currentTreks: null,
   treksWithinBounds: null,

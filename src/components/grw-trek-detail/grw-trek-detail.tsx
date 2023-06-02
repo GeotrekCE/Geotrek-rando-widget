@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, State, getAssetPath, Build } from '@stencil/core';
+import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
@@ -108,7 +109,7 @@ export class GrwTrekDetail {
               </div>
             </div>
             <div class="downloads-container">
-              <div class="download-title">Téléchargements</div>
+              <div class="download-title">{translate[state.language].downloads}</div>
               <div class="links-container">
                 <a href={`${this.currentTrek.gpx}`}>GPX</a>
                 <a href={`${this.currentTrek.kml}`}>KML</a>
@@ -126,25 +127,25 @@ export class GrwTrekDetail {
             {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
             {this.currentTrek.description && (
               <div class="description-container">
-                <div class="description-title">Description</div>
+                <div class="description-title">{translate[state.language].description}</div>
                 <div class="description" innerHTML={this.currentTrek.description}></div>
               </div>
             )}
             {this.currentTrek.departure && (
               <div class="departure-container">
-                <div class="departure-title">Départ :&nbsp;</div>
+                <div class="departure-title">{translate[state.language].departure} :&nbsp;</div>
                 <div innerHTML={this.currentTrek.departure}></div>
               </div>
             )}
             {this.currentTrek.arrival && (
               <div class="arrival-container">
-                <div class="arrival-title">Arrivée :&nbsp;</div>
+                <div class="arrival-title">{translate[state.language].arrival} :&nbsp;</div>
                 <div innerHTML={this.currentTrek.arrival}></div>
               </div>
             )}
             {this.currentTrek.altimetric_profile && (
               <div class="altimetric-profile-container">
-                <div class="altimetric-profile-title">Profil altimétrique</div>
+                <div class="altimetric-profile-title">{translate[state.language].elevationProfile}</div>
                 <img
                   src={
                     this.currentTrek.altimetric_profile.endsWith('.json')
@@ -156,19 +157,19 @@ export class GrwTrekDetail {
             )}
             {this.currentTrek.access && (
               <div class="access-container">
-                <div class="access-title">Accès routier</div>
+                <div class="access-title">{translate[state.language].roadAccess}</div>
                 <div class="access" innerHTML={this.currentTrek.access}></div>
               </div>
             )}
             {this.currentTrek.public_transport && (
               <div class="public-transport-container">
-                <div class="public-transport-title">Transport</div>
+                <div class="public-transport-title">{translate[state.language].transport}</div>
                 <div class="public-transport" innerHTML={this.currentTrek.public_transport}></div>
               </div>
             )}
             {(this.currentTrek.advice || this.labels.length > 0) && (
               <div class="advice-container">
-                <div class="advice-title">Recommandations</div>
+                <div class="advice-title">{translate[state.language].recommandations}</div>
                 {this.currentTrek.advice && <div class="advice" innerHTML={this.currentTrek.advice}></div>}
                 {this.labels.map(label => (
                   <div class="label-container">
@@ -183,19 +184,19 @@ export class GrwTrekDetail {
             )}
             {this.currentTrek.advised_parking && (
               <div class="advised-parking-container">
-                <div class="advised-parking-title">Parking conseillé</div>
+                <div class="advised-parking-title">{translate[state.language].recommendedParking}</div>
                 <div class="advised_parking" innerHTML={this.currentTrek.advised_parking}></div>
               </div>
             )}
             {this.currentTrek.gear && (
               <div class="gear-container">
-                <div class="gear-title">Équipements</div>
+                <div class="gear-title">{translate[state.language].equipments}</div>
                 <div class="gear" innerHTML={this.currentTrek.gear}></div>
               </div>
             )}
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
               <div class="sensitive-areas-container">
-                <div class="sensitive-areas-title">Zones de sensibilité environnementale</div>
+                <div class="sensitive-areas-title">{translate[state.language].environmentalSensitiveAreas}</div>
                 {state.currentSensitiveAreas.map(sensitiveArea => (
                   <grw-sensitive-area-detail sensitiveArea={sensitiveArea}></grw-sensitive-area-detail>
                 ))}
@@ -203,7 +204,7 @@ export class GrwTrekDetail {
             )}
             {state.currentInformationDesks && state.currentInformationDesks.length > 0 && (
               <div class="information-desks-container">
-                <div class="information-desks-title">Lieux de renseignement</div>
+                <div class="information-desks-title">{translate[state.language].informationPlaces}</div>
                 {state.currentInformationDesks.map(informationDesk => (
                   <grw-information-desk-detail informationDesk={informationDesk}></grw-information-desk-detail>
                 ))}
@@ -219,7 +220,7 @@ export class GrwTrekDetail {
               this.currentTrek.accessibility_exposure ||
               this.currentTrek.accessibility_advice) && (
               <div class="accessibilities-container">
-                <div class="accessibilities-title">Accessibilité</div>
+                <div class="accessibilities-title">{translate[state.language].accessibility}</div>
                 {this.currentTrek.disabled_infrastructure && <div innerHTML={this.currentTrek.disabled_infrastructure}></div>}
                 <div class="accessibilities-content-container">
                   {this.accessibilities.map(accessibility => (
@@ -231,43 +232,43 @@ export class GrwTrekDetail {
                 </div>
                 {this.currentTrek.accessibility_level && (
                   <div class="accessibility-level-container">
-                    <div class="accessibility-level-title">Niveau d'accessibilité</div>
+                    <div class="accessibility-level-title">{translate[state.language].accessibilityLevel}</div>
                     <div innerHTML={this.accessibilityLevel.name}></div>
                   </div>
                 )}
                 {this.currentTrek.accessibility_slope && (
                   <div class="accessibility-slope-container">
-                    <div class="accessibility-slope-title">Pente</div>
+                    <div class="accessibility-slope-title">{translate[state.language].accessibilitySlope}</div>
                     <div innerHTML={this.currentTrek.accessibility_slope}></div>
                   </div>
                 )}
                 {this.currentTrek.accessibility_width && (
                   <div class="accessibility-width-container">
-                    <div class="accessibility-width-title">Largeur</div>
+                    <div class="accessibility-width-title">{translate[state.language].accessibilityWidth}</div>
                     <div innerHTML={this.currentTrek.accessibility_width}></div>
                   </div>
                 )}
                 {this.currentTrek.accessibility_signage && (
                   <div class="accessibility-signage-container">
-                    <div class="accessibility-signage-title">Pente</div>
+                    <div class="accessibility-signage-title">{translate[state.language].accessibilitySignage}</div>
                     <div innerHTML={this.currentTrek.accessibility_signage}></div>
                   </div>
                 )}
                 {this.currentTrek.accessibility_covering && (
                   <div class="accessibility-covering-container">
-                    <div class="accessibility-covering-title">Revêtement</div>
+                    <div class="accessibility-covering-title">{translate[state.language].accessibilityCovering}</div>
                     <div innerHTML={this.currentTrek.accessibility_covering}></div>
                   </div>
                 )}
                 {this.currentTrek.accessibility_exposure && (
                   <div class="accessibility-exposure-container">
-                    <div class="accessibility-exposure-title">Exposition</div>
+                    <div class="accessibility-exposure-title">{translate[state.language].accessibilityExposure}</div>
                     <div innerHTML={this.currentTrek.accessibility_exposure}></div>
                   </div>
                 )}
                 {this.currentTrek.accessibility_advice && (
                   <div class="accessibility-advice-container">
-                    <div class="accessibility-advice-title">Conseils</div>
+                    <div class="accessibility-advice-title">{translate[state.language].accessibilityAdvices}</div>
                     <div innerHTML={this.currentTrek.accessibility_advice}></div>
                   </div>
                 )}
@@ -275,7 +276,7 @@ export class GrwTrekDetail {
             )}
             {state.currentPois && state.currentPois.length > 0 && (
               <div class="pois-container">
-                <div class="pois-title">Points d'intérêts</div>
+                <div class="pois-title">{translate[state.language].pois(state.currentPois.length)}</div>
                 {state.currentPois.map(poi => (
                   <grw-poi-detail poi={poi}></grw-poi-detail>
                 ))}
@@ -283,7 +284,7 @@ export class GrwTrekDetail {
             )}
             {this.currentTrek.source && this.currentTrek.source.length > 0 && (
               <div class="source-container">
-                <div class="source-title">Sources</div>
+                <div class="source-title">{translate[state.language].sources}</div>
                 {this.sources.map(source => (
                   <div class="source-sub-container">
                     {source.pictogram && <img src={source.pictogram} />}

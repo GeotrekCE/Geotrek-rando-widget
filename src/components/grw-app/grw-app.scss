@@ -14,12 +14,12 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   background-color: var(--color-primary);
   height: 64px;
   .arrow-back-icon {
     width: 48px;
     height: auto;
-    margin-left: 24px;
     img {
       cursor: pointer;
       width: 48px;
@@ -43,9 +43,15 @@
       color: #ffffff;
     }
   }
+  .header-left-container {
+    margin-left: 24px;
+  }
+  .header-right-container {
+    display: flex;
+    margin-right: 24px;
+  }
   .attribution-container {
-    position: absolute;
-    right: 24px;
+    margin-left: 12px;
     a {
       color: #ffffff;
       text-decoration: none;

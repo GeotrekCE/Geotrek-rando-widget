@@ -23,7 +23,7 @@ export namespace Components {
         "colorTrekLine": string;
         "districts": string;
         "inBbox": string;
-        "language": string;
+        "languages": string;
         "linkName": string;
         "linkTarget": string;
         "portals": string;
@@ -59,6 +59,8 @@ export namespace Components {
     interface GrwPoiDetail {
         "poi": Poi;
     }
+    interface GrwSelectLanguage {
+    }
     interface GrwSensitiveAreaDetail {
         "sensitiveArea": SensitiveArea;
     }
@@ -78,7 +80,7 @@ export namespace Components {
     }
     interface GrwTrekProvider {
         "api": string;
-        "language": string;
+        "languages": string;
         "trekId": string;
     }
     interface GrwTreksList {
@@ -92,7 +94,7 @@ export namespace Components {
         "cities": string;
         "districts": string;
         "inBbox": string;
-        "language": string;
+        "languages": string;
         "portals": string;
         "practices": string;
         "routes": string;
@@ -139,6 +141,12 @@ declare global {
         prototype: HTMLGrwPoiDetailElement;
         new (): HTMLGrwPoiDetailElement;
     };
+    interface HTMLGrwSelectLanguageElement extends Components.GrwSelectLanguage, HTMLStencilElement {
+    }
+    var HTMLGrwSelectLanguageElement: {
+        prototype: HTMLGrwSelectLanguageElement;
+        new (): HTMLGrwSelectLanguageElement;
+    };
     interface HTMLGrwSensitiveAreaDetailElement extends Components.GrwSensitiveAreaDetail, HTMLStencilElement {
     }
     var HTMLGrwSensitiveAreaDetailElement: {
@@ -181,6 +189,7 @@ declare global {
         "grw-information-desk-detail": HTMLGrwInformationDeskDetailElement;
         "grw-map": HTMLGrwMapElement;
         "grw-poi-detail": HTMLGrwPoiDetailElement;
+        "grw-select-language": HTMLGrwSelectLanguageElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
         "grw-trek-detail": HTMLGrwTrekDetailElement;
@@ -205,7 +214,7 @@ declare namespace LocalJSX {
         "colorTrekLine"?: string;
         "districts"?: string;
         "inBbox"?: string;
-        "language"?: string;
+        "languages"?: string;
         "linkName"?: string;
         "linkTarget"?: string;
         "portals"?: string;
@@ -242,6 +251,8 @@ declare namespace LocalJSX {
     interface GrwPoiDetail {
         "poi"?: Poi;
     }
+    interface GrwSelectLanguage {
+    }
     interface GrwSensitiveAreaDetail {
         "sensitiveArea"?: SensitiveArea;
     }
@@ -262,7 +273,7 @@ declare namespace LocalJSX {
     }
     interface GrwTrekProvider {
         "api"?: string;
-        "language"?: string;
+        "languages"?: string;
         "trekId"?: string;
     }
     interface GrwTreksList {
@@ -276,7 +287,7 @@ declare namespace LocalJSX {
         "cities"?: string;
         "districts"?: string;
         "inBbox"?: string;
-        "language"?: string;
+        "languages"?: string;
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
@@ -289,6 +300,7 @@ declare namespace LocalJSX {
         "grw-information-desk-detail": GrwInformationDeskDetail;
         "grw-map": GrwMap;
         "grw-poi-detail": GrwPoiDetail;
+        "grw-select-language": GrwSelectLanguage;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
         "grw-trek-card": GrwTrekCard;
         "grw-trek-detail": GrwTrekDetail;
@@ -306,6 +318,7 @@ declare module "@stencil/core" {
             "grw-information-desk-detail": LocalJSX.GrwInformationDeskDetail & JSXBase.HTMLAttributes<HTMLGrwInformationDeskDetailElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-poi-detail": LocalJSX.GrwPoiDetail & JSXBase.HTMLAttributes<HTMLGrwPoiDetailElement>;
+            "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
             "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;

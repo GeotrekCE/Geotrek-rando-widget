@@ -54,12 +54,9 @@ export class GrwTrekCard {
     const lengthImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/length.svg`);
     const ascentImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/ascent.svg`);
     return (
-      <Host
-        onClick={() => this.trekCardPress.emit(this.currentTrek.id)}
-        style={{ 'width': this.isLargeView ? '100%' : 'auto', '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}
-      >
+      <Host style={{ 'width': this.isLargeView ? '100%' : 'auto', '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (
-          <div class={this.isLargeView ? 'trek-card-large-view-container' : 'trek-card-container'}>
+          <div class={this.isLargeView ? 'trek-card-large-view-container' : 'trek-card-container'} onClick={() => this.trekCardPress.emit(this.currentTrek.id)}>
             {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].thumbnail && (
               <img class="image" src={`${this.currentTrek.attachments[0].thumbnail}`} loading="lazy" />
             )}
