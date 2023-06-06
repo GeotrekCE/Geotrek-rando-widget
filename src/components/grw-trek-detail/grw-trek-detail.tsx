@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, State, getAssetPath, Build } from '@stencil/core';
+import Swiper from 'swiper';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
@@ -10,6 +11,8 @@ import { formatDuration, formatLength, formatAscent } from 'utils/utils';
   shadow: true,
 })
 export class GrwTrekDetail {
+  swiper?: Swiper;
+  swiperRef?: HTMLDivElement;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;
@@ -24,6 +27,21 @@ export class GrwTrekDetail {
   @Prop() colorPrimaryShade = '#4a0021';
   @Prop() colorPrimaryTint = '#974c6e';
   @Prop() resetStoreOnDisconnected = true;
+
+  componentDidLoad() {
+    this.swiper = new Swiper(this.swiperRef, {
+      slidesPerView: 1.5,
+      spaceBetween: 20,
+      grabCursor: true,
+      breakpointsBase: 'container',
+      breakpoints: {
+        '540': {
+          slidesPerView: 2.5,
+          spaceBetween: 20,
+        },
+      },
+    });
+  }
 
   connectedCallback() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -70,10 +88,10 @@ export class GrwTrekDetail {
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-shade': this.colorPrimaryShade, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (
           <div class="trek-detail-container">
-            <div class="name">{this.currentTrek.name}</div>
             {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].url && (
               <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />
             )}
+            <div class="name">{this.currentTrek.name}</div>
             <div class="sub-container">
               <div class="icons-labels-container">
                 <div class="row">
@@ -277,9 +295,15 @@ export class GrwTrekDetail {
             {state.currentPois && state.currentPois.length > 0 && (
               <div class="pois-container">
                 <div class="pois-title">{translate[state.language].pois(state.currentPois.length)}</div>
-                {state.currentPois.map(poi => (
-                  <grw-poi-detail poi={poi}></grw-poi-detail>
-                ))}
+                <div class="swiper" ref={el => (this.swiperRef = el)}>
+                  <div class="swiper-wrapper">
+                    {state.currentPois.map(poi => (
+                      <div class="swiper-slide">
+                        <grw-poi-detail poi={poi}></grw-poi-detail>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
             {this.currentTrek.source && this.currentTrek.source.length > 0 && (

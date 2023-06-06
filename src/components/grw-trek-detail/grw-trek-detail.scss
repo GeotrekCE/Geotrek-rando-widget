@@ -1,3 +1,5 @@
+@use '~swiper/swiper.scss';
+
 grw-sensitive-area-detail,
 grw-information-desk-detail,
 grw-poi-detail {
@@ -12,12 +14,11 @@ grw-poi-detail {
   overflow-y: auto;
   .name {
     color: var(--color-primary);
-    font-size: 48px;
+    font-size: 1.6rem;
     font-weight: bold;
     padding: 24px;
   }
   .image {
-    border-radius: 8px;
     align-self: center;
     width: 100%;
     max-width: 700px;
@@ -69,7 +70,7 @@ grw-poi-detail {
     align-items: center;
     .download-title {
       color: var(--color-primary);
-      font-size: 18px;
+      font-size: 1.3rem;
       margin-bottom: 12px;
     }
     .links-container {
@@ -135,7 +136,7 @@ grw-poi-detail {
   .source-title,
   .accessibilities-title {
     color: var(--color-primary);
-    font-size: 36px;
+    font-size: 1.5rem;
     font-weight: bold;
     margin: 12px 0px;
   }
@@ -150,7 +151,7 @@ grw-poi-detail {
     }
     .label-name {
       color: var(--color-primary);
-      font-size: 24px;
+      font-size: 1.4rem;
       font-weight: bold;
       padding: 12px 0px;
     }
@@ -166,7 +167,7 @@ grw-poi-detail {
     }
     .source-name {
       color: var(--color-primary);
-      font-size: 24px;
+      font-size: 1.4rem;
       font-weight: bold;
       padding: 12px 0px;
     }
@@ -205,7 +206,15 @@ grw-poi-detail {
   .accessibility-exposure-title,
   .accessibility-advice-title {
     color: var(--color-primary);
-    font-size: 24px;
+    font-size: 1.4rem;
     padding: 12px 0px;
+  }
+}
+
+.swiper {
+  margin: 0px -24px 0px -24px;
+
+  .swiper-slide:first-of-type {
+    margin-left: 24px;
   }
 }

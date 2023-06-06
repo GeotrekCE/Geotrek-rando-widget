@@ -150,16 +150,17 @@
 }
 
 .map-visibility-button {
-  cursor: pointer;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  bottom: 24px;
   width: 100%;
   z-index: 400;
   user-select: none;
   div {
+    cursor: pointer;
+    position: absolute;
+    bottom: 24px;
     background-color: var(--color-primary);
     color: #ffffff;
     padding: 12px;
@@ -171,7 +172,7 @@
 
 .header-container {
   .title {
-    font-size: 24px;
+    font-size: 1.4rem;
   }
 }
 
@@ -193,7 +194,7 @@
 
 .large-view-header-container {
   .title {
-    font-size: 32px;
+    font-size: 1.5rem;
   }
 }
 
