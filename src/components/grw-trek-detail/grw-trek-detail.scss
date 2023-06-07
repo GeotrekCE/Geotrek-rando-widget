@@ -149,6 +149,51 @@ grw-poi-detail {
     margin: 12px 0px;
   }
 }
+
+.description-container {
+  .description {
+    ol {
+      position: relative;
+      counter-reset: referencePoint;
+      &:before {
+        content: '';
+        position: absolute;
+        width: 4px;
+        top: 0px;
+        bottom: 0px;
+        left: 14px;
+        background-color: #e59900;
+      }
+      li {
+        position: relative;
+        list-style-type: none;
+        counter-increment: referencePoint;
+        p {
+          margin: 0;
+        }
+        &:not(:first-child) {
+          margin-top: 12px;
+        }
+      }
+      li:before {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: counter(referencePoint);
+        width: 24px;
+        height: 24px;
+        background: #f04141;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 0.8em;
+        color: white;
+        margin-left: -36px;
+        top: calc(50% - 12px);
+      }
+    }
+  }
+}
 .label-container {
   .label-sub-container {
     display: flex;
