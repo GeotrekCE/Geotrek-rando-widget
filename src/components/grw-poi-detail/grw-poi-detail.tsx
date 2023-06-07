@@ -9,32 +9,32 @@ import { Poi } from 'types/types';
   shadow: true,
 })
 export class GrwPoiDetail {
-  swiper?: Swiper;
-  swiperRef?: HTMLDivElement;
-  prevElRef?: HTMLDivElement;
-  nextElRef?: HTMLDivElement;
-  paginationElRef?: HTMLDivElement;
+  swiperPoi?: Swiper;
+  swiperPoiRef?: HTMLDivElement;
+  prevElPoiRef?: HTMLDivElement;
+  nextElPoiRef?: HTMLDivElement;
+  paginationElPoiRef?: HTMLDivElement;
   @Prop() poi: Poi;
   @State() displayShortDescription = true;
   @State() displayFullscreen = false;
 
   componentDidLoad() {
-    this.swiper = new Swiper(this.swiperRef, {
+    this.swiperPoi = new Swiper(this.swiperPoiRef, {
       modules: [Navigation, Pagination, Keyboard],
       navigation: {
-        prevEl: this.prevElRef,
-        nextEl: this.nextElRef,
+        prevEl: this.prevElPoiRef,
+        nextEl: this.nextElPoiRef,
       },
-      pagination: { el: this.paginationElRef },
+      pagination: { el: this.paginationElPoiRef },
       allowTouchMove: false,
       keyboard: false,
     });
-    this.swiperRef.onfullscreenchange = () => {
+    this.swiperPoiRef.onfullscreenchange = () => {
       this.displayFullscreen = !this.displayFullscreen;
       if (this.displayFullscreen) {
-        this.swiper.keyboard.enable();
+        this.swiperPoi.keyboard.enable();
       } else {
-        this.swiper.keyboard.disable();
+        this.swiperPoi.keyboard.disable();
       }
     };
   }
@@ -44,8 +44,8 @@ export class GrwPoiDetail {
   }
 
   handleFullscreen() {
-    if (this.poi.attachments && this.poi.attachments[0] && this.poi.attachments[0].thumbnail) {
-      this.swiperRef.requestFullscreen();
+    if (this.poi.attachments && this.poi.attachments[0] && this.poi.attachments[0].url) {
+      this.swiperPoiRef.requestFullscreen();
     }
   }
 
@@ -55,7 +55,7 @@ export class GrwPoiDetail {
       <Host>
         <div class="poi-type-img-container">
           <img class="poi-type" src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`} />
-          <div class="swiper" ref={el => (this.swiperRef = el)}>
+          <div class="swiper" ref={el => (this.swiperPoiRef = el)}>
             <div class="swiper-wrapper">
               {this.poi.attachments.length > 0 ? (
                 this.poi.attachments.map(attachment => (
@@ -69,9 +69,9 @@ export class GrwPoiDetail {
                 </div>
               )}
             </div>
-            <div class="swiper-pagination" ref={el => (this.paginationElRef = el)}></div>
-            <div class="swiper-button-prev" ref={el => (this.prevElRef = el)}></div>
-            <div class="swiper-button-next" ref={el => (this.nextElRef = el)}></div>
+            <div class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
+            <div class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
+            <div class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
           </div>
         </div>
         <div class="poi-sub-container">

@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, State, getAssetPath, Build } from '@stencil/core';
-import Swiper from 'swiper';
+import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
@@ -11,8 +11,13 @@ import { formatDuration, formatLength, formatAscent } from 'utils/utils';
   shadow: true,
 })
 export class GrwTrekDetail {
-  swiper?: Swiper;
-  swiperRef?: HTMLDivElement;
+  swiperImages?: Swiper;
+  swiperPois?: Swiper;
+  swiperImagesRef?: HTMLDivElement;
+  prevElImagesRef?: HTMLDivElement;
+  nextElImagesRef?: HTMLDivElement;
+  paginationElImagesRef?: HTMLDivElement;
+  swiperPoisRef?: HTMLDivElement;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;
@@ -22,6 +27,7 @@ export class GrwTrekDetail {
   @State() sources: Sources;
   @State() accessibilities: Accessibilities;
   @State() accessibilityLevel: AccessibilityLevel;
+  @State() displayFullscreen = false;
   @Prop() trek: Trek;
   @Prop() colorPrimary = '#6b0030';
   @Prop() colorPrimaryShade = '#4a0021';
@@ -29,7 +35,25 @@ export class GrwTrekDetail {
   @Prop() resetStoreOnDisconnected = true;
 
   componentDidLoad() {
-    this.swiper = new Swiper(this.swiperRef, {
+    this.swiperImages = new Swiper(this.swiperImagesRef, {
+      modules: [Navigation, Pagination, Keyboard],
+      navigation: {
+        prevEl: this.prevElImagesRef,
+        nextEl: this.nextElImagesRef,
+      },
+      pagination: { el: this.paginationElImagesRef },
+      allowTouchMove: false,
+      keyboard: false,
+    });
+    this.swiperImagesRef.onfullscreenchange = () => {
+      this.displayFullscreen = !this.displayFullscreen;
+      if (this.displayFullscreen) {
+        this.swiperImages.keyboard.enable();
+      } else {
+        this.swiperImages.keyboard.disable();
+      }
+    };
+    this.swiperPois = new Swiper(this.swiperPoisRef, {
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
@@ -80,6 +104,12 @@ export class GrwTrekDetail {
     }
   }
 
+  handleFullscreen() {
+    if (this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].url) {
+      this.swiperImagesRef.requestFullscreen();
+    }
+  }
+
   render() {
     const durationImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/duration.svg`);
     const lengthImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/length.svg`);
@@ -88,9 +118,20 @@ export class GrwTrekDetail {
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-shade': this.colorPrimaryShade, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (
           <div class="trek-detail-container">
-            {this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].url && (
-              <img class="image" src={this.currentTrek.attachments[0].url} loading="lazy" />
-            )}
+            <div class="images-container">
+              <div class="swiper" ref={el => (this.swiperImagesRef = el)}>
+                <div class="swiper-wrapper">
+                  {this.currentTrek.attachments.map(attachment => (
+                    <div class="swiper-slide">
+                      <img class="image" src={this.displayFullscreen ? attachment.url : attachment.thumbnail} loading="lazy" onClick={() => this.handleFullscreen()} />
+                    </div>
+                  ))}
+                </div>
+                <div class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
+                <div class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
+                <div class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
+              </div>
+            </div>
             <div class="name">{this.currentTrek.name}</div>
             <div class="sub-container">
               <div class="icons-labels-container">
@@ -295,7 +336,7 @@ export class GrwTrekDetail {
             {state.currentPois && state.currentPois.length > 0 && (
               <div class="pois-container">
                 <div class="pois-title">{translate[state.language].pois(state.currentPois.length)}</div>
-                <div class="swiper" ref={el => (this.swiperRef = el)}>
+                <div class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
                   <div class="swiper-wrapper">
                     {state.currentPois.map(poi => (
                       <div class="swiper-slide">

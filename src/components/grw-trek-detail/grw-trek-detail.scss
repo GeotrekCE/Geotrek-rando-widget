@@ -1,4 +1,13 @@
 @use '~swiper/swiper.scss';
+@use '~swiper/modules/navigation/navigation.scss';
+@use '~swiper/modules/pagination/pagination.scss';
+
+:host {
+  --swiper-navigation-size: 32px;
+  --swiper-navigation-color: var(--color-primary);
+  --swiper-pagination-bullet-size: 12px;
+  --swiper-pagination-color: var(--color-primary);
+}
 
 grw-sensitive-area-detail,
 grw-information-desk-detail,
@@ -19,11 +28,10 @@ grw-poi-detail {
     padding: 24px;
   }
   .image {
-    align-self: center;
+    cursor: pointer;
     width: 100%;
-    max-width: 700px;
-    height: auto;
-    box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.25);
+    height: 100%;
+    object-fit: cover;
   }
   .sub-container {
     padding: 24px;
@@ -211,7 +219,7 @@ grw-poi-detail {
   }
 }
 
-.swiper {
+.swiper-pois {
   margin: 0px -24px 0px -24px;
 
   .swiper-slide:first-of-type {
