@@ -1,6 +1,7 @@
 import { Component, Host, h, Element, Prop, State, Event, EventEmitter, getAssetPath, Build } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
+import 'leaflet-textpath';
 import state, { onChange, reset } from 'store/store';
 
 @Component({
@@ -179,6 +180,9 @@ export class GrwMap {
     };
 
     this.currentTrekLayer = L.geoJSON(currentTrekFeature, {
+      onEachFeature: (geoJsonPoint, layer: any) => {
+        layer.setText('►    ', { repeat: true, offset: 8, attributes: { 'fill': this.colorPrimary, 'font-weight': 'bold', 'font-size': '24' } });
+      },
       style: () => ({
         color: this.colorTrekLine,
       }),
