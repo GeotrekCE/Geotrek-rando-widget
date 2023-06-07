@@ -35,7 +35,7 @@ App.args = {
   urlLayer: 'planignv2',
   attribution: '© IGN',
   colorPrimary: '#6b0030',
-  colorPrimaryShade: '4a0021',
+  colorPrimaryShade: '#4a0021',
   colorPrimaryTint: '#974c6e',
   colorTrekLine: '#6b0030',
   colorDepartureIcon: '#006b3b',
