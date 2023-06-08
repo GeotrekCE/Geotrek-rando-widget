@@ -227,12 +227,14 @@ grw-poi-detail {
   }
 }
 .departure-container,
-.arrival-container {
+.arrival-container,
+.cities-container {
   display: flex;
   align-items: center;
   padding: 0px 24px 24px 24px;
   .departure-title,
-  .arrival-title {
+  .arrival-title,
+  .cities-title {
     color: var(--color-primary);
     font-weight: bold;
   }

@@ -180,7 +180,7 @@ export class GrwMap {
     };
 
     this.currentTrekLayer = L.geoJSON(currentTrekFeature, {
-      onEachFeature: (geoJsonPoint, layer: any) => {
+      onEachFeature: (_geoJsonPoint, layer: any) => {
         layer.setText('►    ', { repeat: true, offset: 8, attributes: { 'fill': this.colorPrimary, 'font-weight': 'bold', 'font-size': '24' } });
       },
       style: () => ({

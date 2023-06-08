@@ -52,7 +52,7 @@ export class GrwTreksProvider {
       fetch(`${state.api}trek_route/?language=${state.language}&fields=id,route,pictogram`, { signal: this.signal }),
       fetch(`${state.api}trek_practice/?language=${state.language}&fields=id,name,pictogram`, { signal: this.signal }),
       fetch(`${state.api}theme/?language=${state.language}&fields=id,label,pictogram`, { signal: this.signal }),
-      fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true`, { signal: this.signal }),
+      fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, { signal: this.signal }),
       fetch(treksRequest, { signal: this.signal }),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))

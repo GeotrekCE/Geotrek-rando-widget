@@ -28,6 +28,7 @@ interface Translation {
   accessibilityAdvices: string;
   pois: Function;
   sources: string;
+  cities: string;
 }
 
 interface AvailableTranslations {
@@ -66,6 +67,7 @@ export const translate: AvailableTranslations = {
     accessibilityAdvices: 'Conseils',
     pois: (poisLength: number) => `Les ${poisLength} patrimoines à découvrir`,
     sources: 'Sources',
+    cities: 'Communes traversées',
   },
   en: {
     filter: 'Filter',
@@ -97,5 +99,6 @@ export const translate: AvailableTranslations = {
     accessibilityAdvices: 'Advices',
     pois: (poisLength: number) => `${poisLength} points of interest`,
     sources: 'Sources',
+    cities: 'Cities crossed',
   },
 };

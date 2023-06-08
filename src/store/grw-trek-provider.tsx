@@ -27,7 +27,9 @@ export class GrwTrekProvider {
     requests.push(!state.routes ? fetch(`${state.api}trek_route/?language=${state.language}&fields=id,route,pictogram`, { signal: this.signal }) : new Response('null'));
     requests.push(!state.practices ? fetch(`${state.api}trek_practice/?language=${state.language}&fields=id,name,pictogram`, { signal: this.signal }) : new Response('null'));
     requests.push(!state.themes ? fetch(`${state.api}theme/?language=${state.language}&fields=id,label,pictogram`, { signal: this.signal }) : new Response('null'));
-    requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true`, { signal: this.signal }) : new Response('null'));
+    requests.push(
+      !state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, { signal: this.signal }) : new Response('null'),
+    );
     Promise.all([
       ...requests,
       fetch(`${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`, {
@@ -46,7 +48,7 @@ export class GrwTrekProvider {
         { signal: this.signal },
       ),
       fetch(
-        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,altimetric_profile,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities`,
+        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,altimetric_profile,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities`,
         { signal: this.signal },
       ),
     ])

@@ -28,6 +28,7 @@ export class GrwTrekDetail {
   @State() accessibilities: Accessibilities;
   @State() accessibilityLevel: AccessibilityLevel;
   @State() displayFullscreen = false;
+  @State() cities: string[];
   @Prop() trek: Trek;
   @Prop() colorPrimary = '#6b0030';
   @Prop() colorPrimaryShade = '#4a0021';
@@ -80,6 +81,7 @@ export class GrwTrekDetail {
       if (state.accessibilitiesLevel) {
         this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
       }
+      this.cities = this.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
     }
     onChange('currentTrek', () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -94,6 +96,7 @@ export class GrwTrekDetail {
         if (state.accessibilitiesLevel) {
           this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
         }
+        this.cities = this.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
       }
     });
   }
@@ -200,6 +203,12 @@ export class GrwTrekDetail {
               <div class="arrival-container">
                 <div class="arrival-title">{translate[state.language].arrival} :&nbsp;</div>
                 <div innerHTML={this.currentTrek.arrival}></div>
+              </div>
+            )}
+            {this.currentTrek.cities && (
+              <div class="cities-container">
+                <div class="cities-title">{translate[state.language].cities} :&nbsp;</div>
+                <div innerHTML={this.cities.join(', ')}></div>
               </div>
             )}
             {this.currentTrek.altimetric_profile && (
