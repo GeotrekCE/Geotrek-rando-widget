@@ -194,7 +194,23 @@ grw-poi-detail {
     }
   }
 }
+.current-advice-container {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 2px solid #534764;
+  border-radius: 1rem;
+  img {
+    width: 26px;
+    margin-right: 16px;
+  }
+}
+
 .label-container {
+  margin-top: 12px;
+  padding: 12px;
+  border: 2px solid #d77e00;
+  border-radius: 1rem;
   .label-sub-container {
     display: flex;
     align-items: center;

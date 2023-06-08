@@ -117,6 +117,7 @@ export class GrwTrekDetail {
     const durationImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/duration.svg`);
     const lengthImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/length.svg`);
     const ascentImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/ascent.svg`);
+    const adviseImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/advise.svg`);
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-shade': this.colorPrimaryShade, '--color-primary-tint': this.colorPrimaryTint }}>
         {this.currentTrek && (
@@ -238,7 +239,12 @@ export class GrwTrekDetail {
             {(this.currentTrek.advice || this.labels.length > 0) && (
               <div class="advice-container">
                 <div class="advice-title">{translate[state.language].recommandations}</div>
-                {this.currentTrek.advice && <div class="advice" innerHTML={this.currentTrek.advice}></div>}
+                {this.currentTrek.advice && (
+                  <div class="current-advice-container">
+                    <img src={adviseImageSrc} />
+                    <div class="advice" innerHTML={this.currentTrek.advice}></div>
+                  </div>
+                )}
                 {this.labels.map(label => (
                   <div class="label-container">
                     <div class="label-sub-container">
