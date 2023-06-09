@@ -2,6 +2,7 @@ import { Component, Host, h, Element, Prop, State, Event, EventEmitter, getAsset
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import 'leaflet-textpath';
+import 'leaflet.locatecontrol';
 import state, { onChange, reset } from 'store/store';
 
 @Component({
@@ -43,6 +44,7 @@ export class GrwMap {
     });
 
     L.control.scale().addTo(this.map);
+    (L.control as any).locate({ showPopup: false }).addTo(this.map);
 
     L.tileLayer(this.urlLayer, {
       maxZoom: 19,
