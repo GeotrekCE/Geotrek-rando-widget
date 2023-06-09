@@ -65,7 +65,7 @@ export class GrwPoiDetail {
                 ))
               ) : (
                 <div class="swiper-slide">
-                  <img class="poi-default-img" src={defaultImageSrc} loading="lazy" />
+                  <img class="default-poi-img" src={defaultImageSrc} loading="lazy" />
                 </div>
               )}
             </div>

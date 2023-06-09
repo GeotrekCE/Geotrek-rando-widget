@@ -13,11 +13,13 @@ import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 export class GrwTrekDetail {
   swiperImages?: Swiper;
   swiperPois?: Swiper;
+  swiperInformationDesks?: Swiper;
   swiperImagesRef?: HTMLDivElement;
   prevElImagesRef?: HTMLDivElement;
   nextElImagesRef?: HTMLDivElement;
   paginationElImagesRef?: HTMLDivElement;
   swiperPoisRef?: HTMLDivElement;
+  swiperInformationDesksRef?: HTMLDivElement;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;
@@ -62,7 +64,17 @@ export class GrwTrekDetail {
       breakpoints: {
         '540': {
           slidesPerView: 2.5,
-          spaceBetween: 20,
+        },
+      },
+    });
+    this.swiperInformationDesks = new Swiper(this.swiperInformationDesksRef, {
+      slidesPerView: 1.5,
+      spaceBetween: 20,
+      grabCursor: true,
+      breakpointsBase: 'container',
+      breakpoints: {
+        '540': {
+          slidesPerView: 2.5,
         },
       },
     });
@@ -279,9 +291,17 @@ export class GrwTrekDetail {
             {state.currentInformationDesks && state.currentInformationDesks.length > 0 && (
               <div class="information-desks-container">
                 <div class="information-desks-title">{translate[state.language].informationPlaces}</div>
-                {state.currentInformationDesks.map(informationDesk => (
-                  <grw-information-desk-detail informationDesk={informationDesk}></grw-information-desk-detail>
-                ))}
+                <div class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
+                  <div class="swiper-wrapper">
+                    {state.currentInformationDesks
+                      .filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id))
+                      .map(informationDesk => (
+                        <div class="swiper-slide">
+                          <grw-information-desk-detail informationDesk={informationDesk}></grw-information-desk-detail>
+                        </div>
+                      ))}
+                  </div>
+                </div>
               </div>
             )}
             {(this.currentTrek.disabled_infrastructure ||

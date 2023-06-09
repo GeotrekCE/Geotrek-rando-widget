@@ -45,6 +45,7 @@ export type Trek = {
   accessibility_exposure?: string;
   accessibility_advice?: string;
   cities?: string[];
+  information_desks?: number[];
 };
 
 export type Attachments = Attachment[];

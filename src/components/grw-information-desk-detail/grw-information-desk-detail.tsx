@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, State } from '@stencil/core';
 import { InformationDesk } from 'types/types';
 
 @Component({
@@ -8,6 +8,11 @@ import { InformationDesk } from 'types/types';
 })
 export class GrwInformationDeskDetail {
   @Prop() informationDesk: InformationDesk;
+  @State() displayShortDescription = true;
+
+  handleInformationDeskDescription() {
+    this.displayShortDescription = !this.displayShortDescription;
+  }
 
   render() {
     return (
@@ -19,16 +24,13 @@ export class GrwInformationDeskDetail {
         )}
         <div class="information-desk-sub-container">
           {this.informationDesk.name && <div class="information-desk-name">{this.informationDesk.name}</div>}
-          {this.informationDesk.description && <div class="information-desk-description" innerHTML={this.informationDesk.description}></div>}
-          {this.informationDesk.postal_code ||
-            this.informationDesk.municipality ||
-            (this.informationDesk.street && (
-              <div>
-                {this.informationDesk.postal_code}
-                {` ${this.informationDesk.municipality}`}
-                {` ${this.informationDesk.street}`}
-              </div>
-            ))}
+          {(this.informationDesk.postal_code || this.informationDesk.municipality || this.informationDesk.street) && (
+            <div>
+              {this.informationDesk.postal_code && this.informationDesk.postal_code}
+              {this.informationDesk.municipality && ` ${this.informationDesk.municipality}`}
+              {this.informationDesk.street && ` ${this.informationDesk.street}`}
+            </div>
+          )}
           {this.informationDesk.phone && (
             <div>
               <a href={`tel:${this.informationDesk.phone}`}>{this.informationDesk.phone}</a>
@@ -42,6 +44,14 @@ export class GrwInformationDeskDetail {
           {this.informationDesk.website && (
             <div>
               <a href={`${this.informationDesk.website}`}>{this.informationDesk.website}</a>
+            </div>
+          )}
+          {this.informationDesk.description && (
+            <div class="information-desk-description-container">
+              <div class={this.displayShortDescription ? 'information-desk-description-short' : 'information-desk-description'} innerHTML={this.informationDesk.description}></div>
+              <div class="handle-information-desk-description" onClick={() => this.handleInformationDeskDescription()}>
+                {this.displayShortDescription ? 'Lire plus' : 'Lire moins'}
+              </div>
             </div>
           )}
         </div>

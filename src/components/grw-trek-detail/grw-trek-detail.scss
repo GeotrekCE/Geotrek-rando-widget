@@ -282,10 +282,7 @@ grw-poi-detail {
   }
 }
 
-.swiper-pois {
-  margin: 0px -24px 0px -24px;
-
-  .swiper-slide:first-of-type {
-    margin-left: 24px;
-  }
+.swiper-pois,
+.swiper-information-desks {
+  overflow: visible;
 }

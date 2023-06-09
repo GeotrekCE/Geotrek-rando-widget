@@ -30,5 +30,6 @@
   .sensitive-area-period-values,
   .sensitive-area-practice-values {
     display: flex;
+    flex-wrap: wrap;
   }
 }
