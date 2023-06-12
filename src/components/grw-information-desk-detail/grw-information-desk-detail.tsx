@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { InformationDesk } from 'types/types';
 
 @Component({
@@ -7,11 +7,16 @@ import { InformationDesk } from 'types/types';
   shadow: true,
 })
 export class GrwInformationDeskDetail {
-  @Prop() informationDesk: InformationDesk;
+  @Event() centerOnMap: EventEmitter<{ latitude: number; longitude: number }>;
   @State() displayShortDescription = true;
+  @Prop() informationDesk: InformationDesk;
 
   handleInformationDeskDescription() {
     this.displayShortDescription = !this.displayShortDescription;
+  }
+
+  handleCenterOnMap() {
+    this.centerOnMap.emit({ latitude: this.informationDesk.latitude, longitude: this.informationDesk.longitude });
   }
 
   render() {
@@ -23,6 +28,7 @@ export class GrwInformationDeskDetail {
           </div>
         )}
         <div class="information-desk-sub-container">
+          {this.informationDesk.latitude && this.informationDesk.longitude && <button onClick={() => this.handleCenterOnMap()}>Centrer sur la carte</button>}
           {this.informationDesk.name && <div class="information-desk-name">{this.informationDesk.name}</div>}
           {(this.informationDesk.postal_code || this.informationDesk.municipality || this.informationDesk.street) && (
             <div>

@@ -189,8 +189,8 @@ export type InformationDesk = {
   postal_code: string;
   street: string;
   photo_url: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
 };
 
 export type InformationDeskType = {

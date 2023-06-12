@@ -13,7 +13,7 @@
 | `cities`     | `cities`     |             | `string` | `undefined` |
 | `districts`  | `districts`  |             | `string` | `undefined` |
 | `inBbox`     | `in-bbox`    |             | `string` | `undefined` |
-| `language`   | `language`   |             | `string` | `'fr'`      |
+| `languages`  | `languages`  |             | `string` | `'fr'`      |
 | `portals`    | `portals`    |             | `string` | `undefined` |
 | `practices`  | `practices`  |             | `string` | `undefined` |
 | `routes`     | `routes`     |             | `string` | `undefined` |

@@ -1,4 +1,4 @@
-import { Component, Host, h, Element, Prop, State, Event, EventEmitter, getAssetPath, Build } from '@stencil/core';
+import { Component, Host, h, Element, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import 'leaflet-textpath';
@@ -36,6 +36,11 @@ export class GrwMap {
   currentInformationDesksLayer: L.GeoJSON<any>;
   currentPointsReferenceLayer: L.GeoJSON<any>;
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
+
+  @Listen('centerOnMap', { target: 'window' })
+  onCenterOnMap(event: CustomEvent<{ latitude: number; longitude: number }>) {
+    this.map.setView(new L.LatLng(event.detail.latitude, event.detail.longitude), 17, { animate: false });
+  }
 
   componentDidLoad() {
     this.map = L.map(this.element, {
@@ -353,12 +358,16 @@ export class GrwMap {
         features: [],
       };
 
-      for (const currentInformationDesk of state.currentInformationDesks) {
-        currentInformationDesksFeatureCollection.features.push({
-          type: 'Feature',
-          properties: { name: currentInformationDesk.name, type_pictogram: currentInformationDesk.type.pictogram },
-          geometry: { type: 'Point', coordinates: [Number(currentInformationDesk.longitude), Number(currentInformationDesk.latitude)] },
-        });
+      for (const currentInformationDesk of state.currentInformationDesks.filter(currentInformationDesks =>
+        state.currentTrek.information_desks.includes(currentInformationDesks.id),
+      )) {
+        if (currentInformationDesk.latitude && currentInformationDesk.longitude) {
+          currentInformationDesksFeatureCollection.features.push({
+            type: 'Feature',
+            properties: { name: currentInformationDesk.name, type_pictogram: currentInformationDesk.type.pictogram },
+            geometry: { type: 'Point', coordinates: [Number(currentInformationDesk.longitude), Number(currentInformationDesk.latitude)] },
+          });
+        }
       }
 
       this.currentInformationDesksLayer = L.geoJSON(currentInformationDesksFeatureCollection, {

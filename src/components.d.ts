@@ -102,6 +102,10 @@ export namespace Components {
         "themes": string;
     }
 }
+export interface GrwInformationDeskDetailCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwInformationDeskDetailElement;
+}
 export interface GrwMapCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwMapElement;
@@ -232,6 +236,7 @@ declare namespace LocalJSX {
     }
     interface GrwInformationDeskDetail {
         "informationDesk"?: InformationDesk;
+        "onCenterOnMap"?: (event: GrwInformationDeskDetailCustomEvent<{ latitude: number; longitude: number }>) => void;
     }
     interface GrwMap {
         "attribution"?: string;

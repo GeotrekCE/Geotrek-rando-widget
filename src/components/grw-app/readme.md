@@ -21,7 +21,7 @@
 | `colorTrekLine`      | `color-trek-line`      |             | `string` | `'#6b0030'`            |
 | `districts`          | `districts`            |             | `string` | `undefined`            |
 | `inBbox`             | `in-bbox`              |             | `string` | `undefined`            |
-| `language`           | `language`             |             | `string` | `'fr'`                 |
+| `languages`          | `languages`            |             | `string` | `'fr'`                 |
 | `linkName`           | `link-name`            |             | `string` | `'GEOTREK'`            |
 | `linkTarget`         | `link-target`          |             | `string` | `'https://geotrek.fr'` |
 | `portals`            | `portals`              |             | `string` | `undefined`            |
@@ -40,6 +40,7 @@
 - [grw-treks-provider](../../store)
 - [grw-trek-provider](../../store)
 - [grw-filter](../grw-filter)
+- [grw-select-language](../grw-select-language)
 - [grw-treks-list](../grw-treks-list)
 - [grw-trek-detail](../grw-trek-detail)
 - [grw-map](../grw-map)
@@ -50,6 +51,7 @@ graph TD;
   grw-app --> grw-treks-provider
   grw-app --> grw-trek-provider
   grw-app --> grw-filter
+  grw-app --> grw-select-language
   grw-app --> grw-treks-list
   grw-app --> grw-trek-detail
   grw-app --> grw-map

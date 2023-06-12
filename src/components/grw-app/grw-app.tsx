@@ -43,7 +43,7 @@ export class GrwApp {
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
-  @Listen('trekCardPress')
+  @Listen('trekCardPress', { target: 'window' })
   onTrekCardPress(event: CustomEvent<number>) {
     this.currentTrekId = event.detail;
     this.showTrek = !this.showTrek;
@@ -55,6 +55,13 @@ export class GrwApp {
   @Listen('resize', { target: 'window' })
   onWindowResize() {
     this.handleView();
+  }
+
+  @Listen('centerOnMap', { target: 'window' })
+  onCenterOnMap() {
+    if (!this.isLargeView) {
+      this.showTrekMap = true;
+    }
   }
 
   @Watch('isLargeView')
