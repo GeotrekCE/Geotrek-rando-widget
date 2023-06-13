@@ -141,7 +141,7 @@ export class GrwTrekDetail {
                     .filter(attachment => attachment.type === 'image')
                     .map(attachment => (
                       <div class="swiper-slide">
-                        <img class="image" src={this.displayFullscreen ? attachment.url : attachment.thumbnail} loading="lazy" onClick={() => this.handleFullscreen()} />
+                        <img class="image" src={attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
                       </div>
                     ))}
                 </div>
