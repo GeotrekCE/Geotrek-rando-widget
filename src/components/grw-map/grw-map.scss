@@ -3,6 +3,7 @@
 @use '~@raruto/leaflet-elevation/dist/leaflet-elevation.min.css';
 
 #map {
+  position: relative;
   font-family: 'Roboto';
   display: block;
   height: 100%;
@@ -18,8 +19,13 @@
 }
 
 #elevation {
-  border-radius: 0px;
+  position: relative;
   background-color: #ffffff;
+  z-index: 400;
+}
+
+.elevation-control .background {
+  border-radius: 0px;
 }
 
 .elevation-polyline {
