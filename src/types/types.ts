@@ -18,7 +18,6 @@ export type Trek = {
   departure: string;
   departure_city: string;
   arrival?: string;
-  altimetric_profile?: string;
   geometry?: LineString;
   departure_geom?: Position;
   gpx?: string;

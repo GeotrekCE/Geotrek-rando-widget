@@ -1,12 +1,34 @@
 @use '~leaflet/dist/leaflet.css';
 @use '~leaflet.locatecontrol/dist/L.Control.Locate.min.css';
+@use '~@raruto/leaflet-elevation/dist/leaflet-elevation.min.css';
 
-grw-map {
+#map {
   font-family: 'Roboto';
   display: block;
   height: 100%;
-  max-height: 100vh;
   z-index: 400;
+}
+
+.treks-map {
+  max-height: 100%;
+}
+
+.trek-map {
+  max-height: calc(100% - 250px);
+}
+
+#elevation {
+  border-radius: 0px;
+  background-color: #ffffff;
+}
+
+.elevation-polyline {
+  stroke: var(--color-trek-line);
+}
+
+.height-focus.line,
+.height-focus-label {
+  display: none;
 }
 
 .departure-icon img,

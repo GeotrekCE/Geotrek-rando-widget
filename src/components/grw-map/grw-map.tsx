@@ -1,8 +1,9 @@
-import { Component, Host, h, Element, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import 'leaflet-textpath';
 import 'leaflet.locatecontrol';
+import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
 import state, { onChange, reset } from 'store/store';
 
 @Component({
@@ -10,7 +11,8 @@ import state, { onChange, reset } from 'store/store';
   styleUrl: 'grw-map.scss',
 })
 export class GrwMap {
-  @Element() element: HTMLElement;
+  mapRef: HTMLElement;
+  elevationRef: HTMLElement;
   @Event() trekCardPress: EventEmitter<number>;
   @State() mapIsReady = false;
   @Prop() urlLayer: string;
@@ -35,6 +37,7 @@ export class GrwMap {
   currentParkingLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
   currentPointsReferenceLayer: L.GeoJSON<any>;
+  elevationControl: any;
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
 
   @Listen('centerOnMap', { target: 'window' })
@@ -43,7 +46,7 @@ export class GrwMap {
   }
 
   componentDidLoad() {
-    this.map = L.map(this.element, {
+    this.map = L.map(this.mapRef, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
       zoom: this.zoom,
     });
@@ -191,7 +194,7 @@ export class GrwMap {
         layer.setText('►    ', { repeat: true, offset: 8, attributes: { 'fill': this.colorPrimary, 'font-weight': 'bold', 'font-size': '24' } });
       },
       style: () => ({
-        color: this.colorTrekLine,
+        color: 'transparent',
       }),
       interactive: false,
     }).addTo(this.map);
@@ -423,6 +426,44 @@ export class GrwMap {
       }).addTo(this.map);
     }
 
+    const elevationOptions = {
+      srcFolder: 'http://unpkg.com/@raruto/leaflet-elevation/src/',
+      elevationDiv: `#${this.elevationRef.id}`,
+      theme: 'lightblue-theme',
+      detached: true,
+      height: 250,
+      wptIcons: false,
+      wptLabels: false,
+      collapsed: false,
+      autohide: false,
+      distanceMarkers: false,
+      hotline: false,
+      closeBtn: false,
+      summary: false,
+      time: false,
+      timestamps: false,
+      legend: false,
+      downloadLink: false,
+      autofitBounds: false,
+      ruler: false,
+      edgeScale: false,
+      waypoints: false,
+      almostOver: false,
+      speed: false,
+      slope: false,
+      acceleration: false,
+      reverseCoords: false,
+      imperial: false,
+    };
+    this.elevationControl = (L.control as any).elevation({ ...elevationOptions }).addTo(this.map);
+    const elevation = JSON.stringify({
+      name: `${state.currentTrek.name}`,
+      type: 'FeatureCollection',
+      features: [{ type: 'Feature', geometry: { type: 'LineString', coordinates: state.currentTrek.geometry.coordinates }, properties: null }],
+    });
+
+    this.elevationControl.load(elevation);
+
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
 
@@ -463,6 +504,8 @@ export class GrwMap {
       this.map.removeLayer(this.currentPointsReferenceLayer);
       this.currentPointsReferenceLayer = null;
     }
+
+    this.map.removeControl(this.elevationControl);
   }
 
   disconnectedCallback() {
@@ -480,8 +523,11 @@ export class GrwMap {
           '--color-departure-icon': this.colorDepartureIcon,
           '--color-arrival-icon': this.colorArrivalIcon,
           '--color-poi-icon': this.colorPoiIcon,
+          '--color-trek-line': this.colorTrekLine,
         }}
       >
+        <div id="map" class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
+        <div id="elevation" ref={el => (this.elevationRef = el)}></div>
         {!this.mapIsReady && (
           <div class="map-loader-container">
             <span class="loader"></span>

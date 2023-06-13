@@ -224,18 +224,17 @@ export class GrwTrekDetail {
                 <div innerHTML={this.cities.join(', ')}></div>
               </div>
             )}
-            {this.currentTrek.altimetric_profile && (
-              <div class="altimetric-profile-container">
-                <div class="altimetric-profile-title">{translate[state.language].elevationProfile}</div>
-                <img
+            <div class="altimetric-profile-container">
+              <div class="altimetric-profile-title">{translate[state.language].elevationProfile}</div>
+              <div id="altimetric-profile"></div>
+              {/* <img
                   src={
                     this.currentTrek.altimetric_profile.endsWith('.json')
                       ? this.currentTrek.altimetric_profile.replace('.json', '.svg')
                       : `${this.currentTrek.altimetric_profile}?format=svg`
                   }
-                />
-              </div>
-            )}
+                /> */}
+            </div>
             {this.currentTrek.access && (
               <div class="access-container">
                 <div class="access-title">{translate[state.language].roadAccess}</div>

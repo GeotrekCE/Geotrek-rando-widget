@@ -5,7 +5,7 @@ import state, { onChange, reset } from 'store/store';
 @Component({
   tag: 'grw-app',
   styleUrls: ['grw-app.scss'],
-  shadow: true,
+  shadow: false,
 })
 export class GrwApp {
   @Element() element: HTMLElement;
@@ -146,7 +146,14 @@ export class GrwApp {
   render() {
     const arrowBackImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/arrow-back.svg`);
     return (
-      <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint, '--color-primary-shade': this.colorPrimaryShade }}>
+      <Host
+        style={{
+          '--color-primary': this.colorPrimary,
+          '--color-primary-tint': this.colorPrimaryTint,
+          '--color-primary-shade': this.colorPrimaryShade,
+          '--color-trek-line': this.colorTrekLine,
+        }}
+      >
         {!state.currentTreks && !state.currentTrek && (
           <div class="init-loader-container">
             <span class="loader"></span>

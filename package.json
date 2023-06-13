@@ -26,16 +26,17 @@
     "prepare": "npm run build && npm run precompress"
   },
   "dependencies": {
-    "@stencil/core": "^3.3.0",
+    "@raruto/leaflet-elevation": "^2.4.0",
+    "@stencil/core": "^3.3.1",
     "leaflet": "^1.9.4",
     "leaflet-textpath": "^1.2.3",
     "leaflet.locatecontrol": "^0.79.0",
-    "swiper": "^9.3.2"
+    "swiper": "^9.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.1",
-    "@stencil/sass": "^3.0.3",
-    "@stencil/store": "^2.0.7",
+    "@babel/core": "^7.22.5",
+    "@stencil/sass": "^3.0.4",
+    "@stencil/store": "^2.0.8",
     "@storybook/addon-controls": "^6.5.12",
     "@storybook/addon-docs": "^6.5.12",
     "@storybook/builder-webpack4": "^6.5.12",
