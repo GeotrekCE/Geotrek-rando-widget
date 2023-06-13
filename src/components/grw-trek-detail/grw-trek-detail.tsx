@@ -137,11 +137,13 @@ export class GrwTrekDetail {
             <div class="images-container">
               <div class="swiper" ref={el => (this.swiperImagesRef = el)}>
                 <div class="swiper-wrapper">
-                  {this.currentTrek.attachments.map(attachment => (
-                    <div class="swiper-slide">
-                      <img class="image" src={this.displayFullscreen ? attachment.url : attachment.thumbnail} loading="lazy" onClick={() => this.handleFullscreen()} />
-                    </div>
-                  ))}
+                  {this.currentTrek.attachments
+                    .filter(attachment => attachment.type === 'image')
+                    .map(attachment => (
+                      <div class="swiper-slide">
+                        <img class="image" src={this.displayFullscreen ? attachment.url : attachment.thumbnail} loading="lazy" onClick={() => this.handleFullscreen()} />
+                      </div>
+                    ))}
                 </div>
                 <div class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
                 <div class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>

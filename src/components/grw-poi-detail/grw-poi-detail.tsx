@@ -58,11 +58,13 @@ export class GrwPoiDetail {
           <div class="swiper" ref={el => (this.swiperPoiRef = el)}>
             <div class="swiper-wrapper">
               {this.poi.attachments.length > 0 ? (
-                this.poi.attachments.map(attachment => (
-                  <div class="swiper-slide">
-                    <img class="poi-img" src={this.displayFullscreen ? attachment.url : attachment.thumbnail} loading="lazy" onClick={() => this.handleFullscreen()} />
-                  </div>
-                ))
+                this.poi.attachments
+                  .filter(attachment => attachment.type === 'image')
+                  .map(attachment => (
+                    <div class="swiper-slide">
+                      <img class="poi-img" src={this.displayFullscreen ? attachment.url : attachment.thumbnail} loading="lazy" onClick={() => this.handleFullscreen()} />
+                    </div>
+                  ))
               ) : (
                 <div class="swiper-slide">
                   <img class="default-poi-img" src={defaultImageSrc} loading="lazy" />
