@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, getAssetPath, Build } from '@stencil/core';
+import { Component, Host, h, Prop, State, getAssetPath, Build, Event, EventEmitter } from '@stencil/core';
 import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
@@ -20,6 +20,14 @@ export class GrwTrekDetail {
   paginationElImagesRef?: HTMLDivElement;
   swiperPoisRef?: HTMLDivElement;
   swiperInformationDesksRef?: HTMLDivElement;
+  pointReferenceRef?: HTMLDivElement;
+  parkingRef?: HTMLDivElement;
+  poiRef?: HTMLDivElement;
+  informationDeskRef?: HTMLDivElement;
+  @Event() informationDeskIsInViewport: EventEmitter<boolean>;
+  @Event() pointReferenceIsInViewport: EventEmitter<boolean>;
+  @Event() parkingIsInViewport: EventEmitter<boolean>;
+  @Event() poiIsInViewport: EventEmitter<boolean>;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;
@@ -50,11 +58,7 @@ export class GrwTrekDetail {
     });
     this.swiperImagesRef.onfullscreenchange = () => {
       this.displayFullscreen = !this.displayFullscreen;
-      if (this.displayFullscreen) {
-        this.swiperImages.keyboard.enable();
-      } else {
-        this.swiperImages.keyboard.disable();
-      }
+      this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
     };
     this.swiperPois = new Swiper(this.swiperPoisRef, {
       slidesPerView: 1.5,
@@ -78,6 +82,34 @@ export class GrwTrekDetail {
         },
       },
     });
+    const informationDeskObserver = new IntersectionObserver(
+      entries => {
+        this.informationDeskIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+      },
+      { threshold: 0.5 },
+    );
+    informationDeskObserver.observe(this.informationDeskRef);
+    const pointReferenceObserver = new IntersectionObserver(
+      entries => {
+        this.pointReferenceIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+      },
+      { threshold: 0.5 },
+    );
+    pointReferenceObserver.observe(this.pointReferenceRef);
+    const parkingObserver = new IntersectionObserver(
+      entries => {
+        this.parkingIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+      },
+      { threshold: 0.5 },
+    );
+    parkingObserver.observe(this.parkingRef);
+    const poiObserver = new IntersectionObserver(
+      entries => {
+        this.poiIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+      },
+      { threshold: 0.5 },
+    );
+    poiObserver.observe(this.poiRef);
   }
 
   connectedCallback() {
@@ -203,7 +235,7 @@ export class GrwTrekDetail {
             {this.currentTrek.description_teaser && <div class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
             {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
             {this.currentTrek.description && (
-              <div class="description-container">
+              <div class="description-container" ref={el => (this.pointReferenceRef = el)}>
                 <div class="description-title">{translate[state.language].description}</div>
                 <div class="description" innerHTML={this.currentTrek.description}></div>
               </div>
@@ -226,17 +258,6 @@ export class GrwTrekDetail {
                 <div innerHTML={this.cities.join(', ')}></div>
               </div>
             )}
-            <div class="altimetric-profile-container">
-              <div class="altimetric-profile-title">{translate[state.language].elevationProfile}</div>
-              <div id="altimetric-profile"></div>
-              {/* <img
-                  src={
-                    this.currentTrek.altimetric_profile.endsWith('.json')
-                      ? this.currentTrek.altimetric_profile.replace('.json', '.svg')
-                      : `${this.currentTrek.altimetric_profile}?format=svg`
-                  }
-                /> */}
-            </div>
             {this.currentTrek.access && (
               <div class="access-container">
                 <div class="access-title">{translate[state.language].roadAccess}</div>
@@ -270,7 +291,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {this.currentTrek.advised_parking && (
-              <div class="advised-parking-container">
+              <div class="advised-parking-container" ref={el => (this.parkingRef = el)}>
                 <div class="advised-parking-title">{translate[state.language].recommendedParking}</div>
                 <div class="advised_parking" innerHTML={this.currentTrek.advised_parking}></div>
               </div>
@@ -290,7 +311,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentInformationDesks && state.currentInformationDesks.length > 0 && (
-              <div class="information-desks-container">
+              <div class="information-desks-container" ref={el => (this.informationDeskRef = el)}>
                 <div class="information-desks-title">{translate[state.language].informationPlaces}</div>
                 <div class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
                   <div class="swiper-wrapper">
@@ -370,7 +391,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentPois && state.currentPois.length > 0 && (
-              <div class="pois-container">
+              <div class="pois-container" ref={el => (this.poiRef = el)}>
                 <div class="pois-title">{translate[state.language].pois(state.currentPois.length)}</div>
                 <div class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
                   <div class="swiper-wrapper">

@@ -114,6 +114,10 @@ export interface GrwTrekCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwTrekCardElement;
 }
+export interface GrwTrekDetailCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwTrekDetailElement;
+}
 declare global {
     interface HTMLGrwAppElement extends Components.GrwApp, HTMLStencilElement {
     }
@@ -273,6 +277,10 @@ declare namespace LocalJSX {
         "colorPrimary"?: string;
         "colorPrimaryShade"?: string;
         "colorPrimaryTint"?: string;
+        "onInformationDeskIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onParkingIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onPoiIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onPointReferenceIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
     }

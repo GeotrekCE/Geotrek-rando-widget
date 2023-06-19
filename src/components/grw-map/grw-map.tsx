@@ -45,6 +45,34 @@ export class GrwMap {
     this.map.setView(new L.LatLng(event.detail.latitude, event.detail.longitude), 17, { animate: false });
   }
 
+  @Listen('pointReferenceIsInViewport', { target: 'window' })
+  pointReferenceIsInViewport(event: CustomEvent<boolean>) {
+    this.handleLayerVisibility(event.detail, this.currentPointsReferenceLayer);
+  }
+
+  @Listen('parkingIsInViewport', { target: 'window' })
+  parkingIsInViewport(event: CustomEvent<boolean>) {
+    this.handleLayerVisibility(event.detail, this.currentParkingLayer);
+  }
+
+  @Listen('informationDeskIsInViewport', { target: 'window' })
+  onInformationDesksIsInViewport(event: CustomEvent<boolean>) {
+    this.handleLayerVisibility(event.detail, this.currentInformationDesksLayer);
+  }
+
+  @Listen('poiIsInViewport', { target: 'window' })
+  poiIsInViewport(event: CustomEvent<boolean>) {
+    this.handleLayerVisibility(event.detail, this.currentPoisLayer);
+  }
+
+  handleLayerVisibility(visible: boolean, layer: L.GeoJSON) {
+    if (visible && !this.map.hasLayer(layer)) {
+      layer.addTo(this.map);
+    } else if (this.map.hasLayer(layer)) {
+      this.map.removeLayer(layer);
+    }
+  }
+
   componentDidLoad() {
     this.map = L.map(this.mapRef, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
@@ -255,7 +283,7 @@ export class GrwMap {
             autoPanOnFocus: false,
             interactive: false,
           } as any),
-      }).addTo(this.map);
+      });
     }
 
     if (state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0) {
@@ -352,7 +380,7 @@ export class GrwMap {
             layer.bindTooltip(poiTooltip).openTooltip();
           });
         },
-      }).addTo(this.map);
+      });
     }
 
     if (state.currentInformationDesks && state.currentInformationDesks.length > 0) {
@@ -394,7 +422,7 @@ export class GrwMap {
             layer.bindTooltip(informationDesksTooltip).openTooltip();
           });
         },
-      }).addTo(this.map);
+      });
     }
 
     if (state.currentTrek.points_reference) {
@@ -423,7 +451,7 @@ export class GrwMap {
             interactive: false,
           } as any);
         },
-      }).addTo(this.map);
+      });
     }
 
     const elevationOptions = {
