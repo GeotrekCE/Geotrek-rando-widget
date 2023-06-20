@@ -1,7 +1,7 @@
 import { createTreksMap } from './TreksMap';
 
 export default {
-  title: 'Geotrek Rando Widget',
+  title: 'Geotrek rando widget',
   argTypes: {
     urlLayer: {
       control: 'select',

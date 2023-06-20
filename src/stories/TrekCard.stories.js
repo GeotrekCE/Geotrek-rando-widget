@@ -1,7 +1,7 @@
 import { createTrekCard } from './TrekCard';
 
 export default {
-  title: 'Geotrek Rando Widget',
+  title: 'Geotrek rando widget',
   argTypes: {},
 };
 

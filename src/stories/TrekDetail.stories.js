@@ -1,7 +1,7 @@
 import { createTrekDetail } from './TrekDetail';
 
 export default {
-  title: 'Geotrek Rando Widget',
+  title: 'Geotrek rando widget',
   argTypes: {},
 };
 
