@@ -32,12 +32,17 @@ export class GrwMap {
   treksLayer: L.GeoJSON<any>;
   currentTrekLayer: L.GeoJSON<any>;
   currentDepartureArrivalLayer: L.GeoJSON<any>;
+  currentPointsReferenceLayer: L.GeoJSON<any>;
+  currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
   currentPoisLayer: L.GeoJSON<any>;
-  currentParkingLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
-  currentPointsReferenceLayer: L.GeoJSON<any>;
-  elevationControl: any;
+  elevationControl: L.Control.Layers;
+  layersControl: L.Control.Layers;
+  userLayersState: {
+    [key: number]: boolean;
+  } = {};
+
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
 
   @Listen('centerOnMap', { target: 'window' })
@@ -60,6 +65,11 @@ export class GrwMap {
     this.handleLayerVisibility(event.detail, this.currentInformationDesksLayer);
   }
 
+  @Listen('sensitiveAreaIsInViewport', { target: 'window' })
+  sensitiveAreaIsInViewport(event: CustomEvent<boolean>) {
+    this.handleLayerVisibility(event.detail, this.currentSensitiveAreasLayer);
+  }
+
   @Listen('poiIsInViewport', { target: 'window' })
   poiIsInViewport(event: CustomEvent<boolean>) {
     this.handleLayerVisibility(event.detail, this.currentPoisLayer);
@@ -68,9 +78,10 @@ export class GrwMap {
   handleLayerVisibility(visible: boolean, layer: L.GeoJSON) {
     if (visible && !this.map.hasLayer(layer)) {
       layer.addTo(this.map);
-    } else if (this.map.hasLayer(layer)) {
+    } else if (this.map.hasLayer(layer) && !this.userLayersState[(layer as any)._leaflet_id]) {
       this.map.removeLayer(layer);
     }
+    this.handleLayersControlEvent();
   }
 
   componentDidLoad() {
@@ -313,36 +324,7 @@ export class GrwMap {
           });
         },
         style: () => ({ color: this.colorSensitiveArea }),
-      }).addTo(this.map);
-
-      (L.Control as any).SensitiveAreasCheckboxContainer = L.Control.extend({
-        onAdd: () => {
-          const sensitiveAreasCheckboxContainer = L.DomUtil.create('div');
-          sensitiveAreasCheckboxContainer.className = 'sensitiveAreasCheckboxContainer';
-          const sensitiveAreasCheckbox = L.DomUtil.create('input');
-          sensitiveAreasCheckbox.setAttribute('id', 'sensitiveAreasCheckbox');
-          sensitiveAreasCheckbox.setAttribute('type', 'checkbox');
-          sensitiveAreasCheckbox.setAttribute('checked', 'true');
-          sensitiveAreasCheckbox.onclick = value =>
-            (value.composedPath()[0] as any).checked ? this.map.addLayer(this.currentSensitiveAreasLayer) : this.map.removeLayer(this.currentSensitiveAreasLayer);
-          const sensitiveAreasLabel = L.DomUtil.create('label');
-          sensitiveAreasLabel.setAttribute('for', 'sensitiveAreasCheckbox');
-          sensitiveAreasLabel.innerHTML =
-            currentSensitiveAreasFeatureCollection.features.length > 1 || currentSensitiveAreasFeatureCollection.features[0].geometry.type === 'MultiPolygon'
-              ? 'Afficher les zones sensibles'
-              : 'Afficher la zone sensible';
-          sensitiveAreasCheckboxContainer.appendChild(sensitiveAreasCheckbox);
-          sensitiveAreasCheckboxContainer.appendChild(sensitiveAreasLabel);
-
-          return sensitiveAreasCheckboxContainer;
-        },
       });
-
-      (L.control as any).sensitiveAreasCheckboxContainer = () => {
-        return new (L.Control as any).SensitiveAreasCheckboxContainer();
-      };
-
-      this.sensitiveAreasControl = (L.control as any).sensitiveAreasCheckboxContainer({ position: 'topright' }).addTo(this.map);
     }
 
     if (state.currentPois && state.currentPois.length > 0) {
@@ -490,9 +472,29 @@ export class GrwMap {
       features: [{ type: 'Feature', geometry: { type: 'LineString', coordinates: state.currentTrek.geometry.coordinates }, properties: null }],
     });
 
-    this.elevationControl.load(elevation);
+    (this.elevationControl as any).load(elevation);
+
+    const overlays = {
+      'Points de référence': this.currentPointsReferenceLayer,
+      'Parking conseillé': this.currentParkingLayer,
+      'Zones de sensibilité environnementale': this.currentSensitiveAreasLayer,
+      'Lieux de renseignement': this.currentInformationDesksLayer,
+      'Patrimoines': this.currentPoisLayer,
+    };
+    this.layersControl = L.control.layers(null, overlays, { collapsed: true }).addTo(this.map);
+
+    this.handleLayersControlEvent();
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+  }
+
+  handleLayersControlEvent() {
+    const userLayersState: HTMLInputElement[] = (this.layersControl as any)._layerControlInputs;
+    userLayersState.forEach((userLayerState: any) => {
+      userLayerState.onchange = event => {
+        this.userLayersState[userLayerState.layerId] = (event.target as any).checked;
+      };
+    });
   }
 
   removeTrek() {
@@ -543,6 +545,7 @@ export class GrwMap {
   }
 
   render() {
+    const layersImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/layers.svg`);
     return (
       <Host
         style={{
@@ -552,6 +555,7 @@ export class GrwMap {
           '--color-arrival-icon': this.colorArrivalIcon,
           '--color-poi-icon': this.colorPoiIcon,
           '--color-trek-line': this.colorTrekLine,
+          '--layers-image-src': `url(${layersImageSrc})`,
         }}
       >
         <div id="map" class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>

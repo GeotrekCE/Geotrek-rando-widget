@@ -16,9 +16,13 @@
 
 ## Events
 
-| Event                          | Description | Type                   |
-| ------------------------------ | ----------- | ---------------------- |
-| `informationDesksIsInViewport` |             | `CustomEvent<boolean>` |
+| Event                         | Description | Type                   |
+| ----------------------------- | ----------- | ---------------------- |
+| `informationDeskIsInViewport` |             | `CustomEvent<boolean>` |
+| `parkingIsInViewport`         |             | `CustomEvent<boolean>` |
+| `poiIsInViewport`             |             | `CustomEvent<boolean>` |
+| `pointReferenceIsInViewport`  |             | `CustomEvent<boolean>` |
+| `sensitiveAreaIsInViewport`   |             | `CustomEvent<boolean>` |
 
 
 ## Dependencies

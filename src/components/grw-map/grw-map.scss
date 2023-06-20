@@ -10,6 +10,10 @@
   z-index: 400;
 }
 
+.leaflet-retina .leaflet-control-layers-toggle {
+  background-image: var(--layers-image-src);
+}
+
 .treks-map {
   max-height: 100%;
 }

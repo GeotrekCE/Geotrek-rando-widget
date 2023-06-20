@@ -22,11 +22,13 @@ export class GrwTrekDetail {
   swiperInformationDesksRef?: HTMLDivElement;
   pointReferenceRef?: HTMLDivElement;
   parkingRef?: HTMLDivElement;
+  sensitiveAreaRef?: HTMLDivElement;
   poiRef?: HTMLDivElement;
   informationDeskRef?: HTMLDivElement;
   @Event() informationDeskIsInViewport: EventEmitter<boolean>;
   @Event() pointReferenceIsInViewport: EventEmitter<boolean>;
   @Event() parkingIsInViewport: EventEmitter<boolean>;
+  @Event() sensitiveAreaIsInViewport: EventEmitter<boolean>;
   @Event() poiIsInViewport: EventEmitter<boolean>;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
@@ -103,6 +105,13 @@ export class GrwTrekDetail {
       { threshold: 0.5 },
     );
     parkingObserver.observe(this.parkingRef);
+    const sensitiveAreaRefObserver = new IntersectionObserver(
+      entries => {
+        this.sensitiveAreaIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+      },
+      { threshold: 0.5 },
+    );
+    sensitiveAreaRefObserver.observe(this.sensitiveAreaRef);
     const poiObserver = new IntersectionObserver(
       entries => {
         this.poiIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
@@ -303,7 +312,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
-              <div class="sensitive-areas-container">
+              <div class="sensitive-areas-container" ref={el => (this.sensitiveAreaRef = el)}>
                 <div class="sensitive-areas-title">{translate[state.language].environmentalSensitiveAreas}</div>
                 {state.currentSensitiveAreas.map(sensitiveArea => (
                   <grw-sensitive-area-detail sensitiveArea={sensitiveArea}></grw-sensitive-area-detail>

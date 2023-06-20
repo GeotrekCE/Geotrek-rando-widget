@@ -281,6 +281,7 @@ declare namespace LocalJSX {
         "onParkingIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onPoiIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onPointReferenceIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onSensitiveAreaIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
     }
