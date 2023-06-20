@@ -32,6 +32,7 @@ export namespace Components {
         "structures": string;
         "themes": string;
         "urlLayer": string;
+        "weather": boolean;
         "zoom": number;
     }
     interface GrwFilter {
@@ -77,6 +78,7 @@ export namespace Components {
         "colorPrimaryTint": string;
         "resetStoreOnDisconnected": boolean;
         "trek": Trek;
+        "weather": boolean;
     }
     interface GrwTrekProvider {
         "api": string;
@@ -231,6 +233,7 @@ declare namespace LocalJSX {
         "structures"?: string;
         "themes"?: string;
         "urlLayer"?: string;
+        "weather"?: boolean;
         "zoom"?: number;
     }
     interface GrwFilter {
@@ -284,6 +287,7 @@ declare namespace LocalJSX {
         "onSensitiveAreaIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
+        "weather"?: boolean;
     }
     interface GrwTrekProvider {
         "api"?: string;

@@ -39,6 +39,7 @@ export class GrwApp {
   @Prop() colorPoiIcon = '#974c6e';
   @Prop() linkName = 'GEOTREK';
   @Prop() linkTarget = 'https://geotrek.fr';
+  @Prop() weather = false;
 
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
@@ -251,6 +252,7 @@ export class GrwApp {
                     color-primary={this.colorPrimary}
                     color-primary-shade={this.colorPrimaryShade}
                     color-primary-tint={this.colorPrimaryTint}
+                    weather={this.weather}
                   ></grw-trek-detail>
                 </div>
               )}

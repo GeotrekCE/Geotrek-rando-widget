@@ -8,7 +8,7 @@ import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 @Component({
   tag: 'grw-trek-detail',
   styleUrl: 'grw-trek-detail.scss',
-  shadow: true,
+  shadow: false,
 })
 export class GrwTrekDetail {
   swiperImages?: Swiper;
@@ -46,6 +46,7 @@ export class GrwTrekDetail {
   @Prop() colorPrimaryShade = '#4a0021';
   @Prop() colorPrimaryTint = '#974c6e';
   @Prop() resetStoreOnDisconnected = true;
+  @Prop() weather = false;
 
   componentDidLoad() {
     this.swiperImages = new Swiper(this.swiperImagesRef, {
@@ -265,6 +266,16 @@ export class GrwTrekDetail {
               <div class="cities-container">
                 <div class="cities-title">{translate[state.language].cities} :&nbsp;</div>
                 <div innerHTML={this.cities.join(', ')}></div>
+              </div>
+            )}
+            {this.weather && this.currentTrek.departure_city && (
+              <div class="weather-container">
+                <iframe
+                  id="weather-widget"
+                  height="150"
+                  frameborder="0"
+                  src={`https://meteofrance.com/widget/prevision/${this.currentTrek.departure_city}0#${this.colorPrimaryTint}`}
+                ></iframe>
               </div>
             )}
             {this.currentTrek.access && (
