@@ -30,7 +30,7 @@
 | `structures`         | `structures`           |             | `string`  | `undefined`            |
 | `themes`             | `themes`               |             | `string`  | `undefined`            |
 | `urlLayer`           | `url-layer`            |             | `string`  | `undefined`            |
-| `weather`            | `weather`              |             | `boolean` | `true`                 |
+| `weather`            | `weather`              |             | `boolean` | `false`                |
 | `zoom`               | `zoom`                 |             | `number`  | `undefined`            |
 
 

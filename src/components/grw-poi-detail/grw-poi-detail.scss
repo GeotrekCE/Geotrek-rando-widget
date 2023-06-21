@@ -5,14 +5,13 @@
 :host {
   display: flex;
   flex-direction: column;
-  max-width: 240px;
   overflow: hidden;
   border: 1px solid gray;
   border-radius: 20px;
   --swiper-navigation-size: 32px;
   --swiper-navigation-color: var(--color-primary);
   --swiper-pagination-bullet-size: 12px;
-  --swiper-pagination-color: var(--color-primary);
+
   a {
     color: var(--color-primary);
   }
@@ -33,6 +32,10 @@
   }
   .default-poi-img {
     background-color: var(--color-primary-tint);
+    object-fit: contain;
+  }
+  .img-fullscreen {
+    max-height: none;
     object-fit: contain;
   }
   .poi-type {

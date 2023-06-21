@@ -122,11 +122,11 @@ export class GrwApp {
 
   handlePopState() {
     const url = new URL(window.location.toString());
-    const trekParam = url.searchParams.get('trek');
-    if (trekParam) {
-      this.currentTrekId = Number(trekParam);
-      this.showTrek = !this.showTrek;
-    } else {
+    const trekParam = Number(url.searchParams.get('trek'));
+    if (trekParam && this.currentTrekId !== trekParam) {
+      this.currentTrekId = trekParam;
+      this.showTrek = true;
+    } else if (!trekParam) {
       this.onTrekDetailsClose();
     }
   }

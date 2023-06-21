@@ -1,9 +1,23 @@
 import { Component, Host, h, Prop, State, getAssetPath, Build, Event, EventEmitter } from '@stencil/core';
-import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
+import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel } from 'swiper';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
+
+const options: {
+  presentation: boolean;
+  description: boolean;
+  sensitiveArea: boolean;
+  informationPlaces: boolean;
+  pois: boolean;
+} = {
+  presentation: false,
+  description: false,
+  sensitiveArea: false,
+  informationPlaces: false,
+  pois: false,
+};
 
 @Component({
   tag: 'grw-trek-detail',
@@ -20,11 +34,12 @@ export class GrwTrekDetail {
   paginationElImagesRef?: HTMLDivElement;
   swiperPoisRef?: HTMLDivElement;
   swiperInformationDesksRef?: HTMLDivElement;
+  presentationRef?: HTMLDivElement;
   pointReferenceRef?: HTMLDivElement;
   parkingRef?: HTMLDivElement;
   sensitiveAreaRef?: HTMLDivElement;
-  poiRef?: HTMLDivElement;
   informationDeskRef?: HTMLDivElement;
+  poiRef?: HTMLDivElement;
   @Event() informationDeskIsInViewport: EventEmitter<boolean>;
   @Event() pointReferenceIsInViewport: EventEmitter<boolean>;
   @Event() parkingIsInViewport: EventEmitter<boolean>;
@@ -41,6 +56,7 @@ export class GrwTrekDetail {
   @State() accessibilityLevel: AccessibilityLevel;
   @State() displayFullscreen = false;
   @State() cities: string[];
+  @State() options = { ...options, presentation: true };
   @Prop() trek: Trek;
   @Prop() colorPrimary = '#6b0030';
   @Prop() colorPrimaryShade = '#4a0021';
@@ -50,7 +66,7 @@ export class GrwTrekDetail {
 
   componentDidLoad() {
     this.swiperImages = new Swiper(this.swiperImagesRef, {
-      modules: [Navigation, Pagination, Keyboard],
+      modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
       navigation: {
         prevEl: this.prevElImagesRef,
         nextEl: this.nextElImagesRef,
@@ -64,9 +80,12 @@ export class GrwTrekDetail {
       this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
     };
     this.swiperPois = new Swiper(this.swiperPoisRef, {
+      modules: [FreeMode, Mousewheel],
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
+      freeMode: true,
+      mousewheel: { forceToAxis: true },
       breakpointsBase: 'container',
       breakpoints: {
         '540': {
@@ -75,9 +94,12 @@ export class GrwTrekDetail {
       },
     });
     this.swiperInformationDesks = new Swiper(this.swiperInformationDesksRef, {
+      modules: [FreeMode, Mousewheel],
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
+      freeMode: true,
+      mousewheel: { forceToAxis: true },
       breakpointsBase: 'container',
       breakpoints: {
         '540': {
@@ -85,37 +107,64 @@ export class GrwTrekDetail {
         },
       },
     });
-    const informationDeskObserver = new IntersectionObserver(
+    const presentationObserver = new IntersectionObserver(
       entries => {
-        this.informationDeskIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+        const intersectionRatio = entries[0].intersectionRatio >= 0.5;
+        if (intersectionRatio) {
+          this.options = { ...options, presentation: intersectionRatio };
+        }
       },
       { threshold: 0.5 },
     );
-    informationDeskObserver.observe(this.informationDeskRef);
+    presentationObserver.observe(this.presentationRef);
     const pointReferenceObserver = new IntersectionObserver(
       entries => {
-        this.pointReferenceIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+        const intersectionRatio = entries[0].intersectionRatio >= 0.5;
+        this.pointReferenceIsInViewport.emit(intersectionRatio);
+        if (intersectionRatio) {
+          this.options = { ...options, description: intersectionRatio };
+        }
       },
       { threshold: 0.5 },
     );
     pointReferenceObserver.observe(this.pointReferenceRef);
     const parkingObserver = new IntersectionObserver(
       entries => {
-        this.parkingIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+        const intersectionRatio = entries[0].intersectionRatio >= 0.5;
+        this.parkingIsInViewport.emit(intersectionRatio);
       },
       { threshold: 0.5 },
     );
     parkingObserver.observe(this.parkingRef);
     const sensitiveAreaRefObserver = new IntersectionObserver(
       entries => {
-        this.sensitiveAreaIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+        const intersectionRatio = entries[0].intersectionRatio >= 0.5;
+        this.sensitiveAreaIsInViewport.emit(intersectionRatio);
+        if (intersectionRatio) {
+          this.options = { ...options, sensitiveArea: intersectionRatio };
+        }
       },
       { threshold: 0.5 },
     );
     sensitiveAreaRefObserver.observe(this.sensitiveAreaRef);
+    const informationDeskObserver = new IntersectionObserver(
+      entries => {
+        const intersectionRatio = entries[0].intersectionRatio >= 0.5;
+        this.informationDeskIsInViewport.emit(intersectionRatio);
+        if (intersectionRatio) {
+          this.options = { ...options, informationPlaces: intersectionRatio };
+        }
+      },
+      { threshold: 0.5 },
+    );
+    informationDeskObserver.observe(this.informationDeskRef);
     const poiObserver = new IntersectionObserver(
       entries => {
-        this.poiIsInViewport.emit(entries[0].intersectionRatio >= 0.5);
+        const intersectionRatio = entries[0].intersectionRatio >= 0.5;
+        this.poiIsInViewport.emit(intersectionRatio);
+        if (intersectionRatio) {
+          this.options = { ...options, pois: intersectionRatio };
+        }
       },
       { threshold: 0.5 },
     );
@@ -174,9 +223,26 @@ export class GrwTrekDetail {
     const adviseImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/advise.svg`);
     return (
       <Host style={{ '--color-primary': this.colorPrimary, '--color-primary-shade': this.colorPrimaryShade, '--color-primary-tint': this.colorPrimaryTint }}>
+        <div class="trek-options">
+          <a href="#presentation" class={`trek-option${this.options.presentation ? ' selected-trek-option' : ''}`}>
+            {translate[state.language].options.presentation}
+          </a>
+          <a href="#description" class={`trek-option${this.options.description ? ' selected-trek-option' : ''}`}>
+            {translate[state.language].options.description}
+          </a>
+          <a href="#sensitive-areas" class={`trek-option${this.options.sensitiveArea ? ' selected-trek-option' : ''}`}>
+            {translate[state.language].options.environmentalSensitiveAreas}
+          </a>
+          <a href="#information-places" class={`trek-option${this.options.informationPlaces ? ' selected-trek-option' : ''}`}>
+            {translate[state.language].options.informationPlaces}
+          </a>
+          <a href="#pois" class={`trek-option${this.options.pois ? ' selected-trek-option' : ''}`}>
+            {translate[state.language].options.pois}
+          </a>
+        </div>
         {this.currentTrek && (
           <div class="trek-detail-container">
-            <div class="images-container">
+            <div id="presentation" class="images-container" ref={el => (this.presentationRef = el)}>
               <div class="swiper" ref={el => (this.swiperImagesRef = el)}>
                 <div class="swiper-wrapper">
                   {this.currentTrek.attachments
@@ -245,7 +311,7 @@ export class GrwTrekDetail {
             {this.currentTrek.description_teaser && <div class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
             {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
             {this.currentTrek.description && (
-              <div class="description-container" ref={el => (this.pointReferenceRef = el)}>
+              <div id="description" class="description-container" ref={el => (this.pointReferenceRef = el)}>
                 <div class="description-title">{translate[state.language].description}</div>
                 <div class="description" innerHTML={this.currentTrek.description}></div>
               </div>
@@ -323,7 +389,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
-              <div class="sensitive-areas-container" ref={el => (this.sensitiveAreaRef = el)}>
+              <div id="sensitive-areas" class="sensitive-areas-container" ref={el => (this.sensitiveAreaRef = el)}>
                 <div class="sensitive-areas-title">{translate[state.language].environmentalSensitiveAreas}</div>
                 {state.currentSensitiveAreas.map(sensitiveArea => (
                   <grw-sensitive-area-detail sensitiveArea={sensitiveArea}></grw-sensitive-area-detail>
@@ -331,7 +397,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentInformationDesks && state.currentInformationDesks.length > 0 && (
-              <div class="information-desks-container" ref={el => (this.informationDeskRef = el)}>
+              <div id="information-places" class="information-desks-container" ref={el => (this.informationDeskRef = el)}>
                 <div class="information-desks-title">{translate[state.language].informationPlaces}</div>
                 <div class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
                   <div class="swiper-wrapper">
@@ -411,7 +477,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentPois && state.currentPois.length > 0 && (
-              <div class="pois-container" ref={el => (this.poiRef = el)}>
+              <div id="pois" class="pois-container" ref={el => (this.poiRef = el)}>
                 <div class="pois-title">{translate[state.language].pois(state.currentPois.length)}</div>
                 <div class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
                   <div class="swiper-wrapper">

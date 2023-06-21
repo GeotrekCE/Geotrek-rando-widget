@@ -5,6 +5,7 @@ import 'leaflet-textpath';
 import 'leaflet.locatecontrol';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
 import state, { onChange, reset } from 'store/store';
+import { translate } from 'i18n/i18n';
 
 @Component({
   tag: 'grw-map',
@@ -28,7 +29,6 @@ export class GrwMap {
   @Prop() colorPoiIcon = '#974c6e';
   @Prop() resetStoreOnDisconnected = true;
   map: L.Map;
-  sensitiveAreasControl: any;
   treksLayer: L.GeoJSON<any>;
   currentTrekLayer: L.GeoJSON<any>;
   currentDepartureArrivalLayer: L.GeoJSON<any>;
@@ -75,15 +75,6 @@ export class GrwMap {
     this.handleLayerVisibility(event.detail, this.currentPoisLayer);
   }
 
-  handleLayerVisibility(visible: boolean, layer: L.GeoJSON) {
-    if (visible && !this.map.hasLayer(layer)) {
-      layer.addTo(this.map);
-    } else if (this.map.hasLayer(layer) && !this.userLayersState[(layer as any)._leaflet_id]) {
-      this.map.removeLayer(layer);
-    }
-    this.handleLayersControlEvent();
-  }
-
   componentDidLoad() {
     this.map = L.map(this.mapRef, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
@@ -123,6 +114,15 @@ export class GrwMap {
         this.addTreks();
       }
     });
+  }
+
+  handleLayerVisibility(visible: boolean, layer: L.GeoJSON) {
+    if (visible && !this.map.hasLayer(layer)) {
+      layer.addTo(this.map);
+    } else if (this.map.hasLayer(layer) && !this.userLayersState[(layer as any)._leaflet_id]) {
+      this.map.removeLayer(layer);
+    }
+    this.handleLayersControlEvent();
   }
 
   addTreks() {
@@ -474,15 +474,13 @@ export class GrwMap {
 
     (this.elevationControl as any).load(elevation);
 
-    const overlays = {
-      'Points de référence': this.currentPointsReferenceLayer,
-      'Parking conseillé': this.currentParkingLayer,
-      'Zones de sensibilité environnementale': this.currentSensitiveAreasLayer,
-      'Lieux de renseignement': this.currentInformationDesksLayer,
-      'Patrimoines': this.currentPoisLayer,
-    };
+    const overlays = {};
+    overlays[translate[state.language].layers.pointsReference] = this.currentPointsReferenceLayer;
+    overlays[translate[state.language].layers.parking] = this.currentParkingLayer;
+    overlays[translate[state.language].layers.sensitiveArea] = this.currentSensitiveAreasLayer;
+    overlays[translate[state.language].layers.informationPlaces] = this.currentInformationDesksLayer;
+    overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
     this.layersControl = L.control.layers(null, overlays, { collapsed: true }).addTo(this.map);
-
     this.handleLayersControlEvent();
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
@@ -516,8 +514,6 @@ export class GrwMap {
     if (this.currentSensitiveAreasLayer) {
       this.map.removeLayer(this.currentSensitiveAreasLayer);
       this.currentSensitiveAreasLayer = null;
-      this.map.removeControl(this.sensitiveAreasControl);
-      this.sensitiveAreasControl = null;
     }
 
     if (this.currentPoisLayer) {
@@ -535,6 +531,7 @@ export class GrwMap {
       this.currentPointsReferenceLayer = null;
     }
 
+    this.map.removeControl(this.layersControl);
     this.map.removeControl(this.elevationControl);
   }
 

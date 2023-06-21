@@ -29,6 +29,20 @@ interface Translation {
   pois: Function;
   sources: string;
   cities: string;
+  options: {
+    presentation: string;
+    description: string;
+    environmentalSensitiveAreas: string;
+    informationPlaces: string;
+    pois: string;
+  };
+  layers: {
+    pointsReference: string;
+    parking: string;
+    sensitiveArea: string;
+    informationPlaces: string;
+    pois: string;
+  };
 }
 
 interface AvailableTranslations {
@@ -68,6 +82,20 @@ export const translate: AvailableTranslations = {
     pois: (poisLength: number) => `Les ${poisLength} patrimoines à découvrir`,
     sources: 'Sources',
     cities: 'Communes traversées',
+    options: {
+      presentation: 'Présentation',
+      description: 'Description',
+      environmentalSensitiveAreas: 'Zones sensibles',
+      informationPlaces: "Lieux d'informations",
+      pois: 'Patrimoines',
+    },
+    layers: {
+      pointsReference: 'Points de référence',
+      parking: 'Parking conseillé',
+      sensitiveArea: 'Zones de sensibilité environnementale',
+      informationPlaces: 'Lieux de renseignement',
+      pois: 'Patrimoines',
+    },
   },
   en: {
     filter: 'Filter',
@@ -100,5 +128,19 @@ export const translate: AvailableTranslations = {
     pois: (poisLength: number) => `${poisLength} points of interest`,
     sources: 'Sources',
     cities: 'Cities crossed',
+    options: {
+      presentation: 'Presentation',
+      description: 'Description',
+      environmentalSensitiveAreas: 'Sensitive areas',
+      informationPlaces: 'Information places',
+      pois: 'Points of interest',
+    },
+    layers: {
+      pointsReference: 'Reference points',
+      parking: 'Parking',
+      sensitiveArea: 'Sensitive areas',
+      informationPlaces: 'Information places',
+      pois: 'Points of interest',
+    },
   },
 };

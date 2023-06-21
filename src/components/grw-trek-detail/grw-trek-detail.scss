@@ -2,11 +2,11 @@
 @use '~swiper/modules/navigation/navigation.scss';
 @use '~swiper/modules/pagination/pagination.scss';
 
-:host {
+grw-trek-detail {
   --swiper-navigation-size: 32px;
   --swiper-navigation-color: var(--color-primary);
-  --swiper-pagination-bullet-size: 12px;
   --swiper-pagination-color: var(--color-primary);
+  --swiper-pagination-bullet-size: 12px;
 }
 
 grw-sensitive-area-detail,
@@ -14,12 +14,49 @@ grw-information-desk-detail,
 grw-poi-detail {
   margin-top: 12px;
 }
-
+.trek-options {
+  display: flex;
+  width: calc(100% - 16px);
+  min-height: 32px;
+  padding: 8px;
+  background-color: #ffffff;
+  z-index: 20;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  .trek-option {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 16px;
+    font-size: 1.1rem;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    text-decoration: none;
+    color: inherit;
+    transition-property: color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.3s;
+    &:hover {
+      color: var(--color-primary);
+      border-color: 2px solid var(--color-primary);
+    }
+    &:last-child {
+      margin-right: 16px;
+    }
+  }
+  .selected-trek-option {
+    color: var(--color-primary);
+    border-color: 2px solid var(--color-primary);
+  }
+}
 .trek-detail-container {
   font-family: 'Roboto';
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 48px);
   overflow-y: auto;
   .name {
     color: var(--color-primary);
@@ -121,13 +158,27 @@ grw-poi-detail {
   .advice-container,
   .advised-parking-container,
   .gear-container,
-  .pois-container,
   .sensitive-areas-container,
-  .information-desks-container,
   .source-container,
   .accessibilities-container,
   .weather-container {
     padding: 0px 24px 24px 24px;
+  }
+  .ambiance,
+  .description-teaser,
+  .description-container,
+  .altimetric-profile-container,
+  .access-container,
+  .public-transport-container,
+  .advice-container,
+  .advised-parking-container,
+  .gear-container,
+  .sensitive-areas-container,
+  .information-desks-container,
+  .pois-container,
+  .source-container,
+  .accessibilities-container,
+  .weather-container {
     a {
       color: var(--color-primary);
     }
@@ -139,15 +190,25 @@ grw-poi-detail {
   .advice-title,
   .advised-parking-title,
   .gear-title,
-  .pois-title,
   .sensitive-areas-title,
   .information-desks-title,
+  .pois-title,
   .source-title,
   .accessibilities-title {
     color: var(--color-primary);
     font-size: 1.5rem;
     font-weight: bold;
     margin: 12px 0px;
+  }
+
+  .information-desks-container,
+  .pois-container {
+    padding: 0px 0px 24px 0px;
+  }
+
+  .information-desks-title,
+  .pois-title {
+    padding: 0px 24px 0px 24px;
   }
 }
 
@@ -287,4 +348,10 @@ grw-poi-detail {
   #weather-widget {
     width: 100%;
   }
+}
+
+.swiper-information-desks,
+.swiper-pois {
+  padding-right: 32px;
+  padding-left: 32px;
 }

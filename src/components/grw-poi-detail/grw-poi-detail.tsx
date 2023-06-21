@@ -62,7 +62,12 @@ export class GrwPoiDetail {
                   .filter(attachment => attachment.type === 'image')
                   .map(attachment => (
                     <div class="swiper-slide">
-                      <img class="poi-img" src={this.displayFullscreen ? attachment.url : attachment.thumbnail} loading="lazy" onClick={() => this.handleFullscreen()} />
+                      <img
+                        class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
+                        src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                        loading="lazy"
+                        onClick={() => this.handleFullscreen()}
+                      />
                     </div>
                   ))
               ) : (
