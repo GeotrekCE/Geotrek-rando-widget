@@ -446,7 +446,7 @@ export class GrwMap {
       });
     }
     const elevationOptions = {
-      srcFolder: 'http://unpkg.com/@raruto/leaflet-elevation/src/',
+      srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',
       elevationDiv: `#${this.elevationRef.id}`,
       theme: 'custom-theme',
       detached: true,
