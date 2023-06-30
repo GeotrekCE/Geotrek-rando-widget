@@ -2,6 +2,9 @@ import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
 
 export const config: Config = {
+  hydratedFlag: {
+    selector: 'attribute',
+  },
   namespace: 'geotrek-rando-widget',
   buildEs5: 'prod',
   extras: {

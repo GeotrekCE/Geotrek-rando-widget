@@ -211,7 +211,7 @@ export class GrwMap {
       this.treksLayer.addData(treksFeatureCollection);
     }
 
-    this.map.fitBounds(bounds);
+    bounds && this.map.fitBounds(bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
 
@@ -502,7 +502,7 @@ export class GrwMap {
     this.handleLayersControlEvent();
 
     const bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-    this.map.fitBounds(bounds);
+    bounds && this.map.fitBounds(bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
