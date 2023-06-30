@@ -2,7 +2,9 @@
 @use '~leaflet.locatecontrol/dist/L.Control.Locate.min.css';
 @use '~@raruto/leaflet-elevation/dist/leaflet-elevation.min.css';
 
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
 
 #map {
   position: relative;

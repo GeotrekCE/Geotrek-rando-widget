@@ -2,7 +2,9 @@
 @use '~swiper/modules/navigation/navigation.scss';
 @use '~swiper/modules/pagination/pagination.scss';
 
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
 
 grw-trek-detail {
   --swiper-navigation-size: 32px;
@@ -158,6 +160,8 @@ grw-trek-detail {
           width: calc(100% / 3);
           img,
           span {
+            font-family: 'Material Symbols Outlined';
+            font-size: 24px;
             width: 24px;
             height: auto;
             margin-right: 8px;
@@ -352,6 +356,8 @@ grw-trek-detail {
   border: 2px solid var(--color-outline);
   border-radius: 12px;
   span {
+    font-family: 'Material Symbols Outlined';
+    font-size: 24px;
     width: 26px;
     margin-right: 8px;
   }

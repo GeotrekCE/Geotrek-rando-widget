@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0');
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
 
 :host {
   display: flex;
@@ -62,6 +64,7 @@
   display: flex;
   align-items: center;
   span {
+    font-family: 'Material Symbols Outlined';
     font-size: 16px;
     margin-right: 8px;
   }
@@ -91,6 +94,7 @@
     box-shadow: var(--elevation-2);
   }
   span {
+    font-family: 'Material Symbols Outlined';
     font-size: 18px;
   }
 }
