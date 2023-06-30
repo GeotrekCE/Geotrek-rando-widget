@@ -219,10 +219,7 @@ export class GrwApp {
                     </div>
                   )}
                 </div>
-                <div class="header-right-container">
-                  <span class="material-symbols-outlined margin-right-icon">translate</span>
-                  {state.languages.length > 1 && <grw-select-language></grw-select-language>}
-                </div>
+                <div class="header-right-container">{state.languages.length > 1 && <grw-select-language></grw-select-language>}</div>
               </div>
               {!this.showTrek && (
                 <div class="handle-filters-container">

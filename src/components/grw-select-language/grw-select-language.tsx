@@ -17,15 +17,14 @@ export class GrwSelectLanguage {
   render() {
     return (
       <Host>
-        <slot>
-          <select onInput={event => this.handleSelect(event)} name="languages" id="language-select">
-            {state.languages.map(language => (
-              <option selected={language === state.language} value={language.toLocaleLowerCase()}>
-                {language.toLocaleUpperCase()}
-              </option>
-            ))}
-          </select>
-        </slot>
+        <span class="material-symbols-outlined margin-right-icon">translate</span>
+        <select onInput={event => this.handleSelect(event)} name="languages" id="language-select">
+          {state.languages.map(language => (
+            <option selected={language === state.language} value={language.toLocaleLowerCase()}>
+              {language.toLocaleUpperCase()}
+            </option>
+          ))}
+        </select>
       </Host>
     );
   }
