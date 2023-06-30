@@ -14,14 +14,26 @@ export namespace Components {
         "center": string;
         "cities": string;
         "colorArrivalIcon": string;
+        "colorBackground": string;
         "colorDepartureIcon": string;
+        "colorOnPrimary": string;
+        "colorOnPrimaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorOnSurfaceVariant": string;
         "colorPoiIcon": string;
-        "colorPrimary": string;
-        "colorPrimaryShade": string;
-        "colorPrimaryTint": string;
+        "colorPrimaryApp": string;
+        "colorPrimaryContainer": string;
+        "colorSecondaryContainer": string;
         "colorSensitiveArea": string;
+        "colorSurface": string;
+        "colorSurfaceContainerHigh": string;
+        "colorSurfaceContainerLow": string;
+        "colorSurfaceVariant": string;
         "colorTrekLine": string;
         "districts": string;
+        "fabBackgroundColor": string;
+        "fabColor": string;
         "inBbox": string;
         "languages": string;
         "linkName": string;
@@ -47,12 +59,16 @@ export namespace Components {
         "attribution": string;
         "center": string;
         "colorArrivalIcon": string;
+        "colorBackground": string;
         "colorDepartureIcon": string;
+        "colorOnPrimaryContainer": string;
+        "colorOnSurface": string;
         "colorPoiIcon": string;
-        "colorPrimary": string;
-        "colorPrimaryTint": string;
+        "colorPrimaryApp": string;
+        "colorPrimaryContainer": string;
         "colorSensitiveArea": string;
         "colorTrekLine": string;
+        "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
         "urlLayer": string;
         "zoom": number;
@@ -66,16 +82,24 @@ export namespace Components {
         "sensitiveArea": SensitiveArea;
     }
     interface GrwTrekCard {
-        "colorPrimary": string;
-        "colorPrimaryTint": string;
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
         "trek": Trek;
     }
     interface GrwTrekDetail {
-        "colorPrimary": string;
-        "colorPrimaryShade": string;
-        "colorPrimaryTint": string;
+        "colorBackground": string;
+        "colorOnPrimaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
         "trek": Trek;
         "weather": boolean;
@@ -86,8 +110,11 @@ export namespace Components {
         "trekId": string;
     }
     interface GrwTreksList {
-        "colorPrimary": string;
-        "colorPrimaryTint": string;
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
     }
@@ -215,14 +242,26 @@ declare namespace LocalJSX {
         "center"?: string;
         "cities"?: string;
         "colorArrivalIcon"?: string;
+        "colorBackground"?: string;
         "colorDepartureIcon"?: string;
+        "colorOnPrimary"?: string;
+        "colorOnPrimaryContainer"?: string;
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorOnSurfaceVariant"?: string;
         "colorPoiIcon"?: string;
-        "colorPrimary"?: string;
-        "colorPrimaryShade"?: string;
-        "colorPrimaryTint"?: string;
+        "colorPrimaryApp"?: string;
+        "colorPrimaryContainer"?: string;
+        "colorSecondaryContainer"?: string;
         "colorSensitiveArea"?: string;
+        "colorSurface"?: string;
+        "colorSurfaceContainerHigh"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "colorSurfaceVariant"?: string;
         "colorTrekLine"?: string;
         "districts"?: string;
+        "fabBackgroundColor"?: string;
+        "fabColor"?: string;
         "inBbox"?: string;
         "languages"?: string;
         "linkName"?: string;
@@ -249,12 +288,16 @@ declare namespace LocalJSX {
         "attribution"?: string;
         "center"?: string;
         "colorArrivalIcon"?: string;
+        "colorBackground"?: string;
         "colorDepartureIcon"?: string;
+        "colorOnPrimaryContainer"?: string;
+        "colorOnSurface"?: string;
         "colorPoiIcon"?: string;
-        "colorPrimary"?: string;
-        "colorPrimaryTint"?: string;
+        "colorPrimaryApp"?: string;
+        "colorPrimaryContainer"?: string;
         "colorSensitiveArea"?: string;
         "colorTrekLine"?: string;
+        "isLargeView"?: boolean;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "urlLayer"?: string;
@@ -269,21 +312,29 @@ declare namespace LocalJSX {
         "sensitiveArea"?: SensitiveArea;
     }
     interface GrwTrekCard {
-        "colorPrimary"?: string;
-        "colorPrimaryTint"?: string;
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
         "onTrekCardPress"?: (event: GrwTrekCardCustomEvent<number>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
     }
     interface GrwTrekDetail {
-        "colorPrimary"?: string;
-        "colorPrimaryShade"?: string;
-        "colorPrimaryTint"?: string;
+        "colorBackground"?: string;
+        "colorOnPrimaryContainer"?: string;
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorPrimaryContainer"?: string;
+        "colorSecondaryContainer"?: string;
+        "isLargeView"?: boolean;
+        "onDescriptionReferenceIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onInformationDeskIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onParkingIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onPoiIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
-        "onPointReferenceIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onSensitiveAreaIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
@@ -295,8 +346,11 @@ declare namespace LocalJSX {
         "trekId"?: string;
     }
     interface GrwTreksList {
-        "colorPrimary"?: string;
-        "colorPrimaryTint"?: string;
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
         "resetStoreOnDisconnected"?: boolean;
     }

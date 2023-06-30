@@ -1,4 +1,15 @@
-export const createTrekDetail = ({ api, language, trekId, colorPrimary, colorPrimaryShade, colorPrimaryTint }) => {
+export const createTrekDetail = ({
+  api,
+  language,
+  trekId,
+  colorPrimaryApp,
+  colorOnSurface,
+  colorPrimaryContainer,
+  colorOnPrimaryContainer,
+  colorSecondaryContainer,
+  colorOnSecondaryContainer,
+  colorBackground,
+}) => {
   const container = document.createElement('div');
   const trek = document.createElement('grw-trek-provider');
   trek.setAttribute('api', api);
@@ -6,9 +17,13 @@ export const createTrekDetail = ({ api, language, trekId, colorPrimary, colorPri
   trek.setAttribute('trek-id', trekId);
   container.appendChild(trek);
   const detail = document.createElement('grw-trek-detail');
-  detail.setAttribute('color-primary', colorPrimary);
-  detail.setAttribute('color-primary-shade', colorPrimaryShade);
-  detail.setAttribute('color-primary-tint', colorPrimaryTint);
+  trek.setAttribute('color-primary-app', colorPrimaryApp);
+  trek.setAttribute('color-on-surface', colorOnSurface);
+  trek.setAttribute('color-primary-container', colorPrimaryContainer);
+  trek.setAttribute('color-on-primary-container', colorOnPrimaryContainer);
+  trek.setAttribute('color-secondary-container', colorSecondaryContainer);
+  trek.setAttribute('color-on-secondary-container', colorOnSecondaryContainer);
+  trek.setAttribute('color-background', colorBackground);
   container.appendChild(detail);
   return container;
 };

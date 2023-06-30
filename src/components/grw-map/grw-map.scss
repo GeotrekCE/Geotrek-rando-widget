@@ -6,7 +6,6 @@
   position: relative;
   font-family: 'Roboto';
   display: block;
-  height: 100%;
 }
 
 .leaflet-retina .leaflet-control-layers-toggle {
@@ -14,28 +13,68 @@
 }
 
 .treks-map {
-  max-height: 100%;
+  height: calc(100%);
 }
 
 .trek-map {
-  max-height: calc(100% - 250px);
+  height: calc(100% - 250px - var(--map-bottom-space-height));
 }
 
 #elevation {
   position: relative;
   background-color: #ffffff;
+  height: 250px;
 }
 
 .elevation-control .background {
   border-radius: 0px;
 }
 
-.elevation-polyline {
+.custom-theme.elevation-control .axis text {
+  fill: var(--color-on-surface);
+}
+
+.custom-theme.elevation-control .axis line,
+.custom-theme.elevation-control .axis path {
+  stroke: var(--color-on-surface);
+}
+
+.custom-theme.elevation-control .mouse-focus-label-rect {
+  fill: var(--color-primary-container);
+  stroke: var(--color-on-primary-container);
+}
+
+.custom-theme.elevation-control .mouse-focus-label-text {
+  fill: var(--color-on-primary-container);
+}
+
+.custom-theme.elevation-control .background {
+  background-color: var(--color-background);
+}
+
+.custom-theme.elevation-control .mouse-focus-line {
+  stroke: var(--color-on-surface);
+}
+
+.custom-theme.elevation-control .area path.altitude,
+.custom-theme .legend-altitude rect.area {
+  fill: var(--color-primary-app);
   stroke: var(--color-trek-line);
 }
 
-.height-focus.line,
-.height-focus-label {
+.custom-theme.height-focus.circle-lower {
+  fill: #ffffff;
+  stroke: var(--color-on-surface);
+}
+
+.custom-theme.elevation-polyline {
+  stroke: var(--color-trek-line);
+}
+
+.custom-theme.height-focus.line,
+.custom-theme.height-focus-label,
+.start-marker,
+.end-marker {
   display: none;
 }
 
@@ -58,7 +97,7 @@
 }
 
 .trek-marker {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-app);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -73,15 +112,15 @@
   z-index: 500;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.5);
+  background-color: var(--color-background);
   display: flex;
   justify-content: center;
   align-items: center;
   .loader {
     width: 48px;
     height: 48px;
-    border: 5px solid var(--color-primary-tint);
-    border-bottom-color: var(--color-primary);
+    border: 5px solid var(--color-primary-container);
+    border-bottom-color: var(--color-on-primary-container);
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
@@ -114,9 +153,10 @@
     border-radius: 8px;
   }
   .trek-name {
-    color: var(--color-primary);
-    font-weight: bold;
-    font-size: 1.1rem;
+    color: var(--color-primary-app);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
   }
   .trek-name-margin-top {
     margin-top: 12px;
@@ -129,9 +169,10 @@
   .poi-name,
   .information-desks-name,
   .sensitive-area-name {
-    color: var(--color-primary);
-    font-weight: bold;
-    font-size: 1.1rem;
+    color: var(--color-primary-app);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 
@@ -175,7 +216,7 @@
   align-items: center;
   width: 48px;
   height: 48px;
-  font-size: 1.4rem;
+  font-size: 48px;
   color: #ffffff;
 }
 
@@ -188,6 +229,13 @@
   align-items: center;
   width: 24px;
   height: 24px;
-  font-size: 1.3rem;
+  font-size: 24px;
   color: #ffffff;
+}
+
+.map-bottom-space {
+  min-height: var(--map-bottom-space-height);
+  height: var(--map-bottom-space-height);
+  width: 100%;
+  background-color: var(--color-background);
 }

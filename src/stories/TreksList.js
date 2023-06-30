@@ -1,4 +1,20 @@
-export const createTreksList = ({ api, language, inBbox, cities, districts, structures, themes, portals, routes, practices, colorPrimary, colorPrimaryTint }) => {
+export const createTreksList = ({
+  api,
+  language,
+  inBbox,
+  cities,
+  districts,
+  structures,
+  themes,
+  portals,
+  routes,
+  practices,
+  colorPrimaryApp,
+  colorOnSurface,
+  colorSecondaryContainer,
+  colorOnSecondaryContainer,
+  colorSurfaceContainerLow,
+}) => {
   const container = document.createElement('div');
   const treks = document.createElement('grw-treks-provider');
   treks.setAttribute('api', api);
@@ -13,8 +29,11 @@ export const createTreksList = ({ api, language, inBbox, cities, districts, stru
   practices && treks.setAttribute('practices', practices);
   container.appendChild(treks);
   const list = document.createElement('grw-treks-list');
-  list.setAttribute('color-primary', colorPrimary);
-  list.setAttribute('color-primary-tint', colorPrimaryTint);
+  list.setAttribute('color-primary', colorPrimaryApp);
+  list.setAttribute('color-on-surface', colorOnSurface);
+  list.setAttribute('color-secondary-container', colorSecondaryContainer);
+  list.setAttribute('color-on-secondary-container', colorOnSecondaryContainer);
+  list.setAttribute('color-surface-container-low', colorSurfaceContainerLow);
   container.appendChild(list);
   return container;
 };

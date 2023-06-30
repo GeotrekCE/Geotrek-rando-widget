@@ -27,27 +27,26 @@
   },
   "dependencies": {
     "@raruto/leaflet-elevation": "^2.4.0",
-    "@stencil/core": "^3.3.1",
+    "@stencil/core": "^3.4.1",
     "leaflet": "^1.9.4",
-    "leaflet-textpath": "^1.2.3",
     "leaflet.locatecontrol": "^0.79.0",
-    "swiper": "^9.4.0"
+    "swiper": "^9.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@stencil/sass": "^3.0.4",
     "@stencil/store": "^2.0.8",
-    "@storybook/addon-controls": "^6.5.12",
-    "@storybook/addon-docs": "^6.5.12",
-    "@storybook/builder-webpack4": "^6.5.12",
-    "@storybook/html": "^6.5.12",
-    "@storybook/manager-webpack4": "^6.5.12",
-    "@storybook/storybook-deployer": "^2.8.12",
+    "@storybook/addon-controls": "^6.5.16",
+    "@storybook/addon-docs": "^6.5.16",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/html": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/storybook-deployer": "^2.8.16",
     "@types/geojson": "^7946.0.10",
     "@types/leaflet": "^1.9.3",
     "babel-loader": "^9.1.2",
     "glob": "^9.3.4",
-    "typescript": "^4.9.5"
+    "typescript": "^5.1.6"
   },
   "author": "bastien.alvez@makina-corpus.com",
   "license": "MIT"

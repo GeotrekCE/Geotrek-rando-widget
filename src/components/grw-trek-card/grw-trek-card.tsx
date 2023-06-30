@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Event, EventEmitter, State, getAssetPath, Build } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
 import { City, Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
@@ -17,8 +17,11 @@ export class GrwTrekCard {
   @State() themes: Themes;
   @State() departureCity: City;
   @Prop() trek: Trek;
-  @Prop() colorPrimary = '#6b0030';
-  @Prop() colorPrimaryTint = '#974c6e';
+  @Prop() colorPrimaryApp = '#6b0030';
+  @Prop() colorOnSurface = '#49454e';
+  @Prop() colorSecondaryContainer = '#e8def8';
+  @Prop() colorOnSecondaryContainer = '#1d192b';
+  @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() isLargeView = false;
   @Prop() resetStoreOnDisconnected = true;
 
@@ -50,11 +53,17 @@ export class GrwTrekCard {
   }
 
   render() {
-    const durationImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/duration.svg`);
-    const lengthImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/length.svg`);
-    const ascentImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/ascent.svg`);
     return (
-      <Host style={{ 'width': this.isLargeView ? '100%' : 'auto', '--color-primary': this.colorPrimary, '--color-primary-tint': this.colorPrimaryTint }}>
+      <Host
+        style={{
+          'width': this.isLargeView ? '100%' : 'auto',
+          '--color-primary-app': this.colorPrimaryApp,
+          '--color-on-surface': this.colorOnSurface,
+          '--color-secondary-container': this.colorSecondaryContainer,
+          '--color-on-secondary-container': this.colorOnSecondaryContainer,
+          '--color-surface-container-low': this.colorSurfaceContainerLow,
+        }}
+      >
         {this.currentTrek && (
           <div class={this.isLargeView ? 'trek-card-large-view-container' : 'trek-card-container'} onClick={() => this.trekCardPress.emit(this.currentTrek.id)}>
             {this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 0 && (
@@ -75,17 +84,17 @@ export class GrwTrekCard {
                     {this.difficulty?.label}
                   </div>
                   <div class="icon-label duration">
-                    <img src={durationImageSrc} />
+                    <span class="material-symbols-outlined">timelapse</span>
                     {formatDuration(this.currentTrek.duration)}
                   </div>
                 </div>
                 <div class="row">
                   <div class="icon-label length">
-                    <img src={lengthImageSrc} />
+                    <span class="material-symbols-outlined">open_in_full</span>
                     {formatLength(this.currentTrek.length_2d)}
                   </div>
                   <div class="icon-label ascent">
-                    <img src={ascentImageSrc} />
+                    <span class="material-symbols-outlined">moving</span>
                     {formatAscent(this.currentTrek.ascent)}
                   </div>
                 </div>

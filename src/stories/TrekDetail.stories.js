@@ -15,8 +15,12 @@ TrekDetail.args = {
   api: 'https://randoadmin.parc-haut-jura.fr/api/v2/',
   language: 'fr',
   trekId: 242872,
-  colorPrimary: '#6b0030',
-  colorPrimaryShade: '#4a0021',
-  colorPrimaryTint: '#974c6e',
+  colorPrimaryApp: '#6b0030',
+  colorOnSurface: '#49454e',
+  colorPrimaryContainer: '#eaddff',
+  colorOnPrimaryContainer: '#21005e',
+  colorSecondaryContainer: '#e8def8',
+  colorOnSecondaryContainer: '#1d192b',
+  colorBackground: '#fef7ff',
 };
 TrekDetail.storyName = 'Trek detail';

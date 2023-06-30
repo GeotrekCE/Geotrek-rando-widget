@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop } from '@stencil/core';
+import { Build, Component, h, Host, Prop } from '@stencil/core';
 import state from 'store/store';
 
 @Component({
@@ -18,6 +18,7 @@ export class GrwTreksProvider {
   @Prop() practices: string;
   controller = new AbortController();
   signal = this.controller.signal;
+  init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
 
   connectedCallback() {
     if (!state.api) {
@@ -48,12 +49,12 @@ export class GrwTreksProvider {
     treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom&page_size=999`;
 
     Promise.all([
-      fetch(`${state.api}trek_difficulty/?language=${state.language}&fields=id,label,pictogram`, { signal: this.signal }),
-      fetch(`${state.api}trek_route/?language=${state.language}&fields=id,route,pictogram`, { signal: this.signal }),
-      fetch(`${state.api}trek_practice/?language=${state.language}&fields=id,name,pictogram`, { signal: this.signal }),
-      fetch(`${state.api}theme/?language=${state.language}&fields=id,label,pictogram`, { signal: this.signal }),
-      fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, { signal: this.signal }),
-      fetch(treksRequest, { signal: this.signal }),
+      fetch(`${state.api}trek_difficulty/?language=${state.language}&fields=id,label,pictogram`, this.init),
+      fetch(`${state.api}trek_route/?language=${state.language}&fields=id,route,pictogram`, this.init),
+      fetch(`${state.api}trek_practice/?language=${state.language}&fields=id,name,pictogram`, this.init),
+      fetch(`${state.api}theme/?language=${state.language}&fields=id,label,pictogram`, this.init),
+      fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init),
+      fetch(treksRequest, this.init),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(([difficulties, routes, practices, themes, cities, treks]) => {

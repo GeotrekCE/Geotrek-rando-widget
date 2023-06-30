@@ -7,13 +7,14 @@
   flex-direction: column;
   overflow: hidden;
   border: 1px solid gray;
-  border-radius: 20px;
+  border-radius: 12px;
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface);
   --swiper-navigation-size: 32px;
-  --swiper-navigation-color: var(--color-primary);
+  --swiper-navigation-color: var(--color-primary-app);
   --swiper-pagination-bullet-size: 12px;
-
   a {
-    color: var(--color-primary);
+    color: var(--color-primary-app);
   }
 }
 
@@ -31,7 +32,7 @@
     object-fit: cover;
   }
   .default-poi-img {
-    background-color: var(--color-primary-tint);
+    background-color: var(--color-primary-container);
     object-fit: contain;
   }
   .img-fullscreen {
@@ -44,7 +45,7 @@
     padding: 4px;
     border: 2px solid #ffffff;
     border-radius: 50%;
-    background-color: var(--color-primary);
+    background-color: var(--color-on-surface);
     position: absolute;
     top: 8px;
     left: 8px;
@@ -59,17 +60,18 @@
 }
 
 .poi-name {
-  color: var(--color-primary);
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 .poi-description {
-  font-size: 1.1rem;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .poi-description-short {
-  font-size: 1.1rem;
+  font-size: 14px;
+  line-height: 20px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
@@ -78,7 +80,7 @@
 
 .handle-poi-description {
   cursor: pointer;
-  color: var(--color-primary);
+  color: var(--color-primary-app);
   text-decoration: underline;
   margin-top: 12px;
 }

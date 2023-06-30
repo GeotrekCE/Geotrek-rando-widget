@@ -22,7 +22,10 @@ TreksList.args = {
   portals: '',
   routes: '',
   practices: '',
-  colorPrimary: '#6b0030',
-  colorPrimaryTint: '#974c6e',
+  colorPrimaryApp: '#6b0030',
+  colorOnSurface: '#49454e',
+  colorSecondaryContainer: '#e8def8',
+  colorOnSecondaryContainer: '#1d192b',
+  colorSurfaceContainerLow: '#f7f2fa',
 };
 TreksList.storyName = 'Treks list';

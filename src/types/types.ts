@@ -201,3 +201,18 @@ export type InformationDeskType = {
 export type Filters = Filter[];
 
 export type Filter = { property: string; trekProperty: string; type: string };
+
+export interface Option {
+  visible: boolean;
+  width: number;
+  indicator: boolean;
+}
+
+export interface Options {
+  presentation: Option;
+  description: Option;
+  recommendations: Option;
+  sensitiveArea: Option;
+  informationPlaces: Option;
+  pois: Option;
+}

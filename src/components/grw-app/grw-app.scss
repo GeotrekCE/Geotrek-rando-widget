@@ -4,56 +4,55 @@
 
 .app-container {
   position: relative;
+  width: 100%;
   height: 100%;
-  max-height: 100vh;
   font-family: 'Roboto';
+  color: var(--color-on-surface);
+  overflow: hidden;
 }
 
 .header-container,
 .large-view-header-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--color-primary);
-  height: 64px;
-  .arrow-back-icon {
-    width: 48px;
-    height: auto;
-    img {
-      cursor: pointer;
-      width: 48px;
-      height: auto;
-    }
-  }
-  .handle-filters-container {
+  background-color: var(--color-background);
+  box-shadow: var(--elevation-2);
+  .header-top {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    .handle-filters-button {
-      user-select: none;
-      cursor: pointer;
-      color: var(--color-primary);
-      background-color: #ffffff;
-      margin-left: 12px;
-      border-radius: 8px;
-      padding: 8px;
-    }
-    .current-treks-within-bounds-length {
-      margin-left: 12px;
-      color: #ffffff;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .arrow-back-icon {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--color-on-surface);
+    border: none;
+    background-color: var(--color-background);
+    border-radius: 50%;
+    height: 48px;
+    width: 48px;
+    padding: 12px;
+    &:hover {
+      box-shadow: var(--elevation-1);
     }
   }
   .header-left-container {
-    margin-left: 24px;
+    margin-left: 8px;
   }
   .header-right-container {
     display: flex;
-    margin-right: 24px;
+    align-items: center;
+    margin-right: 8px;
+    .margin-right-icon {
+      margin-right: 8px;
+    }
   }
   .attribution-container {
-    margin-left: 12px;
     a {
-      color: #ffffff;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 40px;
+      color: var(--color-on-surface);
       text-decoration: none;
     }
   }
@@ -67,30 +66,51 @@
   top: 64px;
 }
 
-.filters-container {
-  position: absolute;
-  width: 100%;
-  background-color: #ffffff;
-  padding: 36px 0px;
-  z-index: 1100;
-  .close-filters-button {
+.handle-filters-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px 16px;
+  height: 64px;
+  .handle-filters-button {
+    user-select: none;
     cursor: pointer;
-    font-weight: bold;
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 12px;
-    border-radius: 12px;
-    color: var(--color-primary);
-    border: 1px var(--color-primary) solid;
-    &:hover {
-      background-color: var(--color-primary);
-      color: #ffffff;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: var(--color-background);
+    color: var(--color-on-surface);
+    padding: 12px 24px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    position: relative;
+    gap: 8px;
+    white-space: nowrap;
+    line-height: 20px;
+    letter-spacing: 0.10000000149011612px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: var(--elevation-1);
+    transition: box-shadow 0.2s ease-in-out 0s;
+    span {
+      font-size: 18px;
     }
   }
-  .filter-margin-top {
-    margin-top: 24px;
+  .current-treks-within-bounds-length {
+    margin-left: 12px;
+    color: var(--color-on-surface);
   }
+}
+
+.filters-container {
+  background-color: var(--color-background);
+  position: absolute;
+  width: 100%;
+  padding: 16px 0px 32px 0px;
+  z-index: 1100;
 }
 
 .back-filters-container {
@@ -102,6 +122,11 @@
   top: 64px;
 }
 
+.divider {
+  margin: 16px;
+  border-top: 1px solid var(--color-outline);
+}
+
 .init-loader-container,
 .loader-container,
 .large-view-loader-container {
@@ -109,11 +134,12 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  background-color: var(--color-background);
   .loader {
     width: 48px;
     height: 48px;
-    border: 5px solid var(--color-primary-tint);
-    border-bottom-color: var(--color-primary);
+    border: 5px solid var(--color-primary-container);
+    border-bottom-color: var(--color-on-primary-container);
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
@@ -133,6 +159,15 @@
 .content-container {
   position: relative;
   display: flex;
+  height: calc(100% - 64px - 64px);
+  background-color: var(--color-background);
+}
+
+.content-treks {
+  height: calc(100% - 64px - 64px);
+}
+
+.content-trek {
   height: calc(100% - 64px);
 }
 
@@ -141,6 +176,8 @@
 .large-view-app-treks-list-container,
 .large-view-app-trek-detail-container {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-map-container,
@@ -149,30 +186,38 @@
   height: 100%;
 }
 
-.map-visibility-button {
-  position: relative;
+.map-visibility-button-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  z-index: 400;
-  user-select: none;
-  div {
+  position: absolute;
+  bottom: 24px;
+  z-index: 4;
+  .map-visibility-button {
     cursor: pointer;
-    position: absolute;
-    bottom: 24px;
-    background-color: var(--color-primary);
-    color: #ffffff;
-    padding: 12px;
-    border-radius: 24px;
-    width: 120px;
-    text-align: center;
-  }
-}
-
-.header-container {
-  .title {
-    font-size: 1.4rem;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    text-decoration: none;
+    padding: 16px;
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    box-shadow: var(--elevation-1);
+    border-radius: 12px;
+    height: 56px;
+    font-size: 16px;
+    width: unset;
+    &:hover {
+      box-shadow: var(--elevation-4);
+    }
+    span {
+      margin-right: 8px;
+      color: var(--color-on-primary-container);
+    }
   }
 }
 
@@ -187,15 +232,8 @@
 }
 
 .app-map-container {
-  position: relative;
   width: 100%;
   position: absolute;
-}
-
-.large-view-header-container {
-  .title {
-    font-size: 1.5rem;
-  }
 }
 
 .large-view-loader-container {

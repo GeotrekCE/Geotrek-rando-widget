@@ -5,12 +5,15 @@
 
 ## Properties
 
-| Property                   | Attribute                     | Description | Type      | Default     |
-| -------------------------- | ----------------------------- | ----------- | --------- | ----------- |
-| `colorPrimary`             | `color-primary`               |             | `string`  | `'#6b0030'` |
-| `colorPrimaryTint`         | `color-primary-tint`          |             | `string`  | `'#974c6e'` |
-| `isLargeView`              | `is-large-view`               |             | `boolean` | `false`     |
-| `resetStoreOnDisconnected` | `reset-store-on-disconnected` |             | `boolean` | `true`      |
+| Property                    | Attribute                      | Description | Type      | Default     |
+| --------------------------- | ------------------------------ | ----------- | --------- | ----------- |
+| `colorOnSecondaryContainer` | `color-on-secondary-container` |             | `string`  | `'#1d192b'` |
+| `colorOnSurface`            | `color-on-surface`             |             | `string`  | `'#49454e'` |
+| `colorPrimaryApp`           | `color-primary-app`            |             | `string`  | `'#6b0030'` |
+| `colorSecondaryContainer`   | `color-secondary-container`    |             | `string`  | `'#e8def8'` |
+| `colorSurfaceContainerLow`  | `color-surface-container-low`  |             | `string`  | `'#f7f2fa'` |
+| `isLargeView`               | `is-large-view`                |             | `boolean` | `false`     |
+| `resetStoreOnDisconnected`  | `reset-store-on-disconnected`  |             | `boolean` | `true`      |
 
 
 ## Dependencies

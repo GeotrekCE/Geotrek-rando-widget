@@ -27,7 +27,10 @@ TreksMap.args = {
   center: '46.50761080179829, 5.927117067721017',
   zoom: 8,
   attribution: '© IGN',
-  colorPrimary: '#6b0030',
-  colorPrimaryTint: '#974c6e',
+  colorPrimaryApp: '#6b0030',
+  colorOnSurface: '#49454e',
+  colorPrimaryContainer: '#eaddff',
+  colorOnPrimaryContainer: '#21005e',
+  colorBackground: '#fef7ff',
 };
 TreksMap.storyName = 'Treks map';

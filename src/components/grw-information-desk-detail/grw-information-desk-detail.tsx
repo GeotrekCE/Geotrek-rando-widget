@@ -28,8 +28,13 @@ export class GrwInformationDeskDetail {
           </div>
         )}
         <div class="information-desk-sub-container">
-          {this.informationDesk.latitude && this.informationDesk.longitude && <button onClick={() => this.handleCenterOnMap()}>Centrer sur la carte</button>}
           {this.informationDesk.name && <div class="information-desk-name">{this.informationDesk.name}</div>}
+          {this.informationDesk.latitude && this.informationDesk.longitude && (
+            <button class="center-on-map-button" onClick={() => this.handleCenterOnMap()}>
+              <span class="material-symbols-outlined">location_searching</span>
+              Centrer sur la carte
+            </button>
+          )}
           {(this.informationDesk.postal_code || this.informationDesk.municipality || this.informationDesk.street) && (
             <div>
               {this.informationDesk.postal_code && this.informationDesk.postal_code}
@@ -38,17 +43,20 @@ export class GrwInformationDeskDetail {
             </div>
           )}
           {this.informationDesk.phone && (
-            <div>
+            <div class="phone-container">
+              <span class="material-symbols-outlined">call</span>
               <a href={`tel:${this.informationDesk.phone}`}>{this.informationDesk.phone}</a>
             </div>
           )}
           {this.informationDesk.email && (
-            <div>
+            <div class="mail-container">
+              <span class="material-symbols-outlined">mail</span>
               <a href={`mailto:${this.informationDesk.email}`}>{this.informationDesk.email}</a>
             </div>
           )}
           {this.informationDesk.website && (
-            <div>
+            <div class="link-container">
+              <span class="material-symbols-outlined">link</span>
               <a href={`${this.informationDesk.website}`}>{this.informationDesk.website}</a>
             </div>
           )}

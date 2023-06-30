@@ -4,23 +4,19 @@
 
 grw-trek-detail {
   --swiper-navigation-size: 32px;
-  --swiper-navigation-color: var(--color-primary);
-  --swiper-pagination-color: var(--color-primary);
+  --swiper-navigation-color: var(--color-primary-app);
+  --swiper-pagination-color: var(--color-primary-app);
   --swiper-pagination-bullet-size: 12px;
+  overflow: hidden;
 }
 
-grw-sensitive-area-detail,
-grw-information-desk-detail,
-grw-poi-detail {
-  margin-top: 12px;
-}
 .trek-options {
   display: flex;
-  width: calc(100% - 16px);
+  position: relative;
+  width: 100%;
   min-height: 32px;
-  padding: 8px;
-  background-color: #ffffff;
-  z-index: 20;
+  padding: 8px 0px;
+  background-color: var(--color-background);
   overflow-x: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -31,38 +27,103 @@ grw-poi-detail {
     align-items: center;
     justify-content: center;
     margin-left: 16px;
-    font-size: 1.1rem;
-    border-bottom: 2px solid transparent;
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 500;
     white-space: nowrap;
     text-decoration: none;
-    color: inherit;
+    color: var(--color-on-surface);
     transition-property: color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 0.3s;
     &:hover {
-      color: var(--color-primary);
-      border-color: 2px solid var(--color-primary);
+      color: var(--color-primary-app);
     }
-    &:last-child {
-      margin-right: 16px;
+    @media (hover: none) {
+      &:not(.selected-trek-option):hover {
+        color: inherit;
+      }
     }
   }
+  .trek-option:last-of-type {
+    margin-right: 16px;
+  }
   .selected-trek-option {
-    color: var(--color-primary);
-    border-color: 2px solid var(--color-primary);
+    color: var(--color-primary-app);
+  }
+  .indicator-selected-trek-option {
+    position: absolute;
+    bottom: 8px;
+    height: 2px;
+    background-image: linear-gradient(var(--color-primary-app), var(--color-primary-app));
+    background-repeat: no-repeat;
+    transition: transform 0.5s ease, background-size 0.5s ease 0.5s;
+    margin-left: 16px;
+    background-position: center;
+  }
+  .presentation.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 240px;
+    background-size: 120px 100%;
+  }
+  .description.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 240px;
+    background-size: 120px 100%;
+  }
+  .recommendations.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 380px;
+    background-size: 190px 100%;
+  }
+  .sensitive-areas.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 320px;
+    background-size: 160px 100%;
+  }
+  .information-places.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 400px;
+    background-size: 200px 100%;
+  }
+  .pois.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 240px;
+    background-size: 120px 100%;
+  }
+  .presentation {
+    min-width: 120px;
+    width: 120px;
+  }
+  .description {
+    min-width: 120px;
+    width: 120px;
+  }
+  .recommendations {
+    min-width: 190px;
+    width: 190px;
+  }
+  .sensitive-areas {
+    min-width: 160px;
+    width: 160px;
+  }
+  .information-places {
+    min-width: 200px;
+    width: 200px;
+  }
+  .pois {
+    min-width: 120px;
+    width: 120px;
   }
 }
 .trek-detail-container {
   font-family: 'Roboto';
+  color: var(--color-on-surface);
   display: flex;
   flex-direction: column;
   height: calc(100% - 48px);
   overflow-y: auto;
   .name {
-    color: var(--color-primary);
-    font-size: 1.6rem;
-    font-weight: bold;
-    padding: 24px;
+    color: var(--color-on-surface);
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 400;
+    padding: 0px 24px;
+    margin: 8px 0px;
   }
   .image {
     cursor: pointer;
@@ -71,7 +132,7 @@ grw-poi-detail {
     object-fit: cover;
   }
   .sub-container {
-    padding: 24px;
+    padding: 24px 24px 0px 24px;
     .icons-labels-container {
       display: flex;
       justify-content: flex-start;
@@ -90,47 +151,61 @@ grw-poi-detail {
             margin: 0px 8px;
           }
           display: flex;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           width: calc(100% / 3);
-          img {
+          img,
+          span {
             width: 24px;
             height: auto;
-            margin-right: 24px;
+            margin-right: 8px;
           }
         }
         .practice {
           img {
-            background-color: var(--color-primary);
+            background-color: var(--color-primary-app);
           }
         }
       }
     }
   }
   .downloads-container {
-    padding: 0px 24px 24px 24px;
+    padding: 0px 24px 0px 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     .download-title {
-      color: var(--color-primary);
-      font-size: 1.3rem;
-      margin-bottom: 12px;
+      color: var(--color-on-surface);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 500;
+      margin-bottom: 8px;
     }
     .links-container {
       display: flex;
       a {
-        background-color: var(--color-primary);
-        padding: 8px;
-        color: #ffffff;
-        text-decoration: none;
+        background-color: var(--color-primary-container);
+        color: var(--color-on-primary-container);
         border-radius: 8px;
+        padding: 8px 16px;
+        box-shadow: var(--elevation-1);
+        height: 32px;
+        gap: 8px;
+        box-sizing: border-box;
+        text-align: start;
+        vertical-align: middle;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        text-decoration: none;
         &:nth-child(2) {
           margin: 0px 12px;
         }
         &:hover {
-          background-color: var(--color-primary-shade);
+          box-shadow: var(--elevation-2);
         }
       }
     }
@@ -140,13 +215,26 @@ grw-poi-detail {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    padding: 0px 24px 24px 24px;
+    padding: 0px 24px 0px 24px;
+
     .theme {
-      background-color: var(--color-primary-tint);
-      color: #ffffff;
+      background-color: var(--color-secondary-container);
+      color: var(--color-on-secondary-container);
       border-radius: 8px;
-      padding: 8px;
+      padding: 8px 16px;
       margin: 0px 8px 8px 0px;
+      box-shadow: var(--elevation-0);
+      border: 1px solid var(--color-outline);
+      height: 32px;
+      gap: 8px;
+      box-sizing: border-box;
+      text-align: start;
+      vertical-align: middle;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
   }
   .ambiance,
@@ -162,7 +250,7 @@ grw-poi-detail {
   .source-container,
   .accessibilities-container,
   .weather-container {
-    padding: 0px 24px 24px 24px;
+    padding: 0px 24px 0px 24px;
   }
   .ambiance,
   .description-teaser,
@@ -179,8 +267,11 @@ grw-poi-detail {
   .source-container,
   .accessibilities-container,
   .weather-container {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
     a {
-      color: var(--color-primary);
+      color: var(--color-primary-app);
     }
   }
   .description-title,
@@ -195,15 +286,12 @@ grw-poi-detail {
   .pois-title,
   .source-title,
   .accessibilities-title {
-    color: var(--color-primary);
-    font-size: 1.5rem;
+    color: var(--color-on-surface);
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 400;
     font-weight: bold;
-    margin: 12px 0px;
-  }
-
-  .information-desks-container,
-  .pois-container {
-    padding: 0px 0px 24px 0px;
+    margin-bottom: 16px;
   }
 
   .information-desks-title,
@@ -224,7 +312,7 @@ grw-poi-detail {
         top: 0px;
         bottom: 0px;
         left: 14px;
-        background-color: #e59900;
+        background-color: var(--color-primary-app);
       }
       li {
         position: relative;
@@ -258,21 +346,20 @@ grw-poi-detail {
 }
 .current-advice-container {
   display: flex;
-  align-items: center;
   padding: 12px;
-  border: 2px solid #534764;
-  border-radius: 1rem;
-  img {
+  border: 2px solid var(--color-outline);
+  border-radius: 12px;
+  span {
     width: 26px;
-    margin-right: 16px;
+    margin-right: 8px;
   }
 }
 
 .label-container {
   margin-top: 12px;
   padding: 12px;
-  border: 2px solid #d77e00;
-  border-radius: 1rem;
+  border: 2px solid var(--color-outline);
+  border-radius: 12px;
   .label-sub-container {
     display: flex;
     align-items: center;
@@ -281,11 +368,18 @@ grw-poi-detail {
       margin-right: 16px;
     }
     .label-name {
-      color: var(--color-primary);
-      font-size: 1.4rem;
-      font-weight: bold;
+      color: var(--color-on-surface);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 500;
       padding: 12px 0px;
     }
+  }
+  .label-advice {
+    color: var(--color-on-surface);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
   }
 }
 .source-container {
@@ -297,9 +391,10 @@ grw-poi-detail {
       margin-right: 16px;
     }
     .source-name {
-      color: var(--color-primary);
-      font-size: 1.4rem;
-      font-weight: bold;
+      color: var(--color-on-surface);
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
       padding: 12px 0px;
     }
   }
@@ -313,8 +408,10 @@ grw-poi-detail {
   .departure-title,
   .arrival-title,
   .cities-title {
-    color: var(--color-primary);
+    color: var(--color-on-surface);
     font-weight: bold;
+    white-space: nowrap;
+    margin-right: 8px;
   }
 }
 .accessibilities-container {
@@ -338,8 +435,10 @@ grw-poi-detail {
   .accessibility-covering-title,
   .accessibility-exposure-title,
   .accessibility-advice-title {
-    color: var(--color-primary);
-    font-size: 1.4rem;
+    color: var(--color-on-surface);
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 400;
     padding: 12px 0px;
   }
 }
@@ -354,4 +453,16 @@ grw-poi-detail {
 .swiper-pois {
   padding-right: 32px;
   padding-left: 32px;
+}
+
+.divider {
+  margin: 16px;
+  border-top: 1px solid var(--color-outline);
+}
+
+.detail-bottom-space {
+  min-height: var(--detail-bottom-space-height);
+  height: var(--detail-bottom-space-height);
+  width: 100%;
+  background-color: var(--color-background);
 }

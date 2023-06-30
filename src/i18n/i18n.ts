@@ -5,7 +5,10 @@ interface Translation {
   duration: string;
   treks: string;
   trek: string;
+  showList: string;
   showMap: string;
+  showRoute: string;
+  showDetails: string;
   downloads: string;
   description: string;
   departure: string;
@@ -13,9 +16,9 @@ interface Translation {
   elevationProfile: string;
   roadAccess: string;
   transport: string;
-  recommandations: string;
+  recommendations: string;
   recommendedParking: string;
-  equipements: string;
+  equipments: string;
   environmentalSensitiveAreas: string;
   informationPlaces: string;
   accessibility: string;
@@ -32,6 +35,7 @@ interface Translation {
   options: {
     presentation: string;
     description: string;
+    recommendations: string;
     environmentalSensitiveAreas: string;
     informationPlaces: string;
     pois: string;
@@ -58,7 +62,10 @@ export const translate: AvailableTranslations = {
     duration: 'Durée',
     treks: 'randonnées',
     trek: 'randonnée',
+    showList: 'Voir la liste',
     showMap: 'Voir la carte',
+    showRoute: "Voir l'itinéraire",
+    showDetails: 'Voir la fiche',
     downloads: 'Téléchargements',
     description: 'Description',
     departure: 'Départ',
@@ -66,9 +73,9 @@ export const translate: AvailableTranslations = {
     elevationProfile: 'Profil altimétrique',
     roadAccess: 'Accès routier',
     transport: 'Transport',
-    recommandations: 'Recommandations',
+    recommendations: 'Recommandations',
     recommendedParking: 'Parking conseillé',
-    equipements: 'Équipements',
+    equipments: 'Équipements',
     environmentalSensitiveAreas: 'Zones de sensibilité environnementale',
     informationPlaces: 'Lieux de renseignement',
     accessibility: 'Accessibilité',
@@ -85,6 +92,7 @@ export const translate: AvailableTranslations = {
     options: {
       presentation: 'Présentation',
       description: 'Description',
+      recommendations: 'Recommandations',
       environmentalSensitiveAreas: 'Zones sensibles',
       informationPlaces: "Lieux d'informations",
       pois: 'Patrimoines',
@@ -104,7 +112,10 @@ export const translate: AvailableTranslations = {
     duration: 'Duration',
     treks: 'Hikes',
     trek: 'Hike',
+    showList: 'Show the list',
     showMap: 'Show the map',
+    showRoute: 'Show the route',
+    showDetails: 'Show the details',
     downloads: 'Downloads',
     description: 'Description',
     departure: 'Departure',
@@ -112,9 +123,9 @@ export const translate: AvailableTranslations = {
     elevationProfile: 'Elevation profile',
     roadAccess: 'Road acess',
     transport: 'Transport',
-    recommandations: 'Recommandations',
+    recommendations: 'Recommendations',
     recommendedParking: 'Parking recommended',
-    equipements: 'Equipements',
+    equipments: 'Equipements',
     environmentalSensitiveAreas: 'Areas of environmental sensitivity',
     informationPlaces: 'Information places',
     accessibility: 'Accessibility',
@@ -131,6 +142,7 @@ export const translate: AvailableTranslations = {
     options: {
       presentation: 'Presentation',
       description: 'Description',
+      recommendations: 'Recommendations',
       environmentalSensitiveAreas: 'Sensitive areas',
       informationPlaces: 'Information places',
       pois: 'Points of interest',

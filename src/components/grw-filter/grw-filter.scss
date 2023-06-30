@@ -1,28 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+:host {
+  font-family: roboto;
+}
+
 .filter-name {
   margin-left: 8px;
-  color: var(--color-primary);
-  font-size: 1.4rem;
-  font-weight: bold;
+  color: var(--color-on-surface);
+  line-height: 32px;
+  letter-spacing: 0px;
+  font-size: 24px;
+  font-weight: 400;
 }
 .filter-button-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-right: 16px;
   .filter-button,
   .selected-filter-button {
-    user-select: none;
     cursor: pointer;
-    border: 1px var(--color-primary) solid;
-    border-radius: 8px;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
     margin: 8px 0px 0px 8px;
-    padding: 8px;
+    padding: 8px 16px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--elevation-1);
+    border: 1px solid var(--color-outline);
+    border-radius: 8px;
+    -webkit-tap-highlight-color: transparent;
+    line-height: 20px;
+    transition: box-shadow 0.2s ease-in-out 0s;
+    min-width: 100px;
+    white-space: nowrap;
+    &:hover {
+      box-shadow: var(--elevation-2);
+    }
   }
   .filter-button {
-    color: var(--color-primary);
-    background-color: #ffffff;
+    color: var(--color-on-surface-variant);
+    background-color: transparent;
   }
   .selected-filter-button {
-    color: #ffffff;
-    background-color: var(--color-primary);
+    color: var(--color-on-secondary-container);
+    background-color: var(--color-secondary-container);
+    span {
+      margin-right: 8px;
+      font-size: 18px;
+      color: var(--color-on-secondary-container);
+    }
   }
 }

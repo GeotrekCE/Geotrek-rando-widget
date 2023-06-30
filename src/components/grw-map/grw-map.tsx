@@ -1,7 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
-import 'leaflet-textpath';
 import 'leaflet.locatecontrol';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
 import state, { onChange, reset } from 'store/store';
@@ -20,14 +19,21 @@ export class GrwMap {
   @Prop() attribution: string;
   @Prop() center = '1, 1';
   @Prop() zoom = 10;
-  @Prop() colorPrimary = '#6b0030';
-  @Prop() colorPrimaryTint = '#974c6e';
+
+  @Prop() colorPrimaryApp = '#6b0030';
+  @Prop() colorOnSurface = '#49454e';
+  @Prop() colorPrimaryContainer = '#eaddff';
+  @Prop() colorOnPrimaryContainer = '#21005e';
+  @Prop() colorBackground = '#fef7ff';
+
   @Prop() colorTrekLine = '#6b0030';
   @Prop() colorDepartureIcon = '#006b3b';
   @Prop() colorArrivalIcon = '#85003b';
   @Prop() colorSensitiveArea = '	#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
+
   @Prop() resetStoreOnDisconnected = true;
+  @Prop() isLargeView = false;
   map: L.Map;
   treksLayer: L.GeoJSON<any>;
   currentTrekLayer: L.GeoJSON<any>;
@@ -50,29 +56,39 @@ export class GrwMap {
     this.map.setView(new L.LatLng(event.detail.latitude, event.detail.longitude), 17, { animate: false });
   }
 
-  @Listen('pointReferenceIsInViewport', { target: 'window' })
-  pointReferenceIsInViewport(event: CustomEvent<boolean>) {
-    this.handleLayerVisibility(event.detail, this.currentPointsReferenceLayer);
+  @Listen('descriptionReferenceIsInViewport', { target: 'window' })
+  descriptionReferenceIsInViewport(event: CustomEvent<boolean>) {
+    if (this.currentPointsReferenceLayer) {
+      this.handleLayerVisibility(event.detail, this.currentPointsReferenceLayer);
+    }
   }
 
   @Listen('parkingIsInViewport', { target: 'window' })
   parkingIsInViewport(event: CustomEvent<boolean>) {
-    this.handleLayerVisibility(event.detail, this.currentParkingLayer);
+    if (this.currentParkingLayer) {
+      this.handleLayerVisibility(event.detail, this.currentParkingLayer);
+    }
   }
 
   @Listen('informationDeskIsInViewport', { target: 'window' })
   onInformationDesksIsInViewport(event: CustomEvent<boolean>) {
-    this.handleLayerVisibility(event.detail, this.currentInformationDesksLayer);
+    if (this.currentInformationDesksLayer) {
+      this.handleLayerVisibility(event.detail, this.currentInformationDesksLayer);
+    }
   }
 
   @Listen('sensitiveAreaIsInViewport', { target: 'window' })
   sensitiveAreaIsInViewport(event: CustomEvent<boolean>) {
-    this.handleLayerVisibility(event.detail, this.currentSensitiveAreasLayer);
+    if (this.currentSensitiveAreasLayer) {
+      this.handleLayerVisibility(event.detail, this.currentSensitiveAreasLayer);
+    }
   }
 
   @Listen('poiIsInViewport', { target: 'window' })
   poiIsInViewport(event: CustomEvent<boolean>) {
-    this.handleLayerVisibility(event.detail, this.currentPoisLayer);
+    if (this.currentPoisLayer) {
+      this.handleLayerVisibility(event.detail, this.currentPoisLayer);
+    }
   }
 
   componentDidLoad() {
@@ -81,7 +97,7 @@ export class GrwMap {
       zoom: this.zoom,
     });
 
-    L.control.scale().addTo(this.map);
+    L.control.scale({ metric: true, imperial: false }).addTo(this.map);
     (L.control as any).locate({ showPopup: false }).addTo(this.map);
 
     L.tileLayer(this.urlLayer, {
@@ -147,14 +163,13 @@ export class GrwMap {
         });
       }
     }
-
+    let bounds;
     if (!this.treksLayer) {
       if (trekscurrentDepartureCoordinates.length > 0 && !state.currentMapTreksBounds) {
-        const bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-        this.map.fitBounds(bounds);
+        bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
         if (state.currentMapTreksBounds) {
-          this.map.fitBounds(state.currentMapTreksBounds);
+          bounds = state.currentMapTreksBounds;
         }
       }
       this.treksLayer = L.geoJSON(treksFeatureCollection, {
@@ -188,14 +203,15 @@ export class GrwMap {
       }).addTo(this.map);
     } else {
       if (trekscurrentDepartureCoordinates.length > 0) {
-        const bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-        this.map.fitBounds(bounds);
+        bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
         this.map.fire('moveend');
       }
       this.treksLayer.clearLayers();
       this.treksLayer.addData(treksFeatureCollection);
     }
+
+    this.map.fitBounds(bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
 
@@ -229,17 +245,11 @@ export class GrwMap {
     };
 
     this.currentTrekLayer = L.geoJSON(currentTrekFeature, {
-      onEachFeature: (_geoJsonPoint, layer: any) => {
-        layer.setText('►    ', { repeat: true, offset: 8, attributes: { 'fill': this.colorPrimary, 'font-weight': 'bold', 'font-size': '24' } });
-      },
       style: () => ({
         color: 'transparent',
       }),
       interactive: false,
     }).addTo(this.map);
-
-    const bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-    this.map.fitBounds(bounds);
 
     const currentDepartureCoordinates = [state.currentTrek.geometry.coordinates.at(0)[0], state.currentTrek.geometry.coordinates.at(0)[1]];
     const currentArrivalCoordinates = [state.currentTrek.geometry.coordinates.at(-1)[0], state.currentTrek.geometry.coordinates.at(-1)[1]];
@@ -435,11 +445,10 @@ export class GrwMap {
         },
       });
     }
-
     const elevationOptions = {
       srcFolder: 'http://unpkg.com/@raruto/leaflet-elevation/src/',
       elevationDiv: `#${this.elevationRef.id}`,
-      theme: 'lightblue-theme',
+      theme: 'custom-theme',
       detached: true,
       height: 250,
       wptIcons: false,
@@ -471,17 +480,29 @@ export class GrwMap {
       type: 'FeatureCollection',
       features: [{ type: 'Feature', geometry: { type: 'LineString', coordinates: state.currentTrek.geometry.coordinates }, properties: null }],
     });
-
     (this.elevationControl as any).load(elevation);
 
     const overlays = {};
-    overlays[translate[state.language].layers.pointsReference] = this.currentPointsReferenceLayer;
-    overlays[translate[state.language].layers.parking] = this.currentParkingLayer;
-    overlays[translate[state.language].layers.sensitiveArea] = this.currentSensitiveAreasLayer;
-    overlays[translate[state.language].layers.informationPlaces] = this.currentInformationDesksLayer;
-    overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
+    if (this.currentPointsReferenceLayer) {
+      overlays[translate[state.language].layers.pointsReference] = this.currentPointsReferenceLayer;
+    }
+    if (this.currentParkingLayer) {
+      overlays[translate[state.language].layers.parking] = this.currentParkingLayer;
+    }
+    if (this.currentSensitiveAreasLayer) {
+      overlays[translate[state.language].layers.sensitiveArea] = this.currentSensitiveAreasLayer;
+    }
+    if (this.currentInformationDesksLayer) {
+      overlays[translate[state.language].layers.informationPlaces] = this.currentInformationDesksLayer;
+    }
+    if (this.currentPoisLayer) {
+      overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
+    }
     this.layersControl = L.control.layers(null, overlays, { collapsed: true }).addTo(this.map);
     this.handleLayersControlEvent();
+
+    const bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+    this.map.fitBounds(bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
@@ -496,6 +517,17 @@ export class GrwMap {
   }
 
   removeTrek() {
+    if (this.layersControl) {
+      this.map.removeControl(this.layersControl);
+      this.layersControl = null;
+    }
+
+    if (this.elevationControl) {
+      (this.elevationControl as any).clear();
+      this.map.removeControl(this.elevationControl);
+      this.elevationControl = null;
+    }
+
     if (this.currentTrekLayer) {
       this.map.removeLayer(this.currentTrekLayer);
       this.currentTrekLayer = null;
@@ -530,9 +562,6 @@ export class GrwMap {
       this.map.removeLayer(this.currentPointsReferenceLayer);
       this.currentPointsReferenceLayer = null;
     }
-
-    this.map.removeControl(this.layersControl);
-    this.map.removeControl(this.elevationControl);
   }
 
   disconnectedCallback() {
@@ -546,17 +575,22 @@ export class GrwMap {
     return (
       <Host
         style={{
-          '--color-primary': this.colorPrimary,
-          '--color-primary-tint': this.colorPrimaryTint,
+          '--color-primary-app': this.colorPrimaryApp,
+          '--color-on-surface': this.colorOnSurface,
+          '--color-primary-container': this.colorPrimaryContainer,
+          '--color-on-primary-container': this.colorOnPrimaryContainer,
+          '--color-background': this.colorBackground,
           '--color-departure-icon': this.colorDepartureIcon,
           '--color-arrival-icon': this.colorArrivalIcon,
           '--color-poi-icon': this.colorPoiIcon,
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
+          '--map-bottom-space-height': this.isLargeView ? '0px' : '70px',
         }}
       >
         <div id="map" class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
         <div id="elevation" ref={el => (this.elevationRef = el)}></div>
+        <div class="map-bottom-space"></div>
         {!this.mapIsReady && (
           <div class="map-loader-container">
             <span class="loader"></span>

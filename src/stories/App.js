@@ -11,9 +11,21 @@ export const createApp = ({
   practices,
   urlLayer,
   attribution,
-  colorPrimary,
-  colorPrimaryShade,
-  colorPrimaryTint,
+  colorPrimaryApp,
+  colorOnPrimary,
+  colorSurface,
+  colorOnSurface,
+  colorSurfaceVariant,
+  colorOnSurfaceVariant,
+  colorPrimaryContainer,
+  colorOnPrimaryContainer,
+  colorSecondaryContainer,
+  colorOnSecondaryContainer,
+  colorBackground,
+  colorSurfaceContainerHigh,
+  colorSurfaceContainerLow,
+  fabBackgroundColor,
+  fabColor,
   colorTrekLine,
   colorDepartureIcon,
   colorArrivalIcon,
@@ -35,9 +47,21 @@ export const createApp = ({
   practices && app.setAttribute('practices', practices);
   app.setAttribute('url-layer', urlLayer);
   app.setAttribute('attribution', attribution);
-  app.setAttribute('color-primary', colorPrimary);
-  app.setAttribute('color-primary-shade', colorPrimaryShade);
-  app.setAttribute('color-primary-tint', colorPrimaryTint);
+  app.setAttribute('color-primary-app', colorPrimaryApp);
+  app.setAttribute('color-on-primary', colorOnPrimary);
+  app.setAttribute('color-surface', colorSurface);
+  app.setAttribute('color-on-surface', colorOnSurface);
+  app.setAttribute('color-surface-variant', colorSurfaceVariant);
+  app.setAttribute('color-on-surface-variant', colorOnSurfaceVariant);
+  app.setAttribute('color-primary-container', colorPrimaryContainer);
+  app.setAttribute('color-on-primary-container', colorOnPrimaryContainer);
+  app.setAttribute('color-secondary-container', colorSecondaryContainer);
+  app.setAttribute('color-on-secondary-container', colorOnSecondaryContainer);
+  app.setAttribute('color-background', colorBackground);
+  app.setAttribute('color-surface-container-high', colorSurfaceContainerHigh);
+  app.setAttribute('color-surface-container-low', colorSurfaceContainerLow);
+  app.setAttribute('fab-background-color', fabBackgroundColor);
+  app.setAttribute('fab-color', fabColor);
   app.setAttribute('color-trek-line', colorTrekLine);
   app.setAttribute('color-departure-icon', colorDepartureIcon);
   app.setAttribute('color-arrival-icon', colorArrivalIcon);
