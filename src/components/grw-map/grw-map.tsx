@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen, Element } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import 'leaflet.locatecontrol';
@@ -11,6 +11,7 @@ import { translate } from 'i18n/i18n';
   styleUrl: 'grw-map.scss',
 })
 export class GrwMap {
+  @Element() mapElement: HTMLElement;
   mapRef: HTMLElement;
   elevationRef: HTMLElement;
   @Event() trekCardPress: EventEmitter<number>;
@@ -35,6 +36,9 @@ export class GrwMap {
   @Prop() resetStoreOnDisconnected = true;
   @Prop() isLargeView = false;
   map: L.Map;
+  @State() mapHeight = undefined;
+  resizeObserver: ResizeObserver;
+  bounds;
   treksLayer: L.GeoJSON<any>;
   currentTrekLayer: L.GeoJSON<any>;
   currentDepartureArrivalLayer: L.GeoJSON<any>;
@@ -92,6 +96,14 @@ export class GrwMap {
   }
 
   componentDidLoad() {
+    this.mapHeight = this.mapElement.parentElement.clientHeight.toString();
+  }
+
+  componentDidRender() {
+    if (this.mapHeight && !this.map) this.onMapHeight();
+  }
+
+  onMapHeight() {
     this.map = L.map(this.mapRef, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
       zoom: this.zoom,
@@ -163,13 +175,13 @@ export class GrwMap {
         });
       }
     }
-    let bounds;
+
     if (!this.treksLayer) {
       if (trekscurrentDepartureCoordinates.length > 0 && !state.currentMapTreksBounds) {
-        bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+        this.bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
         if (state.currentMapTreksBounds) {
-          bounds = state.currentMapTreksBounds;
+          this.bounds = state.currentMapTreksBounds;
         }
       }
       this.treksLayer = L.geoJSON(treksFeatureCollection, {
@@ -203,7 +215,7 @@ export class GrwMap {
       }).addTo(this.map);
     } else {
       if (trekscurrentDepartureCoordinates.length > 0) {
-        bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+        this.bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
         this.map.fire('moveend');
       }
@@ -211,7 +223,7 @@ export class GrwMap {
       this.treksLayer.addData(treksFeatureCollection);
     }
 
-    bounds && this.map.fitBounds(bounds);
+    this.bounds && this.map.fitBounds(this.bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
 
@@ -447,7 +459,7 @@ export class GrwMap {
     }
     const elevationOptions = {
       srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',
-      elevationDiv: `#${this.elevationRef.id}`,
+      elevationDiv: `#elevation`,
       theme: 'custom-theme',
       detached: true,
       height: 250,
@@ -501,8 +513,8 @@ export class GrwMap {
     this.layersControl = L.control.layers(null, overlays, { collapsed: true }).addTo(this.map);
     this.handleLayersControlEvent();
 
-    const bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-    bounds && this.map.fitBounds(bounds);
+    this.bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+    this.bounds && this.map.fitBounds(this.bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
@@ -586,11 +598,17 @@ export class GrwMap {
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
           '--map-bottom-space-height': this.isLargeView ? '0px' : '70px',
+          'height': `${this.mapHeight}px`,
         }}
       >
-        <div id="map" class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
-        <div id="elevation" ref={el => (this.elevationRef = el)}></div>
-        <div class="map-bottom-space"></div>
+        <div id="map" style={{}} class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
+        {state.currentTrek && (
+          <div>
+            <div id="elevation" ref={el => (this.elevationRef = el)}></div>
+            <div class="map-bottom-space"></div>
+          </div>
+        )}
+
         {!this.mapIsReady && (
           <div class="map-loader-container">
             <span class="loader"></span>

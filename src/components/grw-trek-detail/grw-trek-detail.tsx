@@ -284,7 +284,7 @@ export class GrwTrekDetail {
       ...options,
       presentation: { ...presentation },
       description: { ...description, visible: Boolean(this.currentTrek.description) },
-      recommendations: { ...recommendations, visible: Boolean(this.currentTrek.advice || this.labels.length > 0) },
+      recommendations: { ...recommendations, visible: Boolean(this.currentTrek.advice || (this.labels && this.labels.length > 0)) },
       sensitiveArea: { ...sensitiveArea, visible: Boolean(state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0) },
       informationPlaces: {
         ...informationPlaces,

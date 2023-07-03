@@ -154,6 +154,14 @@ export class GrwApp {
     }
   }
 
+  handleEraseFilters() {
+    console.log('handleEraseFilters');
+  }
+
+  handleOkFilters() {
+    console.log('handleOkFilters');
+  }
+
   disconnectedCallback() {
     reset();
     window.removeEventListener('popstate', this.handlePopStateBind);
@@ -315,6 +323,14 @@ export class GrwApp {
         )}
         {!this.showTrek && this.showFilters && (
           <div class="options-container">
+            <div class="filters-buttons-container">
+              <button class="filter-button" onClick={() => this.handleEraseFilters()}>
+                Effacer
+              </button>
+              <button class="filter-button" onClick={() => this.handleOkFilters()}>
+                Ok
+              </button>
+            </div>
             <div class="filters-container">
               <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name"></grw-filter>
               <div class="divider"></div>

@@ -186,11 +186,12 @@ grw-trek-detail {
       font-size: 16px;
       line-height: 24px;
       font-weight: 500;
-      margin-bottom: 8px;
     }
     .links-container {
       display: flex;
+      flex-wrap: wrap;
       a {
+        margin-top: 8px;
         background-color: var(--color-primary-container);
         color: var(--color-on-primary-container);
         border-radius: 8px;
@@ -208,7 +209,7 @@ grw-trek-detail {
         position: relative;
         text-decoration: none;
         &:nth-child(2) {
-          margin: 0px 12px;
+          margin: 8px 12px 0px 12px;
         }
         &:hover {
           box-shadow: var(--elevation-2);

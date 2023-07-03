@@ -242,6 +242,14 @@ grw-app {
   width: 100%;
 }
 
+grw-treks-list {
+  max-height: calc(100vh - 64px - 64px);
+}
+
+.trek-detail-container {
+  max-height: calc(100vh - 64px - 48px);
+}
+
 .app-map-container {
   width: 100%;
   position: absolute;
