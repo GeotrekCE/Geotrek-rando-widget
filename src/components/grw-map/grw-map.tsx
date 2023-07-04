@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen, Element } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
 import 'leaflet.locatecontrol';
@@ -11,7 +11,6 @@ import { translate } from 'i18n/i18n';
   styleUrl: 'grw-map.scss',
 })
 export class GrwMap {
-  @Element() mapElement: HTMLElement;
   mapRef: HTMLElement;
   elevationRef: HTMLElement;
   @Event() trekCardPress: EventEmitter<number>;
@@ -36,7 +35,6 @@ export class GrwMap {
   @Prop() resetStoreOnDisconnected = true;
   @Prop() isLargeView = false;
   map: L.Map;
-  @State() mapHeight = undefined;
   resizeObserver: ResizeObserver;
   bounds;
   treksLayer: L.GeoJSON<any>;
@@ -96,14 +94,6 @@ export class GrwMap {
   }
 
   componentDidLoad() {
-    this.mapHeight = this.mapElement.parentElement.clientHeight.toString();
-  }
-
-  componentDidRender() {
-    if (this.mapHeight && !this.map) this.onMapHeight();
-  }
-
-  onMapHeight() {
     this.map = L.map(this.mapRef, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
       zoom: this.zoom,
@@ -598,7 +588,6 @@ export class GrwMap {
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
           '--map-bottom-space-height': this.isLargeView ? '0px' : '70px',
-          'height': `${this.mapHeight}px`,
         }}
       >
         <div id="map" style={{}} class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>

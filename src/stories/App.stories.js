@@ -22,6 +22,8 @@ const Template = ({ ...args }) => {
 export const App = Template.bind({});
 
 App.args = {
+  appWidth: '100%',
+  appHeight: '100vh',
   api: 'https://randoadmin.parc-haut-jura.fr/api/v2/',
   language: 'fr',
   inBbox: '',

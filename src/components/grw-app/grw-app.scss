@@ -3,9 +3,10 @@
 }
 
 grw-app {
+  display: block;
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: var(--app-width);
+  height: var(--app-height);
   font-family: 'Roboto';
   color: var(--color-on-surface);
   overflow: hidden;

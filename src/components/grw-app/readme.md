@@ -8,6 +8,8 @@
 | Property                    | Attribute                      | Description | Type      | Default                |
 | --------------------------- | ------------------------------ | ----------- | --------- | ---------------------- |
 | `api`                       | `api`                          |             | `string`  | `undefined`            |
+| `appHeight`                 | `app-height`                   |             | `string`  | `'100vh'`              |
+| `appWidth`                  | `app-width`                    |             | `string`  | `'100%'`               |
 | `attribution`               | `attribution`                  |             | `string`  | `undefined`            |
 | `center`                    | `center`                       |             | `string`  | `undefined`            |
 | `cities`                    | `cities`                       |             | `string`  | `undefined`            |

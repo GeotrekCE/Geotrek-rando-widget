@@ -1,4 +1,6 @@
 export const createApp = ({
+  appWidth,
+  appHeight,
   api,
   language,
   inBbox,
@@ -35,6 +37,8 @@ export const createApp = ({
   linkTarget,
 }) => {
   const app = document.createElement('grw-app');
+  app.setAttribute('app-width', appWidth);
+  app.setAttribute('app-height', appHeight);
   app.setAttribute('api', api);
   app.setAttribute('language', language);
   inBbox && app.setAttribute('in-bbox', inBbox);

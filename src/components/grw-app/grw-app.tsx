@@ -8,13 +8,15 @@ import state, { onChange, reset } from 'store/store';
   shadow: false,
 })
 export class GrwApp {
-  @Element() element: HTMLElement;
+  @Element() appElement: HTMLElement;
   @State() showTrek = false;
   @State() showTreksMap = false;
   @State() showTrekMap = false;
   @State() showFilters = false;
   @State() isLargeView = false;
   @State() currentTrekId: number;
+  @Prop() appWidth: string = '100%';
+  @Prop() appHeight: string = '100vh';
   @Prop() api: string;
   @Prop() languages = 'fr';
   @Prop() inBbox: string;
@@ -115,7 +117,7 @@ export class GrwApp {
   }
 
   handleView() {
-    this.isLargeView = this.element.getBoundingClientRect().width >= this.largeViewSize;
+    this.isLargeView = this.appElement.getBoundingClientRect().width >= this.largeViewSize;
     this.showTreksMap = this.isLargeView;
     this.showTrekMap = this.isLargeView;
   }
@@ -154,13 +156,13 @@ export class GrwApp {
     }
   }
 
-  handleEraseFilters() {
-    console.log('handleEraseFilters');
-  }
+  // handleEraseFilters() {
+  //   console.log('handleEraseFilters');
+  // }
 
-  handleOkFilters() {
-    console.log('handleOkFilters');
-  }
+  // handleOkFilters() {
+  //   console.log('handleOkFilters');
+  // }
 
   disconnectedCallback() {
     reset();
@@ -186,6 +188,8 @@ export class GrwApp {
           '--color-surface-container-low': this.colorSurfaceContainerLow,
           '--fab-background-color': this.fabBackgroundColor,
           '--fab-color': this.fabColor,
+          '--app-width': this.appWidth,
+          '--app-height': this.appHeight,
         }}
       >
         {!state.currentTreks && !state.currentTrek && (
@@ -323,14 +327,14 @@ export class GrwApp {
         )}
         {!this.showTrek && this.showFilters && (
           <div class="options-container">
-            <div class="filters-buttons-container">
+            {/* <div class="filters-buttons-container">
               <button class="filter-button" onClick={() => this.handleEraseFilters()}>
                 Effacer
               </button>
               <button class="filter-button" onClick={() => this.handleOkFilters()}>
                 Ok
               </button>
-            </div>
+            </div> */}
             <div class="filters-container">
               <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name"></grw-filter>
               <div class="divider"></div>
