@@ -120,6 +120,7 @@ grw-trek-detail {
   display: flex;
   flex-direction: column;
   height: calc(100% - 48px);
+  max-height: calc(100% - 48px);
   overflow-y: auto;
   .name {
     color: var(--color-on-surface);
@@ -474,4 +475,10 @@ grw-trek-detail {
   height: var(--detail-bottom-space-height);
   width: 100%;
   background-color: var(--color-background);
+}
+
+.images-container {
+  display: flex;
+  max-width: 100%;
+  max-height: 400px;
 }

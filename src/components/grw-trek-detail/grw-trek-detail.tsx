@@ -5,8 +5,6 @@ import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek, Option, Options } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 
-const threshold = 0.5;
-
 const presentation: Option = {
   visible: true,
   width: 120,
@@ -49,7 +47,7 @@ const options: Options = {
 @Component({
   tag: 'grw-trek-detail',
   styleUrl: 'grw-trek-detail.scss',
-  shadow: false,
+  shadow: true,
 })
 export class GrwTrekDetail {
   swiperImages?: Swiper;
@@ -146,92 +144,71 @@ export class GrwTrekDetail {
       },
     });
     if (this.presentationRef) {
-      const presentationObserver = new IntersectionObserver(
-        entries => {
-          const intersectionRatio = entries[0].intersectionRatio >= threshold;
-          if (intersectionRatio) {
-            this.options = { ...this.defaultOptions, presentation: { ...this.defaultOptions.presentation, indicator: intersectionRatio } };
-          }
-        },
-        { threshold },
-      );
+      const presentationObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, presentation: { ...this.defaultOptions.presentation, indicator: isIntersecting } };
+        }
+      });
       presentationObserver.observe(this.presentationRef);
     }
     if (this.descriptionRef) {
-      const descriptionReferenceObserver = new IntersectionObserver(
-        entries => {
-          const intersectionRatio = entries[0].intersectionRatio >= threshold;
-          this.descriptionReferenceIsInViewport.emit(intersectionRatio);
-          if (intersectionRatio) {
-            this.options = { ...this.defaultOptions, description: { ...this.defaultOptions.description, indicator: intersectionRatio } };
-          }
-        },
-        { threshold },
-      );
+      const descriptionReferenceObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        this.descriptionReferenceIsInViewport.emit(isIntersecting);
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, description: { ...this.defaultOptions.description, indicator: isIntersecting } };
+        }
+      });
       descriptionReferenceObserver.observe(this.descriptionRef);
     }
     if (this.recommendationRef) {
-      const recommendationsObserver = new IntersectionObserver(
-        entries => {
-          const intersectionRatio = entries[0].intersectionRatio >= threshold;
-          if (intersectionRatio) {
-            this.options = { ...this.defaultOptions, recommendations: { ...this.defaultOptions.recommendations, indicator: intersectionRatio } };
-          }
-        },
-        { threshold },
-      );
+      const recommendationsObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, recommendations: { ...this.defaultOptions.recommendations, indicator: isIntersecting } };
+        }
+      });
       recommendationsObserver.observe(this.recommendationRef);
     }
     if (this.parkingRef) {
-      const parkingObserver = new IntersectionObserver(
-        entries => {
-          const intersectionRatio = entries[0].intersectionRatio >= threshold;
-          this.parkingIsInViewport.emit(intersectionRatio);
-        },
-        { threshold },
-      );
+      const parkingObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        this.parkingIsInViewport.emit(isIntersecting);
+      });
       parkingObserver.observe(this.parkingRef);
     }
 
     if (this.sensitiveAreaRef) {
-      const sensitiveAreaRefObserver = new IntersectionObserver(
-        entries => {
-          const intersectionRatio = entries[0].intersectionRatio >= threshold;
-          this.sensitiveAreaIsInViewport.emit(intersectionRatio);
-          if (intersectionRatio) {
-            this.options = { ...this.defaultOptions, sensitiveArea: { ...this.defaultOptions.sensitiveArea, indicator: intersectionRatio } };
-          }
-        },
-        { threshold },
-      );
+      const sensitiveAreaRefObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        this.sensitiveAreaIsInViewport.emit(isIntersecting);
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, sensitiveArea: { ...this.defaultOptions.sensitiveArea, indicator: isIntersecting } };
+        }
+      });
       sensitiveAreaRefObserver.observe(this.sensitiveAreaRef);
     }
 
     if (this.informationDeskRef) {
-      const informationDeskObserver = new IntersectionObserver(
-        entries => {
-          const intersectionRatio = entries[0].intersectionRatio >= threshold;
-          this.informationDeskIsInViewport.emit(intersectionRatio);
-          if (intersectionRatio) {
-            this.options = { ...this.defaultOptions, informationPlaces: { ...this.defaultOptions.informationPlaces, indicator: intersectionRatio } };
-          }
-        },
-        { threshold },
-      );
+      const informationDeskObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        this.informationDeskIsInViewport.emit(isIntersecting);
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, informationPlaces: { ...this.defaultOptions.informationPlaces, indicator: isIntersecting } };
+        }
+      });
       informationDeskObserver.observe(this.informationDeskRef);
     }
 
     if (this.poiRef) {
-      const poiObserver = new IntersectionObserver(
-        entries => {
-          const intersectionRatio = entries[0].intersectionRatio >= threshold;
-          this.poiIsInViewport.emit(intersectionRatio);
-          if (intersectionRatio) {
-            this.options = { ...this.defaultOptions, pois: { ...this.defaultOptions.pois, indicator: intersectionRatio } };
-          }
-        },
-        { threshold },
-      );
+      const poiObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        this.poiIsInViewport.emit(isIntersecting);
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, pois: { ...this.defaultOptions.pois, indicator: isIntersecting } };
+        }
+      });
       poiObserver.observe(this.poiRef);
     }
   }
