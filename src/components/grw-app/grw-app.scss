@@ -11,14 +11,14 @@ grw-app {
   color: var(--color-on-surface);
   overflow: hidden;
   line-height: initial;
+  max-width: 100vw;
+  max-height: 100vh;
 }
 
 .app-container {
   position: relative;
   width: 100%;
   height: 100%;
-  max-width: 100vw;
-  max-height: 100vh;
   overflow: hidden;
 }
 
