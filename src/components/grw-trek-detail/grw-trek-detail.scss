@@ -2,6 +2,18 @@
 @use '~swiper/modules/navigation/navigation.scss';
 @use '~swiper/modules/pagination/pagination.scss';
 
+.swiper {
+  z-index: 0;
+}
+
+.swiper-images {
+  width: calc(100%);
+}
+
+.swiper-pois {
+  width: calc(100% - 64px);
+}
+
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }

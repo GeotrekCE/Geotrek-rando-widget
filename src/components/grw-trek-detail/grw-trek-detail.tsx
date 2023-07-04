@@ -363,7 +363,7 @@ export class GrwTrekDetail {
         {this.currentTrek && (
           <div class="trek-detail-container" ref={el => (this.trekDetailContainerRef = el)}>
             <div class="images-container" ref={el => (this.presentationRef = el)}>
-              <div class="swiper" ref={el => (this.swiperImagesRef = el)}>
+              <div class="swiper swiper-images" ref={el => (this.swiperImagesRef = el)}>
                 <div class="swiper-wrapper">
                   {this.currentTrek.attachments
                     .filter(attachment => attachment.type === 'image')
