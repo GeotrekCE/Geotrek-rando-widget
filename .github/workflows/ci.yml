@@ -13,8 +13,7 @@ jobs:
     uses: ./.github/workflows/update_cache.yml
   ci:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    needs: [get_node_modules]
     steps:
       - uses: actions/checkout@v3
       - name: Debug github action ref
