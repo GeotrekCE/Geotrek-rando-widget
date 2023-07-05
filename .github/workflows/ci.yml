@@ -9,6 +9,8 @@ on:
   workflow_call:
 
 jobs:
+  get_node_modules:
+    uses: ./.github/workflows/update_cache.yml
   ci:
     runs-on: ubuntu-latest
     permissions:
@@ -19,6 +21,5 @@ jobs:
         run: |
           echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"
-      - uses: ./.github/workflows/update_cache.yml
       - name: Build
         run : npm run build
