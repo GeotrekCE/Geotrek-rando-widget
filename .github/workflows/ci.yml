@@ -9,7 +9,7 @@ on:
   workflow_call:
 
 jobs:
-  deploy:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,6 +17,6 @@ jobs:
         run: |
           echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"
-      - uses: ./.github/workflows/update_cache.yml
+      - uses: ./.github/actions/update-cache
       - name: Build
         run : npm run build
