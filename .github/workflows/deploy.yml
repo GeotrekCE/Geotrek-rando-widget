@@ -10,13 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/update-cache
-      - name: Debug github action ref
-        run: |
-          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
-          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
-#      - run: |
-#          install -d -m 700 ~/.ssh/
-#          echo "${{secrets.target_host}} ${{secrets.ssh_host_fingerprint}}">~/.ssh/known_hosts
-#          echo "${{secrets.ssh_private_key}}" >~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
-#      - run: rsync -a --delete -v www loader dist rando-widget@${{secrets.target_host}}:public_html/$GITHUB_REF_NAME/
-#      - run: ssh rando-widget@${{secrets.target_host}} ln -sf --no-dereference $GITHUB_REF_NAME public_html/latest
+      - run: |
+          install -d -m 700 ~/.ssh/
+          echo "${{secrets.target_host}} ${{secrets.ssh_host_fingerprint}}">~/.ssh/known_hosts
+          echo "${{secrets.ssh_private_key}}" >~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+      - run: rsync -a --delete -v www loader dist rando-widget@${{secrets.target_host}}:public_html/$GITHUB_REF_NAME/
+      - run: ssh rando-widget@${{secrets.target_host}} ln -sf --no-dereference $GITHUB_REF_NAME public_html/latest

@@ -5,16 +5,12 @@ on:
     types: [created]
 
 jobs:
-  build:
-    uses: ./.github/workflows/ci.yml
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/update-cache
 
-#  publish-npm:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: ./.github/actions/update-cache
-#
-#      - run: npm publish
-#        env:
-#          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
