@@ -9,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: npm
-      - run: npm ci
+      - uses: ./.github/workflows/update_cache.yml
+      - name: Debug github action ref
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
       - run: |
           install -d -m 700 ~/.ssh/
           echo "${{secrets.target_host}} ${{secrets.ssh_host_fingerprint}}">~/.ssh/known_hosts
