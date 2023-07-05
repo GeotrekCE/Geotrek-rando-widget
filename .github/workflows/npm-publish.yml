@@ -9,16 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/update_cache.yml
-      - name: Build
-        run : npm run build
+      - uses: ./.github/workflows/ci.yml
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - uses: ./.github/workflows/update_cache.yml
 
       - run: npm publish
