@@ -22,5 +22,5 @@ runs:
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        npm ci
+        npm ci --no-audit
 
