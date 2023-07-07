@@ -271,3 +271,27 @@ grw-trek-detail {
   position: relative;
   width: 50%;
 }
+
+.filters-options-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .filter-option-button {
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 8px 0px 0px 8px;
+    padding: 8px 16px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--elevation-0);
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    line-height: 20px;
+    color: var(--color-primary);
+    background-color: transparent;
+  }
+}

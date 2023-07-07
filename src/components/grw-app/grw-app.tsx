@@ -1,4 +1,4 @@
-import { Component, Host, h, Listen, State, Prop, Element, Watch } from '@stencil/core';
+import { Component, Host, h, Listen, State, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
 
@@ -9,6 +9,7 @@ import state, { onChange, reset } from 'store/store';
 })
 export class GrwApp {
   @Element() appElement: HTMLElement;
+  @Event() resetFilter: EventEmitter;
   @State() showTrek = false;
   @State() showTreksMap = false;
   @State() showTrekMap = false;
@@ -156,13 +157,14 @@ export class GrwApp {
     }
   }
 
-  // handleEraseFilters() {
-  //   console.log('handleEraseFilters');
-  // }
+  handleEraseFilters() {
+    this.resetFilter.emit();
+    state.currentTreks = state.treks;
+  }
 
-  // handleOkFilters() {
-  //   console.log('handleOkFilters');
-  // }
+  handleOkFilters() {
+    this.handleFilters();
+  }
 
   disconnectedCallback() {
     reset();
@@ -327,15 +329,15 @@ export class GrwApp {
         )}
         {!this.showTrek && this.showFilters && (
           <div class="options-container">
-            {/* <div class="filters-buttons-container">
-              <button class="filter-button" onClick={() => this.handleEraseFilters()}>
-                Effacer
-              </button>
-              <button class="filter-button" onClick={() => this.handleOkFilters()}>
-                Ok
-              </button>
-            </div> */}
             <div class="filters-container">
+              <div class="filters-options-buttons-container">
+                <button class="filter-option-button" onClick={() => this.handleEraseFilters()}>
+                  Effacer
+                </button>
+                <button class="filter-option-button" onClick={() => this.handleOkFilters()}>
+                  Ok
+                </button>
+              </div>
               <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name"></grw-filter>
               <div class="divider"></div>
               <grw-filter filterName={translate[state.language].difficulty} filterType="difficulties" filterNameProperty="label"></grw-filter>

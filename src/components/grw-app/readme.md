@@ -48,6 +48,13 @@
 | `zoom`                      | `zoom`                         |             | `number`  | `undefined`            |
 
 
+## Events
+
+| Event         | Description | Type               |
+| ------------- | ----------- | ------------------ |
+| `resetFilter` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Depends on

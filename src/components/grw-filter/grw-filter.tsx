@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Listen, forceUpdate } from '@stencil/core';
 import state from 'store/store';
 import { Filters } from 'types/types';
 
@@ -8,6 +8,7 @@ import { Filters } from 'types/types';
   shadow: true,
 })
 export class GrwFilter {
+  filterRef: HTMLElement;
   @Prop() filterType: string;
   @Prop() filterName: string;
   @Prop() filterNameProperty: string;
@@ -16,6 +17,11 @@ export class GrwFilter {
     { property: 'difficulties', trekProperty: 'difficulty', type: 'include' },
     { property: 'durations', trekProperty: 'duration', type: 'interval' },
   ];
+
+  @Listen('resetFilter', { target: 'window' })
+  onResetFilter() {
+    this.resetFilter();
+  }
 
   handleFilter(_event: MouseEvent, filterToHandle: any) {
     const filterFromState = [...state[this.filterType]];
@@ -69,9 +75,14 @@ export class GrwFilter {
     state.currentTreks = isUsingFilter ? filtersTreks : state.treks;
   }
 
+  resetFilter() {
+    state[this.filterType].forEach(currentFilter => (currentFilter.selected = false));
+    forceUpdate(this.filterRef);
+  }
+
   render() {
     return (
-      <Host>
+      <Host ref={el => (this.filterRef = el)}>
         <div class="filter-name display-large">{this.filterName}</div>
         <div class="filter-button-container">
           {state[this.filterType].map(currentFilter => (

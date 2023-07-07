@@ -133,6 +133,10 @@ export namespace Components {
         "themes": string;
     }
 }
+export interface GrwAppCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwAppElement;
+}
 export interface GrwInformationDeskDetailCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwInformationDeskDetailElement;
@@ -270,6 +274,7 @@ declare namespace LocalJSX {
         "languages"?: string;
         "linkName"?: string;
         "linkTarget"?: string;
+        "onResetFilter"?: (event: GrwAppCustomEvent<any>) => void;
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
