@@ -23,7 +23,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
-    "prepare": "npm run build && npm run precompress"
+    "postbuild": "npm run precompress"
   },
   "dependencies": {
     "@raruto/leaflet-elevation": "^2.4.0",
