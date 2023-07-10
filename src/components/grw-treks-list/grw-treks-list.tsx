@@ -1,4 +1,5 @@
 import { Component, Host, h, Element, State, Prop } from '@stencil/core';
+import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
 import { Treks } from 'types/types';
 
@@ -80,19 +81,26 @@ export class GrwTreksList {
   render() {
     return (
       <Host style={{ '--color-primary-app': this.colorPrimaryApp }}>
-        {this.treksToDisplay.map(trek => (
-          <grw-trek-card
-            reset-store-on-disconnected="false"
-            key={`trek-${trek.id}`}
-            trek={trek}
-            is-large-view={this.isLargeView}
-            color-primary-app={this.colorPrimaryApp}
-            color-on-surface={this.colorOnSurface}
-            color-secondary-container={this.colorSecondaryContainer}
-            color-on-secondary-container={this.colorOnSecondaryContainer}
-            color-surface-container-low={this.colorSurfaceContainerLow}
-          ></grw-trek-card>
-        ))}
+        {state.treksWithinBounds && (
+          <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
+            state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek
+          }`}</div>
+        )}
+        <div class="treks-list-container">
+          {this.treksToDisplay.map(trek => (
+            <grw-trek-card
+              reset-store-on-disconnected="false"
+              key={`trek-${trek.id}`}
+              trek={trek}
+              is-large-view={this.isLargeView}
+              color-primary-app={this.colorPrimaryApp}
+              color-on-surface={this.colorOnSurface}
+              color-secondary-container={this.colorSecondaryContainer}
+              color-on-secondary-container={this.colorOnSecondaryContainer}
+              color-surface-container-low={this.colorSurfaceContainerLow}
+            ></grw-trek-card>
+          ))}
+        </div>
         <div class="list-bottom-space"></div>
       </Host>
     );

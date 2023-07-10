@@ -78,6 +78,8 @@ export namespace Components {
     interface GrwPoiDetail {
         "poi": Poi;
     }
+    interface GrwSearch {
+    }
     interface GrwSelectLanguage {
     }
     interface GrwSensitiveAreaDetail {
@@ -184,6 +186,12 @@ declare global {
         prototype: HTMLGrwPoiDetailElement;
         new (): HTMLGrwPoiDetailElement;
     };
+    interface HTMLGrwSearchElement extends Components.GrwSearch, HTMLStencilElement {
+    }
+    var HTMLGrwSearchElement: {
+        prototype: HTMLGrwSearchElement;
+        new (): HTMLGrwSearchElement;
+    };
     interface HTMLGrwSelectLanguageElement extends Components.GrwSelectLanguage, HTMLStencilElement {
     }
     var HTMLGrwSelectLanguageElement: {
@@ -232,6 +240,7 @@ declare global {
         "grw-information-desk-detail": HTMLGrwInformationDeskDetailElement;
         "grw-map": HTMLGrwMapElement;
         "grw-poi-detail": HTMLGrwPoiDetailElement;
+        "grw-search": HTMLGrwSearchElement;
         "grw-select-language": HTMLGrwSelectLanguageElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
@@ -315,6 +324,8 @@ declare namespace LocalJSX {
     interface GrwPoiDetail {
         "poi"?: Poi;
     }
+    interface GrwSearch {
+    }
     interface GrwSelectLanguage {
     }
     interface GrwSensitiveAreaDetail {
@@ -381,6 +392,7 @@ declare namespace LocalJSX {
         "grw-information-desk-detail": GrwInformationDeskDetail;
         "grw-map": GrwMap;
         "grw-poi-detail": GrwPoiDetail;
+        "grw-search": GrwSearch;
         "grw-select-language": GrwSelectLanguage;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
         "grw-trek-card": GrwTrekCard;
@@ -399,6 +411,7 @@ declare module "@stencil/core" {
             "grw-information-desk-detail": LocalJSX.GrwInformationDeskDetail & JSXBase.HTMLAttributes<HTMLGrwInformationDeskDetailElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-poi-detail": LocalJSX.GrwPoiDetail & JSXBase.HTMLAttributes<HTMLGrwPoiDetailElement>;
+            "grw-search": LocalJSX.GrwSearch & JSXBase.HTMLAttributes<HTMLGrwSearchElement>;
             "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;

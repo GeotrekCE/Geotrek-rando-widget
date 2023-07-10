@@ -77,7 +77,7 @@ grw-app {
   top: 64px;
 }
 
-.handle-filters-container {
+.handle-search-filters-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -110,10 +110,6 @@ grw-app {
       font-size: 18px;
       font-family: 'Material Symbols Outlined';
     }
-  }
-  .current-treks-within-bounds-length {
-    margin-left: 12px;
-    color: var(--color-on-surface);
   }
 }
 

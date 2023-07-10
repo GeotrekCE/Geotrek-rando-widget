@@ -236,16 +236,16 @@ export class GrwApp {
                 <div class="header-right-container">{state.languages.length > 1 && <grw-select-language></grw-select-language>}</div>
               </div>
               {!this.showTrek && (
-                <div class="handle-filters-container">
-                  {state.treksWithinBounds && (
-                    <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
-                      state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek
-                    }`}</div>
-                  )}
-                  <button onClick={() => this.handleFilters()} class="handle-filters-button">
-                    <span class="material-symbols-outlined margin-right-icon">filter_list</span>
-                    {translate[state.language].filter}
-                  </button>
+                <div class="handle-search-filters-container">
+                  <div class="handle-search-container">
+                    <grw-search></grw-search>
+                  </div>
+                  <div class="handle-filters-container">
+                    <button onClick={() => this.handleFilters()} class="handle-filters-button">
+                      <span class="material-symbols-outlined margin-right-icon">filter_list</span>
+                      {translate[state.language].filter}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

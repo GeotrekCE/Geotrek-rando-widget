@@ -1,3 +1,6 @@
+import state from 'store/store';
+import { Filters, Treks } from 'types/types';
+
 export function formatDuration(duration: number) {
   let formattedDuration;
   if (duration < 24) {
@@ -17,4 +20,60 @@ export function formatLength(length: number) {
 
 export function formatAscent(ascent: number) {
   return `${ascent}m`;
+}
+
+export function handleFiltersAndSearch(): Treks {
+  const filters: Filters = [
+    { property: 'practices', trekProperty: 'practice', type: 'include' },
+    { property: 'difficulties', trekProperty: 'difficulty', type: 'include' },
+    { property: 'durations', trekProperty: 'duration', type: 'interval' },
+  ];
+
+  let isUsingFilter = false;
+  let filtersTreks = [];
+  for (const filter of filters) {
+    const currentFiltersId: number[] = state[filter.property].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
+    if (currentFiltersId.length > 0) {
+      if (filtersTreks.length > 0) {
+        if (filter.type === 'include') {
+          filtersTreks = [...filtersTreks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
+        } else if (filter.type === 'interval') {
+          filtersTreks = [
+            ...filtersTreks.filter(trek => {
+              for (const currentFilterId of currentFiltersId) {
+                const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
+                if (trek[filter.trekProperty] >= currentFilter.minValue && trek[filter.trekProperty] <= currentFilter.maxValue) {
+                  return true;
+                }
+              }
+              return false;
+            }),
+          ];
+        }
+      } else {
+        if (!isUsingFilter) {
+          isUsingFilter = true;
+        }
+        if (filter.type === 'include') {
+          filtersTreks = [...state.treks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
+        } else if (filter.type === 'interval') {
+          let minValue: number;
+          let maxValue: number;
+          for (const currentFilterId of currentFiltersId) {
+            const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
+            if (isNaN(minValue) || currentFilter.minValue < minValue) {
+              minValue = currentFilter.minValue;
+            }
+            if (isNaN(maxValue) || currentFilter.maxValue > maxValue) {
+              maxValue = currentFilter.maxValue;
+            }
+          }
+          filtersTreks = [...state.treks.filter(trek => trek[filter.trekProperty] >= minValue && trek[filter.trekProperty] <= maxValue)];
+        }
+      }
+    }
+  }
+
+  const searchTreks = isUsingFilter ? filtersTreks : state.treks;
+  return Boolean(state.searchValue) ? searchTreks.filter(currentTrek => currentTrek.name.toLocaleLowerCase().includes(state.searchValue)) : searchTreks;
 }

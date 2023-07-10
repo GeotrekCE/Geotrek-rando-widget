@@ -62,6 +62,7 @@
 - [grw-treks-provider](../../store)
 - [grw-trek-provider](../../store)
 - [grw-select-language](../grw-select-language)
+- [grw-search](../grw-search)
 - [grw-treks-list](../grw-treks-list)
 - [grw-trek-detail](../grw-trek-detail)
 - [grw-map](../grw-map)
@@ -73,6 +74,7 @@ graph TD;
   grw-app --> grw-treks-provider
   grw-app --> grw-trek-provider
   grw-app --> grw-select-language
+  grw-app --> grw-search
   grw-app --> grw-treks-list
   grw-app --> grw-trek-detail
   grw-app --> grw-map

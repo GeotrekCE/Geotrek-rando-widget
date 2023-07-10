@@ -44,6 +44,7 @@ const { state, onChange, reset } = createStore<{
   currentInformationDesks: InformationDesks;
   treksNetworkError: boolean;
   trekNetworkError: boolean;
+  searchValue: string;
 }>({
   api: null,
   languages: null,
@@ -69,6 +70,7 @@ const { state, onChange, reset } = createStore<{
   currentInformationDesks: null,
   treksNetworkError: false,
   trekNetworkError: false,
+  searchValue: null,
 });
 
 export { onChange, reset };
