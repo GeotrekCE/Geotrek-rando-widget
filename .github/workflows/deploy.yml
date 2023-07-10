@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/update-cache
+      - name: Prepare assets
+        run: |
+          npm run prepare
       - run: |
           install -d -m 700 ~/.ssh/
           echo "${{secrets.target_host}} ${{secrets.ssh_host_fingerprint}}">~/.ssh/known_hosts
