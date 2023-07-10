@@ -12,7 +12,7 @@ jobs:
       - uses: ./.github/actions/update-cache
       - name: Prepare assets
         run: |
-          npm run prepare
+          npm run build
       - run: |
           install -d -m 700 ~/.ssh/
           echo "${{secrets.target_host}} ${{secrets.ssh_host_fingerprint}}">~/.ssh/known_hosts

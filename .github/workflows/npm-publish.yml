@@ -14,7 +14,9 @@ jobs:
         with:
           node-version-file: .nvmrc
           registry-url: 'https://registry.npmjs.org'
-      - run: npm run prepare
+      - name: Prepare assets
+        run: |
+          npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
