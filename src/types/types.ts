@@ -143,6 +143,26 @@ export type Duration = {
   selected: boolean;
 };
 
+export type Lengths = Length[];
+
+export type Length = {
+  id: number;
+  name: string;
+  minValue: number;
+  maxValue: number;
+  selected: boolean;
+};
+
+export type Elevations = Elevation[];
+
+export type Elevation = {
+  id: number;
+  name: string;
+  minValue: number;
+  maxValue: number;
+  selected: boolean;
+};
+
 export type SensitiveAreas = SensitiveArea[];
 
 export type SensitiveArea = {
@@ -200,7 +220,7 @@ export type InformationDeskType = {
 
 export type Filters = Filter[];
 
-export type Filter = { property: string; trekProperty: string; type: string };
+export type Filter = { property: string; trekProperty: string; trekPropertyIsArray: boolean; type: string };
 
 export interface Option {
   visible: boolean;

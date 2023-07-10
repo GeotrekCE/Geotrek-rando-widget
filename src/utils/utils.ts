@@ -24,9 +24,16 @@ export function formatAscent(ascent: number) {
 
 export function handleFiltersAndSearch(): Treks {
   const filters: Filters = [
-    { property: 'practices', trekProperty: 'practice', type: 'include' },
-    { property: 'difficulties', trekProperty: 'difficulty', type: 'include' },
-    { property: 'durations', trekProperty: 'duration', type: 'interval' },
+    { property: 'practices', trekProperty: 'practice', trekPropertyIsArray: false, type: 'include' },
+    { property: 'difficulties', trekProperty: 'difficulty', trekPropertyIsArray: false, type: 'include' },
+    { property: 'durations', trekProperty: 'duration', trekPropertyIsArray: false, type: 'interval' },
+    { property: 'lengths', trekProperty: 'length_2d', trekPropertyIsArray: false, type: 'interval' },
+    { property: 'elevations', trekProperty: 'ascent', trekPropertyIsArray: false, type: 'interval' },
+    { property: 'themes', trekProperty: 'themes', trekPropertyIsArray: true, type: 'include' },
+    { property: 'routes', trekProperty: 'route', trekPropertyIsArray: false, type: 'include' },
+    { property: 'accessibilities', trekProperty: 'accessibilities', trekPropertyIsArray: true, type: 'include' },
+    { property: 'cities', trekProperty: 'cities', trekPropertyIsArray: true, type: 'include' },
+    { property: 'labels', trekProperty: 'labels', trekPropertyIsArray: true, type: 'include' },
   ];
 
   let isUsingFilter = false;
@@ -36,7 +43,11 @@ export function handleFiltersAndSearch(): Treks {
     if (currentFiltersId.length > 0) {
       if (filtersTreks.length > 0) {
         if (filter.type === 'include') {
-          filtersTreks = [...filtersTreks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
+          if (filter.trekPropertyIsArray) {
+            filtersTreks = [...state.treks.filter(trek => trek[filter.trekProperty].some(trekProperty => currentFiltersId.includes(trekProperty)))];
+          } else {
+            filtersTreks = [...filtersTreks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
+          }
         } else if (filter.type === 'interval') {
           filtersTreks = [
             ...filtersTreks.filter(trek => {
@@ -55,7 +66,11 @@ export function handleFiltersAndSearch(): Treks {
           isUsingFilter = true;
         }
         if (filter.type === 'include') {
-          filtersTreks = [...state.treks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
+          if (filter.trekPropertyIsArray) {
+            filtersTreks = [...state.treks.filter(trek => trek[filter.trekProperty].some(trekProperty => currentFiltersId.includes(trekProperty)))];
+          } else {
+            filtersTreks = [...state.treks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
+          }
         } else if (filter.type === 'interval') {
           let minValue: number;
           let maxValue: number;

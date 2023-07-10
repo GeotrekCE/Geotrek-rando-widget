@@ -29,6 +29,7 @@ export class GrwTrekProvider {
     requests.push(!state.practices ? fetch(`${state.api}trek_practice/?language=${state.language}&fields=id,name,pictogram`, this.init) : new Response('null'));
     requests.push(!state.themes ? fetch(`${state.api}theme/?language=${state.language}&fields=id,label,pictogram`, this.init) : new Response('null'));
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
+    requests.push(!state.accessibilities ? fetch(`${state.api}trek_accessibility/?language=${state.language}&fields=id,name,pictogram`, this.init) : new Response('null'));
     Promise.all([
       ...requests,
       fetch(`${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`, {
@@ -37,7 +38,6 @@ export class GrwTrekProvider {
       }).catch(() => new Response('null')),
       fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram`, this.init),
       fetch(`${state.api}source/?language=${state.language}&fields=id,name,website,pictogram`, this.init),
-      fetch(`${state.api}trek_accessibility/?language=${state.language}&fields=id,name,pictogram`, this.init),
       fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
       fetch(`${state.api}poi/?language=${state.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, {
         cache: 'force-cache',
@@ -54,7 +54,7 @@ export class GrwTrekProvider {
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, themes, cities, sensitiveAreas, labels, sources, accessibilities, accessibilitiesLevel, pois, poiTypes, informationDesks, trek]) => {
+      .then(([difficulties, routes, practices, themes, cities, accessibilities, sensitiveAreas, labels, sources, accessibilitiesLevel, pois, poiTypes, informationDesks, trek]) => {
         state.trekNetworkError = false;
         if (difficulties) {
           state.difficulties = difficulties.results;
@@ -71,12 +71,16 @@ export class GrwTrekProvider {
         if (cities) {
           state.cities = cities.results;
         }
+
+        if (accessibilities) {
+          state.accessibilities = accessibilities.results;
+        }
+
         if (sensitiveAreas) {
           state.currentSensitiveAreas = sensitiveAreas.results;
         }
         state.labels = labels.results;
         state.sources = sources.results;
-        state.accessibilities = accessibilities.results;
         if (accessibilitiesLevel) {
           state.accessibilitiesLevel = accessibilitiesLevel.results;
         }

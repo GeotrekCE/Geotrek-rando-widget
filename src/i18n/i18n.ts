@@ -3,6 +3,7 @@ interface Translation {
   practice: string;
   difficulty: string;
   duration: string;
+  length: string;
   treks: string;
   trek: string;
   showList: string;
@@ -47,6 +48,10 @@ interface Translation {
     informationPlaces: string;
     pois: string;
   };
+  themes: string;
+  routes: string;
+  elevation: string;
+  others: string;
 }
 
 interface AvailableTranslations {
@@ -60,6 +65,7 @@ export const translate: AvailableTranslations = {
     practice: 'Pratique',
     difficulty: 'Difficulté',
     duration: 'Durée',
+    length: 'Longueur',
     treks: 'randonnées',
     trek: 'randonnée',
     showList: 'Voir la liste',
@@ -104,12 +110,17 @@ export const translate: AvailableTranslations = {
       informationPlaces: 'Lieux de renseignement',
       pois: 'Patrimoines',
     },
+    themes: 'Thèmes',
+    routes: 'Type de parcours',
+    elevation: 'Denivelé positif',
+    others: 'Autres',
   },
   en: {
     filter: 'Filter',
     practice: 'Practice',
     difficulty: 'Difficulty',
     duration: 'Duration',
+    length: 'Length',
     treks: 'Hikes',
     trek: 'Hike',
     showList: 'Show the list',
@@ -154,5 +165,9 @@ export const translate: AvailableTranslations = {
       informationPlaces: 'Information places',
       pois: 'Points of interest',
     },
+    themes: 'Themes',
+    routes: 'Type of course',
+    elevation: 'Positive elevation',
+    others: 'Others',
   },
 };

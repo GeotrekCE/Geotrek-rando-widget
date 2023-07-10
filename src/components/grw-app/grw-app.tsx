@@ -338,11 +338,27 @@ export class GrwApp {
                   Ok
                 </button>
               </div>
-              <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name"></grw-filter>
-              <div class="divider"></div>
-              <grw-filter filterName={translate[state.language].difficulty} filterType="difficulties" filterNameProperty="label"></grw-filter>
-              <div class="divider"></div>
-              <grw-filter filterName={translate[state.language].duration} filterType="durations" filterNameProperty="name"></grw-filter>
+              <div class="filters-options-container">
+                <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].difficulty} filterType="difficulties" filterNameProperty="label"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].duration} filterType="durations" filterNameProperty="name"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].length} filterType="lengths" filterNameProperty="name"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].elevation} filterType="elevations" filterNameProperty="name"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].themes} filterType="themes" filterNameProperty="label"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].routes} filterType="routes" filterNameProperty="route"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].accessibility} filterType="accessibilities" filterNameProperty="name"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].others} filterType="labels" filterNameProperty="name"></grw-filter>
+                <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].cities} filterType="cities" filterNameProperty="name"></grw-filter>
+              </div>
             </div>
             <div onClick={() => this.handleFilters()} class="back-filters-container"></div>
           </div>

@@ -17,6 +17,8 @@ import {
   Cities,
   Trek,
   Treks,
+  Lengths,
+  Elevations,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -33,6 +35,8 @@ const { state, onChange, reset } = createStore<{
   themes: Themes;
   cities: Cities;
   durations: Durations;
+  lengths: Lengths;
+  elevations: Elevations;
   labels: Labels;
   sources: Sources;
   accessibilities: Accessibilities;
@@ -59,6 +63,8 @@ const { state, onChange, reset } = createStore<{
   themes: null,
   cities: null,
   durations: null,
+  lengths: null,
+  elevations: null,
   currentSensitiveAreas: null,
   labels: null,
   sources: null,

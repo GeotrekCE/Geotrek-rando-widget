@@ -115,19 +115,24 @@ grw-app {
 
 .filters-container {
   background-color: var(--color-background);
-  position: absolute;
+  position: relative;
   width: 100%;
-  padding: 16px 0px 32px 0px;
+  height: 100%;
   z-index: 1100;
+}
+
+.filters-options-container {
+  overflow-y: scroll;
+  padding-bottom: 32px;
+  max-height: calc(100% - 48px - 32px);
 }
 
 .back-filters-container {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
-  height: calc(100% - 64px);
+  height: 100%;
   position: absolute;
   z-index: 1099;
-  top: 64px;
 }
 
 .divider {
@@ -272,6 +277,7 @@ grw-trek-detail {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  height: 48px;
   .filter-option-button {
     cursor: pointer;
     user-select: none;
