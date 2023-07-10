@@ -16,14 +16,15 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build --docs",
-    "precompress": "node precompress",
     "start": "stencil build --dev --watch --serve",
     "generate": "stencil generate",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "storybook-to-ghpages",
-    "prepare": "npm run build && npm run precompress"
+    "build": "stencil build --docs",
+    "compression": "node compression",
+    "postbuild": "npm run compression",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@raruto/leaflet-elevation": "^2.4.0",
