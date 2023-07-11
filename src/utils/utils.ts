@@ -90,5 +90,5 @@ export function handleFiltersAndSearch(): Treks {
   }
 
   const searchTreks = isUsingFilter ? filtersTreks : state.treks;
-  return Boolean(state.searchValue) ? searchTreks.filter(currentTrek => currentTrek.name.toLocaleLowerCase().includes(state.searchValue)) : searchTreks;
+  return Boolean(state.searchValue) ? searchTreks.filter(currentTrek => currentTrek.name.toLowerCase().includes(state.searchValue.toLowerCase())) : searchTreks;
 }
