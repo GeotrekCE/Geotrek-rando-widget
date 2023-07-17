@@ -9,9 +9,7 @@
 | -------------------------- | ----------------------------- | ----------- | --------- | ------------ |
 | `attribution`              | `attribution`                 |             | `string`  | `undefined`  |
 | `center`                   | `center`                      |             | `string`  | `'1, 1'`     |
-| `colorArrivalIcon`         | `color-arrival-icon`          |             | `string`  | `'#85003b'`  |
 | `colorBackground`          | `color-background`            |             | `string`  | `'#fef7ff'`  |
-| `colorDepartureIcon`       | `color-departure-icon`        |             | `string`  | `'#006b3b'`  |
 | `colorOnPrimaryContainer`  | `color-on-primary-container`  |             | `string`  | `'#21005e'`  |
 | `colorOnSurface`           | `color-on-surface`            |             | `string`  | `'#49454e'`  |
 | `colorPoiIcon`             | `color-poi-icon`              |             | `string`  | `'#974c6e'`  |

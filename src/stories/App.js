@@ -29,8 +29,6 @@ export const createApp = ({
   fabBackgroundColor,
   fabColor,
   colorTrekLine,
-  colorDepartureIcon,
-  colorArrivalIcon,
   colorSensitiveArea,
   colorPoiIcon,
   linkName,
@@ -68,8 +66,6 @@ export const createApp = ({
   app.setAttribute('fab-background-color', fabBackgroundColor);
   app.setAttribute('fab-color', fabColor);
   app.setAttribute('color-trek-line', colorTrekLine);
-  app.setAttribute('color-departure-icon', colorDepartureIcon);
-  app.setAttribute('color-arrival-icon', colorArrivalIcon);
   app.setAttribute('color-sensitive-area', colorSensitiveArea);
   app.setAttribute('color-poi-icon', colorPoiIcon);
   app.setAttribute('link-name', linkName);

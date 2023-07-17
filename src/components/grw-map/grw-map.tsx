@@ -28,8 +28,6 @@ export class GrwMap {
   @Prop() colorBackground = '#fef7ff';
 
   @Prop() colorTrekLine = '#6b0030';
-  @Prop() colorDepartureIcon = '#006b3b';
-  @Prop() colorArrivalIcon = '#85003b';
   @Prop() colorSensitiveArea = '	#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
   @Prop() useGradient = false;
@@ -552,8 +550,6 @@ export class GrwMap {
           '--color-primary-container': this.colorPrimaryContainer,
           '--color-on-primary-container': this.colorOnPrimaryContainer,
           '--color-background': this.colorBackground,
-          '--color-departure-icon': this.colorDepartureIcon,
-          '--color-arrival-icon': this.colorArrivalIcon,
           '--color-poi-icon': this.colorPoiIcon,
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,

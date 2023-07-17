@@ -15,9 +15,7 @@ export namespace Components {
         "attribution": string;
         "center": string;
         "cities": string;
-        "colorArrivalIcon": string;
         "colorBackground": string;
-        "colorDepartureIcon": string;
         "colorOnPrimary": string;
         "colorOnPrimaryContainer": string;
         "colorOnSecondaryContainer": string;
@@ -61,9 +59,7 @@ export namespace Components {
     interface GrwMap {
         "attribution": string;
         "center": string;
-        "colorArrivalIcon": string;
         "colorBackground": string;
-        "colorDepartureIcon": string;
         "colorOnPrimaryContainer": string;
         "colorOnSurface": string;
         "colorPoiIcon": string;
@@ -260,9 +256,7 @@ declare namespace LocalJSX {
         "attribution"?: string;
         "center"?: string;
         "cities"?: string;
-        "colorArrivalIcon"?: string;
         "colorBackground"?: string;
-        "colorDepartureIcon"?: string;
         "colorOnPrimary"?: string;
         "colorOnPrimaryContainer"?: string;
         "colorOnSecondaryContainer"?: string;
@@ -308,9 +302,7 @@ declare namespace LocalJSX {
     interface GrwMap {
         "attribution"?: string;
         "center"?: string;
-        "colorArrivalIcon"?: string;
         "colorBackground"?: string;
-        "colorDepartureIcon"?: string;
         "colorOnPrimaryContainer"?: string;
         "colorOnSurface"?: string;
         "colorPoiIcon"?: string;

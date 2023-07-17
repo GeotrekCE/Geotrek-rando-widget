@@ -13,9 +13,7 @@
 | `attribution`               | `attribution`                  |             | `string`  | `undefined`            |
 | `center`                    | `center`                       |             | `string`  | `undefined`            |
 | `cities`                    | `cities`                       |             | `string`  | `undefined`            |
-| `colorArrivalIcon`          | `color-arrival-icon`           |             | `string`  | `'#85003b'`            |
 | `colorBackground`           | `color-background`             |             | `string`  | `'#fef7ff'`            |
-| `colorDepartureIcon`        | `color-departure-icon`         |             | `string`  | `'#006b3b'`            |
 | `colorOnPrimary`            | `color-on-primary`             |             | `string`  | `'#ffffff'`            |
 | `colorOnPrimaryContainer`   | `color-on-primary-container`   |             | `string`  | `'#21005e'`            |
 | `colorOnSecondaryContainer` | `color-on-secondary-container` |             | `string`  | `'#1d192b'`            |

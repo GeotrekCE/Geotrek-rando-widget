@@ -34,8 +34,6 @@ TrekMap.args = {
   colorOnPrimaryContainer: '#21005e',
   colorBackground: '#fef7ff',
   colorTrekLine: '#6b0030',
-  colorDepartureIcon: '#006b3b',
-  colorArrivalIcon: '#85003b',
   colorSensitiveArea: '#4974a5',
   colorPoiIcon: '#974c6e',
   useGradient: false,

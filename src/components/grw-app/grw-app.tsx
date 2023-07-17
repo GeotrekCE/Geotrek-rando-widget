@@ -53,8 +53,6 @@ export class GrwApp {
   @Prop() fabColor = '#21005d';
 
   @Prop() colorTrekLine = '#6b0030';
-  @Prop() colorDepartureIcon = '#006b3b';
-  @Prop() colorArrivalIcon = '#85003b';
   @Prop() colorSensitiveArea = '#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
   @Prop() useGradient = false;
@@ -308,8 +306,6 @@ export class GrwApp {
                 color-on-primary-container={this.colorOnPrimaryContainer}
                 color-background={this.colorBackground}
                 color-trek-line={this.colorTrekLine}
-                color-departure-icon={this.colorDepartureIcon}
-                color-arrival-icon={this.colorArrivalIcon}
                 color-sensitive-area={this.colorSensitiveArea}
                 color-poi-icon={this.colorPoiIcon}
                 is-large-view={this.isLargeView}

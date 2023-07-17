@@ -11,8 +11,6 @@ export const createTrekMap = ({
   colorOnPrimaryContainer,
   colorBackground,
   colorTrekLine,
-  colorDepartureIcon,
-  colorArrivalIcon,
   colorSensitiveArea,
   colorPoiIcon,
   useGradient,
@@ -34,8 +32,6 @@ export const createTrekMap = ({
   trekMap.setAttribute('color-on-primary-container', colorOnPrimaryContainer);
   trekMap.setAttribute('color-background', colorBackground);
   trekMap.setAttribute('color-trek-line', colorTrekLine);
-  trekMap.setAttribute('color-departure-icon', colorDepartureIcon);
-  trekMap.setAttribute('color-arrival-icon', colorArrivalIcon);
   trekMap.setAttribute('color-sensitive-area', colorSensitiveArea);
   trekMap.setAttribute('color-poi-icon', colorPoiIcon);
   trekMap.setAttribute('use-gradient', useGradient);
