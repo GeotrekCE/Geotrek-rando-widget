@@ -27,7 +27,6 @@
 #elevation {
   position: relative;
   background-color: #ffffff;
-  height: 250px;
 }
 
 .elevation-control .background {
@@ -60,8 +59,8 @@
   stroke: var(--color-on-surface);
 }
 
-.custom-theme.elevation-control .area path.altitude,
-.custom-theme .legend-altitude rect.area {
+.use-theme-color.elevation-control .area path.altitude,
+.use-theme-color .legend-altitude rect.area {
   fill: var(--color-primary-app);
   stroke: var(--color-trek-line);
 }
@@ -76,28 +75,8 @@
 }
 
 .custom-theme.height-focus.line,
-.custom-theme.height-focus-label,
-.start-marker,
-.end-marker {
+.custom-theme.height-focus-label {
   display: none;
-}
-
-.departure-icon img,
-.arrival-icon img {
-  width: 48px;
-  height: 48px;
-  path {
-    fill: currentColor;
-    stroke: currentColor;
-  }
-}
-
-.departure-icon {
-  color: var(--color-departure-icon);
-}
-
-.arrival-icon {
-  color: var(--color-arrival-icon);
 }
 
 .trek-marker {

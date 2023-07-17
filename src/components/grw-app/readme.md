@@ -44,6 +44,7 @@
 | `structures`                | `structures`                   |             | `string`  | `undefined`            |
 | `themes`                    | `themes`                       |             | `string`  | `undefined`            |
 | `urlLayer`                  | `url-layer`                    |             | `string`  | `undefined`            |
+| `useGradient`               | `use-gradient`                 |             | `boolean` | `false`                |
 | `weather`                   | `weather`                      |             | `boolean` | `false`                |
 | `zoom`                      | `zoom`                         |             | `number`  | `undefined`            |
 

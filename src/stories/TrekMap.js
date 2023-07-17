@@ -15,6 +15,7 @@ export const createTrekMap = ({
   colorArrivalIcon,
   colorSensitiveArea,
   colorPoiIcon,
+  useGradient,
 }) => {
   const container = document.createElement('div');
   container.style = 'height: 100%';
@@ -37,6 +38,7 @@ export const createTrekMap = ({
   trekMap.setAttribute('color-arrival-icon', colorArrivalIcon);
   trekMap.setAttribute('color-sensitive-area', colorSensitiveArea);
   trekMap.setAttribute('color-poi-icon', colorPoiIcon);
+  trekMap.setAttribute('use-gradient', useGradient);
   container.appendChild(trekMap);
   return container;
 };

@@ -35,6 +35,7 @@ export const createApp = ({
   colorPoiIcon,
   linkName,
   linkTarget,
+  useGradient,
 }) => {
   const app = document.createElement('grw-app');
   app.setAttribute('app-width', appWidth);
@@ -73,5 +74,6 @@ export const createApp = ({
   app.setAttribute('color-poi-icon', colorPoiIcon);
   app.setAttribute('link-name', linkName);
   app.setAttribute('link-target', linkTarget);
+  app.setAttribute('use-gradient', useGradient);
   return app;
 };

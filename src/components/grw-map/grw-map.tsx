@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L from 'leaflet';
+import 'leaflet-rotate';
 import 'leaflet.locatecontrol';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
 import state, { onChange, reset } from 'store/store';
@@ -31,6 +32,7 @@ export class GrwMap {
   @Prop() colorArrivalIcon = '#85003b';
   @Prop() colorSensitiveArea = '	#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
+  @Prop() useGradient = false;
 
   @Prop() resetStoreOnDisconnected = true;
   @Prop() isLargeView = false;
@@ -39,7 +41,6 @@ export class GrwMap {
   bounds;
   treksLayer: L.GeoJSON<any>;
   currentTrekLayer: L.GeoJSON<any>;
-  currentDepartureArrivalLayer: L.GeoJSON<any>;
   currentPointsReferenceLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
@@ -239,7 +240,6 @@ export class GrwMap {
   }
 
   addTrek() {
-    const departureArrivalImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/departure-arrival.svg`);
     const currentTrekFeature: Feature = {
       type: 'Feature',
       geometry: state.currentTrek.geometry,
@@ -251,41 +251,6 @@ export class GrwMap {
         color: 'transparent',
       }),
       interactive: false,
-    }).addTo(this.map);
-
-    const currentDepartureCoordinates = [state.currentTrek.geometry.coordinates.at(0)[0], state.currentTrek.geometry.coordinates.at(0)[1]];
-    const currentArrivalCoordinates = [state.currentTrek.geometry.coordinates.at(-1)[0], state.currentTrek.geometry.coordinates.at(-1)[1]];
-    const currentDepartureArrivalFeatureCollection: FeatureCollection = {
-      type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          properties: { type: 'departure' },
-          geometry: { type: 'Point', coordinates: currentDepartureCoordinates },
-        },
-      ],
-    };
-
-    if (currentDepartureCoordinates[0] !== currentArrivalCoordinates[0] || currentDepartureCoordinates[1] !== currentArrivalCoordinates[1]) {
-      currentDepartureArrivalFeatureCollection.features.push({
-        type: 'Feature',
-        properties: { type: 'arrival' },
-        geometry: { type: 'Point', coordinates: currentArrivalCoordinates },
-      });
-    }
-
-    this.currentDepartureArrivalLayer = L.geoJSON(currentDepartureArrivalFeatureCollection, {
-      pointToLayer: (geoJsonPoint, latlng) =>
-        L.marker(latlng, {
-          icon: L.divIcon({
-            html: `<img src=${departureArrivalImageSrc}>`,
-            className: geoJsonPoint.properties.type === 'departure' ? 'departure-icon' : 'arrival-icon',
-            iconSize: 48,
-            iconAnchor: [0, 48],
-          } as any),
-          autoPanOnFocus: false,
-          interactive: false,
-        } as any),
     }).addTo(this.map);
 
     if (state.currentTrek.parking_location) {
@@ -450,15 +415,15 @@ export class GrwMap {
     const elevationOptions = {
       srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',
       elevationDiv: `#elevation`,
-      theme: 'custom-theme',
+      theme: `custom-theme${!this.useGradient ? ' use-theme-color' : ''}`,
       detached: true,
       height: 250,
-      wptIcons: false,
-      wptLabels: false,
+      wptIcons: true,
+      wptLabels: true,
       collapsed: false,
       autohide: false,
-      distanceMarkers: false,
-      hotline: false,
+      distanceMarkers: { distance: false, direction: true },
+      hotline: this.useGradient,
       closeBtn: false,
       summary: false,
       time: false,
@@ -475,6 +440,16 @@ export class GrwMap {
       acceleration: false,
       reverseCoords: false,
       imperial: false,
+      dragging: false,
+      zooming: false,
+      handlers: ['Altitude', 'Distance', 'Slope', 'LinearGradient'],
+      linearGradient: {
+        attr: 'z',
+        path: 'altitude',
+        range: { 0.0: '#008800', 0.5: '#ffff00', 1.0: '#ff0000' },
+        min: 'elevation_min',
+        max: 'elevation_max',
+      },
     };
     this.elevationControl = (L.control as any).elevation({ ...elevationOptions }).addTo(this.map);
     const elevation = JSON.stringify({
@@ -533,11 +508,6 @@ export class GrwMap {
     if (this.currentTrekLayer) {
       this.map.removeLayer(this.currentTrekLayer);
       this.currentTrekLayer = null;
-    }
-
-    if (this.currentDepartureArrivalLayer) {
-      this.map.removeLayer(this.currentDepartureArrivalLayer);
-      this.currentDepartureArrivalLayer = null;
     }
 
     if (this.currentParkingLayer) {

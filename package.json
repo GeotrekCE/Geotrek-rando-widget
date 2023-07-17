@@ -30,6 +30,7 @@
     "@raruto/leaflet-elevation": "^2.4.0",
     "@stencil/core": "^3.4.1",
     "leaflet": "^1.9.4",
+    "leaflet-rotate": "^0.2.8",
     "leaflet.locatecontrol": "^0.79.0",
     "swiper": "^9.4.1"
   },

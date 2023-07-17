@@ -57,6 +57,7 @@ export class GrwApp {
   @Prop() colorArrivalIcon = '#85003b';
   @Prop() colorSensitiveArea = '#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
+  @Prop() useGradient = false;
 
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
@@ -273,6 +274,10 @@ export class GrwApp {
               {state.currentTrek && (
                 <div class={this.isLargeView ? 'large-view-app-trek-detail-container' : 'app-trek-detail-container'}>
                   <grw-trek-detail
+                    style={{
+                      visibility: (!this.showTrekMap && this.showTrek) || this.isLargeView ? 'visible' : 'hidden',
+                      zIndex: !this.showTrekMap ? '1' : '0',
+                    }}
                     reset-store-on-disconnected="false"
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
@@ -282,7 +287,6 @@ export class GrwApp {
                     color-on-secondary-container={this.colorOnSecondaryContainer}
                     color-background={this.colorBackground}
                     weather={this.weather}
-                    style={{ zIndex: this.showTrekMap ? '0' : '1' }}
                     is-large-view={this.isLargeView}
                   ></grw-trek-detail>
                 </div>
@@ -309,6 +313,7 @@ export class GrwApp {
                 color-sensitive-area={this.colorSensitiveArea}
                 color-poi-icon={this.colorPoiIcon}
                 is-large-view={this.isLargeView}
+                use-gradient={this.useGradient}
               ></grw-map>
             </div>
             {(!this.showTrek || (this.showTrek && state.currentTrek)) && (

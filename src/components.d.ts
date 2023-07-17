@@ -46,6 +46,7 @@ export namespace Components {
         "structures": string;
         "themes": string;
         "urlLayer": string;
+        "useGradient": boolean;
         "weather": boolean;
         "zoom": number;
     }
@@ -73,6 +74,7 @@ export namespace Components {
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
         "urlLayer": string;
+        "useGradient": boolean;
         "zoom": number;
     }
     interface GrwPoiDetail {
@@ -290,6 +292,7 @@ declare namespace LocalJSX {
         "structures"?: string;
         "themes"?: string;
         "urlLayer"?: string;
+        "useGradient"?: boolean;
         "weather"?: boolean;
         "zoom"?: number;
     }
@@ -319,6 +322,7 @@ declare namespace LocalJSX {
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "urlLayer"?: string;
+        "useGradient"?: boolean;
         "zoom"?: number;
     }
     interface GrwPoiDetail {

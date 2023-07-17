@@ -22,6 +22,7 @@
 | `isLargeView`              | `is-large-view`               |             | `boolean` | `false`      |
 | `resetStoreOnDisconnected` | `reset-store-on-disconnected` |             | `boolean` | `true`       |
 | `urlLayer`                 | `url-layer`                   |             | `string`  | `undefined`  |
+| `useGradient`              | `use-gradient`                |             | `boolean` | `false`      |
 | `zoom`                     | `zoom`                        |             | `number`  | `10`         |
 
 
