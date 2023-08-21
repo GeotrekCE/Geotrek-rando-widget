@@ -14,15 +14,34 @@
   width: calc(100% - 64px);
 }
 
+.material-symbols {
+  font-family: 'Material Symbols Outlined';
+}
+
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
-grw-trek-detail {
-  --swiper-navigation-size: 32px;
-  --swiper-navigation-color: var(--color-primary-app);
-  --swiper-pagination-color: var(--color-primary-app);
+:host {
+  --swiper-navigation-size: 24px;
+  --swiper-navigation-color: var(--color-on-primary-container);
+  --swiper-pagination-color: var(--color-primary-container);
   --swiper-pagination-bullet-size: 12px;
+  .swiper-button-prev,
+  .swiper-button-next {
+    background-color: var(--color-primary-container);
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    box-shadow: var(--elevation-1);
+    &:hover {
+      box-shadow: var(--elevation-2);
+    }
+  }
+}
+
+grw-trek-detail {
   overflow: hidden;
 }
 
@@ -173,7 +192,6 @@ grw-trek-detail {
           width: calc(100% / 3);
           img,
           span {
-            font-family: 'Material Symbols Outlined';
             font-size: 24px;
             width: 24px;
             height: auto;
@@ -370,7 +388,6 @@ grw-trek-detail {
   border: 2px solid var(--color-outline);
   border-radius: 12px;
   span {
-    font-family: 'Material Symbols Outlined';
     font-size: 24px;
     width: 26px;
     margin-right: 8px;

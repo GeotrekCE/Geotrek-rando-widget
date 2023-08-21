@@ -31,7 +31,7 @@ export class GrwInformationDeskDetail {
           {this.informationDesk.name && <div class="information-desk-name">{this.informationDesk.name}</div>}
           {this.informationDesk.latitude && this.informationDesk.longitude && (
             <button class="center-on-map-button" onClick={() => this.handleCenterOnMap()}>
-              <span class="material-symbols-outlined">location_searching</span>
+              <span class="material-symbols material-symbols-outlined">location_searching</span>
               Centrer sur la carte
             </button>
           )}
@@ -44,19 +44,19 @@ export class GrwInformationDeskDetail {
           )}
           {this.informationDesk.phone && (
             <div class="phone-container">
-              <span class="material-symbols-outlined">call</span>
+              <span class="material-symbols material-symbols-outlined">call</span>
               <a href={`tel:${this.informationDesk.phone}`}>{this.informationDesk.phone}</a>
             </div>
           )}
           {this.informationDesk.email && (
             <div class="mail-container">
-              <span class="material-symbols-outlined">mail</span>
+              <span class="material-symbols material-symbols-outlined">mail</span>
               <a href={`mailto:${this.informationDesk.email}`}>{this.informationDesk.email}</a>
             </div>
           )}
           {this.informationDesk.website && (
             <div class="link-container">
-              <span class="material-symbols-outlined">link</span>
+              <span class="material-symbols material-symbols-outlined">link</span>
               <a href={`${this.informationDesk.website}`}>{this.informationDesk.website}</a>
             </div>
           )}

@@ -18,11 +18,24 @@
   border-radius: 12px;
   background-color: var(--color-surface-container-low);
   color: var(--color-on-surface);
-  --swiper-navigation-size: 32px;
-  --swiper-navigation-color: var(--color-primary-app);
-  --swiper-pagination-bullet-size: 12px;
   a {
     color: var(--color-primary-app);
+  }
+  --swiper-navigation-size: 24px;
+  --swiper-navigation-color: var(--color-on-primary-container);
+  --swiper-pagination-color: var(--color-primary-container);
+  --swiper-pagination-bullet-size: 12px;
+  .swiper-button-prev,
+  .swiper-button-next {
+    background-color: var(--color-primary-container);
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    box-shadow: var(--elevation-1);
+    &:hover {
+      box-shadow: var(--elevation-2);
+    }
   }
 }
 

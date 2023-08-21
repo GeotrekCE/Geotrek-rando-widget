@@ -16,7 +16,7 @@ export class GrwSearch {
   render() {
     return (
       <Host>
-        <span class="material-symbols-outlined">search</span>
+        <span class="material-symbols material-symbols-outlined">search</span>
         <input onInput={e => this.onSearchChange(e)} class="search-input" type="search" placeholder="Rechercher" value={state.searchValue}></input>
       </Host>
     );

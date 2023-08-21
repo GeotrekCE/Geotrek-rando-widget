@@ -1,3 +1,7 @@
+.material-symbols {
+  font-family: 'Material Symbols Outlined';
+}
+
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
@@ -51,7 +55,6 @@
     color: var(--color-on-secondary-container);
     background-color: var(--color-secondary-container);
     span {
-      font-family: 'Material Symbols Outlined';
       font-size: 24px;
       margin-right: 8px;
       color: var(--color-on-secondary-container);

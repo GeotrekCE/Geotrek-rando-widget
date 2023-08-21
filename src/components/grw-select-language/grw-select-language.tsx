@@ -17,7 +17,7 @@ export class GrwSelectLanguage {
   render() {
     return (
       <Host>
-        <span class="material-symbols-outlined margin-right-icon">translate</span>
+        <span class="material-symbols material-symbols-outlined margin-right-icon">translate</span>
         <select onInput={event => this.handleSelect(event)} name="languages" id="language-select">
           {state.languages.map(language => (
             <option selected={language === state.language} value={language.toLocaleLowerCase()}>

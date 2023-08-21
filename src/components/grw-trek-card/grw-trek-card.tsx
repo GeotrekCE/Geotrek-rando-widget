@@ -84,17 +84,17 @@ export class GrwTrekCard {
                     {this.difficulty?.label}
                   </div>
                   <div class="icon-label duration">
-                    <span class="material-symbols-outlined">timelapse</span>
+                    <span class="material-symbols material-symbols-outlined">timelapse</span>
                     {formatDuration(this.currentTrek.duration)}
                   </div>
                 </div>
                 <div class="row">
                   <div class="icon-label length">
-                    <span class="material-symbols-outlined">open_in_full</span>
+                    <span class="material-symbols material-symbols-outlined">open_in_full</span>
                     {formatLength(this.currentTrek.length_2d)}
                   </div>
                   <div class="icon-label ascent">
-                    <span class="material-symbols-outlined">moving</span>
+                    <span class="material-symbols material-symbols-outlined">moving</span>
                     {formatAscent(this.currentTrek.ascent)}
                   </div>
                 </div>

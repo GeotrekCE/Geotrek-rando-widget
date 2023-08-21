@@ -222,7 +222,7 @@ export class GrwApp {
                 <div class="header-left-container">
                   {this.showTrek ? (
                     <button onClick={() => this.handleBackButton()} class="arrow-back-icon">
-                      <span class="material-symbols-outlined">arrow_back</span>
+                      <span class="material-symbols material-symbols-outlined">arrow_back</span>
                     </button>
                   ) : (
                     <div class="attribution-container">
@@ -241,7 +241,7 @@ export class GrwApp {
                   </div>
                   <div class="handle-filters-container">
                     <button onClick={() => this.handleFilters()} class="handle-filters-button">
-                      <span class="material-symbols-outlined margin-right-icon">filter_list</span>
+                      <span class="material-symbols material-symbols-outlined margin-right-icon">filter_list</span>
                       {translate[state.language].filter}
                     </button>
                   </div>
@@ -315,7 +315,7 @@ export class GrwApp {
             {(!this.showTrek || (this.showTrek && state.currentTrek)) && (
               <div class="map-visibility-button-container">
                 <button onClick={() => this.handleShowMap()} class="map-visibility-button" style={{ display: this.isLargeView ? 'none' : 'flex' }}>
-                  <span class="material-symbols-outlined">{this.showTrek ? (this.showTrekMap ? 'summarize' : 'map') : this.showTreksMap ? 'list' : 'map'}</span>
+                  <span class="material-symbols material-symbols-outlined">{this.showTrek ? (this.showTrekMap ? 'summarize' : 'map') : this.showTreksMap ? 'list' : 'map'}</span>
                   {this.showTrek
                     ? this.showTrekMap
                       ? translate[state.language].showDetails
