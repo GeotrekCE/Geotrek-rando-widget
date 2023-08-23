@@ -19,6 +19,7 @@ import {
   Treks,
   Lengths,
   Elevations,
+  Districts,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -38,6 +39,7 @@ const { state, onChange, reset } = createStore<{
   lengths: Lengths;
   elevations: Elevations;
   labels: Labels;
+  districts: Districts;
   sources: Sources;
   accessibilities: Accessibilities;
   accessibilitiesLevel: accessibilitiesLevel;
@@ -67,6 +69,7 @@ const { state, onChange, reset } = createStore<{
   elevations: null,
   currentSensitiveAreas: null,
   labels: null,
+  districts: null,
   sources: null,
   accessibilities: null,
   accessibilitiesLevel: null,

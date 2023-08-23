@@ -34,6 +34,7 @@ export function handleFiltersAndSearch(): Treks {
     { property: 'accessibilities', trekProperty: 'accessibilities', trekPropertyIsArray: true, type: 'include' },
     { property: 'cities', trekProperty: 'cities', trekPropertyIsArray: true, type: 'include' },
     { property: 'labels', trekProperty: 'labels', trekPropertyIsArray: true, type: 'include' },
+    { property: 'districts', trekProperty: 'districts', trekPropertyIsArray: true, type: 'include' },
   ];
 
   let isUsingFilter = false;

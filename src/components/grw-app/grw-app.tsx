@@ -358,6 +358,8 @@ export class GrwApp {
                 <div class="divider"></div>
                 <grw-filter filterName={translate[state.language].others} filterType="labels" filterNameProperty="name"></grw-filter>
                 <div class="divider"></div>
+                <grw-filter filterName={translate[state.language].districts} filterType="districts" filterNameProperty="name"></grw-filter>
+                <div class="divider"></div>
                 <grw-filter filterName={translate[state.language].cities} filterType="cities" filterNameProperty="name"></grw-filter>
               </div>
             </div>

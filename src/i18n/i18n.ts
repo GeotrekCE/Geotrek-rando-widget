@@ -52,6 +52,7 @@ interface Translation {
   routes: string;
   elevation: string;
   others: string;
+  districts: string;
 }
 
 interface AvailableTranslations {
@@ -114,6 +115,7 @@ export const translate: AvailableTranslations = {
     routes: 'Type de parcours',
     elevation: 'Denivelé positif',
     others: 'Autres',
+    districts: 'Secteurs',
   },
   en: {
     filter: 'Filter',
@@ -169,5 +171,6 @@ export const translate: AvailableTranslations = {
     routes: 'Type of course',
     elevation: 'Positive elevation',
     others: 'Others',
+    districts: 'Districts',
   },
 };

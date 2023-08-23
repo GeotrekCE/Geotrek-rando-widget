@@ -46,7 +46,7 @@ export class GrwTreksProvider {
     this.routes && (treksRequest += `&routes=${this.routes}`);
     this.practices && (treksRequest += `&practices=${this.practices}`);
 
-    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels&page_size=999`;
+    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts&page_size=999`;
 
     Promise.all([
       fetch(`${state.api}trek_difficulty/?language=${state.language}&fields=id,label,pictogram`, this.init),
@@ -56,10 +56,11 @@ export class GrwTreksProvider {
       fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init),
       fetch(`${state.api}trek_accessibility/?language=${state.language}&fields=id,name,pictogram&published=true&page_size=999`, this.init),
       fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram&published=true&page_size=999`, this.init),
+      fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init),
       fetch(treksRequest, this.init),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, themes, cities, accessibility, labels, treks]) => {
+      .then(([difficulties, routes, practices, themes, cities, accessibility, labels, districts, treks]) => {
         state.treksNetworkError = false;
         state.difficulties = difficulties.results;
         state.routes = routes.results;
@@ -86,6 +87,7 @@ export class GrwTreksProvider {
         state.currentTreks = treks.results;
         state.treksWithinBounds = treks.results;
         state.labels = labels.results;
+        state.districts = districts.results;
         state.treks = treks.results;
       })
       .catch(() => (state.treksNetworkError = true));

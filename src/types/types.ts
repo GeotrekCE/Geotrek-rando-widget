@@ -109,6 +109,15 @@ export type Label = {
   pictogram: string;
 };
 
+export type Districts = District[];
+
+export type District = {
+  id: number;
+  name: string;
+  advice: string;
+  pictogram: string;
+};
+
 export type Sources = Source[];
 
 export type Source = {
