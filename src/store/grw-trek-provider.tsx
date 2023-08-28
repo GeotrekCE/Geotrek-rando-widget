@@ -32,17 +32,24 @@ export class GrwTrekProvider {
     requests.push(!state.accessibilities ? fetch(`${state.api}trek_accessibility/?language=${state.language}&fields=id,name,pictogram`, this.init) : new Response('null'));
     Promise.all([
       ...requests,
-      fetch(`${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`, {
-        cache: 'force-cache',
-        signal: this.signal,
-      }).catch(() => new Response('null')),
+      fetch(
+        `${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`,
+        this.init,
+      )
+        .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            throw new Error('Sentive area error');
+          }
+        })
+        .catch(() => {
+          return new Response('null');
+        }),
       fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram`, this.init),
       fetch(`${state.api}source/?language=${state.language}&fields=id,name,website,pictogram`, this.init),
       fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
-      fetch(`${state.api}poi/?language=${state.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, {
-        cache: 'force-cache',
-        signal: this.signal,
-      }),
+      fetch(`${state.api}poi/?language=${state.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, this.init),
       fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
       fetch(
         `${state.api}informationdesk/?language=${state.language}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
