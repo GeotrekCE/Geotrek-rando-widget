@@ -455,7 +455,7 @@ export class GrwTrekDetail {
                 <div innerHTML={this.currentTrek.arrival}></div>
               </div>
             )}
-            {this.currentTrek.cities && (
+            {this.currentTrek.cities && this.currentTrek.cities.length > 0 && (
               <div class="cities-container">
                 <div class="cities-title">{translate[state.language].cities} :&nbsp;</div>
                 <div innerHTML={this.cities.join(', ')}></div>
