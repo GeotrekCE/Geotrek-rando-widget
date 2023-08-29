@@ -1,6 +1,7 @@
 import { Component, Host, h, Listen, State, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
+import { filters } from 'utils/utils';
 
 @Component({
   tag: 'grw-app',
@@ -15,6 +16,7 @@ export class GrwApp {
   @State() showTrekMap = false;
   @State() showFilters = false;
   @State() isLargeView = false;
+  @State() selectedSegment = 'selectedOthersFilters';
   @State() currentTrekId: number;
   @Prop() appWidth: string = '100%';
   @Prop() appHeight: string = '100vh';
@@ -157,8 +159,14 @@ export class GrwApp {
   }
 
   handleEraseFilters() {
-    this.resetFilter.emit();
+    filters.forEach(filter => {
+      state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+    });
+    state.selectedOthersFilters = 0;
+    state.selectedThemesFilters = 0;
+    state.selectedLocationFilters = 0;
     state.currentTreks = state.treks;
+    this.resetFilter.emit();
   }
 
   handleOkFilters() {
@@ -168,6 +176,14 @@ export class GrwApp {
   disconnectedCallback() {
     reset();
     window.removeEventListener('popstate', this.handlePopStateBind);
+  }
+
+  handleSelectedSegment(selectedSegment) {
+    this.selectedSegment = selectedSegment;
+  }
+
+  handleSegment(segment) {
+    return filters.filter(filter => filter.segment === segment).some(filter => state[filter.property] && state[filter.property].length > 0);
   }
 
   render() {
@@ -331,36 +347,130 @@ export class GrwApp {
         {!this.showTrek && this.showFilters && (
           <div class="options-container">
             <div class="filters-container">
-              <div class="filters-options-buttons-container">
-                <button class="filter-option-button" onClick={() => this.handleEraseFilters()}>
-                  Effacer
-                </button>
-                <button class="filter-option-button" onClick={() => this.handleOkFilters()}>
-                  Ok
-                </button>
-              </div>
               <div class="filters-options-container">
-                <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].difficulty} filterType="difficulties" filterNameProperty="label"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].duration} filterType="durations" filterNameProperty="name"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].length} filterType="lengths" filterNameProperty="name"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].elevation} filterType="elevations" filterNameProperty="name"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].themes} filterType="themes" filterNameProperty="label"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].routes} filterType="routes" filterNameProperty="route"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].accessibility} filterType="accessibilities" filterNameProperty="name"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].others} filterType="labels" filterNameProperty="name"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].districts} filterType="districts" filterNameProperty="name"></grw-filter>
-                <div class="divider"></div>
-                <grw-filter filterName={translate[state.language].cities} filterType="cities" filterNameProperty="name"></grw-filter>
+                {state.treksWithinBounds && (
+                  <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
+                    state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek
+                  }`}</div>
+                )}
+                <div class="filters-options-buttons-container">
+                  <button class="filter-option-button" onClick={() => this.handleEraseFilters()}>
+                    Effacer
+                  </button>
+                  <button class="filter-option-button" onClick={() => this.handleOkFilters()}>
+                    Ok
+                  </button>
+                </div>
+              </div>
+              <div class="segmented-buttons-container">
+                {this.handleSegment('selectedOthersFilters') && (
+                  <label
+                    class={`segment${this.selectedSegment === 'selectedOthersFilters' ? ' selected-segment' : ''}`}
+                    onClick={() => this.handleSelectedSegment('selectedOthersFilters')}
+                  >
+                    Autres {state.selectedOthersFilters !== 0 && `(${state.selectedOthersFilters})`}
+                  </label>
+                )}
+                {this.handleSegment('selectedThemesFilters') && (
+                  <label
+                    class={`segment${this.selectedSegment === 'selectedThemesFilters' ? ' selected-segment' : ''}`}
+                    onClick={() => this.handleSelectedSegment('selectedThemesFilters')}
+                  >
+                    Thèmes {state.selectedThemesFilters !== 0 && `(${state.selectedThemesFilters})`}
+                  </label>
+                )}
+                {this.handleSegment('selectedLocationFilters') && (
+                  <label
+                    class={`segment${this.selectedSegment === 'selectedLocationFilters' ? ' selected-segment' : ''}`}
+                    onClick={() => this.handleSelectedSegment('selectedLocationFilters')}
+                  >
+                    Localisation {state.selectedLocationFilters !== 0 && `(${state.selectedLocationFilters})`}
+                  </label>
+                )}
+              </div>
+              <div class="filters-segment-container">
+                {this.selectedSegment === 'selectedOthersFilters' && (
+                  <div class="segment-container">
+                    {state['practices'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                      </div>
+                    )}
+                    {state['difficulties'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter
+                          filterName={translate[state.language].difficulty}
+                          filterType="difficulties"
+                          filterNameProperty="label"
+                          segment="selectedOthersFilters"
+                        ></grw-filter>
+                      </div>
+                    )}
+                    {state['durations'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter filterName={translate[state.language].duration} filterType="durations" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                      </div>
+                    )}
+                    {state['lengths'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter filterName={translate[state.language].length} filterType="lengths" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                      </div>
+                    )}
+                    {state['elevations'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter filterName={translate[state.language].elevation} filterType="elevations" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                      </div>
+                    )}
+                    {state['routes'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter filterName={translate[state.language].routes} filterType="routes" filterNameProperty="route" segment="selectedOthersFilters"></grw-filter>
+                      </div>
+                    )}
+                    {state['accessibilities'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter
+                          filterName={translate[state.language].accessibility}
+                          filterType="accessibilities"
+                          filterNameProperty="name"
+                          segment="selectedOthersFilters"
+                        ></grw-filter>
+                      </div>
+                    )}
+                    {state['labels'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter filterName={translate[state.language].others} filterType="labels" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {this.selectedSegment === 'selectedThemesFilters' && (
+                  <div class="segment-container">
+                    {state['themes'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter filterName={translate[state.language].themes} filterType="themes" filterNameProperty="label" segment="selectedThemesFilters"></grw-filter>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {this.selectedSegment === 'selectedLocationFilters' && (
+                  <div class="segment-container">
+                    {state['districts'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter
+                          filterName={translate[state.language].districts}
+                          filterType="districts"
+                          filterNameProperty="name"
+                          segment="selectedLocationFilters"
+                        ></grw-filter>
+                      </div>
+                    )}
+                    {state['cities'].length > 0 && (
+                      <div class="filter-container">
+                        <grw-filter filterName={translate[state.language].cities} filterType="cities" filterNameProperty="name" segment="selectedLocationFilters"></grw-filter>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
             <div onClick={() => this.handleFilters()} class="back-filters-container"></div>

@@ -22,21 +22,21 @@ export function formatAscent(ascent: number) {
   return `${ascent}m`;
 }
 
-export function handleFiltersAndSearch(): Treks {
-  const filters: Filters = [
-    { property: 'practices', trekProperty: 'practice', trekPropertyIsArray: false, type: 'include' },
-    { property: 'difficulties', trekProperty: 'difficulty', trekPropertyIsArray: false, type: 'include' },
-    { property: 'durations', trekProperty: 'duration', trekPropertyIsArray: false, type: 'interval' },
-    { property: 'lengths', trekProperty: 'length_2d', trekPropertyIsArray: false, type: 'interval' },
-    { property: 'elevations', trekProperty: 'ascent', trekPropertyIsArray: false, type: 'interval' },
-    { property: 'themes', trekProperty: 'themes', trekPropertyIsArray: true, type: 'include' },
-    { property: 'routes', trekProperty: 'route', trekPropertyIsArray: false, type: 'include' },
-    { property: 'accessibilities', trekProperty: 'accessibilities', trekPropertyIsArray: true, type: 'include' },
-    { property: 'cities', trekProperty: 'cities', trekPropertyIsArray: true, type: 'include' },
-    { property: 'labels', trekProperty: 'labels', trekPropertyIsArray: true, type: 'include' },
-    { property: 'districts', trekProperty: 'districts', trekPropertyIsArray: true, type: 'include' },
-  ];
+export const filters: Filters = [
+  { property: 'practices', trekProperty: 'practice', trekPropertyIsArray: false, type: 'include', segment: 'selectedOthersFilters' },
+  { property: 'difficulties', trekProperty: 'difficulty', trekPropertyIsArray: false, type: 'include', segment: 'selectedOthersFilters' },
+  { property: 'durations', trekProperty: 'duration', trekPropertyIsArray: false, type: 'interval', segment: 'selectedOthersFilters' },
+  { property: 'lengths', trekProperty: 'length_2d', trekPropertyIsArray: false, type: 'interval', segment: 'selectedOthersFilters' },
+  { property: 'elevations', trekProperty: 'ascent', trekPropertyIsArray: false, type: 'interval', segment: 'selectedOthersFilters' },
+  { property: 'routes', trekProperty: 'route', trekPropertyIsArray: false, type: 'include', segment: 'selectedOthersFilters' },
+  { property: 'accessibilities', trekProperty: 'accessibilities', trekPropertyIsArray: true, type: 'include', segment: 'selectedOthersFilters' },
+  { property: 'labels', trekProperty: 'labels', trekPropertyIsArray: true, type: 'include', segment: 'selectedOthersFilters' },
+  { property: 'themes', trekProperty: 'themes', trekPropertyIsArray: true, type: 'include', segment: 'selectedThemesFilters' },
+  { property: 'cities', trekProperty: 'cities', trekPropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
+  { property: 'districts', trekProperty: 'districts', trekPropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
+];
 
+export function handleFiltersAndSearch(): Treks {
   let isUsingFilter = false;
   let filtersTreks = [];
   for (const filter of filters) {
@@ -45,7 +45,7 @@ export function handleFiltersAndSearch(): Treks {
       if (filtersTreks.length > 0) {
         if (filter.type === 'include') {
           if (filter.trekPropertyIsArray) {
-            filtersTreks = [...state.treks.filter(trek => trek[filter.trekProperty].some(trekProperty => currentFiltersId.includes(trekProperty)))];
+            filtersTreks = [...filtersTreks.filter(trek => trek[filter.trekProperty].some(trekProperty => currentFiltersId.includes(trekProperty)))];
           } else {
             filtersTreks = [...filtersTreks.filter(trek => currentFiltersId.includes(trek[filter.trekProperty]))];
           }

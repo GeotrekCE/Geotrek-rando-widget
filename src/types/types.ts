@@ -229,7 +229,7 @@ export type InformationDeskType = {
 
 export type Filters = Filter[];
 
-export type Filter = { property: string; trekProperty: string; trekPropertyIsArray: boolean; type: string };
+export type Filter = { property: string; trekProperty: string; trekPropertyIsArray: boolean; type: string; segment: string };
 
 export interface Option {
   visible: boolean;

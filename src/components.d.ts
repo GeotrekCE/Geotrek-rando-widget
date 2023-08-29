@@ -52,6 +52,7 @@ export namespace Components {
         "filterName": string;
         "filterNameProperty": string;
         "filterType": string;
+        "segment": string;
     }
     interface GrwInformationDeskDetail {
         "informationDesk": InformationDesk;
@@ -294,6 +295,7 @@ declare namespace LocalJSX {
         "filterName"?: string;
         "filterNameProperty"?: string;
         "filterType"?: string;
+        "segment"?: string;
     }
     interface GrwInformationDeskDetail {
         "informationDesk"?: InformationDesk;

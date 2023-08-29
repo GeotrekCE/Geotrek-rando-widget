@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, Listen, forceUpdate } from '@stencil/core';
 import state from 'store/store';
-import { handleFiltersAndSearch } from 'utils/utils';
+import { filters, handleFiltersAndSearch } from 'utils/utils';
 
 @Component({
   tag: 'grw-filter',
@@ -12,6 +12,7 @@ export class GrwFilter {
   @Prop() filterType: string;
   @Prop() filterName: string;
   @Prop() filterNameProperty: string;
+  @Prop() segment: string;
   @Listen('resetFilter', { target: 'window' })
   onResetFilter() {
     this.resetFilter();
@@ -22,11 +23,18 @@ export class GrwFilter {
     filterFromState.find(currentFilter => currentFilter.id === filterToHandle.id).selected = !filterFromState.find(currentFilter => currentFilter.id === filterToHandle.id)
       .selected;
     state[this.filterType] = filterFromState;
+
+    state[this.segment] = 0;
+    filters
+      .filter(filter => filter.segment === this.segment)
+      .forEach(filter => {
+        state[this.segment] += state[filter.property].filter(filter => filter.selected).length;
+      });
+
     state.currentTreks = handleFiltersAndSearch();
   }
 
   resetFilter() {
-    state[this.filterType].forEach(currentFilter => (currentFilter.selected = false));
     forceUpdate(this.filterRef);
   }
 
