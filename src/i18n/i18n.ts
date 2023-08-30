@@ -53,6 +53,8 @@ interface Translation {
   elevation: string;
   others: string;
   districts: string;
+  erase: string;
+  ok: string;
 }
 
 interface AvailableTranslations {
@@ -116,6 +118,8 @@ export const translate: AvailableTranslations = {
     elevation: 'Denivelé positif',
     others: 'Autres',
     districts: 'Secteurs',
+    erase: 'Effacer',
+    ok: 'Ok',
   },
   en: {
     filter: 'Filter',
@@ -172,5 +176,7 @@ export const translate: AvailableTranslations = {
     elevation: 'Positive elevation',
     others: 'Others',
     districts: 'Districts',
+    erase: 'Erase',
+    ok: 'Ok',
   },
 };

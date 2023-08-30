@@ -1,7 +1,7 @@
 import { Component, Host, h, Listen, State, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
-import { filters } from 'utils/utils';
+import { filters, handleFiltersAndSearch } from 'utils/utils';
 
 @Component({
   tag: 'grw-app',
@@ -165,7 +165,7 @@ export class GrwApp {
     state.selectedOthersFilters = 0;
     state.selectedThemesFilters = 0;
     state.selectedLocationFilters = 0;
-    state.currentTreks = state.treks;
+    state.currentTreks = handleFiltersAndSearch();
     this.resetFilter.emit();
   }
 
@@ -355,10 +355,10 @@ export class GrwApp {
                 )}
                 <div class="filters-options-buttons-container">
                   <button class="filter-option-button" onClick={() => this.handleEraseFilters()}>
-                    Effacer
+                    {translate[state.language].erase}
                   </button>
                   <button class="filter-option-button" onClick={() => this.handleOkFilters()}>
-                    Ok
+                    {translate[state.language].ok}
                   </button>
                 </div>
               </div>
