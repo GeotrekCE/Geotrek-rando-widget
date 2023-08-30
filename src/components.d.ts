@@ -36,8 +36,6 @@ export namespace Components {
         "fabColor": string;
         "inBbox": string;
         "languages": string;
-        "linkName": string;
-        "linkTarget": string;
         "portals": string;
         "practices": string;
         "routes": string;
@@ -278,8 +276,6 @@ declare namespace LocalJSX {
         "fabColor"?: string;
         "inBbox"?: string;
         "languages"?: string;
-        "linkName"?: string;
-        "linkTarget"?: string;
         "onResetFilter"?: (event: GrwAppCustomEvent<any>) => void;
         "portals"?: string;
         "practices"?: string;

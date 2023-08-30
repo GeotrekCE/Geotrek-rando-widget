@@ -31,8 +31,6 @@ export const createApp = ({
   colorTrekLine,
   colorSensitiveArea,
   colorPoiIcon,
-  linkName,
-  linkTarget,
   useGradient,
 }) => {
   const app = document.createElement('grw-app');
@@ -68,8 +66,6 @@ export const createApp = ({
   app.setAttribute('color-trek-line', colorTrekLine);
   app.setAttribute('color-sensitive-area', colorSensitiveArea);
   app.setAttribute('color-poi-icon', colorPoiIcon);
-  app.setAttribute('link-name', linkName);
-  app.setAttribute('link-target', linkTarget);
   app.setAttribute('use-gradient', useGradient);
   return app;
 };

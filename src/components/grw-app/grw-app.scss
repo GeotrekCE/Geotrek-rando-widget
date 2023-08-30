@@ -30,55 +30,33 @@ grw-app {
 .large-view-header-container {
   background-color: var(--color-background);
   box-shadow: var(--elevation-2);
-  .header-top {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  .arrow-back-icon {
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    color: var(--color-on-surface);
-    border: none;
-    background-color: var(--color-background);
-    border-radius: 50%;
-    height: 48px;
-    width: 48px;
-    padding: 12px;
-    &:hover {
-      box-shadow: var(--elevation-1);
-    }
-  }
-  .header-left-container {
-    margin-left: 8px;
-  }
-  .header-right-container {
+  height: 64px;
+  .arrow-back-container {
     display: flex;
     align-items: center;
-    margin-right: 8px;
-    .margin-right-icon {
-      margin-right: 8px;
-    }
-  }
-  .attribution-container {
-    a {
-      font-size: 24px;
-      font-weight: 400;
-      line-height: 40px;
+    height: 100%;
+    margin: 0px 16px;
+    .arrow-back-icon {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
       color: var(--color-on-surface);
-      text-decoration: none;
+      border: none;
+      background-color: var(--color-background);
+      border-radius: 50%;
+      height: 48px;
+      width: 48px;
+      padding: 0px;
+      text-align: left;
     }
   }
 }
 
 .options-container {
-  height: calc(100% - 64px);
+  height: 100%;
   position: absolute;
   width: 100%;
   z-index: 1100;
-  top: 64px;
+  top: 0px;
 }
 
 .handle-search-filters-container {
@@ -88,6 +66,7 @@ grw-app {
   margin: 0px 16px;
   height: 64px;
   .handle-filters-button {
+    margin-left: 16px;
     user-select: none;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -113,6 +92,12 @@ grw-app {
     span {
       font-size: 18px;
     }
+  }
+}
+
+.large-view-header-container {
+  .handle-search-filters-container {
+    justify-content: flex-start;
   }
 }
 
@@ -168,7 +153,7 @@ grw-app {
 .filters-segment-container {
   overflow-y: scroll;
   padding-bottom: 32px;
-  max-height: calc(100% - 48px - 32px);
+  max-height: calc(100% - 64px - 32px);
 }
 
 .back-filters-container {
@@ -216,16 +201,16 @@ grw-app {
 .content-container {
   position: relative;
   display: flex;
-  height: calc(100% - 64px - 64px);
+  height: calc(100% - 64px);
   background-color: var(--color-background);
 }
 
 .content-treks {
-  height: calc(100% - 64px - 64px);
+  height: calc(100% - 64px);
 }
 
 .content-trek {
-  height: calc(100% - 64px);
+  height: 100%;
 }
 
 .app-treks-list-container,
@@ -290,7 +275,7 @@ grw-app {
 }
 
 grw-treks-list {
-  max-height: calc(100vh - 64px - 64px);
+  max-height: calc(100vh - 64px);
 }
 
 grw-trek-detail {
@@ -320,7 +305,7 @@ grw-trek-detail {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 48px;
+  height: 64px;
   margin: 0px 16px;
   .filters-options-buttons-container {
     display: flex;

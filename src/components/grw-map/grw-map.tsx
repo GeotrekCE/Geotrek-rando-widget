@@ -103,7 +103,7 @@ export class GrwMap {
 
     L.tileLayer(this.urlLayer, {
       maxZoom: 19,
-      attribution: this.attribution,
+      attribution: `${this.attribution && this.attribution !== '' ? this.attribution.concat(' | ') : ''}Powered by <a target="_blank" href="https://geotrek.fr/">Geotrek</a>`,
     }).addTo(this.map);
 
     if (state.currentTrek) {

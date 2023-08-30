@@ -34,8 +34,6 @@ export class GrwApp {
   @Prop() center: string;
   @Prop() zoom: number;
   @Prop() attribution: string;
-  @Prop() linkName = 'GEOTREK';
-  @Prop() linkTarget = 'https://geotrek.fr';
   @Prop() weather = false;
 
   @Prop() colorPrimaryApp = '#6750a4';
@@ -234,23 +232,7 @@ export class GrwApp {
         {(state.currentTreks || state.currentTrek) && (
           <div class="app-container">
             <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
-              <div class="header-top">
-                <div class="header-left-container">
-                  {this.showTrek ? (
-                    <button onClick={() => this.handleBackButton()} class="arrow-back-icon">
-                      <span class="material-symbols material-symbols-outlined">arrow_back</span>
-                    </button>
-                  ) : (
-                    <div class="attribution-container">
-                      <a target="_blank" href={this.linkTarget}>
-                        {this.linkName}
-                      </a>
-                    </div>
-                  )}
-                </div>
-                <div class="header-right-container">{state.languages.length > 1 && <grw-select-language></grw-select-language>}</div>
-              </div>
-              {!this.showTrek && (
+              {!this.showTrek ? (
                 <div class="handle-search-filters-container">
                   <div class="handle-search-container">
                     <grw-search></grw-search>
@@ -261,6 +243,12 @@ export class GrwApp {
                       {translate[state.language].filter}
                     </button>
                   </div>
+                </div>
+              ) : (
+                <div class="arrow-back-container">
+                  <button onClick={() => this.handleBackButton()} class="arrow-back-icon">
+                    <span class="material-symbols material-symbols-outlined">arrow_back</span>
+                  </button>
                 </div>
               )}
             </div>

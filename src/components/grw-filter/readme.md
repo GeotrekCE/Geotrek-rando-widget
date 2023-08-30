@@ -12,6 +12,7 @@
 | `filterName`         | `filter-name`          |             | `string` | `undefined` |
 | `filterNameProperty` | `filter-name-property` |             | `string` | `undefined` |
 | `filterType`         | `filter-type`          |             | `string` | `undefined` |
+| `segment`            | `segment`              |             | `string` | `undefined` |
 
 
 ## Dependencies
