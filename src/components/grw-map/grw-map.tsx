@@ -1,9 +1,10 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
-import L from 'leaflet';
+import L, { MarkerClusterGroup } from 'leaflet';
 import 'leaflet-rotate';
 import 'leaflet.locatecontrol';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
+import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import state, { onChange, reset } from 'store/store';
 import { translate } from 'i18n/i18n';
 
@@ -38,6 +39,7 @@ export class GrwMap {
   resizeObserver: ResizeObserver;
   bounds;
   treksLayer: L.GeoJSON<any>;
+  treksMarkerClusterGroup: MarkerClusterGroup;
   currentTrekLayer: L.GeoJSON<any>;
   currentPointsReferenceLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
@@ -177,9 +179,10 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.practice ? `<img src=${geoJsonPoint.properties.practice} />` : `<img />`,
+              html: geoJsonPoint.properties.practice ? `<div><img src=${geoJsonPoint.properties.practice} />` : `<img/></div>`,
               className: 'trek-marker',
-              iconSize: 48,
+              iconSize: 32,
+              iconAnchor: [18, 0],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -201,7 +204,15 @@ export class GrwMap {
             layer.bindPopup(trekDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
           });
         },
-      }).addTo(this.map);
+      });
+      this.treksMarkerClusterGroup = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        iconCreateFunction: cluster => {
+          return L.divIcon({ html: '<div>' + cluster.getChildCount() + '</div>', className: 'treks-marker-cluster-group-icon', iconSize: 48, iconAnchor: [24, 24] } as any);
+        },
+      });
+      this.treksMarkerClusterGroup.addLayer(this.treksLayer);
+      this.map.addLayer(this.treksMarkerClusterGroup);
     } else {
       if (trekscurrentDepartureCoordinates.length > 0) {
         this.bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
@@ -210,6 +221,8 @@ export class GrwMap {
       }
       this.treksLayer.clearLayers();
       this.treksLayer.addData(treksFeatureCollection);
+      this.treksMarkerClusterGroup.clearLayers();
+      this.treksMarkerClusterGroup.addLayer(this.treksLayer);
     }
 
     this.bounds && this.map.fitBounds(this.bounds);
@@ -222,8 +235,9 @@ export class GrwMap {
   removeTreks() {
     if (this.treksLayer) {
       state.currentMapTreksBounds = this.map.getBounds();
-      this.map.removeLayer(this.treksLayer);
+      this.map.removeLayer(this.treksMarkerClusterGroup);
       this.treksLayer = null;
+      this.treksMarkerClusterGroup = null;
       this.map.off('moveend', this.handleTreksWithinBoundsBind);
     }
   }

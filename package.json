@@ -29,9 +29,11 @@
   "dependencies": {
     "@raruto/leaflet-elevation": "^2.4.0",
     "@stencil/core": "^3.4.1",
+    "@types/leaflet.markercluster": "^1.5.2",
     "leaflet": "^1.9.4",
     "leaflet-rotate": "^0.2.8",
     "leaflet.locatecontrol": "^0.79.0",
+    "leaflet.markercluster": "^1.5.3",
     "swiper": "^9.4.1"
   },
   "devDependencies": {
