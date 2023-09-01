@@ -7,6 +7,7 @@ import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import state, { onChange, reset } from 'store/store';
 import { translate } from 'i18n/i18n';
+import { getTrekGeometry } from 'services/treks.service';
 
 @Component({
   tag: 'grw-map',
@@ -41,6 +42,7 @@ export class GrwMap {
   treksLayer: L.GeoJSON<any>;
   treksMarkerClusterGroup: MarkerClusterGroup;
   currentTrekLayer: L.GeoJSON<any>;
+  currentLineTrekId: number;
   currentPointsReferenceLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
@@ -208,14 +210,36 @@ export class GrwMap {
 
             layer.bindPopup(trekDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
           });
+          layer.on('mouseover', () => {
+            if (!this.currentTrekLayer || this.currentLineTrekId !== geoJsonPoint.properties.id) {
+              this.hideTrekLine();
+              this.showTrekLine(geoJsonPoint.properties.id);
+            }
+          });
         },
       });
+
       this.treksMarkerClusterGroup = L.markerClusterGroup({
         showCoverageOnHover: false,
+        removeOutsideVisibleBounds: false,
         iconCreateFunction: cluster => {
           return L.divIcon({ html: '<div>' + cluster.getChildCount() + '</div>', className: 'treks-marker-cluster-group-icon', iconSize: 48, iconAnchor: [24, 24] } as any);
         },
       });
+
+      this.treksMarkerClusterGroup.on('animationend', () => {
+        if (this.currentLineTrekId) {
+          this.treksMarkerClusterGroup.eachLayer((trek: any) => {
+            if ((trek as any).feature.properties.id === this.currentLineTrekId) {
+              const isCurrentLineTrekInsideClusterGroup = Boolean((this.treksMarkerClusterGroup.getVisibleParent(trek) as any)._cLatLng);
+              if (isCurrentLineTrekInsideClusterGroup) {
+                this.hideTrekLine();
+              }
+            }
+          });
+        }
+      });
+
       this.treksMarkerClusterGroup.addLayer(this.treksLayer);
       this.map.addLayer(this.treksMarkerClusterGroup);
     } else {
@@ -257,6 +281,7 @@ export class GrwMap {
   }
 
   addTrek() {
+    this.hideTrekLine();
     const currentTrekFeature: Feature = {
       type: 'Feature',
       geometry: state.currentTrek.geometry,
@@ -556,6 +581,33 @@ export class GrwMap {
   disconnectedCallback() {
     if (this.resetStoreOnDisconnected) {
       reset();
+    }
+  }
+
+  showTrekLine(id) {
+    getTrekGeometry(id).then(response => {
+      const currentTrekFeature: Feature = {
+        type: 'Feature',
+        geometry: response.geometry,
+        properties: {},
+      };
+
+      this.currentTrekLayer = L.geoJSON(currentTrekFeature, {
+        style: () => ({
+          color: this.colorTrekLine,
+        }),
+        interactive: false,
+      }).addTo(this.map);
+
+      this.currentLineTrekId = id;
+    });
+  }
+
+  hideTrekLine() {
+    if (this.currentTrekLayer) {
+      this.map.removeLayer(this.currentTrekLayer);
+      this.currentTrekLayer = null;
+      this.currentLineTrekId = null;
     }
   }
 
