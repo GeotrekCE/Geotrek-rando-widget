@@ -179,7 +179,7 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.practice ? `<div><img src=${geoJsonPoint.properties.practice} />` : `<img/></div>`,
+              html: geoJsonPoint.properties.practice ? `<div><img src=${geoJsonPoint.properties.practice} /><img/></div>` : `<div/></div>`,
               className: 'trek-marker',
               iconSize: 32,
               iconAnchor: [18, 0],
@@ -190,17 +190,22 @@ export class GrwMap {
           layer.once('click', () => {
             const trekDeparturePopup = L.DomUtil.create('div');
             trekDeparturePopup.className = 'trek-departure-popup';
-            trekDeparturePopup.onclick = () => this.trekCardPress.emit(geoJsonPoint.properties.id);
-            const trekName = L.DomUtil.create('div');
-            trekName.innerHTML = geoJsonPoint.properties.name;
-            trekName.className = 'trek-name';
             if (geoJsonPoint.properties.imgSrc) {
-              trekName.className += ' trek-name-margin-top';
               const trekImg = L.DomUtil.create('img');
               trekImg.src = geoJsonPoint.properties.imgSrc;
               trekDeparturePopup.appendChild(trekImg);
             }
+            const trekName = L.DomUtil.create('div');
+            trekName.innerHTML = geoJsonPoint.properties.name;
+            trekName.className = 'trek-name';
             trekDeparturePopup.appendChild(trekName);
+
+            const trekButton = L.DomUtil.create('button');
+            trekButton.innerHTML = 'Afficher le détail';
+            trekButton.className = 'trek-button';
+            trekButton.onclick = () => this.trekCardPress.emit(geoJsonPoint.properties.id);
+            trekDeparturePopup.appendChild(trekButton);
+
             layer.bindPopup(trekDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
           });
         },
