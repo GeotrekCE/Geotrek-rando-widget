@@ -30,10 +30,11 @@ export class GrwApp {
   @Prop() portals: string;
   @Prop() routes: string;
   @Prop() practices: string;
-  @Prop() urlLayer: string;
   @Prop() center: string;
   @Prop() zoom: number;
-  @Prop() attribution: string;
+  @Prop() nameLayer: string;
+  @Prop() urlLayer: string;
+  @Prop() attributionLayer: string;
   @Prop() weather = false;
 
   @Prop() colorPrimaryApp = '#6750a4';
@@ -300,10 +301,11 @@ export class GrwApp {
                   visibility: (this.showTreksMap && !this.showTrek) || (this.showTrekMap && this.showTrek) || this.isLargeView ? 'visible' : 'hidden',
                   zIndex: this.showTrekMap ? '1' : '0',
                 }}
-                url-layer={this.urlLayer}
                 center={this.center}
                 zoom={this.zoom}
-                attribution={this.attribution}
+                name-layer={this.nameLayer}
+                url-layer={this.urlLayer}
+                attribution-layer={this.attributionLayer}
                 color-primary-app={this.colorPrimaryApp}
                 color-on-surface={this.colorOnSurface}
                 color-primary-container={this.colorPrimaryContainer}

@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
-import L, { MarkerClusterGroup } from 'leaflet';
+import L, { MarkerClusterGroup, TileLayer } from 'leaflet';
 import 'leaflet-rotate';
 import 'leaflet.locatecontrol';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
@@ -18,8 +18,9 @@ export class GrwMap {
   elevationRef: HTMLElement;
   @Event() trekCardPress: EventEmitter<number>;
   @State() mapIsReady = false;
+  @Prop() nameLayer: string;
   @Prop() urlLayer: string;
-  @Prop() attribution: string;
+  @Prop() attributionLayer: string;
   @Prop() center = '1, 1';
   @Prop() zoom = 10;
 
@@ -53,6 +54,7 @@ export class GrwMap {
   userLayersState: {
     [key: number]: boolean;
   } = {};
+  tileLayer: { key: string; value: TileLayer }[] = [];
 
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
 
@@ -105,10 +107,33 @@ export class GrwMap {
     L.control.scale({ metric: true, imperial: false }).addTo(this.map);
     (L.control as any).locate({ showPopup: false }).addTo(this.map);
 
-    L.tileLayer(this.urlLayer, {
-      maxZoom: 19,
-      attribution: `${this.attribution && this.attribution !== '' ? this.attribution.concat(' | ') : ''}Powered by <a target="_blank" href="https://geotrek.fr/">Geotrek</a>`,
-    }).addTo(this.map);
+    const nameLayers = this.nameLayer.split(',');
+
+    const urlLayers = this.urlLayer.split(',http').map((url, index) => (index === 0 ? url : 'http' + url));
+
+    const attributionLayers = this.attributionLayer.split(',');
+    urlLayers.forEach((urlLayer, index) => {
+      this.tileLayer.push({
+        key: `${nameLayers[index]}`,
+        value: L.tileLayer(urlLayer, {
+          maxZoom: 19,
+          attribution: `${
+            attributionLayers[index] && attributionLayers[index] !== '' ? attributionLayers[index].concat(' | ') : ''
+          }Powered by <a target="_blank" href="https://geotrek.fr/">Geotrek</a>`,
+        }),
+      });
+    });
+    this.tileLayer[0].value.addTo(this.map);
+
+    if (urlLayers.length > 1) {
+      this.layersControl = L.control
+        .layers(
+          this.tileLayer.reduce((tileLayers, tileLayer) => Object.assign(tileLayers, { [tileLayer.key]: tileLayer.value }), {}),
+          {},
+          { collapsed: true },
+        )
+        .addTo(this.map);
+    }
 
     if (state.currentTrek) {
       this.addTrek();
@@ -454,6 +479,7 @@ export class GrwMap {
         },
       });
     }
+
     const elevationOptions = {
       srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',
       elevationDiv: `#elevation`,
@@ -517,7 +543,15 @@ export class GrwMap {
     if (this.currentPoisLayer) {
       overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
     }
-    this.layersControl = L.control.layers(null, overlays, { collapsed: true }).addTo(this.map);
+
+    if (this.layersControl) {
+      Object.keys(overlays).forEach(key => {
+        this.layersControl.addOverlay(overlays[key], key);
+      });
+    } else {
+      this.layersControl = L.control.layers({}, overlays, { collapsed: true }).addTo(this.map);
+    }
+
     this.handleLayersControlEvent();
 
     this.bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
@@ -529,16 +563,26 @@ export class GrwMap {
   handleLayersControlEvent() {
     const userLayersState: HTMLInputElement[] = (this.layersControl as any)._layerControlInputs;
     userLayersState.forEach((userLayerState: any) => {
-      userLayerState.onchange = event => {
-        this.userLayersState[userLayerState.layerId] = (event.target as any).checked;
-      };
+      if ((this.layersControl as any)._layers.find(layer => layer.layer._leaflet_id === userLayerState.layerId).overlay) {
+        userLayerState.onchange = event => {
+          this.userLayersState[userLayerState.layerId] = (event.target as any).checked;
+        };
+      }
     });
   }
 
   removeTrek() {
     if (this.layersControl) {
-      this.map.removeControl(this.layersControl);
-      this.layersControl = null;
+      if (!(this.layersControl as any)._layers.some(layer => !layer.overlay)) {
+        this.map.removeControl(this.layersControl);
+        this.layersControl = null;
+      } else {
+        (this.layersControl as any)._layers
+          .filter(layer => layer.overlay)
+          .forEach(layer => {
+            this.layersControl.removeLayer(layer.layer);
+          });
+      }
     }
 
     if (this.elevationControl) {

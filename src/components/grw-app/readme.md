@@ -10,7 +10,7 @@
 | `api`                       | `api`                          |             | `string`  | `undefined` |
 | `appHeight`                 | `app-height`                   |             | `string`  | `'100vh'`   |
 | `appWidth`                  | `app-width`                    |             | `string`  | `'100%'`    |
-| `attribution`               | `attribution`                  |             | `string`  | `undefined` |
+| `attributionLayer`          | `attribution-layer`            |             | `string`  | `undefined` |
 | `center`                    | `center`                       |             | `string`  | `undefined` |
 | `cities`                    | `cities`                       |             | `string`  | `undefined` |
 | `colorBackground`           | `color-background`             |             | `string`  | `'#fef7ff'` |
@@ -34,6 +34,7 @@
 | `fabColor`                  | `fab-color`                    |             | `string`  | `'#21005d'` |
 | `inBbox`                    | `in-bbox`                      |             | `string`  | `undefined` |
 | `languages`                 | `languages`                    |             | `string`  | `'fr'`      |
+| `nameLayer`                 | `name-layer`                   |             | `string`  | `undefined` |
 | `portals`                   | `portals`                      |             | `string`  | `undefined` |
 | `practices`                 | `practices`                    |             | `string`  | `undefined` |
 | `routes`                    | `routes`                       |             | `string`  | `undefined` |

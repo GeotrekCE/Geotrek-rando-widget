@@ -5,8 +5,10 @@ export default {
   argTypes: {
     urlLayer: {
       control: 'select',
-      options: ['planignv2', 'openstreetmap'],
+      options: ['planignv2andopenstreetmap', 'planignv2', 'openstreetmap'],
       mapping: {
+        planignv2andopenstreetmap:
+          'https://wxs.ign.fr/cartes/geoportail/wmts?&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=normal&TILEMATRIXSET=PM&FORMAT=image/png&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&TILEMATRIX={z}&TILEROW={y}&TILECOL={x},https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         planignv2:
           'https://wxs.ign.fr/cartes/geoportail/wmts?&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=normal&TILEMATRIXSET=PM&FORMAT=image/png&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
         openstreetmap: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -34,8 +36,9 @@ App.args = {
   portals: '',
   routes: '',
   practices: '',
-  urlLayer: 'planignv2',
-  attribution: '© IGN',
+  nameLayer: 'IGN,OpenStreetMap',
+  urlLayer: 'planignv2andopenstreetmap',
+  attributionLayer: 'IGN, OpenStreetMap',
   colorPrimaryApp: '#6b0030',
   colorOnPrimary: '#ffffff',
   colorSurface: '#1c1b1f',

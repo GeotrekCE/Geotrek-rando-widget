@@ -12,7 +12,7 @@ export namespace Components {
         "api": string;
         "appHeight": string;
         "appWidth": string;
-        "attribution": string;
+        "attributionLayer": string;
         "center": string;
         "cities": string;
         "colorBackground": string;
@@ -36,6 +36,7 @@ export namespace Components {
         "fabColor": string;
         "inBbox": string;
         "languages": string;
+        "nameLayer": string;
         "portals": string;
         "practices": string;
         "routes": string;
@@ -56,7 +57,7 @@ export namespace Components {
         "informationDesk": InformationDesk;
     }
     interface GrwMap {
-        "attribution": string;
+        "attributionLayer": string;
         "center": string;
         "colorBackground": string;
         "colorOnPrimaryContainer": string;
@@ -67,6 +68,7 @@ export namespace Components {
         "colorSensitiveArea": string;
         "colorTrekLine": string;
         "isLargeView": boolean;
+        "nameLayer": string;
         "resetStoreOnDisconnected": boolean;
         "urlLayer": string;
         "useGradient": boolean;
@@ -252,7 +254,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "appHeight"?: string;
         "appWidth"?: string;
-        "attribution"?: string;
+        "attributionLayer"?: string;
         "center"?: string;
         "cities"?: string;
         "colorBackground"?: string;
@@ -276,6 +278,7 @@ declare namespace LocalJSX {
         "fabColor"?: string;
         "inBbox"?: string;
         "languages"?: string;
+        "nameLayer"?: string;
         "onResetFilter"?: (event: GrwAppCustomEvent<any>) => void;
         "portals"?: string;
         "practices"?: string;
@@ -298,7 +301,7 @@ declare namespace LocalJSX {
         "onCenterOnMap"?: (event: GrwInformationDeskDetailCustomEvent<{ latitude: number; longitude: number }>) => void;
     }
     interface GrwMap {
-        "attribution"?: string;
+        "attributionLayer"?: string;
         "center"?: string;
         "colorBackground"?: string;
         "colorOnPrimaryContainer"?: string;
@@ -309,6 +312,7 @@ declare namespace LocalJSX {
         "colorSensitiveArea"?: string;
         "colorTrekLine"?: string;
         "isLargeView"?: boolean;
+        "nameLayer"?: string;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "urlLayer"?: string;

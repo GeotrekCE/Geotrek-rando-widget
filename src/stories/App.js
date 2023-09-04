@@ -11,8 +11,9 @@ export const createApp = ({
   portals,
   routes,
   practices,
+  nameLayer,
   urlLayer,
-  attribution,
+  attributionLayer,
   colorPrimaryApp,
   colorOnPrimary,
   colorSurface,
@@ -46,8 +47,9 @@ export const createApp = ({
   portals && app.setAttribute('portals', portals);
   routes && app.setAttribute('routes', routes);
   practices && app.setAttribute('practices', practices);
+  app.setAttribute('name-layer', nameLayer);
   app.setAttribute('url-layer', urlLayer);
-  app.setAttribute('attribution', attribution);
+  app.setAttribute('attribution-layer', attributionLayer);
   app.setAttribute('color-primary-app', colorPrimaryApp);
   app.setAttribute('color-on-primary', colorOnPrimary);
   app.setAttribute('color-surface', colorSurface);

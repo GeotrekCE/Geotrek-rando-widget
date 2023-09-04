@@ -7,7 +7,7 @@
 
 | Property                   | Attribute                     | Description | Type      | Default      |
 | -------------------------- | ----------------------------- | ----------- | --------- | ------------ |
-| `attribution`              | `attribution`                 |             | `string`  | `undefined`  |
+| `attributionLayer`         | `attribution-layer`           |             | `string`  | `undefined`  |
 | `center`                   | `center`                      |             | `string`  | `'1, 1'`     |
 | `colorBackground`          | `color-background`            |             | `string`  | `'#fef7ff'`  |
 | `colorOnPrimaryContainer`  | `color-on-primary-container`  |             | `string`  | `'#21005e'`  |
@@ -18,6 +18,7 @@
 | `colorSensitiveArea`       | `color-sensitive-area`        |             | `string`  | `'	#4974a5'` |
 | `colorTrekLine`            | `color-trek-line`             |             | `string`  | `'#6b0030'`  |
 | `isLargeView`              | `is-large-view`               |             | `boolean` | `false`      |
+| `nameLayer`                | `name-layer`                  |             | `string`  | `undefined`  |
 | `resetStoreOnDisconnected` | `reset-store-on-disconnected` |             | `boolean` | `true`       |
 | `urlLayer`                 | `url-layer`                   |             | `string`  | `undefined`  |
 | `useGradient`              | `use-gradient`                |             | `boolean` | `false`      |

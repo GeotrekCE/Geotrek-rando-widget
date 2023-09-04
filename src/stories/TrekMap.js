@@ -1,10 +1,11 @@
 export const createTrekMap = ({
   api,
   trekId,
-  urlLayer,
   center,
   zoom,
-  attribution,
+  nameLayer,
+  urlLayer,
+  attributionLayer,
   colorPrimaryApp,
   colorOnSurface,
   colorPrimaryContainer,
@@ -25,7 +26,9 @@ export const createTrekMap = ({
   trekMap.setAttribute('url-layer', urlLayer);
   trekMap.setAttribute('center', center);
   trekMap.setAttribute('zoom', zoom);
-  trekMap.setAttribute('attribution', attribution);
+  trekMap.setAttribute('name-layer', nameLayer);
+  trekMap.setAttribute('url-layer', urlLayer);
+  trekMap.setAttribute('attribution-layer', attributionLayer);
   trekMap.setAttribute('color-primary-app', colorPrimaryApp);
   trekMap.setAttribute('color-on-surface', colorOnSurface);
   trekMap.setAttribute('color-primary-container', colorPrimaryContainer);
