@@ -133,6 +133,27 @@ export class GrwMap {
           { collapsed: true },
         )
         .addTo(this.map);
+
+      (L.Control as any).Contract = L.Control.extend({
+        onAdd: () => {
+          const contractContainer = L.DomUtil.create('div');
+          contractContainer.className = 'leaflet-bar leaflet-control';
+          const contract = contractContainer.appendChild(L.DomUtil.create('a'));
+          contract.href = '#';
+          contract.style.backgroundImage = `var(--contract-image-src)`;
+          contractContainer.onclick = e => {
+            this.bounds && this.map.fitBounds(this.bounds);
+            e.preventDefault();
+          };
+          return contractContainer;
+        },
+      });
+
+      (L.control as any).contract = opts => {
+        return new (L.Control as any).Contract(opts);
+      };
+
+      (L.control as any).contract({ position: 'topleft' }).addTo(this.map);
     }
 
     if (state.currentTrek) {
@@ -657,6 +678,7 @@ export class GrwMap {
 
   render() {
     const layersImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/layers.svg`);
+    const contractImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/contract.svg`);
     return (
       <Host
         style={{
@@ -668,6 +690,7 @@ export class GrwMap {
           '--color-poi-icon': this.colorPoiIcon,
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
+          '--contract-image-src': `url(${contractImageSrc})`,
           '--map-bottom-space-height': this.isLargeView ? '0px' : '70px',
         }}
       >
