@@ -358,7 +358,7 @@ export class GrwApp {
                     class={`segment${this.selectedSegment === 'selectedActivitiesFilters' ? ' selected-segment' : ''}`}
                     onClick={() => this.handleSelectedSegment('selectedActivitiesFilters')}
                   >
-                    Autres {state.selectedActivitiesFilters !== 0 && `(${state.selectedActivitiesFilters})`}
+                    {translate[state.language].activities} {state.selectedActivitiesFilters !== 0 && `(${state.selectedActivitiesFilters})`}
                   </label>
                 )}
                 {this.handleSegment('selectedThemesFilters') && (
@@ -366,7 +366,7 @@ export class GrwApp {
                     class={`segment${this.selectedSegment === 'selectedThemesFilters' ? ' selected-segment' : ''}`}
                     onClick={() => this.handleSelectedSegment('selectedThemesFilters')}
                   >
-                    Thèmes {state.selectedThemesFilters !== 0 && `(${state.selectedThemesFilters})`}
+                    {translate[state.language].themes} {state.selectedThemesFilters !== 0 && `(${state.selectedThemesFilters})`}
                   </label>
                 )}
                 {this.handleSegment('selectedLocationFilters') && (
@@ -374,7 +374,7 @@ export class GrwApp {
                     class={`segment${this.selectedSegment === 'selectedLocationFilters' ? ' selected-segment' : ''}`}
                     onClick={() => this.handleSelectedSegment('selectedLocationFilters')}
                   >
-                    Localisation {state.selectedLocationFilters !== 0 && `(${state.selectedLocationFilters})`}
+                    {translate[state.language].location} {state.selectedLocationFilters !== 0 && `(${state.selectedLocationFilters})`}
                   </label>
                 )}
               </div>

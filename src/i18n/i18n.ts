@@ -55,6 +55,7 @@ interface Translation {
   districts: string;
   erase: string;
   ok: string;
+  location: string;
 }
 
 interface AvailableTranslations {
@@ -120,6 +121,7 @@ export const translate: AvailableTranslations = {
     districts: 'Secteurs',
     erase: 'Effacer',
     ok: 'Ok',
+    location: 'Localisation',
   },
   en: {
     filter: 'Filter',
@@ -178,5 +180,6 @@ export const translate: AvailableTranslations = {
     districts: 'Districts',
     erase: 'Erase',
     ok: 'Ok',
+    location: 'Location',
   },
 };
