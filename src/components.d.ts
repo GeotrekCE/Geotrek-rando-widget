@@ -336,6 +336,8 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
+        "onCardTrekMouseLeave"?: (event: GrwTrekCardCustomEvent<any>) => void;
+        "onCardTrekMouseOver"?: (event: GrwTrekCardCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwTrekCardCustomEvent<number>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;

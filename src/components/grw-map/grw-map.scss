@@ -90,7 +90,8 @@
   font-size: 16px;
 }
 
-.trek-marker {
+.trek-marker,
+.selected-trek-marker {
   div {
     display: flex;
     justify-content: center;
@@ -106,6 +107,16 @@
       position: absolute;
       z-index: 20;
       width: 24px !important;
+    }
+  }
+}
+
+.selected-trek-marker {
+  div {
+    width: 64px;
+    height: 64px;
+    img {
+      width: 48px !important;
     }
   }
 }

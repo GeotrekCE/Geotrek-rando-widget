@@ -104,6 +104,10 @@
   }
 }
 
+.selected-trek-card {
+  box-shadow: var(--elevation-2);
+}
+
 .trek-card-container {
   width: 350px;
   .image {

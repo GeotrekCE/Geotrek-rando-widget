@@ -1,5 +1,7 @@
 # grw-trek-card
 
+
+
 <!-- Auto Generated Below -->
 
 
@@ -19,9 +21,11 @@
 
 ## Events
 
-| Event           | Description | Type                  |
-| --------------- | ----------- | --------------------- |
-| `trekCardPress` |             | `CustomEvent<number>` |
+| Event                | Description | Type                  |
+| -------------------- | ----------- | --------------------- |
+| `cardTrekMouseLeave` |             | `CustomEvent<any>`    |
+| `cardTrekMouseOver`  |             | `CustomEvent<number>` |
+| `trekCardPress`      |             | `CustomEvent<number>` |
 
 
 ## Dependencies

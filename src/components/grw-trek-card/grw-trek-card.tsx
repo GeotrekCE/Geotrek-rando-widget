@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, State, Listen } from '@stencil/core';
 import state, { onChange, reset } from 'store/store';
 import { City, Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
@@ -24,6 +24,9 @@ export class GrwTrekCard {
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() isLargeView = false;
   @Prop() resetStoreOnDisconnected = true;
+
+  @Event() cardTrekMouseOver: EventEmitter<number>;
+  @Event() cardTrekMouseLeave: EventEmitter;
 
   connectedCallback() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -52,6 +55,16 @@ export class GrwTrekCard {
     }
   }
 
+  @Listen('mouseover')
+  handleMouseOver() {
+    this.cardTrekMouseOver.emit(this.currentTrek.id);
+  }
+
+  @Listen('mouseleave')
+  handleMouseLeave() {
+    this.cardTrekMouseLeave.emit();
+  }
+
   render() {
     return (
       <Host
@@ -65,7 +78,14 @@ export class GrwTrekCard {
         }}
       >
         {this.currentTrek && (
-          <div class={this.isLargeView ? 'trek-card-large-view-container' : 'trek-card-container'} onClick={() => this.trekCardPress.emit(this.currentTrek.id)}>
+          <div
+            class={
+              this.isLargeView
+                ? `trek-card-large-view-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
+                : `trek-card-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
+            }
+            onClick={() => this.trekCardPress.emit(this.currentTrek.id)}
+          >
             {this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 0 && (
               <img class="image" src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`} loading="lazy" />
             )}
