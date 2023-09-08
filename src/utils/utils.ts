@@ -23,14 +23,14 @@ export function formatAscent(ascent: number) {
 }
 
 export const filters: Filters = [
-  { property: 'practices', trekProperty: 'practice', trekPropertyIsArray: false, type: 'include', segment: 'selectedOthersFilters' },
-  { property: 'difficulties', trekProperty: 'difficulty', trekPropertyIsArray: false, type: 'include', segment: 'selectedOthersFilters' },
-  { property: 'durations', trekProperty: 'duration', trekPropertyIsArray: false, type: 'interval', segment: 'selectedOthersFilters' },
-  { property: 'lengths', trekProperty: 'length_2d', trekPropertyIsArray: false, type: 'interval', segment: 'selectedOthersFilters' },
-  { property: 'elevations', trekProperty: 'ascent', trekPropertyIsArray: false, type: 'interval', segment: 'selectedOthersFilters' },
-  { property: 'routes', trekProperty: 'route', trekPropertyIsArray: false, type: 'include', segment: 'selectedOthersFilters' },
-  { property: 'accessibilities', trekProperty: 'accessibilities', trekPropertyIsArray: true, type: 'include', segment: 'selectedOthersFilters' },
-  { property: 'labels', trekProperty: 'labels', trekPropertyIsArray: true, type: 'include', segment: 'selectedOthersFilters' },
+  { property: 'practices', trekProperty: 'practice', trekPropertyIsArray: false, type: 'include', segment: 'selectedActivitiesFilters' },
+  { property: 'difficulties', trekProperty: 'difficulty', trekPropertyIsArray: false, type: 'include', segment: 'selectedActivitiesFilters' },
+  { property: 'durations', trekProperty: 'duration', trekPropertyIsArray: false, type: 'interval', segment: 'selectedActivitiesFilters' },
+  { property: 'lengths', trekProperty: 'length_2d', trekPropertyIsArray: false, type: 'interval', segment: 'selectedActivitiesFilters' },
+  { property: 'elevations', trekProperty: 'ascent', trekPropertyIsArray: false, type: 'interval', segment: 'selectedActivitiesFilters' },
+  { property: 'routes', trekProperty: 'route', trekPropertyIsArray: false, type: 'include', segment: 'selectedActivitiesFilters' },
+  { property: 'accessibilities', trekProperty: 'accessibilities', trekPropertyIsArray: true, type: 'include', segment: 'selectedActivitiesFilters' },
+  { property: 'labels', trekProperty: 'labels', trekPropertyIsArray: true, type: 'include', segment: 'selectedActivitiesFilters' },
   { property: 'themes', trekProperty: 'themes', trekPropertyIsArray: true, type: 'include', segment: 'selectedThemesFilters' },
   { property: 'cities', trekProperty: 'cities', trekPropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
   { property: 'districts', trekProperty: 'districts', trekPropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },

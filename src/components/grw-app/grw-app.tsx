@@ -16,7 +16,7 @@ export class GrwApp {
   @State() showTrekMap = false;
   @State() showFilters = false;
   @State() isLargeView = false;
-  @State() selectedSegment = 'selectedOthersFilters';
+  @State() selectedSegment = 'selectedActivitiesFilters';
   @State() currentTrekId: number;
   @Prop() appWidth: string = '100%';
   @Prop() appHeight: string = '100vh';
@@ -161,7 +161,7 @@ export class GrwApp {
     filters.forEach(filter => {
       state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
     });
-    state.selectedOthersFilters = 0;
+    state.selectedActivitiesFilters = 0;
     state.selectedThemesFilters = 0;
     state.selectedLocationFilters = 0;
     state.currentTreks = handleFiltersAndSearch();
@@ -353,12 +353,12 @@ export class GrwApp {
                 </div>
               </div>
               <div class="segmented-buttons-container">
-                {this.handleSegment('selectedOthersFilters') && (
+                {this.handleSegment('selectedActivitiesFilters') && (
                   <label
-                    class={`segment${this.selectedSegment === 'selectedOthersFilters' ? ' selected-segment' : ''}`}
-                    onClick={() => this.handleSelectedSegment('selectedOthersFilters')}
+                    class={`segment${this.selectedSegment === 'selectedActivitiesFilters' ? ' selected-segment' : ''}`}
+                    onClick={() => this.handleSelectedSegment('selectedActivitiesFilters')}
                   >
-                    Autres {state.selectedOthersFilters !== 0 && `(${state.selectedOthersFilters})`}
+                    Autres {state.selectedActivitiesFilters !== 0 && `(${state.selectedActivitiesFilters})`}
                   </label>
                 )}
                 {this.handleSegment('selectedThemesFilters') && (
@@ -379,11 +379,16 @@ export class GrwApp {
                 )}
               </div>
               <div class="filters-segment-container">
-                {this.selectedSegment === 'selectedOthersFilters' && (
+                {this.selectedSegment === 'selectedActivitiesFilters' && (
                   <div class="segment-container">
                     {state['practices'].length > 0 && (
                       <div class="filter-container">
-                        <grw-filter filterName={translate[state.language].practice} filterType="practices" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                        <grw-filter
+                          filterName={translate[state.language].practice}
+                          filterType="practices"
+                          filterNameProperty="name"
+                          segment="selectedActivitiesFilters"
+                        ></grw-filter>
                       </div>
                     )}
                     {state['difficulties'].length > 0 && (
@@ -392,28 +397,38 @@ export class GrwApp {
                           filterName={translate[state.language].difficulty}
                           filterType="difficulties"
                           filterNameProperty="label"
-                          segment="selectedOthersFilters"
+                          segment="selectedActivitiesFilters"
                         ></grw-filter>
                       </div>
                     )}
                     {state['durations'].length > 0 && (
                       <div class="filter-container">
-                        <grw-filter filterName={translate[state.language].duration} filterType="durations" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                        <grw-filter
+                          filterName={translate[state.language].duration}
+                          filterType="durations"
+                          filterNameProperty="name"
+                          segment="selectedActivitiesFilters"
+                        ></grw-filter>
                       </div>
                     )}
                     {state['lengths'].length > 0 && (
                       <div class="filter-container">
-                        <grw-filter filterName={translate[state.language].length} filterType="lengths" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                        <grw-filter filterName={translate[state.language].length} filterType="lengths" filterNameProperty="name" segment="selectedActivitiesFilters"></grw-filter>
                       </div>
                     )}
                     {state['elevations'].length > 0 && (
                       <div class="filter-container">
-                        <grw-filter filterName={translate[state.language].elevation} filterType="elevations" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                        <grw-filter
+                          filterName={translate[state.language].elevation}
+                          filterType="elevations"
+                          filterNameProperty="name"
+                          segment="selectedActivitiesFilters"
+                        ></grw-filter>
                       </div>
                     )}
                     {state['routes'].length > 0 && (
                       <div class="filter-container">
-                        <grw-filter filterName={translate[state.language].routes} filterType="routes" filterNameProperty="route" segment="selectedOthersFilters"></grw-filter>
+                        <grw-filter filterName={translate[state.language].routes} filterType="routes" filterNameProperty="route" segment="selectedActivitiesFilters"></grw-filter>
                       </div>
                     )}
                     {state['accessibilities'].length > 0 && (
@@ -422,13 +437,18 @@ export class GrwApp {
                           filterName={translate[state.language].accessibility}
                           filterType="accessibilities"
                           filterNameProperty="name"
-                          segment="selectedOthersFilters"
+                          segment="selectedActivitiesFilters"
                         ></grw-filter>
                       </div>
                     )}
                     {state['labels'].length > 0 && (
                       <div class="filter-container">
-                        <grw-filter filterName={translate[state.language].others} filterType="labels" filterNameProperty="name" segment="selectedOthersFilters"></grw-filter>
+                        <grw-filter
+                          filterName={translate[state.language].activities}
+                          filterType="labels"
+                          filterNameProperty="name"
+                          segment="selectedActivitiesFilters"
+                        ></grw-filter>
                       </div>
                     )}
                   </div>

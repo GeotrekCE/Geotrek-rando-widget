@@ -51,7 +51,7 @@ interface Translation {
   themes: string;
   routes: string;
   elevation: string;
-  others: string;
+  activities: string;
   districts: string;
   erase: string;
   ok: string;
@@ -116,7 +116,7 @@ export const translate: AvailableTranslations = {
     themes: 'Thèmes',
     routes: 'Type de parcours',
     elevation: 'Denivelé positif',
-    others: 'Autres',
+    activities: 'Activités',
     districts: 'Secteurs',
     erase: 'Effacer',
     ok: 'Ok',
@@ -174,7 +174,7 @@ export const translate: AvailableTranslations = {
     themes: 'Themes',
     routes: 'Type of course',
     elevation: 'Positive elevation',
-    others: 'Others',
+    activities: 'Activities',
     districts: 'Districts',
     erase: 'Erase',
     ok: 'Ok',

@@ -51,7 +51,7 @@ const { state, onChange, reset } = createStore<{
   treksNetworkError: boolean;
   trekNetworkError: boolean;
   searchValue: string;
-  selectedOthersFilters: number;
+  selectedActivitiesFilters: number;
   selectedThemesFilters: number;
   selectedLocationFilters: number;
   selectedTrekId: number;
@@ -84,7 +84,7 @@ const { state, onChange, reset } = createStore<{
   treksNetworkError: false,
   trekNetworkError: false,
   searchValue: null,
-  selectedOthersFilters: 0,
+  selectedActivitiesFilters: 0,
   selectedThemesFilters: 0,
   selectedLocationFilters: 0,
   selectedTrekId: null,
