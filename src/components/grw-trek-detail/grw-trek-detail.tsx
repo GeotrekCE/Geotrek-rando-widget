@@ -51,12 +51,14 @@ const options: Options = {
 })
 export class GrwTrekDetail {
   swiperImages?: Swiper;
+  swiperStep?: Swiper;
   swiperPois?: Swiper;
   swiperInformationDesks?: Swiper;
   swiperImagesRef?: HTMLDivElement;
   prevElImagesRef?: HTMLDivElement;
   nextElImagesRef?: HTMLDivElement;
   paginationElImagesRef?: HTMLDivElement;
+  swiperStepRef?: HTMLDivElement;
   swiperPoisRef?: HTMLDivElement;
   swiperInformationDesksRef?: HTMLDivElement;
   presentationRef?: HTMLDivElement;
@@ -67,6 +69,7 @@ export class GrwTrekDetail {
   informationDeskRef?: HTMLDivElement;
   poiRef?: HTMLDivElement;
   trekDetailContainerRef?: HTMLElement;
+  hasStep?: boolean;
 
   defaultOptions: Options;
   @Event() descriptionReferenceIsInViewport: EventEmitter<boolean>;
@@ -94,6 +97,7 @@ export class GrwTrekDetail {
   @Prop() colorOnPrimaryContainer = '#21005e';
   @Prop() colorSecondaryContainer = '#e8def8';
   @Prop() colorOnSecondaryContainer = '#1d192b';
+  @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() colorBackground = '#fef7ff';
 
   @Prop() resetStoreOnDisconnected = true;
@@ -115,6 +119,20 @@ export class GrwTrekDetail {
       this.displayFullscreen = !this.displayFullscreen;
       this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
     };
+    this.swiperStep = new Swiper(this.swiperStepRef, {
+      modules: [FreeMode, Mousewheel],
+      slidesPerView: 1.5,
+      spaceBetween: 20,
+      grabCursor: true,
+      freeMode: true,
+      mousewheel: { forceToAxis: true },
+      breakpointsBase: 'container',
+      breakpoints: {
+        '540': {
+          slidesPerView: 2.5,
+        },
+      },
+    });
     this.swiperPois = new Swiper(this.swiperPoisRef, {
       modules: [FreeMode, Mousewheel],
       slidesPerView: 1.5,
@@ -229,6 +247,7 @@ export class GrwTrekDetail {
         this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
       }
       this.cities = this.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+      this.hasStep = this.currentTrek.children.length > 0;
     }
     onChange('currentTrek', () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -246,6 +265,7 @@ export class GrwTrekDetail {
           this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
         }
         this.cities = this.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+        this.hasStep = this.currentTrek.children.length > 0;
       }
     });
   }
@@ -436,6 +456,35 @@ export class GrwTrekDetail {
             <div class="divider"></div>
             {this.currentTrek.description_teaser && <div class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
             {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
+            <div class="divider"></div>
+            {this.hasStep && (
+              <div class="step-container">
+                <div class="step-title">{`${this.currentTrek.children.length} ${translate[state.language].steps}`}</div>
+                <div class="swiper swiper-step" ref={el => (this.swiperStepRef = el)}>
+                  <div class="swiper-wrapper">
+                    {state.currentTrekSteps &&
+                      state.currentTrekSteps.map(trek => {
+                        return (
+                          <div class="swiper-slide">
+                            <grw-trek-card
+                              reset-store-on-disconnected="false"
+                              key={`trek-${trek.id}`}
+                              trek={trek}
+                              is-large-view={false}
+                              is-step={true}
+                              color-primary-app={this.colorPrimaryApp}
+                              color-on-surface={this.colorOnSurface}
+                              color-secondary-container={this.colorSecondaryContainer}
+                              color-on-secondary-container={this.colorOnSecondaryContainer}
+                              color-surface-container-low={this.colorSurfaceContainerLow}
+                            ></grw-trek-card>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              </div>
+            )}
             <div class="divider"></div>
             {this.currentTrek.description && (
               <div class="description-container" ref={el => (this.descriptionRef = el)}>

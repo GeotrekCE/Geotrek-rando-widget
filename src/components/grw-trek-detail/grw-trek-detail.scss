@@ -6,14 +6,6 @@
   z-index: 0;
 }
 
-.swiper-images {
-  width: calc(100%);
-}
-
-.swiper-pois {
-  width: calc(100% - 64px);
-}
-
 .material-symbols {
   font-family: 'Material Symbols Outlined';
 }
@@ -304,7 +296,8 @@ grw-trek-detail {
   .pois-container,
   .source-container,
   .accessibilities-container,
-  .weather-container {
+  .weather-container,
+  .step-container {
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
@@ -323,7 +316,8 @@ grw-trek-detail {
   .information-desks-title,
   .pois-title,
   .source-title,
-  .accessibilities-title {
+  .accessibilities-title,
+  .step-title {
     color: var(--color-on-surface);
     font-size: 22px;
     line-height: 28px;
@@ -333,7 +327,8 @@ grw-trek-detail {
   }
 
   .information-desks-title,
-  .pois-title {
+  .pois-title,
+  .step-title {
     padding: 0px 24px 0px 24px;
   }
 }
@@ -489,9 +484,14 @@ grw-trek-detail {
 }
 
 .swiper-information-desks,
-.swiper-pois {
+.swiper-pois,
+.swiper-step {
   padding-right: 32px;
   padding-left: 32px;
+}
+
+.swiper-step {
+  padding-bottom: 4px;
 }
 
 .divider {

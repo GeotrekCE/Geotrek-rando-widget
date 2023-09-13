@@ -60,6 +60,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
+        text-wrap: nowrap;
       }
     }
     .icons-labels-container {
@@ -122,4 +123,8 @@
   .image {
     width: 250px;
   }
+}
+
+.trek-step-card {
+  width: auto;
 }

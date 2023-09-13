@@ -91,6 +91,7 @@ export namespace Components {
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
         "isLargeView": boolean;
+        "isStep": false;
         "resetStoreOnDisconnected": boolean;
         "trek": Trek;
     }
@@ -102,6 +103,7 @@ export namespace Components {
         "colorPrimaryApp": string;
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
         "trek": Trek;
@@ -336,6 +338,7 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
+        "isStep"?: false;
         "onCardTrekMouseLeave"?: (event: GrwTrekCardCustomEvent<any>) => void;
         "onCardTrekMouseOver"?: (event: GrwTrekCardCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwTrekCardCustomEvent<number>) => void;
@@ -350,6 +353,7 @@ declare namespace LocalJSX {
         "colorPrimaryApp"?: string;
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
         "onDescriptionReferenceIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onInformationDeskIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;

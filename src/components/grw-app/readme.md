@@ -76,6 +76,7 @@ graph TD;
   grw-app --> grw-map
   grw-app --> grw-filter
   grw-treks-list --> grw-trek-card
+  grw-trek-detail --> grw-trek-card
   grw-trek-detail --> grw-sensitive-area-detail
   grw-trek-detail --> grw-information-desk-detail
   grw-trek-detail --> grw-poi-detail

@@ -56,46 +56,80 @@ export class GrwTrekProvider {
         this.init,
       ),
       fetch(
-        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,information_desks`,
+        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,information_desks,children`,
         this.init,
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([difficulties, routes, practices, themes, cities, accessibilities, sensitiveAreas, labels, sources, accessibilitiesLevel, pois, poiTypes, informationDesks, trek]) => {
-        state.trekNetworkError = false;
-        if (difficulties) {
-          state.difficulties = difficulties.results;
-        }
-        if (routes) {
-          state.routes = routes.results;
-        }
-        if (practices) {
-          state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
-        }
-        if (themes) {
-          state.themes = themes.results;
-        }
-        if (cities) {
-          state.cities = cities.results;
-        }
+      .then(
+        async ([
+          difficulties,
+          routes,
+          practices,
+          themes,
+          cities,
+          accessibilities,
+          sensitiveAreas,
+          labels,
+          sources,
+          accessibilitiesLevel,
+          pois,
+          poiTypes,
+          informationDesks,
+          trek,
+        ]) => {
+          state.trekNetworkError = false;
 
-        if (accessibilities) {
-          state.accessibilities = accessibilities.results;
-        }
+          if (trek.children.length > 0) {
+            const stepRequests = [];
+            trek.children.forEach(stepId => {
+              stepRequests.push(
+                fetch(
+                  `${state.api}trek/${stepId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,information_desks,children`,
+                ),
+              );
+            });
+            const steps = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
 
-        if (sensitiveAreas) {
-          state.currentSensitiveAreas = sensitiveAreas.results;
-        }
-        state.labels = labels.results;
-        state.sources = sources.results;
-        if (accessibilitiesLevel) {
-          state.accessibilitiesLevel = accessibilitiesLevel.results;
-        }
-        state.currentPois = pois.results;
-        state.poiTypes = poiTypes.results;
-        state.currentInformationDesks = informationDesks.results;
-        state.currentTrek = trek;
-      })
+            state.currentTrekSteps = steps;
+          } else {
+            state.currentTrekSteps = null;
+          }
+
+          if (difficulties) {
+            state.difficulties = difficulties.results;
+          }
+          if (routes) {
+            state.routes = routes.results;
+          }
+          if (practices) {
+            state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
+          }
+          if (themes) {
+            state.themes = themes.results;
+          }
+          if (cities) {
+            state.cities = cities.results;
+          }
+
+          if (accessibilities) {
+            state.accessibilities = accessibilities.results;
+          }
+
+          if (sensitiveAreas) {
+            state.currentSensitiveAreas = sensitiveAreas.results;
+          }
+          state.labels = labels.results;
+          state.sources = sources.results;
+          if (accessibilitiesLevel) {
+            state.accessibilitiesLevel = accessibilitiesLevel.results;
+          }
+          state.currentPois = pois.results;
+          state.poiTypes = poiTypes.results;
+          state.currentInformationDesks = informationDesks.results;
+          state.currentTrek = trek;
+        },
+      )
       .catch(() => {
         state.trekNetworkError = true;
       });

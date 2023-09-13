@@ -63,8 +63,9 @@ export class GrwApp {
 
   @Listen('trekCardPress', { target: 'window' })
   onTrekCardPress(event: CustomEvent<number>) {
+    state.currentTrek = null;
     this.currentTrekId = event.detail;
-    this.showTrek = !this.showTrek;
+    this.showTrek = true;
     this.showTrekMap = false;
     const url = new URL(window.location.toString());
     url.searchParams.set('trek', this.currentTrekId.toString());
@@ -142,6 +143,7 @@ export class GrwApp {
     const url = new URL(window.location.toString());
     const trekParam = Number(url.searchParams.get('trek'));
     if (trekParam && this.currentTrekId !== trekParam) {
+      state.currentTrek = null;
       this.currentTrekId = trekParam;
       this.showTrek = true;
     } else if (!trekParam) {
@@ -288,6 +290,7 @@ export class GrwApp {
                     color-on-primary-container={this.colorOnPrimaryContainer}
                     color-secondary-container={this.colorSecondaryContainer}
                     color-on-secondary-container={this.colorOnSecondaryContainer}
+                    color-surface-container-low={this.colorSurfaceContainerLow}
                     color-background={this.colorBackground}
                     weather={this.weather}
                     is-large-view={this.isLargeView}

@@ -24,6 +24,7 @@ export class GrwTrekCard {
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() isLargeView = false;
   @Prop() resetStoreOnDisconnected = true;
+  @Prop() isStep: false;
 
   @Event() cardTrekMouseOver: EventEmitter<number>;
   @Event() cardTrekMouseLeave: EventEmitter;
@@ -57,12 +58,12 @@ export class GrwTrekCard {
 
   @Listen('mouseover')
   handleMouseOver() {
-    this.cardTrekMouseOver.emit(this.currentTrek.id);
+    !this.isStep && this.cardTrekMouseOver.emit(this.currentTrek.id);
   }
 
   @Listen('mouseleave')
   handleMouseLeave() {
-    this.cardTrekMouseLeave.emit();
+    !this.isStep && this.cardTrekMouseLeave.emit();
   }
 
   render() {
@@ -80,7 +81,9 @@ export class GrwTrekCard {
         {this.currentTrek && (
           <div
             class={
-              this.isLargeView
+              this.isStep
+                ? 'trek-card-container trek-step-card'
+                : this.isLargeView
                 ? `trek-card-large-view-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
                 : `trek-card-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
             }

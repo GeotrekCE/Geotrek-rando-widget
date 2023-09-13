@@ -56,6 +56,7 @@ interface Translation {
   erase: string;
   ok: string;
   location: string;
+  steps: string;
 }
 
 interface AvailableTranslations {
@@ -122,6 +123,7 @@ export const translate: AvailableTranslations = {
     erase: 'Effacer',
     ok: 'Ok',
     location: 'Localisation',
+    steps: 'étapes',
   },
   en: {
     filter: 'Filter',
@@ -181,5 +183,6 @@ export const translate: AvailableTranslations = {
     erase: 'Erase',
     ok: 'Ok',
     location: 'Location',
+    steps: 'steps',
   },
 };
