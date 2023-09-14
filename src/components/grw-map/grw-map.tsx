@@ -129,7 +129,7 @@ export class GrwMap {
     L.control.scale({ metric: true, imperial: false }).addTo(this.map);
     (L.control as any).locate({ showPopup: false }).addTo(this.map);
 
-    const nameLayers = this.nameLayer.split(',');
+    const nameLayers = this.nameLayer ? this.nameLayer.split(',') : ['base-layer'];
 
     const urlLayers = this.urlLayer.split(',http').map((url, index) => (index === 0 ? url : 'http' + url));
 
