@@ -80,20 +80,28 @@ export class GrwTrekProvider {
         ]) => {
           state.trekNetworkError = false;
 
-          if (trek.children.length > 0) {
+          if (trek.children.length > 0 || state.parentTrekId) {
+            const steps: number[] = [];
+            if (trek.children.length > 0) {
+              state.parentTrekId = trek.id;
+              state.parentTrek = trek;
+              steps.push(...trek.children);
+            } else {
+              const parentTrek = await fetch(`${state.api}trek/${state.parentTrekId}/?language=${state.language}&published=true&fields=name,children`).then(response =>
+                response.json(),
+              );
+              state.parentTrek = parentTrek;
+              steps.push(...parentTrek.children);
+            }
             const stepRequests = [];
-            trek.children.forEach(stepId => {
+            steps.forEach(stepId => {
               stepRequests.push(
                 fetch(
-                  `${state.api}trek/${stepId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,information_desks,children`,
+                  `${state.api}trek/${stepId}/?language=${state.language}&published=true&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts`,
                 ),
               );
             });
-            const steps = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
-
-            state.currentTrekSteps = steps;
-          } else {
-            state.currentTrekSteps = null;
+            state.currentTrekSteps = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
           }
 
           if (difficulties) {

@@ -110,7 +110,8 @@
 }
 
 .trek-card-container {
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
   .image {
     width: 100%;
     max-height: 200px;

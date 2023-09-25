@@ -279,6 +279,7 @@ grw-trek-detail {
   .sensitive-areas-container,
   .source-container,
   .accessibilities-container,
+  .parent-trek-container,
   .weather-container {
     padding: 0px 24px 0px 24px;
   }
@@ -297,6 +298,7 @@ grw-trek-detail {
   .source-container,
   .accessibilities-container,
   .weather-container,
+  .parent-trek-container,
   .step-container {
     font-size: 16px;
     line-height: 24px;
@@ -317,7 +319,8 @@ grw-trek-detail {
   .pois-title,
   .source-title,
   .accessibilities-title,
-  .step-title {
+  .step-title,
+  .parent-trek-title {
     color: var(--color-on-surface);
     font-size: 22px;
     line-height: 28px;
@@ -330,6 +333,25 @@ grw-trek-detail {
   .pois-title,
   .step-title {
     padding: 0px 24px 0px 24px;
+  }
+
+  .parent-trek-title {
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: var(--elevation-0);
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    line-height: 20px;
+    color: var(--color-primary);
+    background-color: transparent;
+    div {
+      margin-right: 4px;
+    }
   }
 }
 

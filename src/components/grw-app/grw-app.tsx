@@ -63,12 +63,16 @@ export class GrwApp {
 
   @Listen('trekCardPress', { target: 'window' })
   onTrekCardPress(event: CustomEvent<number>) {
+    const parentTrek = state.parentTrekId ? state.parentTrekId : state.currentTrekSteps ? this.currentTrekId : null;
     state.currentTrek = null;
     this.currentTrekId = event.detail;
     this.showTrek = true;
     this.showTrekMap = false;
     const url = new URL(window.location.toString());
     url.searchParams.set('trek', this.currentTrekId.toString());
+    if (state.currentTrekSteps) {
+      url.searchParams.set('parentTrek', parentTrek.toString());
+    }
     window.history.pushState({}, '', url);
   }
 
@@ -92,8 +96,10 @@ export class GrwApp {
   componentWillLoad() {
     const url = new URL(window.location.toString());
     const trekParam = url.searchParams.get('trek');
+    const parentTrekId = url.searchParams.get('parentTrek');
     if (trekParam) {
       window.history.replaceState({ isInitialHistoryWithTrek: true }, '', url);
+      state.parentTrekId = parentTrekId ? Number(parentTrekId) : null;
       this.currentTrekId = Number(trekParam);
       this.showTrek = !this.showTrek;
     }
@@ -104,6 +110,7 @@ export class GrwApp {
       if (state.trekNetworkError) {
         const urlRedirect = new URL(window.location.toString());
         urlRedirect.searchParams.delete('trek');
+        urlRedirect.searchParams.delete('parentTrek');
         window.history.replaceState({}, '', urlRedirect);
         this.onTrekDetailsClose();
       }
@@ -114,6 +121,8 @@ export class GrwApp {
 
   onTrekDetailsClose() {
     state.currentTrek = null;
+    state.currentTrekSteps = null;
+    state.parentTrekId = null;
     this.currentTrekId = null;
     this.showTrek = !this.showTrek;
   }

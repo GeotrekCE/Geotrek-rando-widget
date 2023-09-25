@@ -65,6 +65,12 @@ grw-app {
   justify-content: space-between;
   margin: 0px 16px;
   height: 64px;
+
+  .handle-search-container {
+    width: calc(50% + 48px);
+    max-width: 220px;
+  }
+
   .handle-filters-button {
     margin-left: 16px;
     user-select: none;

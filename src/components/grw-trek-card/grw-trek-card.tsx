@@ -95,11 +95,13 @@ export class GrwTrekCard {
             <div class="sub-container">
               {this.departureCity && <div class="departure">{this.departureCity.name}</div>}
               <div class="name">{this.currentTrek?.name}</div>
-              <div class="themes-container">
-                {this.themes.map(theme => (
-                  <div class="theme">{theme.label}</div>
-                ))}
-              </div>
+              {!this.isStep && (
+                <div class="themes-container">
+                  {this.themes.map(theme => (
+                    <div class="theme">{theme.label}</div>
+                  ))}
+                </div>
+              )}
               <div class="icons-labels-container">
                 <div class="row">
                   <div class="icon-label difficulty">
@@ -121,16 +123,18 @@ export class GrwTrekCard {
                     {formatAscent(this.currentTrek.ascent)}
                   </div>
                 </div>
-                <div class="row">
-                  <div class="icon-label route">
-                    {this.route?.pictogram && <img src={this.route.pictogram} />}
-                    {this.route?.route}
+                {!this.isStep && (
+                  <div class="row">
+                    <div class="icon-label route">
+                      {this.route?.pictogram && <img src={this.route.pictogram} />}
+                      {this.route?.route}
+                    </div>
+                    <div class="icon-label practice">
+                      {this.practice?.pictogram && <img src={this.practice.pictogram} />}
+                      {this.practice?.name}
+                    </div>
                   </div>
-                  <div class="icon-label practice">
-                    {this.practice?.pictogram && <img src={this.practice.pictogram} />}
-                    {this.practice?.name}
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

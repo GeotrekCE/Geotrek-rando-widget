@@ -55,6 +55,8 @@ const { state, onChange, reset } = createStore<{
   selectedThemesFilters: number;
   selectedLocationFilters: number;
   selectedTrekId: number;
+  parentTrekId: number;
+  parentTrek: Trek;
   currentTrekSteps: Treks;
 }>({
   api: null,
@@ -89,6 +91,8 @@ const { state, onChange, reset } = createStore<{
   selectedThemesFilters: 0,
   selectedLocationFilters: 0,
   selectedTrekId: null,
+  parentTrekId: null,
+  parentTrek: null,
   currentTrekSteps: null,
 });
 

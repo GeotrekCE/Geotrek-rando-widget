@@ -457,9 +457,17 @@ export class GrwTrekDetail {
             {this.currentTrek.description_teaser && <div class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
             {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
             <div class="divider"></div>
-            {this.hasStep && (
+            {state.parentTrek && (
+              <div class="parent-trek-container">
+                <button class="parent-trek-title">
+                  <div>&lt;</div>
+                  {state.parentTrek.name}
+                </button>
+              </div>
+            )}
+            {state.currentTrekSteps && (
               <div class="step-container">
-                <div class="step-title">{`${this.currentTrek.children.length} ${translate[state.language].steps}`}</div>
+                <div class="step-title">{`${state.currentTrekSteps.length} ${translate[state.language].steps}`}</div>
                 <div class="swiper swiper-step" ref={el => (this.swiperStepRef = el)}>
                   <div class="swiper-wrapper">
                     {state.currentTrekSteps &&
