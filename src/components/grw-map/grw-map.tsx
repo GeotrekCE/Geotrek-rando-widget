@@ -12,6 +12,7 @@ import { getTrekGeometry } from 'services/treks.service';
 @Component({
   tag: 'grw-map',
   styleUrl: 'grw-map.scss',
+  shadow: true,
 })
 export class GrwMap {
   mapRef: HTMLElement;
