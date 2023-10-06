@@ -77,6 +77,7 @@ export class GrwTrekDetail {
   @Event() sensitiveAreaIsInViewport: EventEmitter<boolean>;
   @Event() informationDeskIsInViewport: EventEmitter<boolean>;
   @Event() poiIsInViewport: EventEmitter<boolean>;
+  @Event() parentTrekPress: EventEmitter<number>;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
   @State() route: Route;
@@ -457,9 +458,9 @@ export class GrwTrekDetail {
             {this.currentTrek.description_teaser && <div class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
             {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
             <div class="divider"></div>
-            {state.parentTrek && (
+            {state.parentTrekId && state.parentTrek && this.currentTrek.id !== state.parentTrekId && (
               <div class="parent-trek-container">
-                <button class="parent-trek-title">
+                <button class="parent-trek-title" onClick={() => this.parentTrekPress.emit(state.parentTrekId)}>
                   <div>&lt;</div>
                   {state.parentTrek.name}
                 </button>

@@ -76,6 +76,18 @@ export class GrwApp {
     window.history.pushState({}, '', url);
   }
 
+  @Listen('parentTrekPress', { target: 'window' })
+  onParentTrekPress(event: CustomEvent<number>) {
+    state.currentTrek = null;
+    this.currentTrekId = event.detail;
+    this.showTrek = true;
+    this.showTrekMap = false;
+    const url = new URL(window.location.toString());
+    url.searchParams.set('trek', this.currentTrekId.toString());
+    url.searchParams.delete('parentTrek');
+    window.history.pushState({}, '', url);
+  }
+
   @Listen('resize', { target: 'window' })
   onWindowResize() {
     this.handleView();

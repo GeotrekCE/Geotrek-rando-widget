@@ -27,6 +27,7 @@
 | ---------------------------------- | ----------- | ---------------------- |
 | `descriptionReferenceIsInViewport` |             | `CustomEvent<boolean>` |
 | `informationDeskIsInViewport`      |             | `CustomEvent<boolean>` |
+| `parentTrekPress`                  |             | `CustomEvent<number>`  |
 | `parkingIsInViewport`              |             | `CustomEvent<boolean>` |
 | `poiIsInViewport`                  |             | `CustomEvent<boolean>` |
 | `sensitiveAreaIsInViewport`        |             | `CustomEvent<boolean>` |
