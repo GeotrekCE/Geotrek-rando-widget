@@ -92,6 +92,10 @@ grw-trek-detail {
     width: 240px;
     background-size: 120px 100%;
   }
+  .steps.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 160px;
+    background-size: 80px 100%;
+  }
   .description.selected-trek-option ~ .indicator-selected-trek-option {
     width: 240px;
     background-size: 120px 100%;
@@ -115,6 +119,10 @@ grw-trek-detail {
   .presentation {
     min-width: 120px;
     width: 120px;
+  }
+  .steps {
+    min-width: 80px;
+    width: 80px;
   }
   .description {
     min-width: 120px;
@@ -326,7 +334,26 @@ grw-trek-detail {
     line-height: 28px;
     font-weight: 400;
     font-weight: bold;
+  }
+
+  .description-title,
+  .altimetric-profile-title,
+  .access-title,
+  .public-transport-title,
+  .advice-title,
+  .advised-parking-title,
+  .gear-title,
+  .sensitive-areas-title,
+  .information-desks-title,
+  .pois-title,
+  .source-title,
+  .accessibilities-title,
+  .parent-trek-title {
     margin-bottom: 16px;
+  }
+
+  .step-title {
+    margin-bottom: 12px;
   }
 
   .information-desks-title,
@@ -514,6 +541,45 @@ grw-trek-detail {
 
 .swiper-step {
   padding-bottom: 4px;
+  .swiper-wrapper {
+    .swiper-slide {
+      counter-increment: stepPoint;
+      padding-top: 36px;
+    }
+    .swiper-slide:first-child:before {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    .swiper-slide:before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      height: 12px;
+      width: calc(100% + 20px);
+      background-color: var(--color-secondary-container);
+    }
+    .swiper-slide:last-child:before {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      width: 100%;
+    }
+    .swiper-slide:after {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      content: counter(stepPoint);
+      width: 24px;
+      height: 24px;
+      background: var(--color-primary-app);
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 0.8em;
+      color: white;
+      margin-left: calc(50% - 12px);
+      top: 0px;
+    }
+  }
 }
 
 .divider {

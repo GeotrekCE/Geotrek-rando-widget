@@ -10,6 +10,11 @@ const presentation: Option = {
   width: 120,
   indicator: false,
 };
+const steps: Option = {
+  visible: false,
+  width: 80,
+  indicator: false,
+};
 const description: Option = {
   visible: false,
   width: 120,
@@ -37,6 +42,7 @@ const pois: Option = {
 };
 const options: Options = {
   presentation,
+  steps,
   description,
   recommendations,
   sensitiveArea,
@@ -68,15 +74,17 @@ export class GrwTrekDetail {
   sensitiveAreaRef?: HTMLDivElement;
   informationDeskRef?: HTMLDivElement;
   poiRef?: HTMLDivElement;
+  stepsRef?: HTMLDivElement;
   trekDetailContainerRef?: HTMLElement;
   hasStep?: boolean;
 
   defaultOptions: Options;
-  @Event() descriptionReferenceIsInViewport: EventEmitter<boolean>;
+  @Event() descriptionIsInViewport: EventEmitter<boolean>;
   @Event() parkingIsInViewport: EventEmitter<boolean>;
   @Event() sensitiveAreaIsInViewport: EventEmitter<boolean>;
   @Event() informationDeskIsInViewport: EventEmitter<boolean>;
   @Event() poiIsInViewport: EventEmitter<boolean>;
+  @Event() stepsIsInViewport: EventEmitter<boolean>;
   @Event() parentTrekPress: EventEmitter<number>;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
@@ -171,15 +179,25 @@ export class GrwTrekDetail {
       });
       presentationObserver.observe(this.presentationRef);
     }
-    if (this.descriptionRef) {
-      const descriptionReferenceObserver = new IntersectionObserver(entries => {
+    if (this.stepsRef) {
+      const stepsObserver = new IntersectionObserver(entries => {
         const isIntersecting = entries[0].isIntersecting;
-        this.descriptionReferenceIsInViewport.emit(isIntersecting);
+        this.stepsIsInViewport.emit(isIntersecting);
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, steps: { ...this.defaultOptions.steps, indicator: isIntersecting } };
+        }
+      });
+      stepsObserver.observe(this.stepsRef);
+    }
+    if (this.descriptionRef) {
+      const descriptionObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        this.descriptionIsInViewport.emit(isIntersecting);
         if (isIntersecting) {
           this.options = { ...this.defaultOptions, description: { ...this.defaultOptions.description, indicator: isIntersecting } };
         }
       });
-      descriptionReferenceObserver.observe(this.descriptionRef);
+      descriptionObserver.observe(this.descriptionRef);
     }
     if (this.recommendationRef) {
       const recommendationsObserver = new IntersectionObserver(entries => {
@@ -281,6 +299,7 @@ export class GrwTrekDetail {
     return {
       ...options,
       presentation: { ...presentation },
+      steps: { ...steps, visible: Boolean(state.parentTrek) },
       description: { ...description, visible: Boolean(this.currentTrek.description) },
       recommendations: { ...recommendations, visible: Boolean(this.currentTrek.advice || (this.labels && this.labels.length > 0)) },
       sensitiveArea: { ...sensitiveArea, visible: Boolean(state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0) },
@@ -344,6 +363,11 @@ export class GrwTrekDetail {
             <a onClick={() => this.handleScrollTo(this.presentationRef)} class={`presentation trek-option${this.options.presentation.indicator ? ' selected-trek-option' : ''}`}>
               {translate[state.language].options.presentation}
             </a>
+            {this.options.steps.visible && (
+              <a onClick={() => this.handleScrollTo(this.stepsRef)} class={`steps trek-option${this.options.steps.indicator ? ' selected-trek-option' : ''}`}>
+                {translate[state.language].options.steps}
+              </a>
+            )}
             {this.options.description.visible && (
               <a onClick={() => this.handleScrollTo(this.descriptionRef)} class={`description trek-option${this.options.description.indicator ? ' selected-trek-option' : ''}`}>
                 {translate[state.language].options.description}
@@ -467,7 +491,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentTrekSteps && (
-              <div class="step-container">
+              <div class="step-container" ref={el => (this.stepsRef = el)}>
                 <div class="step-title">{`${state.currentTrekSteps.length} ${translate[state.language].steps}`}</div>
                 <div class="swiper swiper-step" ref={el => (this.swiperStepRef = el)}>
                   <div class="swiper-wrapper">

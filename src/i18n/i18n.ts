@@ -40,6 +40,7 @@ interface Translation {
     environmentalSensitiveAreas: string;
     informationPlaces: string;
     pois: string;
+    steps: string;
   };
   layers: {
     pointsReference: string;
@@ -47,6 +48,7 @@ interface Translation {
     sensitiveArea: string;
     informationPlaces: string;
     pois: string;
+    steps: string;
   };
   themes: string;
   routes: string;
@@ -107,6 +109,7 @@ export const translate: AvailableTranslations = {
       environmentalSensitiveAreas: 'Zones sensibles',
       informationPlaces: "Lieux d'informations",
       pois: 'Patrimoines',
+      steps: 'Étapes',
     },
     layers: {
       pointsReference: 'Points de référence',
@@ -114,6 +117,7 @@ export const translate: AvailableTranslations = {
       sensitiveArea: 'Zones de sensibilité environnementale',
       informationPlaces: 'Lieux de renseignement',
       pois: 'Patrimoines',
+      steps: 'Étapes',
     },
     themes: 'Thèmes',
     routes: 'Type de parcours',
@@ -167,6 +171,7 @@ export const translate: AvailableTranslations = {
       environmentalSensitiveAreas: 'Sensitive areas',
       informationPlaces: 'Information places',
       pois: 'Points of interest',
+      steps: 'Steps',
     },
     layers: {
       pointsReference: 'Reference points',
@@ -174,6 +179,7 @@ export const translate: AvailableTranslations = {
       sensitiveArea: 'Sensitive areas',
       informationPlaces: 'Information places',
       pois: 'Points of interest',
+      steps: 'Steps',
     },
     themes: 'Themes',
     routes: 'Type of course',

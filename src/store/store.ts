@@ -58,6 +58,7 @@ const { state, onChange, reset } = createStore<{
   parentTrekId: number;
   parentTrek: Trek;
   currentTrekSteps: Treks;
+  selectedStepId: number;
 }>({
   api: null,
   languages: null,
@@ -94,6 +95,7 @@ const { state, onChange, reset } = createStore<{
   parentTrekId: null,
   parentTrek: null,
   currentTrekSteps: null,
+  selectedStepId: null,
 });
 
 export { onChange, reset };

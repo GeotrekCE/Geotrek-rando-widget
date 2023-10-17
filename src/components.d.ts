@@ -355,12 +355,13 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
-        "onDescriptionReferenceIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onDescriptionIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onInformationDeskIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onParentTrekPress"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onParkingIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onPoiIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onSensitiveAreaIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onStepsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
         "weather"?: boolean;

@@ -58,12 +58,12 @@ export class GrwTrekCard {
 
   @Listen('mouseover')
   handleMouseOver() {
-    !this.isStep && this.cardTrekMouseOver.emit(this.currentTrek.id);
+    this.cardTrekMouseOver.emit(this.currentTrek.id);
   }
 
   @Listen('mouseleave')
   handleMouseLeave() {
-    !this.isStep && this.cardTrekMouseLeave.emit();
+    this.cardTrekMouseLeave.emit();
   }
 
   render() {
@@ -82,7 +82,7 @@ export class GrwTrekCard {
           <div
             class={
               this.isStep
-                ? 'trek-card-container trek-step-card'
+                ? `trek-card-container trek-step-card${state.selectedStepId === this.currentTrek.id ? ' selected-trek-card' : ''}`
                 : this.isLargeView
                 ? `trek-card-large-view-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
                 : `trek-card-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`

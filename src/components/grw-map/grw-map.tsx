@@ -42,10 +42,11 @@ export class GrwMap {
   resizeObserver: ResizeObserver;
   bounds;
   treksLayer: L.GeoJSON<any>;
-  TreksLayer: L.GeoJSON<any>;
   treksMarkerClusterGroup: MarkerClusterGroup;
   currentTrekLayer: L.GeoJSON<any>;
+  currentStepsLayer: L.GeoJSON<any>;
   selectedCurrentTrekLayer: L.GeoJSON<any>;
+  selectedCurrentStepLayer: L.GeoJSON<any>;
   currentPointsReferenceLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
@@ -58,6 +59,7 @@ export class GrwMap {
   } = {};
   tileLayer: { key: string; value: TileLayer }[] = [];
   trekPopupIsOpen: boolean;
+  stepPopupIsOpen: boolean;
 
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
 
@@ -66,8 +68,15 @@ export class GrwMap {
     this.map.setView(new L.LatLng(event.detail.latitude, event.detail.longitude), 17, { animate: false });
   }
 
-  @Listen('descriptionReferenceIsInViewport', { target: 'window' })
-  descriptionReferenceIsInViewport(event: CustomEvent<boolean>) {
+  @Listen('stepsIsInViewport', { target: 'window' })
+  stepsIsInViewport(event: CustomEvent<boolean>) {
+    if (this.currentStepsLayer) {
+      this.handleLayerVisibility(event.detail, this.currentStepsLayer);
+    }
+  }
+
+  @Listen('descriptionIsInViewport', { target: 'window' })
+  descriptionIsInViewport(event: CustomEvent<boolean>) {
     if (this.currentPointsReferenceLayer) {
       this.handleLayerVisibility(event.detail, this.currentPointsReferenceLayer);
     }
@@ -103,21 +112,28 @@ export class GrwMap {
 
   @Listen('cardTrekMouseOver', { target: 'window' })
   onCardTrekMouseOver(event: CustomEvent<number>) {
-    if (!state.selectedTrekId || state.selectedTrekId !== event.detail) {
+    if (!state.parentTrek && (!state.selectedTrekId || state.selectedTrekId !== event.detail)) {
       state.selectedTrekId = event.detail;
       this.hideTrekLine();
       this.showTrekLine(event.detail);
       this.addSelectedCurrentTrek(event.detail);
+    } else if (state.parentTrek) {
+      this.stepPopupIsOpen = false;
+      state.selectedStepId = null;
+      this.addSelectedCurrentStep(event.detail);
     }
   }
 
   @Listen('cardTrekMouseLeave', { target: 'window' })
   oncardTrekMouseLeave() {
-    if (!this.trekPopupIsOpen) {
+    if (!this.trekPopupIsOpen && state.selectedTrekId) {
       this.trekPopupIsOpen = false;
       state.selectedTrekId = null;
       this.hideTrekLine();
       this.removeSelectedCurrentTrek();
+    } else if (this.currentStepsLayer) {
+      state.selectedStepId = null;
+      this.removeSelectedCurrentStep();
     }
   }
 
@@ -250,7 +266,9 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.practice ? `<div><img src=${geoJsonPoint.properties.practice} /><img/></div>` : `<div/></div>`,
+              html: geoJsonPoint.properties.practice
+                ? `<div class="trek-marker-container"><img src=${geoJsonPoint.properties.practice} /></div>`
+                : `<div class="trek-marker-container"></div>`,
               className: 'trek-marker',
               iconSize: 32,
               iconAnchor: [18, 0],
@@ -514,6 +532,71 @@ export class GrwMap {
       });
     }
 
+    if (!this.currentStepsLayer && state.parentTrekId && state.parentTrek && state.currentTrek.id === state.parentTrekId) {
+      const stepsFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      if (state.currentTrekSteps) {
+        for (const trek of state.currentTrekSteps) {
+          stepsFeatureCollection.features.push({
+            type: 'Feature',
+            geometry: { type: 'Point', coordinates: trek.departure_geom },
+            properties: {
+              id: trek.id,
+              name: trek.name,
+              practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram,
+              imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].thumbnail,
+            },
+          });
+        }
+      }
+
+      let stepIndex = 0;
+      this.currentStepsLayer = L.geoJSON(stepsFeatureCollection, {
+        pointToLayer: (_geoJsonPoint, latlng) => {
+          stepIndex += 1;
+          return L.marker(latlng, {
+            zIndexOffset: 4000000,
+            icon: L.divIcon({
+              html: `<div class="step-marker-container"><div class="step-number">${stepIndex}</div></div>`,
+              className: 'step-marker',
+              iconSize: 32,
+              iconAnchor: [18, 0],
+            } as any),
+            autoPanOnFocus: false,
+          } as any);
+        },
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('click', () => {
+            const trekDeparturePopup = L.DomUtil.create('div');
+            trekDeparturePopup.className = 'trek-departure-popup';
+            if (geoJsonPoint.properties.imgSrc) {
+              const trekImg = L.DomUtil.create('img');
+              trekImg.src = geoJsonPoint.properties.imgSrc;
+              trekDeparturePopup.appendChild(trekImg);
+            }
+            const trekName = L.DomUtil.create('div');
+            trekName.innerHTML = geoJsonPoint.properties.name;
+            trekName.className = 'trek-name';
+            trekDeparturePopup.appendChild(trekName);
+
+            const trekButton = L.DomUtil.create('button');
+            trekButton.innerHTML = 'Afficher le détail';
+            trekButton.className = 'trek-button';
+            trekButton.onclick = () => this.trekCardPress.emit(geoJsonPoint.properties.id);
+            trekDeparturePopup.appendChild(trekButton);
+
+            layer.bindPopup(trekDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+          });
+          layer.on('mouseover', e => {
+            this.addSelectedCurrentStep(geoJsonPoint.properties.id, e.latlng);
+          });
+        },
+      });
+    }
+
     const elevationOptions = {
       srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',
       elevationDiv: `#elevation`,
@@ -562,6 +645,9 @@ export class GrwMap {
     (this.elevationControl as any).load(elevation);
 
     const overlays = {};
+    if (this.currentStepsLayer) {
+      overlays[translate[state.language].layers.steps] = this.currentStepsLayer;
+    }
     if (this.currentPointsReferenceLayer) {
       overlays[translate[state.language].layers.pointsReference] = this.currentPointsReferenceLayer;
     }
@@ -622,7 +708,9 @@ export class GrwMap {
         L.marker(latlng, {
           zIndexOffset: 4000000,
           icon: L.divIcon({
-            html: geoJsonPoint.properties.practice ? `<div><img src=${geoJsonPoint.properties.practice} /><img/></div>` : `<div/></div>`,
+            html: geoJsonPoint.properties.practice
+              ? `<div class="trek-marker-container"><img src=${geoJsonPoint.properties.practice} /></div>`
+              : `<div class="trek-marker-container"></div>`,
             className: 'selected-trek-marker',
             iconSize: 64,
             iconAnchor: [36, 36],
@@ -677,6 +765,91 @@ export class GrwMap {
     state.selectedTrekId = null;
     this.selectedCurrentTrekLayer && this.map.removeLayer(this.selectedCurrentTrekLayer);
     this.selectedCurrentTrekLayer = null;
+  }
+
+  addSelectedCurrentStep(id, customCoordinates?) {
+    const stepsFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentTrekSteps) {
+      const stepIndex = state.currentTrekSteps.findIndex(trek => trek.id === id);
+      stepsFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: customCoordinates ? [customCoordinates.lng, customCoordinates.lat] : state.currentTrekSteps[stepIndex].departure_geom },
+        properties: {
+          id: state.currentTrekSteps[stepIndex].id,
+          name: state.currentTrekSteps[stepIndex].name,
+          practice: state.practices.find(practice => practice.id === state.currentTrekSteps[stepIndex].practice)?.pictogram,
+          imgSrc:
+            state.currentTrekSteps[stepIndex].attachments && state.currentTrekSteps[stepIndex].attachments.length > 0 && state.currentTrekSteps[stepIndex].attachments[0].thumbnail,
+          index: stepIndex + 1,
+        },
+      });
+    }
+
+    this.removeSelectedCurrentStep();
+    state.selectedStepId = id;
+
+    this.selectedCurrentStepLayer = L.geoJSON(stepsFeatureCollection, {
+      pointToLayer: (geoJsonPoint, latlng) =>
+        L.marker(latlng, {
+          zIndexOffset: 4000000,
+          icon: L.divIcon({
+            html: `<div class="step-marker-container"><div class="step-number">${geoJsonPoint.properties.index}</div></div>`,
+            className: 'selected-step-marker',
+            iconSize: 64,
+            iconAnchor: [36, 36],
+          } as any),
+          autoPanOnFocus: false,
+        } as any),
+      onEachFeature: (geoJsonPoint, layer) => {
+        layer.once('click', () => {
+          const trekDeparturePopup = L.DomUtil.create('div');
+          trekDeparturePopup.className = 'trek-departure-popup';
+          if (geoJsonPoint.properties.imgSrc) {
+            const trekImg = L.DomUtil.create('img');
+            trekImg.src = geoJsonPoint.properties.imgSrc;
+            trekDeparturePopup.appendChild(trekImg);
+          }
+          const trekName = L.DomUtil.create('div');
+          trekName.innerHTML = geoJsonPoint.properties.name;
+          trekName.className = 'trek-name';
+          trekDeparturePopup.appendChild(trekName);
+
+          const trekButton = L.DomUtil.create('button');
+          trekButton.innerHTML = 'Afficher le détail';
+          trekButton.className = 'trek-button';
+          trekButton.onclick = () => this.trekCardPress.emit(geoJsonPoint.properties.id);
+          trekDeparturePopup.appendChild(trekButton);
+
+          layer.bindPopup(trekDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+        });
+        layer.on('mouseout', () => {
+          if (!this.stepPopupIsOpen) {
+            state.selectedTrekId = null;
+            this.removeSelectedCurrentStep();
+          }
+        });
+        layer.on('popupopen', () => {
+          this.stepPopupIsOpen = Boolean(state.selectedStepId);
+        });
+        layer.on('popupclose', () => {
+          if (state.selectedStepId) {
+            this.stepPopupIsOpen = false;
+            state.selectedStepId = null;
+            this.removeSelectedCurrentStep();
+          }
+        });
+      },
+    }).addTo(this.map);
+  }
+
+  removeSelectedCurrentStep() {
+    state.selectedStepId = null;
+    this.selectedCurrentStepLayer && this.map.removeLayer(this.selectedCurrentStepLayer);
+    this.selectedCurrentStepLayer = null;
   }
 
   handleLayersControlEvent() {
@@ -738,6 +911,11 @@ export class GrwMap {
     if (this.currentPointsReferenceLayer) {
       this.map.removeLayer(this.currentPointsReferenceLayer);
       this.currentPointsReferenceLayer = null;
+    }
+
+    if (this.currentStepsLayer) {
+      this.map.removeLayer(this.currentStepsLayer);
+      this.currentStepsLayer = null;
     }
   }
 

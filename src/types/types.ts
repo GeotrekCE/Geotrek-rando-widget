@@ -240,6 +240,7 @@ export interface Option {
 
 export interface Options {
   presentation: Option;
+  steps: Option;
   description: Option;
   recommendations: Option;
   sensitiveArea: Option;
