@@ -20,6 +20,8 @@ import {
   Lengths,
   Elevations,
   Districts,
+  TouristicContents,
+  TouristicContentCategories,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -59,6 +61,8 @@ const { state, onChange, reset } = createStore<{
   parentTrek: Trek;
   currentTrekSteps: Treks;
   selectedStepId: number;
+  touristicContents: TouristicContents;
+  touristicContentCategories: TouristicContentCategories;
 }>({
   api: null,
   languages: null,
@@ -96,6 +100,8 @@ const { state, onChange, reset } = createStore<{
   parentTrek: null,
   currentTrekSteps: null,
   selectedStepId: null,
+  touristicContents: null,
+  touristicContentCategories: null,
 });
 
 export { onChange, reset };

@@ -23,14 +23,16 @@
 
 ## Events
 
-| Event                              | Description | Type                   |
-| ---------------------------------- | ----------- | ---------------------- |
-| `descriptionReferenceIsInViewport` |             | `CustomEvent<boolean>` |
-| `informationDeskIsInViewport`      |             | `CustomEvent<boolean>` |
-| `parentTrekPress`                  |             | `CustomEvent<number>`  |
-| `parkingIsInViewport`              |             | `CustomEvent<boolean>` |
-| `poiIsInViewport`                  |             | `CustomEvent<boolean>` |
-| `sensitiveAreaIsInViewport`        |             | `CustomEvent<boolean>` |
+| Event                           | Description | Type                   |
+| ------------------------------- | ----------- | ---------------------- |
+| `descriptionIsInViewport`       |             | `CustomEvent<boolean>` |
+| `informationDeskIsInViewport`   |             | `CustomEvent<boolean>` |
+| `parentTrekPress`               |             | `CustomEvent<number>`  |
+| `parkingIsInViewport`           |             | `CustomEvent<boolean>` |
+| `poiIsInViewport`               |             | `CustomEvent<boolean>` |
+| `sensitiveAreaIsInViewport`     |             | `CustomEvent<boolean>` |
+| `stepsIsInViewport`             |             | `CustomEvent<boolean>` |
+| `touristicContentsIsInViewport` |             | `CustomEvent<boolean>` |
 
 
 ## Dependencies
@@ -43,16 +45,18 @@
 
 - [grw-trek-card](../grw-trek-card)
 - [grw-sensitive-area-detail](../grw-sensitive-area-detail)
-- [grw-information-desk-detail](../grw-information-desk-detail)
-- [grw-poi-detail](../grw-poi-detail)
+- [grw-information-desk](../grw-information-desk)
+- [grw-poi](../grw-poi-detail)
+- [grw-touristic-content](../grw-touristic-content)
 
 ### Graph
 ```mermaid
 graph TD;
   grw-trek-detail --> grw-trek-card
   grw-trek-detail --> grw-sensitive-area-detail
-  grw-trek-detail --> grw-information-desk-detail
-  grw-trek-detail --> grw-poi-detail
+  grw-trek-detail --> grw-information-desk
+  grw-trek-detail --> grw-poi
+  grw-trek-detail --> grw-touristic-content
   grw-app --> grw-trek-detail
   style grw-trek-detail fill:#f9f,stroke:#333,stroke-width:4px
 ```

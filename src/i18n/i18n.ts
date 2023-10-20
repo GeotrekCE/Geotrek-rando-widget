@@ -31,6 +31,7 @@ interface Translation {
   accessibilityExposure: string;
   accessibilityAdvices: string;
   pois: Function;
+  touristicContents: Function;
   sources: string;
   cities: string;
   options: {
@@ -41,6 +42,7 @@ interface Translation {
     informationPlaces: string;
     pois: string;
     steps: string;
+    touristicContents: string;
   };
   layers: {
     pointsReference: string;
@@ -49,6 +51,7 @@ interface Translation {
     informationPlaces: string;
     pois: string;
     steps: string;
+    touristicContents: string;
   };
   themes: string;
   routes: string;
@@ -100,6 +103,7 @@ export const translate: AvailableTranslations = {
     accessibilityExposure: 'Exposition',
     accessibilityAdvices: 'Conseils',
     pois: (poisLength: number) => `Les ${poisLength} patrimoines à découvrir`,
+    touristicContents: (touristicContentsLength: number) => `À proximité (${touristicContentsLength})`,
     sources: 'Sources',
     cities: 'Communes traversées',
     options: {
@@ -110,6 +114,7 @@ export const translate: AvailableTranslations = {
       informationPlaces: "Lieux d'informations",
       pois: 'Patrimoines',
       steps: 'Étapes',
+      touristicContents: 'À proximité',
     },
     layers: {
       pointsReference: 'Points de référence',
@@ -118,6 +123,7 @@ export const translate: AvailableTranslations = {
       informationPlaces: 'Lieux de renseignement',
       pois: 'Patrimoines',
       steps: 'Étapes',
+      touristicContents: 'À proximité',
     },
     themes: 'Thèmes',
     routes: 'Type de parcours',
@@ -162,6 +168,7 @@ export const translate: AvailableTranslations = {
     accessibilityExposure: 'Exposure',
     accessibilityAdvices: 'Advices',
     pois: (poisLength: number) => `${poisLength} points of interest`,
+    touristicContents: (touristicContentsLength: number) => `Near (${touristicContentsLength})`,
     sources: 'Sources',
     cities: 'Cities crossed',
     options: {
@@ -172,6 +179,7 @@ export const translate: AvailableTranslations = {
       informationPlaces: 'Information places',
       pois: 'Points of interest',
       steps: 'Steps',
+      touristicContents: 'Near',
     },
     layers: {
       pointsReference: 'Reference points',
@@ -180,6 +188,7 @@ export const translate: AvailableTranslations = {
       informationPlaces: 'Information places',
       pois: 'Points of interest',
       steps: 'Steps',
+      touristicContents: 'Near',
     },
     themes: 'Themes',
     routes: 'Type of course',

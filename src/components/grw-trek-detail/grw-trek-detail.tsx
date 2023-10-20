@@ -40,6 +40,11 @@ const pois: Option = {
   width: 120,
   indicator: false,
 };
+const touristicContents: Option = {
+  visible: false,
+  width: 120,
+  indicator: false,
+};
 const options: Options = {
   presentation,
   steps,
@@ -48,6 +53,7 @@ const options: Options = {
   sensitiveArea,
   informationPlaces,
   pois,
+  touristicContents,
 };
 
 @Component({
@@ -60,6 +66,7 @@ export class GrwTrekDetail {
   swiperStep?: Swiper;
   swiperPois?: Swiper;
   swiperInformationDesks?: Swiper;
+  swiperTouristicContents?: Swiper;
   swiperImagesRef?: HTMLDivElement;
   prevElImagesRef?: HTMLDivElement;
   nextElImagesRef?: HTMLDivElement;
@@ -67,6 +74,7 @@ export class GrwTrekDetail {
   swiperStepRef?: HTMLDivElement;
   swiperPoisRef?: HTMLDivElement;
   swiperInformationDesksRef?: HTMLDivElement;
+  swiperTouristicContentsRef?: HTMLDivElement;
   presentationRef?: HTMLDivElement;
   descriptionRef?: HTMLDivElement;
   parkingRef?: HTMLDivElement;
@@ -75,6 +83,7 @@ export class GrwTrekDetail {
   informationDeskRef?: HTMLDivElement;
   poiRef?: HTMLDivElement;
   stepsRef?: HTMLDivElement;
+  touristicContentsRef?: HTMLDivElement;
   trekDetailContainerRef?: HTMLElement;
   hasStep?: boolean;
 
@@ -85,6 +94,7 @@ export class GrwTrekDetail {
   @Event() informationDeskIsInViewport: EventEmitter<boolean>;
   @Event() poiIsInViewport: EventEmitter<boolean>;
   @Event() stepsIsInViewport: EventEmitter<boolean>;
+  @Event() touristicContentsIsInViewport: EventEmitter<boolean>;
   @Event() parentTrekPress: EventEmitter<number>;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
@@ -157,6 +167,20 @@ export class GrwTrekDetail {
       },
     });
     this.swiperInformationDesks = new Swiper(this.swiperInformationDesksRef, {
+      modules: [FreeMode, Mousewheel],
+      slidesPerView: 1.5,
+      spaceBetween: 20,
+      grabCursor: true,
+      freeMode: true,
+      mousewheel: { forceToAxis: true },
+      breakpointsBase: 'container',
+      breakpoints: {
+        '540': {
+          slidesPerView: 2.5,
+        },
+      },
+    });
+    this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
       modules: [FreeMode, Mousewheel],
       slidesPerView: 1.5,
       spaceBetween: 20,
@@ -248,6 +272,16 @@ export class GrwTrekDetail {
       });
       poiObserver.observe(this.poiRef);
     }
+    if (this.touristicContentsRef) {
+      const touristicContentObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        this.touristicContentsIsInViewport.emit(isIntersecting);
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, touristicContents: { ...this.defaultOptions.touristicContents, indicator: isIntersecting } };
+        }
+      });
+      touristicContentObserver.observe(this.touristicContentsRef);
+    }
   }
 
   connectedCallback() {
@@ -311,6 +345,7 @@ export class GrwTrekDetail {
         ),
       },
       pois: { ...pois, visible: Boolean(state.currentPois && state.currentPois.length > 0) },
+      touristicContents: { ...touristicContents, visible: Boolean(state.touristicContents && state.touristicContents.length > 0) },
     };
   }
 
@@ -400,6 +435,14 @@ export class GrwTrekDetail {
             {this.options.pois.visible && (
               <a onClick={() => this.handleScrollTo(this.poiRef)} class={`pois trek-option${this.options.pois.indicator ? ' selected-trek-option' : ''}`}>
                 {translate[state.language].options.pois}
+              </a>
+            )}
+            {this.options.touristicContents.visible && (
+              <a
+                onClick={() => this.handleScrollTo(this.touristicContentsRef)}
+                class={`touristic-content trek-option${this.options.touristicContents.indicator ? ' selected-trek-option' : ''}`}
+              >
+                {translate[state.language].options.touristicContents}
               </a>
             )}
             <span class="indicator-selected-trek-option" style={{ transform: `translateX(${this.handleIndicatorSelectedTrekOption()})` }}></span>
@@ -630,7 +673,7 @@ export class GrwTrekDetail {
                           .filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id))
                           .map(informationDesk => (
                             <div class="swiper-slide">
-                              <grw-information-desk-detail informationDesk={informationDesk}></grw-information-desk-detail>
+                              <grw-information-desk informationDesk={informationDesk}></grw-information-desk>
                             </div>
                           ))}
                       </div>
@@ -714,7 +757,24 @@ export class GrwTrekDetail {
                     <div class="swiper-wrapper">
                       {state.currentPois.map(poi => (
                         <div class="swiper-slide">
-                          <grw-poi-detail poi={poi}></grw-poi-detail>
+                          <grw-poi poi={poi}></grw-poi>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {state.touristicContents && state.touristicContents.length > 0 && (
+              <div>
+                <div class="divider"></div>
+                <div class="touristic-content-container" ref={el => (this.touristicContentsRef = el)}>
+                  <div class="touristic-content-title">{translate[state.language].touristicContents(state.touristicContents.length)}</div>
+                  <div class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
+                    <div class="swiper-wrapper">
+                      {state.touristicContents.map(touristicContent => (
+                        <div class="swiper-slide">
+                          <grw-touristic-content touristicContent={touristicContent}></grw-touristic-content>
                         </div>
                       ))}
                     </div>

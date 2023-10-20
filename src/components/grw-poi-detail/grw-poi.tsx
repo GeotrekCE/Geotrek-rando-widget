@@ -4,8 +4,8 @@ import state from 'store/store';
 import { Poi } from 'types/types';
 
 @Component({
-  tag: 'grw-poi-detail',
-  styleUrl: 'grw-poi-detail.scss',
+  tag: 'grw-poi',
+  styleUrl: 'grw-poi.scss',
   shadow: true,
 })
 export class GrwPoiDetail {

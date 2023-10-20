@@ -78,8 +78,9 @@ graph TD;
   grw-treks-list --> grw-trek-card
   grw-trek-detail --> grw-trek-card
   grw-trek-detail --> grw-sensitive-area-detail
-  grw-trek-detail --> grw-information-desk-detail
-  grw-trek-detail --> grw-poi-detail
+  grw-trek-detail --> grw-information-desk
+  grw-trek-detail --> grw-poi
+  grw-trek-detail --> grw-touristic-content
   style grw-app fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -56,6 +56,11 @@ export class GrwTrekProvider {
         this.init,
       ),
       fetch(
+        `${state.api}touristiccontent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,description_teaser,category,geometry&page_size=999`,
+        this.init,
+      ),
+      fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
+      fetch(
         `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,information_desks,children`,
         this.init,
       ),
@@ -76,6 +81,8 @@ export class GrwTrekProvider {
           pois,
           poiTypes,
           informationDesks,
+          touristicContent,
+          touristicContentCategory,
           trek,
         ]) => {
           state.trekNetworkError = false;
@@ -131,6 +138,12 @@ export class GrwTrekProvider {
           state.sources = sources.results;
           if (accessibilitiesLevel) {
             state.accessibilitiesLevel = accessibilitiesLevel.results;
+          }
+          if (touristicContent) {
+            state.touristicContents = touristicContent.results;
+          }
+          if (touristicContentCategory) {
+            state.touristicContentCategories = touristicContentCategory.results;
           }
           state.currentPois = pois.results;
           state.poiTypes = poiTypes.results;

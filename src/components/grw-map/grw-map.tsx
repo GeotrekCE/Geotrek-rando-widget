@@ -52,6 +52,7 @@ export class GrwMap {
   currentSensitiveAreasLayer: L.GeoJSON<any>;
   currentPoisLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
+  currentToutisticContentsLayer: L.GeoJSON<any>;
   elevationControl: L.Control.Layers;
   layersControl: L.Control.Layers;
   userLayersState: {
@@ -107,6 +108,13 @@ export class GrwMap {
   poiIsInViewport(event: CustomEvent<boolean>) {
     if (this.currentPoisLayer) {
       this.handleLayerVisibility(event.detail, this.currentPoisLayer);
+    }
+  }
+
+  @Listen('touristicContentsIsInViewport', { target: 'window' })
+  touristicContentsIsInViewport(event: CustomEvent<boolean>) {
+    if (this.currentToutisticContentsLayer) {
+      this.handleLayerVisibility(event.detail, this.currentToutisticContentsLayer);
     }
   }
 
@@ -461,6 +469,47 @@ export class GrwMap {
       });
     }
 
+    if (state.touristicContents && state.touristicContents.length > 0) {
+      const currentTouristicContentsFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const touristicContent of state.touristicContents) {
+        currentTouristicContentsFeatureCollection.features.push({
+          type: 'Feature',
+          properties: {
+            name: touristicContent.name,
+            category_pictogram: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category)?.pictogram,
+          },
+          geometry: touristicContent.geometry,
+        });
+      }
+
+      this.currentToutisticContentsLayer = L.geoJSON(currentTouristicContentsFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: geoJsonPoint.properties.category_pictogram ? `<img src=${geoJsonPoint.properties.category_pictogram} />` : `<img />`,
+              className: 'touristic-content-icon',
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('mouseover', () => {
+            const touristicContentTooltip = L.DomUtil.create('div');
+            touristicContentTooltip.className = 'poi-tooltip';
+            const touristicContentName = L.DomUtil.create('div');
+            touristicContentName.innerHTML = geoJsonPoint.properties.name;
+            touristicContentName.className = 'touristic-content-name';
+            touristicContentTooltip.appendChild(touristicContentName);
+            layer.bindTooltip(touristicContentTooltip).openTooltip();
+          });
+        },
+      });
+    }
+
     if (state.currentInformationDesks && state.currentInformationDesks.length > 0) {
       const currentInformationDesksFeatureCollection: FeatureCollection = {
         type: 'FeatureCollection',
@@ -662,6 +711,9 @@ export class GrwMap {
     }
     if (this.currentPoisLayer) {
       overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
+    }
+    if (this.currentToutisticContentsLayer) {
+      overlays[translate[state.language].layers.touristicContents] = this.currentToutisticContentsLayer;
     }
 
     if (this.layersControl) {
@@ -916,6 +968,11 @@ export class GrwMap {
     if (this.currentStepsLayer) {
       this.map.removeLayer(this.currentStepsLayer);
       this.currentStepsLayer = null;
+    }
+
+    if (this.currentToutisticContentsLayer) {
+      this.map.removeLayer(this.currentToutisticContentsLayer);
+      this.currentToutisticContentsLayer = null;
     }
   }
 

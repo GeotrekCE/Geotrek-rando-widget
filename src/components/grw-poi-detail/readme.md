@@ -21,8 +21,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  grw-trek-detail --> grw-poi-detail
-  style grw-poi-detail fill:#f9f,stroke:#333,stroke-width:4px
+  grw-trek-detail --> grw-poi
+  style grw-poi fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

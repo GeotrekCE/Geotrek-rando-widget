@@ -228,6 +228,25 @@ export type InformationDeskType = {
   pictogram: string;
 };
 
+export type TouristicContent = {
+  id: number;
+  name: string;
+  attachments: Attachments;
+  description_teaser: string;
+  category: number;
+  geometry: Geometry;
+};
+
+export type TouristicContents = TouristicContent[];
+
+export type TouristicContentCategory = {
+  id: number;
+  label: string;
+  pictogram: string;
+};
+
+export type TouristicContentCategories = TouristicContentCategory[];
+
 export type Filters = Filter[];
 
 export type Filter = { property: string; trekProperty: string; trekPropertyIsArray: boolean; type: string; segment: string };
@@ -246,4 +265,5 @@ export interface Options {
   sensitiveArea: Option;
   informationPlaces: Option;
   pois: Option;
+  touristicContents: Option;
 }

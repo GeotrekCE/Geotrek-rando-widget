@@ -116,6 +116,10 @@ grw-trek-detail {
     width: 240px;
     background-size: 120px 100%;
   }
+  .touristic-content.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 240px;
+    background-size: 120px 100%;
+  }
   .presentation {
     min-width: 120px;
     width: 120px;
@@ -141,6 +145,10 @@ grw-trek-detail {
     width: 200px;
   }
   .pois {
+    min-width: 120px;
+    width: 120px;
+  }
+  .touristic-content {
     min-width: 120px;
     width: 120px;
   }
@@ -307,7 +315,8 @@ grw-trek-detail {
   .accessibilities-container,
   .weather-container,
   .parent-trek-container,
-  .step-container {
+  .step-container,
+  .touristic-content-container {
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
@@ -328,7 +337,8 @@ grw-trek-detail {
   .source-title,
   .accessibilities-title,
   .step-title,
-  .parent-trek-title {
+  .parent-trek-title,
+  .touristic-content-title {
     color: var(--color-on-surface);
     font-size: 22px;
     line-height: 28px;
@@ -348,7 +358,8 @@ grw-trek-detail {
   .pois-title,
   .source-title,
   .accessibilities-title,
-  .parent-trek-title {
+  .parent-trek-title,
+  .touristic-content-title {
     margin-bottom: 16px;
   }
 
@@ -358,7 +369,8 @@ grw-trek-detail {
 
   .information-desks-title,
   .pois-title,
-  .step-title {
+  .step-title,
+  .touristic-content-title {
     padding: 0px 24px 0px 24px;
   }
 
@@ -534,7 +546,8 @@ grw-trek-detail {
 
 .swiper-information-desks,
 .swiper-pois,
-.swiper-step {
+.swiper-step,
+.swiper-touristic-content {
   padding-right: 32px;
   padding-left: 32px;
 }

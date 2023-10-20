@@ -28,8 +28,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  grw-trek-detail --> grw-information-desk-detail
-  style grw-information-desk-detail fill:#f9f,stroke:#333,stroke-width:4px
+  grw-trek-detail --> grw-information-desk
+  style grw-information-desk fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

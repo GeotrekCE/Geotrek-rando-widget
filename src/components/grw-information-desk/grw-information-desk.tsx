@@ -2,8 +2,8 @@ import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/c
 import { InformationDesk } from 'types/types';
 
 @Component({
-  tag: 'grw-information-desk-detail',
-  styleUrl: 'grw-information-desk-detail.scss',
+  tag: 'grw-information-desk',
+  styleUrl: 'grw-information-desk.scss',
   shadow: true,
 })
 export class GrwInformationDeskDetail {

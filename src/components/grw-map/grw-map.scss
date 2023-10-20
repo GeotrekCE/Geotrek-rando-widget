@@ -222,7 +222,8 @@
 .sensitive-area-tooltip {
   .poi-name,
   .information-desks-name,
-  .sensitive-area-name {
+  .sensitive-area-name,
+  .touristic-content-name {
     color: var(--color-primary-app);
     font-weight: 400;
     font-size: 16px;
@@ -251,7 +252,8 @@
 }
 
 .poi-icon,
-.information-desks-icon {
+.information-desks-icon,
+.touristic-content-icon {
   background-color: var(--color-poi-icon);
   border-radius: 50%;
   display: flex;

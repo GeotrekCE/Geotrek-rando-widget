@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { InformationDesk, Poi, SensitiveArea, Trek } from "types/types";
-export { InformationDesk, Poi, SensitiveArea, Trek } from "types/types";
+import { InformationDesk, Poi, SensitiveArea, TouristicContent, Trek } from "types/types";
+export { InformationDesk, Poi, SensitiveArea, TouristicContent, Trek } from "types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
@@ -53,7 +53,7 @@ export namespace Components {
         "filterType": string;
         "segment": string;
     }
-    interface GrwInformationDeskDetail {
+    interface GrwInformationDesk {
         "informationDesk": InformationDesk;
     }
     interface GrwMap {
@@ -74,7 +74,7 @@ export namespace Components {
         "useGradient": boolean;
         "zoom": number;
     }
-    interface GrwPoiDetail {
+    interface GrwPoi {
         "poi": Poi;
     }
     interface GrwSearch {
@@ -83,6 +83,9 @@ export namespace Components {
     }
     interface GrwSensitiveAreaDetail {
         "sensitiveArea": SensitiveArea;
+    }
+    interface GrwTouristicContent {
+        "touristicContent": TouristicContent;
     }
     interface GrwTrekCard {
         "colorOnSecondaryContainer": string;
@@ -140,9 +143,9 @@ export interface GrwAppCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwAppElement;
 }
-export interface GrwInformationDeskDetailCustomEvent<T> extends CustomEvent<T> {
+export interface GrwInformationDeskCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLGrwInformationDeskDetailElement;
+    target: HTMLGrwInformationDeskElement;
 }
 export interface GrwMapCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -169,11 +172,11 @@ declare global {
         prototype: HTMLGrwFilterElement;
         new (): HTMLGrwFilterElement;
     };
-    interface HTMLGrwInformationDeskDetailElement extends Components.GrwInformationDeskDetail, HTMLStencilElement {
+    interface HTMLGrwInformationDeskElement extends Components.GrwInformationDesk, HTMLStencilElement {
     }
-    var HTMLGrwInformationDeskDetailElement: {
-        prototype: HTMLGrwInformationDeskDetailElement;
-        new (): HTMLGrwInformationDeskDetailElement;
+    var HTMLGrwInformationDeskElement: {
+        prototype: HTMLGrwInformationDeskElement;
+        new (): HTMLGrwInformationDeskElement;
     };
     interface HTMLGrwMapElement extends Components.GrwMap, HTMLStencilElement {
     }
@@ -181,11 +184,11 @@ declare global {
         prototype: HTMLGrwMapElement;
         new (): HTMLGrwMapElement;
     };
-    interface HTMLGrwPoiDetailElement extends Components.GrwPoiDetail, HTMLStencilElement {
+    interface HTMLGrwPoiElement extends Components.GrwPoi, HTMLStencilElement {
     }
-    var HTMLGrwPoiDetailElement: {
-        prototype: HTMLGrwPoiDetailElement;
-        new (): HTMLGrwPoiDetailElement;
+    var HTMLGrwPoiElement: {
+        prototype: HTMLGrwPoiElement;
+        new (): HTMLGrwPoiElement;
     };
     interface HTMLGrwSearchElement extends Components.GrwSearch, HTMLStencilElement {
     }
@@ -204,6 +207,12 @@ declare global {
     var HTMLGrwSensitiveAreaDetailElement: {
         prototype: HTMLGrwSensitiveAreaDetailElement;
         new (): HTMLGrwSensitiveAreaDetailElement;
+    };
+    interface HTMLGrwTouristicContentElement extends Components.GrwTouristicContent, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicContentElement: {
+        prototype: HTMLGrwTouristicContentElement;
+        new (): HTMLGrwTouristicContentElement;
     };
     interface HTMLGrwTrekCardElement extends Components.GrwTrekCard, HTMLStencilElement {
     }
@@ -238,12 +247,13 @@ declare global {
     interface HTMLElementTagNameMap {
         "grw-app": HTMLGrwAppElement;
         "grw-filter": HTMLGrwFilterElement;
-        "grw-information-desk-detail": HTMLGrwInformationDeskDetailElement;
+        "grw-information-desk": HTMLGrwInformationDeskElement;
         "grw-map": HTMLGrwMapElement;
-        "grw-poi-detail": HTMLGrwPoiDetailElement;
+        "grw-poi": HTMLGrwPoiElement;
         "grw-search": HTMLGrwSearchElement;
         "grw-select-language": HTMLGrwSelectLanguageElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
+        "grw-touristic-content": HTMLGrwTouristicContentElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
         "grw-trek-detail": HTMLGrwTrekDetailElement;
         "grw-trek-provider": HTMLGrwTrekProviderElement;
@@ -298,9 +308,9 @@ declare namespace LocalJSX {
         "filterType"?: string;
         "segment"?: string;
     }
-    interface GrwInformationDeskDetail {
+    interface GrwInformationDesk {
         "informationDesk"?: InformationDesk;
-        "onCenterOnMap"?: (event: GrwInformationDeskDetailCustomEvent<{ latitude: number; longitude: number }>) => void;
+        "onCenterOnMap"?: (event: GrwInformationDeskCustomEvent<{ latitude: number; longitude: number }>) => void;
     }
     interface GrwMap {
         "attributionLayer"?: string;
@@ -321,7 +331,7 @@ declare namespace LocalJSX {
         "useGradient"?: boolean;
         "zoom"?: number;
     }
-    interface GrwPoiDetail {
+    interface GrwPoi {
         "poi"?: Poi;
     }
     interface GrwSearch {
@@ -330,6 +340,9 @@ declare namespace LocalJSX {
     }
     interface GrwSensitiveAreaDetail {
         "sensitiveArea"?: SensitiveArea;
+    }
+    interface GrwTouristicContent {
+        "touristicContent"?: TouristicContent;
     }
     interface GrwTrekCard {
         "colorOnSecondaryContainer"?: string;
@@ -362,6 +375,7 @@ declare namespace LocalJSX {
         "onPoiIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onSensitiveAreaIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onStepsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onTouristicContentsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
         "weather"?: boolean;
@@ -395,12 +409,13 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "grw-app": GrwApp;
         "grw-filter": GrwFilter;
-        "grw-information-desk-detail": GrwInformationDeskDetail;
+        "grw-information-desk": GrwInformationDesk;
         "grw-map": GrwMap;
-        "grw-poi-detail": GrwPoiDetail;
+        "grw-poi": GrwPoi;
         "grw-search": GrwSearch;
         "grw-select-language": GrwSelectLanguage;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
+        "grw-touristic-content": GrwTouristicContent;
         "grw-trek-card": GrwTrekCard;
         "grw-trek-detail": GrwTrekDetail;
         "grw-trek-provider": GrwTrekProvider;
@@ -414,12 +429,13 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
             "grw-filter": LocalJSX.GrwFilter & JSXBase.HTMLAttributes<HTMLGrwFilterElement>;
-            "grw-information-desk-detail": LocalJSX.GrwInformationDeskDetail & JSXBase.HTMLAttributes<HTMLGrwInformationDeskDetailElement>;
+            "grw-information-desk": LocalJSX.GrwInformationDesk & JSXBase.HTMLAttributes<HTMLGrwInformationDeskElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
-            "grw-poi-detail": LocalJSX.GrwPoiDetail & JSXBase.HTMLAttributes<HTMLGrwPoiDetailElement>;
+            "grw-poi": LocalJSX.GrwPoi & JSXBase.HTMLAttributes<HTMLGrwPoiElement>;
             "grw-search": LocalJSX.GrwSearch & JSXBase.HTMLAttributes<HTMLGrwSearchElement>;
             "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
+            "grw-touristic-content": LocalJSX.GrwTouristicContent & JSXBase.HTMLAttributes<HTMLGrwTouristicContentElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
             "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
             "grw-trek-provider": LocalJSX.GrwTrekProvider & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;
