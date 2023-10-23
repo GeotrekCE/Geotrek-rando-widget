@@ -482,7 +482,10 @@ export class GrwTrekDetail {
                     {this.difficulty?.label}
                   </div>
                   <div class="icon-label duration">
-                    <span class="material-symbols material-symbols-outlined">timelapse</span>
+                    {/* @ts-ignore */}
+                    <span translate={false} class="material-symbols material-symbols-outlined">
+                      timelapse
+                    </span>
                     {formatDuration(this.currentTrek?.duration)}
                   </div>
                   <div class="icon-label route">
@@ -492,11 +495,17 @@ export class GrwTrekDetail {
                 </div>
                 <div class="row">
                   <div class="icon-label length">
-                    <span class="material-symbols material-symbols-outlined">open_in_full</span>
+                    {/* @ts-ignore */}
+                    <span translate={false} class="material-symbols material-symbols-outlined">
+                      open_in_full
+                    </span>
                     {formatLength(this.currentTrek.length_2d)}
                   </div>
                   <div class="icon-label ascent">
-                    <span class="material-symbols material-symbols-outlined">moving</span>
+                    {/* @ts-ignore */}
+                    <span translate={false} class="material-symbols material-symbols-outlined">
+                      moving
+                    </span>
                     {formatAscent(this.currentTrek.ascent)}
                   </div>
                   <div class="icon-label practice">
@@ -511,13 +520,25 @@ export class GrwTrekDetail {
               <div class="download-title">{translate[state.language].downloads}</div>
               <div class="links-container">
                 <a href={`${this.currentTrek.gpx}`}>
-                  <span class="material-symbols material-symbols-outlined">download</span>GPX
+                  {/* @ts-ignore */}
+                  <span translate={false} class="material-symbols material-symbols-outlined">
+                    download
+                  </span>
+                  GPX
                 </a>
                 <a href={`${this.currentTrek.kml}`}>
-                  <span class="material-symbols material-symbols-outlined">download</span>KML
+                  {/* @ts-ignore */}
+                  <span translate={false} class="material-symbols material-symbols-outlined">
+                    download
+                  </span>
+                  KML
                 </a>
                 <a href={`${this.currentTrek.pdf}`}>
-                  <span class="material-symbols material-symbols-outlined">download</span>PDF
+                  {/* @ts-ignore */}
+                  <span translate={false} class="material-symbols material-symbols-outlined">
+                    download
+                  </span>
+                  PDF
                 </a>
               </div>
             </div>
@@ -616,7 +637,10 @@ export class GrwTrekDetail {
                   <div class="advice-title">{translate[state.language].recommendations}</div>
                   {this.currentTrek.advice && (
                     <div class="current-advice-container">
-                      <span class="material-symbols material-symbols-outlined">warning</span>
+                      {/* @ts-ignore */}
+                      <span translate={false} class="material-symbols material-symbols-outlined">
+                        warning
+                      </span>
                       <div class="advice" innerHTML={this.currentTrek.advice}></div>
                     </div>
                   )}

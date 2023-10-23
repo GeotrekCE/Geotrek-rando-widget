@@ -45,7 +45,8 @@ export class GrwFilter {
         <div class="filter-button-container">
           {state[this.filterType].map(currentFilter => (
             <button onClick={event => this.handleFilter(event, currentFilter)} class={currentFilter.selected ? 'selected-filter-button' : 'filter-button'}>
-              {currentFilter.selected && <span class="material-symbols material-symbols-outlined">check</span>}
+              {/* @ts-ignore */}
+              {currentFilter.selected && <span translate={false} class="material-symbols material-symbols-outlined">check</span>}
               {currentFilter[this.filterNameProperty]}
             </button>
           ))}
