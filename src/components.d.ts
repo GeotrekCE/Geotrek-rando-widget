@@ -53,6 +53,9 @@ export namespace Components {
         "filterType": string;
         "segment": string;
     }
+    interface GrwFilters {
+        "handleFilters": Function;
+    }
     interface GrwInformationDesk {
         "informationDesk": InformationDesk;
     }
@@ -139,9 +142,9 @@ export namespace Components {
         "themes": string;
     }
 }
-export interface GrwAppCustomEvent<T> extends CustomEvent<T> {
+export interface GrwFiltersCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLGrwAppElement;
+    target: HTMLGrwFiltersElement;
 }
 export interface GrwInformationDeskCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -171,6 +174,12 @@ declare global {
     var HTMLGrwFilterElement: {
         prototype: HTMLGrwFilterElement;
         new (): HTMLGrwFilterElement;
+    };
+    interface HTMLGrwFiltersElement extends Components.GrwFilters, HTMLStencilElement {
+    }
+    var HTMLGrwFiltersElement: {
+        prototype: HTMLGrwFiltersElement;
+        new (): HTMLGrwFiltersElement;
     };
     interface HTMLGrwInformationDeskElement extends Components.GrwInformationDesk, HTMLStencilElement {
     }
@@ -247,6 +256,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "grw-app": HTMLGrwAppElement;
         "grw-filter": HTMLGrwFilterElement;
+        "grw-filters": HTMLGrwFiltersElement;
         "grw-information-desk": HTMLGrwInformationDeskElement;
         "grw-map": HTMLGrwMapElement;
         "grw-poi": HTMLGrwPoiElement;
@@ -291,7 +301,6 @@ declare namespace LocalJSX {
         "inBbox"?: string;
         "languages"?: string;
         "nameLayer"?: string;
-        "onResetFilter"?: (event: GrwAppCustomEvent<any>) => void;
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
@@ -307,6 +316,10 @@ declare namespace LocalJSX {
         "filterNameProperty"?: string;
         "filterType"?: string;
         "segment"?: string;
+    }
+    interface GrwFilters {
+        "handleFilters"?: Function;
+        "onResetFilter"?: (event: GrwFiltersCustomEvent<any>) => void;
     }
     interface GrwInformationDesk {
         "informationDesk"?: InformationDesk;
@@ -409,6 +422,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "grw-app": GrwApp;
         "grw-filter": GrwFilter;
+        "grw-filters": GrwFilters;
         "grw-information-desk": GrwInformationDesk;
         "grw-map": GrwMap;
         "grw-poi": GrwPoi;
@@ -429,6 +443,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
             "grw-filter": LocalJSX.GrwFilter & JSXBase.HTMLAttributes<HTMLGrwFilterElement>;
+            "grw-filters": LocalJSX.GrwFilters & JSXBase.HTMLAttributes<HTMLGrwFiltersElement>;
             "grw-information-desk": LocalJSX.GrwInformationDesk & JSXBase.HTMLAttributes<HTMLGrwInformationDeskElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-poi": LocalJSX.GrwPoi & JSXBase.HTMLAttributes<HTMLGrwPoiElement>;
