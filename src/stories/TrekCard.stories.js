@@ -13,7 +13,7 @@ export const TrekCard = Template.bind({});
 
 TrekCard.args = {
   api: 'https://randoadmin.parc-haut-jura.fr/api/v2/',
-  language: 'fr',
+  languages: 'fr',
   trekId: 242872,
   colorPrimaryApp: '#6b0030',
   colorOnSurface: '#49454e',

@@ -27,7 +27,7 @@ App.args = {
   appWidth: '100%',
   appHeight: '100vh',
   api: 'https://randoadmin.parc-haut-jura.fr/api/v2/',
-  language: 'fr',
+  languages: 'fr',
   inBbox: '',
   cities: '',
   districts: '',

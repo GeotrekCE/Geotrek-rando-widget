@@ -1,6 +1,6 @@
 export const createTreksList = ({
   api,
-  language,
+  languages,
   inBbox,
   cities,
   districts,
@@ -18,7 +18,7 @@ export const createTreksList = ({
   const container = document.createElement('div');
   const treks = document.createElement('grw-treks-provider');
   treks.setAttribute('api', api);
-  treks.setAttribute('language', language);
+  treks.setAttribute('languages', languages);
   inBbox && treks.setAttribute('in-bbox', inBbox);
   cities && treks.setAttribute('cities', cities);
   districts && treks.setAttribute('districts', districts);

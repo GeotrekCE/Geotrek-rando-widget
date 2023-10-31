@@ -1,8 +1,8 @@
-export const createTrekCard = ({ api, language, trekId, colorPrimaryApp, colorOnSurface, colorSecondaryContainer, colorOnSecondaryContainer, colorSurfaceContainerLow }) => {
+export const createTrekCard = ({ api, languages, trekId, colorPrimaryApp, colorOnSurface, colorSecondaryContainer, colorOnSecondaryContainer, colorSurfaceContainerLow }) => {
   const container = document.createElement('div');
   const trek = document.createElement('grw-trek-provider');
   trek.setAttribute('api', api);
-  trek.setAttribute('language', language);
+  trek.setAttribute('languages', languages);
   trek.setAttribute('trek-id', trekId);
   container.appendChild(trek);
   const card = document.createElement('grw-trek-card');

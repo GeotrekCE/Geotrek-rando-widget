@@ -2,7 +2,7 @@ export const createApp = ({
   appWidth,
   appHeight,
   api,
-  language,
+  languages,
   inBbox,
   cities,
   districts,
@@ -38,7 +38,7 @@ export const createApp = ({
   app.setAttribute('app-width', appWidth);
   app.setAttribute('app-height', appHeight);
   app.setAttribute('api', api);
-  app.setAttribute('language', language);
+  app.setAttribute('languages', languages);
   inBbox && app.setAttribute('in-bbox', inBbox);
   cities && app.setAttribute('cities', cities);
   districts && app.setAttribute('districts', districts);

@@ -1,6 +1,6 @@
 export const createTrekDetail = ({
   api,
-  language,
+  languages,
   trekId,
   colorPrimaryApp,
   colorOnSurface,
@@ -13,7 +13,7 @@ export const createTrekDetail = ({
   const container = document.createElement('div');
   const trek = document.createElement('grw-trek-provider');
   trek.setAttribute('api', api);
-  trek.setAttribute('language', language);
+  trek.setAttribute('languages', languages);
   trek.setAttribute('trek-id', trekId);
   container.appendChild(trek);
   const detail = document.createElement('grw-trek-detail');
