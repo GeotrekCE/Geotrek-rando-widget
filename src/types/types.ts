@@ -1,4 +1,4 @@
-import { LineString, Geometry, Position, MultiPoint } from 'geojson';
+import { LineString, Geometry, Position, MultiPoint, Point } from 'geojson';
 
 export type Treks = Trek[];
 
@@ -232,9 +232,17 @@ export type TouristicContent = {
   id: number;
   name: string;
   attachments: Attachments;
-  description_teaser: string;
+  description?: string;
+  description_teaser?: string;
+  practical_info?: string;
   category: number;
-  geometry: Geometry;
+  geometry: Point;
+  cities?: string[];
+  source?: number[];
+  pdf?: string;
+  contact?: string;
+  email?: string;
+  website?: string;
 };
 
 export type TouristicContents = TouristicContent[];

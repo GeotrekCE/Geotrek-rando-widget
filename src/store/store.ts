@@ -22,6 +22,7 @@ import {
   Districts,
   TouristicContents,
   TouristicContentCategories,
+  TouristicContent,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -63,6 +64,7 @@ const { state, onChange, reset } = createStore<{
   selectedStepId: number;
   touristicContents: TouristicContents;
   touristicContentCategories: TouristicContentCategories;
+  currentTouristicContent: TouristicContent;
 }>({
   api: null,
   languages: null,
@@ -102,6 +104,7 @@ const { state, onChange, reset } = createStore<{
   selectedStepId: null,
   touristicContents: null,
   touristicContentCategories: null,
+  currentTouristicContent: null,
 });
 
 export { onChange, reset };

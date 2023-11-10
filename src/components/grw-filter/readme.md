@@ -19,12 +19,12 @@
 
 ### Used by
 
- - [grw-app](../grw-app)
+ - [grw-filters](../grw-filters)
 
 ### Graph
 ```mermaid
 graph TD;
-  grw-app --> grw-filter
+  grw-filters --> grw-filter
   style grw-filter fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

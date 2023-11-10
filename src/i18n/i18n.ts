@@ -10,6 +10,7 @@ interface Translation {
   showMap: string;
   showRoute: string;
   showDetails: string;
+  download: string;
   downloads: string;
   description: string;
   departure: string;
@@ -33,7 +34,8 @@ interface Translation {
   pois: Function;
   touristicContents: Function;
   sources: string;
-  cities: string;
+  city: string;
+  crossedCities: string;
   options: {
     presentation: string;
     description: string;
@@ -45,7 +47,7 @@ interface Translation {
     touristicContents: string;
   };
   layers: {
-    pointsReference: string;
+    referencePoints: string;
     parking: string;
     sensitiveArea: string;
     informationPlaces: string;
@@ -62,6 +64,10 @@ interface Translation {
   ok: string;
   location: string;
   steps: string;
+  usefulInformation: string;
+  contact: string;
+  email: string;
+  website: string;
 }
 
 interface AvailableTranslations {
@@ -82,6 +88,7 @@ export const translate: AvailableTranslations = {
     showMap: 'Voir la carte',
     showRoute: "Voir l'itinéraire",
     showDetails: 'Voir la fiche',
+    download: 'Téléchargement',
     downloads: 'Téléchargements',
     description: 'Description',
     departure: 'Départ',
@@ -105,7 +112,8 @@ export const translate: AvailableTranslations = {
     pois: (poisLength: number) => `Les ${poisLength} patrimoines à découvrir`,
     touristicContents: (touristicContentsLength: number) => `À proximité (${touristicContentsLength})`,
     sources: 'Sources',
-    cities: 'Communes traversées',
+    city: 'Commune',
+    crossedCities: 'Communes traversées',
     options: {
       presentation: 'Présentation',
       description: 'Description',
@@ -117,7 +125,7 @@ export const translate: AvailableTranslations = {
       touristicContents: 'À proximité',
     },
     layers: {
-      pointsReference: 'Points de référence',
+      referencePoints: 'Points de référence',
       parking: 'Parking conseillé',
       sensitiveArea: 'Zones de sensibilité environnementale',
       informationPlaces: 'Lieux de renseignement',
@@ -134,6 +142,10 @@ export const translate: AvailableTranslations = {
     ok: 'Ok',
     location: 'Localisation',
     steps: 'étapes',
+    usefulInformation: 'Informations pratiques',
+    contact: 'Contact',
+    email: 'Email',
+    website: 'Site web',
   },
   en: {
     filter: 'Filter',
@@ -147,6 +159,7 @@ export const translate: AvailableTranslations = {
     showMap: 'Show the map',
     showRoute: 'Show the route',
     showDetails: 'Show the details',
+    download: 'Download',
     downloads: 'Downloads',
     description: 'Description',
     departure: 'Departure',
@@ -170,7 +183,8 @@ export const translate: AvailableTranslations = {
     pois: (poisLength: number) => `${poisLength} points of interest`,
     touristicContents: (touristicContentsLength: number) => `Near (${touristicContentsLength})`,
     sources: 'Sources',
-    cities: 'Cities crossed',
+    city: 'City',
+    crossedCities: 'Cities crossed',
     options: {
       presentation: 'Presentation',
       description: 'Description',
@@ -182,7 +196,7 @@ export const translate: AvailableTranslations = {
       touristicContents: 'Near',
     },
     layers: {
-      pointsReference: 'Reference points',
+      referencePoints: 'Reference points',
       parking: 'Parking',
       sensitiveArea: 'Sensitive areas',
       informationPlaces: 'Information places',
@@ -198,6 +212,10 @@ export const translate: AvailableTranslations = {
     erase: 'Erase',
     ok: 'Ok',
     location: 'Location',
+    usefulInformation: 'Useful information',
     steps: 'steps',
+    contact: 'Contact',
+    email: 'Email',
+    website: 'Website',
   },
 };

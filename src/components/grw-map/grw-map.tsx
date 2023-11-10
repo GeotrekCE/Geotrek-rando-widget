@@ -17,6 +17,8 @@ import { getTrekGeometry } from 'services/treks.service';
 export class GrwMap {
   mapRef: HTMLElement;
   elevationRef: HTMLElement;
+  maxZoom = 19;
+
   @Event() trekCardPress: EventEmitter<number>;
   @State() mapIsReady = false;
   @Prop() nameLayer: string;
@@ -47,12 +49,13 @@ export class GrwMap {
   currentStepsLayer: L.GeoJSON<any>;
   selectedCurrentTrekLayer: L.GeoJSON<any>;
   selectedCurrentStepLayer: L.GeoJSON<any>;
-  currentPointsReferenceLayer: L.GeoJSON<any>;
+  currentReferencePointsLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
   currentPoisLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
   currentToutisticContentsLayer: L.GeoJSON<any>;
+  currentToutisticContentLayer: L.GeoJSON<any>;
   elevationControl: L.Control.Layers;
   layersControl: L.Control.Layers;
   userLayersState: {
@@ -78,8 +81,8 @@ export class GrwMap {
 
   @Listen('descriptionIsInViewport', { target: 'window' })
   descriptionIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentPointsReferenceLayer) {
-      this.handleLayerVisibility(event.detail, this.currentPointsReferenceLayer);
+    if (this.currentReferencePointsLayer) {
+      this.handleLayerVisibility(event.detail, this.currentReferencePointsLayer);
     }
   }
 
@@ -163,7 +166,7 @@ export class GrwMap {
       this.tileLayer.push({
         key: `${nameLayers[index]}`,
         value: L.tileLayer(urlLayer, {
-          maxZoom: 19,
+          maxZoom: this.maxZoom,
           attribution: `${
             attributionLayers[index] && attributionLayers[index] !== '' ? attributionLayers[index].concat(' | ') : ''
           }Powered by <a target="_blank" href="https://geotrek.fr/">Geotrek</a>`,
@@ -207,6 +210,8 @@ export class GrwMap {
       this.addTrek();
     } else if (state.currentTreks) {
       this.addTreks();
+    } else if (state.currentTouristicContent) {
+      this.addTouristicContent();
     }
 
     onChange('currentTreks', () => {
@@ -223,7 +228,21 @@ export class GrwMap {
       if (state.currentTrek) {
         this.removeTreks();
         this.addTrek();
-      } else {
+      } else if (state.currentTreks) {
+        this.removeTrek();
+        this.addTreks();
+      }
+    });
+
+    onChange('currentTouristicContent', () => {
+      if (state.currentTouristicContent) {
+        this.removeTrek();
+        this.removeTreks();
+        this.addTouristicContent();
+      } else if (state.currentTrek) {
+        this.removeTreks();
+        this.addTrek();
+      } else if (state.currentTrek) {
         this.removeTrek();
         this.addTreks();
       }
@@ -553,19 +572,19 @@ export class GrwMap {
     }
 
     if (state.currentTrek.points_reference) {
-      const currentPointsReferenceFeatureCollection: FeatureCollection = {
+      const currentReferencePointsFeatureCollection: FeatureCollection = {
         type: 'FeatureCollection',
         features: [],
       };
 
-      currentPointsReferenceFeatureCollection.features.push({
+      currentReferencePointsFeatureCollection.features.push({
         type: 'Feature',
         properties: {},
         geometry: state.currentTrek.points_reference,
       });
 
       let index = 0;
-      this.currentPointsReferenceLayer = L.geoJSON(currentPointsReferenceFeatureCollection, {
+      this.currentReferencePointsLayer = L.geoJSON(currentReferencePointsFeatureCollection, {
         pointToLayer: (_geoJsonPoint, latlng) => {
           index += 1;
           return L.marker(latlng, {
@@ -697,8 +716,8 @@ export class GrwMap {
     if (this.currentStepsLayer) {
       overlays[translate[state.language].layers.steps] = this.currentStepsLayer;
     }
-    if (this.currentPointsReferenceLayer) {
-      overlays[translate[state.language].layers.pointsReference] = this.currentPointsReferenceLayer;
+    if (this.currentReferencePointsLayer) {
+      overlays[translate[state.language].layers.referencePoints] = this.currentReferencePointsLayer;
     }
     if (this.currentParkingLayer) {
       overlays[translate[state.language].layers.parking] = this.currentParkingLayer;
@@ -960,9 +979,9 @@ export class GrwMap {
       this.currentInformationDesksLayer = null;
     }
 
-    if (this.currentPointsReferenceLayer) {
-      this.map.removeLayer(this.currentPointsReferenceLayer);
-      this.currentPointsReferenceLayer = null;
+    if (this.currentReferencePointsLayer) {
+      this.map.removeLayer(this.currentReferencePointsLayer);
+      this.currentReferencePointsLayer = null;
     }
 
     if (this.currentStepsLayer) {
@@ -1003,6 +1022,53 @@ export class GrwMap {
     if (this.currentTrekLayer) {
       this.map.removeLayer(this.currentTrekLayer);
       this.currentTrekLayer = null;
+    }
+  }
+
+  addTouristicContent() {
+    const touristicContentsFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentTouristicContent) {
+      touristicContentsFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: state.currentTouristicContent.geometry.coordinates },
+        properties: {
+          id: state.currentTouristicContent.id,
+          name: state.currentTouristicContent.name,
+          practice: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === state.currentTouristicContent.category).pictogram,
+        },
+      });
+    }
+
+    if (!this.currentToutisticContentLayer) {
+      this.currentToutisticContentLayer = L.geoJSON(touristicContentsFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: geoJsonPoint.properties.practice
+                ? `<div class="touristic-content-marker-container"><img src=${geoJsonPoint.properties.practice} /></div>`
+                : `<div class="touristic-content-marker-container"></div>`,
+              className: 'touristic-content-marker',
+              iconSize: 32,
+              iconAnchor: [18, 0],
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+      });
+      this.map.addLayer(this.currentToutisticContentLayer);
+    }
+
+    this.map.setView([state.currentTouristicContent.geometry.coordinates[1], state.currentTouristicContent.geometry.coordinates[0]], this.maxZoom);
+    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+  }
+
+  removeTouristicContent() {
+    if (this.currentToutisticContentLayer) {
+      this.map.removeLayer(this.currentToutisticContentLayer);
+      this.currentToutisticContentLayer = null;
     }
   }
 

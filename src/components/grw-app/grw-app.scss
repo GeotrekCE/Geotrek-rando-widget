@@ -145,8 +145,10 @@ grw-app {
 
 .app-treks-list-container,
 .app-trek-detail-container,
+.app-touristic-content-detail-container,
 .large-view-app-treks-list-container,
 .large-view-app-trek-detail-container {
+  max-width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -204,7 +206,8 @@ grw-app {
   width: 100%;
 }
 
-grw-treks-list {
+grw-treks-list,
+grw-touristic-content-detail {
   max-height: calc(100vh - 64px);
 }
 
@@ -222,7 +225,8 @@ grw-trek-detail {
 }
 
 .large-view-app-treks-list-container,
-.large-view-app-trek-detail-container {
+.large-view-app-trek-detail-container,
+.large-view-app-touristic-content-detail-container {
   width: 50%;
 }
 

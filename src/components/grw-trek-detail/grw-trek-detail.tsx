@@ -545,13 +545,15 @@ export class GrwTrekDetail {
             <div class="divider"></div>
             {this.currentTrek.description_teaser && <div class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
             {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
-            <div class="divider"></div>
             {state.parentTrekId && state.parentTrek && this.currentTrek.id !== state.parentTrekId && (
-              <div class="parent-trek-container">
-                <button class="parent-trek-title" onClick={() => this.parentTrekPress.emit(state.parentTrekId)}>
-                  <div>&lt;</div>
-                  {state.parentTrek.name}
-                </button>
+              <div>
+                <div class="divider"></div>
+                <div class="parent-trek-container">
+                  <button class="parent-trek-title" onClick={() => this.parentTrekPress.emit(state.parentTrekId)}>
+                    <div>&lt;</div>
+                    {state.parentTrek.name}
+                  </button>
+                </div>
               </div>
             )}
             {state.currentTrekSteps && (
@@ -603,7 +605,7 @@ export class GrwTrekDetail {
             )}
             {this.currentTrek.cities && this.currentTrek.cities.length > 0 && (
               <div class="cities-container">
-                <div class="cities-title">{translate[state.language].cities} :&nbsp;</div>
+                <div class="cities-title">{translate[state.language].crossedCities} :&nbsp;</div>
                 <div innerHTML={this.cities.join(', ')}></div>
               </div>
             )}

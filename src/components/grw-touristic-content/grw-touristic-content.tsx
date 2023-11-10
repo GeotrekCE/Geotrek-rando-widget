@@ -1,4 +1,4 @@
-import { Build, Component, Host, Prop, State, getAssetPath, h } from '@stencil/core';
+import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitter } from '@stencil/core';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
 import { TouristicContent } from 'types/types';
@@ -9,6 +9,7 @@ import { TouristicContent } from 'types/types';
   shadow: true,
 })
 export class GrwTouristicContent {
+  @Event() touristicContentCardPress: EventEmitter<number>;
   swiperTouristicContent?: Swiper;
   swiperTouristicContentRef?: HTMLDivElement;
   prevElTouristicContentRef?: HTMLDivElement;
@@ -82,6 +83,11 @@ export class GrwTouristicContent {
             <div class="touristic-content-category-name">{touristicContentCategory.label}</div>
           </div>
           <div class="touristic-content-name">{this.touristicContent.name}</div>
+        </div>
+        <div class="touristic-content-more-detail-container">
+          <button class="more-details-button" onClick={() => this.touristicContentCardPress.emit(this.touristicContent.id)}>
+            Plus de détails
+          </button>
         </div>
       </Host>
     );

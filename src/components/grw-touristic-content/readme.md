@@ -7,9 +7,16 @@
 
 ## Properties
 
-| Property           | Attribute | Description | Type                                                                                                                        | Default     |
-| ------------------ | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `touristicContent` | --        |             | `{ id: number; name: string; attachments: Attachments; description_teaser: string; category: number; geometry: Geometry; }` | `undefined` |
+| Property           | Attribute | Description | Type                                                                                                                                                                                                                                                                             | Default     |
+| ------------------ | --------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `touristicContent` | --        |             | `{ id: number; name: string; attachments: Attachments; description?: string; description_teaser?: string; practical_info?: string; category: number; geometry: Point; cities?: string[]; source?: number[]; pdf?: string; contact?: string; email?: string; website?: string; }` | `undefined` |
+
+
+## Events
+
+| Event                       | Description | Type                  |
+| --------------------------- | ----------- | --------------------- |
+| `touristicContentCardPress` |             | `CustomEvent<number>` |
 
 
 ## Dependencies

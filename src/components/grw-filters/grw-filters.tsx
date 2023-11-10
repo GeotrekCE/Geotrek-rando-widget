@@ -162,7 +162,7 @@ export class GrwFilters {
                   )}
                   {state['cities'].length > 0 && (
                     <div class="filter-container">
-                      <grw-filter filterName={translate[state.language].cities} filterType="cities" filterNameProperty="name" segment="selectedLocationFilters"></grw-filter>
+                      <grw-filter filterName={translate[state.language].crossedCities} filterType="cities" filterNameProperty="name" segment="selectedLocationFilters"></grw-filter>
                     </div>
                   )}
                 </div>

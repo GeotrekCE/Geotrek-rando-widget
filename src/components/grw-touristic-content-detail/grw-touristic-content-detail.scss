@@ -1,0 +1,190 @@
+@use '~swiper/swiper.scss';
+@use '~swiper/modules/navigation/navigation.scss';
+@use '~swiper/modules/pagination/pagination.scss';
+
+.swiper {
+  z-index: 0;
+}
+
+.material-symbols {
+  font-family: 'Material Symbols Outlined';
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+:host {
+  --swiper-navigation-size: 24px;
+  --swiper-navigation-color: var(--color-on-primary-container);
+  --swiper-pagination-color: var(--color-primary-container);
+  --swiper-pagination-bullet-size: 12px;
+  .swiper-button-prev,
+  .swiper-button-next {
+    background-color: var(--color-primary-container);
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: 32px;
+    box-shadow: var(--elevation-1);
+    &:hover {
+      box-shadow: var(--elevation-2);
+    }
+  }
+}
+
+grw-touristic-content-detail {
+  overflow: hidden;
+}
+
+.touristic-content-detail-container {
+  font-family: 'Roboto';
+  color: var(--color-on-surface);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  .touristic-content-category-container {
+    display: flex;
+    align-items: center;
+    padding: 0px 24px;
+    margin: 8px 0px;
+    .touristic-content-category-name {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
+    img {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+      background-color: var(--color-primary-app);
+    }
+  }
+  .name {
+    color: var(--color-on-surface);
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 400;
+    padding: 0px 24px;
+    margin: 8px 0px;
+  }
+  .image,
+  .default-poi-img {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .default-poi-img {
+    background-color: var(--color-primary-container);
+    object-fit: contain;
+  }
+  .description-teaser,
+  .description-container,
+  .useful-information-container,
+  .contact-container {
+    padding: 0px 24px 0px 24px;
+  }
+  .description-container,
+  .useful-information-container,
+  .contact-container {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    a {
+      color: var(--color-primary-app);
+    }
+  }
+  .description-title,
+  .useful-information-title,
+  .contact-title {
+    color: var(--color-on-surface);
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 400;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+}
+
+.detail-bottom-space {
+  min-height: var(--detail-bottom-space-height);
+  height: var(--detail-bottom-space-height);
+  width: 100%;
+  background-color: var(--color-background);
+}
+
+.images-container {
+  display: flex;
+  max-width: 100%;
+  max-height: 400px;
+}
+
+.divider {
+  margin: 16px;
+  border-top: 1px solid var(--color-outline);
+}
+
+.cities-container {
+  display: flex;
+  align-items: center;
+  padding: 24px 24px 0px 24px;
+  .cities-title {
+    color: var(--color-on-surface);
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 8px;
+  }
+}
+
+.downloads-container {
+  padding: 0px 24px 0px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .download-title {
+    color: var(--color-on-surface);
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+  .links-container {
+    display: flex;
+    flex-wrap: wrap;
+    a {
+      margin-top: 8px;
+      background-color: var(--color-primary-container);
+      color: var(--color-on-primary-container);
+      border-radius: 8px;
+      padding: 8px 16px;
+      box-shadow: var(--elevation-1);
+      height: 32px;
+      gap: 8px;
+      box-sizing: border-box;
+      text-align: start;
+      vertical-align: middle;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-decoration: none;
+      &:nth-child(2) {
+        margin: 8px 12px 0px 12px;
+      }
+      &:hover {
+        box-shadow: var(--elevation-2);
+      }
+    }
+  }
+}
+
+.email-container,
+.website-container {
+  display: flex;
+}

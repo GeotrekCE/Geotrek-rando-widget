@@ -92,10 +92,12 @@
 
 .trek-marker,
 .step-marker,
+.touristic-content-marker,
 .selected-trek-marker,
 .selected-step-marker {
   .trek-marker-container,
-  .step-marker-container {
+  .step-marker-container,
+  .touristic-content-marker-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +117,8 @@
       width: 24px !important;
     }
   }
-  .trek-marker-container {
+  .trek-marker-container,
+  .touristic-content-marker-container {
     background-color: var(--color-surface);
   }
   .step-marker-container {
@@ -126,7 +129,8 @@
 .selected-trek-marker,
 .selected-step-marker {
   .trek-marker-container,
-  .step-marker-container {
+  .step-marker-container,
+  .touristic-content-marker-container {
     width: 64px;
     height: 64px;
     img,

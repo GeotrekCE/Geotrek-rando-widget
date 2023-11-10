@@ -56,7 +56,7 @@ export class GrwTrekProvider {
         this.init,
       ),
       fetch(
-        `${state.api}touristiccontent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,description_teaser,category,geometry&page_size=999`,
+        `${state.api}touristiccontent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,category,geometry&page_size=999`,
         this.init,
       ),
       fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
