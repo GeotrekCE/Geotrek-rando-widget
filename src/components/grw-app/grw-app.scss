@@ -146,6 +146,7 @@ grw-app {
 .app-treks-list-container,
 .app-trek-detail-container,
 .app-touristic-content-detail-container,
+.app-touristic-event-detail-container,
 .large-view-app-treks-list-container,
 .large-view-app-trek-detail-container {
   max-width: 100%;
@@ -207,7 +208,8 @@ grw-app {
 }
 
 grw-treks-list,
-grw-touristic-content-detail {
+grw-touristic-content-detail,
+grw-touristic-event-detail {
   max-height: calc(100vh - 64px);
 }
 
@@ -226,7 +228,8 @@ grw-trek-detail {
 
 .large-view-app-treks-list-container,
 .large-view-app-trek-detail-container,
-.large-view-app-touristic-content-detail-container {
+.large-view-app-touristic-content-detail-container,
+.large-view-app-touristic-event-detail-container {
   width: 50%;
 }
 

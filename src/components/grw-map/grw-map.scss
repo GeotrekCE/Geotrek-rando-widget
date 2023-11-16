@@ -93,11 +93,13 @@
 .trek-marker,
 .step-marker,
 .touristic-content-marker,
+.touristic-event-marker,
 .selected-trek-marker,
 .selected-step-marker {
   .trek-marker-container,
   .step-marker-container,
-  .touristic-content-marker-container {
+  .touristic-content-marker-container,
+  .touristic-event-marker-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +120,8 @@
     }
   }
   .trek-marker-container,
-  .touristic-content-marker-container {
+  .touristic-content-marker-container,
+  .touristic-event-marker-container {
     background-color: var(--color-surface);
   }
   .step-marker-container {
@@ -130,7 +133,8 @@
 .selected-step-marker {
   .trek-marker-container,
   .step-marker-container,
-  .touristic-content-marker-container {
+  .touristic-content-marker-container,
+  .touristic-event-marker-container {
     width: 64px;
     height: 64px;
     img,
@@ -223,11 +227,14 @@
 
 .poi-tooltip,
 .information-desks-tooltip,
-.sensitive-area-tooltip {
+.sensitive-area-tooltip,
+.touristic-content-tooltip,
+.touristic-event-tooltip {
   .poi-name,
   .information-desks-name,
   .sensitive-area-name,
-  .touristic-content-name {
+  .touristic-content-name,
+  .touristic-event-name {
     color: var(--color-primary-app);
     font-weight: 400;
     font-size: 16px;
@@ -257,7 +264,8 @@
 
 .poi-icon,
 .information-desks-icon,
-.touristic-content-icon {
+.touristic-content-icon,
+.touristic-event-icon {
   background-color: var(--color-poi-icon);
   border-radius: 50%;
   display: flex;

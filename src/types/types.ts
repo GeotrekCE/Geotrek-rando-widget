@@ -255,6 +255,33 @@ export type TouristicContentCategory = {
 
 export type TouristicContentCategories = TouristicContentCategory[];
 
+export type TouristicEvent = {
+  id: number;
+  name: string;
+  attachments: Attachments;
+  description?: string;
+  description_teaser?: string;
+  practical_info?: string;
+  type: number;
+  geometry: Point;
+  cities?: string[];
+  source?: number[];
+  pdf?: string;
+  contact?: string;
+  email?: string;
+  website?: string;
+};
+
+export type TouristicEvents = TouristicEvent[];
+
+export type TouristicEventType = {
+  id: number;
+  type: string;
+  pictogram: string;
+};
+
+export type TouristicEventTypes = TouristicEventType[];
+
 export type Filters = Filter[];
 
 export type Filter = { property: string; trekProperty: string; trekPropertyIsArray: boolean; type: string; segment: string };
@@ -274,4 +301,5 @@ export interface Options {
   informationPlaces: Option;
   pois: Option;
   touristicContents: Option;
+  touristicEvents: Option;
 }

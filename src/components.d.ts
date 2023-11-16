@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { InformationDesk, Poi, SensitiveArea, TouristicContent, Trek } from "types/types";
-export { InformationDesk, Poi, SensitiveArea, TouristicContent, Trek } from "types/types";
+import { InformationDesk, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "types/types";
+export { InformationDesk, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
@@ -106,6 +106,25 @@ export namespace Components {
         "languages": string;
         "touristicContentId": string;
     }
+    interface GrwTouristicEvent {
+        "touristicEvent": TouristicEvent;
+    }
+    interface GrwTouristicEventDetail {
+        "colorBackground": string;
+        "colorOnPrimaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+    }
+    interface GrwTouristicEventProvider {
+        "api": string;
+        "languages": string;
+        "touristicEventId": string;
+    }
     interface GrwTrekCard {
         "colorOnSecondaryContainer": string;
         "colorOnSurface": string;
@@ -173,6 +192,10 @@ export interface GrwMapCustomEvent<T> extends CustomEvent<T> {
 export interface GrwTouristicContentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwTouristicContentElement;
+}
+export interface GrwTouristicEventCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwTouristicEventElement;
 }
 export interface GrwTrekCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -255,6 +278,24 @@ declare global {
         prototype: HTMLGrwTouristicContentProviderElement;
         new (): HTMLGrwTouristicContentProviderElement;
     };
+    interface HTMLGrwTouristicEventElement extends Components.GrwTouristicEvent, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicEventElement: {
+        prototype: HTMLGrwTouristicEventElement;
+        new (): HTMLGrwTouristicEventElement;
+    };
+    interface HTMLGrwTouristicEventDetailElement extends Components.GrwTouristicEventDetail, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicEventDetailElement: {
+        prototype: HTMLGrwTouristicEventDetailElement;
+        new (): HTMLGrwTouristicEventDetailElement;
+    };
+    interface HTMLGrwTouristicEventProviderElement extends Components.GrwTouristicEventProvider, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicEventProviderElement: {
+        prototype: HTMLGrwTouristicEventProviderElement;
+        new (): HTMLGrwTouristicEventProviderElement;
+    };
     interface HTMLGrwTrekCardElement extends Components.GrwTrekCard, HTMLStencilElement {
     }
     var HTMLGrwTrekCardElement: {
@@ -298,6 +339,9 @@ declare global {
         "grw-touristic-content": HTMLGrwTouristicContentElement;
         "grw-touristic-content-detail": HTMLGrwTouristicContentDetailElement;
         "grw-touristic-content-provider": HTMLGrwTouristicContentProviderElement;
+        "grw-touristic-event": HTMLGrwTouristicEventElement;
+        "grw-touristic-event-detail": HTMLGrwTouristicEventDetailElement;
+        "grw-touristic-event-provider": HTMLGrwTouristicEventProviderElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
         "grw-trek-detail": HTMLGrwTrekDetailElement;
         "grw-trek-provider": HTMLGrwTrekProviderElement;
@@ -408,6 +452,26 @@ declare namespace LocalJSX {
         "languages"?: string;
         "touristicContentId"?: string;
     }
+    interface GrwTouristicEvent {
+        "onTouristicEventCardPress"?: (event: GrwTouristicEventCustomEvent<number>) => void;
+        "touristicEvent"?: TouristicEvent;
+    }
+    interface GrwTouristicEventDetail {
+        "colorBackground"?: string;
+        "colorOnPrimaryContainer"?: string;
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorPrimaryContainer"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "isLargeView"?: boolean;
+    }
+    interface GrwTouristicEventProvider {
+        "api"?: string;
+        "languages"?: string;
+        "touristicEventId"?: string;
+    }
     interface GrwTrekCard {
         "colorOnSecondaryContainer"?: string;
         "colorOnSurface"?: string;
@@ -440,6 +504,7 @@ declare namespace LocalJSX {
         "onSensitiveAreaIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onStepsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onTouristicEventsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
         "weather"?: boolean;
@@ -483,6 +548,9 @@ declare namespace LocalJSX {
         "grw-touristic-content": GrwTouristicContent;
         "grw-touristic-content-detail": GrwTouristicContentDetail;
         "grw-touristic-content-provider": GrwTouristicContentProvider;
+        "grw-touristic-event": GrwTouristicEvent;
+        "grw-touristic-event-detail": GrwTouristicEventDetail;
+        "grw-touristic-event-provider": GrwTouristicEventProvider;
         "grw-trek-card": GrwTrekCard;
         "grw-trek-detail": GrwTrekDetail;
         "grw-trek-provider": GrwTrekProvider;
@@ -506,6 +574,9 @@ declare module "@stencil/core" {
             "grw-touristic-content": LocalJSX.GrwTouristicContent & JSXBase.HTMLAttributes<HTMLGrwTouristicContentElement>;
             "grw-touristic-content-detail": LocalJSX.GrwTouristicContentDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicContentDetailElement>;
             "grw-touristic-content-provider": LocalJSX.GrwTouristicContentProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentProviderElement>;
+            "grw-touristic-event": LocalJSX.GrwTouristicEvent & JSXBase.HTMLAttributes<HTMLGrwTouristicEventElement>;
+            "grw-touristic-event-detail": LocalJSX.GrwTouristicEventDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicEventDetailElement>;
+            "grw-touristic-event-provider": LocalJSX.GrwTouristicEventProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicEventProviderElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
             "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
             "grw-trek-provider": LocalJSX.GrwTrekProvider & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;

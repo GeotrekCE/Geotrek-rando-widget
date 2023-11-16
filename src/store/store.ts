@@ -23,6 +23,9 @@ import {
   TouristicContents,
   TouristicContentCategories,
   TouristicContent,
+  TouristicEvents,
+  TouristicEventTypes,
+  TouristicEvent,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -65,6 +68,9 @@ const { state, onChange, reset } = createStore<{
   touristicContents: TouristicContents;
   touristicContentCategories: TouristicContentCategories;
   currentTouristicContent: TouristicContent;
+  touristicEvents: TouristicEvents;
+  touristicEventTypes: TouristicEventTypes;
+  currentTouristicEvent: TouristicEvent;
 }>({
   api: null,
   languages: null,
@@ -105,6 +111,9 @@ const { state, onChange, reset } = createStore<{
   touristicContents: null,
   touristicContentCategories: null,
   currentTouristicContent: null,
+  touristicEvents: null,
+  touristicEventTypes: null,
+  currentTouristicEvent: null,
 });
 
 export { onChange, reset };

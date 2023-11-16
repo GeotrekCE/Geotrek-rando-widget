@@ -120,6 +120,10 @@ grw-trek-detail {
     width: 240px;
     background-size: 120px 100%;
   }
+  .touristic-event.selected-trek-option ~ .indicator-selected-trek-option {
+    width: 240px;
+    background-size: 120px 100%;
+  }
   .presentation {
     min-width: 120px;
     width: 120px;
@@ -149,6 +153,10 @@ grw-trek-detail {
     width: 120px;
   }
   .touristic-content {
+    min-width: 120px;
+    width: 120px;
+  }
+  .touristic-event {
     min-width: 120px;
     width: 120px;
   }
@@ -316,7 +324,8 @@ grw-trek-detail {
   .weather-container,
   .parent-trek-container,
   .step-container,
-  .touristic-content-container {
+  .touristic-content-container,
+  .touristic-event-container {
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
@@ -338,7 +347,8 @@ grw-trek-detail {
   .accessibilities-title,
   .step-title,
   .parent-trek-title,
-  .touristic-content-title {
+  .touristic-content-title,
+  .touristic-event-title {
     color: var(--color-on-surface);
     font-size: 22px;
     line-height: 28px;
@@ -359,7 +369,8 @@ grw-trek-detail {
   .source-title,
   .accessibilities-title,
   .parent-trek-title,
-  .touristic-content-title {
+  .touristic-content-title,
+  .touristic-event-title {
     margin-bottom: 16px;
   }
 
@@ -370,7 +381,8 @@ grw-trek-detail {
   .information-desks-title,
   .pois-title,
   .step-title,
-  .touristic-content-title {
+  .touristic-content-title,
+  .touristic-event-title {
     padding: 0px 24px 0px 24px;
   }
 
@@ -547,7 +559,8 @@ grw-trek-detail {
 .swiper-information-desks,
 .swiper-pois,
 .swiper-step,
-.swiper-touristic-content {
+.swiper-touristic-content,
+.swiper-touristic-event {
   padding-right: 32px;
   padding-left: 32px;
 }

@@ -50,7 +50,6 @@ export class GrwTouristicContent {
     return (
       <Host>
         <div class="touristic-content-type-img-container">
-          {/* <img class="touristic-content-type" src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`} /> */}
           <div class="swiper" ref={el => (this.swiperTouristicContentRef = el)}>
             <div class="swiper-wrapper">
               {this.touristicContent.attachments.length > 0 ? (

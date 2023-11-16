@@ -45,6 +45,11 @@ const touristicContents: Option = {
   width: 120,
   indicator: false,
 };
+const touristicEvents: Option = {
+  visible: false,
+  width: 120,
+  indicator: false,
+};
 const options: Options = {
   presentation,
   steps,
@@ -54,6 +59,7 @@ const options: Options = {
   informationPlaces,
   pois,
   touristicContents,
+  touristicEvents,
 };
 
 @Component({
@@ -67,6 +73,7 @@ export class GrwTrekDetail {
   swiperPois?: Swiper;
   swiperInformationDesks?: Swiper;
   swiperTouristicContents?: Swiper;
+  swiperTouristicEvents?: Swiper;
   swiperImagesRef?: HTMLDivElement;
   prevElImagesRef?: HTMLDivElement;
   nextElImagesRef?: HTMLDivElement;
@@ -75,6 +82,8 @@ export class GrwTrekDetail {
   swiperPoisRef?: HTMLDivElement;
   swiperInformationDesksRef?: HTMLDivElement;
   swiperTouristicContentsRef?: HTMLDivElement;
+  swiperTouristicEventsRef?: HTMLDivElement;
+  trekDetailContainerRef?: HTMLElement;
   presentationRef?: HTMLDivElement;
   descriptionRef?: HTMLDivElement;
   parkingRef?: HTMLDivElement;
@@ -84,7 +93,7 @@ export class GrwTrekDetail {
   poiRef?: HTMLDivElement;
   stepsRef?: HTMLDivElement;
   touristicContentsRef?: HTMLDivElement;
-  trekDetailContainerRef?: HTMLElement;
+  touristicEventsRef?: HTMLDivElement;
   hasStep?: boolean;
 
   defaultOptions: Options;
@@ -95,6 +104,7 @@ export class GrwTrekDetail {
   @Event() poiIsInViewport: EventEmitter<boolean>;
   @Event() stepsIsInViewport: EventEmitter<boolean>;
   @Event() touristicContentsIsInViewport: EventEmitter<boolean>;
+  @Event() touristicEventsIsInViewport: EventEmitter<boolean>;
   @Event() parentTrekPress: EventEmitter<number>;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
@@ -181,6 +191,20 @@ export class GrwTrekDetail {
       },
     });
     this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
+      modules: [FreeMode, Mousewheel],
+      slidesPerView: 1.5,
+      spaceBetween: 20,
+      grabCursor: true,
+      freeMode: true,
+      mousewheel: { forceToAxis: true },
+      breakpointsBase: 'container',
+      breakpoints: {
+        '540': {
+          slidesPerView: 2.5,
+        },
+      },
+    });
+    this.swiperTouristicEvents = new Swiper(this.swiperTouristicEventsRef, {
       modules: [FreeMode, Mousewheel],
       slidesPerView: 1.5,
       spaceBetween: 20,
@@ -282,6 +306,16 @@ export class GrwTrekDetail {
       });
       touristicContentObserver.observe(this.touristicContentsRef);
     }
+    if (this.touristicEventsRef) {
+      const touristicEventObserver = new IntersectionObserver(entries => {
+        const isIntersecting = entries[0].isIntersecting;
+        this.touristicEventsIsInViewport.emit(isIntersecting);
+        if (isIntersecting) {
+          this.options = { ...this.defaultOptions, touristicEvents: { ...this.defaultOptions.touristicEvents, indicator: isIntersecting } };
+        }
+      });
+      touristicEventObserver.observe(this.touristicContentsRef);
+    }
   }
 
   connectedCallback() {
@@ -346,6 +380,7 @@ export class GrwTrekDetail {
       },
       pois: { ...pois, visible: Boolean(state.currentPois && state.currentPois.length > 0) },
       touristicContents: { ...touristicContents, visible: Boolean(state.touristicContents && state.touristicContents.length > 0) },
+      touristicEvents: { ...touristicEvents, visible: Boolean(state.touristicEvents && state.touristicEvents.length > 0) },
     };
   }
 
@@ -443,6 +478,14 @@ export class GrwTrekDetail {
                 class={`touristic-content trek-option${this.options.touristicContents.indicator ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.touristicContents}
+              </a>
+            )}
+            {this.options.touristicEvents.visible && (
+              <a
+                onClick={() => this.handleScrollTo(this.touristicEventsRef)}
+                class={`touristic-event trek-option${this.options.touristicEvents.indicator ? ' selected-trek-option' : ''}`}
+              >
+                {translate[state.language].options.touristicEvents}
               </a>
             )}
             <span class="indicator-selected-trek-option" style={{ transform: `translateX(${this.handleIndicatorSelectedTrekOption()})` }}></span>
@@ -801,6 +844,23 @@ export class GrwTrekDetail {
                       {state.touristicContents.map(touristicContent => (
                         <div class="swiper-slide">
                           <grw-touristic-content touristicContent={touristicContent}></grw-touristic-content>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {state.touristicEvents && state.touristicEvents.length > 0 && (
+              <div>
+                <div class="divider"></div>
+                <div class="touristic-event-container" ref={el => (this.touristicEventsRef = el)}>
+                  <div class="touristic-event-title">{translate[state.language].touristicEvents(state.touristicEvents.length)}</div>
+                  <div class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>
+                    <div class="swiper-wrapper">
+                      {state.touristicEvents.map(touristicEvent => (
+                        <div class="swiper-slide">
+                          <grw-touristic-event touristicEvent={touristicEvent}></grw-touristic-event>
                         </div>
                       ))}
                     </div>

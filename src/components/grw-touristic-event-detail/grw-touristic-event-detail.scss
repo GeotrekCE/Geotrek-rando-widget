@@ -33,11 +33,11 @@
   }
 }
 
-grw-touristic-content-detail {
+grw-touristic-event-detail {
   overflow: hidden;
 }
 
-.touristic-content-detail-container {
+.touristic-event-detail-container {
   font-family: 'Roboto';
   color: var(--color-on-surface);
   display: flex;
@@ -45,12 +45,12 @@ grw-touristic-content-detail {
   height: 100%;
   max-height: 100%;
   overflow-y: auto;
-  .touristic-content-category-container {
+  .touristic-event-category-container {
     display: flex;
     align-items: center;
     padding: 0px 24px;
     margin: 8px 0px;
-    .touristic-content-category-name {
+    .touristic-event-category-name {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
