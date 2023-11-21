@@ -33,6 +33,7 @@
 | `sensitiveAreaIsInViewport`     |             | `CustomEvent<boolean>` |
 | `stepsIsInViewport`             |             | `CustomEvent<boolean>` |
 | `touristicContentsIsInViewport` |             | `CustomEvent<boolean>` |
+| `touristicEventsIsInViewport`   |             | `CustomEvent<boolean>` |
 
 
 ## Dependencies

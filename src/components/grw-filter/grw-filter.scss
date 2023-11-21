@@ -1,3 +1,6 @@
+@import '~choices.js/public/assets/styles/base.min.css';
+@import '~choices.js/public/assets/styles/choices.min.css';
+
 .material-symbols {
   font-family: 'Material Symbols Outlined';
 }
@@ -23,6 +26,56 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin-right: 16px;
+  .choices__list--multiple:not(:empty) + .choices__input::placeholder {
+    opacity: 0;
+  }
+  .choices {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 8px 0px 0px 8px;
+    padding: 8px 16px;
+    .choices__inner {
+      border: 1px solid var(--color-outline);
+      border-radius: 8px;
+      box-shadow: var(--elevation-1);
+      -webkit-tap-highlight-color: transparent;
+      line-height: 20px;
+    }
+    .choices__inner,
+    .choices__input,
+    .choices__list--dropdown .choices__item--selectable.is-highlighted,
+    .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+      color: var(--color-on-surface-variant);
+      background-color: transparent;
+    }
+    .choices__list--multiple .choices__item {
+      color: var(--color-on-secondary-container);
+      background-color: var(--color-secondary-container);
+      font-size: 14px;
+      margin-right: 8px;
+      border: 1px solid var(--color-outline);
+      border-radius: 8px;
+      box-shadow: var(--elevation-1);
+      -webkit-tap-highlight-color: transparent;
+      line-height: 20px;
+    }
+    .choices__button {
+      background-image: url('data:image/svg+xml,\<svg width="21" height="21" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor" fill-rule="evenodd"><path d="M2.592.044l18.364 18.364-2.548 2.548L.044 2.592z"/><path d="M0 18.364L18.364 0l2.548 2.548L2.548 20.912z"/></g></svg>');
+      color: var(--color-on-secondary-container);
+      border-left: 1px solid var(--color-outline);
+    }
+    .choices__list--dropdown,
+    .choices__list[aria-expanded] {
+      width: calc(100% - 32px);
+      color: var(--color-on-secondary-container);
+      background-color: var(--color-secondary-container);
+      border: 1px solid var(--color-outline);
+    }
+    .choices__input {
+      width: 100%;
+    }
+  }
   .filter-button,
   .selected-filter-button {
     cursor: pointer;
@@ -59,5 +112,27 @@
       margin-right: 8px;
       color: var(--color-on-secondary-container);
     }
+  }
+}
+
+.select-container {
+  display: inline-flex;
+  width: 100%;
+  z-index: 4000;
+}
+.select-container .choicesjs-stencil {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 22;
+  z-index: 4000;
+  .choices__inner {
+    padding: 0px;
+  }
+  .choices__input {
+    padding: 0px;
+    margin: 0px;
+    width: 100% !important;
+    min-height: 44px;
   }
 }

@@ -58,7 +58,7 @@
 .filters-segment-container {
   overflow-y: scroll;
   padding-bottom: 32px;
-  max-height: calc(100% - 64px - 32px);
+  height: calc(100% - 64px - 42px - 32px);
 }
 
 .back-filters-container {

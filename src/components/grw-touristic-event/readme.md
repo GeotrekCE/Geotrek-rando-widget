@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property         | Attribute | Description | Type                                                                    | Default     |
-| ---------------- | --------- | ----------- | ----------------------------------------------------------------------- | ----------- |
-| `touristicEvent` | --        |             | `{ id: number; name: string; attachments: Attachments; type: number; }` | `undefined` |
+| Property         | Attribute | Description | Type                                                                                                                                                                                                                                                                         | Default     |
+| ---------------- | --------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `touristicEvent` | --        |             | `{ id: number; name: string; attachments: Attachments; description?: string; description_teaser?: string; practical_info?: string; type: number; geometry: Point; cities?: string[]; source?: number[]; pdf?: string; contact?: string; email?: string; website?: string; }` | `undefined` |
 
 
 ## Events

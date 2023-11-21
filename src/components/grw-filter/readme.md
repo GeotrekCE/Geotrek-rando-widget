@@ -11,6 +11,7 @@
 | -------------------- | ---------------------- | ----------- | -------- | ----------- |
 | `filterName`         | `filter-name`          |             | `string` | `undefined` |
 | `filterNameProperty` | `filter-name-property` |             | `string` | `undefined` |
+| `filterPlaceholder`  | `filter-placeholder`   |             | `string` | `''`        |
 | `filterType`         | `filter-type`          |             | `string` | `undefined` |
 | `segment`            | `segment`              |             | `string` | `undefined` |
 

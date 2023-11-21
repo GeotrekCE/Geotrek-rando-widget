@@ -37,6 +37,7 @@ interface Translation {
   sources: string;
   city: string;
   crossedCities: string;
+  placeholderCrossedCities: string;
   options: {
     presentation: string;
     description: string;
@@ -59,6 +60,7 @@ interface Translation {
     touristicEvents: string;
   };
   themes: string;
+  placeholderThemes: string;
   routes: string;
   elevation: string;
   activities: string;
@@ -118,6 +120,7 @@ export const translate: AvailableTranslations = {
     sources: 'Sources',
     city: 'Commune',
     crossedCities: 'Communes traversées',
+    placeholderCrossedCities: 'Sélectionner une ou plusieurs communes',
     options: {
       presentation: 'Présentation',
       description: 'Description',
@@ -140,6 +143,7 @@ export const translate: AvailableTranslations = {
       touristicEvents: 'Événements',
     },
     themes: 'Thèmes',
+    placeholderThemes: 'Sélectionner un ou plusieurs thèmes',
     routes: 'Type de parcours',
     elevation: 'Denivelé positif',
     activities: 'Activités',
@@ -192,6 +196,7 @@ export const translate: AvailableTranslations = {
     sources: 'Sources',
     city: 'City',
     crossedCities: 'Cities crossed',
+    placeholderCrossedCities: 'Select one or more municipalities',
     options: {
       presentation: 'Presentation',
       description: 'Description',
@@ -214,6 +219,7 @@ export const translate: AvailableTranslations = {
       touristicEvents: 'Events',
     },
     themes: 'Themes',
+    placeholderThemes: 'Select one or more themes',
     routes: 'Type of course',
     elevation: 'Positive elevation',
     activities: 'Activities',

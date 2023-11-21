@@ -1,6 +1,7 @@
-import { Component, Host, h, Prop, Listen, forceUpdate } from '@stencil/core';
+import { Component, Host, h, Prop, Listen, forceUpdate, Element } from '@stencil/core';
 import state from 'store/store';
 import { filters, handleFiltersAndSearch } from 'utils/utils';
+import 'choices.js/public/assets/scripts/choices.min.js';
 
 @Component({
   tag: 'grw-filter',
@@ -8,11 +9,17 @@ import { filters, handleFiltersAndSearch } from 'utils/utils';
   shadow: true,
 })
 export class GrwFilter {
+  @Element() el: HTMLElement;
   filterRef: HTMLElement;
+  choicesRef: HTMLElement;
+  choices: any;
+
   @Prop() filterType: string;
   @Prop() filterName: string;
+  @Prop() filterPlaceholder: string = '';
   @Prop() filterNameProperty: string;
   @Prop() segment: string;
+
   @Listen('resetFilter', { target: 'window' })
   onResetFilter() {
     this.resetFilter();
@@ -35,7 +42,54 @@ export class GrwFilter {
   }
 
   resetFilter() {
+    if (this.choices) {
+      this.choices.removeActiveItems();
+    }
     forceUpdate(this.filterRef);
+  }
+
+  componentDidLoad() {
+    if (this.choicesRef) {
+      // @ts-ignore
+      this.choices = new Choices(this.choicesRef, {
+        removeItemButton: true,
+        choices: state[this.filterType].map(currentFilter => {
+          return { value: currentFilter.id, label: currentFilter[this.filterNameProperty], selected: currentFilter.selected };
+        }),
+        placeholder: true,
+        placeholderValue: this.filterPlaceholder,
+        noResultsText: '',
+        noChoicesText: '',
+        itemSelectText: '',
+      });
+
+      const choices = this.el.shadowRoot.querySelector('.choices');
+      choices.addEventListener(
+        'click',
+        event => {
+          event.stopPropagation();
+          const dropdown = this.el.shadowRoot.querySelector('.choices__list.choices__list--dropdown');
+          if (!dropdown.classList.contains('is-active')) {
+            const choices = this.el.shadowRoot.querySelector('.choices');
+            choices.classList.add('is-focused');
+            choices.classList.add('is-open');
+            dropdown.classList.add('is-active');
+            dropdown.setAttribute('aria-expanded', 'true');
+          }
+        },
+        false,
+      );
+      choices.addEventListener(
+        'change',
+        event => {
+          this.handleFilter(
+            null,
+            state[this.filterType].find(currentFilter => currentFilter.id === (event as any).detail.value),
+          );
+        },
+        false,
+      );
+    }
   }
 
   render() {
@@ -43,13 +97,20 @@ export class GrwFilter {
       <Host ref={el => (this.filterRef = el)}>
         <div class="filter-name display-large">{this.filterName}</div>
         <div class="filter-button-container">
-          {state[this.filterType].map(currentFilter => (
-            <button onClick={event => this.handleFilter(event, currentFilter)} class={currentFilter.selected ? 'selected-filter-button' : 'filter-button'}>
-              {/* @ts-ignore */}
-              {currentFilter.selected && <span translate={false} class="material-symbols material-symbols-outlined">check</span>}
-              {currentFilter[this.filterNameProperty]}
-            </button>
-          ))}
+          {state[this.filterType].length > 9 ? (
+            <select multiple ref={el => (this.choicesRef = el)}></select>
+          ) : (
+            state[this.filterType].map(currentFilter => (
+              <button onClick={event => this.handleFilter(event, currentFilter)} class={currentFilter.selected ? 'selected-filter-button' : 'filter-button'}>
+                {/* @ts-ignore */}
+                {currentFilter.selected && (<span translate={false} class="material-symbols material-symbols-outlined">
+                    check
+                  </span>
+                )}
+                {currentFilter[this.filterNameProperty]}
+              </button>
+            ))
+          )}
         </div>
       </Host>
     );

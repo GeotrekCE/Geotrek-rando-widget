@@ -50,6 +50,7 @@ export namespace Components {
     interface GrwFilter {
         "filterName": string;
         "filterNameProperty": string;
+        "filterPlaceholder": string;
         "filterType": string;
         "segment": string;
     }
@@ -392,6 +393,7 @@ declare namespace LocalJSX {
     interface GrwFilter {
         "filterName"?: string;
         "filterNameProperty"?: string;
+        "filterPlaceholder"?: string;
         "filterType"?: string;
         "segment"?: string;
     }
