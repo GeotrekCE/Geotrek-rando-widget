@@ -144,7 +144,7 @@ export class GrwTrekProvider {
             state.accessibilitiesLevel = accessibilitiesLevel.results;
           }
           if (touristicContent) {
-            state.touristicContents = touristicContent.results;
+            state.trekTouristicContents = touristicContent.results;
           }
           if (touristicContentCategory) {
             state.touristicContentCategories = touristicContentCategory.results;

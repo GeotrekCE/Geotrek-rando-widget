@@ -12,7 +12,7 @@ export class GrwApp {
   @State() showTrek = false;
   @State() showTouristicContent = false;
   @State() showTouristicEvent = false;
-  @State() showTreksMap = false;
+  @State() showHomeMap = false;
   @State() showTrekMap = false;
   @State() showTouristicContentMap = false;
   @State() showTouristicEventMap = false;
@@ -60,6 +60,10 @@ export class GrwApp {
   @Prop() colorSensitiveArea = '#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
   @Prop() useGradient = false;
+
+  @Prop() treks = true;
+  @Prop() touristicContents = false;
+  @Prop() touristicEvents = false;
 
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
@@ -198,7 +202,7 @@ export class GrwApp {
 
   handleView() {
     this.isLargeView = this.appElement.getBoundingClientRect().width >= this.largeViewSize;
-    this.showTreksMap = this.isLargeView;
+    this.showHomeMap = this.isLargeView;
     this.showTrekMap = this.isLargeView;
   }
 
@@ -246,7 +250,7 @@ export class GrwApp {
     } else if (this.showTouristicEvent) {
       this.showTouristicEventMap = !this.showTouristicEventMap;
     } else {
-      this.showTreksMap = !this.showTreksMap;
+      this.showHomeMap = !this.showHomeMap;
     }
   }
 
@@ -260,7 +264,7 @@ export class GrwApp {
     } else if (this.showTouristicEvent) {
       mapIconButton = this.showTouristicEventMap ? 'summarize' : 'map';
     } else {
-      mapIconButton = this.showTreksMap ? 'list' : 'map';
+      mapIconButton = this.showHomeMap ? 'list' : 'map';
     }
 
     return mapIconButton;
@@ -276,7 +280,7 @@ export class GrwApp {
     } else if (this.showTouristicEvent) {
       mapLabelButton = this.showTouristicEventMap ? translate[state.language].showDetails : translate[state.language].showMap;
     } else {
-      mapLabelButton = this.showTreksMap ? translate[state.language].showList : translate[state.language].showMap;
+      mapLabelButton = this.showHomeMap ? translate[state.language].showList : translate[state.language].showMap;
     }
 
     return mapLabelButton;
@@ -310,12 +314,12 @@ export class GrwApp {
           '--app-height': this.appHeight,
         }}
       >
-        {!state.currentTreks && !state.currentTrek && !state.currentTouristicContent && !state.currentTouristicEvent && (
+        {!state.currentTreks && !state.currentTrek && !state.currentTouristicContent && !state.currentTouristicEvent && !state.touristicContents && (
           <div class="init-loader-container">
             <span class="loader"></span>
           </div>
         )}
-        {!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && !state.treks && (
+        {this.treks && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && !state.treks && (
           <grw-treks-provider
             api={this.api}
             languages={this.languages}
@@ -333,12 +337,19 @@ export class GrwApp {
           <grw-trek-provider api={this.api} languages={this.languages} trek-id={this.currentTrekId}></grw-trek-provider>
         )}
         {this.showTouristicContent && this.currentTouristicContentId && (
-          <grw-touristic-content-provider api={this.api} languages={this.languages} touristic-content-id={this.currentTouristicContentId}></grw-touristic-content-provider>
+          <grw-touristic-content-card-provider
+            api={this.api}
+            languages={this.languages}
+            touristic-content-id={this.currentTouristicContentId}
+          ></grw-touristic-content-card-provider>
         )}
         {this.showTouristicEvent && this.currentTouristicEventId && (
           <grw-touristic-event-provider api={this.api} languages={this.languages} touristic-event-id={this.currentTouristicEventId}></grw-touristic-event-provider>
         )}
-        {(state.currentTreks || state.currentTrek || state.currentTouristicContent || state.currentTouristicEvent) && (
+        {this.touristicContents && !state.touristicContents && !this.showTouristicContent && (
+          <grw-touristic-content-provider api={this.api} languages={this.languages}></grw-touristic-content-provider>
+        )}
+        {(state.currentTreks || state.currentTrek || state.touristicContents || state.currentTouristicContent || state.currentTouristicEvent) && (
           <div class="app-container">
             <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
               {!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent ? (
@@ -373,15 +384,28 @@ export class GrwApp {
                 class={this.isLargeView ? 'large-view-app-treks-list-container' : 'app-treks-list-container'}
                 style={{ display: this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'none' : 'flex', position: this.showTrek ? 'absolute' : 'relative' }}
               >
-                <grw-treks-list
-                  reset-store-on-disconnected="false"
-                  is-large-view={this.isLargeView}
-                  color-primary-app={this.colorPrimaryApp}
-                  color-on-surface={this.colorOnSurface}
-                  color-secondary-container={this.colorSecondaryContainer}
-                  color-on-secondary-container={this.colorOnSecondaryContainer}
-                  color-surface-container-low={this.colorSurfaceContainerLow}
-                ></grw-treks-list>
+                {this.treks && (
+                  <grw-treks-list
+                    reset-store-on-disconnected="false"
+                    is-large-view={this.isLargeView}
+                    color-primary-app={this.colorPrimaryApp}
+                    color-on-surface={this.colorOnSurface}
+                    color-secondary-container={this.colorSecondaryContainer}
+                    color-on-secondary-container={this.colorOnSecondaryContainer}
+                    color-surface-container-low={this.colorSurfaceContainerLow}
+                  ></grw-treks-list>
+                )}
+                {this.touristicContents && (
+                  <grw-touristic-contents-list
+                    reset-store-on-disconnected="false"
+                    is-large-view={this.isLargeView}
+                    color-primary-app={this.colorPrimaryApp}
+                    color-on-surface={this.colorOnSurface}
+                    color-secondary-container={this.colorSecondaryContainer}
+                    color-on-secondary-container={this.colorOnSecondaryContainer}
+                    color-surface-container-low={this.colorSurfaceContainerLow}
+                  ></grw-touristic-contents-list>
+                )}
               </div>
               {((this.showTrek && !state.currentTrek) ||
                 (this.showTouristicContent && !state.currentTouristicContent) ||
@@ -454,14 +478,14 @@ export class GrwApp {
                 class={this.isLargeView ? 'large-view-app-map-container' : 'app-map-container'}
                 style={{
                   visibility:
-                    (this.showTreksMap && !this.showTrek) ||
+                    (this.showHomeMap && !this.showTrek) ||
                     (this.showTrekMap && this.showTrek) ||
-                    (this.showTouristicContentMap && this.showTouristicEvent) ||
-                    (this.showTouristicEventMap && this.showTouristicContent) ||
+                    (this.showTouristicContentMap && this.showTouristicContent) ||
+                    (this.showTouristicEventMap && this.showTouristicEvent) ||
                     this.isLargeView
                       ? 'visible'
                       : 'hidden',
-                  zIndex: this.showTreksMap || this.showTrekMap || this.showTouristicContentMap || this.showTouristicEventMap ? '1' : '0',
+                  zIndex: this.showHomeMap || this.showTrekMap || this.showTouristicContentMap || this.showTouristicEventMap ? '1' : '0',
                 }}
                 center={this.center}
                 zoom={this.zoom}

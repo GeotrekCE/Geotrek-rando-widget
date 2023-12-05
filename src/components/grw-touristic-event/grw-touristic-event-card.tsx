@@ -4,8 +4,8 @@ import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
 import { TouristicEvent } from 'types/types';
 
 @Component({
-  tag: 'grw-touristic-event',
-  styleUrl: 'grw-touristic-event.scss',
+  tag: 'grw-touristic-event-card',
+  styleUrl: 'grw-touristic-event-card.scss',
   shadow: true,
 })
 export class GrwTouristicEvent {

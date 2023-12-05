@@ -13,7 +13,7 @@
   overflow-y: auto;
 }
 
-grw-trek-card {
+grw-touristic-content-card {
   margin: 0px 8px 8px 8px;
 }
 
@@ -23,7 +23,7 @@ grw-trek-card {
   width: 100%;
 }
 
-.current-treks-within-bounds-length {
+.current-touristic-contents-within-bounds-length {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,7 +34,7 @@ grw-trek-card {
   font-weight: 400;
 }
 
-.treks-list-container {
+.touristic-contents-list-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

@@ -2,10 +2,10 @@ import { Build, Component, h, Host, Prop } from '@stencil/core';
 import state from 'store/store';
 
 @Component({
-  tag: 'grw-touristic-content-card-provider',
+  tag: 'grw-touristic-content-provider',
   shadow: true,
 })
-export class GrwTouristicContentProvider {
+export class GrwTouristicContentsProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
   @Prop() touristicContentId: string;
@@ -19,10 +19,10 @@ export class GrwTouristicContentProvider {
       state.languages = this.languages.split(',');
       state.language = state.languages[0];
     }
-    this.handleTouristicContent();
+    this.handleTouristicContents();
   }
 
-  handleTouristicContent() {
+  handleTouristicContents() {
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
     requests.push(
@@ -33,13 +33,10 @@ export class GrwTouristicContentProvider {
 
     Promise.all([
       ...requests,
-      fetch(
-        `${state.api}touristiccontent/${this.touristicContentId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website`,
-        this.init,
-      ),
+      fetch(`${state.api}touristiccontent/?language=${state.language}&published=true&fields=id,name,attachments,category,geometry&page_size=999`, this.init),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(async ([cities, touristicContentCategory, touristicContent]) => {
+      .then(async ([cities, touristicContentCategory, touristicContents]) => {
         state.trekNetworkError = false;
 
         if (cities) {
@@ -48,7 +45,8 @@ export class GrwTouristicContentProvider {
         if (touristicContentCategory) {
           state.touristicContentCategories = touristicContentCategory.results;
         }
-        state.currentTouristicContent = touristicContent;
+        state.touristicContentsWithinBounds = touristicContents.results;
+        state.touristicContents = touristicContents.results;
       })
       .catch(() => {
         state.trekNetworkError = true;

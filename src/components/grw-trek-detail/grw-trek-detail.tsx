@@ -379,7 +379,7 @@ export class GrwTrekDetail {
         ),
       },
       pois: { ...pois, visible: Boolean(state.currentPois && state.currentPois.length > 0) },
-      touristicContents: { ...touristicContents, visible: Boolean(state.touristicContents && state.touristicContents.length > 0) },
+      touristicContents: { ...touristicContents, visible: Boolean(state.trekTouristicContents && state.trekTouristicContents.length > 0) },
       touristicEvents: { ...touristicEvents, visible: Boolean(state.touristicEvents && state.touristicEvents.length > 0) },
     };
   }
@@ -834,16 +834,16 @@ export class GrwTrekDetail {
                 </div>
               </div>
             )}
-            {state.touristicContents && state.touristicContents.length > 0 && (
+            {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
               <div>
                 <div class="divider"></div>
                 <div class="touristic-content-container" ref={el => (this.touristicContentsRef = el)}>
-                  <div class="touristic-content-title">{translate[state.language].touristicContents(state.touristicContents.length)}</div>
+                  <div class="touristic-content-title">{translate[state.language].touristicContents(state.trekTouristicContents.length)}</div>
                   <div class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
                     <div class="swiper-wrapper">
-                      {state.touristicContents.map(touristicContent => (
+                      {state.trekTouristicContents.map(touristicContent => (
                         <div class="swiper-slide">
-                          <grw-touristic-content touristicContent={touristicContent}></grw-touristic-content>
+                          <grw-touristic-content-card touristicContent={touristicContent} isInsideHorizontalList={true}></grw-touristic-content-card>
                         </div>
                       ))}
                     </div>
@@ -860,7 +860,7 @@ export class GrwTrekDetail {
                     <div class="swiper-wrapper">
                       {state.touristicEvents.map(touristicEvent => (
                         <div class="swiper-slide">
-                          <grw-touristic-event touristicEvent={touristicEvent}></grw-touristic-event>
+                          <grw-touristic-event-card touristicEvent={touristicEvent}></grw-touristic-event-card>
                         </div>
                       ))}
                     </div>

@@ -38,6 +38,10 @@ interface Translation {
   city: string;
   crossedCities: string;
   placeholderCrossedCities: string;
+  home: {
+    touristicContents: string;
+    touristicContent: string;
+  };
   options: {
     presentation: string;
     description: string;
@@ -87,8 +91,8 @@ export const translate: AvailableTranslations = {
     difficulty: 'Difficulté',
     duration: 'Durée',
     length: 'Longueur',
-    treks: 'randonnées',
-    trek: 'randonnée',
+    treks: 'itinéraires',
+    trek: 'itinéraire',
     showList: 'Voir la liste',
     showMap: 'Voir la carte',
     showRoute: "Voir l'itinéraire",
@@ -121,6 +125,10 @@ export const translate: AvailableTranslations = {
     city: 'Commune',
     crossedCities: 'Communes traversées',
     placeholderCrossedCities: 'Sélectionner une ou plusieurs communes',
+    home: {
+      touristicContents: 'à proximité',
+      touristicContent: 'à proximité',
+    },
     options: {
       presentation: 'Présentation',
       description: 'Description',
@@ -163,8 +171,8 @@ export const translate: AvailableTranslations = {
     difficulty: 'Difficulty',
     duration: 'Duration',
     length: 'Length',
-    treks: 'Hikes',
-    trek: 'Hike',
+    treks: 'routes',
+    trek: 'route',
     showList: 'Show the list',
     showMap: 'Show the map',
     showRoute: 'Show the route',
@@ -197,6 +205,10 @@ export const translate: AvailableTranslations = {
     city: 'City',
     crossedCities: 'Cities crossed',
     placeholderCrossedCities: 'Select one or more municipalities',
+    home: {
+      touristicContents: 'near',
+      touristicContent: 'near',
+    },
     options: {
       presentation: 'Presentation',
       description: 'Description',

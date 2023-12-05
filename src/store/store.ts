@@ -34,7 +34,7 @@ const { state, onChange, reset } = createStore<{
   language: string;
   treks: Treks;
   treksWithinBounds: Treks;
-  currentMapTreksBounds: LatLngBounds;
+  currentMapBounds: LatLngBounds;
   currentTreks: Treks;
   difficulties: Difficulties;
   routes: Routes;
@@ -65,12 +65,15 @@ const { state, onChange, reset } = createStore<{
   parentTrek: Trek;
   currentTrekSteps: Treks;
   selectedStepId: number;
+  trekTouristicContents: TouristicContents;
   touristicContents: TouristicContents;
+  touristicContentsWithinBounds: TouristicContents;
   touristicContentCategories: TouristicContentCategories;
   currentTouristicContent: TouristicContent;
   touristicEvents: TouristicEvents;
   touristicEventTypes: TouristicEventTypes;
   currentTouristicEvent: TouristicEvent;
+  selectedTouristicContentId: number;
 }>({
   api: null,
   languages: null,
@@ -78,7 +81,7 @@ const { state, onChange, reset } = createStore<{
   treks: null,
   currentTreks: null,
   treksWithinBounds: null,
-  currentMapTreksBounds: null,
+  currentMapBounds: null,
   difficulties: null,
   routes: null,
   practices: null,
@@ -108,12 +111,15 @@ const { state, onChange, reset } = createStore<{
   parentTrek: null,
   currentTrekSteps: null,
   selectedStepId: null,
+  trekTouristicContents: null,
   touristicContents: null,
+  touristicContentsWithinBounds: null,
   touristicContentCategories: null,
   currentTouristicContent: null,
   touristicEvents: null,
   touristicEventTypes: null,
   currentTouristicEvent: null,
+  selectedTouristicContentId: null,
 });
 
 export { onChange, reset };

@@ -13,11 +13,6 @@
 :host {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  border: 1px solid gray;
-  border-radius: 12px;
-  background-color: var(--color-surface-container-low);
-  color: var(--color-on-surface);
   a {
     color: var(--color-primary-app);
   }
@@ -131,4 +126,46 @@
       font-size: 18px;
     }
   }
+}
+
+.touristic-content-card-container,
+.touristic-content-card-large-view-container {
+  cursor: pointer;
+  font-family: 'Roboto';
+  border-radius: 12px;
+  box-shadow: var(--elevation-1);
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+  .image {
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+}
+
+.touristic-content-container {
+  width: 100%;
+  max-width: 350px;
+  .image {
+    width: 100%;
+    max-height: 200px;
+  }
+}
+
+.touristic-content-card-large-view-container {
+  display: flex;
+  flex-direction: row;
+  .image {
+    width: 250px;
+  }
+}
+
+.is-inside-vertical-list {
+  cursor: pointer;
+  border: none;
+}
+
+.selected-touristic-content-card {
+  box-shadow: var(--elevation-2);
 }

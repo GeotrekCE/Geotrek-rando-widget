@@ -40,6 +40,9 @@
 | `routes`                    | `routes`                       |             | `string`  | `undefined` |
 | `structures`                | `structures`                   |             | `string`  | `undefined` |
 | `themes`                    | `themes`                       |             | `string`  | `undefined` |
+| `touristicContents`         | `touristic-contents`           |             | `boolean` | `false`     |
+| `touristicEvents`           | `touristic-events`             |             | `boolean` | `false`     |
+| `treks`                     | `treks`                        |             | `boolean` | `false`     |
 | `urlLayer`                  | `url-layer`                    |             | `string`  | `undefined` |
 | `useGradient`               | `use-gradient`                 |             | `boolean` | `false`     |
 | `weather`                   | `weather`                      |             | `boolean` | `false`     |
@@ -52,10 +55,11 @@
 
 - [grw-treks-provider](../../store)
 - [grw-trek-provider](../../store)
+- [grw-touristic-content-card-provider](../../store)
 - [grw-touristic-content-provider](../../store)
-- [grw-touristic-event-provider](../../store)
 - [grw-search](../grw-search)
 - [grw-treks-list](../grw-treks-list)
+- [grw-touristic-contents-list](../grw-touristic-contents-list)
 - [grw-trek-detail](../grw-trek-detail)
 - [grw-touristic-content-detail](../grw-touristic-content-detail)
 - [grw-touristic-event-detail](../grw-touristic-event-detail)
@@ -67,22 +71,24 @@
 graph TD;
   grw-app --> grw-treks-provider
   grw-app --> grw-trek-provider
+  grw-app --> grw-touristic-content-card-provider
   grw-app --> grw-touristic-content-provider
-  grw-app --> grw-touristic-event-provider
   grw-app --> grw-search
   grw-app --> grw-treks-list
+  grw-app --> grw-touristic-contents-list
   grw-app --> grw-trek-detail
   grw-app --> grw-touristic-content-detail
   grw-app --> grw-touristic-event-detail
   grw-app --> grw-map
   grw-app --> grw-filters
   grw-treks-list --> grw-trek-card
+  grw-touristic-contents-list --> grw-touristic-content-card
   grw-trek-detail --> grw-trek-card
   grw-trek-detail --> grw-sensitive-area-detail
   grw-trek-detail --> grw-information-desk
   grw-trek-detail --> grw-poi
-  grw-trek-detail --> grw-touristic-content
-  grw-trek-detail --> grw-touristic-event
+  grw-trek-detail --> grw-touristic-content-card
+  grw-trek-detail --> grw-touristic-event-card
   grw-filters --> grw-filter
   style grw-app fill:#f9f,stroke:#333,stroke-width:4px
 ```

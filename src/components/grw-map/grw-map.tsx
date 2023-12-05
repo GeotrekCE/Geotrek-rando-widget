@@ -20,6 +20,8 @@ export class GrwMap {
   maxZoom = 19;
 
   @Event() trekCardPress: EventEmitter<number>;
+  @Event() touristicContentCardPress: EventEmitter<number>;
+
   @State() mapIsReady = false;
   @Prop() nameLayer: string;
   @Prop() urlLayer: string;
@@ -44,11 +46,15 @@ export class GrwMap {
   resizeObserver: ResizeObserver;
   bounds;
   treksLayer: L.GeoJSON<any>;
+  toutisticContentsLayer: L.GeoJSON<any>;
+
   treksMarkerClusterGroup: MarkerClusterGroup;
+  touristicContentsMarkerClusterGroup: MarkerClusterGroup;
   currentTrekLayer: L.GeoJSON<any>;
   currentStepsLayer: L.GeoJSON<any>;
   selectedCurrentTrekLayer: L.GeoJSON<any>;
   selectedCurrentStepLayer: L.GeoJSON<any>;
+  selectedTouristicContentLayer: L.GeoJSON<any>;
   currentReferencePointsLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
@@ -66,8 +72,10 @@ export class GrwMap {
   tileLayer: { key: string; value: TileLayer }[] = [];
   trekPopupIsOpen: boolean;
   stepPopupIsOpen: boolean;
+  touristicContentPopupIsOpen: boolean;
 
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
+  handleTouristicContentsWithinBoundsBind: (event: any) => void = this.handleTouristicContentsWithinBounds.bind(this);
 
   @Listen('centerOnMap', { target: 'window' })
   onCenterOnMap(event: CustomEvent<{ latitude: number; longitude: number }>) {
@@ -145,7 +153,7 @@ export class GrwMap {
   }
 
   @Listen('cardTrekMouseLeave', { target: 'window' })
-  oncardTrekMouseLeave() {
+  onCardTrekMouseLeave() {
     if (!this.trekPopupIsOpen && state.selectedTrekId) {
       this.trekPopupIsOpen = false;
       state.selectedTrekId = null;
@@ -155,6 +163,30 @@ export class GrwMap {
       state.selectedStepId = null;
       this.removeSelectedCurrentStep();
     }
+  }
+
+  @Listen('cardTouristicContentMouseOver', { target: 'window' })
+  onTouristicContentMouseOver(event: CustomEvent<number>) {
+    // if (!state.parentTrek && (!state.selectedTrekId || state.selectedTrekId !== event.detail)) {
+    //   state.selectedTrekId = event.detail;
+    //   this.addSelectedCurrentTrek(event.detail);
+    // } else if (state.parentTrek) {
+    this.touristicContentPopupIsOpen = false;
+    state.selectedTouristicContentId = null;
+    this.addSelectedTouristicContent(event.detail);
+    // }
+  }
+
+  @Listen('cardTouristicContentMouseLeave', { target: 'window' })
+  onTouristicContentMouseLeave() {
+    // if (!this.trekPopupIsOpen && state.selectedTrekId) {
+    //   this.trekPopupIsOpen = false;
+    //   state.selectedTrekId = null;
+    //   this.removeSelectedCurrentTrek();
+    // } else if (this.currentStepsLayer) {
+    state.selectedTouristicContentId = null;
+    this.removeSelectedTouristicContent();
+    // }
   }
 
   componentDidLoad() {
@@ -223,13 +255,13 @@ export class GrwMap {
       this.addTouristicContent();
     } else if (state.currentTouristicEvent) {
       this.addTouristicEvent();
+    } else if (state.touristicContents) {
+      this.addTouristicContents();
     }
 
     onChange('currentTreks', () => {
       if (state.currentTrek) {
         this.removeTreks();
-        this.removeTouristicContent();
-        this.removeTouristicEvent();
         this.addTrek();
       } else if (state.currentTreks) {
         this.removeTrek();
@@ -242,8 +274,6 @@ export class GrwMap {
     onChange('currentTrek', () => {
       if (state.currentTrek) {
         this.removeTreks();
-        this.removeTouristicContent();
-        this.removeTouristicEvent();
         this.addTrek();
       } else if (state.currentTreks) {
         this.removeTrek();
@@ -256,18 +286,16 @@ export class GrwMap {
     onChange('currentTouristicContent', () => {
       if (state.currentTouristicContent) {
         this.removeTrek();
-        this.removeTreks();
-        this.removeTouristicEvent();
+        this.removeTouristicContents();
         this.addTouristicContent();
-      } else if (state.currentTrek) {
-        this.removeTreks();
+      } else if (state.touristicContents) {
         this.removeTouristicContent();
-        this.removeTouristicEvent();
+        this.addTouristicContents();
+      } else if (state.currentTrek) {
+        this.removeTouristicContent();
         this.addTrek();
-      } else if (state.currentTrek) {
-        this.removeTrek();
+      } else if (state.currentTreks) {
         this.removeTouristicContent();
-        this.removeTouristicEvent();
         this.addTreks();
       }
     });
@@ -275,24 +303,23 @@ export class GrwMap {
     onChange('currentTouristicEvent', () => {
       if (state.currentTouristicEvent) {
         this.removeTrek();
-        this.removeTreks();
-        this.removeTouristicEvent();
         this.addTouristicEvent();
-      } else if (state.currentTouristicContent) {
-        this.removeTrek();
-        this.removeTreks();
-        this.removeTouristicEvent();
-        this.addTouristicContent();
       } else if (state.currentTrek) {
-        this.removeTreks();
-        this.removeTouristicContent();
         this.removeTouristicEvent();
         this.addTrek();
-      } else if (state.currentTrek) {
-        this.removeTrek();
-        this.removeTouristicContent();
+      } else if (state.currentTreks) {
         this.removeTouristicEvent();
         this.addTreks();
+      }
+    });
+
+    onChange('touristicContents', () => {
+      if (state.currentTouristicContent) {
+        this.removeTouristicContents();
+        this.addTouristicContent();
+      } else if (state.touristicContents) {
+        this.removeTouristicContent();
+        this.addTouristicContents();
       }
     });
   }
@@ -307,7 +334,7 @@ export class GrwMap {
   }
 
   addTreks() {
-    const trekscurrentDepartureCoordinates = [];
+    const treksCurrentDepartureCoordinates = [];
     const treksFeatureCollection: FeatureCollection = {
       type: 'FeatureCollection',
       features: [],
@@ -315,7 +342,7 @@ export class GrwMap {
 
     if (state.currentTreks) {
       for (const trek of state.currentTreks) {
-        trekscurrentDepartureCoordinates.push(trek.departure_geom);
+        treksCurrentDepartureCoordinates.push(trek.departure_geom);
         treksFeatureCollection.features.push({
           type: 'Feature',
           geometry: { type: 'Point', coordinates: trek.departure_geom },
@@ -330,11 +357,11 @@ export class GrwMap {
     }
 
     if (!this.treksLayer) {
-      if (trekscurrentDepartureCoordinates.length > 0 && !state.currentMapTreksBounds) {
-        this.bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      if (treksCurrentDepartureCoordinates.length > 0 && !state.currentMapBounds) {
+        this.bounds = L.latLngBounds(treksCurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
-        if (state.currentMapTreksBounds) {
-          this.bounds = state.currentMapTreksBounds;
+        if (state.currentMapBounds) {
+          this.bounds = state.currentMapBounds;
         }
       }
       this.treksLayer = L.geoJSON(treksFeatureCollection, {
@@ -391,8 +418,8 @@ export class GrwMap {
       this.treksMarkerClusterGroup.addLayer(this.treksLayer);
       this.map.addLayer(this.treksMarkerClusterGroup);
     } else {
-      if (trekscurrentDepartureCoordinates.length > 0) {
-        this.bounds = L.latLngBounds(trekscurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      if (treksCurrentDepartureCoordinates.length > 0) {
+        this.bounds = L.latLngBounds(treksCurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
         this.map.fire('moveend');
       }
@@ -411,7 +438,7 @@ export class GrwMap {
 
   removeTreks() {
     if (this.treksLayer) {
-      state.currentMapTreksBounds = this.map.getBounds();
+      state.currentMapBounds = this.map.getBounds();
       this.map.removeLayer(this.treksMarkerClusterGroup);
       this.treksLayer = null;
       this.treksMarkerClusterGroup = null;
@@ -421,10 +448,21 @@ export class GrwMap {
 
   handleTreksWithinBounds() {
     if (
-      (state.currentTreks && !state.currentMapTreksBounds) ||
-      (state.currentTreks && state.currentMapTreksBounds && state.currentMapTreksBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
+      (state.currentTreks && !state.currentMapBounds) ||
+      (state.currentTreks && state.currentMapBounds && state.currentMapBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
     ) {
       state.treksWithinBounds = state.currentTreks.filter(trek => this.map.getBounds().contains(L.latLng(trek.departure_geom[1], trek.departure_geom[0])));
+    }
+  }
+
+  handleTouristicContentsWithinBounds() {
+    if (
+      (state.touristicContents && !state.currentMapBounds) ||
+      (state.touristicContents && state.currentMapBounds && state.currentMapBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
+    ) {
+      state.touristicContentsWithinBounds = state.touristicContents.filter(touristicContent =>
+        this.map.getBounds().contains(L.latLng(touristicContent.geometry.coordinates[1], touristicContent.geometry.coordinates[0])),
+      );
     }
   }
 
@@ -536,13 +574,13 @@ export class GrwMap {
       });
     }
 
-    if (state.touristicContents && state.touristicContents.length > 0) {
+    if (state.trekTouristicContents && state.trekTouristicContents.length > 0) {
       const currentTouristicContentsFeatureCollection: FeatureCollection = {
         type: 'FeatureCollection',
         features: [],
       };
 
-      for (const touristicContent of state.touristicContents) {
+      for (const touristicContent of state.trekTouristicContents) {
         currentTouristicContentsFeatureCollection.features.push({
           type: 'Feature',
           properties: {
@@ -1123,6 +1161,10 @@ export class GrwMap {
   }
 
   addTouristicContent() {
+    this.touristicContentPopupIsOpen = false;
+    state.selectedTouristicContentId = null;
+    this.removeSelectedTouristicContent();
+
     const touristicContentsFeatureCollection: FeatureCollection = {
       type: 'FeatureCollection',
       features: [],
@@ -1166,6 +1208,130 @@ export class GrwMap {
     if (this.currentToutisticContentLayer) {
       this.map.removeLayer(this.currentToutisticContentLayer);
       this.currentToutisticContentLayer = null;
+    }
+  }
+
+  addTouristicContents() {
+    const touristicContentsCurrentCoordinates = [];
+
+    const touristicContentsFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.touristicContents) {
+      if (touristicContentsCurrentCoordinates.length > 0 && !state.currentMapBounds) {
+        this.bounds = L.latLngBounds(touristicContentsCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      } else {
+        if (state.currentMapBounds) {
+          this.bounds = state.currentMapBounds;
+        }
+      }
+      for (const touristicContent of state.touristicContents) {
+        touristicContentsCurrentCoordinates.push(touristicContent.geometry.coordinates);
+
+        touristicContentsFeatureCollection.features.push({
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: touristicContent.geometry.coordinates },
+          properties: {
+            id: touristicContent.id,
+            name: touristicContent.name,
+            practice: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category).pictogram,
+          },
+        });
+      }
+    }
+
+    if (!this.toutisticContentsLayer) {
+      if (touristicContentsCurrentCoordinates.length > 0 && !state.currentMapBounds) {
+        this.bounds = L.latLngBounds(touristicContentsCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      } else {
+        if (state.currentMapBounds) {
+          this.bounds = state.currentMapBounds;
+        }
+      }
+      this.toutisticContentsLayer = L.geoJSON(touristicContentsFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: geoJsonPoint.properties.practice
+                ? `<div class="touristic-content-marker-container"><img src=${geoJsonPoint.properties.practice} /></div>`
+                : `<div class="touristic-content-marker-container"></div>`,
+              className: 'touristic-content-marker',
+              iconSize: 32,
+              iconAnchor: [18, 0],
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('click', () => {
+            const touristicContentCoordinatesPopup = L.DomUtil.create('div');
+            touristicContentCoordinatesPopup.className = 'touristic-content-coordinates-popup';
+            if (geoJsonPoint.properties.imgSrc) {
+              const touristicCotentImg = L.DomUtil.create('img');
+              touristicCotentImg.src = geoJsonPoint.properties.imgSrc;
+              touristicContentCoordinatesPopup.appendChild(touristicCotentImg);
+            }
+            const touristicContentName = L.DomUtil.create('div');
+            touristicContentName.innerHTML = geoJsonPoint.properties.name;
+            touristicContentName.className = 'touristic-content-name';
+            touristicContentCoordinatesPopup.appendChild(touristicContentName);
+
+            const touristicContentButton = L.DomUtil.create('button');
+            touristicContentButton.innerHTML = 'Afficher le détail';
+            touristicContentButton.className = 'touristic-content-button';
+            touristicContentButton.onclick = () => this.touristicContentCardPress.emit(geoJsonPoint.properties.id);
+            touristicContentCoordinatesPopup.appendChild(touristicContentButton);
+
+            layer.bindPopup(touristicContentCoordinatesPopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+          });
+          layer.on('mouseover', e => {
+            this.addSelectedTouristicContent(geoJsonPoint.properties.id, e.latlng);
+          });
+        },
+      });
+
+      this.touristicContentsMarkerClusterGroup = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        removeOutsideVisibleBounds: false,
+        iconCreateFunction: cluster => {
+          return L.divIcon({
+            html: '<div>' + cluster.getChildCount() + '</div>',
+            className: 'touristic-content-marker-cluster-group-icon',
+            iconSize: 48,
+            iconAnchor: [24, 24],
+          } as any);
+        },
+      });
+
+      this.touristicContentsMarkerClusterGroup.addLayer(this.toutisticContentsLayer);
+      this.map.addLayer(this.touristicContentsMarkerClusterGroup);
+    } else {
+      if (touristicContentsCurrentCoordinates.length > 0) {
+        this.bounds = L.latLngBounds(touristicContentsCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      } else {
+        this.map.fire('moveend');
+      }
+      this.toutisticContentsLayer.clearLayers();
+      this.toutisticContentsLayer.addData(touristicContentsFeatureCollection);
+      this.treksMarkerClusterGroup.clearLayers();
+      this.treksMarkerClusterGroup.addLayer(this.toutisticContentsLayer);
+    }
+
+    this.bounds && this.map.fitBounds(this.bounds);
+
+    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+
+    this.map.on('moveend', this.handleTouristicContentsWithinBoundsBind);
+  }
+
+  removeTouristicContents() {
+    if (this.toutisticContentsLayer) {
+      state.currentMapBounds = this.map.getBounds();
+      this.map.removeLayer(this.touristicContentsMarkerClusterGroup);
+      this.toutisticContentsLayer = null;
+      this.touristicContentsMarkerClusterGroup = null;
+      this.map.off('moveend', this.handleTouristicContentsWithinBoundsBind);
     }
   }
 
@@ -1214,6 +1380,92 @@ export class GrwMap {
       this.map.removeLayer(this.currentToutisticEventLayer);
       this.currentToutisticEventLayer = null;
     }
+  }
+
+  addSelectedTouristicContent(id, customCoordinates?) {
+    const touristicContentFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.touristicContents) {
+      const touristicContent = state.touristicContents.find(touristicContent => touristicContent.id === id);
+      touristicContentFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: customCoordinates ? [customCoordinates.lng, customCoordinates.lat] : touristicContent.geometry.coordinates },
+        properties: {
+          id: touristicContent.id,
+          name: touristicContent.name,
+          category: state.touristicContentCategories.find(practice => practice.id === touristicContent.category)?.pictogram,
+          imgSrc: touristicContent.attachments && touristicContent.attachments.length > 0 && touristicContent.attachments[0].thumbnail,
+        },
+      });
+    }
+
+    this.removeSelectedTouristicContent();
+    state.selectedTouristicContentId = id;
+
+    this.selectedTouristicContentLayer = L.geoJSON(touristicContentFeatureCollection, {
+      pointToLayer: (geoJsonPoint, latlng) =>
+        L.marker(latlng, {
+          zIndexOffset: 4000000,
+          icon: L.divIcon({
+            html: geoJsonPoint.properties.category
+              ? `<div class="touristic-content-marker-container"><img src=${geoJsonPoint.properties.category} /></div>`
+              : `<div class="touristic-content-trek-marker-container"></div>`,
+            className: 'selected-touristic-content-marker',
+            iconSize: 64,
+            iconAnchor: [36, 36],
+          } as any),
+          autoPanOnFocus: false,
+        } as any),
+      onEachFeature: (geoJsonPoint, layer) => {
+        layer.once('click', () => {
+          const touristicContentDeparturePopup = L.DomUtil.create('div');
+          touristicContentDeparturePopup.className = 'touristic-content-coordinates-popup';
+          if (geoJsonPoint.properties.imgSrc) {
+            const touristicContentImg = L.DomUtil.create('img');
+            touristicContentImg.src = geoJsonPoint.properties.imgSrc;
+            touristicContentDeparturePopup.appendChild(touristicContentImg);
+          }
+
+          const touristicContentName = L.DomUtil.create('div');
+          touristicContentName.innerHTML = geoJsonPoint.properties.name;
+          touristicContentName.className = 'touristic-content-name';
+          touristicContentDeparturePopup.appendChild(touristicContentName);
+
+          const touristicContentButton = L.DomUtil.create('button');
+          touristicContentButton.innerHTML = 'Afficher le détail';
+          touristicContentButton.className = 'touristic-content-button';
+          touristicContentButton.onclick = () => this.touristicContentCardPress.emit(geoJsonPoint.properties.id);
+          touristicContentDeparturePopup.appendChild(touristicContentButton);
+
+          layer.bindPopup(touristicContentDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+        });
+        layer.on('mouseout', () => {
+          if (!this.touristicContentPopupIsOpen) {
+            state.selectedTouristicContentId = null;
+            this.removeSelectedTouristicContent();
+          }
+        });
+        layer.on('popupopen', () => {
+          this.touristicContentPopupIsOpen = Boolean(state.selectedTouristicContentId);
+        });
+        layer.on('popupclose', () => {
+          if (state.selectedTouristicContentId) {
+            this.touristicContentPopupIsOpen = false;
+            state.selectedTouristicContentId = null;
+            this.removeSelectedTouristicContent();
+          }
+        });
+      },
+    }).addTo(this.map);
+  }
+
+  removeSelectedTouristicContent() {
+    state.selectedTouristicContentId = null;
+    this.selectedTouristicContentLayer && this.map.removeLayer(this.selectedTouristicContentLayer);
+    this.selectedTouristicContentLayer = null;
   }
 
   render() {

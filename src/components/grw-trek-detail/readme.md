@@ -48,8 +48,8 @@
 - [grw-sensitive-area-detail](../grw-sensitive-area-detail)
 - [grw-information-desk](../grw-information-desk)
 - [grw-poi](../grw-poi-detail)
-- [grw-touristic-content](../grw-touristic-content)
-- [grw-touristic-event](../grw-touristic-event)
+- [grw-touristic-content-card](../grw-touristic-content)
+- [grw-touristic-event-card](../grw-touristic-event)
 
 ### Graph
 ```mermaid
@@ -58,8 +58,8 @@ graph TD;
   grw-trek-detail --> grw-sensitive-area-detail
   grw-trek-detail --> grw-information-desk
   grw-trek-detail --> grw-poi
-  grw-trek-detail --> grw-touristic-content
-  grw-trek-detail --> grw-touristic-event
+  grw-trek-detail --> grw-touristic-content-card
+  grw-trek-detail --> grw-touristic-event-card
   grw-app --> grw-trek-detail
   style grw-trek-detail fill:#f9f,stroke:#333,stroke-width:4px
 ```

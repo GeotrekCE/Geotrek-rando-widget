@@ -1,6 +1,4 @@
-# grw-touristic-event
-
-
+# grw-touristic-event-card
 
 <!-- Auto Generated Below -->
 
@@ -28,8 +26,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  grw-trek-detail --> grw-touristic-event
-  style grw-touristic-event fill:#f9f,stroke:#333,stroke-width:4px
+  grw-trek-detail --> grw-touristic-event-card
+  style grw-touristic-event-card fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

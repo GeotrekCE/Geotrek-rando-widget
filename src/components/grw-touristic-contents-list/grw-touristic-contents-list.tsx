@@ -1,16 +1,16 @@
 import { Component, Host, h, Element, State, Prop } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
-import { Treks } from 'types/types';
+import { TouristicContents } from 'types/types';
 
 @Component({
-  tag: 'grw-treks-list',
-  styleUrl: 'grw-treks-list.scss',
+  tag: 'grw-touristic-contents-list',
+  styleUrl: 'grw-touristic-contents-list.scss',
   shadow: true,
 })
-export class GrwTreksList {
+export class GrwTouristicContentsList {
   @Element() element: HTMLElement;
-  @State() treksToDisplay: Treks = [];
+  @State() touristicContentsToDisplay: TouristicContents = [];
 
   @Prop() colorPrimaryApp = '#6b0030';
   @Prop() colorOnSurface = '#49454e';
@@ -27,31 +27,33 @@ export class GrwTreksList {
 
   connectedCallback() {
     this.handleInfiniteScrollEvent(true);
-    if (state.currentTreks) {
-      this.treksToDisplay = [...state.currentTreks.slice(0, this.step)];
+    if (state.touristicContents) {
+      this.touristicContentsToDisplay = [...state.touristicContents.slice(0, this.step)];
     }
-    onChange('currentTreks', () => {
+    onChange('touristicContents', () => {
       this.handleInfiniteScrollEvent(true);
       this.element.scroll({ top: 0 });
-      if (state.currentTreks) {
-        this.treksToDisplay = [...state.currentTreks.slice(0, this.step)];
+      if (state.touristicContents) {
+        this.touristicContentsToDisplay = [...state.touristicContents.slice(0, this.step)];
       }
     });
-    onChange('treksWithinBounds', () => {
+    onChange('touristicContentsWithinBounds', () => {
       this.handleInfiniteScrollEvent(true);
       this.element.scroll({ top: 0 });
-      if (state.treksWithinBounds) {
-        this.treksToDisplay = [...state.treksWithinBounds.slice(0, this.step)];
+      if (state.touristicContents) {
+        this.touristicContentsToDisplay = [...state.touristicContentsWithinBounds.slice(0, this.step)];
       }
     });
   }
 
   handleInfiniteScroll(event: any) {
     if (event.composedPath()[0].scrollTop + event.composedPath()[0].scrollHeight / 2 >= event.composedPath()[0].scrollHeight) {
-      if (this.treksToDisplay.length < state.treksWithinBounds.length) {
-        this.treksToDisplay = state.treksWithinBounds.slice(
+      if (this.touristicContentsToDisplay.length < state.touristicContentsWithinBounds.length) {
+        this.touristicContentsToDisplay = state.touristicContentsWithinBounds.slice(
           0,
-          this.treksToDisplay.length + this.step >= state.treksWithinBounds.length ? state.treksWithinBounds.length : this.treksToDisplay.length + this.step,
+          this.touristicContentsToDisplay.length + this.step >= state.touristicContentsWithinBounds.length
+            ? state.touristicContentsWithinBounds.length
+            : this.touristicContentsToDisplay.length + this.step,
         );
       } else {
         this.handleInfiniteScrollEvent(false);
@@ -81,24 +83,24 @@ export class GrwTreksList {
   render() {
     return (
       <Host style={{ '--color-primary-app': this.colorPrimaryApp }}>
-        {state.treksWithinBounds && (
-          <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
-            state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek
+        {state.touristicContentsWithinBounds && (
+          <div class="current-touristic-contents-within-bounds-length">{`${state.touristicContentsWithinBounds.length} ${
+            state.touristicContentsWithinBounds.length > 1 ? translate[state.language].home.touristicContents : translate[state.language].home.touristicContent
           }`}</div>
         )}
-        <div class="treks-list-container">
-          {this.treksToDisplay.map(trek => (
-            <grw-trek-card
+        <div class="touristic-contents-list-container">
+          {this.touristicContentsToDisplay.map(touristicContent => (
+            <grw-touristic-content-card
               reset-store-on-disconnected="false"
-              key={`trek-${trek.id}`}
-              trek={trek}
+              key={`touristic-content-${touristicContent.id}`}
+              touristicContent={touristicContent}
               is-large-view={this.isLargeView}
               color-primary-app={this.colorPrimaryApp}
               color-on-surface={this.colorOnSurface}
               color-secondary-container={this.colorSecondaryContainer}
               color-on-secondary-container={this.colorOnSecondaryContainer}
               color-surface-container-low={this.colorSurfaceContainerLow}
-            ></grw-trek-card>
+            ></grw-touristic-content-card>
           ))}
         </div>
         {!this.isLargeView && <div class="list-bottom-space"></div>}

@@ -80,7 +80,8 @@
   display: none;
 }
 
-.treks-marker-cluster-group-icon {
+.treks-marker-cluster-group-icon,
+.touristic-content-marker-cluster-group-icon {
   background-color: var(--color-primary-app);
   border-radius: 50%;
   display: flex;
@@ -95,7 +96,8 @@
 .touristic-content-marker,
 .touristic-event-marker,
 .selected-trek-marker,
-.selected-step-marker {
+.selected-step-marker,
+.selected-touristic-content-marker {
   .trek-marker-container,
   .step-marker-container,
   .touristic-content-marker-container,
@@ -130,7 +132,8 @@
 }
 
 .selected-trek-marker,
-.selected-step-marker {
+.selected-step-marker,
+.selected-touristic-content-marker {
   .trek-marker-container,
   .step-marker-container,
   .touristic-content-marker-container,
@@ -184,7 +187,8 @@
   margin: 0;
 }
 
-.trek-departure-popup {
+.trek-departure-popup,
+.touristic-content-coordinates-popup {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -192,13 +196,15 @@
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
   }
-  .trek-name {
+  .trek-name,
+  .touristic-content-name {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
     padding: 8px;
   }
-  .trek-button {
+  .trek-button,
+  .touristic-content-button {
     margin: 0px 8px 8px 8px;
     user-select: none;
     cursor: pointer;

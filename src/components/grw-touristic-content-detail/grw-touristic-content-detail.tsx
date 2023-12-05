@@ -31,20 +31,22 @@ export class GrwTouristicContentDetail {
   touristicContentDetailContainerRef?: HTMLElement;
 
   componentDidLoad() {
-    this.swiperImages = new Swiper(this.swiperImagesRef, {
-      modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
-      navigation: {
-        prevEl: this.prevElImagesRef,
-        nextEl: this.nextElImagesRef,
-      },
-      pagination: { el: this.paginationElImagesRef },
-      allowTouchMove: false,
-      keyboard: false,
-    });
-    this.swiperImagesRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen;
-      this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
-    };
+    if (this.swiperImagesRef) {
+      this.swiperImages = new Swiper(this.swiperImagesRef, {
+        modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
+        navigation: {
+          prevEl: this.prevElImagesRef,
+          nextEl: this.nextElImagesRef,
+        },
+        pagination: { el: this.paginationElImagesRef },
+        allowTouchMove: false,
+        keyboard: false,
+      });
+      this.swiperImagesRef.onfullscreenchange = () => {
+        this.displayFullscreen = !this.displayFullscreen;
+        this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
+      };
+    }
   }
 
   handleFullscreen() {

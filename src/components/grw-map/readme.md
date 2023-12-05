@@ -27,9 +27,10 @@
 
 ## Events
 
-| Event           | Description | Type                  |
-| --------------- | ----------- | --------------------- |
-| `trekCardPress` |             | `CustomEvent<number>` |
+| Event                       | Description | Type                  |
+| --------------------------- | ----------- | --------------------- |
+| `touristicContentCardPress` |             | `CustomEvent<number>` |
+| `trekCardPress`             |             | `CustomEvent<number>` |
 
 
 ## Dependencies
