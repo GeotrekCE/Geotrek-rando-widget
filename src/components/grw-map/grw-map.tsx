@@ -167,26 +167,15 @@ export class GrwMap {
 
   @Listen('cardTouristicContentMouseOver', { target: 'window' })
   onTouristicContentMouseOver(event: CustomEvent<number>) {
-    // if (!state.parentTrek && (!state.selectedTrekId || state.selectedTrekId !== event.detail)) {
-    //   state.selectedTrekId = event.detail;
-    //   this.addSelectedCurrentTrek(event.detail);
-    // } else if (state.parentTrek) {
     this.touristicContentPopupIsOpen = false;
     state.selectedTouristicContentId = null;
     this.addSelectedTouristicContent(event.detail);
-    // }
   }
 
   @Listen('cardTouristicContentMouseLeave', { target: 'window' })
   onTouristicContentMouseLeave() {
-    // if (!this.trekPopupIsOpen && state.selectedTrekId) {
-    //   this.trekPopupIsOpen = false;
-    //   state.selectedTrekId = null;
-    //   this.removeSelectedCurrentTrek();
-    // } else if (this.currentStepsLayer) {
     state.selectedTouristicContentId = null;
     this.removeSelectedTouristicContent();
-    // }
   }
 
   componentDidLoad() {
@@ -313,11 +302,11 @@ export class GrwMap {
       }
     });
 
-    onChange('touristicContents', () => {
+    onChange('currentTouristicContents', () => {
       if (state.currentTouristicContent) {
         this.removeTouristicContents();
         this.addTouristicContent();
-      } else if (state.touristicContents) {
+      } else if (state.currentTouristicContents) {
         this.removeTouristicContent();
         this.addTouristicContents();
       }
@@ -457,10 +446,10 @@ export class GrwMap {
 
   handleTouristicContentsWithinBounds() {
     if (
-      (state.touristicContents && !state.currentMapBounds) ||
-      (state.touristicContents && state.currentMapBounds && state.currentMapBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
+      (state.currentTouristicContents && !state.currentMapBounds) ||
+      (state.currentTouristicContents && state.currentMapBounds && state.currentMapBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
     ) {
-      state.touristicContentsWithinBounds = state.touristicContents.filter(touristicContent =>
+      state.touristicContentsWithinBounds = state.currentTouristicContents.filter(touristicContent =>
         this.map.getBounds().contains(L.latLng(touristicContent.geometry.coordinates[1], touristicContent.geometry.coordinates[0])),
       );
     }
@@ -1227,16 +1216,16 @@ export class GrwMap {
           this.bounds = state.currentMapBounds;
         }
       }
-      for (const touristicContent of state.touristicContents) {
-        touristicContentsCurrentCoordinates.push(touristicContent.geometry.coordinates);
+      for (const currentTouristicContent of state.currentTouristicContents) {
+        touristicContentsCurrentCoordinates.push(currentTouristicContent.geometry.coordinates);
 
         touristicContentsFeatureCollection.features.push({
           type: 'Feature',
-          geometry: { type: 'Point', coordinates: touristicContent.geometry.coordinates },
+          geometry: { type: 'Point', coordinates: currentTouristicContent.geometry.coordinates },
           properties: {
-            id: touristicContent.id,
-            name: touristicContent.name,
-            practice: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category).pictogram,
+            id: currentTouristicContent.id,
+            name: currentTouristicContent.name,
+            practice: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === currentTouristicContent.category).pictogram,
           },
         });
       }
@@ -1314,8 +1303,8 @@ export class GrwMap {
       }
       this.toutisticContentsLayer.clearLayers();
       this.toutisticContentsLayer.addData(touristicContentsFeatureCollection);
-      this.treksMarkerClusterGroup.clearLayers();
-      this.treksMarkerClusterGroup.addLayer(this.toutisticContentsLayer);
+      this.touristicContentsMarkerClusterGroup.clearLayers();
+      this.touristicContentsMarkerClusterGroup.addLayer(this.toutisticContentsLayer);
     }
 
     this.bounds && this.map.fitBounds(this.bounds);

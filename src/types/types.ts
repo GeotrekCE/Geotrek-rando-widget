@@ -282,17 +282,21 @@ export type TouristicEventType = {
 
 export type TouristicEventTypes = TouristicEventType[];
 
-export type Filters = Filter[];
+export type TrekFilters = TrekFilter[];
 
-export type Filter = { property: string; trekProperty: string; trekPropertyIsArray: boolean; type: string; segment: string };
+export type TrekFilter = { property: string; trekProperty: string; trekPropertyIsArray: boolean; type: string; segment: string };
 
-export interface Option {
+export type TouristicContentsFilters = TouristicContentsFilter[];
+
+export type TouristicContentsFilter = { property: string; touristicContentProperty: string; touristicContentPropertyIsArray: boolean; type: string; segment: string };
+
+export type Option = {
   visible: boolean;
   width: number;
   indicator: boolean;
-}
+};
 
-export interface Options {
+export type Options = {
   presentation: Option;
   steps: Option;
   description: Option;
@@ -302,4 +306,6 @@ export interface Options {
   pois: Option;
   touristicContents: Option;
   touristicEvents: Option;
-}
+};
+
+export type mode = 'treks' | 'touristicContents';

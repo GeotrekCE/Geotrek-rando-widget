@@ -39,7 +39,7 @@ export class GrwTouristicEventProvider {
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(async ([cities, touristicContentTypes, touristicEvent]) => {
+      .then(([cities, touristicContentTypes, touristicEvent]) => {
         state.trekNetworkError = false;
 
         if (cities) {

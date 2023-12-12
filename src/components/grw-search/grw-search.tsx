@@ -1,6 +1,6 @@
 import { Component, Host, h } from '@stencil/core';
 import state from 'store/store';
-import { handleFiltersAndSearch } from 'utils/utils';
+import { handleTouristicContentsFiltersAndSearch, handleTreksFiltersAndSearch } from 'utils/utils';
 
 @Component({
   tag: 'grw-search',
@@ -10,7 +10,11 @@ import { handleFiltersAndSearch } from 'utils/utils';
 export class GrwSearch {
   onSearchChange(event: InputEvent) {
     state.searchValue = (event.target as any).value;
-    state.currentTreks = handleFiltersAndSearch();
+    if (state.mode === 'treks') {
+      state.currentTreks = handleTreksFiltersAndSearch();
+    } else if (state.mode === 'touristicContents') {
+      state.currentTouristicContents = handleTouristicContentsFiltersAndSearch();
+    }
   }
 
   render() {

@@ -42,7 +42,7 @@
 | `themes`                    | `themes`                       |             | `string`  | `undefined` |
 | `touristicContents`         | `touristic-contents`           |             | `boolean` | `false`     |
 | `touristicEvents`           | `touristic-events`             |             | `boolean` | `false`     |
-| `treks`                     | `treks`                        |             | `boolean` | `false`     |
+| `treks`                     | `treks`                        |             | `boolean` | `true`      |
 | `urlLayer`                  | `url-layer`                    |             | `string`  | `undefined` |
 | `useGradient`               | `use-gradient`                 |             | `boolean` | `false`     |
 | `weather`                   | `weather`                      |             | `boolean` | `false`     |

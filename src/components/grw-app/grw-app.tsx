@@ -147,6 +147,11 @@ export class GrwApp {
   }
 
   componentWillLoad() {
+    if (this.treks) {
+      state.mode = 'treks';
+    } else if (this.touristicContents) {
+      state.mode = 'touristicContents';
+    }
     const url = new URL(window.location.toString());
     const trekParam = url.searchParams.get('trek');
     const parentTrekId = url.searchParams.get('parenttrek');

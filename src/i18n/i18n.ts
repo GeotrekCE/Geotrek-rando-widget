@@ -77,6 +77,8 @@ interface Translation {
   contact: string;
   email: string;
   website: string;
+  category: string;
+  services: string;
 }
 
 interface AvailableTranslations {
@@ -164,6 +166,8 @@ export const translate: AvailableTranslations = {
     contact: 'Contact',
     email: 'Email',
     website: 'Site web',
+    category: 'Catégorie',
+    services: 'Services',
   },
   en: {
     filter: 'Filter',
@@ -244,5 +248,7 @@ export const translate: AvailableTranslations = {
     contact: 'Contact',
     email: 'Email',
     website: 'Website',
+    category: 'Category',
+    services: 'Services',
   },
 };

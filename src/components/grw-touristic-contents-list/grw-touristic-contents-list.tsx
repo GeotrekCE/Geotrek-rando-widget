@@ -27,20 +27,20 @@ export class GrwTouristicContentsList {
 
   connectedCallback() {
     this.handleInfiniteScrollEvent(true);
-    if (state.touristicContents) {
-      this.touristicContentsToDisplay = [...state.touristicContents.slice(0, this.step)];
+    if (state.currentTouristicContents) {
+      this.touristicContentsToDisplay = [...state.currentTouristicContents.slice(0, this.step)];
     }
-    onChange('touristicContents', () => {
+    onChange('currentTouristicContents', () => {
       this.handleInfiniteScrollEvent(true);
       this.element.scroll({ top: 0 });
-      if (state.touristicContents) {
-        this.touristicContentsToDisplay = [...state.touristicContents.slice(0, this.step)];
+      if (state.currentTouristicContents) {
+        this.touristicContentsToDisplay = [...state.currentTouristicContents.slice(0, this.step)];
       }
     });
     onChange('touristicContentsWithinBounds', () => {
       this.handleInfiniteScrollEvent(true);
       this.element.scroll({ top: 0 });
-      if (state.touristicContents) {
+      if (state.touristicContentsWithinBounds) {
         this.touristicContentsToDisplay = [...state.touristicContentsWithinBounds.slice(0, this.step)];
       }
     });

@@ -29,6 +29,7 @@ import {
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
+  mode: string;
   api: string;
   languages: string[];
   language: string;
@@ -67,6 +68,7 @@ const { state, onChange, reset } = createStore<{
   selectedStepId: number;
   trekTouristicContents: TouristicContents;
   touristicContents: TouristicContents;
+  currentTouristicContents: TouristicContents;
   touristicContentsWithinBounds: TouristicContents;
   touristicContentCategories: TouristicContentCategories;
   currentTouristicContent: TouristicContent;
@@ -75,6 +77,7 @@ const { state, onChange, reset } = createStore<{
   currentTouristicEvent: TouristicEvent;
   selectedTouristicContentId: number;
 }>({
+  mode: null,
   api: null,
   languages: null,
   language: null,
@@ -113,6 +116,7 @@ const { state, onChange, reset } = createStore<{
   selectedStepId: null,
   trekTouristicContents: null,
   touristicContents: null,
+  currentTouristicContents: null,
   touristicContentsWithinBounds: null,
   touristicContentCategories: null,
   currentTouristicContent: null,

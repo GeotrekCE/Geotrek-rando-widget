@@ -25,26 +25,31 @@ export class GrwTouristicContentsProvider {
   handleTouristicContents() {
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
-    requests.push(
-      !state.touristicContentCategories
-        ? fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init)
-        : new Response('null'),
-    );
+    requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null')),
+      requests.push(
+        !state.touristicContentCategories
+          ? fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init)
+          : new Response('null'),
+      );
 
     Promise.all([
       ...requests,
-      fetch(`${state.api}touristiccontent/?language=${state.language}&published=true&fields=id,name,attachments,category,geometry&page_size=999`, this.init),
+      fetch(`${state.api}touristiccontent/?language=${state.language}&published=true&fields=id,name,attachments,category,geometry,cities,districts&page_size=999`, this.init),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(async ([cities, touristicContentCategory, touristicContents]) => {
+      .then(([cities, districts, touristicContentCategory, touristicContents]) => {
         state.trekNetworkError = false;
 
         if (cities) {
           state.cities = cities.results;
         }
+        if (districts) {
+          state.districts = districts.results;
+        }
         if (touristicContentCategory) {
           state.touristicContentCategories = touristicContentCategory.results;
         }
+        state.currentTouristicContents = touristicContents.results;
         state.touristicContentsWithinBounds = touristicContents.results;
         state.touristicContents = touristicContents.results;
       })

@@ -34,7 +34,7 @@
     font-size: 14px;
     font-weight: 500;
     margin: 8px 0px 0px 8px;
-    padding: 8px 16px;
+    padding: 8px 0px;
     .choices__inner {
       border: 1px solid var(--color-outline);
       border-radius: 8px;
@@ -67,7 +67,7 @@
     }
     .choices__list--dropdown,
     .choices__list[aria-expanded] {
-      width: calc(100% - 32px);
+      width: 100%;
       color: var(--color-on-secondary-container);
       background-color: var(--color-secondary-container);
       border: 1px solid var(--color-outline);
