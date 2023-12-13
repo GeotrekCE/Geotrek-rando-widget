@@ -39,6 +39,10 @@ interface Translation {
   crossedCities: string;
   placeholderCrossedCities: string;
   home: {
+    segment: {
+      treks: string;
+      touristicContents: string;
+    };
     touristicContents: string;
     touristicContent: string;
   };
@@ -128,6 +132,10 @@ export const translate: AvailableTranslations = {
     crossedCities: 'Communes traversées',
     placeholderCrossedCities: 'Sélectionner une ou plusieurs communes',
     home: {
+      segment: {
+        treks: 'Itinéraires',
+        touristicContents: 'À proximité',
+      },
       touristicContents: 'à proximité',
       touristicContent: 'à proximité',
     },
@@ -210,6 +218,10 @@ export const translate: AvailableTranslations = {
     crossedCities: 'Cities crossed',
     placeholderCrossedCities: 'Select one or more municipalities',
     home: {
+      segment: {
+        treks: 'Routes',
+        touristicContents: 'Near',
+      },
       touristicContents: 'near',
       touristicContent: 'near',
     },

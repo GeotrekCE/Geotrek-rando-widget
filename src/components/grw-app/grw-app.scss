@@ -30,7 +30,7 @@ grw-app {
 .large-view-header-container {
   background-color: var(--color-background);
   box-shadow: var(--elevation-2);
-  height: 64px;
+  height: var(--header-height);
   .arrow-back-container {
     display: flex;
     align-items: center;
@@ -93,6 +93,10 @@ grw-app {
   }
 }
 
+.header-detail {
+  height: 64px;
+}
+
 .large-view-header-container {
   .handle-search-filters-container {
     justify-content: flex-start;
@@ -131,12 +135,12 @@ grw-app {
 .content-container {
   position: relative;
   display: flex;
-  height: calc(100% - 64px);
+  height: calc(100% - var(--header-height));
   background-color: var(--color-background);
 }
 
 .content-treks {
-  height: calc(100% - 64px);
+  height: calc(100% - var(--header-height));
 }
 
 .content-trek {
@@ -211,11 +215,11 @@ grw-treks-list,
 grw-touristic-contents-list,
 grw-touristic-content-detail,
 grw-touristic-event-detail {
-  max-height: calc(100vh - 64px);
+  max-height: calc(100vh - var(--header-height));
 }
 
 grw-trek-detail {
-  max-height: calc(100vh - 64px - 48px);
+  max-height: calc(100vh - var(--header-height) - 48px);
 }
 
 .app-map-container {
@@ -237,4 +241,46 @@ grw-trek-detail {
 .large-view-app-map-container {
   position: relative;
   width: 50%;
+}
+
+.segmented-buttons-container {
+  display: flex;
+  justify-content: center;
+  width: calc(100% - 32px);
+  height: 40px;
+  margin: 16px;
+  border: 1px solid var(--color-outline);
+  border-radius: 20px;
+  line-height: 20px;
+  .segment {
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
+    color: var(--color-on-surface-variant);
+    background-color: transparent;
+    border-radius: 0px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    &:first-child {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
+    &:not(:last-child) {
+      border-right: 1px solid var(--color-outline);
+    }
+    &:last-child {
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+  }
+  .selected-segment {
+    color: var(--color-on-secondary-container);
+    background-color: var(--color-secondary-container);
+  }
 }

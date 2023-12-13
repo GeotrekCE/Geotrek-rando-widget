@@ -311,6 +311,16 @@ export class GrwMap {
         this.addTouristicContents();
       }
     });
+
+    onChange('mode', () => {
+      if (state.mode === 'treks') {
+        this.removeTouristicContents();
+        this.addTreks();
+      } else if (state.mode === 'touristicContents') {
+        this.removeTreks();
+        this.addTouristicContents();
+      }
+    });
   }
 
   handleLayerVisibility(visible: boolean, layer: L.GeoJSON) {
@@ -323,6 +333,8 @@ export class GrwMap {
   }
 
   addTreks() {
+    state.treksWithinBounds = state.currentTreks;
+
     const treksCurrentDepartureCoordinates = [];
     const treksFeatureCollection: FeatureCollection = {
       type: 'FeatureCollection',
@@ -421,7 +433,6 @@ export class GrwMap {
     this.bounds && this.map.fitBounds(this.bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
-
     this.map.on('moveend', this.handleTreksWithinBoundsBind);
   }
 
@@ -1201,6 +1212,7 @@ export class GrwMap {
   }
 
   addTouristicContents() {
+    state.touristicContentsWithinBounds = state.touristicContents;
     const touristicContentsCurrentCoordinates = [];
 
     const touristicContentsFeatureCollection: FeatureCollection = {

@@ -1,6 +1,8 @@
 import { Component, Host, h, Listen, State, Prop, Element, Watch } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
+import { mode } from 'types/types';
+import { handleTouristicContentsFiltersAndSearch, handleTreksFiltersAndSearch, touristicContentsFilters, treksFilters } from 'utils/utils';
 
 @Component({
   tag: 'grw-app',
@@ -296,6 +298,27 @@ export class GrwApp {
     window.removeEventListener('popstate', this.handlePopStateBind);
   }
 
+  changeMode(mode: mode) {
+    state.searchValue = '';
+    if (mode === 'treks') {
+      treksFilters.forEach(filter => {
+        state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+      });
+      state.selectedActivitiesFilters = 0;
+      state.selectedThemesFilters = 0;
+      state.selectedLocationFilters = 0;
+      state.currentTreks = handleTreksFiltersAndSearch();
+    } else if (mode === 'touristicContents') {
+      touristicContentsFilters.forEach(filter => {
+        state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+      });
+      state.selectedActivitiesFilters = 0;
+      state.selectedLocationFilters = 0;
+      state.currentTouristicContents = handleTouristicContentsFiltersAndSearch();
+    }
+    state.mode = mode;
+  }
+
   render() {
     return (
       <Host
@@ -317,6 +340,7 @@ export class GrwApp {
           '--fab-color': this.fabColor,
           '--app-width': this.appWidth,
           '--app-height': this.appHeight,
+          '--header-height': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 ? '136px' : '64px',
         }}
       >
         {!state.currentTreks && !state.currentTrek && !state.currentTouristicContent && !state.currentTouristicEvent && !state.touristicContents && (
@@ -356,7 +380,25 @@ export class GrwApp {
         )}
         {(state.currentTreks || state.currentTrek || state.touristicContents || state.currentTouristicContent || state.currentTouristicEvent) && (
           <div class="app-container">
-            <div class={this.isLargeView ? 'large-view-header-container' : 'header-container'}>
+            <div
+              class={`${this.isLargeView ? 'large-view-header-container' : 'header-container'}${
+                this.showTrek || this.showTouristicContent || this.showTouristicEvent ? ' header-detail' : ''
+              }`}
+            >
+              {Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && (
+                <div class="segmented-buttons-container">
+                  {this.treks && (
+                    <label class={`segment${state.mode === 'treks' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('treks')}>
+                      {translate[state.language].home.segment.treks}
+                    </label>
+                  )}
+                  {this.touristicContents && (
+                    <label class={`segment${state.mode === 'touristicContents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicContents')}>
+                      {translate[state.language].home.segment.touristicContents}
+                    </label>
+                  )}
+                </div>
+              )}
               {!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent ? (
                 <div class="handle-search-filters-container">
                   <div class="handle-search-container">
@@ -389,7 +431,7 @@ export class GrwApp {
                 class={this.isLargeView ? 'large-view-app-treks-list-container' : 'app-treks-list-container'}
                 style={{ display: this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'none' : 'flex', position: this.showTrek ? 'absolute' : 'relative' }}
               >
-                {this.treks && (
+                {state.mode === 'treks' && this.treks && (
                   <grw-treks-list
                     reset-store-on-disconnected="false"
                     is-large-view={this.isLargeView}
@@ -400,7 +442,7 @@ export class GrwApp {
                     color-surface-container-low={this.colorSurfaceContainerLow}
                   ></grw-treks-list>
                 )}
-                {this.touristicContents && (
+                {state.mode === 'touristicContents' && this.touristicContents && (
                   <grw-touristic-contents-list
                     reset-store-on-disconnected="false"
                     is-large-view={this.isLargeView}
