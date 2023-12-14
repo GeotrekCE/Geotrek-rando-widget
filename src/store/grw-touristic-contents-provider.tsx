@@ -2,13 +2,19 @@ import { Build, Component, h, Host, Prop } from '@stencil/core';
 import state from 'store/store';
 
 @Component({
-  tag: 'grw-touristic-content-provider',
+  tag: 'grw-touristic-contents-provider',
   shadow: true,
 })
 export class GrwTouristicContentsProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
   @Prop() touristicContentId: string;
+  @Prop() inBbox: string;
+  @Prop() cities: string;
+  @Prop() districts: string;
+  @Prop() structures: string;
+  @Prop() themes: string;
+  @Prop() portals: string;
   controller = new AbortController();
   signal = this.controller.signal;
   init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
@@ -23,6 +29,16 @@ export class GrwTouristicContentsProvider {
   }
 
   handleTouristicContents() {
+    let touristicContentsRequest = `${state.api}touristiccontent/?language=${state.language}&published=true`;
+    this.inBbox && (touristicContentsRequest += `&in_bbox=${this.inBbox}`);
+    this.cities && (touristicContentsRequest += `&cities=${this.cities}`);
+    this.districts && (touristicContentsRequest += `&districts=${this.districts}`);
+    this.structures && (touristicContentsRequest += `&structures=${this.structures}`);
+    this.themes && (touristicContentsRequest += `&themes=${this.themes}`);
+    this.portals && (touristicContentsRequest += `&portals=${this.portals}`);
+
+    touristicContentsRequest += `&fields=id,name,attachments,category,geometry,cities,districts&page_size=999`;
+
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
     requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null')),
@@ -32,10 +48,7 @@ export class GrwTouristicContentsProvider {
           : new Response('null'),
       );
 
-    Promise.all([
-      ...requests,
-      fetch(`${state.api}touristiccontent/?language=${state.language}&published=true&fields=id,name,attachments,category,geometry,cities,districts&page_size=999`, this.init),
-    ])
+    Promise.all([...requests, fetch(touristicContentsRequest, this.init)])
       .then(responses => Promise.all(responses.map(response => response.json())))
       .then(([cities, districts, touristicContentCategory, touristicContents]) => {
         state.trekNetworkError = false;

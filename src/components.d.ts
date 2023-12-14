@@ -112,11 +112,6 @@ export namespace Components {
         "colorSurfaceContainerLow": string;
         "isLargeView": boolean;
     }
-    interface GrwTouristicContentProvider {
-        "api": string;
-        "languages": string;
-        "touristicContentId": string;
-    }
     interface GrwTouristicContentsList {
         "colorOnSecondaryContainer": string;
         "colorOnSurface": string;
@@ -125,6 +120,17 @@ export namespace Components {
         "colorSurfaceContainerLow": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
+    }
+    interface GrwTouristicContentsProvider {
+        "api": string;
+        "cities": string;
+        "districts": string;
+        "inBbox": string;
+        "languages": string;
+        "portals": string;
+        "structures": string;
+        "themes": string;
+        "touristicContentId": string;
     }
     interface GrwTouristicEventCard {
         "touristicEvent": TouristicEvent;
@@ -298,17 +304,17 @@ declare global {
         prototype: HTMLGrwTouristicContentDetailElement;
         new (): HTMLGrwTouristicContentDetailElement;
     };
-    interface HTMLGrwTouristicContentProviderElement extends Components.GrwTouristicContentProvider, HTMLStencilElement {
-    }
-    var HTMLGrwTouristicContentProviderElement: {
-        prototype: HTMLGrwTouristicContentProviderElement;
-        new (): HTMLGrwTouristicContentProviderElement;
-    };
     interface HTMLGrwTouristicContentsListElement extends Components.GrwTouristicContentsList, HTMLStencilElement {
     }
     var HTMLGrwTouristicContentsListElement: {
         prototype: HTMLGrwTouristicContentsListElement;
         new (): HTMLGrwTouristicContentsListElement;
+    };
+    interface HTMLGrwTouristicContentsProviderElement extends Components.GrwTouristicContentsProvider, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicContentsProviderElement: {
+        prototype: HTMLGrwTouristicContentsProviderElement;
+        new (): HTMLGrwTouristicContentsProviderElement;
     };
     interface HTMLGrwTouristicEventCardElement extends Components.GrwTouristicEventCard, HTMLStencilElement {
     }
@@ -371,8 +377,8 @@ declare global {
         "grw-touristic-content-card": HTMLGrwTouristicContentCardElement;
         "grw-touristic-content-card-provider": HTMLGrwTouristicContentCardProviderElement;
         "grw-touristic-content-detail": HTMLGrwTouristicContentDetailElement;
-        "grw-touristic-content-provider": HTMLGrwTouristicContentProviderElement;
         "grw-touristic-contents-list": HTMLGrwTouristicContentsListElement;
+        "grw-touristic-contents-provider": HTMLGrwTouristicContentsProviderElement;
         "grw-touristic-event-card": HTMLGrwTouristicEventCardElement;
         "grw-touristic-event-card-provider": HTMLGrwTouristicEventCardProviderElement;
         "grw-touristic-event-detail": HTMLGrwTouristicEventDetailElement;
@@ -495,11 +501,6 @@ declare namespace LocalJSX {
         "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
     }
-    interface GrwTouristicContentProvider {
-        "api"?: string;
-        "languages"?: string;
-        "touristicContentId"?: string;
-    }
     interface GrwTouristicContentsList {
         "colorOnSecondaryContainer"?: string;
         "colorOnSurface"?: string;
@@ -508,6 +509,17 @@ declare namespace LocalJSX {
         "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
         "resetStoreOnDisconnected"?: boolean;
+    }
+    interface GrwTouristicContentsProvider {
+        "api"?: string;
+        "cities"?: string;
+        "districts"?: string;
+        "inBbox"?: string;
+        "languages"?: string;
+        "portals"?: string;
+        "structures"?: string;
+        "themes"?: string;
+        "touristicContentId"?: string;
     }
     interface GrwTouristicEventCard {
         "onTouristicEventCardPress"?: (event: GrwTouristicEventCardCustomEvent<number>) => void;
@@ -605,8 +617,8 @@ declare namespace LocalJSX {
         "grw-touristic-content-card": GrwTouristicContentCard;
         "grw-touristic-content-card-provider": GrwTouristicContentCardProvider;
         "grw-touristic-content-detail": GrwTouristicContentDetail;
-        "grw-touristic-content-provider": GrwTouristicContentProvider;
         "grw-touristic-contents-list": GrwTouristicContentsList;
+        "grw-touristic-contents-provider": GrwTouristicContentsProvider;
         "grw-touristic-event-card": GrwTouristicEventCard;
         "grw-touristic-event-card-provider": GrwTouristicEventCardProvider;
         "grw-touristic-event-detail": GrwTouristicEventDetail;
@@ -633,8 +645,8 @@ declare module "@stencil/core" {
             "grw-touristic-content-card": LocalJSX.GrwTouristicContentCard & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardElement>;
             "grw-touristic-content-card-provider": LocalJSX.GrwTouristicContentCardProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardProviderElement>;
             "grw-touristic-content-detail": LocalJSX.GrwTouristicContentDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicContentDetailElement>;
-            "grw-touristic-content-provider": LocalJSX.GrwTouristicContentProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentProviderElement>;
             "grw-touristic-contents-list": LocalJSX.GrwTouristicContentsList & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsListElement>;
+            "grw-touristic-contents-provider": LocalJSX.GrwTouristicContentsProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsProviderElement>;
             "grw-touristic-event-card": LocalJSX.GrwTouristicEventCard & JSXBase.HTMLAttributes<HTMLGrwTouristicEventCardElement>;
             "grw-touristic-event-card-provider": LocalJSX.GrwTouristicEventCardProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicEventCardProviderElement>;
             "grw-touristic-event-detail": LocalJSX.GrwTouristicEventDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicEventDetailElement>;

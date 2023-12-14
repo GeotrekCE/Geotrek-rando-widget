@@ -366,17 +366,22 @@ export class GrwApp {
           <grw-trek-provider api={this.api} languages={this.languages} trek-id={this.currentTrekId}></grw-trek-provider>
         )}
         {this.showTouristicContent && this.currentTouristicContentId && (
-          <grw-touristic-content-card-provider
-            api={this.api}
-            languages={this.languages}
-            touristic-content-id={this.currentTouristicContentId}
-          ></grw-touristic-content-card-provider>
+          <grw-touristic-content-provider api={this.api} languages={this.languages} touristic-content-id={this.currentTouristicContentId}></grw-touristic-content-provider>
         )}
         {this.showTouristicEvent && this.currentTouristicEventId && (
           <grw-touristic-event-provider api={this.api} languages={this.languages} touristic-event-id={this.currentTouristicEventId}></grw-touristic-event-provider>
         )}
         {this.touristicContents && !state.touristicContents && !this.showTouristicContent && (
-          <grw-touristic-content-provider api={this.api} languages={this.languages}></grw-touristic-content-provider>
+          <grw-touristic-contents-provider
+            api={this.api}
+            languages={this.languages}
+            in-bbox={this.inBbox}
+            cities={this.cities}
+            districts={this.districts}
+            structures={this.structures}
+            themes={this.themes}
+            portals={this.portals}
+          ></grw-touristic-contents-provider>
         )}
         {(state.currentTreks || state.currentTrek || state.touristicContents || state.currentTouristicContent || state.currentTouristicEvent) && (
           <div class="app-container">
