@@ -114,6 +114,7 @@ export class GrwFilters {
                             filterType="practices"
                             filterNameProperty="name"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderPractices}
                           ></grw-filter>
                         </div>
                       )}

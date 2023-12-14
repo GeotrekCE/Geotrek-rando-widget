@@ -562,21 +562,21 @@ export class GrwTrekDetail {
             <div class="downloads-container">
               <div class="download-title">{translate[state.language].downloads}</div>
               <div class="links-container">
-                <a href={`${this.currentTrek.gpx}`}>
+                <a href={`${this.currentTrek.gpx}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
                   <span translate={false} class="material-symbols material-symbols-outlined">
                     download
                   </span>
                   GPX
                 </a>
-                <a href={`${this.currentTrek.kml}`}>
+                <a href={`${this.currentTrek.kml}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
                   <span translate={false} class="material-symbols material-symbols-outlined">
                     download
                   </span>
                   KML
                 </a>
-                <a href={`${this.currentTrek.pdf}`}>
+                <a href={`${this.currentTrek.pdf}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
                   <span translate={false} class="material-symbols material-symbols-outlined">
                     download

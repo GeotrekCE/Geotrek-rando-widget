@@ -15,6 +15,7 @@ export class GrwTouristicContentsProvider {
   @Prop() structures: string;
   @Prop() themes: string;
   @Prop() portals: string;
+
   controller = new AbortController();
   signal = this.controller.signal;
   init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
@@ -44,7 +45,12 @@ export class GrwTouristicContentsProvider {
     requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null')),
       requests.push(
         !state.touristicContentCategories
-          ? fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init)
+          ? fetch(
+              `${state.api}touristiccontent_category/?language=${state.language}${
+                this.portals ? '&portals='.concat(this.portals) : ''
+              }&published=true&fields=id,label,pictogram&page_size=999`,
+              this.init,
+            )
           : new Response('null'),
       );
 

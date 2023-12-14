@@ -69,6 +69,7 @@ interface Translation {
   };
   themes: string;
   placeholderThemes: string;
+  placeholderPractices: string;
   routes: string;
   elevation: string;
   activities: string;
@@ -129,12 +130,12 @@ export const translate: AvailableTranslations = {
     touristicEvents: (touristicEventsLength: number) => `Événements (${touristicEventsLength})`,
     sources: 'Sources',
     city: 'Commune',
-    crossedCities: 'Communes traversées',
+    crossedCities: 'Communes',
     placeholderCrossedCities: 'Sélectionner une ou plusieurs communes',
     home: {
       segment: {
         treks: 'Itinéraires',
-        touristicContents: 'À proximité',
+        touristicContents: 'Services',
       },
       touristicContents: 'à proximité',
       touristicContent: 'à proximité',
@@ -162,6 +163,7 @@ export const translate: AvailableTranslations = {
     },
     themes: 'Thèmes',
     placeholderThemes: 'Sélectionner un ou plusieurs thèmes',
+    placeholderPractices: 'Sélectionner une ou plusieurs pratiques',
     routes: 'Type de parcours',
     elevation: 'Denivelé positif',
     activities: 'Activités',
@@ -215,12 +217,12 @@ export const translate: AvailableTranslations = {
     touristicEvents: (touristicEventsLength: number) => `Events (${touristicEventsLength})`,
     sources: 'Sources',
     city: 'City',
-    crossedCities: 'Cities crossed',
+    crossedCities: 'Cities',
     placeholderCrossedCities: 'Select one or more municipalities',
     home: {
       segment: {
         treks: 'Routes',
-        touristicContents: 'Near',
+        touristicContents: 'Services',
       },
       touristicContents: 'near',
       touristicContent: 'near',
@@ -248,6 +250,7 @@ export const translate: AvailableTranslations = {
     },
     themes: 'Themes',
     placeholderThemes: 'Select one or more themes',
+    placeholderPractices: 'Select one or more practices',
     routes: 'Type of course',
     elevation: 'Positive elevation',
     activities: 'Activities',

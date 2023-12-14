@@ -110,6 +110,7 @@ export namespace Components {
     interface GrwTouristicContentProvider {
         "api": string;
         "languages": string;
+        "portals": string;
         "touristicContentId": string;
     }
     interface GrwTouristicContentsList {
@@ -138,6 +139,7 @@ export namespace Components {
     interface GrwTouristicEventCardProvider {
         "api": string;
         "languages": string;
+        "portals": string;
         "touristicEventId": string;
     }
     interface GrwTouristicEventDetail {
@@ -179,6 +181,7 @@ export namespace Components {
     interface GrwTrekProvider {
         "api": string;
         "languages": string;
+        "portals": string;
         "trekId": string;
     }
     interface GrwTreksList {
@@ -499,6 +502,7 @@ declare namespace LocalJSX {
     interface GrwTouristicContentProvider {
         "api"?: string;
         "languages"?: string;
+        "portals"?: string;
         "touristicContentId"?: string;
     }
     interface GrwTouristicContentsList {
@@ -528,6 +532,7 @@ declare namespace LocalJSX {
     interface GrwTouristicEventCardProvider {
         "api"?: string;
         "languages"?: string;
+        "portals"?: string;
         "touristicEventId"?: string;
     }
     interface GrwTouristicEventDetail {
@@ -581,6 +586,7 @@ declare namespace LocalJSX {
     interface GrwTrekProvider {
         "api"?: string;
         "languages"?: string;
+        "portals"?: string;
         "trekId"?: string;
     }
     interface GrwTreksList {

@@ -9,6 +9,8 @@ export class GrwTouristicEventProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
   @Prop() touristicEventId: string;
+  @Prop() portals: string;
+
   controller = new AbortController();
   signal = this.controller.signal;
   init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
@@ -26,8 +28,13 @@ export class GrwTouristicEventProvider {
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
     requests.push(
-      !state.touristicContentCategories
-        ? fetch(`${state.api}touristicevent_type/?language=${state.language}&published=true&fields=id,type,pictogram&page_size=999`, this.init)
+      !state.touristicEventTypes
+        ? fetch(
+            `${state.api}touristicevent_type/?language=${state.language}${
+              this.portals ? '&portals='.concat(this.portals) : ''
+            }&published=true&fields=id,type,pictogram&page_size=999`,
+            this.init,
+          )
         : new Response('null'),
     );
 
@@ -39,14 +46,14 @@ export class GrwTouristicEventProvider {
       ),
     ])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([cities, touristicContentTypes, touristicEvent]) => {
+      .then(([cities, touristicEventTypes, touristicEvent]) => {
         state.trekNetworkError = false;
 
         if (cities) {
           state.cities = cities.results;
         }
-        if (touristicContentTypes) {
-          state.touristicEventTypes = touristicContentTypes.results;
+        if (touristicEventTypes) {
+          state.touristicEventTypes = touristicEventTypes.results;
         }
         state.currentTouristicEvent = touristicEvent;
       })

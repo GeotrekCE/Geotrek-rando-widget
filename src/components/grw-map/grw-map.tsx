@@ -256,7 +256,7 @@ export class GrwMap {
         this.removeTrek();
         this.removeTouristicContent();
         this.removeTouristicEvent();
-        this.addTreks();
+        this.addTreks(true);
       }
     });
 
@@ -308,17 +308,21 @@ export class GrwMap {
         this.addTouristicContent();
       } else if (state.currentTouristicContents) {
         this.removeTouristicContent();
-        this.addTouristicContents();
+        this.addTouristicContents(true);
       }
     });
 
     onChange('mode', () => {
       if (state.mode === 'treks') {
-        this.removeTouristicContents();
-        this.addTreks();
+        if (state.treks) {
+          this.removeTouristicContents();
+          this.addTreks(true);
+        }
       } else if (state.mode === 'touristicContents') {
-        this.removeTreks();
-        this.addTouristicContents();
+        if (state.touristicContents) {
+          this.removeTreks();
+          this.addTouristicContents(true);
+        }
       }
     });
   }
@@ -332,7 +336,7 @@ export class GrwMap {
     this.handleLayersControlEvent();
   }
 
-  addTreks() {
+  addTreks(resetBounds = false) {
     state.treksWithinBounds = state.currentTreks;
 
     const treksCurrentDepartureCoordinates = [];
@@ -358,7 +362,7 @@ export class GrwMap {
     }
 
     if (!this.treksLayer) {
-      if (treksCurrentDepartureCoordinates.length > 0 && !state.currentMapBounds) {
+      if ((treksCurrentDepartureCoordinates.length > 0 && !state.currentMapBounds) || resetBounds) {
         this.bounds = L.latLngBounds(treksCurrentDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
         if (state.currentMapBounds) {
@@ -1211,8 +1215,9 @@ export class GrwMap {
     }
   }
 
-  addTouristicContents() {
-    state.touristicContentsWithinBounds = state.touristicContents;
+  addTouristicContents(resetBounds = false) {
+    state.touristicContentsWithinBounds = state.currentTouristicContents;
+
     const touristicContentsCurrentCoordinates = [];
 
     const touristicContentsFeatureCollection: FeatureCollection = {
@@ -1220,14 +1225,7 @@ export class GrwMap {
       features: [],
     };
 
-    if (state.touristicContents) {
-      if (touristicContentsCurrentCoordinates.length > 0 && !state.currentMapBounds) {
-        this.bounds = L.latLngBounds(touristicContentsCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-      } else {
-        if (state.currentMapBounds) {
-          this.bounds = state.currentMapBounds;
-        }
-      }
+    if (state.currentTouristicContents) {
       for (const currentTouristicContent of state.currentTouristicContents) {
         touristicContentsCurrentCoordinates.push(currentTouristicContent.geometry.coordinates);
 
@@ -1244,7 +1242,7 @@ export class GrwMap {
     }
 
     if (!this.toutisticContentsLayer) {
-      if (touristicContentsCurrentCoordinates.length > 0 && !state.currentMapBounds) {
+      if ((touristicContentsCurrentCoordinates.length > 0 && !state.currentMapBounds) || resetBounds) {
         this.bounds = L.latLngBounds(touristicContentsCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
         if (state.currentMapBounds) {

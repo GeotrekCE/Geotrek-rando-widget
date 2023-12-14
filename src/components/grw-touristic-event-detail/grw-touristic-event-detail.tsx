@@ -106,7 +106,7 @@ export class GrwTouristicEventDetail {
             <div class="downloads-container">
               <div class="download-title">{translate[state.language].download}</div>
               <div class="links-container">
-                <a href={`${state.currentTouristicEvent.pdf}`}>
+                <a href={`${state.currentTouristicEvent.pdf}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
                   <span translate={false} class="material-symbols material-symbols-outlined">
                     download

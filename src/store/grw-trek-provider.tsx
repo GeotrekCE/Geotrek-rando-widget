@@ -9,6 +9,8 @@ export class GrwTrekProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
   @Prop() trekId: string;
+  @Prop() portals: string;
+
   controller = new AbortController();
   signal = this.controller.signal;
   init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
@@ -24,12 +26,32 @@ export class GrwTrekProvider {
 
   handleTrek() {
     const requests = [];
-    requests.push(!state.difficulties ? fetch(`${state.api}trek_difficulty/?language=${state.language}&fields=id,label,pictogram`, this.init) : new Response('null'));
-    requests.push(!state.routes ? fetch(`${state.api}trek_route/?language=${state.language}&fields=id,route,pictogram`, this.init) : new Response('null'));
-    requests.push(!state.practices ? fetch(`${state.api}trek_practice/?language=${state.language}&fields=id,name,pictogram`, this.init) : new Response('null'));
-    requests.push(!state.themes ? fetch(`${state.api}theme/?language=${state.language}&fields=id,label,pictogram`, this.init) : new Response('null'));
+    requests.push(
+      !state.difficulties
+        ? fetch(`${state.api}trek_difficulty/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init)
+        : new Response('null'),
+    );
+    requests.push(
+      !state.routes
+        ? fetch(`${state.api}trek_route/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,route,pictogram`, this.init)
+        : new Response('null'),
+    );
+    requests.push(
+      !state.practices
+        ? fetch(`${state.api}trek_practice/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init)
+        : new Response('null'),
+    );
+    requests.push(
+      !state.themes
+        ? fetch(`${state.api}theme/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init)
+        : new Response('null'),
+    );
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
-    requests.push(!state.accessibilities ? fetch(`${state.api}trek_accessibility/?language=${state.language}&fields=id,name,pictogram`, this.init) : new Response('null'));
+    requests.push(
+      !state.accessibilities
+        ? fetch(`${state.api}trek_accessibility/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init)
+        : new Response('null'),
+    );
     Promise.all([
       ...requests,
       fetch(

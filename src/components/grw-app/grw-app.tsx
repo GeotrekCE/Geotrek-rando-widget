@@ -363,13 +363,23 @@ export class GrwApp {
           ></grw-treks-provider>
         )}
         {this.showTrek && this.currentTrekId && !state.currentTrek && (
-          <grw-trek-provider api={this.api} languages={this.languages} trek-id={this.currentTrekId}></grw-trek-provider>
+          <grw-trek-provider api={this.api} languages={this.languages} trek-id={this.currentTrekId} portals={this.portals}></grw-trek-provider>
         )}
         {this.showTouristicContent && this.currentTouristicContentId && (
-          <grw-touristic-content-provider api={this.api} languages={this.languages} touristic-content-id={this.currentTouristicContentId}></grw-touristic-content-provider>
+          <grw-touristic-content-provider
+            api={this.api}
+            languages={this.languages}
+            touristic-content-id={this.currentTouristicContentId}
+            portals={this.portals}
+          ></grw-touristic-content-provider>
         )}
         {this.showTouristicEvent && this.currentTouristicEventId && (
-          <grw-touristic-event-provider api={this.api} languages={this.languages} touristic-event-id={this.currentTouristicEventId}></grw-touristic-event-provider>
+          <grw-touristic-event-provider
+            api={this.api}
+            languages={this.languages}
+            touristic-event-id={this.currentTouristicEventId}
+            portals={this.portals}
+          ></grw-touristic-event-provider>
         )}
         {this.touristicContents && state.mode === 'touristicContents' && !state.currentTouristicContents && !this.showTouristicContent && (
           <grw-touristic-contents-provider

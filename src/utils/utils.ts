@@ -105,6 +105,7 @@ export function handleTouristicContentsFiltersAndSearch(): TouristicContents {
   let filtersTouristicContents = [];
   for (const filter of touristicContentsFilters) {
     const currentFiltersId: number[] = state[filter.property].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
+
     if (currentFiltersId.length > 0) {
       if (filtersTouristicContents.length > 0) {
         if (filter.type === 'include') {
@@ -165,8 +166,8 @@ export function handleTouristicContentsFiltersAndSearch(): TouristicContents {
       }
     }
   }
-
   const searchTouristicContents = isUsingFilter ? filtersTouristicContents : state.touristicContents;
+
   return Boolean(state.searchValue)
     ? searchTouristicContents.filter(currentTouristicContents => currentTouristicContents.name.toLowerCase().includes(state.searchValue.toLowerCase()))
     : searchTouristicContents;
