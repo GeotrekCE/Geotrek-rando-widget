@@ -58,5 +58,8 @@ App.args = {
   colorSensitiveArea: '#4974a5',
   colorPoiIcon: '#974c6e',
   useGradient: false,
+  treks: true,
+  touristicContents: false,
+  touristicEvents: false,
 };
 App.storyName = 'App';

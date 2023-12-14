@@ -33,6 +33,9 @@ export const createApp = ({
   colorSensitiveArea,
   colorPoiIcon,
   useGradient,
+  treks,
+  touristicContents,
+  touristicEvents,
 }) => {
   const app = document.createElement('grw-app');
   app.setAttribute('app-width', appWidth);
@@ -69,5 +72,8 @@ export const createApp = ({
   app.setAttribute('color-sensitive-area', colorSensitiveArea);
   app.setAttribute('color-poi-icon', colorPoiIcon);
   app.setAttribute('use-gradient', useGradient);
+  app.setAttribute('treks', treks);
+  app.setAttribute('touristic-contents', touristicContents);
+  app.setAttribute('touristic-events', touristicEvents);
   return app;
 };
