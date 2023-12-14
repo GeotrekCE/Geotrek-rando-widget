@@ -84,11 +84,10 @@ export class GrwTreksProvider {
           { id: 1, name: '0 - 500m', minValue: 0, maxValue: 500, selected: false },
           { id: 2, name: '500m - 1km', minValue: 500, maxValue: 1000, selected: false },
         ];
-        state.currentTreks = treks.results;
-        state.treksWithinBounds = treks.results;
         state.labels = labels.results;
         state.districts = districts.results;
         state.treks = treks.results;
+        state.currentTreks = treks.results;
       })
       .catch(() => (state.treksNetworkError = true));
   }

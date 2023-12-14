@@ -2,7 +2,7 @@ import { Build, Component, h, Host, Prop } from '@stencil/core';
 import state from 'store/store';
 
 @Component({
-  tag: 'grw-touristic-content-card-provider',
+  tag: 'grw-touristic-content-provider',
   shadow: true,
 })
 export class GrwTouristicContentProvider {

@@ -96,11 +96,6 @@ export namespace Components {
         "isLargeView": boolean;
         "touristicContent": TouristicContent;
     }
-    interface GrwTouristicContentCardProvider {
-        "api": string;
-        "languages": string;
-        "touristicContentId": string;
-    }
     interface GrwTouristicContentDetail {
         "colorBackground": string;
         "colorOnPrimaryContainer": string;
@@ -111,6 +106,11 @@ export namespace Components {
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
         "isLargeView": boolean;
+    }
+    interface GrwTouristicContentProvider {
+        "api": string;
+        "languages": string;
+        "touristicContentId": string;
     }
     interface GrwTouristicContentsList {
         "colorOnSecondaryContainer": string;
@@ -292,17 +292,17 @@ declare global {
         prototype: HTMLGrwTouristicContentCardElement;
         new (): HTMLGrwTouristicContentCardElement;
     };
-    interface HTMLGrwTouristicContentCardProviderElement extends Components.GrwTouristicContentCardProvider, HTMLStencilElement {
-    }
-    var HTMLGrwTouristicContentCardProviderElement: {
-        prototype: HTMLGrwTouristicContentCardProviderElement;
-        new (): HTMLGrwTouristicContentCardProviderElement;
-    };
     interface HTMLGrwTouristicContentDetailElement extends Components.GrwTouristicContentDetail, HTMLStencilElement {
     }
     var HTMLGrwTouristicContentDetailElement: {
         prototype: HTMLGrwTouristicContentDetailElement;
         new (): HTMLGrwTouristicContentDetailElement;
+    };
+    interface HTMLGrwTouristicContentProviderElement extends Components.GrwTouristicContentProvider, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicContentProviderElement: {
+        prototype: HTMLGrwTouristicContentProviderElement;
+        new (): HTMLGrwTouristicContentProviderElement;
     };
     interface HTMLGrwTouristicContentsListElement extends Components.GrwTouristicContentsList, HTMLStencilElement {
     }
@@ -375,8 +375,8 @@ declare global {
         "grw-select-language": HTMLGrwSelectLanguageElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
         "grw-touristic-content-card": HTMLGrwTouristicContentCardElement;
-        "grw-touristic-content-card-provider": HTMLGrwTouristicContentCardProviderElement;
         "grw-touristic-content-detail": HTMLGrwTouristicContentDetailElement;
+        "grw-touristic-content-provider": HTMLGrwTouristicContentProviderElement;
         "grw-touristic-contents-list": HTMLGrwTouristicContentsListElement;
         "grw-touristic-contents-provider": HTMLGrwTouristicContentsProviderElement;
         "grw-touristic-event-card": HTMLGrwTouristicEventCardElement;
@@ -485,11 +485,6 @@ declare namespace LocalJSX {
         "onTouristicContentCardPress"?: (event: GrwTouristicContentCardCustomEvent<number>) => void;
         "touristicContent"?: TouristicContent;
     }
-    interface GrwTouristicContentCardProvider {
-        "api"?: string;
-        "languages"?: string;
-        "touristicContentId"?: string;
-    }
     interface GrwTouristicContentDetail {
         "colorBackground"?: string;
         "colorOnPrimaryContainer"?: string;
@@ -500,6 +495,11 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
+    }
+    interface GrwTouristicContentProvider {
+        "api"?: string;
+        "languages"?: string;
+        "touristicContentId"?: string;
     }
     interface GrwTouristicContentsList {
         "colorOnSecondaryContainer"?: string;
@@ -615,8 +615,8 @@ declare namespace LocalJSX {
         "grw-select-language": GrwSelectLanguage;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
         "grw-touristic-content-card": GrwTouristicContentCard;
-        "grw-touristic-content-card-provider": GrwTouristicContentCardProvider;
         "grw-touristic-content-detail": GrwTouristicContentDetail;
+        "grw-touristic-content-provider": GrwTouristicContentProvider;
         "grw-touristic-contents-list": GrwTouristicContentsList;
         "grw-touristic-contents-provider": GrwTouristicContentsProvider;
         "grw-touristic-event-card": GrwTouristicEventCard;
@@ -643,8 +643,8 @@ declare module "@stencil/core" {
             "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
             "grw-touristic-content-card": LocalJSX.GrwTouristicContentCard & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardElement>;
-            "grw-touristic-content-card-provider": LocalJSX.GrwTouristicContentCardProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardProviderElement>;
             "grw-touristic-content-detail": LocalJSX.GrwTouristicContentDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicContentDetailElement>;
+            "grw-touristic-content-provider": LocalJSX.GrwTouristicContentProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentProviderElement>;
             "grw-touristic-contents-list": LocalJSX.GrwTouristicContentsList & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsListElement>;
             "grw-touristic-contents-provider": LocalJSX.GrwTouristicContentsProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsProviderElement>;
             "grw-touristic-event-card": LocalJSX.GrwTouristicEventCard & JSXBase.HTMLAttributes<HTMLGrwTouristicEventCardElement>;

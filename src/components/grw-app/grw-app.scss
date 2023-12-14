@@ -106,6 +106,7 @@ grw-app {
 .init-loader-container,
 .loader-container,
 .large-view-loader-container {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -212,14 +213,14 @@ grw-app {
 }
 
 grw-treks-list,
-grw-touristic-contents-list,
-grw-touristic-content-detail,
-grw-touristic-event-detail {
+grw-touristic-contents-list {
   max-height: calc(100vh - var(--header-height));
 }
 
-grw-trek-detail {
-  max-height: calc(100vh - var(--header-height) - 48px);
+grw-trek-detail,
+grw-touristic-content-detail,
+grw-touristic-event-detail {
+  max-height: calc(100vh - 64px);
 }
 
 .app-map-container {

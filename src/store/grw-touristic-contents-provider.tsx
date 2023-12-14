@@ -62,9 +62,8 @@ export class GrwTouristicContentsProvider {
         if (touristicContentCategory) {
           state.touristicContentCategories = touristicContentCategory.results;
         }
-        state.currentTouristicContents = touristicContents.results;
-        state.touristicContentsWithinBounds = touristicContents.results;
         state.touristicContents = touristicContents.results;
+        state.currentTouristicContents = touristicContents.results;
       })
       .catch(() => {
         state.trekNetworkError = true;

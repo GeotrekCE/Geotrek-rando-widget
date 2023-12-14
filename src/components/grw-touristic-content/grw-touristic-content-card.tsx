@@ -91,7 +91,7 @@ export class GrwTouristicContentCard {
             {this.isInsideHorizontalList ? (
               <div class="swiper" ref={el => (this.swiperTouristicContentRef = el)}>
                 <div class="swiper-wrapper">
-                  {this.touristicContent.attachments.length > 0 ? (
+                  {this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
                     this.touristicContent.attachments
                       .filter(attachment => attachment.type === 'image')
                       .map(attachment => (

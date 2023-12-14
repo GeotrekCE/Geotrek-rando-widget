@@ -300,7 +300,7 @@ export class GrwApp {
 
   changeMode(mode: mode) {
     state.searchValue = '';
-    if (mode === 'treks') {
+    if (mode === 'treks' && state.currentTreks) {
       treksFilters.forEach(filter => {
         state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
       });
@@ -308,7 +308,7 @@ export class GrwApp {
       state.selectedThemesFilters = 0;
       state.selectedLocationFilters = 0;
       state.currentTreks = handleTreksFiltersAndSearch();
-    } else if (mode === 'touristicContents') {
+    } else if (mode === 'touristicContents' && state.currentTouristicContents) {
       touristicContentsFilters.forEach(filter => {
         state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
       });
@@ -343,12 +343,12 @@ export class GrwApp {
           '--header-height': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 ? '136px' : '64px',
         }}
       >
-        {!state.currentTreks && !state.currentTrek && !state.currentTouristicContent && !state.currentTouristicEvent && !state.touristicContents && (
+        {!state.currentTreks && !state.currentTrek && !state.currentTouristicContent && !state.currentTouristicEvent && !state.currentTouristicContents && (
           <div class="init-loader-container">
             <span class="loader"></span>
           </div>
         )}
-        {this.treks && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && !state.treks && (
+        {this.treks && state.mode === 'treks' && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && !state.currentTreks && (
           <grw-treks-provider
             api={this.api}
             languages={this.languages}
@@ -371,7 +371,7 @@ export class GrwApp {
         {this.showTouristicEvent && this.currentTouristicEventId && (
           <grw-touristic-event-provider api={this.api} languages={this.languages} touristic-event-id={this.currentTouristicEventId}></grw-touristic-event-provider>
         )}
-        {this.touristicContents && !state.touristicContents && !this.showTouristicContent && (
+        {this.touristicContents && state.mode === 'touristicContents' && !state.currentTouristicContents && !this.showTouristicContent && (
           <grw-touristic-contents-provider
             api={this.api}
             languages={this.languages}
@@ -431,7 +431,7 @@ export class GrwApp {
               )}
             </div>
 
-            <div class={`content-container ${this.showTrek ? 'content-trek' : 'content-treks'}`}>
+            <div class={`content-container ${this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'content-trek' : 'content-treks'}`}>
               <div
                 class={this.isLargeView ? 'large-view-app-treks-list-container' : 'app-treks-list-container'}
                 style={{ display: this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'none' : 'flex', position: this.showTrek ? 'absolute' : 'relative' }}
@@ -459,13 +459,15 @@ export class GrwApp {
                   ></grw-touristic-contents-list>
                 )}
               </div>
-              {((this.showTrek && !state.currentTrek) ||
+              {(this.showTrek && !state.currentTrek) ||
                 (this.showTouristicContent && !state.currentTouristicContent) ||
-                (this.showTouristicEvent && !state.currentTouristicEvent)) && (
-                <div class={this.isLargeView ? 'large-view-loader-container' : 'loader-container'}>
-                  <span class="loader"></span>
-                </div>
-              )}
+                (this.showTouristicEvent && !state.currentTouristicEvent) ||
+                (!state.currentTreks && state.mode === 'treks') ||
+                (!state.touristicContents && state.mode === 'touristicContents' && (
+                  <div class={this.isLargeView ? 'large-view-loader-container' : 'loader-container'}>
+                    <span class="loader"></span>
+                  </div>
+                ))}
               {state.currentTrek && (
                 <div class={this.isLargeView ? 'large-view-app-trek-detail-container' : 'app-trek-detail-container'}>
                   <grw-trek-detail
