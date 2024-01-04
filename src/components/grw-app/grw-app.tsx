@@ -435,6 +435,11 @@ export class GrwApp {
         )}
         {(state.currentTreks || state.currentTrek || state.touristicContents || state.touristicEvents || state.currentTouristicContent || state.currentTouristicEvent) && (
           <div class="app-container">
+            {state.languages && state.languages.length > 1 && (
+              <div class="languages-container">
+                <grw-select-language></grw-select-language>
+              </div>
+            )}
             <div
               class={`${this.isLargeView ? 'large-view-header-container' : 'header-container'}${
                 this.showTrek || this.showTouristicContent || this.showTouristicEvent ? ' header-detail' : ''

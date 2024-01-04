@@ -27,6 +27,13 @@ grw-app {
   overflow: hidden;
 }
 
+.languages-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 16px 16px 0px 0px;
+}
+
 .header-container,
 .large-view-header-container {
   background-color: var(--color-background);

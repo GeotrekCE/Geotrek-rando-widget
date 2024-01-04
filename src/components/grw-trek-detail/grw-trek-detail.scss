@@ -171,11 +171,11 @@ grw-trek-detail {
   overflow-y: auto;
   .name {
     color: var(--color-on-surface);
-    font-size: 22px;
+    font-size: 32px;
     line-height: 28px;
-    font-weight: 400;
+    font-weight: 600;
     padding: 0px 24px;
-    margin: 8px 0px;
+    margin: 16px 0px;
   }
   .image {
     cursor: pointer;
@@ -270,7 +270,6 @@ grw-trek-detail {
     align-items: center;
     flex-wrap: wrap;
     padding: 0px 24px 0px 24px;
-
     .theme {
       background-color: var(--color-secondary-container);
       color: var(--color-on-secondary-container);
@@ -332,6 +331,11 @@ grw-trek-detail {
     a {
       color: var(--color-primary-app);
     }
+  }
+  .description-teaser {
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 8px;
   }
   .description-title,
   .altimetric-profile-title,
