@@ -290,6 +290,10 @@ export type TouristicContentsFilters = TouristicContentsFilter[];
 
 export type TouristicContentsFilter = { property: string; touristicContentProperty: string; touristicContentPropertyIsArray: boolean; type: string; segment: string };
 
+export type TouristicEventsFilters = TouristicEventsFilter[];
+
+export type TouristicEventsFilter = { property: string; touristicEventProperty: string; touristicEventPropertyIsArray: boolean; type: string; segment: string };
+
 export type Option = {
   visible: boolean;
   width: number;
@@ -308,4 +312,4 @@ export type Options = {
   touristicEvents: Option;
 };
 
-export type mode = 'treks' | 'touristicContents';
+export type mode = 'treks' | 'touristicContents' | 'touristicEvents';

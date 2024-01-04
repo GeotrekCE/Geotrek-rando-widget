@@ -1,4 +1,4 @@
-import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitter } from '@stencil/core';
+import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitter, Listen } from '@stencil/core';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
 import { TouristicEvent } from 'types/types';
@@ -16,27 +16,34 @@ export class GrwTouristicEvent {
   nextElTouristicEventRef?: HTMLDivElement;
   paginationElTouristicEventRef?: HTMLDivElement;
   @Prop() touristicEvent: TouristicEvent;
+  @Prop() isLargeView = false;
+  @Prop() isInsideHorizontalList = false;
   @State() displayFullscreen = false;
 
+  @Event() cardTouristicEventMouseOver: EventEmitter<number>;
+  @Event() cardTouristicEventMouseLeave: EventEmitter;
+
   componentDidLoad() {
-    this.swiperTouristicEvent = new Swiper(this.swiperTouristicEventRef, {
-      modules: [Navigation, Pagination, Keyboard],
-      navigation: {
-        prevEl: this.prevElTouristicEventRef,
-        nextEl: this.nextElTouristicEventRef,
-      },
-      pagination: { el: this.paginationElTouristicEventRef },
-      allowTouchMove: false,
-      keyboard: false,
-    });
-    this.swiperTouristicEventRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen;
-      if (this.displayFullscreen) {
-        this.swiperTouristicEvent.keyboard.enable();
-      } else {
-        this.swiperTouristicEvent.keyboard.disable();
-      }
-    };
+    if (this.swiperTouristicEventRef) {
+      this.swiperTouristicEvent = new Swiper(this.swiperTouristicEventRef, {
+        modules: [Navigation, Pagination, Keyboard],
+        navigation: {
+          prevEl: this.prevElTouristicEventRef,
+          nextEl: this.nextElTouristicEventRef,
+        },
+        pagination: { el: this.paginationElTouristicEventRef },
+        allowTouchMove: false,
+        keyboard: false,
+      });
+      this.swiperTouristicEventRef.onfullscreenchange = () => {
+        this.displayFullscreen = !this.displayFullscreen;
+        if (this.displayFullscreen) {
+          this.swiperTouristicEvent.keyboard.enable();
+        } else {
+          this.swiperTouristicEvent.keyboard.disable();
+        }
+      };
+    }
   }
 
   handleFullscreen() {
@@ -44,49 +51,89 @@ export class GrwTouristicEvent {
       this.swiperTouristicEventRef.requestFullscreen();
     }
   }
+
+  @Listen('mouseover')
+  handleMouseOver() {
+    this.cardTouristicEventMouseOver.emit(this.touristicEvent.id);
+  }
+
+  @Listen('mouseleave')
+  handleMouseLeave() {
+    this.cardTouristicEventMouseLeave.emit();
+  }
+
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
-    const touristicEventTypes = state.touristicEventTypes.find(touristicEventType => touristicEventType.id === this.touristicEvent.type);
+    const touristicEventType = state.touristicEventTypes.find(touristicEventType => touristicEventType.id === this.touristicEvent.type);
     return (
-      <Host>
-        <div class="touristic-event-type-img-container">
-          <div class="swiper" ref={el => (this.swiperTouristicEventRef = el)}>
-            <div class="swiper-wrapper">
-              {this.touristicEvent.attachments.length > 0 ? (
-                this.touristicEvent.attachments
-                  .filter(attachment => attachment.type === 'image')
-                  .map(attachment => (
+      <Host
+        style={{
+          width: this.isLargeView ? '100%' : 'auto',
+        }}
+      >
+        <div
+          class={
+            this.isLargeView
+              ? `touristic-event-card-large-view-container${state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''}${
+                  !this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''
+                }`
+              : `touristic-event-card-container${state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''}${
+                  !this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''
+                }`
+          }
+          onClick={() => {
+            if (!this.isInsideHorizontalList) {
+              this.touristicEventCardPress.emit(this.touristicEvent.id);
+            }
+          }}
+        >
+          <div class="touristic-event-type-img-container">
+            {this.isInsideHorizontalList ? (
+              <div class="swiper" ref={el => (this.swiperTouristicEventRef = el)}>
+                <div class="swiper-wrapper">
+                  {this.touristicEvent.attachments.length > 0 ? (
+                    this.touristicEvent.attachments
+                      .filter(attachment => attachment.type === 'image')
+                      .map(attachment => (
+                        <div class="swiper-slide">
+                          <img
+                            class={`touristic-event-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
+                            src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                            loading="lazy"
+                            onClick={() => this.handleFullscreen()}
+                          />
+                        </div>
+                      ))
+                  ) : (
                     <div class="swiper-slide">
-                      <img
-                        class={`touristic-event-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
-                        src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
-                        loading="lazy"
-                        onClick={() => this.handleFullscreen()}
-                      />
+                      <img class="default-touristic-event-img" src={defaultImageSrc} loading="lazy" />
                     </div>
-                  ))
-              ) : (
-                <div class="swiper-slide">
-                  <img class="default-touristic-event-img" src={defaultImageSrc} loading="lazy" />
+                  )}
                 </div>
-              )}
+                <div class="swiper-pagination" ref={el => (this.paginationElTouristicEventRef = el)}></div>
+                <div class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
+                <div class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
+              </div>
+            ) : this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
+              <img class="image" src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`} loading="lazy" />
+            ) : (
+              <div></div>
+            )}
+          </div>
+          <div class="touristic-event-sub-container">
+            <div class="touristic-event-type-container">
+              <img src={touristicEventType.pictogram} />
+              <div class="touristic-event-type-name">{touristicEventType.type}</div>
             </div>
-            <div class="swiper-pagination" ref={el => (this.paginationElTouristicEventRef = el)}></div>
-            <div class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
-            <div class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
+            <div class="touristic-event-name">{this.touristicEvent.name}</div>
           </div>
-        </div>
-        <div class="touristic-event-sub-container">
-          <div class="touristic-event-type-container">
-            <img src={touristicEventTypes.pictogram} />
-            <div class="touristic-event-type-name">{touristicEventTypes.type}</div>
-          </div>
-          <div class="touristic-event-name">{this.touristicEvent.name}</div>
-        </div>
-        <div class="touristic-event-more-detail-container">
-          <button class="more-details-button" onClick={() => this.touristicEventCardPress.emit(this.touristicEvent.id)}>
-            Plus de détails
-          </button>
+          {this.isInsideHorizontalList && (
+            <div class="touristic-event-more-detail-container">
+              <button class="more-details-button" onClick={() => this.touristicEventCardPress.emit(this.touristicEvent.id)}>
+                Plus de détails
+              </button>
+            </div>
+          )}
         </div>
       </Host>
     );

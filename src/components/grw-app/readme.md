@@ -55,11 +55,13 @@
 
 - [grw-treks-provider](../../store)
 - [grw-trek-provider](../../store)
-- [grw-touristic-content-card-provider](../../store)
 - [grw-touristic-content-provider](../../store)
+- [grw-touristic-contents-provider](../../store)
+- [grw-touristic-events-provider](../../store)
 - [grw-search](../grw-search)
 - [grw-treks-list](../grw-treks-list)
 - [grw-touristic-contents-list](../grw-touristic-contents-list)
+- [grw-touristic-events-list](../grw-touristic-events-list)
 - [grw-trek-detail](../grw-trek-detail)
 - [grw-touristic-content-detail](../grw-touristic-content-detail)
 - [grw-touristic-event-detail](../grw-touristic-event-detail)
@@ -71,11 +73,13 @@
 graph TD;
   grw-app --> grw-treks-provider
   grw-app --> grw-trek-provider
-  grw-app --> grw-touristic-content-card-provider
   grw-app --> grw-touristic-content-provider
+  grw-app --> grw-touristic-contents-provider
+  grw-app --> grw-touristic-events-provider
   grw-app --> grw-search
   grw-app --> grw-treks-list
   grw-app --> grw-touristic-contents-list
+  grw-app --> grw-touristic-events-list
   grw-app --> grw-trek-detail
   grw-app --> grw-touristic-content-detail
   grw-app --> grw-touristic-event-detail
@@ -83,6 +87,7 @@ graph TD;
   grw-app --> grw-filters
   grw-treks-list --> grw-trek-card
   grw-touristic-contents-list --> grw-touristic-content-card
+  grw-touristic-events-list --> grw-touristic-event-card
   grw-trek-detail --> grw-trek-card
   grw-trek-detail --> grw-sensitive-area-detail
   grw-trek-detail --> grw-information-desk

@@ -2,10 +2,10 @@ import { Build, Component, h, Host, Prop } from '@stencil/core';
 import state from 'store/store';
 
 @Component({
-  tag: 'grw-touristic-contents-provider',
+  tag: 'grw-touristic-events-provider',
   shadow: true,
 })
-export class GrwTouristicContentsProvider {
+export class GrwTouristicEventsProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
   @Prop() inBbox: string;
@@ -25,37 +25,37 @@ export class GrwTouristicContentsProvider {
       state.languages = this.languages.split(',');
       state.language = state.languages[0];
     }
-    this.handleTouristicContents();
+    this.handleTouristicEvents();
   }
 
-  handleTouristicContents() {
-    let touristicContentsRequest = `${state.api}touristiccontent/?language=${state.language}&published=true`;
-    this.inBbox && (touristicContentsRequest += `&in_bbox=${this.inBbox}`);
-    this.cities && (touristicContentsRequest += `&cities=${this.cities}`);
-    this.districts && (touristicContentsRequest += `&districts=${this.districts}`);
-    this.structures && (touristicContentsRequest += `&structures=${this.structures}`);
-    this.themes && (touristicContentsRequest += `&themes=${this.themes}`);
-    this.portals && (touristicContentsRequest += `&portals=${this.portals}`);
+  handleTouristicEvents() {
+    let touristicEventsRequest = `${state.api}touristicevent/?language=${state.language}&published=true`;
+    this.inBbox && (touristicEventsRequest += `&in_bbox=${this.inBbox}`);
+    this.cities && (touristicEventsRequest += `&cities=${this.cities}`);
+    this.districts && (touristicEventsRequest += `&districts=${this.districts}`);
+    this.structures && (touristicEventsRequest += `&structures=${this.structures}`);
+    this.themes && (touristicEventsRequest += `&themes=${this.themes}`);
+    this.portals && (touristicEventsRequest += `&portals=${this.portals}`);
 
-    touristicContentsRequest += `&fields=id,name,attachments,category,geometry,cities,districts&page_size=999`;
+    touristicEventsRequest += `&fields=id,name,attachments,category,geometry,cities,districts,type&page_size=999`;
 
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
     requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null')),
       requests.push(
-        !state.touristicContentCategories
+        !state.touristicEventTypes
           ? fetch(
-              `${state.api}touristiccontent_category/?language=${state.language}${
+              `${state.api}touristicevent_type/?language=${state.language}${
                 this.portals ? '&portals='.concat(this.portals) : ''
-              }&published=true&fields=id,label,pictogram&page_size=999`,
+              }&published=true&fields=id,type,pictogram&page_size=999`,
               this.init,
             )
           : new Response('null'),
       );
 
-    Promise.all([...requests, fetch(touristicContentsRequest, this.init)])
+    Promise.all([...requests, fetch(touristicEventsRequest, this.init)])
       .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([cities, districts, touristicContentCategory, touristicContents]) => {
+      .then(([cities, districts, touristicEventTypes, touristicEvents]) => {
         state.trekNetworkError = false;
 
         if (cities) {
@@ -64,11 +64,11 @@ export class GrwTouristicContentsProvider {
         if (districts) {
           state.districts = districts.results;
         }
-        if (touristicContentCategory) {
-          state.touristicContentCategories = touristicContentCategory.results;
+        if (touristicEventTypes) {
+          state.touristicEventTypes = touristicEventTypes.results;
         }
-        state.touristicContents = touristicContents.results;
-        state.currentTouristicContents = touristicContents.results;
+        state.touristicEvents = touristicEvents.results;
+        state.currentTouristicEvents = touristicEvents.results;
       })
       .catch(() => {
         state.trekNetworkError = true;

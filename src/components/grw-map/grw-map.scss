@@ -81,7 +81,8 @@
 }
 
 .treks-marker-cluster-group-icon,
-.touristic-content-marker-cluster-group-icon {
+.touristic-content-marker-cluster-group-icon,
+.touristic-event-marker-cluster-group-icon {
   background-color: var(--color-primary-app);
   border-radius: 50%;
   display: flex;
@@ -188,7 +189,8 @@
 }
 
 .trek-departure-popup,
-.touristic-content-coordinates-popup {
+.touristic-content-coordinates-popup,
+.touristic-event-coordinates-popup {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -197,14 +199,16 @@
     border-top-right-radius: 8px;
   }
   .trek-name,
-  .touristic-content-name {
+  .touristic-content-name,
+  .touristic-event-name {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
     padding: 8px;
   }
   .trek-button,
-  .touristic-content-button {
+  .touristic-content-button,
+  .touristic-event-button {
     margin: 0px 8px 8px 8px;
     user-select: none;
     cursor: pointer;

@@ -1,6 +1,13 @@
 import { Component, Host, h, Prop, Listen, forceUpdate, Element } from '@stencil/core';
 import state from 'store/store';
-import { treksFilters, handleTreksFiltersAndSearch, touristicContentsFilters, handleTouristicContentsFiltersAndSearch } from 'utils/utils';
+import {
+  treksFilters,
+  handleTreksFiltersAndSearch,
+  touristicContentsFilters,
+  handleTouristicContentsFiltersAndSearch,
+  touristicEventsFilters,
+  handleTouristicEventsFiltersAndSearch,
+} from 'utils/utils';
 import 'choices.js/public/assets/scripts/choices.min.js';
 
 @Component({
@@ -49,6 +56,14 @@ export class GrwFilter {
         });
 
       state.currentTouristicContents = handleTouristicContentsFiltersAndSearch();
+    } else if (state.mode === 'touristicEvents') {
+      touristicEventsFilters
+        .filter(filter => filter.segment === this.segment)
+        .forEach(filter => {
+          state[this.segment] += state[filter.property].filter(filter => filter.selected).length;
+        });
+
+      state.currentTouristicEvents = handleTouristicEventsFiltersAndSearch();
     }
   }
 

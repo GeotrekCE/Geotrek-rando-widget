@@ -21,6 +21,7 @@ export class GrwMap {
 
   @Event() trekCardPress: EventEmitter<number>;
   @Event() touristicContentCardPress: EventEmitter<number>;
+  @Event() touristicEventCardPress: EventEmitter<number>;
 
   @State() mapIsReady = false;
   @Prop() nameLayer: string;
@@ -47,9 +48,11 @@ export class GrwMap {
   bounds;
   treksLayer: L.GeoJSON<any>;
   toutisticContentsLayer: L.GeoJSON<any>;
+  toutisticEventsLayer: L.GeoJSON<any>;
 
   treksMarkerClusterGroup: MarkerClusterGroup;
   touristicContentsMarkerClusterGroup: MarkerClusterGroup;
+  touristicEventsMarkerClusterGroup: MarkerClusterGroup;
   currentTrekLayer: L.GeoJSON<any>;
   currentStepsLayer: L.GeoJSON<any>;
   selectedCurrentTrekLayer: L.GeoJSON<any>;
@@ -76,6 +79,7 @@ export class GrwMap {
 
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
   handleTouristicContentsWithinBoundsBind: (event: any) => void = this.handleTouristicContentsWithinBounds.bind(this);
+  handleTouristicEventsWithinBoundsBind: (event: any) => void = this.handleTouristicEventsWithinBounds.bind(this);
 
   @Listen('centerOnMap', { target: 'window' })
   onCenterOnMap(event: CustomEvent<{ latitude: number; longitude: number }>) {
@@ -246,6 +250,8 @@ export class GrwMap {
       this.addTouristicEvent();
     } else if (state.touristicContents) {
       this.addTouristicContents();
+    } else if (state.touristicEvents) {
+      this.addTouristicEvents();
     }
 
     onChange('currentTreks', () => {
@@ -292,6 +298,7 @@ export class GrwMap {
     onChange('currentTouristicEvent', () => {
       if (state.currentTouristicEvent) {
         this.removeTrek();
+        this.removeTouristicEvents();
         this.addTouristicEvent();
       } else if (state.currentTrek) {
         this.removeTouristicEvent();
@@ -312,16 +319,34 @@ export class GrwMap {
       }
     });
 
+    onChange('currentTouristicEvents', () => {
+      if (state.currentTouristicEvent) {
+        this.removeTouristicEvents();
+        this.addTouristicEvent();
+      } else if (state.currentTouristicEvents) {
+        this.removeTouristicEvent();
+        this.addTouristicEvents(true);
+      }
+    });
+
     onChange('mode', () => {
       if (state.mode === 'treks') {
         if (state.treks) {
           this.removeTouristicContents();
+          this.removeTouristicEvents();
           this.addTreks(true);
         }
       } else if (state.mode === 'touristicContents') {
         if (state.touristicContents) {
           this.removeTreks();
+          this.removeTouristicEvents();
           this.addTouristicContents(true);
+        }
+      } else if (state.mode === 'touristicEvents') {
+        if (state.touristicEvents) {
+          this.removeTreks();
+          this.removeTouristicContents();
+          this.addTouristicEvents(true);
         }
       }
     });
@@ -466,6 +491,17 @@ export class GrwMap {
     ) {
       state.touristicContentsWithinBounds = state.currentTouristicContents.filter(touristicContent =>
         this.map.getBounds().contains(L.latLng(touristicContent.geometry.coordinates[1], touristicContent.geometry.coordinates[0])),
+      );
+    }
+  }
+
+  handleTouristicEventsWithinBounds() {
+    if (
+      (state.currentTouristicEvents && !state.currentMapBounds) ||
+      (state.currentTouristicEvents && state.currentMapBounds && state.currentMapBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
+    ) {
+      state.touristicEventsWithinBounds = state.currentTouristicEvents.filter(touristicEvent =>
+        this.map.getBounds().contains(L.latLng(touristicEvent.geometry.coordinates[1], touristicEvent.geometry.coordinates[0])),
       );
     }
   }
@@ -1236,6 +1272,7 @@ export class GrwMap {
             id: currentTouristicContent.id,
             name: currentTouristicContent.name,
             practice: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === currentTouristicContent.category).pictogram,
+            imgSrc: currentTouristicContent.attachments && currentTouristicContent.attachments.length > 0 && currentTouristicContent.attachments[0].thumbnail,
           },
         });
       }
@@ -1267,9 +1304,9 @@ export class GrwMap {
             const touristicContentCoordinatesPopup = L.DomUtil.create('div');
             touristicContentCoordinatesPopup.className = 'touristic-content-coordinates-popup';
             if (geoJsonPoint.properties.imgSrc) {
-              const touristicCotentImg = L.DomUtil.create('img');
-              touristicCotentImg.src = geoJsonPoint.properties.imgSrc;
-              touristicContentCoordinatesPopup.appendChild(touristicCotentImg);
+              const touristicContentImg = L.DomUtil.create('img');
+              touristicContentImg.src = geoJsonPoint.properties.imgSrc;
+              touristicContentCoordinatesPopup.appendChild(touristicContentImg);
             }
             const touristicContentName = L.DomUtil.create('div');
             touristicContentName.innerHTML = geoJsonPoint.properties.name;
@@ -1465,6 +1502,126 @@ export class GrwMap {
     state.selectedTouristicContentId = null;
     this.selectedTouristicContentLayer && this.map.removeLayer(this.selectedTouristicContentLayer);
     this.selectedTouristicContentLayer = null;
+  }
+
+  addTouristicEvents(resetBounds = false) {
+    state.touristicEventsWithinBounds = state.currentTouristicEvents;
+
+    const touristicEventsCurrentCoordinates = [];
+
+    const touristicEventsFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentTouristicEvents) {
+      for (const currentTouristicEvent of state.currentTouristicEvents) {
+        touristicEventsCurrentCoordinates.push(currentTouristicEvent.geometry.coordinates);
+
+        touristicEventsFeatureCollection.features.push({
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: currentTouristicEvent.geometry.coordinates },
+          properties: {
+            id: currentTouristicEvent.id,
+            name: currentTouristicEvent.name,
+            type: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === currentTouristicEvent.type)?.pictogram,
+            imgSrc: currentTouristicEvent.attachments && currentTouristicEvent.attachments.length > 0 && currentTouristicEvent.attachments[0].thumbnail,
+          },
+        });
+      }
+    }
+
+    if (!this.toutisticEventsLayer) {
+      if ((touristicEventsCurrentCoordinates.length > 0 && !state.currentMapBounds) || resetBounds) {
+        this.bounds = L.latLngBounds(touristicEventsCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      } else {
+        if (state.currentMapBounds) {
+          this.bounds = state.currentMapBounds;
+        }
+      }
+      this.toutisticEventsLayer = L.geoJSON(touristicEventsFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: geoJsonPoint.properties.type
+                ? `<div class="touristic-event-marker-container"><img src=${geoJsonPoint.properties.type} /></div>`
+                : `<div class="touristic-event-marker-container"></div>`,
+              className: 'touristic-event-marker',
+              iconSize: 32,
+              iconAnchor: [18, 0],
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('click', () => {
+            const touristicEventCoordinatesPopup = L.DomUtil.create('div');
+            touristicEventCoordinatesPopup.className = 'touristic-event-coordinates-popup';
+            if (geoJsonPoint.properties.imgSrc) {
+              const touristicEventImg = L.DomUtil.create('img');
+              touristicEventImg.src = geoJsonPoint.properties.imgSrc;
+              touristicEventCoordinatesPopup.appendChild(touristicEventImg);
+            }
+            const touristicEventName = L.DomUtil.create('div');
+            touristicEventName.innerHTML = geoJsonPoint.properties.name;
+            touristicEventName.className = 'touristic-event-name';
+            touristicEventCoordinatesPopup.appendChild(touristicEventName);
+
+            const touristicEventButton = L.DomUtil.create('button');
+            touristicEventButton.innerHTML = 'Afficher le détail';
+            touristicEventButton.className = 'touristic-event-button';
+            touristicEventButton.onclick = () => this.touristicEventCardPress.emit(geoJsonPoint.properties.id);
+            touristicEventCoordinatesPopup.appendChild(touristicEventButton);
+
+            layer.bindPopup(touristicEventCoordinatesPopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+          });
+          layer.on('mouseover', e => {
+            this.addSelectedTouristicContent(geoJsonPoint.properties.id, e.latlng);
+          });
+        },
+      });
+
+      this.touristicEventsMarkerClusterGroup = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        removeOutsideVisibleBounds: false,
+        iconCreateFunction: cluster => {
+          return L.divIcon({
+            html: '<div>' + cluster.getChildCount() + '</div>',
+            className: 'touristic-event-marker-cluster-group-icon',
+            iconSize: 48,
+            iconAnchor: [24, 24],
+          } as any);
+        },
+      });
+
+      this.touristicEventsMarkerClusterGroup.addLayer(this.toutisticEventsLayer);
+      this.map.addLayer(this.touristicEventsMarkerClusterGroup);
+    } else {
+      if (touristicEventsCurrentCoordinates.length > 0) {
+        this.bounds = L.latLngBounds(touristicEventsCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      } else {
+        this.map.fire('moveend');
+      }
+      this.toutisticEventsLayer.clearLayers();
+      this.toutisticEventsLayer.addData(touristicEventsFeatureCollection);
+      this.touristicEventsMarkerClusterGroup.clearLayers();
+      this.touristicEventsMarkerClusterGroup.addLayer(this.toutisticEventsLayer);
+    }
+
+    this.bounds && this.map.fitBounds(this.bounds);
+
+    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+
+    this.map.on('moveend', this.handleTouristicEventsWithinBoundsBind);
+  }
+
+  removeTouristicEvents() {
+    if (this.toutisticEventsLayer) {
+      state.currentMapBounds = this.map.getBounds();
+      this.map.removeLayer(this.touristicEventsMarkerClusterGroup);
+      this.toutisticEventsLayer = null;
+      this.touristicEventsMarkerClusterGroup = null;
+      this.map.off('moveend', this.handleTouristicEventsWithinBoundsBind);
+    }
   }
 
   render() {

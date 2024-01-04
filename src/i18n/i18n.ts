@@ -42,9 +42,12 @@ interface Translation {
     segment: {
       treks: string;
       touristicContents: string;
+      touristicEvents: string;
     };
     touristicContents: string;
     touristicContent: string;
+    touristicEvents: string;
+    touristicEvent: string;
   };
   options: {
     presentation: string;
@@ -84,6 +87,8 @@ interface Translation {
   website: string;
   category: string;
   services: string;
+  type: string;
+  placeholderType: string;
 }
 
 interface AvailableTranslations {
@@ -136,9 +141,12 @@ export const translate: AvailableTranslations = {
       segment: {
         treks: 'Itinéraires',
         touristicContents: 'Services',
+        touristicEvents: 'Événements',
       },
       touristicContents: 'Services',
       touristicContent: 'Service',
+      touristicEvents: 'Événements',
+      touristicEvent: 'Événement',
     },
     options: {
       presentation: 'Présentation',
@@ -178,6 +186,8 @@ export const translate: AvailableTranslations = {
     website: 'Site web',
     category: 'Catégorie',
     services: 'Services',
+    type: 'Types',
+    placeholderType: 'Sélectionner un ou plusieurs types',
   },
   en: {
     filter: 'Filter',
@@ -223,9 +233,12 @@ export const translate: AvailableTranslations = {
       segment: {
         treks: 'Routes',
         touristicContents: 'Services',
+        touristicEvents: 'Events',
       },
       touristicContents: 'Services',
       touristicContent: 'Service',
+      touristicEvents: 'Events',
+      touristicEvent: 'Event',
     },
     options: {
       presentation: 'Presentation',
@@ -265,5 +278,7 @@ export const translate: AvailableTranslations = {
     website: 'Website',
     category: 'Category',
     services: 'Services',
+    type: 'Types',
+    placeholderType: 'Select one or more types',
   },
 };

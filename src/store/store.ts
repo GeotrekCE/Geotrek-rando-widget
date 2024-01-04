@@ -73,9 +73,12 @@ const { state, onChange, reset } = createStore<{
   touristicContentCategories: TouristicContentCategories;
   currentTouristicContent: TouristicContent;
   touristicEvents: TouristicEvents;
+  currentTouristicEvents: TouristicEvents;
+  touristicEventsWithinBounds: TouristicEvents;
   touristicEventTypes: TouristicEventTypes;
   currentTouristicEvent: TouristicEvent;
   selectedTouristicContentId: number;
+  selectedTouristicEventId: number;
 }>({
   mode: null,
   api: null,
@@ -121,9 +124,12 @@ const { state, onChange, reset } = createStore<{
   touristicContentCategories: null,
   currentTouristicContent: null,
   touristicEvents: null,
+  currentTouristicEvents: null,
+  touristicEventsWithinBounds: null,
   touristicEventTypes: null,
   currentTouristicEvent: null,
   selectedTouristicContentId: null,
+  selectedTouristicEventId: null,
 });
 
 export { onChange, reset };

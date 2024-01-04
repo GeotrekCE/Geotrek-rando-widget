@@ -131,16 +131,11 @@ export namespace Components {
         "portals": string;
         "structures": string;
         "themes": string;
-        "touristicContentId": string;
     }
     interface GrwTouristicEventCard {
+        "isInsideHorizontalList": boolean;
+        "isLargeView": boolean;
         "touristicEvent": TouristicEvent;
-    }
-    interface GrwTouristicEventCardProvider {
-        "api": string;
-        "languages": string;
-        "portals": string;
-        "touristicEventId": string;
     }
     interface GrwTouristicEventDetail {
         "colorBackground": string;
@@ -152,6 +147,31 @@ export namespace Components {
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
         "isLargeView": boolean;
+    }
+    interface GrwTouristicEventProvider {
+        "api": string;
+        "languages": string;
+        "portals": string;
+        "touristicEventId": string;
+    }
+    interface GrwTouristicEventsList {
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+        "resetStoreOnDisconnected": boolean;
+    }
+    interface GrwTouristicEventsProvider {
+        "api": string;
+        "cities": string;
+        "districts": string;
+        "inBbox": string;
+        "languages": string;
+        "portals": string;
+        "structures": string;
+        "themes": string;
     }
     interface GrwTrekCard {
         "colorOnSecondaryContainer": string;
@@ -325,17 +345,29 @@ declare global {
         prototype: HTMLGrwTouristicEventCardElement;
         new (): HTMLGrwTouristicEventCardElement;
     };
-    interface HTMLGrwTouristicEventCardProviderElement extends Components.GrwTouristicEventCardProvider, HTMLStencilElement {
-    }
-    var HTMLGrwTouristicEventCardProviderElement: {
-        prototype: HTMLGrwTouristicEventCardProviderElement;
-        new (): HTMLGrwTouristicEventCardProviderElement;
-    };
     interface HTMLGrwTouristicEventDetailElement extends Components.GrwTouristicEventDetail, HTMLStencilElement {
     }
     var HTMLGrwTouristicEventDetailElement: {
         prototype: HTMLGrwTouristicEventDetailElement;
         new (): HTMLGrwTouristicEventDetailElement;
+    };
+    interface HTMLGrwTouristicEventProviderElement extends Components.GrwTouristicEventProvider, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicEventProviderElement: {
+        prototype: HTMLGrwTouristicEventProviderElement;
+        new (): HTMLGrwTouristicEventProviderElement;
+    };
+    interface HTMLGrwTouristicEventsListElement extends Components.GrwTouristicEventsList, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicEventsListElement: {
+        prototype: HTMLGrwTouristicEventsListElement;
+        new (): HTMLGrwTouristicEventsListElement;
+    };
+    interface HTMLGrwTouristicEventsProviderElement extends Components.GrwTouristicEventsProvider, HTMLStencilElement {
+    }
+    var HTMLGrwTouristicEventsProviderElement: {
+        prototype: HTMLGrwTouristicEventsProviderElement;
+        new (): HTMLGrwTouristicEventsProviderElement;
     };
     interface HTMLGrwTrekCardElement extends Components.GrwTrekCard, HTMLStencilElement {
     }
@@ -383,8 +415,10 @@ declare global {
         "grw-touristic-contents-list": HTMLGrwTouristicContentsListElement;
         "grw-touristic-contents-provider": HTMLGrwTouristicContentsProviderElement;
         "grw-touristic-event-card": HTMLGrwTouristicEventCardElement;
-        "grw-touristic-event-card-provider": HTMLGrwTouristicEventCardProviderElement;
         "grw-touristic-event-detail": HTMLGrwTouristicEventDetailElement;
+        "grw-touristic-event-provider": HTMLGrwTouristicEventProviderElement;
+        "grw-touristic-events-list": HTMLGrwTouristicEventsListElement;
+        "grw-touristic-events-provider": HTMLGrwTouristicEventsProviderElement;
         "grw-trek-card": HTMLGrwTrekCardElement;
         "grw-trek-detail": HTMLGrwTrekDetailElement;
         "grw-trek-provider": HTMLGrwTrekProviderElement;
@@ -464,6 +498,7 @@ declare namespace LocalJSX {
         "isLargeView"?: boolean;
         "nameLayer"?: string;
         "onTouristicContentCardPress"?: (event: GrwMapCustomEvent<number>) => void;
+        "onTouristicEventCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "resetStoreOnDisconnected"?: boolean;
         "urlLayer"?: string;
@@ -523,17 +558,14 @@ declare namespace LocalJSX {
         "portals"?: string;
         "structures"?: string;
         "themes"?: string;
-        "touristicContentId"?: string;
     }
     interface GrwTouristicEventCard {
+        "isInsideHorizontalList"?: boolean;
+        "isLargeView"?: boolean;
+        "onCardTouristicEventMouseLeave"?: (event: GrwTouristicEventCardCustomEvent<any>) => void;
+        "onCardTouristicEventMouseOver"?: (event: GrwTouristicEventCardCustomEvent<number>) => void;
         "onTouristicEventCardPress"?: (event: GrwTouristicEventCardCustomEvent<number>) => void;
         "touristicEvent"?: TouristicEvent;
-    }
-    interface GrwTouristicEventCardProvider {
-        "api"?: string;
-        "languages"?: string;
-        "portals"?: string;
-        "touristicEventId"?: string;
     }
     interface GrwTouristicEventDetail {
         "colorBackground"?: string;
@@ -545,6 +577,31 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "isLargeView"?: boolean;
+    }
+    interface GrwTouristicEventProvider {
+        "api"?: string;
+        "languages"?: string;
+        "portals"?: string;
+        "touristicEventId"?: string;
+    }
+    interface GrwTouristicEventsList {
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "isLargeView"?: boolean;
+        "resetStoreOnDisconnected"?: boolean;
+    }
+    interface GrwTouristicEventsProvider {
+        "api"?: string;
+        "cities"?: string;
+        "districts"?: string;
+        "inBbox"?: string;
+        "languages"?: string;
+        "portals"?: string;
+        "structures"?: string;
+        "themes"?: string;
     }
     interface GrwTrekCard {
         "colorOnSecondaryContainer"?: string;
@@ -626,8 +683,10 @@ declare namespace LocalJSX {
         "grw-touristic-contents-list": GrwTouristicContentsList;
         "grw-touristic-contents-provider": GrwTouristicContentsProvider;
         "grw-touristic-event-card": GrwTouristicEventCard;
-        "grw-touristic-event-card-provider": GrwTouristicEventCardProvider;
         "grw-touristic-event-detail": GrwTouristicEventDetail;
+        "grw-touristic-event-provider": GrwTouristicEventProvider;
+        "grw-touristic-events-list": GrwTouristicEventsList;
+        "grw-touristic-events-provider": GrwTouristicEventsProvider;
         "grw-trek-card": GrwTrekCard;
         "grw-trek-detail": GrwTrekDetail;
         "grw-trek-provider": GrwTrekProvider;
@@ -654,8 +713,10 @@ declare module "@stencil/core" {
             "grw-touristic-contents-list": LocalJSX.GrwTouristicContentsList & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsListElement>;
             "grw-touristic-contents-provider": LocalJSX.GrwTouristicContentsProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsProviderElement>;
             "grw-touristic-event-card": LocalJSX.GrwTouristicEventCard & JSXBase.HTMLAttributes<HTMLGrwTouristicEventCardElement>;
-            "grw-touristic-event-card-provider": LocalJSX.GrwTouristicEventCardProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicEventCardProviderElement>;
             "grw-touristic-event-detail": LocalJSX.GrwTouristicEventDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicEventDetailElement>;
+            "grw-touristic-event-provider": LocalJSX.GrwTouristicEventProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicEventProviderElement>;
+            "grw-touristic-events-list": LocalJSX.GrwTouristicEventsList & JSXBase.HTMLAttributes<HTMLGrwTouristicEventsListElement>;
+            "grw-touristic-events-provider": LocalJSX.GrwTouristicEventsProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicEventsProviderElement>;
             "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
             "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
             "grw-trek-provider": LocalJSX.GrwTrekProvider & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;
