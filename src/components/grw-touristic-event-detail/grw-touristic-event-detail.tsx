@@ -102,6 +102,12 @@ export class GrwTouristicEventDetail {
               <div class="touristic-event-category-name">{touristicEventType.type}</div>
             </div>
             <div class="name">{state.currentTouristicEvent.name}</div>
+            {(state.currentTouristicEvent.begin_date || state.currentTouristicEvent.end_date) && (
+              <div class="touristic-event-date-container">
+                {state.currentTouristicEvent.begin_date && <div class="touristic-event-date">Date de début : {state.currentTouristicEvent.begin_date}</div>}
+                {state.currentTouristicEvent.end_date && <div class="touristic-event-date">Date de fin : {state.currentTouristicEvent.end_date}</div>}
+              </div>
+            )}
             <div class="divider"></div>
             <div class="downloads-container">
               <div class="download-title">{translate[state.language].download}</div>

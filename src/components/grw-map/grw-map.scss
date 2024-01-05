@@ -98,7 +98,8 @@
 .touristic-event-marker,
 .selected-trek-marker,
 .selected-step-marker,
-.selected-touristic-content-marker {
+.selected-touristic-content-marker,
+.selected-touristic-event-marker {
   .trek-marker-container,
   .step-marker-container,
   .touristic-content-marker-container,
@@ -134,7 +135,8 @@
 
 .selected-trek-marker,
 .selected-step-marker,
-.selected-touristic-content-marker {
+.selected-touristic-content-marker,
+.selected-touristic-event-marker {
   .trek-marker-container,
   .step-marker-container,
   .touristic-content-marker-container,
@@ -181,11 +183,6 @@
       transform: rotate(360deg);
     }
   }
-}
-
-.leaflet-popup-content {
-  width: 144px;
-  margin: 0;
 }
 
 .trek-departure-popup,
@@ -318,9 +315,18 @@
   background-color: var(--color-background);
 }
 
+.leaflet-popup {
+  bottom: 64px !important;
+}
+
 .leaflet-popup-content-wrapper {
   cursor: default;
   padding: 0px;
   background-color: var(--color-background);
   box-shadow: var(--elevation-2);
+}
+
+.leaflet-popup-content {
+  width: 144px;
+  margin: 0;
 }

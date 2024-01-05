@@ -126,7 +126,14 @@ export class GrwTouristicEvent {
               <div class="touristic-event-type-name">{touristicEventType.type}</div>
             </div>
             <div class="touristic-event-name">{this.touristicEvent.name}</div>
+            {(this.touristicEvent.begin_date || this.touristicEvent.end_date) && (
+              <div class="touristic-event-date-container">
+                {this.touristicEvent.begin_date && <div class="touristic-event-date">Date de début : {this.touristicEvent.begin_date}</div>}
+                {this.touristicEvent.end_date && <div class="touristic-event-date">Date de fin : {this.touristicEvent.end_date}</div>}
+              </div>
+            )}
           </div>
+
           {this.isInsideHorizontalList && (
             <div class="touristic-event-more-detail-container">
               <button class="more-details-button" onClick={() => this.touristicEventCardPress.emit(this.touristicEvent.id)}>

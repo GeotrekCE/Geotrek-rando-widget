@@ -41,7 +41,7 @@ export class GrwTouristicEventProvider {
     Promise.all([
       ...requests,
       fetch(
-        `${state.api}touristicevent/${this.touristicEventId}/?language=${state.language}&fields=id,name,attachments,description,description_teaser,type,geometry,cities,pdf,practical_info,contact,email,website&published=true`,
+        `${state.api}touristicevent/${this.touristicEventId}/?language=${state.language}&fields=id,name,attachments,description,description_teaser,type,geometry,cities,pdf,practical_info,contact,email,website,begin_date,end_date&published=true`,
         this.init,
       ),
     ])

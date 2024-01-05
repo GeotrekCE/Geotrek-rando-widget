@@ -272,6 +272,8 @@ export type TouristicEvent = {
   contact?: string;
   email?: string;
   website?: string;
+  begin_date?: string;
+  end_date?: string;
 };
 
 export type TouristicEvents = TouristicEvent[];

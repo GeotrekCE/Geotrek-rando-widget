@@ -37,7 +37,7 @@ export class GrwTouristicEventsProvider {
     this.themes && (touristicEventsRequest += `&themes=${this.themes}`);
     this.portals && (touristicEventsRequest += `&portals=${this.portals}`);
 
-    touristicEventsRequest += `&fields=id,name,attachments,category,geometry,cities,districts,type&page_size=999`;
+    touristicEventsRequest += `&fields=id,name,attachments,category,geometry,cities,districts,type,begin_date,end_date&page_size=999`;
 
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));

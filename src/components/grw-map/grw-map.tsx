@@ -58,6 +58,7 @@ export class GrwMap {
   selectedCurrentTrekLayer: L.GeoJSON<any>;
   selectedCurrentStepLayer: L.GeoJSON<any>;
   selectedTouristicContentLayer: L.GeoJSON<any>;
+  selectedTouristicEventLayer: L.GeoJSON<any>;
   currentReferencePointsLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
@@ -76,6 +77,7 @@ export class GrwMap {
   trekPopupIsOpen: boolean;
   stepPopupIsOpen: boolean;
   touristicContentPopupIsOpen: boolean;
+  touristicEventPopupIsOpen: boolean;
 
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
   handleTouristicContentsWithinBoundsBind: (event: any) => void = this.handleTouristicContentsWithinBounds.bind(this);
@@ -182,6 +184,19 @@ export class GrwMap {
     this.removeSelectedTouristicContent();
   }
 
+  @Listen('cardTouristicEventMouseOver', { target: 'window' })
+  onTouristicEventMouseOver(event: CustomEvent<number>) {
+    this.touristicEventPopupIsOpen = false;
+    state.selectedTouristicEventId = null;
+    this.addSelectedTouristicEvent(event.detail);
+  }
+
+  @Listen('cardTouristicEventMouseLeave', { target: 'window' })
+  onTouristicEventMouseLeave() {
+    state.selectedTouristicEventId = null;
+    this.removeSelectedTouristicEvent();
+  }
+
   componentDidLoad() {
     this.map = L.map(this.mapRef, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
@@ -255,10 +270,17 @@ export class GrwMap {
     }
 
     onChange('currentTreks', () => {
+      this.hideTrekLine();
+      this.removeSelectedCurrentTrek();
+      this.removeSelectedTouristicContent();
+      this.removeSelectedTouristicEvent();
       if (state.currentTrek) {
         this.removeTreks();
         this.addTrek();
       } else if (state.currentTreks) {
+        this.removeTreks();
+        this.removeTouristicContents();
+        this.removeTouristicEvents();
         this.removeTrek();
         this.removeTouristicContent();
         this.removeTouristicEvent();
@@ -310,26 +332,42 @@ export class GrwMap {
     });
 
     onChange('currentTouristicContents', () => {
+      this.hideTrekLine();
+      this.removeSelectedCurrentTrek();
+      this.removeSelectedTouristicContent();
+      this.removeSelectedTouristicEvent();
       if (state.currentTouristicContent) {
         this.removeTouristicContents();
         this.addTouristicContent();
       } else if (state.currentTouristicContents) {
+        this.removeTreks();
+        this.removeTouristicEvents();
         this.removeTouristicContent();
         this.addTouristicContents(true);
       }
     });
 
     onChange('currentTouristicEvents', () => {
+      this.hideTrekLine();
+      this.removeSelectedCurrentTrek();
+      this.removeSelectedTouristicContent();
+      this.removeSelectedTouristicEvent();
       if (state.currentTouristicEvent) {
         this.removeTouristicEvents();
         this.addTouristicEvent();
       } else if (state.currentTouristicEvents) {
+        this.removeTreks();
+        this.removeTouristicContents();
         this.removeTouristicEvent();
         this.addTouristicEvents(true);
       }
     });
 
     onChange('mode', () => {
+      this.hideTrekLine();
+      this.removeSelectedCurrentTrek();
+      this.removeSelectedTouristicContent();
+      this.removeSelectedTouristicEvent();
       if (state.mode === 'treks') {
         if (state.treks) {
           this.removeTouristicContents();
@@ -403,7 +441,7 @@ export class GrwMap {
                 : `<div class="trek-marker-container"></div>`,
               className: 'trek-marker',
               iconSize: 32,
-              iconAnchor: [18, 0],
+              iconAnchor: [16, 32],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -441,7 +479,7 @@ export class GrwMap {
         showCoverageOnHover: false,
         removeOutsideVisibleBounds: false,
         iconCreateFunction: cluster => {
-          return L.divIcon({ html: '<div>' + cluster.getChildCount() + '</div>', className: 'treks-marker-cluster-group-icon', iconSize: 48, iconAnchor: [24, 24] } as any);
+          return L.divIcon({ html: '<div>' + cluster.getChildCount() + '</div>', className: 'treks-marker-cluster-group-icon', iconSize: 48, iconAnchor: [24, 48] } as any);
         },
       });
 
@@ -538,7 +576,7 @@ export class GrwMap {
               html: '<div>P</div>',
               className: 'parking-icon',
               iconSize: 48,
-              iconAnchor: [0, 48],
+              iconAnchor: [24, 48],
             } as any),
             autoPanOnFocus: false,
             interactive: false,
@@ -798,7 +836,7 @@ export class GrwMap {
               html: `<div class="step-marker-container"><div class="step-number">${stepIndex}</div></div>`,
               className: 'step-marker',
               iconSize: 32,
-              iconAnchor: [18, 0],
+              iconAnchor: [16, 32],
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -955,7 +993,7 @@ export class GrwMap {
               : `<div class="trek-marker-container"></div>`,
             className: 'selected-trek-marker',
             iconSize: 64,
-            iconAnchor: [36, 36],
+            iconAnchor: [32, 64],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1042,7 +1080,7 @@ export class GrwMap {
             html: `<div class="step-marker-container"><div class="step-number">${geoJsonPoint.properties.index}</div></div>`,
             className: 'selected-step-marker',
             iconSize: 64,
-            iconAnchor: [36, 36],
+            iconAnchor: [32, 64],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1089,9 +1127,11 @@ export class GrwMap {
   }
 
   removeSelectedCurrentStep() {
-    state.selectedStepId = null;
-    this.selectedCurrentStepLayer && this.map.removeLayer(this.selectedCurrentStepLayer);
-    this.selectedCurrentStepLayer = null;
+    if (state.selectedStepId) {
+      state.selectedStepId = null;
+      this.selectedCurrentStepLayer && this.map.removeLayer(this.selectedCurrentStepLayer);
+      this.selectedCurrentStepLayer = null;
+    }
   }
 
   handleLayersControlEvent() {
@@ -1232,7 +1272,7 @@ export class GrwMap {
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 32,
-              iconAnchor: [18, 0],
+              iconAnchor: [16, 64],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1295,7 +1335,7 @@ export class GrwMap {
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 32,
-              iconAnchor: [18, 0],
+              iconAnchor: [16, 64],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1335,7 +1375,7 @@ export class GrwMap {
             html: '<div>' + cluster.getChildCount() + '</div>',
             className: 'touristic-content-marker-cluster-group-icon',
             iconSize: 48,
-            iconAnchor: [24, 24],
+            iconAnchor: [24, 64],
           } as any);
         },
       });
@@ -1399,7 +1439,7 @@ export class GrwMap {
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 32,
-              iconAnchor: [18, 0],
+              iconAnchor: [16, 64],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1448,10 +1488,10 @@ export class GrwMap {
           icon: L.divIcon({
             html: geoJsonPoint.properties.category
               ? `<div class="touristic-content-marker-container"><img src=${geoJsonPoint.properties.category} /></div>`
-              : `<div class="touristic-content-trek-marker-container"></div>`,
+              : `<div class="touristic-content-marker-container"></div>`,
             className: 'selected-touristic-content-marker',
             iconSize: 64,
-            iconAnchor: [36, 36],
+            iconAnchor: [32, 64],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1548,7 +1588,7 @@ export class GrwMap {
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 32,
-              iconAnchor: [18, 0],
+              iconAnchor: [16, 64],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1575,7 +1615,7 @@ export class GrwMap {
             layer.bindPopup(touristicEventCoordinatesPopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
           });
           layer.on('mouseover', e => {
-            this.addSelectedTouristicContent(geoJsonPoint.properties.id, e.latlng);
+            this.addSelectedTouristicEvent(geoJsonPoint.properties.id, e.latlng);
           });
         },
       });
@@ -1588,7 +1628,7 @@ export class GrwMap {
             html: '<div>' + cluster.getChildCount() + '</div>',
             className: 'touristic-event-marker-cluster-group-icon',
             iconSize: 48,
-            iconAnchor: [24, 24],
+            iconAnchor: [24, 64],
           } as any);
         },
       });
@@ -1622,6 +1662,92 @@ export class GrwMap {
       this.touristicEventsMarkerClusterGroup = null;
       this.map.off('moveend', this.handleTouristicEventsWithinBoundsBind);
     }
+  }
+
+  addSelectedTouristicEvent(id, customCoordinates?) {
+    const touristicEventFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.touristicEvents) {
+      const touristicEvent = state.touristicEvents.find(touristicEvent => touristicEvent.id === id);
+      touristicEventFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: customCoordinates ? [customCoordinates.lng, customCoordinates.lat] : touristicEvent.geometry.coordinates },
+        properties: {
+          id: touristicEvent.id,
+          name: touristicEvent.name,
+          category: state.touristicEventTypes.find(type => type.id === touristicEvent.type)?.pictogram,
+          imgSrc: touristicEvent.attachments && touristicEvent.attachments.length > 0 && touristicEvent.attachments[0].thumbnail,
+        },
+      });
+    }
+
+    this.removeSelectedTouristicEvent();
+    state.selectedTouristicEventId = id;
+
+    this.selectedTouristicEventLayer = L.geoJSON(touristicEventFeatureCollection, {
+      pointToLayer: (geoJsonPoint, latlng) =>
+        L.marker(latlng, {
+          zIndexOffset: 4000000,
+          icon: L.divIcon({
+            html: geoJsonPoint.properties.category
+              ? `<div class="touristic-event-marker-container"><img src=${geoJsonPoint.properties.category} /></div>`
+              : `<div class="touristic-event-marker-container"></div>`,
+            className: 'selected-touristic-event-marker',
+            iconSize: 64,
+            iconAnchor: [32, 64],
+          } as any),
+          autoPanOnFocus: false,
+        } as any),
+      onEachFeature: (geoJsonPoint, layer) => {
+        layer.once('click', () => {
+          const touristicEventDeparturePopup = L.DomUtil.create('div');
+          touristicEventDeparturePopup.className = 'touristic-event-coordinates-popup';
+          if (geoJsonPoint.properties.imgSrc) {
+            const touristicEventImg = L.DomUtil.create('img');
+            touristicEventImg.src = geoJsonPoint.properties.imgSrc;
+            touristicEventDeparturePopup.appendChild(touristicEventImg);
+          }
+
+          const touristicEventName = L.DomUtil.create('div');
+          touristicEventName.innerHTML = geoJsonPoint.properties.name;
+          touristicEventName.className = 'touristic-event-name';
+          touristicEventDeparturePopup.appendChild(touristicEventName);
+
+          const touristicEventButton = L.DomUtil.create('button');
+          touristicEventButton.innerHTML = 'Afficher le détail';
+          touristicEventButton.className = 'touristic-event-button';
+          touristicEventButton.onclick = () => this.touristicEventCardPress.emit(geoJsonPoint.properties.id);
+          touristicEventDeparturePopup.appendChild(touristicEventButton);
+
+          layer.bindPopup(touristicEventDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+        });
+        layer.on('mouseout', () => {
+          if (!this.touristicEventPopupIsOpen) {
+            state.selectedTouristicEventId = null;
+            this.removeSelectedTouristicEvent();
+          }
+        });
+        layer.on('popupopen', () => {
+          this.touristicEventPopupIsOpen = Boolean(state.selectedTouristicEventId);
+        });
+        layer.on('popupclose', () => {
+          if (state.selectedTouristicEventId) {
+            this.touristicEventPopupIsOpen = false;
+            state.selectedTouristicEventId = null;
+            this.removeSelectedTouristicEvent();
+          }
+        });
+      },
+    }).addTo(this.map);
+  }
+
+  removeSelectedTouristicEvent() {
+    state.selectedTouristicEventId = null;
+    this.selectedTouristicEventLayer && this.map.removeLayer(this.selectedTouristicEventLayer);
+    this.selectedTouristicEventLayer = null;
   }
 
   render() {
