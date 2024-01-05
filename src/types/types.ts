@@ -46,6 +46,8 @@ export type Trek = {
   cities?: string[];
   information_desks?: number[];
   children?: number[];
+  ratings?: number[];
+  ratings_description?: string;
 };
 
 export type Attachments = Attachment[];
@@ -313,3 +315,10 @@ export type Options = {
 };
 
 export type mode = 'treks' | 'touristicContents' | 'touristicEvents';
+
+export type Ratings = Rating[];
+
+export type Rating = {
+  id: number;
+  name: string;
+};

@@ -52,6 +52,11 @@ export class GrwTrekProvider {
         ? fetch(`${state.api}trek_accessibility/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init)
         : new Response('null'),
     );
+    requests.push(
+      !state.ratings
+        ? fetch(`${state.api}trek_rating/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name`, this.init)
+        : new Response('null'),
+    );
     Promise.all([
       ...requests,
       fetch(
@@ -85,7 +90,7 @@ export class GrwTrekProvider {
       fetch(`${state.api}touristicevent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,type,geometry&page_size=999`, this.init),
       fetch(`${state.api}touristicevent_type/?language=${state.language}&published=true&fields=id,type,pictogram&page_size=999`, this.init),
       fetch(
-        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,information_desks,children`,
+        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,ratings,ratings_description,information_desks,children`,
         this.init,
       ),
     ])
@@ -98,6 +103,7 @@ export class GrwTrekProvider {
           themes,
           cities,
           accessibilities,
+          ratings,
           sensitiveAreas,
           labels,
           sources,
@@ -155,6 +161,10 @@ export class GrwTrekProvider {
 
           if (accessibilities) {
             state.accessibilities = accessibilities.results;
+          }
+
+          if (ratings) {
+            state.ratings = ratings.results;
           }
 
           if (sensitiveAreas) {

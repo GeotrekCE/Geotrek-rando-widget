@@ -26,6 +26,7 @@ import {
   TouristicEvents,
   TouristicEventTypes,
   TouristicEvent,
+  Ratings,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -48,6 +49,7 @@ const { state, onChange, reset } = createStore<{
   labels: Labels;
   districts: Districts;
   sources: Sources;
+  ratings: Ratings;
   accessibilities: Accessibilities;
   accessibilitiesLevel: accessibilitiesLevel;
   poiTypes: PoiTypes;
@@ -100,6 +102,7 @@ const { state, onChange, reset } = createStore<{
   labels: null,
   districts: null,
   sources: null,
+  ratings: null,
   accessibilities: null,
   accessibilitiesLevel: null,
   poiTypes: null,
