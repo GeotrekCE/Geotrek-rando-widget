@@ -323,4 +323,12 @@ export type Ratings = Rating[];
 export type Rating = {
   id: number;
   name: string;
+  scale: number;
+};
+
+export type RatingsScale = RatingScale[];
+
+export type RatingScale = {
+  id: number;
+  name: string;
 };

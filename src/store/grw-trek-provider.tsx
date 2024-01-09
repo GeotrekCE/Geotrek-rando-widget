@@ -54,9 +54,11 @@ export class GrwTrekProvider {
     );
     requests.push(
       !state.ratings
-        ? fetch(`${state.api}trek_rating/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name`, this.init)
+        ? fetch(`${state.api}trek_rating/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,scale`, this.init)
         : new Response('null'),
     );
+    requests.push(!state.ratings ? fetch(`${state.api}trek_ratingscale/?language=${state.language}&fields=id,name`, this.init) : new Response('null'));
+
     Promise.all([
       ...requests,
       fetch(
@@ -104,6 +106,7 @@ export class GrwTrekProvider {
           cities,
           accessibilities,
           ratings,
+          ratingsScale,
           sensitiveAreas,
           labels,
           sources,
@@ -165,6 +168,10 @@ export class GrwTrekProvider {
 
           if (ratings) {
             state.ratings = ratings.results;
+          }
+
+          if (ratingsScale) {
+            state.ratingsScale = ratingsScale.results;
           }
 
           if (sensitiveAreas) {

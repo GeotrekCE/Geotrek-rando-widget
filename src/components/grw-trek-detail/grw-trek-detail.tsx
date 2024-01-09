@@ -557,7 +557,11 @@ export class GrwTrekDetail {
                   </div>
                 </div>
                 {this.currentTrek.ratings.map(trekRating => (
-                  <div class="row">{state.ratings.find(rating => rating.id === trekRating).name}</div>
+                  <div class="row">
+                    {`${state.ratingsScale.find(ratingScale => ratingScale.id === state.ratings.find(rating => rating.id === trekRating).scale).name} : ${
+                      state.ratings.find(rating => rating.id === trekRating).name
+                    }`}
+                  </div>
                 ))}
                 {this.currentTrek.ratings_description && this.currentTrek.ratings_description !== '' && <div class="row">{this.currentTrek.ratings_description}</div>}
               </div>
