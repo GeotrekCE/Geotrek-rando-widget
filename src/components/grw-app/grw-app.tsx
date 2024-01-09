@@ -457,7 +457,7 @@ export class GrwApp {
                       {translate[state.language].home.segment.touristicContents}
                     </label>
                   )}
-                  {this.touristicContents && (
+                  {this.touristicEvents && (
                     <label class={`segment${state.mode === 'touristicEvents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicEvents')}>
                       {translate[state.language].home.segment.touristicEvents}
                     </label>
