@@ -1,0 +1,36 @@
+.material-symbols {
+  font-family: 'Material Symbols Outlined';
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.common-button {
+  margin-left: 16px;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  padding: 12px 24px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  position: relative;
+  gap: 8px;
+  white-space: nowrap;
+  line-height: 20px;
+  letter-spacing: 0.10000000149011612px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: var(--elevation-1);
+  transition: box-shadow 0.2s ease-in-out 0s;
+  span {
+    font-size: 18px;
+  }
+}

@@ -50,6 +50,17 @@ export namespace Components {
         "weather": boolean;
         "zoom": number;
     }
+    interface GrwCommonButton {
+        "action": Function;
+        "icon": string;
+        "name": string;
+    }
+    interface GrwExtendedFab {
+        "action": Function;
+        "display": string;
+        "icon": Function;
+        "name": Function;
+    }
     interface GrwFilter {
         "filterName": string;
         "filterNameProperty": string;
@@ -62,6 +73,10 @@ export namespace Components {
     }
     interface GrwInformationDesk {
         "informationDesk": InformationDesk;
+    }
+    interface GrwLoader {
+        "colorOnPrimaryContainer": string;
+        "colorPrimaryContainer": string;
     }
     interface GrwMap {
         "attributionLayer": string;
@@ -85,6 +100,11 @@ export namespace Components {
         "poi": Poi;
     }
     interface GrwSearch {
+    }
+    interface GrwSegmentedSegment {
+        "touristicContents": boolean;
+        "touristicEvents": boolean;
+        "treks": boolean;
     }
     interface GrwSelectLanguage {
     }
@@ -261,6 +281,18 @@ declare global {
         prototype: HTMLGrwAppElement;
         new (): HTMLGrwAppElement;
     };
+    interface HTMLGrwCommonButtonElement extends Components.GrwCommonButton, HTMLStencilElement {
+    }
+    var HTMLGrwCommonButtonElement: {
+        prototype: HTMLGrwCommonButtonElement;
+        new (): HTMLGrwCommonButtonElement;
+    };
+    interface HTMLGrwExtendedFabElement extends Components.GrwExtendedFab, HTMLStencilElement {
+    }
+    var HTMLGrwExtendedFabElement: {
+        prototype: HTMLGrwExtendedFabElement;
+        new (): HTMLGrwExtendedFabElement;
+    };
     interface HTMLGrwFilterElement extends Components.GrwFilter, HTMLStencilElement {
     }
     var HTMLGrwFilterElement: {
@@ -279,6 +311,12 @@ declare global {
         prototype: HTMLGrwInformationDeskElement;
         new (): HTMLGrwInformationDeskElement;
     };
+    interface HTMLGrwLoaderElement extends Components.GrwLoader, HTMLStencilElement {
+    }
+    var HTMLGrwLoaderElement: {
+        prototype: HTMLGrwLoaderElement;
+        new (): HTMLGrwLoaderElement;
+    };
     interface HTMLGrwMapElement extends Components.GrwMap, HTMLStencilElement {
     }
     var HTMLGrwMapElement: {
@@ -296,6 +334,12 @@ declare global {
     var HTMLGrwSearchElement: {
         prototype: HTMLGrwSearchElement;
         new (): HTMLGrwSearchElement;
+    };
+    interface HTMLGrwSegmentedSegmentElement extends Components.GrwSegmentedSegment, HTMLStencilElement {
+    }
+    var HTMLGrwSegmentedSegmentElement: {
+        prototype: HTMLGrwSegmentedSegmentElement;
+        new (): HTMLGrwSegmentedSegmentElement;
     };
     interface HTMLGrwSelectLanguageElement extends Components.GrwSelectLanguage, HTMLStencilElement {
     }
@@ -401,12 +445,16 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "grw-app": HTMLGrwAppElement;
+        "grw-common-button": HTMLGrwCommonButtonElement;
+        "grw-extended-fab": HTMLGrwExtendedFabElement;
         "grw-filter": HTMLGrwFilterElement;
         "grw-filters": HTMLGrwFiltersElement;
         "grw-information-desk": HTMLGrwInformationDeskElement;
+        "grw-loader": HTMLGrwLoaderElement;
         "grw-map": HTMLGrwMapElement;
         "grw-poi": HTMLGrwPoiElement;
         "grw-search": HTMLGrwSearchElement;
+        "grw-segmented-segment": HTMLGrwSegmentedSegmentElement;
         "grw-select-language": HTMLGrwSelectLanguageElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
         "grw-touristic-content-card": HTMLGrwTouristicContentCardElement;
@@ -469,6 +517,17 @@ declare namespace LocalJSX {
         "weather"?: boolean;
         "zoom"?: number;
     }
+    interface GrwCommonButton {
+        "action"?: Function;
+        "icon"?: string;
+        "name"?: string;
+    }
+    interface GrwExtendedFab {
+        "action"?: Function;
+        "display"?: string;
+        "icon"?: Function;
+        "name"?: Function;
+    }
     interface GrwFilter {
         "filterName"?: string;
         "filterNameProperty"?: string;
@@ -483,6 +542,10 @@ declare namespace LocalJSX {
     interface GrwInformationDesk {
         "informationDesk"?: InformationDesk;
         "onCenterOnMap"?: (event: GrwInformationDeskCustomEvent<{ latitude: number; longitude: number }>) => void;
+    }
+    interface GrwLoader {
+        "colorOnPrimaryContainer"?: string;
+        "colorPrimaryContainer"?: string;
     }
     interface GrwMap {
         "attributionLayer"?: string;
@@ -509,6 +572,11 @@ declare namespace LocalJSX {
         "poi"?: Poi;
     }
     interface GrwSearch {
+    }
+    interface GrwSegmentedSegment {
+        "touristicContents"?: boolean;
+        "touristicEvents"?: boolean;
+        "treks"?: boolean;
     }
     interface GrwSelectLanguage {
     }
@@ -669,12 +737,16 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "grw-app": GrwApp;
+        "grw-common-button": GrwCommonButton;
+        "grw-extended-fab": GrwExtendedFab;
         "grw-filter": GrwFilter;
         "grw-filters": GrwFilters;
         "grw-information-desk": GrwInformationDesk;
+        "grw-loader": GrwLoader;
         "grw-map": GrwMap;
         "grw-poi": GrwPoi;
         "grw-search": GrwSearch;
+        "grw-segmented-segment": GrwSegmentedSegment;
         "grw-select-language": GrwSelectLanguage;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
         "grw-touristic-content-card": GrwTouristicContentCard;
@@ -699,12 +771,16 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
+            "grw-common-button": LocalJSX.GrwCommonButton & JSXBase.HTMLAttributes<HTMLGrwCommonButtonElement>;
+            "grw-extended-fab": LocalJSX.GrwExtendedFab & JSXBase.HTMLAttributes<HTMLGrwExtendedFabElement>;
             "grw-filter": LocalJSX.GrwFilter & JSXBase.HTMLAttributes<HTMLGrwFilterElement>;
             "grw-filters": LocalJSX.GrwFilters & JSXBase.HTMLAttributes<HTMLGrwFiltersElement>;
             "grw-information-desk": LocalJSX.GrwInformationDesk & JSXBase.HTMLAttributes<HTMLGrwInformationDeskElement>;
+            "grw-loader": LocalJSX.GrwLoader & JSXBase.HTMLAttributes<HTMLGrwLoaderElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
             "grw-poi": LocalJSX.GrwPoi & JSXBase.HTMLAttributes<HTMLGrwPoiElement>;
             "grw-search": LocalJSX.GrwSearch & JSXBase.HTMLAttributes<HTMLGrwSearchElement>;
+            "grw-segmented-segment": LocalJSX.GrwSegmentedSegment & JSXBase.HTMLAttributes<HTMLGrwSegmentedSegmentElement>;
             "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
             "grw-touristic-content-card": LocalJSX.GrwTouristicContentCard & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardElement>;

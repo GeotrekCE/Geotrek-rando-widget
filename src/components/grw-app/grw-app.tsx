@@ -1,15 +1,6 @@
 import { Component, Host, h, Listen, State, Prop, Element, Watch } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
-import { mode } from 'types/types';
-import {
-  handleTouristicContentsFiltersAndSearch,
-  handleTouristicEventsFiltersAndSearch,
-  handleTreksFiltersAndSearch,
-  touristicContentsFilters,
-  touristicEventsFilters,
-  treksFilters,
-} from 'utils/utils';
 
 @Component({
   tag: 'grw-app',
@@ -314,34 +305,6 @@ export class GrwApp {
     window.removeEventListener('popstate', this.handlePopStateBind);
   }
 
-  changeMode(mode: mode) {
-    state.searchValue = '';
-    if (mode === 'treks' && state.currentTreks) {
-      treksFilters.forEach(filter => {
-        state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
-      });
-      state.selectedActivitiesFilters = 0;
-      state.selectedThemesFilters = 0;
-      state.selectedLocationFilters = 0;
-      state.currentTreks = handleTreksFiltersAndSearch();
-    } else if (mode === 'touristicContents' && state.currentTouristicContents) {
-      touristicContentsFilters.forEach(filter => {
-        state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
-      });
-      state.selectedActivitiesFilters = 0;
-      state.selectedLocationFilters = 0;
-      state.currentTouristicContents = handleTouristicContentsFiltersAndSearch();
-    } else if (mode === 'touristicEvents' && state.currentTouristicEvents) {
-      touristicEventsFilters.forEach(filter => {
-        state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
-      });
-      state.selectedActivitiesFilters = 0;
-      state.selectedLocationFilters = 0;
-      state.currentTouristicEvents = handleTouristicEventsFiltersAndSearch();
-    }
-    state.mode = mode;
-  }
-
   render() {
     return (
       <Host
@@ -373,7 +336,7 @@ export class GrwApp {
           !state.currentTouristicContents &&
           !state.currentTouristicEvents && (
             <div class="init-loader-container">
-              <span class="loader"></span>
+              <grw-loader color-primary-container={this.colorPrimaryContainer} color-on-primary-container={this.colorOnPrimaryContainer}></grw-loader>
             </div>
           )}
         {this.treks && state.mode === 'treks' && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && !state.currentTreks && (
@@ -445,38 +408,19 @@ export class GrwApp {
                 this.showTrek || this.showTouristicContent || this.showTouristicEvent ? ' header-detail' : ''
               }`}
             >
-              {Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && (
-                <div class="segmented-buttons-container">
-                  {this.treks && (
-                    <label class={`segment${state.mode === 'treks' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('treks')}>
-                      {translate[state.language].home.segment.treks}
-                    </label>
-                  )}
-                  {this.touristicContents && (
-                    <label class={`segment${state.mode === 'touristicContents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicContents')}>
-                      {translate[state.language].home.segment.touristicContents}
-                    </label>
-                  )}
-                  {this.touristicEvents && (
-                    <label class={`segment${state.mode === 'touristicEvents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicEvents')}>
-                      {translate[state.language].home.segment.touristicEvents}
-                    </label>
-                  )}
-                </div>
-              )}
+              {Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 &&
+                !this.showTrek &&
+                !this.showTouristicContent &&
+                !this.showTouristicEvent && (
+                  <grw-segmented-segment treks={this.treks} touristicContents={this.touristicContents} touristicEvents={this.touristicEvents}></grw-segmented-segment>
+                )}
               {!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent ? (
                 <div class="handle-search-filters-container">
                   <div class="handle-search-container">
                     <grw-search></grw-search>
                   </div>
                   <div class="handle-filters-container">
-                    <button onClick={() => this.handleFilters()} class="handle-filters-button">
-                      {/* @ts-ignore */}
-                      <span translate={false} class="material-symbols material-symbols-outlined margin-right-icon">
-                        filter_list
-                      </span>
-                      {translate[state.language].filter}
-                    </button>
+                    <grw-common-button action={() => this.handleFilters()} icon={'filter_list'} name={translate[state.language].filter}></grw-common-button>
                   </div>
                 </div>
               ) : (
@@ -536,7 +480,7 @@ export class GrwApp {
                 (!state.currentTreks && state.mode === 'treks') ||
                 (!state.touristicContents && state.mode === 'touristicContents' && (
                   <div class={this.isLargeView ? 'large-view-loader-container' : 'loader-container'}>
-                    <span class="loader"></span>
+                    <grw-loader color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
                   </div>
                 ))}
               {state.currentTrek && (
@@ -634,13 +578,12 @@ export class GrwApp {
               (this.showTouristicContent && state.currentTouristicContent) ||
               (this.showTouristicEvent && state.currentTouristicEvent)) && (
               <div class="map-visibility-button-container">
-                <button onClick={() => this.handleShowMap()} class="map-visibility-button" style={{ display: this.isLargeView ? 'none' : 'flex' }}>
-                  {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined">
-                    {this.getMapVisibilityIconButton()}
-                  </span>
-                  {this.getMapVisibilityLabelButton()}
-                </button>
+                <grw-extended-fab
+                  action={() => this.handleShowMap()}
+                  icon={() => this.getMapVisibilityIconButton()}
+                  name={() => this.getMapVisibilityLabelButton()}
+                  display={this.isLargeView ? 'none' : 'flex'}
+                ></grw-extended-fab>
               </div>
             )}
           </div>

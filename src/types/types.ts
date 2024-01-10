@@ -316,7 +316,7 @@ export type Options = {
   touristicEvents: Option;
 };
 
-export type mode = 'treks' | 'touristicContents' | 'touristicEvents';
+export type Mode = 'treks' | 'touristicContents' | 'touristicEvents';
 
 export type Ratings = Rating[];
 

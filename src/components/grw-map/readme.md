@@ -30,6 +30,7 @@
 | Event                       | Description | Type                  |
 | --------------------------- | ----------- | --------------------- |
 | `touristicContentCardPress` |             | `CustomEvent<number>` |
+| `touristicEventCardPress`   |             | `CustomEvent<number>` |
 | `trekCardPress`             |             | `CustomEvent<number>` |
 
 

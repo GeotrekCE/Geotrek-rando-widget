@@ -53,12 +53,17 @@
 
 ### Depends on
 
+- [grw-loader](../grw-loader)
 - [grw-treks-provider](../../store)
 - [grw-trek-provider](../../store)
 - [grw-touristic-content-provider](../../store)
+- [grw-touristic-event-provider](../../store)
 - [grw-touristic-contents-provider](../../store)
 - [grw-touristic-events-provider](../../store)
+- [grw-select-language](../grw-select-language)
+- [grw-segmented-segment](../grw-segmented-segment)
 - [grw-search](../grw-search)
+- [grw-common-button](../grw-common-button)
 - [grw-treks-list](../grw-treks-list)
 - [grw-touristic-contents-list](../grw-touristic-contents-list)
 - [grw-touristic-events-list](../grw-touristic-events-list)
@@ -66,17 +71,23 @@
 - [grw-touristic-content-detail](../grw-touristic-content-detail)
 - [grw-touristic-event-detail](../grw-touristic-event-detail)
 - [grw-map](../grw-map)
+- [grw-extended-fab](../grw-extended-fab)
 - [grw-filters](../grw-filters)
 
 ### Graph
 ```mermaid
 graph TD;
+  grw-app --> grw-loader
   grw-app --> grw-treks-provider
   grw-app --> grw-trek-provider
   grw-app --> grw-touristic-content-provider
+  grw-app --> grw-touristic-event-provider
   grw-app --> grw-touristic-contents-provider
   grw-app --> grw-touristic-events-provider
+  grw-app --> grw-select-language
+  grw-app --> grw-segmented-segment
   grw-app --> grw-search
+  grw-app --> grw-common-button
   grw-app --> grw-treks-list
   grw-app --> grw-touristic-contents-list
   grw-app --> grw-touristic-events-list
@@ -84,6 +95,7 @@ graph TD;
   grw-app --> grw-touristic-content-detail
   grw-app --> grw-touristic-event-detail
   grw-app --> grw-map
+  grw-app --> grw-extended-fab
   grw-app --> grw-filters
   grw-treks-list --> grw-trek-card
   grw-touristic-contents-list --> grw-touristic-content-card

@@ -1,20 +1,9 @@
-.material-symbols {
-  font-family: 'Material Symbols Outlined';
-}
-
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-}
-
 grw-app {
   display: block;
   position: relative;
   width: var(--app-width);
   height: var(--app-height);
-  font-family: 'Roboto';
-  color: var(--color-on-surface);
   overflow: hidden;
-  line-height: initial;
   max-width: 100dvw;
   max-height: 100dvh;
 }
@@ -36,7 +25,6 @@ grw-app {
 
 .header-container,
 .large-view-header-container {
-  background-color: var(--color-background);
   height: var(--header-height);
   .arrow-back-container {
     display: flex;
@@ -69,35 +57,6 @@ grw-app {
     width: calc(50% + 48px);
     max-width: 220px;
   }
-
-  .handle-filters-button {
-    margin-left: 16px;
-    user-select: none;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    background-color: var(--color-background);
-    color: var(--color-on-surface);
-    padding: 12px 24px;
-    border-radius: 20px;
-    box-sizing: border-box;
-    position: relative;
-    gap: 8px;
-    white-space: nowrap;
-    line-height: 20px;
-    letter-spacing: 0.10000000149011612px;
-    font-size: 14px;
-    font-weight: 500;
-    box-shadow: var(--elevation-1);
-    transition: box-shadow 0.2s ease-in-out 0s;
-    span {
-      font-size: 18px;
-    }
-  }
 }
 
 .header-detail {
@@ -119,32 +78,12 @@ grw-app {
   align-items: center;
   height: 100%;
   background-color: var(--color-background);
-  .loader {
-    width: 48px;
-    height: 48px;
-    border: 5px solid var(--color-primary-container);
-    border-bottom-color: var(--color-on-primary-container);
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-  }
-
-  @keyframes rotation {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 }
 
 .content-container {
   position: relative;
   display: flex;
   height: calc(100% - var(--header-height));
-  background-color: var(--color-background);
 }
 
 .content-treks {
@@ -161,10 +100,10 @@ grw-app {
 .app-touristic-event-detail-container,
 .large-view-app-treks-list-container,
 .large-view-app-trek-detail-container {
-  max-width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  max-width: 100%;
+  height: 100%;
 }
 
 .app-map-container,
@@ -181,32 +120,6 @@ grw-app {
   position: absolute;
   bottom: 24px;
   z-index: 4;
-  .map-visibility-button {
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    text-decoration: none;
-    padding: 16px;
-    background-color: var(--color-primary-container);
-    color: var(--color-on-primary-container);
-    box-shadow: var(--elevation-1);
-    border-radius: 12px;
-    height: 56px;
-    font-size: 16px;
-    width: unset;
-    &:hover {
-      box-shadow: var(--elevation-4);
-    }
-    span {
-      font-size: 24px;
-      margin-right: 8px;
-      color: var(--color-on-primary-container);
-    }
-  }
 }
 
 .init-loader-container,
@@ -249,46 +162,4 @@ grw-touristic-event-detail {
 .large-view-app-map-container {
   position: relative;
   width: 50%;
-}
-
-.segmented-buttons-container {
-  display: flex;
-  justify-content: center;
-  width: calc(100% - 32px);
-  height: 40px;
-  margin: 16px;
-  border: 1px solid var(--color-outline);
-  border-radius: 20px;
-  line-height: 20px;
-  .segment {
-    cursor: pointer;
-    user-select: none;
-    font-size: 14px;
-    font-weight: 500;
-    -webkit-tap-highlight-color: transparent;
-    color: var(--color-on-surface-variant);
-    background-color: transparent;
-    border-radius: 0px;
-    min-width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    &:first-child {
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-    }
-    &:not(:last-child) {
-      border-right: 1px solid var(--color-outline);
-    }
-    &:last-child {
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-    }
-  }
-  .selected-segment {
-    color: var(--color-on-secondary-container);
-    background-color: var(--color-secondary-container);
-  }
 }

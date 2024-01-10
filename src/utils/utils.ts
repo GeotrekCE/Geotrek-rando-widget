@@ -2,14 +2,16 @@ import state from 'store/store';
 import { TouristicContents, TouristicContentsFilters, TouristicEvents, TouristicEventsFilters, TrekFilters, Treks } from 'types/types';
 
 export function formatDuration(duration: number) {
-  let formattedDuration;
+  let formattedDuration = '';
   if (duration < 24) {
-    formattedDuration = `${Math.floor(duration)}h`;
+    if (Math.floor(duration) !== 0) {
+      formattedDuration += `${Math.floor(duration)}h`;
+    }
     if (duration % 1 > 0) {
       formattedDuration += `${Math.round(60 * (duration % 1))}min`;
     }
   } else {
-    formattedDuration = `${duration / 24}j`;
+    formattedDuration += `${duration / 24}j`;
   }
   return formattedDuration;
 }
