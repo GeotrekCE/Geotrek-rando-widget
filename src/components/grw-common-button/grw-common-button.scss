@@ -16,10 +16,10 @@
   align-items: center;
   justify-content: center;
   border: none;
-  background-color: var(--color-background);
-  color: var(--color-on-surface);
+  color: var(--color-on-secondary-container);
+  background-color: var(--color-secondary-container);
   padding: 12px 24px;
-  border-radius: 20px;
+  border-radius: var(--border-radius, 20px);
   box-sizing: border-box;
   position: relative;
   gap: 8px;

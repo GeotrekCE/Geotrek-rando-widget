@@ -40,6 +40,7 @@ export namespace Components {
         "nameLayer": string;
         "portals": string;
         "practices": string;
+        "rounded": boolean;
         "routes": string;
         "structures": string;
         "themes": string;
@@ -524,6 +525,7 @@ declare namespace LocalJSX {
         "nameLayer"?: string;
         "portals"?: string;
         "practices"?: string;
+        "rounded"?: boolean;
         "routes"?: string;
         "structures"?: string;
         "themes"?: string;

@@ -37,7 +37,7 @@ grw-app {
       color: var(--color-on-surface);
       border: none;
       background-color: var(--color-background);
-      border-radius: 50%;
+      border-radius: var(--border-radius, 50%);
       height: 48px;
       width: 48px;
       padding: 0px;

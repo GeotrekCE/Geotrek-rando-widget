@@ -26,7 +26,7 @@
     padding: 4px;
     width: 32px;
     height: 32px;
-    border-radius: 32px;
+    border-radius: var(--border-radius, 32px);
     box-shadow: var(--elevation-1);
     &:hover {
       box-shadow: var(--elevation-2);
@@ -60,7 +60,7 @@
     height: 24px;
     padding: 4px;
     border: 2px solid #ffffff;
-    border-radius: 50%;
+    border-radius: var(--border-radius, 50%);
     background-color: var(--color-on-surface);
     position: absolute;
     top: 8px;
@@ -103,7 +103,7 @@
     cursor: pointer;
     background-color: var(--color-primary-container);
     color: var(--color-on-primary-container);
-    border-radius: 8px;
+    border-radius: var(--border-radius, 8px);
     padding: 8px 16px;
     box-shadow: var(--elevation-1);
     width: 100%;
@@ -133,15 +133,15 @@
 .touristic-event-card-large-view-container {
   cursor: pointer;
   font-family: var(--font-family);
-  border-radius: 12px;
+  border-radius: var(--border-radius, 12px);
   box-shadow: var(--elevation-1);
   background-color: var(--color-surface-container-low);
   color: var(--color-on-surface);
   .image {
     height: 100%;
     object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: var(--border-radius, 12px);
+    border-top-right-radius: var(--border-radius, 12px);
   }
 }
 

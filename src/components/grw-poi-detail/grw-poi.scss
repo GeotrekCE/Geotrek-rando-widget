@@ -15,7 +15,7 @@
   flex-direction: column;
   overflow: hidden;
   border: 1px solid gray;
-  border-radius: 12px;
+  border-radius: var(--border-radius, 12px);
   background-color: var(--color-surface-container-low);
   color: var(--color-on-surface);
   a {
@@ -31,7 +31,7 @@
     padding: 4px;
     width: 32px;
     height: 32px;
-    border-radius: 32px;
+    border-radius: var(--border-radius, 32px);
     box-shadow: var(--elevation-1);
     &:hover {
       box-shadow: var(--elevation-2);
@@ -65,7 +65,7 @@
     height: 24px;
     padding: 4px;
     border: 2px solid #ffffff;
-    border-radius: 50%;
+    border-radius: var(--border-radius, 50%);
     background-color: var(--color-on-surface);
     position: absolute;
     top: 8px;

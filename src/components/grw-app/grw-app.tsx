@@ -56,6 +56,7 @@ export class GrwApp {
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() fabBackgroundColor = '#eaddff';
   @Prop() fabColor = '#21005d';
+  @Prop() rounded = true;
 
   @Prop() colorTrekLine = '#6b0030';
   @Prop() colorSensitiveArea = '#4974a5';
@@ -329,6 +330,7 @@ export class GrwApp {
           '--app-width': this.appWidth,
           '--app-height': this.appHeight,
           '--header-height': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 ? '136px' : '64px',
+          '--border-radius': this.rounded ? '' : '0px',
         }}
       >
         {!state.currentTreks &&

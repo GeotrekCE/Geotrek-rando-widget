@@ -10,13 +10,13 @@
 .trek-card-large-view-container {
   cursor: pointer;
   font-family: var(--font-family);
-  border-radius: 12px;
+  border-radius: var(--border-radius, 12px);
   box-shadow: var(--elevation-1);
   background-color: var(--color-surface-container-low);
   .image {
     object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: var(--border-radius, 12px);
+    border-top-right-radius: var(--border-radius, 12px);
   }
   .sub-container {
     display: flex;
@@ -45,7 +45,7 @@
       .theme {
         background-color: var(--color-secondary-container);
         color: var(--color-on-secondary-container);
-        border-radius: 8px;
+        border-radius: var(--border-radius, 8px);
         padding: 8px 16px;
         margin: 0px 8px 8px 0px;
         box-shadow: var(--elevation-0);

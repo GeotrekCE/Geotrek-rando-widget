@@ -16,10 +16,10 @@
   border: none;
   text-decoration: none;
   padding: 16px;
-  background-color: var(--color-primary-container);
-  color: var(--color-on-primary-container);
+  background-color: var(--fab-background-color);
+  color: var(--fab-color);
   box-shadow: var(--elevation-1);
-  border-radius: 12px;
+  border-radius: var(--border-radius, 12px);
   height: 56px;
   font-family: var(--font-family);
   font-size: 16px;
@@ -30,6 +30,6 @@
   span {
     font-size: 24px;
     margin-right: 8px;
-    color: var(--color-on-primary-container);
+    color: var(--fab-color);
   }
 }
