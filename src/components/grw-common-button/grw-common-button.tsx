@@ -10,9 +10,15 @@ export class GrwCommonButton {
   @Prop() icon: string;
   @Prop() name: string;
 
+  @Prop() fontFamily = 'Roboto';
+
   render() {
     return (
-      <Host>
+      <Host
+        style={{
+          '--font-family': this.fontFamily,
+        }}
+      >
         <button onClick={() => this.action()} class="common-button">
           {/* @ts-ignore */}
           <span translate={false} class="material-symbols material-symbols-outlined margin-right-icon">

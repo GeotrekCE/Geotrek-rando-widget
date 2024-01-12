@@ -22,6 +22,8 @@ export class GrwFilters {
 
   @Prop() handleFilters: Function;
 
+  @Prop() fontFamily = 'Roboto';
+
   handleEraseTreksFilters() {
     treksFilters.forEach(filter => {
       state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
@@ -81,7 +83,11 @@ export class GrwFilters {
 
   render() {
     return (
-      <Host>
+      <Host
+        style={{
+          '--font-family': this.fontFamily,
+        }}
+      >
         <div class="options-container">
           <div class="filters-container">
             {state.mode === 'treks' && (
@@ -133,6 +139,7 @@ export class GrwFilters {
                       {state['practices'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].practice}
                             filterType="practices"
                             filterNameProperty="name"
@@ -144,6 +151,7 @@ export class GrwFilters {
                       {state['difficulties'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].difficulty}
                             filterType="difficulties"
                             filterNameProperty="label"
@@ -154,6 +162,7 @@ export class GrwFilters {
                       {state['durations'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].duration}
                             filterType="durations"
                             filterNameProperty="name"
@@ -163,12 +172,19 @@ export class GrwFilters {
                       )}
                       {state['lengths'].length > 0 && (
                         <div class="filter-container">
-                          <grw-filter filterName={translate[state.language].length} filterType="lengths" filterNameProperty="name" segment="selectedActivitiesFilters"></grw-filter>
+                          <grw-filter
+                            fontFamily={this.fontFamily}
+                            filterName={translate[state.language].length}
+                            filterType="lengths"
+                            filterNameProperty="name"
+                            segment="selectedActivitiesFilters"
+                          ></grw-filter>
                         </div>
                       )}
                       {state['elevations'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].elevation}
                             filterType="elevations"
                             filterNameProperty="name"
@@ -178,12 +194,19 @@ export class GrwFilters {
                       )}
                       {state['routes'].length > 0 && (
                         <div class="filter-container">
-                          <grw-filter filterName={translate[state.language].routes} filterType="routes" filterNameProperty="route" segment="selectedActivitiesFilters"></grw-filter>
+                          <grw-filter
+                            fontFamily={this.fontFamily}
+                            filterName={translate[state.language].routes}
+                            filterType="routes"
+                            filterNameProperty="route"
+                            segment="selectedActivitiesFilters"
+                          ></grw-filter>
                         </div>
                       )}
                       {state['accessibilities'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].accessibility}
                             filterType="accessibilities"
                             filterNameProperty="name"
@@ -194,6 +217,7 @@ export class GrwFilters {
                       {state['labels'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].activities}
                             filterType="labels"
                             filterNameProperty="name"
@@ -208,6 +232,7 @@ export class GrwFilters {
                       {state['themes'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].themes}
                             filterPlaceholder={translate[state.language].placeholderThemes}
                             filterType="themes"
@@ -223,6 +248,7 @@ export class GrwFilters {
                       {state['districts'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].districts}
                             filterType="districts"
                             filterNameProperty="name"
@@ -233,6 +259,7 @@ export class GrwFilters {
                       {state['cities'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].crossedCities}
                             filterPlaceholder={translate[state.language].placeholderCrossedCities}
                             filterType="cities"
@@ -287,6 +314,7 @@ export class GrwFilters {
                       {state['touristicContentCategories'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].category}
                             filterType="touristicContentCategories"
                             filterNameProperty="label"
@@ -301,6 +329,7 @@ export class GrwFilters {
                       {state['districts'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].districts}
                             filterType="districts"
                             filterNameProperty="name"
@@ -311,6 +340,7 @@ export class GrwFilters {
                       {state['cities'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].crossedCities}
                             filterPlaceholder={translate[state.language].placeholderCrossedCities}
                             filterType="cities"
@@ -365,6 +395,7 @@ export class GrwFilters {
                       {state['touristicEventTypes'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].type}
                             filterPlaceholder={translate[state.language].placeholderType}
                             filterType="touristicEventTypes"
@@ -380,6 +411,7 @@ export class GrwFilters {
                       {state['districts'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].districts}
                             filterType="districts"
                             filterNameProperty="name"
@@ -390,6 +422,7 @@ export class GrwFilters {
                       {state['cities'].length > 0 && (
                         <div class="filter-container">
                           <grw-filter
+                            fontFamily={this.fontFamily}
                             filterName={translate[state.language].crossedCities}
                             filterPlaceholder={translate[state.language].placeholderCrossedCities}
                             filterType="cities"

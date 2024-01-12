@@ -12,6 +12,7 @@ export class GrwTouristicContentsList {
   @Element() element: HTMLElement;
   @State() touristicEventsToDisplay: TouristicEvents = [];
 
+  @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
   @Prop() colorOnSurface = '#49454e';
   @Prop() colorSecondaryContainer = '#e8def8';
@@ -82,7 +83,7 @@ export class GrwTouristicContentsList {
 
   render() {
     return (
-      <Host style={{ '--color-primary-app': this.colorPrimaryApp }}>
+      <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.touristicEventsWithinBounds && (
           <div class="current-touristic-events-within-bounds-length">{`${state.touristicEventsWithinBounds.length} ${
             state.touristicEventsWithinBounds.length > 1 ? translate[state.language].home.touristicEvents : translate[state.language].home.touristicEvent
@@ -95,6 +96,7 @@ export class GrwTouristicContentsList {
               key={`touristic-event-${touristicEvent.id}`}
               touristicEvent={touristicEvent}
               is-large-view={this.isLargeView}
+              fontFamily={this.fontFamily}
               color-primary-app={this.colorPrimaryApp}
               color-on-surface={this.colorOnSurface}
               color-secondary-container={this.colorSecondaryContainer}

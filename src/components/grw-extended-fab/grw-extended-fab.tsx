@@ -11,9 +11,15 @@ export class GrwExtendedFab {
   @Prop() name: Function;
   @Prop() display: string;
 
+  @Prop() fontFamily = 'Roboto';
+
   render() {
     return (
-      <Host>
+      <Host
+        style={{
+          '--font-family': this.fontFamily,
+        }}
+      >
         <button onClick={() => this.action()} class="map-visibility-button" style={{ display: this.display }}>
           {/* @ts-ignore */}
           <span translate={false} class="material-symbols material-symbols-outlined">

@@ -9,7 +9,7 @@
 
 #map {
   position: relative;
-  font-family: 'Roboto';
+  font-family: var(--font-family);
   display: block;
 }
 
@@ -229,6 +229,7 @@
     font-weight: 500;
     box-shadow: var(--elevation-1);
     transition: box-shadow 0.2s ease-in-out 0s;
+    font-family: var(--font-family);
   }
 }
 

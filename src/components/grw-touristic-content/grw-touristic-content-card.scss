@@ -119,6 +119,7 @@
     position: relative;
     border: none;
     font-size: 14px;
+    font-family: var(--font-family);
     &:hover {
       box-shadow: var(--elevation-2);
     }
@@ -131,7 +132,7 @@
 .touristic-content-card-container,
 .touristic-content-card-large-view-container {
   cursor: pointer;
-  font-family: 'Roboto';
+  font-family: var(--font-family);
   border-radius: 12px;
   box-shadow: var(--elevation-1);
   background-color: var(--color-surface-container-low);

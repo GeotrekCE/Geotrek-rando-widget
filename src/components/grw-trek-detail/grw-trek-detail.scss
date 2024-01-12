@@ -45,6 +45,7 @@ grw-trek-detail {
   padding: 8px 0px;
   background-color: var(--color-background);
   overflow-x: auto;
+  font-family: var(--font-family);
   &::-webkit-scrollbar {
     display: none;
   }
@@ -162,7 +163,7 @@ grw-trek-detail {
   }
 }
 .trek-detail-container {
-  font-family: 'Roboto';
+  font-family: var(--font-family);
   color: var(--color-on-surface);
   display: flex;
   flex-direction: column;
@@ -255,6 +256,7 @@ grw-trek-detail {
         justify-content: center;
         position: relative;
         text-decoration: none;
+        font-family: var(--font-family);
         &:nth-child(2) {
           margin: 8px 12px 0px 12px;
         }

@@ -38,7 +38,7 @@ grw-touristic-content-detail {
 }
 
 .touristic-content-detail-container {
-  font-family: 'Roboto';
+  font-family: var(--font-family);
   color: var(--color-on-surface);
   display: flex;
   flex-direction: column;

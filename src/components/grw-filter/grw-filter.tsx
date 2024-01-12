@@ -21,6 +21,8 @@ export class GrwFilter {
   choicesRef: HTMLElement;
   choices: any;
 
+  @Prop() fontFamily = 'Roboto';
+
   @Prop() filterType: string;
   @Prop() filterName: string;
   @Prop() filterPlaceholder: string = '';
@@ -120,7 +122,12 @@ export class GrwFilter {
 
   render() {
     return (
-      <Host ref={el => (this.filterRef = el)}>
+      <Host
+        ref={el => (this.filterRef = el)}
+        style={{
+          '--font-family': this.fontFamily,
+        }}
+      >
         <div class="filter-name display-large">{this.filterName}</div>
         <div class="filter-button-container">
           {state[this.filterType].length > 9 ? (

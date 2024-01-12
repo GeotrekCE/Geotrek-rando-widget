@@ -9,7 +9,7 @@
 .trek-card-container,
 .trek-card-large-view-container {
   cursor: pointer;
-  font-family: 'Roboto';
+  font-family: var(--font-family);
   border-radius: 12px;
   box-shadow: var(--elevation-1);
   background-color: var(--color-surface-container-low);

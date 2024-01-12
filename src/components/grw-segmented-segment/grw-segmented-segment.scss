@@ -1,5 +1,5 @@
 .segmented-buttons-container {
-  font-family: 'Roboto';
+  font-family: var(--font-family);
   display: flex;
   justify-content: center;
   width: calc(100% - 32px);

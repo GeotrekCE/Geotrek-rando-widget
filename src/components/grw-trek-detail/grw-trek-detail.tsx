@@ -120,6 +120,7 @@ export class GrwTrekDetail {
   @State() options: Options;
   @Prop() trek: Trek;
 
+  @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
   @Prop() colorOnSurface = '#49454e';
   @Prop() colorPrimaryContainer = '#eaddff';
@@ -418,6 +419,7 @@ export class GrwTrekDetail {
     return (
       <Host
         style={{
+          '--font-family': this.fontFamily,
           '--color-primary-app': this.colorPrimaryApp,
           '--color-on-surface': this.colorOnSurface,
           '--color-primary-container': this.colorPrimaryContainer,
@@ -622,6 +624,7 @@ export class GrwTrekDetail {
                               trek={trek}
                               is-large-view={false}
                               is-step={true}
+                              fontFamily={this.fontFamily}
                               color-primary-app={this.colorPrimaryApp}
                               color-on-surface={this.colorOnSurface}
                               color-secondary-container={this.colorSecondaryContainer}
@@ -851,7 +854,7 @@ export class GrwTrekDetail {
                     <div class="swiper-wrapper">
                       {state.trekTouristicContents.map(touristicContent => (
                         <div class="swiper-slide">
-                          <grw-touristic-content-card touristicContent={touristicContent} isInsideHorizontalList={true}></grw-touristic-content-card>
+                          <grw-touristic-content-card fontFamily={this.fontFamily} touristicContent={touristicContent} isInsideHorizontalList={true}></grw-touristic-content-card>
                         </div>
                       ))}
                     </div>
@@ -868,7 +871,7 @@ export class GrwTrekDetail {
                     <div class="swiper-wrapper">
                       {state.touristicEvents.map(touristicEvent => (
                         <div class="swiper-slide">
-                          <grw-touristic-event-card touristicEvent={touristicEvent}></grw-touristic-event-card>
+                          <grw-touristic-event-card fontFamily={this.fontFamily} touristicEvent={touristicEvent}></grw-touristic-event-card>
                         </div>
                       ))}
                     </div>

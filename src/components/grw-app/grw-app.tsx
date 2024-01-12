@@ -40,6 +40,7 @@ export class GrwApp {
   @Prop() attributionLayer: string;
   @Prop() weather = false;
 
+  @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6750a4';
   @Prop() colorOnPrimary = '#ffffff';
   @Prop() colorSurface = '#1c1b1f';
@@ -309,6 +310,7 @@ export class GrwApp {
     return (
       <Host
         style={{
+          '--font-family': this.fontFamily,
           '--color-primary-app': this.colorPrimaryApp,
           '--color-on-primary': this.colorOnPrimary,
           '--color-surface': this.colorSurface,
@@ -412,15 +414,25 @@ export class GrwApp {
                 !this.showTrek &&
                 !this.showTouristicContent &&
                 !this.showTouristicEvent && (
-                  <grw-segmented-segment treks={this.treks} touristicContents={this.touristicContents} touristicEvents={this.touristicEvents}></grw-segmented-segment>
+                  <grw-segmented-segment
+                    fontFamily={this.fontFamily}
+                    treks={this.treks}
+                    touristicContents={this.touristicContents}
+                    touristicEvents={this.touristicEvents}
+                  ></grw-segmented-segment>
                 )}
               {!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent ? (
                 <div class="handle-search-filters-container">
                   <div class="handle-search-container">
-                    <grw-search></grw-search>
+                    <grw-search fontFamily={this.fontFamily}></grw-search>
                   </div>
                   <div class="handle-filters-container">
-                    <grw-common-button action={() => this.handleFilters()} icon={'filter_list'} name={translate[state.language].filter}></grw-common-button>
+                    <grw-common-button
+                      fontFamily={this.fontFamily}
+                      action={() => this.handleFilters()}
+                      icon={'filter_list'}
+                      name={translate[state.language].filter}
+                    ></grw-common-button>
                   </div>
                 </div>
               ) : (
@@ -444,6 +456,7 @@ export class GrwApp {
                   <grw-treks-list
                     reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
+                    fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
                     color-secondary-container={this.colorSecondaryContainer}
@@ -455,6 +468,7 @@ export class GrwApp {
                   <grw-touristic-contents-list
                     reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
+                    fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
                     color-secondary-container={this.colorSecondaryContainer}
@@ -466,6 +480,7 @@ export class GrwApp {
                   <grw-touristic-events-list
                     reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
+                    fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
                     color-secondary-container={this.colorSecondaryContainer}
@@ -491,6 +506,7 @@ export class GrwApp {
                       zIndex: !this.showTrekMap ? '1' : '0',
                     }}
                     reset-store-on-disconnected={'false'}
+                    fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
                     color-primary-container={this.colorPrimaryContainer}
@@ -511,6 +527,7 @@ export class GrwApp {
                       visibility: !this.showTouristicContentMap || this.isLargeView ? 'visible' : 'hidden',
                       zIndex: !this.showTouristicContentMap ? '1' : '0',
                     }}
+                    fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
                     color-primary-container={this.colorPrimaryContainer}
@@ -530,6 +547,7 @@ export class GrwApp {
                       visibility: !this.showTouristicEventMap || this.isLargeView ? 'visible' : 'hidden',
                       zIndex: !this.showTouristicEventMap ? '1' : '0',
                     }}
+                    fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
                     color-primary-container={this.colorPrimaryContainer}
@@ -561,6 +579,7 @@ export class GrwApp {
                 name-layer={this.nameLayer}
                 url-layer={this.urlLayer}
                 attribution-layer={this.attributionLayer}
+                fontFamily={this.fontFamily}
                 color-primary-app={this.colorPrimaryApp}
                 color-on-surface={this.colorOnSurface}
                 color-primary-container={this.colorPrimaryContainer}
@@ -579,6 +598,7 @@ export class GrwApp {
               (this.showTouristicEvent && state.currentTouristicEvent)) && (
               <div class="map-visibility-button-container">
                 <grw-extended-fab
+                  fontFamily={this.fontFamily}
                   action={() => this.handleShowMap()}
                   icon={() => this.getMapVisibilityIconButton()}
                   name={() => this.getMapVisibilityLabelButton()}
@@ -588,7 +608,7 @@ export class GrwApp {
             )}
           </div>
         )}
-        {!this.showTrek && this.showFilters && <grw-filters handleFilters={() => this.handleFilters()}></grw-filters>}
+        {!this.showTrek && this.showFilters && <grw-filters fontFamily={this.fontFamily} handleFilters={() => this.handleFilters()}></grw-filters>}
       </Host>
     );
   }

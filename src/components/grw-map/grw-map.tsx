@@ -30,6 +30,7 @@ export class GrwMap {
   @Prop() center = '1, 1';
   @Prop() zoom = 10;
 
+  @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
   @Prop() colorOnSurface = '#49454e';
   @Prop() colorPrimaryContainer = '#eaddff';
@@ -1756,6 +1757,7 @@ export class GrwMap {
     return (
       <Host
         style={{
+          '--font-family': this.fontFamily,
           '--color-primary-app': this.colorPrimaryApp,
           '--color-on-surface': this.colorOnSurface,
           '--color-primary-container': this.colorPrimaryContainer,

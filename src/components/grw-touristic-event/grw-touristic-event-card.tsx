@@ -15,6 +15,9 @@ export class GrwTouristicEvent {
   prevElTouristicEventRef?: HTMLDivElement;
   nextElTouristicEventRef?: HTMLDivElement;
   paginationElTouristicEventRef?: HTMLDivElement;
+
+  @Prop() fontFamily = 'Roboto';
+
   @Prop() touristicEvent: TouristicEvent;
   @Prop() isLargeView = false;
   @Prop() isInsideHorizontalList = false;
@@ -68,7 +71,8 @@ export class GrwTouristicEvent {
     return (
       <Host
         style={{
-          width: this.isLargeView ? '100%' : 'auto',
+          '--font-family': this.fontFamily,
+          'width': this.isLargeView ? '100%' : 'auto',
         }}
       >
         <div

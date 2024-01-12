@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 import state from 'store/store';
 import { handleTouristicContentsFiltersAndSearch, handleTouristicEventsFiltersAndSearch, handleTreksFiltersAndSearch } from 'utils/utils';
 
@@ -8,6 +8,8 @@ import { handleTouristicContentsFiltersAndSearch, handleTouristicEventsFiltersAn
   shadow: true,
 })
 export class GrwSearch {
+  @Prop() fontFamily = 'Roboto';
+
   onSearchChange(event: InputEvent) {
     state.searchValue = (event.target as any).value;
     if (state.mode === 'treks') {
@@ -21,7 +23,11 @@ export class GrwSearch {
 
   render() {
     return (
-      <Host>
+      <Host
+        style={{
+          '--font-family': this.fontFamily,
+        }}
+      >
         {/* @ts-ignore */}
         <span translate={false} class="material-symbols material-symbols-outlined">
           search

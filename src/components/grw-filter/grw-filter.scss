@@ -9,10 +9,6 @@
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 
-:host {
-  font-family: 'Roboto';
-}
-
 .filter-name {
   margin-left: 8px;
   color: var(--color-on-surface);
@@ -20,6 +16,7 @@
   letter-spacing: 0px;
   font-size: 24px;
   font-weight: 400;
+  font-family: var(--font-family);
 }
 .filter-button-container {
   display: flex;
@@ -35,6 +32,7 @@
     font-weight: 500;
     margin: 8px 0px 0px 8px;
     padding: 8px 0px;
+    font-family: var(--font-family);
     .choices__inner {
       border: 1px solid var(--color-outline);
       border-radius: 8px;
@@ -74,6 +72,7 @@
     }
     .choices__input {
       width: 100%;
+      font-family: var(--font-family);
     }
   }
   .filter-button,
@@ -99,6 +98,7 @@
     &:hover {
       box-shadow: var(--elevation-2);
     }
+    font-family: var(--font-family);
   }
   .filter-button {
     color: var(--color-on-surface-variant);

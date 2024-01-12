@@ -17,6 +17,8 @@ export class GrwTouristicContentDetail {
   presentationRef?: HTMLDivElement;
 
   @State() displayFullscreen = false;
+
+  @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
   @Prop() colorOnSurface = '#49454e';
   @Prop() colorPrimaryContainer = '#eaddff';
@@ -65,6 +67,7 @@ export class GrwTouristicContentDetail {
     return (
       <Host
         style={{
+          '--font-family': this.fontFamily,
           '--color-primary-app': this.colorPrimaryApp,
           '--color-on-surface': this.colorOnSurface,
           '--color-primary-container': this.colorPrimaryContainer,

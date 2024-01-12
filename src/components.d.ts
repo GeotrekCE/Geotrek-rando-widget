@@ -34,6 +34,7 @@ export namespace Components {
         "districts": string;
         "fabBackgroundColor": string;
         "fabColor": string;
+        "fontFamily": string;
         "inBbox": string;
         "languages": string;
         "nameLayer": string;
@@ -52,12 +53,14 @@ export namespace Components {
     }
     interface GrwCommonButton {
         "action": Function;
+        "fontFamily": string;
         "icon": string;
         "name": string;
     }
     interface GrwExtendedFab {
         "action": Function;
         "display": string;
+        "fontFamily": string;
         "icon": Function;
         "name": Function;
     }
@@ -66,9 +69,11 @@ export namespace Components {
         "filterNameProperty": string;
         "filterPlaceholder": string;
         "filterType": string;
+        "fontFamily": string;
         "segment": string;
     }
     interface GrwFilters {
+        "fontFamily": string;
         "handleFilters": Function;
     }
     interface GrwInformationDesk {
@@ -89,6 +94,7 @@ export namespace Components {
         "colorPrimaryContainer": string;
         "colorSensitiveArea": string;
         "colorTrekLine": string;
+        "fontFamily": string;
         "isLargeView": boolean;
         "nameLayer": string;
         "resetStoreOnDisconnected": boolean;
@@ -100,8 +106,10 @@ export namespace Components {
         "poi": Poi;
     }
     interface GrwSearch {
+        "fontFamily": string;
     }
     interface GrwSegmentedSegment {
+        "fontFamily": string;
         "touristicContents": boolean;
         "touristicEvents": boolean;
         "treks": boolean;
@@ -112,6 +120,7 @@ export namespace Components {
         "sensitiveArea": SensitiveArea;
     }
     interface GrwTouristicContentCard {
+        "fontFamily": string;
         "isInsideHorizontalList": boolean;
         "isLargeView": boolean;
         "touristicContent": TouristicContent;
@@ -125,6 +134,7 @@ export namespace Components {
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "fontFamily": string;
         "isLargeView": boolean;
     }
     interface GrwTouristicContentProvider {
@@ -139,6 +149,7 @@ export namespace Components {
         "colorPrimaryApp": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "fontFamily": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
     }
@@ -153,6 +164,7 @@ export namespace Components {
         "themes": string;
     }
     interface GrwTouristicEventCard {
+        "fontFamily": string;
         "isInsideHorizontalList": boolean;
         "isLargeView": boolean;
         "touristicEvent": TouristicEvent;
@@ -166,6 +178,7 @@ export namespace Components {
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "fontFamily": string;
         "isLargeView": boolean;
     }
     interface GrwTouristicEventProvider {
@@ -180,6 +193,7 @@ export namespace Components {
         "colorPrimaryApp": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "fontFamily": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
     }
@@ -199,6 +213,7 @@ export namespace Components {
         "colorPrimaryApp": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "fontFamily": string;
         "isLargeView": boolean;
         "isStep": false;
         "resetStoreOnDisconnected": boolean;
@@ -213,6 +228,7 @@ export namespace Components {
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "fontFamily": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
         "trek": Trek;
@@ -230,6 +246,7 @@ export namespace Components {
         "colorPrimaryApp": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "fontFamily": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
     }
@@ -501,6 +518,7 @@ declare namespace LocalJSX {
         "districts"?: string;
         "fabBackgroundColor"?: string;
         "fabColor"?: string;
+        "fontFamily"?: string;
         "inBbox"?: string;
         "languages"?: string;
         "nameLayer"?: string;
@@ -519,12 +537,14 @@ declare namespace LocalJSX {
     }
     interface GrwCommonButton {
         "action"?: Function;
+        "fontFamily"?: string;
         "icon"?: string;
         "name"?: string;
     }
     interface GrwExtendedFab {
         "action"?: Function;
         "display"?: string;
+        "fontFamily"?: string;
         "icon"?: Function;
         "name"?: Function;
     }
@@ -533,9 +553,11 @@ declare namespace LocalJSX {
         "filterNameProperty"?: string;
         "filterPlaceholder"?: string;
         "filterType"?: string;
+        "fontFamily"?: string;
         "segment"?: string;
     }
     interface GrwFilters {
+        "fontFamily"?: string;
         "handleFilters"?: Function;
         "onResetFilter"?: (event: GrwFiltersCustomEvent<any>) => void;
     }
@@ -558,6 +580,7 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
         "colorSensitiveArea"?: string;
         "colorTrekLine"?: string;
+        "fontFamily"?: string;
         "isLargeView"?: boolean;
         "nameLayer"?: string;
         "onTouristicContentCardPress"?: (event: GrwMapCustomEvent<number>) => void;
@@ -572,8 +595,10 @@ declare namespace LocalJSX {
         "poi"?: Poi;
     }
     interface GrwSearch {
+        "fontFamily"?: string;
     }
     interface GrwSegmentedSegment {
+        "fontFamily"?: string;
         "touristicContents"?: boolean;
         "touristicEvents"?: boolean;
         "treks"?: boolean;
@@ -584,6 +609,7 @@ declare namespace LocalJSX {
         "sensitiveArea"?: SensitiveArea;
     }
     interface GrwTouristicContentCard {
+        "fontFamily"?: string;
         "isInsideHorizontalList"?: boolean;
         "isLargeView"?: boolean;
         "onCardTouristicContentMouseLeave"?: (event: GrwTouristicContentCardCustomEvent<any>) => void;
@@ -600,6 +626,7 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
         "isLargeView"?: boolean;
     }
     interface GrwTouristicContentProvider {
@@ -614,6 +641,7 @@ declare namespace LocalJSX {
         "colorPrimaryApp"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
         "isLargeView"?: boolean;
         "resetStoreOnDisconnected"?: boolean;
     }
@@ -628,6 +656,7 @@ declare namespace LocalJSX {
         "themes"?: string;
     }
     interface GrwTouristicEventCard {
+        "fontFamily"?: string;
         "isInsideHorizontalList"?: boolean;
         "isLargeView"?: boolean;
         "onCardTouristicEventMouseLeave"?: (event: GrwTouristicEventCardCustomEvent<any>) => void;
@@ -644,6 +673,7 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
         "isLargeView"?: boolean;
     }
     interface GrwTouristicEventProvider {
@@ -658,6 +688,7 @@ declare namespace LocalJSX {
         "colorPrimaryApp"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
         "isLargeView"?: boolean;
         "resetStoreOnDisconnected"?: boolean;
     }
@@ -677,6 +708,7 @@ declare namespace LocalJSX {
         "colorPrimaryApp"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
         "isLargeView"?: boolean;
         "isStep"?: false;
         "onCardTrekMouseLeave"?: (event: GrwTrekCardCustomEvent<any>) => void;
@@ -694,6 +726,7 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
         "isLargeView"?: boolean;
         "onDescriptionIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onInformationDeskIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
@@ -720,6 +753,7 @@ declare namespace LocalJSX {
         "colorPrimaryApp"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
         "isLargeView"?: boolean;
         "resetStoreOnDisconnected"?: boolean;
     }

@@ -17,6 +17,8 @@ export class GrwTrekCard {
   @State() themes: Themes;
   @State() departureCity: City;
   @Prop() trek: Trek;
+
+  @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
   @Prop() colorOnSurface = '#49454e';
   @Prop() colorSecondaryContainer = '#e8def8';
@@ -70,6 +72,7 @@ export class GrwTrekCard {
     return (
       <Host
         style={{
+          '--font-family': this.fontFamily,
           'width': this.isLargeView ? '100%' : 'auto',
           '--color-primary-app': this.colorPrimaryApp,
           '--color-on-surface': this.colorOnSurface,

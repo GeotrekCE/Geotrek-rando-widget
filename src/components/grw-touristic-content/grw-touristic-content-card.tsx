@@ -15,6 +15,9 @@ export class GrwTouristicContentCard {
   prevElTouristicContentRef?: HTMLDivElement;
   nextElTouristicContentRef?: HTMLDivElement;
   paginationElTouristicContentRef?: HTMLDivElement;
+
+  @Prop() fontFamily = 'Roboto';
+
   @Prop() touristicContent: TouristicContent;
   @Prop() isLargeView = false;
   @Prop() isInsideHorizontalList = false;
@@ -68,7 +71,8 @@ export class GrwTouristicContentCard {
     return (
       <Host
         style={{
-          width: this.isLargeView ? '100%' : 'auto',
+          '--font-family': this.fontFamily,
+          'width': this.isLargeView ? '100%' : 'auto',
         }}
       >
         <div

@@ -12,6 +12,7 @@ export class GrwTreksList {
   @Element() element: HTMLElement;
   @State() treksToDisplay: Treks = [];
 
+  @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
   @Prop() colorOnSurface = '#49454e';
   @Prop() colorSecondaryContainer = '#e8def8';
@@ -80,7 +81,7 @@ export class GrwTreksList {
 
   render() {
     return (
-      <Host style={{ '--color-primary-app': this.colorPrimaryApp }}>
+      <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.treksWithinBounds && (
           <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
             state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek
@@ -93,6 +94,7 @@ export class GrwTreksList {
               key={`trek-${trek.id}`}
               trek={trek}
               is-large-view={this.isLargeView}
+              fontFamily={this.fontFamily}
               color-primary-app={this.colorPrimaryApp}
               color-on-surface={this.colorOnSurface}
               color-secondary-container={this.colorSecondaryContainer}

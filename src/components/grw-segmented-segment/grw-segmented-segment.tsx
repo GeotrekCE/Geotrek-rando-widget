@@ -22,6 +22,8 @@ export class GrwSegmentedSegment {
   @Prop() touristicContents = false;
   @Prop() touristicEvents = false;
 
+  @Prop() fontFamily = 'Roboto';
+
   changeMode(mode: Mode) {
     state.searchValue = '';
     if (mode === 'treks' && state.currentTreks) {
@@ -52,7 +54,11 @@ export class GrwSegmentedSegment {
 
   render() {
     return (
-      <Host>
+      <Host
+        style={{
+          '--font-family': this.fontFamily,
+        }}
+      >
         <div class="segmented-buttons-container">
           {this.treks && (
             <label class={`segment${state.mode === 'treks' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('treks')}>
