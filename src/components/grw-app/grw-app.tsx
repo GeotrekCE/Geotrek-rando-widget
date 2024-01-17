@@ -1,6 +1,6 @@
 import { Component, Host, h, Listen, State, Prop, Element, Watch } from '@stencil/core';
 import { translate } from 'i18n/i18n';
-import state, { onChange, reset } from 'store/store';
+import state, { reset } from 'store/store';
 
 @Component({
   tag: 'grw-app',
