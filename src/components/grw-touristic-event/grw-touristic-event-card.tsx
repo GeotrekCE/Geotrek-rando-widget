@@ -110,7 +110,13 @@ export class GrwTouristicEvent {
                       ))
                   ) : (
                     <div class="swiper-slide">
-                      <img class="default-touristic-event-img" src={defaultImageSrc} loading="lazy" />
+                      <img
+                        /* @ts-ignore */
+                        crossorigin="anonymous"
+                        class="default-touristic-event-img"
+                        src={defaultImageSrc}
+                        loading="lazy"
+                      />
                     </div>
                   )}
                 </div>
@@ -119,14 +125,24 @@ export class GrwTouristicEvent {
                 <div class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
               </div>
             ) : this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
-              <img class="image" src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`} loading="lazy" />
+              <img
+                /* @ts-ignore */
+                crossorigin="anonymous"
+                class="image"
+                src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                loading="lazy"
+              />
             ) : (
               <div></div>
             )}
           </div>
           <div class="touristic-event-sub-container">
             <div class="touristic-event-type-container">
-              <img src={touristicEventType.pictogram} />
+              <img
+                /* @ts-ignore */
+                crossorigin="anonymous"
+                src={touristicEventType.pictogram}
+              />
               <div class="touristic-event-type-name">{touristicEventType.type}</div>
             </div>
             <div class="touristic-event-name">{this.touristicEvent.name}</div>

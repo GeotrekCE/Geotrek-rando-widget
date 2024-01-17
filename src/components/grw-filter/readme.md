@@ -13,6 +13,7 @@
 | `filterNameProperty` | `filter-name-property` |             | `string` | `undefined` |
 | `filterPlaceholder`  | `filter-placeholder`   |             | `string` | `''`        |
 | `filterType`         | `filter-type`          |             | `string` | `undefined` |
+| `fontFamily`         | `font-family`          |             | `string` | `'Roboto'`  |
 | `segment`            | `segment`              |             | `string` | `undefined` |
 
 

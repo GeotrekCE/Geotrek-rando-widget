@@ -110,7 +110,13 @@ export class GrwTouristicContentCard {
                       ))
                   ) : (
                     <div class="swiper-slide">
-                      <img class="default-touristic-content-img" src={defaultImageSrc} loading="lazy" />
+                      <img
+                        /* @ts-ignore */
+                        crossorigin="anonymous"
+                        class="default-touristic-content-img"
+                        src={defaultImageSrc}
+                        loading="lazy"
+                      />
                     </div>
                   )}
                 </div>
@@ -119,14 +125,24 @@ export class GrwTouristicContentCard {
                 <div class="swiper-button-next" ref={el => (this.nextElTouristicContentRef = el)}></div>
               </div>
             ) : this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
-              <img class="image" src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`} loading="lazy" />
+              <img
+                /* @ts-ignore */
+                crossorigin="anonymous"
+                class="image"
+                src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                loading="lazy"
+              />
             ) : (
               <div></div>
             )}
           </div>
           <div class="touristic-content-sub-container">
             <div class="touristic-content-category-container">
-              <img src={touristicContentCategory.pictogram} />
+              <img
+                /* @ts-ignore */
+                crossorigin="anonymous"
+                src={touristicContentCategory.pictogram}
+              />
               <div class="touristic-content-category-name">{touristicContentCategory.label}</div>
             </div>
             <div class="touristic-content-name">{this.touristicContent.name}</div>

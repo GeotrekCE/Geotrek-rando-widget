@@ -17,6 +17,7 @@
 | `colorPrimaryContainer`    | `color-primary-container`     |             | `string`  | `'#eaddff'`  |
 | `colorSensitiveArea`       | `color-sensitive-area`        |             | `string`  | `'	#4974a5'` |
 | `colorTrekLine`            | `color-trek-line`             |             | `string`  | `'#6b0030'`  |
+| `fontFamily`               | `font-family`                 |             | `string`  | `'Roboto'`   |
 | `isLargeView`              | `is-large-view`               |             | `boolean` | `false`      |
 | `nameLayer`                | `name-layer`                  |             | `string`  | `undefined`  |
 | `resetStoreOnDisconnected` | `reset-store-on-disconnected` |             | `boolean` | `true`       |

@@ -178,17 +178,6 @@ export class GrwApp {
   }
 
   componentDidLoad() {
-    onChange('trekNetworkError', () => {
-      if (state.trekNetworkError) {
-        const urlRedirect = new URL(window.location.toString());
-        urlRedirect.searchParams.delete('trek');
-        urlRedirect.searchParams.delete('parenttrek');
-        urlRedirect.searchParams.delete('touristiccontent');
-        urlRedirect.searchParams.delete('touristicevent');
-        window.history.replaceState({}, '', urlRedirect);
-        this.onDetailsClose();
-      }
-    });
     window.addEventListener('popstate', this.handlePopStateBind, false);
     this.handleView();
   }
@@ -208,7 +197,6 @@ export class GrwApp {
     this.showTouristicEventMap = false;
     state.currentTouristicContent = null;
     state.currentTouristicEvent = null;
-
     state.currentTrek = null;
     state.currentTrekSteps = null;
     state.parentTrekId = null;
@@ -300,6 +288,10 @@ export class GrwApp {
     }
 
     return mapLabelButton;
+  }
+
+  reload() {
+    window.location.reload();
   }
 
   disconnectedCallback() {
@@ -400,7 +392,13 @@ export class GrwApp {
             portals={this.portals}
           ></grw-touristic-events-provider>
         )}
-        {(state.currentTreks || state.currentTrek || state.touristicContents || state.touristicEvents || state.currentTouristicContent || state.currentTouristicEvent) && (
+        {(state.currentTreks ||
+          state.currentTrek ||
+          state.touristicContents ||
+          state.touristicEvents ||
+          state.currentTouristicContent ||
+          state.currentTouristicEvent ||
+          state.trekNetworkError) && (
           <div class="app-container">
             {state.languages && state.languages.length > 1 && (
               <div class="languages-container">
@@ -450,6 +448,12 @@ export class GrwApp {
             </div>
 
             <div class={`content-container ${this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'content-trek' : 'content-treks'}`}>
+              {state.trekNetworkError && (
+                <div class="error-container">
+                  Une erreur est survenue.
+                  <grw-common-button icon="refresh" name="Recharger la page" action={() => this.reload()}></grw-common-button>
+                </div>
+              )}
               <div
                 class={this.isLargeView ? 'large-view-app-treks-list-container' : 'app-treks-list-container'}
                 style={{ display: this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'none' : 'flex', position: this.showTrek ? 'absolute' : 'relative' }}
@@ -562,37 +566,39 @@ export class GrwApp {
                   ></grw-touristic-event-detail>
                 </div>
               )}
-              <grw-map
-                reset-store-on-disconnected={'false'}
-                class={this.isLargeView ? 'large-view-app-map-container' : 'app-map-container'}
-                style={{
-                  visibility:
-                    (this.showHomeMap && !this.showTrek) ||
-                    (this.showTrekMap && this.showTrek) ||
-                    (this.showTouristicContentMap && this.showTouristicContent) ||
-                    (this.showTouristicEventMap && this.showTouristicEvent) ||
-                    this.isLargeView
-                      ? 'visible'
-                      : 'hidden',
-                  zIndex: this.showHomeMap || this.showTrekMap || this.showTouristicContentMap || this.showTouristicEventMap ? '1' : '0',
-                }}
-                center={this.center}
-                zoom={this.zoom}
-                name-layer={this.nameLayer}
-                url-layer={this.urlLayer}
-                attribution-layer={this.attributionLayer}
-                fontFamily={this.fontFamily}
-                color-primary-app={this.colorPrimaryApp}
-                color-on-surface={this.colorOnSurface}
-                color-primary-container={this.colorPrimaryContainer}
-                color-on-primary-container={this.colorOnPrimaryContainer}
-                color-background={this.colorBackground}
-                color-trek-line={this.colorTrekLine}
-                color-sensitive-area={this.colorSensitiveArea}
-                color-poi-icon={this.colorPoiIcon}
-                is-large-view={this.isLargeView}
-                use-gradient={this.useGradient}
-              ></grw-map>
+              {!state.trekNetworkError && (
+                <grw-map
+                  reset-store-on-disconnected={'false'}
+                  class={this.isLargeView ? 'large-view-app-map-container' : 'app-map-container'}
+                  style={{
+                    visibility:
+                      (this.showHomeMap && !this.showTrek) ||
+                      (this.showTrekMap && this.showTrek) ||
+                      (this.showTouristicContentMap && this.showTouristicContent) ||
+                      (this.showTouristicEventMap && this.showTouristicEvent) ||
+                      this.isLargeView
+                        ? 'visible'
+                        : 'hidden',
+                    zIndex: this.showHomeMap || this.showTrekMap || this.showTouristicContentMap || this.showTouristicEventMap ? '1' : '0',
+                  }}
+                  center={this.center}
+                  zoom={this.zoom}
+                  name-layer={this.nameLayer}
+                  url-layer={this.urlLayer}
+                  attribution-layer={this.attributionLayer}
+                  fontFamily={this.fontFamily}
+                  color-primary-app={this.colorPrimaryApp}
+                  color-on-surface={this.colorOnSurface}
+                  color-primary-container={this.colorPrimaryContainer}
+                  color-on-primary-container={this.colorOnPrimaryContainer}
+                  color-background={this.colorBackground}
+                  color-trek-line={this.colorTrekLine}
+                  color-sensitive-area={this.colorSensitiveArea}
+                  color-poi-icon={this.colorPoiIcon}
+                  is-large-view={this.isLargeView}
+                  use-gradient={this.useGradient}
+                ></grw-map>
+              )}
             </div>
             {((!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent) ||
               (this.showTrek && state.currentTrek) ||

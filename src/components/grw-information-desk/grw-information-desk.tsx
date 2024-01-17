@@ -24,7 +24,12 @@ export class GrwInformationDeskDetail {
       <Host>
         {this.informationDesk.photo_url && (
           <div class="information-desk-img">
-            <img src={this.informationDesk.photo_url} loading="lazy" />
+            <img
+              /* @ts-ignore */
+              crossorigin="anonymous"
+              src={this.informationDesk.photo_url}
+              loading="lazy"
+            />
           </div>
         )}
         <div class="information-desk-sub-container">

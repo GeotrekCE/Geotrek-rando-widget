@@ -86,12 +86,25 @@ export class GrwTouristicEventDetail {
                       .filter(attachment => attachment.type === 'image')
                       .map(attachment => (
                         <div class="swiper-slide">
-                          <img class="image" src={attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
+                          <img
+                            /* @ts-ignore */
+                            crossorigin="anonymous"
+                            class="image"
+                            src={attachment.url}
+                            loading="lazy"
+                            onClick={() => this.handleFullscreen()}
+                          />
                         </div>
                       ))
                   ) : (
                     <div class="swiper-slide">
-                      <img class="default-poi-img" src={defaultImageSrc} loading="lazy" />
+                      <img
+                        /* @ts-ignore */
+                        crossorigin="anonymous"
+                        class="default-poi-img"
+                        src={defaultImageSrc}
+                        loading="lazy"
+                      />
                     </div>
                   )}
                 </div>
@@ -101,7 +114,11 @@ export class GrwTouristicEventDetail {
               </div>
             </div>
             <div class="touristic-event-category-container">
-              <img src={touristicEventType.pictogram} />
+              <img
+                /* @ts-ignore */
+                crossorigin="anonymous"
+                src={touristicEventType.pictogram}
+              />
               <div class="touristic-event-category-name">{touristicEventType.type}</div>
             </div>
             <div class="name">{state.currentTouristicEvent.name}</div>

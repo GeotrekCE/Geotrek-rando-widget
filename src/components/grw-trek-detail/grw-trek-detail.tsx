@@ -502,7 +502,14 @@ export class GrwTrekDetail {
                     .filter(attachment => attachment.type === 'image')
                     .map(attachment => (
                       <div class="swiper-slide">
-                        <img class="image" src={attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
+                        <img
+                          /* @ts-ignore */
+                          crossorigin="anonymous"
+                          class="image"
+                          src={attachment.url}
+                          loading="lazy"
+                          onClick={() => this.handleFullscreen()}
+                        />
                       </div>
                     ))}
                 </div>
@@ -523,7 +530,13 @@ export class GrwTrekDetail {
               <div class="icons-labels-container">
                 <div class="row">
                   <div class="icon-label difficulty">
-                    {this.difficulty?.pictogram && <img src={this.difficulty.pictogram} />}
+                    {this.difficulty?.pictogram && (
+                      <img
+                        /* @ts-ignore */
+                        crossorigin="anonymous"
+                        src={this.difficulty.pictogram}
+                      />
+                    )}
                     {this.difficulty?.label}
                   </div>
                   <div class="icon-label duration">
@@ -534,7 +547,13 @@ export class GrwTrekDetail {
                     {formatDuration(this.currentTrek?.duration)}
                   </div>
                   <div class="icon-label route">
-                    {this.route?.pictogram && <img src={this.route.pictogram} />}
+                    {this.route?.pictogram && (
+                      <img
+                        /* @ts-ignore */
+                        crossorigin="anonymous"
+                        src={this.route.pictogram}
+                      />
+                    )}
                     {this.route?.route}
                   </div>
                 </div>
@@ -554,7 +573,13 @@ export class GrwTrekDetail {
                     {formatAscent(this.currentTrek.ascent)}
                   </div>
                   <div class="icon-label practice">
-                    {this.practice?.pictogram && <img src={this.practice.pictogram} />}
+                    {this.practice?.pictogram && (
+                      <img
+                        /* @ts-ignore */
+                        crossorigin="anonymous"
+                        src={this.practice.pictogram}
+                      />
+                    )}
                     {this.practice?.name}
                   </div>
                 </div>
@@ -703,7 +728,13 @@ export class GrwTrekDetail {
                   {this.labels.map(label => (
                     <div class="label-container">
                       <div class="label-sub-container">
-                        {label.pictogram && <img src={label.pictogram} />}
+                        {label.pictogram && (
+                          <img
+                            /* @ts-ignore */
+                            crossorigin="anonymous"
+                            src={label.pictogram}
+                          />
+                        )}
                         <div class="label-name" innerHTML={label.name}></div>
                       </div>
                       <div class="label-advice" innerHTML={label.advice}></div>
@@ -778,7 +809,11 @@ export class GrwTrekDetail {
                   <div class="accessibilities-content-container">
                     {this.accessibilities.map(accessibility => (
                       <div class="accessibility-content-container">
-                        <img src={accessibility.pictogram}></img>
+                        <img
+                          /* @ts-ignore */
+                          crossorigin="anonymous"
+                          src={accessibility.pictogram}
+                        ></img>
                         <div innerHTML={accessibility.name}></div>
                       </div>
                     ))}
@@ -886,7 +921,13 @@ export class GrwTrekDetail {
                   <div class="source-title">{translate[state.language].sources}</div>
                   {this.sources.map(source => (
                     <div class="source-sub-container">
-                      {source.pictogram && <img src={source.pictogram} />}
+                      {source.pictogram && (
+                        <img
+                          /* @ts-ignore */
+                          crossorigin="anonymous"
+                          src={source.pictogram}
+                        />
+                      )}
                       <div>
                         <div class="source-name" innerHTML={source.name}></div>
                         <a class="source-advice" href={source.website} innerHTML={source.website}></a>

@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property            | Attribute            | Description | Type      | Default |
-| ------------------- | -------------------- | ----------- | --------- | ------- |
-| `touristicContents` | `touristic-contents` |             | `boolean` | `false` |
-| `touristicEvents`   | `touristic-events`   |             | `boolean` | `false` |
-| `treks`             | `treks`              |             | `boolean` | `true`  |
+| Property            | Attribute            | Description | Type      | Default    |
+| ------------------- | -------------------- | ----------- | --------- | ---------- |
+| `fontFamily`        | `font-family`        |             | `string`  | `'Roboto'` |
+| `touristicContents` | `touristic-contents` |             | `boolean` | `false`    |
+| `touristicEvents`   | `touristic-events`   |             | `boolean` | `false`    |
+| `treks`             | `treks`              |             | `boolean` | `true`     |
 
 
 ## Dependencies

@@ -220,6 +220,7 @@ export class GrwMap {
           attribution: `${
             attributionLayers[index] && attributionLayers[index] !== '' ? attributionLayers[index].concat(' | ') : ''
           }Powered by <a target="_blank" href="https://geotrek.fr/">Geotrek</a>`,
+          crossOrigin: true,
         }),
       });
     });
@@ -438,7 +439,7 @@ export class GrwMap {
           L.marker(latlng, {
             icon: L.divIcon({
               html: geoJsonPoint.properties.practice
-                ? `<div class="trek-marker-container"><img src=${geoJsonPoint.properties.practice} /></div>`
+                ? `<div class="trek-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.practice} /></div>`
                 : `<div class="trek-marker-container"></div>`,
               className: 'trek-marker',
               iconSize: 32,
@@ -453,6 +454,7 @@ export class GrwMap {
             if (geoJsonPoint.properties.imgSrc) {
               const trekImg = L.DomUtil.create('img');
               trekImg.src = geoJsonPoint.properties.imgSrc;
+              trekImg.crossOrigin = 'anonymous';
               trekDeparturePopup.appendChild(trekImg);
             }
             const trekName = L.DomUtil.create('div');
@@ -633,7 +635,7 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type_pictogram ? `<img src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
+              html: geoJsonPoint.properties.type_pictogram ? `<img crossorigin="anonymous" src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
               className: 'poi-icon',
               iconSize: 48,
             } as any),
@@ -674,7 +676,7 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.category_pictogram ? `<img src=${geoJsonPoint.properties.category_pictogram} />` : `<img />`,
+              html: geoJsonPoint.properties.category_pictogram ? `<img crossorigin="anonymous "src=${geoJsonPoint.properties.category_pictogram} />` : `<img />`,
               className: 'touristic-content-icon',
               iconSize: 48,
             } as any),
@@ -715,7 +717,10 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type_pictogram ? `<img src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
+              html: geoJsonPoint.properties.type_pictogram
+                ? `
+            <img crossorigin="anonymous" src=${geoJsonPoint.properties.type_pictogram} />`
+                : `<img />`,
               className: 'touristic-event-icon',
               iconSize: 48,
             } as any),
@@ -757,7 +762,7 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type_pictogram ? `<img src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
+              html: geoJsonPoint.properties.type_pictogram ? `<img crossorigin="anonymous" src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
               className: 'information-desks-icon',
               iconSize: 48,
             } as any),
@@ -849,6 +854,7 @@ export class GrwMap {
             if (geoJsonPoint.properties.imgSrc) {
               const trekImg = L.DomUtil.create('img');
               trekImg.src = geoJsonPoint.properties.imgSrc;
+              trekImg.crossOrigin = 'anonymous';
               trekDeparturePopup.appendChild(trekImg);
             }
             const trekName = L.DomUtil.create('div');
@@ -990,7 +996,7 @@ export class GrwMap {
           zIndexOffset: 4000000,
           icon: L.divIcon({
             html: geoJsonPoint.properties.practice
-              ? `<div class="trek-marker-container"><img src=${geoJsonPoint.properties.practice} /></div>`
+              ? `<div class="trek-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.practice} /></div>`
               : `<div class="trek-marker-container"></div>`,
             className: 'selected-trek-marker',
             iconSize: 64,
@@ -1005,6 +1011,7 @@ export class GrwMap {
           if (geoJsonPoint.properties.imgSrc) {
             const trekImg = L.DomUtil.create('img');
             trekImg.src = geoJsonPoint.properties.imgSrc;
+            trekImg.crossOrigin = 'anonymous';
             trekDeparturePopup.appendChild(trekImg);
           }
           const trekName = L.DomUtil.create('div');
@@ -1092,6 +1099,7 @@ export class GrwMap {
           if (geoJsonPoint.properties.imgSrc) {
             const trekImg = L.DomUtil.create('img');
             trekImg.src = geoJsonPoint.properties.imgSrc;
+            trekImg.crossOrigin = 'anonymous';
             trekDeparturePopup.appendChild(trekImg);
           }
           const trekName = L.DomUtil.create('div');
@@ -1269,7 +1277,7 @@ export class GrwMap {
           L.marker(latlng, {
             icon: L.divIcon({
               html: geoJsonPoint.properties.practice
-                ? `<div class="touristic-content-marker-container"><img src=${geoJsonPoint.properties.practice} /></div>`
+                ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous "src=${geoJsonPoint.properties.practice} /></div>`
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 32,
@@ -1332,7 +1340,7 @@ export class GrwMap {
           L.marker(latlng, {
             icon: L.divIcon({
               html: geoJsonPoint.properties.practice
-                ? `<div class="touristic-content-marker-container"><img src=${geoJsonPoint.properties.practice} /></div>`
+                ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.practice} /></div>`
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 32,
@@ -1347,6 +1355,7 @@ export class GrwMap {
             if (geoJsonPoint.properties.imgSrc) {
               const touristicContentImg = L.DomUtil.create('img');
               touristicContentImg.src = geoJsonPoint.properties.imgSrc;
+              touristicContentImg.crossOrigin = 'anonymous';
               touristicContentCoordinatesPopup.appendChild(touristicContentImg);
             }
             const touristicContentName = L.DomUtil.create('div');
@@ -1436,7 +1445,7 @@ export class GrwMap {
           L.marker(latlng, {
             icon: L.divIcon({
               html: geoJsonPoint.properties.type
-                ? `<div class="touristic-event-marker-container"><img src=${geoJsonPoint.properties.type} /></div>`
+                ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.type} /></div>`
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 32,
@@ -1488,7 +1497,7 @@ export class GrwMap {
           zIndexOffset: 4000000,
           icon: L.divIcon({
             html: geoJsonPoint.properties.category
-              ? `<div class="touristic-content-marker-container"><img src=${geoJsonPoint.properties.category} /></div>`
+              ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.category} /></div>`
               : `<div class="touristic-content-marker-container"></div>`,
             className: 'selected-touristic-content-marker',
             iconSize: 64,
@@ -1503,6 +1512,7 @@ export class GrwMap {
           if (geoJsonPoint.properties.imgSrc) {
             const touristicContentImg = L.DomUtil.create('img');
             touristicContentImg.src = geoJsonPoint.properties.imgSrc;
+            touristicContentImg.crossOrigin = 'anonymous';
             touristicContentDeparturePopup.appendChild(touristicContentImg);
           }
 
@@ -1585,7 +1595,7 @@ export class GrwMap {
           L.marker(latlng, {
             icon: L.divIcon({
               html: geoJsonPoint.properties.type
-                ? `<div class="touristic-event-marker-container"><img src=${geoJsonPoint.properties.type} /></div>`
+                ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.type} /></div>`
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 32,
@@ -1600,6 +1610,7 @@ export class GrwMap {
             if (geoJsonPoint.properties.imgSrc) {
               const touristicEventImg = L.DomUtil.create('img');
               touristicEventImg.src = geoJsonPoint.properties.imgSrc;
+              touristicEventImg.crossOrigin = 'anonymous';
               touristicEventCoordinatesPopup.appendChild(touristicEventImg);
             }
             const touristicEventName = L.DomUtil.create('div');
@@ -1694,7 +1705,7 @@ export class GrwMap {
           zIndexOffset: 4000000,
           icon: L.divIcon({
             html: geoJsonPoint.properties.category
-              ? `<div class="touristic-event-marker-container"><img src=${geoJsonPoint.properties.category} /></div>`
+              ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.category} /></div>`
               : `<div class="touristic-event-marker-container"></div>`,
             className: 'selected-touristic-event-marker',
             iconSize: 64,
@@ -1709,6 +1720,7 @@ export class GrwMap {
           if (geoJsonPoint.properties.imgSrc) {
             const touristicEventImg = L.DomUtil.create('img');
             touristicEventImg.src = geoJsonPoint.properties.imgSrc;
+            touristicEventImg.crossOrigin = 'anonymous';
             touristicEventDeparturePopup.appendChild(touristicEventImg);
           }
 

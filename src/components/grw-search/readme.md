@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property     | Attribute     | Description | Type     | Default    |
+| ------------ | ------------- | ----------- | -------- | ---------- |
+| `fontFamily` | `font-family` |             | `string` | `'Roboto'` |
+
+
 ## Dependencies
 
 ### Used by

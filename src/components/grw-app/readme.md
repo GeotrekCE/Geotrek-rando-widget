@@ -32,11 +32,13 @@
 | `districts`                 | `districts`                    |             | `string`  | `undefined` |
 | `fabBackgroundColor`        | `fab-background-color`         |             | `string`  | `'#eaddff'` |
 | `fabColor`                  | `fab-color`                    |             | `string`  | `'#21005d'` |
+| `fontFamily`                | `font-family`                  |             | `string`  | `'Roboto'`  |
 | `inBbox`                    | `in-bbox`                      |             | `string`  | `undefined` |
 | `languages`                 | `languages`                    |             | `string`  | `'fr'`      |
 | `nameLayer`                 | `name-layer`                   |             | `string`  | `undefined` |
 | `portals`                   | `portals`                      |             | `string`  | `undefined` |
 | `practices`                 | `practices`                    |             | `string`  | `undefined` |
+| `rounded`                   | `rounded`                      |             | `boolean` | `true`      |
 | `routes`                    | `routes`                       |             | `string`  | `undefined` |
 | `structures`                | `structures`                   |             | `string`  | `undefined` |
 | `themes`                    | `themes`                       |             | `string`  | `undefined` |

@@ -93,7 +93,13 @@ export class GrwTrekCard {
             onClick={() => this.trekCardPress.emit(this.currentTrek.id)}
           >
             {this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 0 && (
-              <img class="image" src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`} loading="lazy" />
+              <img
+                /* @ts-ignore */
+                crossorigin="anonymous"
+                class="image"
+                src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                loading="lazy"
+              />
             )}
             <div class="sub-container">
               {this.departureCity && <div class="departure">{this.departureCity.name}</div>}
@@ -108,7 +114,13 @@ export class GrwTrekCard {
               <div class="icons-labels-container">
                 <div class="row">
                   <div class="icon-label difficulty">
-                    {this.difficulty?.pictogram && <img src={this.difficulty.pictogram} />}
+                    {this.difficulty?.pictogram && (
+                      <img
+                        /* @ts-ignore */
+                        crossorigin="anonymous"
+                        src={this.difficulty.pictogram}
+                      />
+                    )}
                     {this.difficulty?.label}
                   </div>
                   <div class="icon-label duration">
@@ -138,11 +150,23 @@ export class GrwTrekCard {
                 {!this.isStep && (
                   <div class="row">
                     <div class="icon-label route">
-                      {this.route?.pictogram && <img src={this.route.pictogram} />}
+                      {this.route?.pictogram && (
+                        <img
+                          /* @ts-ignore */
+                          crossorigin="anonymous"
+                          src={this.route.pictogram}
+                        />
+                      )}
                       {this.route?.route}
                     </div>
                     <div class="icon-label practice">
-                      {this.practice?.pictogram && <img src={this.practice.pictogram} />}
+                      {this.practice?.pictogram && (
+                        <img
+                          /* @ts-ignore */
+                          crossorigin="anonymous"
+                          src={this.practice.pictogram}
+                        />
+                      )}
                       {this.practice?.name}
                     </div>
                   </div>

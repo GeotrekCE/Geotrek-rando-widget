@@ -54,7 +54,12 @@ export class GrwPoiDetail {
     return (
       <Host>
         <div class="poi-type-img-container">
-          <img class="poi-type" src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`} />
+          <img
+            /* @ts-ignore */
+            crossorigin="anonymous"
+            class="poi-type"
+            src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`}
+          />
           <div class="swiper" ref={el => (this.swiperPoiRef = el)}>
             <div class="swiper-wrapper">
               {this.poi.attachments.length > 0 ? (
@@ -72,7 +77,13 @@ export class GrwPoiDetail {
                   ))
               ) : (
                 <div class="swiper-slide">
-                  <img class="default-poi-img" src={defaultImageSrc} loading="lazy" />
+                  <img
+                    /* @ts-ignore */
+                    crossorigin="anonymous"
+                    class="default-poi-img"
+                    src={defaultImageSrc}
+                    loading="lazy"
+                  />
                 </div>
               )}
             </div>

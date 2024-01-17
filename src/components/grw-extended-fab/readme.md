@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type       | Default     |
-| --------- | --------- | ----------- | ---------- | ----------- |
-| `action`  | --        |             | `Function` | `undefined` |
-| `display` | `display` |             | `string`   | `undefined` |
-| `icon`    | --        |             | `Function` | `undefined` |
-| `name`    | --        |             | `Function` | `undefined` |
+| Property     | Attribute     | Description | Type       | Default     |
+| ------------ | ------------- | ----------- | ---------- | ----------- |
+| `action`     | --            |             | `Function` | `undefined` |
+| `display`    | `display`     |             | `string`   | `undefined` |
+| `fontFamily` | `font-family` |             | `string`   | `'Roboto'`  |
+| `icon`       | --            |             | `Function` | `undefined` |
+| `name`       | --            |             | `Function` | `undefined` |
 
 
 ## Dependencies

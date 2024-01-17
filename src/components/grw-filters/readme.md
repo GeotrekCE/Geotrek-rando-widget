@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property        | Attribute | Description | Type       | Default     |
-| --------------- | --------- | ----------- | ---------- | ----------- |
-| `handleFilters` | --        |             | `Function` | `undefined` |
+| Property        | Attribute     | Description | Type       | Default     |
+| --------------- | ------------- | ----------- | ---------- | ----------- |
+| `fontFamily`    | `font-family` |             | `string`   | `'Roboto'`  |
+| `handleFilters` | --            |             | `Function` | `undefined` |
 
 
 ## Events

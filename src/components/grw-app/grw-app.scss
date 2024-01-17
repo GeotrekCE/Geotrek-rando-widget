@@ -57,6 +57,9 @@ grw-app {
     width: calc(50% + 48px);
     max-width: 220px;
   }
+  .handle-filters-container {
+    margin-left: 16px;
+  }
 }
 
 .header-detail {
@@ -162,4 +165,17 @@ grw-touristic-event-detail {
 .large-view-app-map-container {
   position: relative;
   width: 50%;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 16px;
+  font-family: var(--font-family);
+  font-size: 16px;
+  grw-common-button {
+    margin-top: 16px;
+  }
 }
