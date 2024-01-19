@@ -300,8 +300,8 @@ export type TouristicEventsFilter = { property: string; touristicEventProperty: 
 
 export type Option = {
   visible: boolean;
-  width: number;
   indicator: boolean;
+  ref: string;
 };
 
 export type Options = {

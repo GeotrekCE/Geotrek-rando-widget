@@ -66,8 +66,8 @@
     .choices__list--dropdown,
     .choices__list[aria-expanded] {
       width: 100%;
-      color: var(--color-on-secondary-container);
-      background-color: var(--color-secondary-container);
+      color: var(--color-secondary-container);
+      background-color: var(--color-on-secondary-container);
       border: 1px solid var(--color-outline);
     }
     .choices__input {

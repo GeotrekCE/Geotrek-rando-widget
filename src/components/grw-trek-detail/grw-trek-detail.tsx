@@ -5,50 +5,51 @@ import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek, Option, Options } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 
+const threshold = 1;
 const presentation: Option = {
   visible: true,
-  width: 120,
   indicator: false,
+  ref: 'presentationOptionRef',
 };
 const steps: Option = {
   visible: false,
-  width: 80,
   indicator: false,
+  ref: 'stepsOptionRef',
 };
 const description: Option = {
   visible: false,
-  width: 120,
   indicator: false,
+  ref: 'descriptionOptionRef',
 };
 const recommendations: Option = {
   visible: false,
-  width: 190,
   indicator: false,
+  ref: 'recommendationsOptionRef',
 };
 const sensitiveArea: Option = {
   visible: false,
-  width: 160,
   indicator: false,
+  ref: 'sensitiveAreaOptionRef',
 };
 const informationPlaces: Option = {
   visible: false,
-  width: 200,
   indicator: false,
+  ref: 'informationPlacesOptionRef',
 };
 const pois: Option = {
   visible: false,
-  width: 120,
   indicator: false,
+  ref: 'poisOptionRef',
 };
 const touristicContents: Option = {
   visible: false,
-  width: 120,
   indicator: false,
+  ref: 'touristicContentsOptionRef',
 };
 const touristicEvents: Option = {
   visible: false,
-  width: 120,
   indicator: false,
+  ref: 'touristicEventsOptionRef',
 };
 const options: Options = {
   presentation,
@@ -89,18 +90,29 @@ export class GrwTrekDetail {
   parkingRef?: HTMLDivElement;
   recommendationRef?: HTMLDivElement;
   sensitiveAreaRef?: HTMLDivElement;
-  informationDeskRef?: HTMLDivElement;
+  informationPlacesRef?: HTMLDivElement;
   poiRef?: HTMLDivElement;
   stepsRef?: HTMLDivElement;
   touristicContentsRef?: HTMLDivElement;
   touristicEventsRef?: HTMLDivElement;
+  presentationOptionRef?: HTMLAnchorElement;
+  stepsOptionRef?: HTMLAnchorElement;
+  descriptionOptionRef?: HTMLAnchorElement;
+  recommendationsOptionRef?: HTMLAnchorElement;
+  OptionRef?: HTMLAnchorElement;
+  sensitiveAreaOptionRef?: HTMLAnchorElement;
+  informationPlacesOptionRef?: HTMLAnchorElement;
+  poisOptionRef?: HTMLAnchorElement;
+  touristicContentsOptionRef?: HTMLAnchorElement;
+  touristicEventsOptionRef?: HTMLAnchorElement;
+
   hasStep?: boolean;
 
   defaultOptions: Options;
   @Event() descriptionIsInViewport: EventEmitter<boolean>;
   @Event() parkingIsInViewport: EventEmitter<boolean>;
   @Event() sensitiveAreaIsInViewport: EventEmitter<boolean>;
-  @Event() informationDeskIsInViewport: EventEmitter<boolean>;
+  @Event() informationPlacesIsInViewport: EventEmitter<boolean>;
   @Event() poiIsInViewport: EventEmitter<boolean>;
   @Event() stepsIsInViewport: EventEmitter<boolean>;
   @Event() touristicContentsIsInViewport: EventEmitter<boolean>;
@@ -133,6 +145,7 @@ export class GrwTrekDetail {
   @Prop() resetStoreOnDisconnected = true;
   @Prop() weather = false;
   @Prop() isLargeView = false;
+  indicatorSelectedTrekOption = { translateX: null, width: null, backgroundSize: null, ref: null };
 
   componentDidLoad() {
     this.swiperImages = new Swiper(this.swiperImagesRef, {
@@ -220,101 +233,122 @@ export class GrwTrekDetail {
       },
     });
     if (this.presentationRef) {
-      const presentationObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, presentation: { ...this.defaultOptions.presentation, indicator: isIntersecting } };
-        }
-      });
+      const presentationObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.options = { ...this.options, presentation: { ...this.defaultOptions.presentation, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
       presentationObserver.observe(this.presentationRef);
     }
     if (this.stepsRef) {
-      const stepsObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        this.stepsIsInViewport.emit(isIntersecting);
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, steps: { ...this.defaultOptions.steps, indicator: isIntersecting } };
-        }
-      });
+      const stepsObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.stepsIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, steps: { ...this.defaultOptions.steps, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
       stepsObserver.observe(this.stepsRef);
     }
     if (this.descriptionRef) {
-      const descriptionObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        this.descriptionIsInViewport.emit(isIntersecting);
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, description: { ...this.defaultOptions.description, indicator: isIntersecting } };
-        }
-      });
+      const descriptionObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.descriptionIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, description: { ...this.defaultOptions.description, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
       descriptionObserver.observe(this.descriptionRef);
     }
     if (this.recommendationRef) {
-      const recommendationsObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, recommendations: { ...this.defaultOptions.recommendations, indicator: isIntersecting } };
-        }
-      });
+      const recommendationsObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.options = { ...this.options, recommendations: { ...this.defaultOptions.recommendations, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
       recommendationsObserver.observe(this.recommendationRef);
     }
     if (this.parkingRef) {
-      const parkingObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        this.parkingIsInViewport.emit(isIntersecting);
-      });
+      const parkingObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.parkingIsInViewport.emit(isIntersecting);
+        },
+        { threshold },
+      );
       parkingObserver.observe(this.parkingRef);
     }
 
     if (this.sensitiveAreaRef) {
-      const sensitiveAreaRefObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        this.sensitiveAreaIsInViewport.emit(isIntersecting);
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, sensitiveArea: { ...this.defaultOptions.sensitiveArea, indicator: isIntersecting } };
-        }
-      });
+      const sensitiveAreaRefObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.sensitiveAreaIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, sensitiveArea: { ...this.defaultOptions.sensitiveArea, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
       sensitiveAreaRefObserver.observe(this.sensitiveAreaRef);
     }
 
-    if (this.informationDeskRef) {
-      const informationDeskObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        this.informationDeskIsInViewport.emit(isIntersecting);
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, informationPlaces: { ...this.defaultOptions.informationPlaces, indicator: isIntersecting } };
-        }
-      });
-      informationDeskObserver.observe(this.informationDeskRef);
+    if (this.informationPlacesRef) {
+      const informationPlacesObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.informationPlacesIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, informationPlaces: { ...this.defaultOptions.informationPlaces, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      informationPlacesObserver.observe(this.informationPlacesRef);
     }
 
     if (this.poiRef) {
-      const poiObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        this.poiIsInViewport.emit(isIntersecting);
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, pois: { ...this.defaultOptions.pois, indicator: isIntersecting } };
-        }
-      });
+      const poiObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.poiIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, pois: { ...this.defaultOptions.pois, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
       poiObserver.observe(this.poiRef);
     }
     if (this.touristicContentsRef) {
-      const touristicContentObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        this.touristicContentsIsInViewport.emit(isIntersecting);
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, touristicContents: { ...this.defaultOptions.touristicContents, indicator: isIntersecting } };
-        }
-      });
+      const touristicContentObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.touristicContentsIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, touristicContents: { ...this.defaultOptions.touristicContents, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
       touristicContentObserver.observe(this.touristicContentsRef);
     }
     if (this.touristicEventsRef) {
-      const touristicEventObserver = new IntersectionObserver(entries => {
-        const isIntersecting = entries[0].isIntersecting;
-        this.touristicEventsIsInViewport.emit(isIntersecting);
-        if (isIntersecting) {
-          this.options = { ...this.defaultOptions, touristicEvents: { ...this.defaultOptions.touristicEvents, indicator: isIntersecting } };
-        }
-      });
+      const touristicEventObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.touristicEventsIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, touristicEvents: { ...this.defaultOptions.touristicEvents, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
       touristicEventObserver.observe(this.touristicContentsRef);
     }
   }
@@ -392,9 +426,11 @@ export class GrwTrekDetail {
   }
 
   handleIndicatorSelectedTrekOption() {
-    let previousVisibleOptions = 0;
     let currentOption: Option;
+    let previousVisibleOptions = 0;
     let previousWidthOptions = 0;
+    let elementWidth = 0;
+
     const options: Option[] = Object.values(this.options);
     let index = 0;
     while (!currentOption && index < options.length) {
@@ -403,16 +439,24 @@ export class GrwTrekDetail {
       } else {
         if (options[index].visible) {
           previousVisibleOptions += 1;
-          previousWidthOptions += options[index].width;
+          previousWidthOptions += this[options[index].ref].clientWidth;
         }
       }
       index++;
     }
-    return `${previousWidthOptions + 16 * previousVisibleOptions - currentOption.width / 2}px`;
+    if (currentOption && this[currentOption.ref]) {
+      elementWidth = this[currentOption.ref].clientWidth;
+      this.indicatorSelectedTrekOption = {
+        translateX: `${previousWidthOptions + 16 * previousVisibleOptions - elementWidth / 2}px`,
+        width: `${elementWidth * 2}px`,
+        backgroundSize: `${elementWidth}px 100%`,
+        ref: currentOption.ref,
+      };
+    }
   }
 
   handleScrollTo(element: HTMLDivElement) {
-    this.trekDetailContainerRef.scrollTo({ top: element.offsetTop - 48 });
+    this.trekDetailContainerRef.scrollTo({ top: element.offsetTop - 64 });
   }
 
   render() {
@@ -432,65 +476,95 @@ export class GrwTrekDetail {
       >
         {this.currentTrek && (
           <div class="trek-options">
-            <a onClick={() => this.handleScrollTo(this.presentationRef)} class={`presentation trek-option${this.options.presentation.indicator ? ' selected-trek-option' : ''}`}>
+            <a
+              ref={el => (this.presentationOptionRef = el)}
+              onClick={() => this.handleScrollTo(this.presentationRef)}
+              class={`presentation trek-option${this.indicatorSelectedTrekOption.ref === 'presentationOptionRef' ? ' selected-trek-option' : ''}`}
+            >
               {translate[state.language].options.presentation}
             </a>
             {this.options.steps.visible && (
-              <a onClick={() => this.handleScrollTo(this.stepsRef)} class={`steps trek-option${this.options.steps.indicator ? ' selected-trek-option' : ''}`}>
+              <a
+                ref={el => (this.stepsOptionRef = el)}
+                onClick={() => this.handleScrollTo(this.stepsRef)}
+                class={`steps trek-option${this.options.steps.indicator ? ' selected-trek-option' : ''}`}
+              >
                 {translate[state.language].options.steps}
               </a>
             )}
             {this.options.description.visible && (
-              <a onClick={() => this.handleScrollTo(this.descriptionRef)} class={`description trek-option${this.options.description.indicator ? ' selected-trek-option' : ''}`}>
+              <a
+                ref={el => (this.descriptionOptionRef = el)}
+                onClick={() => this.handleScrollTo(this.descriptionRef)}
+                class={`description trek-option${this.indicatorSelectedTrekOption.ref === 'descriptionOptionRef' ? ' selected-trek-option' : ''}`}
+              >
                 {translate[state.language].options.description}
               </a>
             )}
             {this.options.recommendations.visible && (
               <a
+                ref={el => (this.recommendationsOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.recommendationRef)}
-                class={`recommendations trek-option${this.options.recommendations.indicator ? ' selected-trek-option' : ''}`}
+                class={`recommendations trek-option${this.indicatorSelectedTrekOption.ref === 'recommendationsOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.recommendations}
               </a>
             )}
             {this.options.sensitiveArea.visible && (
               <a
+                ref={el => (this.sensitiveAreaOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.sensitiveAreaRef)}
-                class={`sensitive-areas trek-option${this.options.sensitiveArea.indicator ? ' selected-trek-option' : ''}`}
+                class={`sensitive-areas trek-option${this.indicatorSelectedTrekOption.ref === 'sensitiveAreaOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.environmentalSensitiveAreas}
               </a>
             )}
             {this.options.informationPlaces.visible && (
               <a
-                onClick={() => this.handleScrollTo(this.informationDeskRef)}
-                class={`information-places trek-option${this.options.informationPlaces.indicator ? ' selected-trek-option' : ''}`}
+                ref={el => (this.informationPlacesOptionRef = el)}
+                onClick={() => this.handleScrollTo(this.informationPlacesRef)}
+                class={`information-places trek-option${this.indicatorSelectedTrekOption.ref === 'informationPlacesOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.informationPlaces}
               </a>
             )}
             {this.options.pois.visible && (
-              <a onClick={() => this.handleScrollTo(this.poiRef)} class={`pois trek-option${this.options.pois.indicator ? ' selected-trek-option' : ''}`}>
+              <a
+                ref={el => (this.poisOptionRef = el)}
+                onClick={() => this.handleScrollTo(this.poiRef)}
+                class={`pois trek-option${this.indicatorSelectedTrekOption.ref === 'poisOptionRef' ? ' selected-trek-option' : ''}`}
+              >
                 {translate[state.language].options.pois}
               </a>
             )}
             {this.options.touristicContents.visible && (
               <a
+                ref={el => (this.touristicContentsOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.touristicContentsRef)}
-                class={`touristic-content trek-option${this.options.touristicContents.indicator ? ' selected-trek-option' : ''}`}
+                class={`touristic-content trek-option${this.indicatorSelectedTrekOption.ref === 'touristicContentsOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.touristicContents}
               </a>
             )}
             {this.options.touristicEvents.visible && (
               <a
+                ref={el => (this.touristicEventsOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.touristicEventsRef)}
-                class={`touristic-event trek-option${this.options.touristicEvents.indicator ? ' selected-trek-option' : ''}`}
+                class={`touristic-event trek-option${this.indicatorSelectedTrekOption.ref === 'touristicEventsOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.touristicEvents}
               </a>
             )}
-            <span class="indicator-selected-trek-option" style={{ transform: `translateX(${this.handleIndicatorSelectedTrekOption()})` }}></span>
+            {this.presentationOptionRef && (
+              <span
+                class="indicator-selected-trek-option"
+                style={{
+                  transform: `translateX(${this.indicatorSelectedTrekOption.translateX})`,
+                  width: this.indicatorSelectedTrekOption.width,
+                  backgroundSize: this.indicatorSelectedTrekOption.backgroundSize,
+                }}
+              ></span>
+            )}
           </div>
         )}
         {this.currentTrek && (
@@ -635,8 +709,8 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentTrekSteps && (
-              <div class="step-container" ref={el => (this.stepsRef = el)}>
-                <div class="step-title">{`${state.currentTrekSteps.length} ${translate[state.language].steps}`}</div>
+              <div class="step-container">
+                <div class="step-title" ref={el => (this.stepsRef = el)}>{`${state.currentTrekSteps.length} ${translate[state.language].steps}`}</div>
                 <div class="swiper swiper-step" ref={el => (this.swiperStepRef = el)}>
                   <div class="swiper-wrapper">
                     {state.currentTrekSteps &&
@@ -665,8 +739,13 @@ export class GrwTrekDetail {
             )}
             <div class="divider"></div>
             {this.currentTrek.description && (
-              <div class="description-container" ref={el => (this.descriptionRef = el)}>
-                <div class="description-title">{translate[state.language].description}</div>
+              <div class="description-container">
+                <div class="description-title" ref={el => (this.descriptionRef = el)}>
+                  {translate[state.language].description}
+                </div>
+                <div class="description" innerHTML={this.currentTrek.description}></div>
+                <div class="description" innerHTML={this.currentTrek.description}></div>
+                <div class="description" innerHTML={this.currentTrek.description}></div>
                 <div class="description" innerHTML={this.currentTrek.description}></div>
               </div>
             )}
@@ -714,8 +793,10 @@ export class GrwTrekDetail {
             {(this.currentTrek.advice || this.labels.length > 0) && (
               <div>
                 <div class="divider"></div>
-                <div class="advice-container" ref={el => (this.recommendationRef = el)}>
-                  <div class="advice-title">{translate[state.language].recommendations}</div>
+                <div class="advice-container">
+                  <div class="advice-title" ref={el => (this.recommendationRef = el)}>
+                    {translate[state.language].recommendations}
+                  </div>
                   {this.currentTrek.advice && (
                     <div class="current-advice-container">
                       {/* @ts-ignore */}
@@ -746,8 +827,10 @@ export class GrwTrekDetail {
             {this.currentTrek.advised_parking && (
               <div>
                 <div class="divider"></div>
-                <div class="advised-parking-container" ref={el => (this.parkingRef = el)}>
-                  <div class="advised-parking-title">{translate[state.language].recommendedParking}</div>
+                <div class="advised-parking-container">
+                  <div class="advised-parking-title" ref={el => (this.parkingRef = el)}>
+                    {translate[state.language].recommendedParking}
+                  </div>
                   <div class="advised-parking" innerHTML={this.currentTrek.advised_parking}></div>
                 </div>
               </div>
@@ -764,8 +847,10 @@ export class GrwTrekDetail {
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
               <div>
                 <div class="divider"></div>
-                <div class="sensitive-areas-container" ref={el => (this.sensitiveAreaRef = el)}>
-                  <div class="sensitive-areas-title">{translate[state.language].environmentalSensitiveAreas}</div>
+                <div class="sensitive-areas-container">
+                  <div class="sensitive-areas-title" ref={el => (this.sensitiveAreaRef = el)}>
+                    {translate[state.language].environmentalSensitiveAreas}
+                  </div>
                   {state.currentSensitiveAreas.map(sensitiveArea => (
                     <grw-sensitive-area-detail sensitiveArea={sensitiveArea}></grw-sensitive-area-detail>
                   ))}
@@ -776,8 +861,10 @@ export class GrwTrekDetail {
               state.currentInformationDesks.filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0 && (
                 <div>
                   <div class="divider"></div>
-                  <div class="information-desks-container" ref={el => (this.informationDeskRef = el)}>
-                    <div class="information-desks-title">{translate[state.language].informationPlaces}</div>
+                  <div class="information-desks-container">
+                    <div class="information-desks-title" ref={el => (this.informationPlacesRef = el)}>
+                      {translate[state.language].informationPlaces}
+                    </div>
                     <div class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
                       <div class="swiper-wrapper">
                         {state.currentInformationDesks
@@ -866,8 +953,10 @@ export class GrwTrekDetail {
             {state.currentPois && state.currentPois.length > 0 && (
               <div>
                 <div class="divider"></div>
-                <div class="pois-container" ref={el => (this.poiRef = el)}>
-                  <div class="pois-title">{translate[state.language].pois(state.currentPois.length)}</div>
+                <div class="pois-container">
+                  <div class="pois-title" ref={el => (this.poiRef = el)}>
+                    {translate[state.language].pois(state.currentPois.length)}
+                  </div>
                   <div class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
                     <div class="swiper-wrapper">
                       {state.currentPois.map(poi => (
@@ -883,8 +972,10 @@ export class GrwTrekDetail {
             {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
               <div>
                 <div class="divider"></div>
-                <div class="touristic-content-container" ref={el => (this.touristicContentsRef = el)}>
-                  <div class="touristic-content-title">{translate[state.language].touristicContents(state.trekTouristicContents.length)}</div>
+                <div class="touristic-content-container">
+                  <div class="touristic-content-title" ref={el => (this.touristicContentsRef = el)}>
+                    {translate[state.language].touristicContents(state.trekTouristicContents.length)}
+                  </div>
                   <div class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
                     <div class="swiper-wrapper">
                       {state.trekTouristicContents.map(touristicContent => (
@@ -900,8 +991,10 @@ export class GrwTrekDetail {
             {state.touristicEvents && state.touristicEvents.length > 0 && (
               <div>
                 <div class="divider"></div>
-                <div class="touristic-event-container" ref={el => (this.touristicEventsRef = el)}>
-                  <div class="touristic-event-title">{translate[state.language].touristicEvents(state.touristicEvents.length)}</div>
+                <div class="touristic-event-container">
+                  <div class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
+                    {translate[state.language].touristicEvents(state.touristicEvents.length)}
+                  </div>
                   <div class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>
                     <div class="swiper-wrapper">
                       {state.touristicEvents.map(touristicEvent => (

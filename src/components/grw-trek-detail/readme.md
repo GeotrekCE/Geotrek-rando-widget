@@ -27,7 +27,7 @@
 | Event                           | Description | Type                   |
 | ------------------------------- | ----------- | ---------------------- |
 | `descriptionIsInViewport`       |             | `CustomEvent<boolean>` |
-| `informationDeskIsInViewport`   |             | `CustomEvent<boolean>` |
+| `informationPlacesIsInViewport` |             | `CustomEvent<boolean>` |
 | `parentTrekPress`               |             | `CustomEvent<number>`  |
 | `parkingIsInViewport`           |             | `CustomEvent<boolean>` |
 | `poiIsInViewport`               |             | `CustomEvent<boolean>` |

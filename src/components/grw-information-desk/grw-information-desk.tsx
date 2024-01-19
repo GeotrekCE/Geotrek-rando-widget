@@ -1,4 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import state from 'store/store';
+import { translate } from 'i18n/i18n';
 import { InformationDesk } from 'types/types';
 
 @Component({
@@ -40,7 +42,7 @@ export class GrwInformationDeskDetail {
               <span translate={false} class="material-symbols material-symbols-outlined">
                 location_searching
               </span>
-              Centrer sur la carte
+              {translate[state.language].centerOnMap}
             </button>
           )}
           {(this.informationDesk.postal_code || this.informationDesk.municipality || this.informationDesk.street) && (

@@ -731,7 +731,7 @@ declare namespace LocalJSX {
         "fontFamily"?: string;
         "isLargeView"?: boolean;
         "onDescriptionIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
-        "onInformationDeskIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onInformationPlacesIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onParentTrekPress"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onParkingIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onPoiIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
