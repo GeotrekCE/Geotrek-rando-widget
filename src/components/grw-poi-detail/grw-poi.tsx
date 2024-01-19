@@ -2,6 +2,7 @@ import { Component, Host, h, Prop, State, Build, getAssetPath } from '@stencil/c
 import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
 import state from 'store/store';
 import { Poi } from 'types/types';
+import { translate } from 'i18n/i18n';
 
 @Component({
   tag: 'grw-poi',
@@ -14,8 +15,11 @@ export class GrwPoiDetail {
   prevElPoiRef?: HTMLDivElement;
   nextElPoiRef?: HTMLDivElement;
   paginationElPoiRef?: HTMLDivElement;
+  descriptionRef?: HTMLDivElement;
+
   @Prop() poi: Poi;
   @State() displayShortDescription = true;
+  @State() showPoiDescriptionButton = false;
   @State() displayFullscreen = false;
 
   componentDidLoad() {
@@ -37,6 +41,7 @@ export class GrwPoiDetail {
         this.swiperPoi.keyboard.disable();
       }
     };
+    this.showPoiDescriptionButton = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
   }
 
   handlePoiDescription() {
@@ -94,10 +99,12 @@ export class GrwPoiDetail {
         </div>
         <div class="poi-sub-container">
           <div class="poi-name">{this.poi.name}</div>
-          <div class={this.displayShortDescription ? 'poi-description-short' : 'poi-description'} innerHTML={this.poi.description}></div>
-          <div class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
-            {this.displayShortDescription ? 'Lire plus' : 'Lire moins'}
-          </div>
+          <div class={this.displayShortDescription ? 'poi-description-short' : 'poi-description'} innerHTML={this.poi.description} ref={el => (this.descriptionRef = el)}></div>
+          {this.showPoiDescriptionButton && (
+            <div class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
+              {this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess}
+            </div>
+          )}
         </div>
       </Host>
     );

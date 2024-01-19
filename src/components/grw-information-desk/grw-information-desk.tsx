@@ -9,9 +9,15 @@ import { InformationDesk } from 'types/types';
   shadow: true,
 })
 export class GrwInformationDeskDetail {
+  descriptionRef?: HTMLDivElement;
   @Event() centerOnMap: EventEmitter<{ latitude: number; longitude: number }>;
   @State() displayShortDescription = true;
+  @State() showInformationDeskDescriptionButton = false;
   @Prop() informationDesk: InformationDesk;
+
+  componentDidLoad() {
+    this.showInformationDeskDescriptionButton = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
+  }
 
   handleInformationDeskDescription() {
     this.displayShortDescription = !this.displayShortDescription;
@@ -81,10 +87,16 @@ export class GrwInformationDeskDetail {
           )}
           {this.informationDesk.description && (
             <div class="information-desk-description-container">
-              <div class={this.displayShortDescription ? 'information-desk-description-short' : 'information-desk-description'} innerHTML={this.informationDesk.description}></div>
-              <div class="handle-information-desk-description" onClick={() => this.handleInformationDeskDescription()}>
-                {this.displayShortDescription ? 'Lire plus' : 'Lire moins'}
-              </div>
+              <div
+                class={this.displayShortDescription ? 'information-desk-description-short' : 'information-desk-description'}
+                innerHTML={this.informationDesk.description}
+                ref={el => (this.descriptionRef = el)}
+              ></div>
+              {false && (
+                <div class="handle-information-desk-description" onClick={() => this.handleInformationDeskDescription()}>
+                  {this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess}
+                </div>
+              )}
             </div>
           )}
         </div>

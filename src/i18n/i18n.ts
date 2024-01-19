@@ -90,6 +90,8 @@ interface Translation {
   type: string;
   placeholderType: string;
   centerOnMap: string;
+  readMore: string;
+  readLess: string;
 }
 
 interface AvailableTranslations {
@@ -190,6 +192,8 @@ export const translate: AvailableTranslations = {
     type: 'Types',
     placeholderType: 'Sélectionner un ou plusieurs types',
     centerOnMap: 'Centrer sur la carte',
+    readMore: 'Lire plus',
+    readLess: 'Lire moins',
   },
   en: {
     filter: 'Filter',
@@ -283,5 +287,7 @@ export const translate: AvailableTranslations = {
     type: 'Types',
     placeholderType: 'Select one or more types',
     centerOnMap: 'Center on map',
+    readMore: 'Read more',
+    readLess: 'Read less',
   },
 };
