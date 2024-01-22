@@ -99,7 +99,7 @@ grw-trek-detail {
   max-height: 100%;
   overflow-y: auto;
   .name {
-    color: var(--color-on-surface);
+    color: var(--color-primary-app);
     font-size: 32px;
     line-height: 28px;
     font-weight: 600;
@@ -141,6 +141,7 @@ grw-trek-detail {
             width: 24px;
             height: auto;
             margin-right: 8px;
+            color: var(--color-primary-app);
           }
         }
         .practice {
