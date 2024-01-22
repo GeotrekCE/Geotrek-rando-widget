@@ -744,9 +744,6 @@ export class GrwTrekDetail {
                   {translate[state.language].description}
                 </div>
                 <div class="description" innerHTML={this.currentTrek.description}></div>
-                <div class="description" innerHTML={this.currentTrek.description}></div>
-                <div class="description" innerHTML={this.currentTrek.description}></div>
-                <div class="description" innerHTML={this.currentTrek.description}></div>
               </div>
             )}
             {this.currentTrek.departure && (
