@@ -16,11 +16,10 @@ interface Translation {
   departure: string;
   arrival: string;
   elevationProfile: string;
-  roadAccess: string;
+  roadAccessAndParking: string;
   transport: string;
   recommendations: string;
   recommendedParking: string;
-  equipments: string;
   environmentalSensitiveAreas: string;
   informationPlaces: string;
   accessibility: string;
@@ -59,6 +58,7 @@ interface Translation {
     steps: string;
     touristicContents: string;
     touristicEvents: string;
+    accessibility: string;
   };
   layers: {
     referencePoints: string;
@@ -92,6 +92,7 @@ interface Translation {
   centerOnMap: string;
   readMore: string;
   readLess: string;
+  sensitiveAreasDescription: string;
 }
 
 interface AvailableTranslations {
@@ -118,24 +119,23 @@ export const translate: AvailableTranslations = {
     departure: 'Départ',
     arrival: 'Arrivée',
     elevationProfile: 'Profil altimétrique',
-    roadAccess: 'Accès routier',
+    roadAccessAndParking: 'Accès routier et parking',
     transport: 'Transport',
     recommendations: 'Recommandations',
-    recommendedParking: 'Parking conseillé',
-    equipments: 'Équipements',
+    recommendedParking: 'Stationnement',
     environmentalSensitiveAreas: 'Zones de sensibilité environnementale',
     informationPlaces: 'Lieux de renseignement',
     accessibility: 'Accessibilité',
     accessibilityLevel: "Niveau d'accessibilité",
     accessibilitySlope: 'Pente',
     accessibilityWidth: 'Largeur',
-    accessibilitySignage: 'Signalisation',
+    accessibilitySignage: 'Signalétique',
     accessibilityCovering: 'Revêtement',
     accessibilityExposure: 'Exposition',
     accessibilityAdvices: 'Conseils',
     pois: (poisLength: number) => `Les ${poisLength} patrimoines à découvrir`,
     touristicContents: (touristicContentsLength: number) => `Services à proximité (${touristicContentsLength})`,
-    touristicEvents: (touristicEventsLength: number) => `Événements associés (${touristicEventsLength})`,
+    touristicEvents: (touristicEventsLength: number) => `Événements à proximité (${touristicEventsLength})`,
     sources: 'Sources',
     city: 'Commune',
     crossedCities: 'Communes',
@@ -161,6 +161,7 @@ export const translate: AvailableTranslations = {
       steps: 'Étapes',
       touristicContents: 'À proximité',
       touristicEvents: 'Événements',
+      accessibility: 'Accessibilité',
     },
     layers: {
       referencePoints: 'Points de référence',
@@ -194,6 +195,8 @@ export const translate: AvailableTranslations = {
     centerOnMap: 'Centrer sur la carte',
     readMore: 'Lire plus',
     readLess: 'Lire moins',
+    sensitiveAreasDescription:
+      'Le long de votre itinéraire, vous allez traverser des zones de sensibilité liées à la présence d’une espèce ou d’un milieu particulier. Dans ces zones, un comportement adapté permet de contribuer à leur préservation. Pour plus d’informations détaillées, des fiches spécifiques sont accessibles pour chaque zone.',
   },
   en: {
     filter: 'Filter',
@@ -213,11 +216,10 @@ export const translate: AvailableTranslations = {
     departure: 'Departure',
     arrival: 'Arrival',
     elevationProfile: 'Elevation profile',
-    roadAccess: 'Road acess',
+    roadAccessAndParking: 'Road access and parking',
     transport: 'Transport',
     recommendations: 'Recommendations',
-    recommendedParking: 'Parking recommended',
-    equipments: 'Equipements',
+    recommendedParking: 'Parking',
     environmentalSensitiveAreas: 'Areas of environmental sensitivity',
     informationPlaces: 'Information places',
     accessibility: 'Accessibility',
@@ -229,8 +231,8 @@ export const translate: AvailableTranslations = {
     accessibilityExposure: 'Exposure',
     accessibilityAdvices: 'Advices',
     pois: (poisLength: number) => `${poisLength} points of interest`,
-    touristicContents: (touristicContentsLength: number) => `Near (${touristicContentsLength})`,
-    touristicEvents: (touristicEventsLength: number) => `Events (${touristicEventsLength})`,
+    touristicContents: (touristicContentsLength: number) => `Near services (${touristicContentsLength})`,
+    touristicEvents: (touristicEventsLength: number) => `Near events (${touristicEventsLength})`,
     sources: 'Sources',
     city: 'City',
     crossedCities: 'Cities',
@@ -256,6 +258,7 @@ export const translate: AvailableTranslations = {
       steps: 'Steps',
       touristicContents: 'Near',
       touristicEvents: 'Events',
+      accessibility: 'Accessibility',
     },
     layers: {
       referencePoints: 'Reference points',
@@ -289,5 +292,7 @@ export const translate: AvailableTranslations = {
     centerOnMap: 'Center on map',
     readMore: 'Read more',
     readLess: 'Read less',
+    sensitiveAreasDescription:
+      'Along your trek, you will go through sensitive areas related to the presence of a specific species or environment. In these areas, an appropriate behaviour allows to contribute to their preservation. For detailed information, specific forms are accessible for each area.',
   },
 };

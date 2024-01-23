@@ -319,6 +319,7 @@ export class GrwApp {
           '--color-surface-container-low': this.colorSurfaceContainerLow,
           '--fab-background-color': this.fabBackgroundColor,
           '--fab-color': this.fabColor,
+          '--color-sensitive-area': this.colorSensitiveArea,
           '--app-width': this.appWidth,
           '--app-height': this.appHeight,
           '--header-height': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 ? '136px' : '64px',

@@ -28,6 +28,7 @@ import {
   TouristicEvent,
   Ratings,
   RatingsScale,
+  Networks,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -83,6 +84,7 @@ const { state, onChange, reset } = createStore<{
   currentTouristicEvent: TouristicEvent;
   selectedTouristicContentId: number;
   selectedTouristicEventId: number;
+  networks: Networks;
 }>({
   mode: null,
   api: null,
@@ -136,6 +138,7 @@ const { state, onChange, reset } = createStore<{
   currentTouristicEvent: null,
   selectedTouristicContentId: null,
   selectedTouristicEventId: null,
+  networks: null,
 });
 
 export { onChange, reset };

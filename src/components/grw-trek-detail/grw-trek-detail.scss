@@ -1,6 +1,7 @@
 @use '~swiper/swiper.scss';
 @use '~swiper/modules/navigation/navigation.scss';
 @use '~swiper/modules/pagination/pagination.scss';
+@use '~swiper/modules/scrollbar/scrollbar.scss';
 
 .swiper {
   z-index: 0;
@@ -119,38 +120,41 @@ grw-trek-detail {
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
-      .row {
+      gap: 16px;
+      .icon-label {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-        width: 100%;
-        &:not(:last-child) {
-          margin-bottom: 24px;
+        img,
+        span {
+          font-size: 24px;
+          width: 24px;
+          height: auto;
+          color: var(--color-primary-app);
+          margin-right: 8px;
         }
-        .icon-label {
-          &:nth-child(2) {
-            margin: 0px 8px;
-          }
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          width: calc(100% / 3);
-          img,
-          span {
-            font-size: 24px;
-            width: 24px;
-            height: auto;
-            margin-right: 8px;
-            color: var(--color-primary-app);
-          }
-        }
-        .practice {
-          img {
-            background-color: var(--color-primary-app);
+        .network {
+          &:not(:last-child) {
+            margin-right: 16px;
           }
         }
       }
+      .practice {
+        img {
+          background-color: var(--color-primary-app);
+        }
+      }
+      .network {
+        display: flex;
+        align-items: center;
+      }
     }
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
   .downloads-container {
     padding: 0px 24px 0px 24px;
@@ -229,7 +233,6 @@ grw-trek-detail {
   .public-transport-container,
   .advice-container,
   .advised-parking-container,
-  .gear-container,
   .sensitive-areas-container,
   .source-container,
   .accessibilities-container,
@@ -245,7 +248,6 @@ grw-trek-detail {
   .public-transport-container,
   .advice-container,
   .advised-parking-container,
-  .gear-container,
   .sensitive-areas-container,
   .information-desks-container,
   .pois-container,
@@ -274,7 +276,6 @@ grw-trek-detail {
   .public-transport-title,
   .advice-title,
   .advised-parking-title,
-  .gear-title,
   .sensitive-areas-title,
   .information-desks-title,
   .pois-title,
@@ -291,13 +292,20 @@ grw-trek-detail {
     font-weight: bold;
   }
 
+  .access {
+    margin-bottom: 16px;
+  }
+
+  .advised-parking-title {
+    font-size: 16px;
+  }
+
   .description-title,
   .altimetric-profile-title,
   .access-title,
   .public-transport-title,
   .advice-title,
   .advised-parking-title,
-  .gear-title,
   .sensitive-areas-title,
   .information-desks-title,
   .pois-title,
@@ -375,7 +383,7 @@ grw-trek-detail {
         width: 24px;
         height: 24px;
         background: #f04141;
-        border-radius: var(--border-radius, 12px);
+        border-radius: 12px;
         font-weight: bold;
         font-size: 0.8em;
         color: white;
@@ -385,35 +393,40 @@ grw-trek-detail {
     }
   }
 }
-.current-advice-container {
+
+.current-advice-container,
+.gear-container {
   display: flex;
   padding: 12px;
   border: 2px solid var(--color-outline);
   border-radius: var(--border-radius, 12px);
-  span {
+  font-size: 16px;
+  .material-symbols {
     font-size: 24px;
     width: 26px;
     margin-right: 8px;
   }
+  margin-bottom: 12px;
 }
 
 .label-container {
-  margin-top: 12px;
   padding: 12px;
   border: 2px solid var(--color-outline);
   border-radius: var(--border-radius, 12px);
+  margin-bottom: 12px;
   .label-sub-container {
     display: flex;
     align-items: center;
     img {
       width: 26px;
       margin-right: 16px;
+      background-color: var(--color-on-surface);
     }
     .label-name {
       color: var(--color-on-surface);
       font-size: 16px;
       line-height: 24px;
-      font-weight: 500;
+      font-weight: 600;
       padding: 12px 0px;
     }
   }
@@ -424,6 +437,13 @@ grw-trek-detail {
     font-weight: 500;
   }
 }
+
+.advice-container {
+  div:last-child {
+    margin-bottom: 0px;
+  }
+}
+
 .source-container {
   .source-sub-container {
     display: flex;
@@ -486,7 +506,7 @@ grw-trek-detail {
 }
 
 .weather-container {
-  #weather-widget {
+  iframe {
     width: 100%;
   }
 }
@@ -498,6 +518,7 @@ grw-trek-detail {
 .swiper-touristic-event {
   padding-right: 32px;
   padding-left: 32px;
+  padding-bottom: 20px;
 }
 
 .swiper-step {
@@ -559,4 +580,23 @@ grw-trek-detail {
   display: flex;
   max-width: 100%;
   max-height: 400px;
+}
+
+.descent {
+  span {
+    transform: rotateX(180deg);
+  }
+}
+
+.swiper-horizontal > .swiper-scrollbar,
+.swiper-scrollbar.swiper-scrollbar-horizontal {
+  --swiper-scrollbar-sides-offset: 32px;
+}
+
+.swiper-scrollbar-drag {
+  background-color: var(--color-primary-app);
+}
+
+.sensitive-areas-description {
+  font-size: 16px;
 }

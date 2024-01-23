@@ -16,7 +16,9 @@ export class GrwInformationDeskDetail {
   @Prop() informationDesk: InformationDesk;
 
   componentDidLoad() {
-    this.showInformationDeskDescriptionButton = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
+    if (this.descriptionRef) {
+      this.showInformationDeskDescriptionButton = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
+    }
   }
 
   handleInformationDeskDescription() {

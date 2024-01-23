@@ -21,7 +21,11 @@ export function formatLength(length: number) {
 }
 
 export function formatAscent(ascent: number) {
-  return `${ascent}m`;
+  return `+${ascent}m`;
+}
+
+export function formatDescent(descent: number) {
+  return `${descent}m`;
 }
 
 export const treksFilters: TrekFilters = [

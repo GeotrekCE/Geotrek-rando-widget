@@ -113,7 +113,7 @@ export class GrwFilters {
                       class={`segment${this.selectedSegment === 'selectedActivitiesFilters' ? ' selected-segment' : ''}`}
                       onClick={() => this.handleSelectedSegment('selectedActivitiesFilters')}
                     >
-                      {translate[state.language].activities} {state.selectedActivitiesFilters !== 0 && `(${state.selectedActivitiesFilters})`}
+                      {translate[state.language].home.segment.treks} {state.selectedActivitiesFilters !== 0 && `(${state.selectedActivitiesFilters})`}
                     </label>
                   )}
                   {this.handleSegment('selectedThemesFilters') && (

@@ -7,16 +7,38 @@
   }
 }
 
-.sensitive-area-title {
-  font-size: 22px;
-  line-height: 28px;
-  padding: 12px 0px;
-  font-weight: 400;
+.sensitive-area-title-container {
+  display: flex;
+  align-items: center;
+  .sensitive-area-color-container {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    border: 3px solid var(--color-sensitive-area);
+    position: relative;
+    &:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background-color: var(--color-sensitive-area);
+      opacity: 0.2;
+      position: absolute;
+    }
+  }
+  .sensitive-area-title {
+    font-size: 20px;
+    line-height: 28px;
+    padding: 12px 0px;
+    font-weight: 600;
+  }
 }
 
 .sensitive-area-description {
   font-size: 16px;
   line-height: 24px;
+  p:first-child {
+    margin-top: 0;
+  }
 }
 
 .sensitive-area-period-container,
@@ -25,9 +47,10 @@
   .sensitive-area-period-title,
   .sensitive-area-practice-title,
   .sensitive-area-contact-title {
-    font-size: 16px;
+    font-size: 18px;
     line-height: 24px;
     padding: 12px 0px;
+    font-weight: 600;
   }
   .sensitive-area-period-values,
   .sensitive-area-practice-values {

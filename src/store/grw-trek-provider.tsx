@@ -62,7 +62,7 @@ export class GrwTrekProvider {
     Promise.all([
       ...requests,
       fetch(
-        `${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&fields=id,geometry,name,description,contact,info_url,period,practices`,
+        `${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices`,
         this.init,
       )
         .then(response => {
@@ -91,8 +91,9 @@ export class GrwTrekProvider {
       fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
       fetch(`${state.api}touristicevent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,type,geometry&page_size=999`, this.init),
       fetch(`${state.api}touristicevent_type/?language=${state.language}&published=true&fields=id,type,pictogram&page_size=999`, this.init),
+      fetch(`${state.api}trek_network/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
       fetch(
-        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,ratings,ratings_description,information_desks,children`,
+        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,ratings,ratings_description,information_desks,children,networks`,
         this.init,
       ),
     ])
@@ -118,10 +119,10 @@ export class GrwTrekProvider {
           touristicContentCategory,
           touristicEvent,
           touristicEventType,
+          networks,
           trek,
         ]) => {
           state.trekNetworkError = false;
-
           if (trek.children.length > 0 || state.parentTrekId) {
             const steps: number[] = [];
             if (trek.children.length > 0) {
@@ -139,7 +140,7 @@ export class GrwTrekProvider {
             steps.forEach(stepId => {
               stepRequests.push(
                 fetch(
-                  `${state.api}trek/${stepId}/?language=${state.language}&published=true&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts`,
+                  `${state.api}trek/${stepId}/?language=${state.language}&published=true&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts,networks`,
                 ),
               );
             });
@@ -193,6 +194,9 @@ export class GrwTrekProvider {
           }
           if (touristicEventType) {
             state.touristicEventTypes = touristicEventType.results;
+          }
+          if (networks) {
+            state.networks = networks.results;
           }
           state.currentPois = pois.results;
           state.poiTypes = poiTypes.results;

@@ -34,20 +34,20 @@
   }
 }
 
-.touristic-content-type-img-container {
+.touristic-event-type-img-container {
   position: relative;
-  .touristic-content-img,
-  .default-touristic-content-img {
+  .touristic-event-img,
+  .default-touristic-event-img {
     width: 100%;
     height: 100%;
     max-height: 200px;
     object-fit: cover;
   }
-  .touristic-content-img {
+  .touristic-event-img {
     cursor: pointer;
     object-fit: cover;
   }
-  .default-touristic-content-img {
+  .default-touristic-event-img {
     background-color: var(--color-primary-container);
     object-fit: contain;
   }
@@ -55,7 +55,7 @@
     max-height: none;
     object-fit: contain;
   }
-  .touristic-content-type {
+  .touristic-event-type {
     width: 24px;
     height: 24px;
     padding: 4px;
@@ -69,15 +69,15 @@
   }
 }
 
-.touristic-content-sub-container {
+.touristic-event-sub-container {
   display: flex;
   flex-direction: column;
   padding: 12px;
-  .touristic-content-category-container {
+  .touristic-event-type-container {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
-    .touristic-content-category-name {
+    .touristic-event-type-name {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
@@ -91,13 +91,13 @@
       background-color: var(--color-primary-app);
     }
   }
-  .touristic-content-name {
+  .touristic-event-name {
     font-size: 16px;
     line-height: 24px;
   }
 }
 
-.touristic-content-more-detail-container {
+.touristic-event-more-detail-container {
   padding: 0px 12px 12px 12px;
   .more-details-button {
     cursor: pointer;
@@ -129,9 +129,8 @@
   }
 }
 
-.touristic-content-card-container,
-.touristic-content-card-large-view-container {
-  cursor: pointer;
+.touristic-event-card-container,
+.touristic-event-card-large-view-container {
   font-family: var(--font-family);
   border-radius: var(--border-radius, 12px);
   box-shadow: var(--elevation-1);
@@ -145,7 +144,7 @@
   }
 }
 
-.touristic-content-card-container {
+.touristic-event-container {
   width: 100%;
   max-width: 350px;
   .image {
@@ -154,7 +153,7 @@
   }
 }
 
-.touristic-content-card-large-view-container {
+.touristic-event-card-large-view-container {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -168,6 +167,10 @@
   border: none;
 }
 
-.selected-touristic-content-card {
+.selected-touristic-event-card {
   box-shadow: var(--elevation-2);
+}
+
+.touristic-event-date-container {
+  margin-top: 12px;
 }

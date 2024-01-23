@@ -13,11 +13,15 @@ export class GrwSensitiveAreaDetail {
   render() {
     return (
       <Host>
-        <div class="sensitive-area-title">{this.sensitiveArea.name}</div>
+        <div class="sensitive-area-title-container">
+          <div class="sensitive-area-color-container"></div>
+          <div class="sensitive-area-title">{this.sensitiveArea.name}</div>
+        </div>
+
         <div class="sensitive-area-description" innerHTML={this.sensitiveArea.description}></div>
         {this.sensitiveArea.practices && this.sensitiveArea.practices.length > 0 && (
           <div class="sensitive-area-practice-container">
-            <div class="sensitive-area-practice-title">Domaines d'activités concernés :</div>
+            <div class="sensitive-area-practice-title">Domaines d'activités concernés</div>
             <div class="sensitive-area-practice-values">
               {this.sensitiveArea.practices.map((sensitiveAreaPractice, index) => {
                 const practice = state.practices.find(statePractice => statePractice.id === sensitiveAreaPractice);

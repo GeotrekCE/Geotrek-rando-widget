@@ -38,7 +38,7 @@ export class GrwMap {
   @Prop() colorBackground = '#fef7ff';
 
   @Prop() colorTrekLine = '#6b0030';
-  @Prop() colorSensitiveArea = '	#4974a5';
+  @Prop() colorSensitiveArea = '#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
   @Prop() useGradient = false;
 
@@ -482,7 +482,7 @@ export class GrwMap {
         showCoverageOnHover: false,
         removeOutsideVisibleBounds: false,
         iconCreateFunction: cluster => {
-          return L.divIcon({ html: '<div>' + cluster.getChildCount() + '</div>', className: 'treks-marker-cluster-group-icon', iconSize: 48, iconAnchor: [24, 48] } as any);
+          return L.divIcon({ html: '<div>' + cluster.getChildCount() + '</div>', className: 'treks-marker-cluster-group-icon', iconSize: 48 } as any);
         },
       });
 
@@ -567,23 +567,34 @@ export class GrwMap {
     }).addTo(this.map);
 
     if (state.currentTrek.parking_location) {
+      const parkingImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/parking.svg`);
       const currentParking: Feature = {
         type: 'Feature',
-        properties: {},
+        properties: { name: state.currentTrek.advised_parking },
         geometry: { type: 'Point', coordinates: state.currentTrek.parking_location },
       };
       this.currentParkingLayer = L.geoJSON(currentParking, {
         pointToLayer: (_geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: '<div>P</div>',
+              html: `<img crossorigin="anonymous" src=${parkingImageSrc} />`,
               className: 'parking-icon',
               iconSize: 48,
               iconAnchor: [24, 48],
             } as any),
             autoPanOnFocus: false,
-            interactive: false,
           } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('mouseover', () => {
+            const parkingTooltip = L.DomUtil.create('div');
+            parkingTooltip.className = 'parking-tooltip';
+            const parkingName = L.DomUtil.create('div');
+            parkingName.innerHTML = geoJsonPoint.properties.name;
+            parkingName.className = 'parking-name';
+            parkingTooltip.appendChild(parkingName);
+            layer.bindTooltip(parkingTooltip).openTooltip();
+          });
+        },
       });
     }
 
@@ -842,7 +853,6 @@ export class GrwMap {
               html: `<div class="step-marker-container"><div class="step-number">${stepIndex}</div></div>`,
               className: 'step-marker',
               iconSize: 32,
-              iconAnchor: [16, 32],
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -1088,7 +1098,6 @@ export class GrwMap {
             html: `<div class="step-marker-container"><div class="step-number">${geoJsonPoint.properties.index}</div></div>`,
             className: 'selected-step-marker',
             iconSize: 64,
-            iconAnchor: [32, 64],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1281,7 +1290,6 @@ export class GrwMap {
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 32,
-              iconAnchor: [16, 64],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1344,7 +1352,6 @@ export class GrwMap {
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 32,
-              iconAnchor: [16, 64],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1385,7 +1392,6 @@ export class GrwMap {
             html: '<div>' + cluster.getChildCount() + '</div>',
             className: 'touristic-content-marker-cluster-group-icon',
             iconSize: 48,
-            iconAnchor: [24, 64],
           } as any);
         },
       });
@@ -1449,7 +1455,6 @@ export class GrwMap {
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 32,
-              iconAnchor: [16, 64],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1501,7 +1506,6 @@ export class GrwMap {
               : `<div class="touristic-content-marker-container"></div>`,
             className: 'selected-touristic-content-marker',
             iconSize: 64,
-            iconAnchor: [32, 64],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1599,7 +1603,6 @@ export class GrwMap {
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 32,
-              iconAnchor: [16, 64],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1640,7 +1643,6 @@ export class GrwMap {
             html: '<div>' + cluster.getChildCount() + '</div>',
             className: 'touristic-event-marker-cluster-group-icon',
             iconSize: 48,
-            iconAnchor: [24, 64],
           } as any);
         },
       });
@@ -1709,7 +1711,6 @@ export class GrwMap {
               : `<div class="touristic-event-marker-container"></div>`,
             className: 'selected-touristic-event-marker',
             iconSize: 64,
-            iconAnchor: [32, 64],
           } as any),
           autoPanOnFocus: false,
         } as any),

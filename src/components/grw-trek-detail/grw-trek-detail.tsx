@@ -1,9 +1,9 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
-import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel } from 'swiper';
+import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel, Scrollbar } from 'swiper';
 import { translate } from 'i18n/i18n';
 import state, { onChange, reset } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek, Option, Options } from 'types/types';
-import { formatDuration, formatLength, formatAscent } from 'utils/utils';
+import { formatDuration, formatLength, formatAscent, formatDescent } from 'utils/utils';
 
 const threshold = 1;
 const presentation: Option = {
@@ -21,6 +21,11 @@ const description: Option = {
   indicator: false,
   ref: 'descriptionOptionRef',
 };
+const pois: Option = {
+  visible: false,
+  indicator: false,
+  ref: 'poisOptionRef',
+};
 const recommendations: Option = {
   visible: false,
   indicator: false,
@@ -36,10 +41,10 @@ const informationPlaces: Option = {
   indicator: false,
   ref: 'informationPlacesOptionRef',
 };
-const pois: Option = {
+const accessibility: Option = {
   visible: false,
   indicator: false,
-  ref: 'poisOptionRef',
+  ref: 'accessibilityOptionRef',
 };
 const touristicContents: Option = {
   visible: false,
@@ -55,10 +60,11 @@ const options: Options = {
   presentation,
   steps,
   description,
+  pois,
   recommendations,
   sensitiveArea,
   informationPlaces,
-  pois,
+  accessibility,
   touristicContents,
   touristicEvents,
 };
@@ -93,18 +99,38 @@ export class GrwTrekDetail {
   informationPlacesRef?: HTMLDivElement;
   poiRef?: HTMLDivElement;
   stepsRef?: HTMLDivElement;
+  accessibilityRef?: HTMLDivElement;
   touristicContentsRef?: HTMLDivElement;
   touristicEventsRef?: HTMLDivElement;
   presentationOptionRef?: HTMLAnchorElement;
   stepsOptionRef?: HTMLAnchorElement;
   descriptionOptionRef?: HTMLAnchorElement;
   recommendationsOptionRef?: HTMLAnchorElement;
+  accessibilityOptionRef?: HTMLAnchorElement;
   OptionRef?: HTMLAnchorElement;
   sensitiveAreaOptionRef?: HTMLAnchorElement;
   informationPlacesOptionRef?: HTMLAnchorElement;
   poisOptionRef?: HTMLAnchorElement;
   touristicContentsOptionRef?: HTMLAnchorElement;
   touristicEventsOptionRef?: HTMLAnchorElement;
+  stepSwiperScrollbar?: HTMLDivElement;
+  poisSwiperScrollbar?: HTMLDivElement;
+  informationDesksContentsSwiperScrollbar?: HTMLDivElement;
+  touristicContentsSwiperScrollbar?: HTMLDivElement;
+  touristicEventsSwiperScrollbar?: HTMLDivElement;
+
+  presentationObserver: IntersectionObserver;
+  stepsObserver: IntersectionObserver;
+  descriptionObserver: IntersectionObserver;
+  recommendationsObserver: IntersectionObserver;
+  parkingObserver: IntersectionObserver;
+  sensitiveAreaObserver: IntersectionObserver;
+  informationPlacesObserver: IntersectionObserver;
+  accessibilityObserve: IntersectionObserver;
+  poiObserver: IntersectionObserver;
+  accessibilityObserver: IntersectionObserver;
+  touristicContentObserver: IntersectionObserver;
+  touristicEventObserver: IntersectionObserver;
 
   hasStep?: boolean;
 
@@ -163,12 +189,17 @@ export class GrwTrekDetail {
       this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
     };
     this.swiperStep = new Swiper(this.swiperStepRef, {
-      modules: [FreeMode, Mousewheel],
+      modules: [FreeMode, Mousewheel, Scrollbar],
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
       freeMode: true,
       mousewheel: { forceToAxis: true },
+      scrollbar: {
+        draggable: true,
+        hide: false,
+        el: this.stepSwiperScrollbar,
+      },
       breakpointsBase: 'container',
       breakpoints: {
         '540': {
@@ -177,12 +208,17 @@ export class GrwTrekDetail {
       },
     });
     this.swiperPois = new Swiper(this.swiperPoisRef, {
-      modules: [FreeMode, Mousewheel],
+      modules: [FreeMode, Mousewheel, Scrollbar],
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
       freeMode: true,
       mousewheel: { forceToAxis: true },
+      scrollbar: {
+        draggable: true,
+        hide: false,
+        el: this.poisSwiperScrollbar,
+      },
       breakpointsBase: 'container',
       breakpoints: {
         '540': {
@@ -191,12 +227,17 @@ export class GrwTrekDetail {
       },
     });
     this.swiperInformationDesks = new Swiper(this.swiperInformationDesksRef, {
-      modules: [FreeMode, Mousewheel],
+      modules: [FreeMode, Mousewheel, Scrollbar],
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
       freeMode: true,
       mousewheel: { forceToAxis: true },
+      scrollbar: {
+        draggable: true,
+        hide: false,
+        el: this.informationDesksContentsSwiperScrollbar,
+      },
       breakpointsBase: 'container',
       breakpoints: {
         '540': {
@@ -205,12 +246,17 @@ export class GrwTrekDetail {
       },
     });
     this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
-      modules: [FreeMode, Mousewheel],
+      modules: [FreeMode, Mousewheel, Scrollbar],
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
       freeMode: true,
       mousewheel: { forceToAxis: true },
+      scrollbar: {
+        draggable: true,
+        hide: false,
+        el: this.touristicContentsSwiperScrollbar,
+      },
       breakpointsBase: 'container',
       breakpoints: {
         '540': {
@@ -219,12 +265,17 @@ export class GrwTrekDetail {
       },
     });
     this.swiperTouristicEvents = new Swiper(this.swiperTouristicEventsRef, {
-      modules: [FreeMode, Mousewheel],
+      modules: [FreeMode, Mousewheel, Scrollbar],
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
       freeMode: true,
       mousewheel: { forceToAxis: true },
+      scrollbar: {
+        draggable: true,
+        hide: false,
+        el: this.touristicEventsSwiperScrollbar,
+      },
       breakpointsBase: 'container',
       breakpoints: {
         '540': {
@@ -233,7 +284,7 @@ export class GrwTrekDetail {
       },
     });
     if (this.presentationRef) {
-      const presentationObserver = new IntersectionObserver(
+      this.presentationObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.options = { ...this.options, presentation: { ...this.defaultOptions.presentation, indicator: isIntersecting } };
@@ -241,10 +292,10 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      presentationObserver.observe(this.presentationRef);
+      this.presentationObserver.observe(this.presentationRef);
     }
     if (this.stepsRef) {
-      const stepsObserver = new IntersectionObserver(
+      this.stepsObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.stepsIsInViewport.emit(isIntersecting);
@@ -253,10 +304,10 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      stepsObserver.observe(this.stepsRef);
+      this.stepsObserver.observe(this.stepsRef);
     }
     if (this.descriptionRef) {
-      const descriptionObserver = new IntersectionObserver(
+      this.descriptionObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.descriptionIsInViewport.emit(isIntersecting);
@@ -265,10 +316,10 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      descriptionObserver.observe(this.descriptionRef);
+      this.descriptionObserver.observe(this.descriptionRef);
     }
     if (this.recommendationRef) {
-      const recommendationsObserver = new IntersectionObserver(
+      this.recommendationsObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.options = { ...this.options, recommendations: { ...this.defaultOptions.recommendations, indicator: isIntersecting } };
@@ -276,21 +327,21 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      recommendationsObserver.observe(this.recommendationRef);
+      this.recommendationsObserver.observe(this.recommendationRef);
     }
     if (this.parkingRef) {
-      const parkingObserver = new IntersectionObserver(
+      this.parkingObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.parkingIsInViewport.emit(isIntersecting);
         },
         { threshold },
       );
-      parkingObserver.observe(this.parkingRef);
+      this.parkingObserver.observe(this.parkingRef);
     }
 
     if (this.sensitiveAreaRef) {
-      const sensitiveAreaRefObserver = new IntersectionObserver(
+      this.sensitiveAreaObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.sensitiveAreaIsInViewport.emit(isIntersecting);
@@ -299,11 +350,11 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      sensitiveAreaRefObserver.observe(this.sensitiveAreaRef);
+      this.sensitiveAreaObserver.observe(this.sensitiveAreaRef);
     }
 
     if (this.informationPlacesRef) {
-      const informationPlacesObserver = new IntersectionObserver(
+      this.informationPlacesObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.informationPlacesIsInViewport.emit(isIntersecting);
@@ -312,11 +363,23 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      informationPlacesObserver.observe(this.informationPlacesRef);
+      this.informationPlacesObserver.observe(this.informationPlacesRef);
+    }
+
+    if (this.accessibilityRef) {
+      this.accessibilityObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.options = { ...this.options, accessibility: { ...this.defaultOptions.accessibility, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.accessibilityObserver.observe(this.accessibilityRef);
     }
 
     if (this.poiRef) {
-      const poiObserver = new IntersectionObserver(
+      this.poiObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.poiIsInViewport.emit(isIntersecting);
@@ -325,10 +388,11 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      poiObserver.observe(this.poiRef);
+      this.poiObserver.observe(this.poiRef);
     }
+
     if (this.touristicContentsRef) {
-      const touristicContentObserver = new IntersectionObserver(
+      this.touristicContentObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.touristicContentsIsInViewport.emit(isIntersecting);
@@ -337,10 +401,10 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      touristicContentObserver.observe(this.touristicContentsRef);
+      this.touristicContentObserver.observe(this.touristicContentsRef);
     }
     if (this.touristicEventsRef) {
-      const touristicEventObserver = new IntersectionObserver(
+      this.touristicEventObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
           this.touristicEventsIsInViewport.emit(isIntersecting);
@@ -349,7 +413,7 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      touristicEventObserver.observe(this.touristicContentsRef);
+      this.touristicEventObserver.observe(this.touristicContentsRef);
     }
   }
 
@@ -393,6 +457,18 @@ export class GrwTrekDetail {
   }
 
   disconnectedCallback() {
+    this.presentationObserver && this.presentationObserver.disconnect();
+    this.stepsObserver && this.stepsObserver.disconnect();
+    this.descriptionObserver && this.descriptionObserver.disconnect();
+    this.recommendationsObserver && this.recommendationsObserver.disconnect();
+    this.parkingObserver && this.parkingObserver.disconnect();
+    this.sensitiveAreaObserver && this.sensitiveAreaObserver.disconnect();
+    this.informationPlacesObserver && this.informationPlacesObserver.disconnect();
+    this.accessibilityObserver && this.accessibilityObserver.disconnect();
+    this.poiObserver && this.poiObserver.disconnect();
+    this.accessibilityObserver && this.accessibilityObserver.disconnect();
+    this.touristicContentObserver && this.touristicContentObserver.disconnect();
+    this.touristicEventObserver && this.touristicEventObserver.disconnect();
     if (this.resetStoreOnDisconnected) {
       reset();
     }
@@ -404,6 +480,7 @@ export class GrwTrekDetail {
       presentation: { ...presentation },
       steps: { ...steps, visible: Boolean(state.parentTrek) },
       description: { ...description, visible: Boolean(this.currentTrek.description) },
+      pois: { ...pois, visible: Boolean(state.currentPois && state.currentPois.length > 0) },
       recommendations: { ...recommendations, visible: Boolean(this.currentTrek.advice || (this.labels && this.labels.length > 0)) },
       sensitiveArea: { ...sensitiveArea, visible: Boolean(state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0) },
       informationPlaces: {
@@ -413,7 +490,20 @@ export class GrwTrekDetail {
             state.currentInformationDesks.filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0,
         ),
       },
-      pois: { ...pois, visible: Boolean(state.currentPois && state.currentPois.length > 0) },
+      accessibility: {
+        ...accessibility,
+        visible: Boolean(
+          this.currentTrek.disabled_infrastructure ||
+            (this.accessibilities && this.accessibilities.length > 0) ||
+            this.currentTrek.accessibility_level ||
+            this.currentTrek.accessibility_slope ||
+            this.currentTrek.accessibility_width ||
+            this.currentTrek.accessibility_signage ||
+            this.currentTrek.accessibility_covering ||
+            this.currentTrek.accessibility_exposure ||
+            this.currentTrek.accessibility_advice,
+        ),
+      },
       touristicContents: { ...touristicContents, visible: Boolean(state.trekTouristicContents && state.trekTouristicContents.length > 0) },
       touristicEvents: { ...touristicEvents, visible: Boolean(state.touristicEvents && state.touristicEvents.length > 0) },
     };
@@ -501,6 +591,15 @@ export class GrwTrekDetail {
                 {translate[state.language].options.description}
               </a>
             )}
+            {this.options.pois.visible && (
+              <a
+                ref={el => (this.poisOptionRef = el)}
+                onClick={() => this.handleScrollTo(this.poiRef)}
+                class={`pois trek-option${this.indicatorSelectedTrekOption.ref === 'poisOptionRef' ? ' selected-trek-option' : ''}`}
+              >
+                {translate[state.language].options.pois}
+              </a>
+            )}
             {this.options.recommendations.visible && (
               <a
                 ref={el => (this.recommendationsOptionRef = el)}
@@ -528,13 +627,13 @@ export class GrwTrekDetail {
                 {translate[state.language].options.informationPlaces}
               </a>
             )}
-            {this.options.pois.visible && (
+            {this.options.accessibility.visible && (
               <a
-                ref={el => (this.poisOptionRef = el)}
-                onClick={() => this.handleScrollTo(this.poiRef)}
-                class={`pois trek-option${this.indicatorSelectedTrekOption.ref === 'poisOptionRef' ? ' selected-trek-option' : ''}`}
+                ref={el => (this.accessibilityOptionRef = el)}
+                onClick={() => this.handleScrollTo(this.accessibilityRef)}
+                class={`accessibility trek-option${this.indicatorSelectedTrekOption.ref === 'accessibilityOptionRef' ? ' selected-trek-option' : ''}`}
               >
-                {translate[state.language].options.pois}
+                {translate[state.language].options.accessibility}
               </a>
             )}
             {this.options.touristicContents.visible && (
@@ -602,43 +701,41 @@ export class GrwTrekDetail {
             )}
             <div class="sub-container">
               <div class="icons-labels-container">
-                <div class="row">
-                  <div class="icon-label difficulty">
-                    {this.difficulty?.pictogram && (
-                      <img
-                        /* @ts-ignore */
-                        crossorigin="anonymous"
-                        src={this.difficulty.pictogram}
-                      />
-                    )}
-                    {this.difficulty?.label}
-                  </div>
-                  <div class="icon-label duration">
-                    {/* @ts-ignore */}
-                    <span translate={false} class="material-symbols material-symbols-outlined">
-                      timelapse
-                    </span>
-                    {formatDuration(this.currentTrek?.duration)}
-                  </div>
-                  <div class="icon-label route">
-                    {this.route?.pictogram && (
-                      <img
-                        /* @ts-ignore */
-                        crossorigin="anonymous"
-                        src={this.route.pictogram}
-                      />
-                    )}
-                    {this.route?.route}
-                  </div>
+                <div class="icon-label difficulty">
+                  {this.difficulty?.pictogram && (
+                    <img
+                      /* @ts-ignore */
+                      crossorigin="anonymous"
+                      src={this.difficulty.pictogram}
+                    />
+                  )}
+                  {this.difficulty?.label}
                 </div>
-                <div class="row">
-                  <div class="icon-label length">
-                    {/* @ts-ignore */}
-                    <span translate={false} class="material-symbols material-symbols-outlined">
-                      open_in_full
-                    </span>
-                    {formatLength(this.currentTrek.length_2d)}
-                  </div>
+                <div class="icon-label duration">
+                  {/* @ts-ignore */}
+                  <span translate={false} class="material-symbols material-symbols-outlined">
+                    timelapse
+                  </span>
+                  {formatDuration(this.currentTrek?.duration)}
+                </div>
+                <div class="icon-label route">
+                  {this.route?.pictogram && (
+                    <img
+                      /* @ts-ignore */
+                      crossorigin="anonymous"
+                      src={this.route.pictogram}
+                    />
+                  )}
+                  {this.route?.route}
+                </div>
+                <div class="icon-label length">
+                  {/* @ts-ignore */}
+                  <span translate={false} class="material-symbols material-symbols-outlined">
+                    open_in_full
+                  </span>
+                  {formatLength(this.currentTrek.length_2d)}
+                </div>
+                {this.currentTrek.ascent && (
                   <div class="icon-label ascent">
                     {/* @ts-ignore */}
                     <span translate={false} class="material-symbols material-symbols-outlined">
@@ -646,16 +743,40 @@ export class GrwTrekDetail {
                     </span>
                     {formatAscent(this.currentTrek.ascent)}
                   </div>
-                  <div class="icon-label practice">
-                    {this.practice?.pictogram && (
-                      <img
-                        /* @ts-ignore */
-                        crossorigin="anonymous"
-                        src={this.practice.pictogram}
-                      />
-                    )}
-                    {this.practice?.name}
+                )}
+                {this.currentTrek.descent && (
+                  <div class="icon-label descent">
+                    {/* @ts-ignore */}
+                    <span translate={false} class="material-symbols material-symbols-outlined">
+                      moving
+                    </span>
+                    {formatDescent(this.currentTrek.descent)}
                   </div>
+                )}
+                <div class="icon-label practice">
+                  {this.practice?.pictogram && (
+                    <img
+                      /* @ts-ignore */
+                      crossorigin="anonymous"
+                      src={this.practice.pictogram}
+                    />
+                  )}
+                  {this.practice?.name}
+                </div>
+                <div class="icon-label networks">
+                  {this.currentTrek.networks.map(networkId => {
+                    const currentNetwork = state.networks.find(network => network.id === networkId);
+                    return (
+                      <div class="network">
+                        <img
+                          /* @ts-ignore */
+                          crossorigin="anonymous"
+                          src={currentNetwork.pictogram}
+                        />
+                        {currentNetwork.label}
+                      </div>
+                    );
+                  })}
                 </div>
                 {this.currentTrek.ratings.map(trekRating => (
                   <div class="row">
@@ -718,7 +839,6 @@ export class GrwTrekDetail {
                         return (
                           <div class="swiper-slide">
                             <grw-trek-card
-                              reset-store-on-disconnected="false"
                               key={`trek-${trek.id}`}
                               trek={trek}
                               is-large-view={false}
@@ -734,6 +854,7 @@ export class GrwTrekDetail {
                         );
                       })}
                   </div>
+                  <div class="swiper-scrollbar" ref={el => (this.stepSwiperScrollbar = el)}></div>
                 </div>
               </div>
             )}
@@ -764,17 +885,48 @@ export class GrwTrekDetail {
                 <div innerHTML={this.cities.join(', ')}></div>
               </div>
             )}
+            {state.currentPois && state.currentPois.length > 0 && (
+              <div>
+                <div class="divider"></div>
+                <div class="pois-container">
+                  <div class="pois-title" ref={el => (this.poiRef = el)}>
+                    {translate[state.language].pois(state.currentPois.length)}
+                  </div>
+                  <div class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
+                    <div class="swiper-wrapper">
+                      {state.currentPois.map(poi => (
+                        <div class="swiper-slide">
+                          <grw-poi poi={poi}></grw-poi>
+                        </div>
+                      ))}
+                    </div>
+                    <div class="swiper-scrollbar" ref={el => (this.poisSwiperScrollbar = el)}></div>
+                  </div>
+                </div>
+              </div>
+            )}
             {this.weather && this.currentTrek.departure_city && (
-              <div class="weather-container">
-                <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${this.currentTrek.departure_city}0#${this.colorPrimaryApp}`}></iframe>
+              <div>
+                <div class="divider"></div>
+                <div class="weather-container">
+                  <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${this.currentTrek.departure_city}0#${this.colorPrimaryApp}`}></iframe>
+                </div>
               </div>
             )}
             {this.currentTrek.access && (
               <div>
                 <div class="divider"></div>
                 <div class="access-container">
-                  <div class="access-title">{translate[state.language].roadAccess}</div>
+                  <div class="access-title">{translate[state.language].roadAccessAndParking}</div>
                   <div class="access" innerHTML={this.currentTrek.access}></div>
+                  {this.currentTrek.advised_parking && (
+                    <div>
+                      <div class="advised-parking-title" ref={el => (this.parkingRef = el)}>
+                        {translate[state.language].recommendedParking}
+                      </div>
+                      <div class="advised-parking" innerHTML={this.currentTrek.advised_parking}></div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -787,7 +939,7 @@ export class GrwTrekDetail {
                 </div>
               </div>
             )}
-            {(this.currentTrek.advice || this.labels.length > 0) && (
+            {(this.currentTrek.advice || this.currentTrek.gear || this.labels.length > 0) && (
               <div>
                 <div class="divider"></div>
                 <div class="advice-container">
@@ -801,6 +953,15 @@ export class GrwTrekDetail {
                         warning
                       </span>
                       <div class="advice" innerHTML={this.currentTrek.advice}></div>
+                    </div>
+                  )}
+                  {this.currentTrek.gear && (
+                    <div class="gear-container">
+                      {/* @ts-ignore */}
+                      <span translate={false} class="material-symbols material-symbols-outlined">
+                        backpack
+                      </span>
+                      <div class="gear" innerHTML={this.currentTrek.gear}></div>
                     </div>
                   )}
                   {this.labels.map(label => (
@@ -821,26 +982,6 @@ export class GrwTrekDetail {
                 </div>
               </div>
             )}
-            {this.currentTrek.advised_parking && (
-              <div>
-                <div class="divider"></div>
-                <div class="advised-parking-container">
-                  <div class="advised-parking-title" ref={el => (this.parkingRef = el)}>
-                    {translate[state.language].recommendedParking}
-                  </div>
-                  <div class="advised-parking" innerHTML={this.currentTrek.advised_parking}></div>
-                </div>
-              </div>
-            )}
-            {this.currentTrek.gear && (
-              <div>
-                <div class="divider"></div>
-                <div class="gear-container">
-                  <div class="gear-title">{translate[state.language].equipments}</div>
-                  <div class="gear" innerHTML={this.currentTrek.gear}></div>
-                </div>
-              </div>
-            )}
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
               <div>
                 <div class="divider"></div>
@@ -848,6 +989,7 @@ export class GrwTrekDetail {
                   <div class="sensitive-areas-title" ref={el => (this.sensitiveAreaRef = el)}>
                     {translate[state.language].environmentalSensitiveAreas}
                   </div>
+                  <div class="sensitive-areas-description">{translate[state.language].sensitiveAreasDescription}</div>
                   {state.currentSensitiveAreas.map(sensitiveArea => (
                     <grw-sensitive-area-detail sensitiveArea={sensitiveArea}></grw-sensitive-area-detail>
                   ))}
@@ -872,6 +1014,7 @@ export class GrwTrekDetail {
                             </div>
                           ))}
                       </div>
+                      <div class="swiper-scrollbar" ref={el => (this.informationDesksContentsSwiperScrollbar = el)}></div>
                     </div>
                   </div>
                 </div>
@@ -888,7 +1031,9 @@ export class GrwTrekDetail {
               <div>
                 <div class="divider"></div>
                 <div class="accessibilities-container">
-                  <div class="accessibilities-title">{translate[state.language].accessibility}</div>
+                  <div class="accessibilities-title" ref={el => (this.accessibilityRef = el)}>
+                    {translate[state.language].accessibility}
+                  </div>
                   {this.currentTrek.disabled_infrastructure && <div innerHTML={this.currentTrek.disabled_infrastructure}></div>}
                   <div class="accessibilities-content-container">
                     {this.accessibilities.map(accessibility => (
@@ -947,25 +1092,6 @@ export class GrwTrekDetail {
                 </div>
               </div>
             )}
-            {state.currentPois && state.currentPois.length > 0 && (
-              <div>
-                <div class="divider"></div>
-                <div class="pois-container">
-                  <div class="pois-title" ref={el => (this.poiRef = el)}>
-                    {translate[state.language].pois(state.currentPois.length)}
-                  </div>
-                  <div class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
-                    <div class="swiper-wrapper">
-                      {state.currentPois.map(poi => (
-                        <div class="swiper-slide">
-                          <grw-poi poi={poi}></grw-poi>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
             {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
               <div>
                 <div class="divider"></div>
@@ -981,6 +1107,7 @@ export class GrwTrekDetail {
                         </div>
                       ))}
                     </div>
+                    <div class="swiper-scrollbar" ref={el => (this.touristicContentsSwiperScrollbar = el)}></div>
                   </div>
                 </div>
               </div>
@@ -1000,6 +1127,7 @@ export class GrwTrekDetail {
                         </div>
                       ))}
                     </div>
+                    <div class="swiper-scrollbar" ref={el => (this.touristicEventsSwiperScrollbar = el)}></div>
                   </div>
                 </div>
               </div>

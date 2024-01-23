@@ -15,6 +15,7 @@ export type Trek = {
   duration: number;
   length_2d: number;
   ascent: number;
+  descent: number;
   departure: string;
   departure_city: string;
   arrival?: string;
@@ -48,6 +49,7 @@ export type Trek = {
   children?: number[];
   ratings?: number[];
   ratings_description?: string;
+  networks: number[];
 };
 
 export type Attachments = Attachment[];
@@ -308,10 +310,11 @@ export type Options = {
   presentation: Option;
   steps: Option;
   description: Option;
+  pois: Option;
   recommendations: Option;
   sensitiveArea: Option;
   informationPlaces: Option;
-  pois: Option;
+  accessibility: Option;
   touristicContents: Option;
   touristicEvents: Option;
 };
@@ -331,4 +334,12 @@ export type RatingsScale = RatingScale[];
 export type RatingScale = {
   id: number;
   name: string;
+};
+
+export type Networks = Network[];
+
+export type Network = {
+  id: number;
+  label: string;
+  pictogram: string;
 };
