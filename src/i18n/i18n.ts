@@ -93,6 +93,8 @@ interface Translation {
   readMore: string;
   readLess: string;
   sensitiveAreasDescription: string;
+  emergencyNumber: string;
+  learnMore: string;
 }
 
 interface AvailableTranslations {
@@ -197,6 +199,8 @@ export const translate: AvailableTranslations = {
     readLess: 'Lire moins',
     sensitiveAreasDescription:
       'Le long de votre itinéraire, vous allez traverser des zones de sensibilité liées à la présence d’une espèce ou d’un milieu particulier. Dans ces zones, un comportement adapté permet de contribuer à leur préservation. Pour plus d’informations détaillées, des fiches spécifiques sont accessibles pour chaque zone.',
+    emergencyNumber: 'Numéro de secours',
+    learnMore: 'En savoir plus',
   },
   en: {
     filter: 'Filter',
@@ -294,5 +298,7 @@ export const translate: AvailableTranslations = {
     readLess: 'Read less',
     sensitiveAreasDescription:
       'Along your trek, you will go through sensitive areas related to the presence of a specific species or environment. In these areas, an appropriate behaviour allows to contribute to their preservation. For detailed information, specific forms are accessible for each area.',
+    emergencyNumber: 'Emergency number',
+    learnMore: 'Learn more',
   },
 };

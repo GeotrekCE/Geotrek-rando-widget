@@ -237,7 +237,8 @@ grw-trek-detail {
   .source-container,
   .accessibilities-container,
   .parent-trek-container,
-  .weather-container {
+  .weather-container,
+  .weblinks-container {
     padding: 0px 24px 0px 24px;
   }
   .ambiance,
@@ -257,7 +258,8 @@ grw-trek-detail {
   .parent-trek-container,
   .step-container,
   .touristic-content-container,
-  .touristic-event-container {
+  .touristic-event-container,
+  .weblinks-container {
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
@@ -284,7 +286,8 @@ grw-trek-detail {
   .step-title,
   .parent-trek-title,
   .touristic-content-title,
-  .touristic-event-title {
+  .touristic-event-title,
+  .weblinks-title {
     color: var(--color-on-surface);
     font-size: 22px;
     line-height: 28px;
@@ -313,7 +316,8 @@ grw-trek-detail {
   .accessibilities-title,
   .parent-trek-title,
   .touristic-content-title,
-  .touristic-event-title {
+  .touristic-event-title,
+  .weblinks-title {
     margin-bottom: 16px;
   }
 
@@ -345,6 +349,33 @@ grw-trek-detail {
     background-color: transparent;
     div {
       margin-right: 4px;
+    }
+  }
+
+  .accessibility-emergency-number-content {
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      border-radius: var(--border-radius, 40px);
+      background-color: var(--color-primary-container);
+      color: var(--color-on-primary-container);
+      text-decoration: none;
+      font-weight: 600;
+      width: fit-content;
+      padding: 8px 16px;
+      box-shadow: var(--elevation-1);
+      height: 32px;
+      gap: 8px;
+      box-sizing: border-box;
+      text-align: start;
+      vertical-align: middle;
+      position: relative;
+      font-family: var(--font-family);
+      &:hover {
+        box-shadow: var(--elevation-2);
+      }
     }
   }
 }
@@ -461,6 +492,22 @@ grw-trek-detail {
     }
   }
 }
+.weblinks-container {
+  .weblink-container {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+    padding: 12px 0px;
+    img {
+      width: 26px;
+      margin-right: 16px;
+    }
+  }
+}
+
 .departure-container,
 .arrival-container,
 .cities-container {
@@ -496,7 +543,8 @@ grw-trek-detail {
   .accessibility-signage-title,
   .accessibility-covering-title,
   .accessibility-exposure-title,
-  .accessibility-advice-title {
+  .accessibility-advice-title,
+  .accessibility-emergency-number-title {
     color: var(--color-on-surface);
     font-size: 22px;
     line-height: 28px;

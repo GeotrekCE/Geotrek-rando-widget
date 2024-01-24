@@ -39,6 +39,7 @@ export class GrwApp {
   @Prop() urlLayer: string;
   @Prop() attributionLayer: string;
   @Prop() weather = false;
+  @Prop() emergencyNumber: number;
 
   @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6750a4';
@@ -524,6 +525,7 @@ export class GrwApp {
                     color-background={this.colorBackground}
                     weather={this.weather}
                     is-large-view={this.isLargeView}
+                    emergency-number={this.emergencyNumber}
                   ></grw-trek-detail>
                 </div>
               )}

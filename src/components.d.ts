@@ -32,6 +32,7 @@ export namespace Components {
         "colorSurfaceVariant": string;
         "colorTrekLine": string;
         "districts": string;
+        "emergencyNumber": number;
         "fabBackgroundColor": string;
         "fabColor": string;
         "fontFamily": string;
@@ -229,6 +230,7 @@ export namespace Components {
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "emergencyNumber": number;
         "fontFamily": string;
         "isLargeView": boolean;
         "resetStoreOnDisconnected": boolean;
@@ -517,6 +519,7 @@ declare namespace LocalJSX {
         "colorSurfaceVariant"?: string;
         "colorTrekLine"?: string;
         "districts"?: string;
+        "emergencyNumber"?: number;
         "fabBackgroundColor"?: string;
         "fabColor"?: string;
         "fontFamily"?: string;
@@ -728,6 +731,7 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "emergencyNumber"?: number;
         "fontFamily"?: string;
         "isLargeView"?: boolean;
         "onDescriptionIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;

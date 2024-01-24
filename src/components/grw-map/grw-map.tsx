@@ -3,6 +3,7 @@ import { Feature, FeatureCollection } from 'geojson';
 import L, { MarkerClusterGroup, TileLayer } from 'leaflet';
 import 'leaflet-rotate';
 import 'leaflet.locatecontrol';
+import 'leaflet-i18n';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import state, { onChange, reset } from 'store/store';
@@ -886,6 +887,15 @@ export class GrwMap {
         },
       });
     }
+
+    let elevationTranslation = {
+      'y: ': '',
+      'x: ': '',
+    };
+    /* @ts-ignore */
+    L.registerLocale('fr', elevationTranslation);
+    /* @ts-ignore */
+    L.setLocale('fr');
 
     const elevationOptions = {
       srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',

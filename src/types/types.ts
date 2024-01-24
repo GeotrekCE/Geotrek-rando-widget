@@ -50,6 +50,7 @@ export type Trek = {
   ratings?: number[];
   ratings_description?: string;
   networks: number[];
+  web_links: Weblink[];
 };
 
 export type Attachments = Attachment[];
@@ -340,6 +341,18 @@ export type Networks = Network[];
 
 export type Network = {
   id: number;
+  label: string;
+  pictogram: string;
+};
+
+export type Weblink = {
+  name: string;
+  url: string;
+  category: WeblinkCategory;
+};
+
+export type WeblinkCategory = {
+  id: string;
   label: string;
   pictogram: string;
 };

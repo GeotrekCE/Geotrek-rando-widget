@@ -157,6 +157,7 @@ export class GrwTrekDetail {
   @State() cities: string[];
   @State() options: Options;
   @Prop() trek: Trek;
+  @Prop() emergencyNumber: number;
 
   @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
@@ -501,7 +502,8 @@ export class GrwTrekDetail {
             this.currentTrek.accessibility_signage ||
             this.currentTrek.accessibility_covering ||
             this.currentTrek.accessibility_exposure ||
-            this.currentTrek.accessibility_advice,
+            this.currentTrek.accessibility_advice ||
+            this.emergencyNumber,
         ),
       },
       touristicContents: { ...touristicContents, visible: Boolean(state.trekTouristicContents && state.trekTouristicContents.length > 0) },
@@ -561,7 +563,7 @@ export class GrwTrekDetail {
           '--color-secondary-container': this.colorSecondaryContainer,
           '--color-on-secondary-container': this.colorOnSecondaryContainer,
           '--color-background': this.colorBackground,
-          '--detail-bottom-space-height': this.isLargeView ? '8px' : '104px',
+          '--detail-bottom-space-height': this.isLargeView ? '8px' : '200px',
         }}
       >
         {this.currentTrek && (
@@ -1027,7 +1029,8 @@ export class GrwTrekDetail {
               this.currentTrek.accessibility_signage ||
               this.currentTrek.accessibility_covering ||
               this.currentTrek.accessibility_exposure ||
-              this.currentTrek.accessibility_advice) && (
+              this.currentTrek.accessibility_advice ||
+              this.emergencyNumber) && (
               <div>
                 <div class="divider"></div>
                 <div class="accessibilities-container">
@@ -1047,6 +1050,25 @@ export class GrwTrekDetail {
                       </div>
                     ))}
                   </div>
+                  {this.emergencyNumber && (
+                    <div class="accessibility-emergency-number-container">
+                      <div class="accessibility-emergency-number-title">{translate[state.language].emergencyNumber}</div>
+                      <div class="accessibility-emergency-number-content">
+                        {
+                          <a href={`tel:${this.emergencyNumber.toString()}`}>
+                            <span
+                              /* @ts-ignore */
+                              translate={false}
+                              class="material-symbols material-symbols-outlined"
+                            >
+                              call
+                            </span>
+                            {this.emergencyNumber.toString()}
+                          </a>
+                        }
+                      </div>
+                    </div>
+                  )}
                   {this.currentTrek.accessibility_level && (
                     <div class="accessibility-level-container">
                       <div class="accessibility-level-title">{translate[state.language].accessibilityLevel}</div>
@@ -1129,6 +1151,26 @@ export class GrwTrekDetail {
                     </div>
                     <div class="swiper-scrollbar" ref={el => (this.touristicEventsSwiperScrollbar = el)}></div>
                   </div>
+                </div>
+              </div>
+            )}
+            {this.currentTrek.web_links && this.currentTrek.web_links.length > 0 && (
+              <div>
+                <div class="divider"></div>
+                <div class="weblinks-container">
+                  <div class="weblinks-title">{translate[state.language].learnMore}</div>
+                  {this.currentTrek.web_links.map(weblink => (
+                    <a class="weblink-container" href={weblink.url} target="_blank" rel="noopener noreferrer">
+                      {weblink.category && weblink.category.pictogram && (
+                        <img
+                          /* @ts-ignore */
+                          crossorigin="anonymous"
+                          src={weblink.category.pictogram}
+                        />
+                      )}
+                      {weblink.name}
+                    </a>
+                  ))}
                 </div>
               </div>
             )}

@@ -75,7 +75,7 @@ export class GrwTouristicContentDetail {
           '--color-secondary-container': this.colorSecondaryContainer,
           '--color-on-secondary-container': this.colorOnSecondaryContainer,
           '--color-background': this.colorBackground,
-          '--detail-bottom-space-height': this.isLargeView ? '8px' : '104px',
+          '--detail-bottom-space-height': this.isLargeView ? '8px' : '152px',
         }}
       >
         {state.currentTouristicContent && (
