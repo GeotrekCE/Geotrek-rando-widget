@@ -25,7 +25,7 @@
 
 ### Depends on
 
-- [grw-touristic-content-card](../grw-touristic-content)
+- [grw-touristic-content-card](../grw-touristic-content-card)
 
 ### Graph
 ```mermaid

@@ -30,6 +30,7 @@
 | `colorSurfaceVariant`       | `color-surface-variant`        |             | `string`  | `'#fef7ff'` |
 | `colorTrekLine`             | `color-trek-line`              |             | `string`  | `'#6b0030'` |
 | `districts`                 | `districts`                    |             | `string`  | `undefined` |
+| `emergencyNumber`           | `emergency-number`             |             | `number`  | `undefined` |
 | `fabBackgroundColor`        | `fab-background-color`         |             | `string`  | `'#eaddff'` |
 | `fabColor`                  | `fab-color`                    |             | `string`  | `'#21005d'` |
 | `fontFamily`                | `font-family`                  |             | `string`  | `'Roboto'`  |
@@ -103,9 +104,9 @@ graph TD;
   grw-touristic-contents-list --> grw-touristic-content-card
   grw-touristic-events-list --> grw-touristic-event-card
   grw-trek-detail --> grw-trek-card
+  grw-trek-detail --> grw-poi
   grw-trek-detail --> grw-sensitive-area-detail
   grw-trek-detail --> grw-information-desk
-  grw-trek-detail --> grw-poi
   grw-trek-detail --> grw-touristic-content-card
   grw-trek-detail --> grw-touristic-event-card
   grw-filters --> grw-filter

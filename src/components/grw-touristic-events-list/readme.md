@@ -25,7 +25,7 @@
 
 ### Depends on
 
-- [grw-touristic-event-card](../grw-touristic-event)
+- [grw-touristic-event-card](../grw-touristic-event-card)
 
 ### Graph
 ```mermaid
