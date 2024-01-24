@@ -524,6 +524,11 @@ grw-trek-detail {
   }
 }
 .accessibilities-container {
+  div:nth-child(2) {
+    div:first-child {
+      padding: 0px 0px 12px 0px;
+    }
+  }
   .accessibilities-content-container {
     padding: 12px 0px 0px 0px;
     display: flex;

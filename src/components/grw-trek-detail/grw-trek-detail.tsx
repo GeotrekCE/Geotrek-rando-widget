@@ -1038,18 +1038,20 @@ export class GrwTrekDetail {
                     {translate[state.language].accessibility}
                   </div>
                   {this.currentTrek.disabled_infrastructure && <div innerHTML={this.currentTrek.disabled_infrastructure}></div>}
-                  <div class="accessibilities-content-container">
-                    {this.accessibilities.map(accessibility => (
-                      <div class="accessibility-content-container">
-                        <img
-                          /* @ts-ignore */
-                          crossorigin="anonymous"
-                          src={accessibility.pictogram}
-                        ></img>
-                        <div innerHTML={accessibility.name}></div>
-                      </div>
-                    ))}
-                  </div>
+                  {this.accessibilities && this.accessibilities.length > 0 && (
+                    <div class="accessibilities-content-container">
+                      {this.accessibilities.map(accessibility => (
+                        <div class="accessibility-content-container">
+                          <img
+                            /* @ts-ignore */
+                            crossorigin="anonymous"
+                            src={accessibility.pictogram}
+                          ></img>
+                          <div innerHTML={accessibility.name}></div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   {this.emergencyNumber && (
                     <div class="accessibility-emergency-number-container">
                       <div class="accessibility-emergency-number-title">{translate[state.language].emergencyNumber}</div>

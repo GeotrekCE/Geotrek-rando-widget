@@ -902,7 +902,7 @@ export class GrwMap {
       elevationDiv: `#elevation`,
       theme: `custom-theme${!this.useGradient ? ' use-theme-color' : ''}`,
       detached: true,
-      height: 250,
+      height: 270,
       wptIcons: true,
       wptLabels: true,
       collapsed: false,
@@ -1790,7 +1790,7 @@ export class GrwMap {
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
           '--contract-image-src': `url(${contractImageSrc})`,
-          '--map-bottom-space-height': this.isLargeView ? '0px' : '70px',
+          '--map-bottom-space-height': this.isLargeView ? '0px' : '80px',
         }}
       >
         <div id="map" style={{}} class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
