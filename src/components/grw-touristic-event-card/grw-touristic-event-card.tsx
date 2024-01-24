@@ -138,11 +138,13 @@ export class GrwTouristicEvent {
           </div>
           <div class="touristic-event-sub-container">
             <div class="touristic-event-type-container">
-              <img
-                /* @ts-ignore */
-                crossorigin="anonymous"
-                src={touristicEventType.pictogram}
-              />
+              {touristicEventType && touristicEventType.pictogram && (
+                <img
+                  /* @ts-ignore */
+                  crossorigin="anonymous"
+                  src={touristicEventType.pictogram}
+                />
+              )}
               <div class="touristic-event-type-name">{touristicEventType.type}</div>
             </div>
             <div class="touristic-event-name">{this.touristicEvent.name}</div>

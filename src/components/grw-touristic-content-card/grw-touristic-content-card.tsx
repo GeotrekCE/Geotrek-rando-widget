@@ -138,11 +138,13 @@ export class GrwTouristicContentCard {
           </div>
           <div class="touristic-content-sub-container">
             <div class="touristic-content-category-container">
-              <img
-                /* @ts-ignore */
-                crossorigin="anonymous"
-                src={touristicContentCategory.pictogram}
-              />
+              {touristicContentCategory && touristicContentCategory.pictogram && (
+                <img
+                  /* @ts-ignore */
+                  crossorigin="anonymous"
+                  src={touristicContentCategory.pictogram}
+                />
+              )}
               <div class="touristic-content-category-name">{touristicContentCategory.label}</div>
             </div>
             <div class="touristic-content-name">{this.touristicContent.name}</div>

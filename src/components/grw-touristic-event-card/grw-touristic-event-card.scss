@@ -11,8 +11,6 @@
 }
 
 :host {
-  display: flex;
-  flex-direction: column;
   a {
     color: var(--color-primary-app);
   }
@@ -144,7 +142,7 @@
   }
 }
 
-.touristic-event-container {
+.touristic-event-card-container {
   width: 100%;
   max-width: 350px;
   .image {
