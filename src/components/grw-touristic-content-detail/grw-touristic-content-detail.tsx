@@ -33,22 +33,20 @@ export class GrwTouristicContentDetail {
   touristicContentDetailContainerRef?: HTMLElement;
 
   componentDidLoad() {
-    if (this.swiperImagesRef) {
-      this.swiperImages = new Swiper(this.swiperImagesRef, {
-        modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
-        navigation: {
-          prevEl: this.prevElImagesRef,
-          nextEl: this.nextElImagesRef,
-        },
-        pagination: { el: this.paginationElImagesRef },
-        allowTouchMove: false,
-        keyboard: false,
-      });
-      this.swiperImagesRef.onfullscreenchange = () => {
-        this.displayFullscreen = !this.displayFullscreen;
-        this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
-      };
-    }
+    this.swiperImages = new Swiper(this.swiperImagesRef, {
+      modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
+      navigation: {
+        prevEl: this.prevElImagesRef,
+        nextEl: this.nextElImagesRef,
+      },
+      pagination: { el: this.paginationElImagesRef },
+      allowTouchMove: false,
+      keyboard: false,
+    });
+    this.swiperImagesRef.onfullscreenchange = () => {
+      this.displayFullscreen = !this.displayFullscreen;
+      this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
+    };
   }
 
   handleFullscreen() {
@@ -75,7 +73,13 @@ export class GrwTouristicContentDetail {
           '--color-secondary-container': this.colorSecondaryContainer,
           '--color-on-secondary-container': this.colorOnSecondaryContainer,
           '--color-background': this.colorBackground,
-          '--detail-bottom-space-height': this.isLargeView ? '8px' : '152px',
+          '--detail-bottom-space-height': this.isLargeView
+            ? state.languages && state.languages.length > 1
+              ? '44px'
+              : '12px'
+            : state.languages && state.languages.length > 1
+            ? '204px'
+            : '164px',
         }}
       >
         {state.currentTouristicContent && (

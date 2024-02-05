@@ -18,6 +18,10 @@
     border-top-left-radius: var(--border-radius, 12px);
     border-top-right-radius: var(--border-radius, 12px);
   }
+  .default-trek-img {
+    background-color: var(--color-primary-container);
+    object-fit: contain;
+  }
   .sub-container {
     display: flex;
     flex-direction: column;
@@ -64,41 +68,38 @@
       }
     }
     .icons-labels-container {
+      padding: 0px 0px 8px 0px;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
-      color: var(--color-on-surface);
-      font-size: 14px;
-      line-height: 20px;
-      font-weight: 500;
-      .row {
+      gap: 16px;
+      .icon-label {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
-        width: 100%;
-        &:not(:last-child) {
-          margin-bottom: 12px;
+        width: calc((100% / 2) - 16px);
+        img,
+        .icon {
+          font-size: 24px;
+          width: 24px;
+          height: auto;
+          color: var(--color-primary-app);
+          margin-right: 8px;
         }
-        .icon-label {
-          &:nth-child(2) {
-            margin: 0px 4px;
-          }
-          display: flex;
-          align-items: center;
-          width: 50%;
-          img,
-          span {
-            font-size: 24px;
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
+        .network {
+          &:not(:last-child) {
+            margin-right: 16px;
           }
         }
-        .practice {
-          img {
-            background-color: var(--color-primary-app);
-          }
+        .difficulty {
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+      .practice {
+        img {
+          background-color: var(--color-primary-app);
         }
       }
     }
@@ -112,9 +113,12 @@
 .trek-card-container {
   width: 100%;
   max-width: 350px;
-  .image {
-    width: 100%;
-    max-height: 200px;
+  .trek-img-container {
+    height: 200px;
+    .image {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 
@@ -122,11 +126,39 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  .image {
-    width: 250px;
+  .trek-img-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    .image {
+      width: 250px;
+      height: 200px;
+    }
   }
 }
 
 .trek-step-card {
   width: auto;
+}
+
+.trek-card-container .sub-container .departure {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  height: 56px;
+}
+
+.trek-card-container .sub-container .name {
+  height: 56px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.is-current-step {
+  background-color: var(--color-surface-variant);
 }

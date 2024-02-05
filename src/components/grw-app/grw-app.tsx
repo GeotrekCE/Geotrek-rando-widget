@@ -278,14 +278,16 @@ export class GrwApp {
   getMapVisibilityLabelButton() {
     let mapLabelButton: string;
 
-    if (this.showTrek) {
-      mapLabelButton = this.showTrekMap ? translate[state.language].showDetails : translate[state.language].showRoute;
-    } else if (this.showTouristicContent) {
-      mapLabelButton = this.showTouristicContentMap ? translate[state.language].showDetails : translate[state.language].showMap;
-    } else if (this.showTouristicEvent) {
-      mapLabelButton = this.showTouristicEventMap ? translate[state.language].showDetails : translate[state.language].showMap;
-    } else {
-      mapLabelButton = this.showHomeMap ? translate[state.language].showList : translate[state.language].showMap;
+    if (state.language) {
+      if (this.showTrek) {
+        mapLabelButton = this.showTrekMap ? translate[state.language].showDetails : translate[state.language].showRoute;
+      } else if (this.showTouristicContent) {
+        mapLabelButton = this.showTouristicContentMap ? translate[state.language].showDetails : translate[state.language].showMap;
+      } else if (this.showTouristicEvent) {
+        mapLabelButton = this.showTouristicEventMap ? translate[state.language].showDetails : translate[state.language].showMap;
+      } else {
+        mapLabelButton = this.showHomeMap ? translate[state.language].showList : translate[state.language].showMap;
+      }
     }
 
     return mapLabelButton;

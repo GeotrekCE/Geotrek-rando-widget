@@ -95,6 +95,9 @@ interface Translation {
   sensitiveAreasDescription: string;
   emergencyNumber: string;
   learnMore: string;
+  date: string;
+  startDate: string;
+  endDate: string;
 }
 
 interface AvailableTranslations {
@@ -135,7 +138,7 @@ export const translate: AvailableTranslations = {
     accessibilityCovering: 'Revêtement',
     accessibilityExposure: 'Exposition',
     accessibilityAdvices: 'Conseils',
-    pois: (poisLength: number) => `Les ${poisLength} patrimoines à découvrir`,
+    pois: (poisLength: number) => (poisLength > 1 ? `Les ${poisLength} patrimoines à découvrir` : `${poisLength} patrimoine à découvrir`),
     touristicContents: (touristicContentsLength: number) => `Services à proximité (${touristicContentsLength})`,
     touristicEvents: (touristicEventsLength: number) => `Événements à proximité (${touristicEventsLength})`,
     sources: 'Sources',
@@ -201,6 +204,9 @@ export const translate: AvailableTranslations = {
       'Le long de votre itinéraire, vous allez traverser des zones de sensibilité liées à la présence d’une espèce ou d’un milieu particulier. Dans ces zones, un comportement adapté permet de contribuer à leur préservation. Pour plus d’informations détaillées, des fiches spécifiques sont accessibles pour chaque zone.',
     emergencyNumber: 'Numéro de secours',
     learnMore: 'En savoir plus',
+    date: 'Date',
+    startDate: 'Date de début',
+    endDate: 'Date de fin',
   },
   en: {
     filter: 'Filter',
@@ -234,7 +240,7 @@ export const translate: AvailableTranslations = {
     accessibilityCovering: 'Covering',
     accessibilityExposure: 'Exposure',
     accessibilityAdvices: 'Advices',
-    pois: (poisLength: number) => `${poisLength} points of interest`,
+    pois: (poisLength: number) => (poisLength > 1 ? `${poisLength} points of interest` : `${poisLength} point of interest`),
     touristicContents: (touristicContentsLength: number) => `Near services (${touristicContentsLength})`,
     touristicEvents: (touristicEventsLength: number) => `Near events (${touristicEventsLength})`,
     sources: 'Sources',
@@ -300,5 +306,8 @@ export const translate: AvailableTranslations = {
       'Along your trek, you will go through sensitive areas related to the presence of a specific species or environment. In these areas, an appropriate behaviour allows to contribute to their preservation. For detailed information, specific forms are accessible for each area.',
     emergencyNumber: 'Emergency number',
     learnMore: 'Learn more',
+    date: 'Date',
+    startDate: 'Start date',
+    endDate: 'End date',
   },
 };

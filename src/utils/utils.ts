@@ -11,7 +11,7 @@ export function formatDuration(duration: number) {
       formattedDuration += `${Math.round(60 * (duration % 1))}min`;
     }
   } else {
-    formattedDuration += `${duration / 24}j`;
+    formattedDuration += `${Math.round(duration / 24)}j`;
   }
   return formattedDuration;
 }
@@ -196,19 +196,19 @@ export function handleTouristicEventsFiltersAndSearch(): TouristicEvents {
         if (filter.type === 'include') {
           if (filter.touristicEventPropertyIsArray) {
             filtersTouristicEvents = [
-              ...filtersTouristicEvents.filter(touristicContent =>
-                touristicContent[filter.touristicEventProperty].some(touristicContentProperty => currentFiltersId.includes(touristicContentProperty)),
+              ...filtersTouristicEvents.filter(touristicEvent =>
+                touristicEvent[filter.touristicEventProperty].some(touristicEventProperty => currentFiltersId.includes(touristicEventProperty)),
               ),
             ];
           } else {
-            filtersTouristicEvents = [...filtersTouristicEvents.filter(touristicContent => currentFiltersId.includes(touristicContent[filter.touristicEventProperty]))];
+            filtersTouristicEvents = [...filtersTouristicEvents.filter(touristicEvent => currentFiltersId.includes(touristicEvent[filter.touristicEventProperty]))];
           }
         } else if (filter.type === 'interval') {
           filtersTouristicEvents = [
-            ...filtersTouristicEvents.filter(touristicContent => {
+            ...filtersTouristicEvents.filter(touristicEvent => {
               for (const currentFilterId of currentFiltersId) {
                 const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
-                if (touristicContent[filter.touristicEventProperty] >= currentFilter.minValue && touristicContent[filter.touristicEventProperty] <= currentFilter.maxValue) {
+                if (touristicEvent[filter.touristicEventProperty] >= currentFilter.minValue && touristicEvent[filter.touristicEventProperty] <= currentFilter.maxValue) {
                   return true;
                 }
               }
@@ -223,12 +223,12 @@ export function handleTouristicEventsFiltersAndSearch(): TouristicEvents {
         if (filter.type === 'include') {
           if (filter.touristicEventPropertyIsArray) {
             filtersTouristicEvents = [
-              ...state.touristicContents.filter(touristicContent =>
-                touristicContent[filter.touristicEventProperty].some(touristicContentProperty => currentFiltersId.includes(touristicContentProperty)),
+              ...state.touristicEvents.filter(touristicEvent =>
+                touristicEvent[filter.touristicEventProperty].some(touristicEventProperty => currentFiltersId.includes(touristicEventProperty)),
               ),
             ];
           } else {
-            filtersTouristicEvents = [...state.touristicEvents.filter(touristicContent => currentFiltersId.includes(touristicContent[filter.touristicEventProperty]))];
+            filtersTouristicEvents = [...state.touristicEvents.filter(touristicEvent => currentFiltersId.includes(touristicEvent[filter.touristicEventProperty]))];
           }
         } else if (filter.type === 'interval') {
           let minValue: number;
@@ -251,6 +251,7 @@ export function handleTouristicEventsFiltersAndSearch(): TouristicEvents {
       }
     }
   }
+
   const searchTouristicEvents = isUsingFilter ? filtersTouristicEvents : state.touristicEvents;
   return Boolean(state.searchValue)
     ? searchTouristicEvents.filter(currentTouristicEvent => currentTouristicEvent.name.toLowerCase().includes(state.searchValue.toLowerCase()))

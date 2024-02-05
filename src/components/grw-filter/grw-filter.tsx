@@ -133,16 +133,18 @@ export class GrwFilter {
           {state[this.filterType].length > 9 ? (
             <select multiple ref={el => (this.choicesRef = el)}></select>
           ) : (
-            state[this.filterType].map(currentFilter => (
-              <button onClick={event => this.handleFilter(event, currentFilter)} class={currentFilter.selected ? 'selected-filter-button' : 'filter-button'}>
-                {/* @ts-ignore */}
-                {currentFilter.selected && (<span translate={false} class="material-symbols material-symbols-outlined">
-                    check
-                  </span>
-                )}
-                {currentFilter[this.filterNameProperty]}
-              </button>
-            ))
+            state[this.filterType]
+              .filter(currentFilter => !currentFilter.hasOwnProperty('filter') || (currentFilter.hasOwnProperty('filter') && currentFilter.filter))
+              .map(currentFilter => (
+                <button onClick={event => this.handleFilter(event, currentFilter)} class={currentFilter.selected ? 'selected-filter-button' : 'filter-button'}>
+                  {/* @ts-ignore */}
+                  {currentFilter.selected && (<span translate={false} class="material-symbols material-symbols-outlined">
+                      check
+                    </span>
+                  )}
+                  {currentFilter[this.filterNameProperty]}
+                </button>
+              ))
           )}
         </div>
       </Host>

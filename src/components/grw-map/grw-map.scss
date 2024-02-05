@@ -22,7 +22,7 @@
 }
 
 .trek-map {
-  height: calc(100% - 307px - var(--map-bottom-space-height));
+  height: calc(100% - 350px - var(--map-bottom-space-height));
 }
 
 #elevation {
@@ -80,6 +80,18 @@
   display: none;
 }
 
+.custom-theme .elevation-summary {
+  margin: -35px 35px 0px 35px;
+  font-size: 8px;
+  font-family: var(--font-family);
+  :nth-child(3)::after {
+    display: none;
+  }
+  .avgele {
+    display: none;
+  }
+}
+
 .treks-marker-cluster-group-icon,
 .touristic-content-marker-cluster-group-icon,
 .touristic-event-marker-cluster-group-icon {
@@ -99,7 +111,9 @@
 .selected-trek-marker,
 .selected-step-marker,
 .selected-touristic-content-marker,
-.selected-touristic-event-marker {
+.selected-touristic-event-marker,
+.departure-marker,
+.arrival-marker {
   .trek-marker-container,
   .step-marker-container,
   .touristic-content-marker-container,
@@ -133,6 +147,24 @@
   }
 }
 
+.departure-marker {
+  background-color: #008000;
+  border-radius: 14px;
+  width: 14px !important;
+  height: 14px !important;
+  border: 4px #ffffff solid;
+  z-index: 4000001 !important;
+}
+
+.arrival-marker {
+  background-color: #ff0000;
+  border-radius: 14px;
+  width: 14px !important;
+  height: 14px !important;
+  border: 4px #ffffff solid;
+  z-index: 4000000 !important;
+}
+
 .selected-trek-marker,
 .selected-step-marker,
 .selected-touristic-content-marker,
@@ -141,11 +173,11 @@
   .step-marker-container,
   .touristic-content-marker-container,
   .touristic-event-marker-container {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     img,
     .step-number {
-      width: 48px !important;
+      width: 32px !important;
     }
   }
 }

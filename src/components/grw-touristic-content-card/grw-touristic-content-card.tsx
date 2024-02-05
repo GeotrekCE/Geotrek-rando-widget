@@ -91,7 +91,7 @@ export class GrwTouristicContentCard {
             }
           }}
         >
-          <div class="touristic-content-type-img-container">
+          <div class="touristic-content-img-container">
             {this.isInsideHorizontalList ? (
               <div class="swiper" ref={el => (this.swiperTouristicContentRef = el)}>
                 <div class="swiper-wrapper">

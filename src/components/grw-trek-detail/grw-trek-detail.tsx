@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel, Scrollbar } from 'swiper';
 import { translate } from 'i18n/i18n';
-import state, { onChange, reset } from 'store/store';
+import state, { onChange } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek, Option, Options } from 'types/types';
 import { formatDuration, formatLength, formatAscent, formatDescent } from 'utils/utils';
 
@@ -169,7 +169,6 @@ export class GrwTrekDetail {
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() colorBackground = '#fef7ff';
 
-  @Prop() resetStoreOnDisconnected = true;
   @Prop() weather = false;
   @Prop() isLargeView = false;
   indicatorSelectedTrekOption = { translateX: null, width: null, backgroundSize: null, ref: null };
@@ -191,6 +190,7 @@ export class GrwTrekDetail {
     };
     this.swiperStep = new Swiper(this.swiperStepRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
+      initialSlide: this.getCurrentStepIndex(),
       slidesPerView: 1.5,
       spaceBetween: 20,
       grabCursor: true,
@@ -470,9 +470,6 @@ export class GrwTrekDetail {
     this.accessibilityObserver && this.accessibilityObserver.disconnect();
     this.touristicContentObserver && this.touristicContentObserver.disconnect();
     this.touristicEventObserver && this.touristicEventObserver.disconnect();
-    if (this.resetStoreOnDisconnected) {
-      reset();
-    }
   }
 
   handleOptions() {
@@ -507,7 +504,7 @@ export class GrwTrekDetail {
         ),
       },
       touristicContents: { ...touristicContents, visible: Boolean(state.trekTouristicContents && state.trekTouristicContents.length > 0) },
-      touristicEvents: { ...touristicEvents, visible: Boolean(state.touristicEvents && state.touristicEvents.length > 0) },
+      touristicEvents: { ...touristicEvents, visible: Boolean(state.trekTouristicEvents && state.trekTouristicEvents.length > 0) },
     };
   }
 
@@ -551,6 +548,10 @@ export class GrwTrekDetail {
     this.trekDetailContainerRef.scrollTo({ top: element.offsetTop - 64 });
   }
 
+  getCurrentStepIndex(): number {
+    return state.currentTrekSteps ? state.currentTrekSteps.findIndex(step => step.id === this.currentTrek.id) : 0;
+  }
+
   render() {
     return (
       <Host
@@ -563,7 +564,13 @@ export class GrwTrekDetail {
           '--color-secondary-container': this.colorSecondaryContainer,
           '--color-on-secondary-container': this.colorOnSecondaryContainer,
           '--color-background': this.colorBackground,
-          '--detail-bottom-space-height': this.isLargeView ? '8px' : '200px',
+          '--detail-bottom-space-height': this.isLargeView
+            ? state.languages && state.languages.length > 1
+              ? '44px'
+              : '12px'
+            : state.languages && state.languages.length > 1
+            ? '244px'
+            : '204px',
         }}
       >
         {this.currentTrek && (
@@ -703,16 +710,18 @@ export class GrwTrekDetail {
             )}
             <div class="sub-container">
               <div class="icons-labels-container">
-                <div class="icon-label difficulty">
-                  {this.difficulty?.pictogram && (
-                    <img
-                      /* @ts-ignore */
-                      crossorigin="anonymous"
-                      src={this.difficulty.pictogram}
-                    />
-                  )}
-                  {this.difficulty?.label}
-                </div>
+                {this.difficulty && (
+                  <div class="icon-label difficulty">
+                    {this.difficulty.pictogram && (
+                      <img
+                        /* @ts-ignore */
+                        crossorigin="anonymous"
+                        src={this.difficulty.pictogram}
+                      />
+                    )}
+                    {this.difficulty.label}
+                  </div>
+                )}
                 <div class="icon-label duration">
                   {/* @ts-ignore */}
                   <span translate={false} class="material-symbols material-symbols-outlined">
@@ -1136,16 +1145,16 @@ export class GrwTrekDetail {
                 </div>
               </div>
             )}
-            {state.touristicEvents && state.touristicEvents.length > 0 && (
+            {state.trekTouristicEvents && state.trekTouristicEvents.length > 0 && (
               <div>
                 <div class="divider"></div>
                 <div class="touristic-event-container">
                   <div class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
-                    {translate[state.language].touristicEvents(state.touristicEvents.length)}
+                    {translate[state.language].touristicEvents(state.trekTouristicEvents.length)}
                   </div>
                   <div class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>
                     <div class="swiper-wrapper">
-                      {state.touristicEvents.map(touristicEvent => (
+                      {state.trekTouristicEvents.map(touristicEvent => (
                         <div class="swiper-slide">
                           <grw-touristic-event-card fontFamily={this.fontFamily} touristicEvent={touristicEvent}></grw-touristic-event-card>
                         </div>

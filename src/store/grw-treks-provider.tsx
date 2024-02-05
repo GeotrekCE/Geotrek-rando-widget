@@ -60,7 +60,7 @@ export class GrwTreksProvider {
         this.init,
       ),
       fetch(
-        `${state.api}label/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,advice,pictogram&published=true&page_size=999`,
+        `${state.api}label/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,advice,pictogram,filter&published=true&page_size=999`,
         this.init,
       ),
       fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init),

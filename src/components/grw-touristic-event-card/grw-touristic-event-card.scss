@@ -18,6 +18,9 @@
   --swiper-navigation-color: var(--color-on-primary-container);
   --swiper-pagination-color: var(--color-primary-container);
   --swiper-pagination-bullet-size: 12px;
+  .swiper {
+    height: 200px;
+  }
   .swiper-button-prev,
   .swiper-button-next {
     background-color: var(--color-primary-container);
@@ -32,8 +35,9 @@
   }
 }
 
-.touristic-event-type-img-container {
+.touristic-event-img-container {
   position: relative;
+  height: 200px;
   .touristic-event-img,
   .default-touristic-event-img {
     width: 100%;
@@ -92,6 +96,10 @@
   .touristic-event-name {
     font-size: 16px;
     line-height: 24px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    height: 48px;
   }
 }
 
@@ -147,7 +155,7 @@
   max-width: 350px;
   .image {
     width: 100%;
-    max-height: 200px;
+    height: 100%;
   }
 }
 
@@ -157,12 +165,17 @@
   flex-direction: row;
   .image {
     width: 250px;
+    height: 100%;
   }
 }
 
 .is-inside-vertical-list {
   cursor: pointer;
   border: none;
+  .touristic-content-img,
+  .default-touristic-content-img {
+    height: 100%;
+  }
 }
 
 .selected-touristic-event-card {

@@ -190,7 +190,7 @@ export class GrwTrekProvider {
             state.touristicContentCategories = touristicContentCategory.results;
           }
           if (touristicEvent) {
-            state.touristicEvents = touristicEvent.results;
+            state.trekTouristicEvents = touristicEvent.results;
           }
           if (touristicEventType) {
             state.touristicEventTypes = touristicEventType.results;

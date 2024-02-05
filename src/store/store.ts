@@ -77,6 +77,7 @@ const { state, onChange, reset } = createStore<{
   touristicContentsWithinBounds: TouristicContents;
   touristicContentCategories: TouristicContentCategories;
   currentTouristicContent: TouristicContent;
+  trekTouristicEvents: TouristicEvents;
   touristicEvents: TouristicEvents;
   currentTouristicEvents: TouristicEvents;
   touristicEventsWithinBounds: TouristicEvents;
@@ -131,6 +132,7 @@ const { state, onChange, reset } = createStore<{
   touristicContentsWithinBounds: null,
   touristicContentCategories: null,
   currentTouristicContent: null,
+  trekTouristicEvents: null,
   touristicEvents: null,
   currentTouristicEvents: null,
   touristicEventsWithinBounds: null,

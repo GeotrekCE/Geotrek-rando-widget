@@ -1,5 +1,5 @@
-import { Component, Host, h, Prop, Event, EventEmitter, State, Listen } from '@stencil/core';
-import state, { onChange, reset } from 'store/store';
+import { Component, Host, h, Prop, Event, EventEmitter, State, Listen, Fragment, getAssetPath, Build } from '@stencil/core';
+import state, { onChange } from 'store/store';
 import { City, Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
 
@@ -25,7 +25,6 @@ export class GrwTrekCard {
   @Prop() colorOnSecondaryContainer = '#1d192b';
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() isLargeView = false;
-  @Prop() resetStoreOnDisconnected = true;
   @Prop() isStep: false;
 
   @Event() cardTrekMouseOver: EventEmitter<number>;
@@ -52,12 +51,6 @@ export class GrwTrekCard {
     });
   }
 
-  disconnectedCallback() {
-    if (this.resetStoreOnDisconnected) {
-      reset();
-    }
-  }
-
   @Listen('mouseover')
   handleMouseOver() {
     this.cardTrekMouseOver.emit(this.currentTrek.id);
@@ -69,6 +62,7 @@ export class GrwTrekCard {
   }
 
   render() {
+    const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     return (
       <Host
         style={{
@@ -85,22 +79,34 @@ export class GrwTrekCard {
           <div
             class={
               this.isStep
-                ? `trek-card-container trek-step-card${state.selectedStepId === this.currentTrek.id ? ' selected-trek-card' : ''}`
+                ? `trek-card-container trek-step-card${state.selectedStepId === this.currentTrek.id ? ' selected-trek-card' : ''} ${
+                    state.currentTrek.id === this.currentTrek.id ? 'is-current-step' : ''
+                  }`
                 : this.isLargeView
                 ? `trek-card-large-view-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
                 : `trek-card-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
             }
             onClick={() => this.trekCardPress.emit(this.currentTrek.id)}
           >
-            {this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 0 && (
-              <img
-                /* @ts-ignore */
-                crossorigin="anonymous"
-                class="image"
-                src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
-                loading="lazy"
-              />
-            )}
+            <div class="trek-img-container">
+              {this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
+                <img
+                  /* @ts-ignore */
+                  crossorigin="anonymous"
+                  class="image"
+                  src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                  loading="lazy"
+                />
+              ) : (
+                <img
+                  /* @ts-ignore */
+                  crossorigin="anonymous"
+                  class="image default-trek-img"
+                  src={defaultImageSrc}
+                  loading="lazy"
+                />
+              )}
+            </div>
             <div class="sub-container">
               {this.departureCity && <div class="departure">{this.departureCity.name}</div>}
               <div class="name">{this.currentTrek?.name}</div>
@@ -112,48 +118,48 @@ export class GrwTrekCard {
                 </div>
               )}
               <div class="icons-labels-container">
-                <div class="row">
-                  <div class="icon-label difficulty">
-                    {this.difficulty?.pictogram && (
+                {this.difficulty && (
+                  <div class="icon-label">
+                    {this.difficulty.pictogram && (
                       <img
                         /* @ts-ignore */
                         crossorigin="anonymous"
+                        class="icon"
                         src={this.difficulty.pictogram}
                       />
                     )}
-                    {this.difficulty?.label}
+                    <span class="difficulty">{this.difficulty.label}</span>
                   </div>
-                  <div class="icon-label duration">
-                    {/* @ts-ignore */}
-                    <span translate={false} class="material-symbols material-symbols-outlined">
-                      timelapse
-                    </span>
-                    {formatDuration(this.currentTrek.duration)}
-                  </div>
+                )}
+                <div class="icon-label duration">
+                  {/* @ts-ignore */}
+                  <span translate={false} class="material-symbols material-symbols-outlined icon">
+                    timelapse
+                  </span>
+                  {formatDuration(this.currentTrek.duration)}
                 </div>
-                <div class="row">
-                  <div class="icon-label length">
-                    {/* @ts-ignore */}
-                    <span translate={false} class="material-symbols material-symbols-outlined">
-                      open_in_full
-                    </span>
-                    {formatLength(this.currentTrek.length_2d)}
-                  </div>
-                  <div class="icon-label ascent">
-                    {/* @ts-ignore */}
-                    <span translate={false} class="material-symbols material-symbols-outlined">
-                      moving
-                    </span>
-                    {formatAscent(this.currentTrek.ascent)}
-                  </div>
+                <div class="icon-label length">
+                  {/* @ts-ignore */}
+                  <span translate={false} class="material-symbols material-symbols-outlined icon">
+                    open_in_full
+                  </span>
+                  {formatLength(this.currentTrek.length_2d)}
+                </div>
+                <div class="icon-label ascent">
+                  {/* @ts-ignore */}
+                  <span translate={false} class="material-symbols material-symbols-outlined icon">
+                    moving
+                  </span>
+                  {formatAscent(this.currentTrek.ascent)}
                 </div>
                 {!this.isStep && (
-                  <div class="row">
+                  <Fragment>
                     <div class="icon-label route">
                       {this.route?.pictogram && (
                         <img
                           /* @ts-ignore */
                           crossorigin="anonymous"
+                          class="icon"
                           src={this.route.pictogram}
                         />
                       )}
@@ -164,12 +170,13 @@ export class GrwTrekCard {
                         <img
                           /* @ts-ignore */
                           crossorigin="anonymous"
+                          class="icon"
                           src={this.practice.pictogram}
                         />
                       )}
                       {this.practice?.name}
                     </div>
-                  </div>
+                  </Fragment>
                 )}
               </div>
             </div>

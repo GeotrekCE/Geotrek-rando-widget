@@ -6,7 +6,7 @@ import 'leaflet.locatecontrol';
 import 'leaflet-i18n';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
-import state, { onChange, reset } from 'store/store';
+import state, { onChange } from 'store/store';
 import { translate } from 'i18n/i18n';
 import { getTrekGeometry } from 'services/treks.service';
 
@@ -43,7 +43,6 @@ export class GrwMap {
   @Prop() colorPoiIcon = '#974c6e';
   @Prop() useGradient = false;
 
-  @Prop() resetStoreOnDisconnected = true;
   @Prop() isLargeView = false;
   map: L.Map;
   resizeObserver: ResizeObserver;
@@ -71,6 +70,7 @@ export class GrwMap {
   currentToutisticContentLayer: L.GeoJSON<any>;
   currentToutisticEventLayer: L.GeoJSON<any>;
   elevationControl: L.Control.Layers;
+  departureArrivalLayer: L.GeoJSON<any>;
   layersControl: L.Control.Layers;
   userLayersState: {
     [key: number]: boolean;
@@ -167,8 +167,7 @@ export class GrwMap {
       state.selectedTrekId = null;
       this.hideTrekLine();
       this.removeSelectedCurrentTrek();
-    } else if (this.currentStepsLayer) {
-      state.selectedStepId = null;
+    } else if (this.selectedCurrentStepLayer) {
       this.removeSelectedCurrentStep();
     }
   }
@@ -770,28 +769,30 @@ export class GrwMap {
         }
       }
 
-      this.currentInformationDesksLayer = L.geoJSON(currentInformationDesksFeatureCollection, {
-        pointToLayer: (geoJsonPoint, latlng) =>
-          L.marker(latlng, {
-            icon: L.divIcon({
-              html: geoJsonPoint.properties.type_pictogram ? `<img crossorigin="anonymous" src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
-              className: 'information-desks-icon',
-              iconSize: 48,
+      if (currentInformationDesksFeatureCollection.features.length > 0) {
+        this.currentInformationDesksLayer = L.geoJSON(currentInformationDesksFeatureCollection, {
+          pointToLayer: (geoJsonPoint, latlng) =>
+            L.marker(latlng, {
+              icon: L.divIcon({
+                html: geoJsonPoint.properties.type_pictogram ? `<img crossorigin="anonymous" src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
+                className: 'information-desks-icon',
+                iconSize: 48,
+              } as any),
+              autoPanOnFocus: false,
             } as any),
-            autoPanOnFocus: false,
-          } as any),
-        onEachFeature: (geoJsonPoint, layer) => {
-          layer.once('mouseover', () => {
-            const informationDesksTooltip = L.DomUtil.create('div');
-            informationDesksTooltip.className = 'information-desks-tooltip';
-            const informationDesksName = L.DomUtil.create('div');
-            informationDesksName.innerHTML = geoJsonPoint.properties.name;
-            informationDesksName.className = 'information-desks-name';
-            informationDesksTooltip.appendChild(informationDesksName);
-            layer.bindTooltip(informationDesksTooltip).openTooltip();
-          });
-        },
-      });
+          onEachFeature: (geoJsonPoint, layer) => {
+            layer.once('mouseover', () => {
+              const informationDesksTooltip = L.DomUtil.create('div');
+              informationDesksTooltip.className = 'information-desks-tooltip';
+              const informationDesksName = L.DomUtil.create('div');
+              informationDesksName.innerHTML = geoJsonPoint.properties.name;
+              informationDesksName.className = 'information-desks-name';
+              informationDesksTooltip.appendChild(informationDesksName);
+              layer.bindTooltip(informationDesksTooltip).openTooltip();
+            });
+          },
+        });
+      }
     }
 
     if (state.currentTrek.points_reference) {
@@ -854,6 +855,7 @@ export class GrwMap {
               html: `<div class="step-marker-container"><div class="step-number">${stepIndex}</div></div>`,
               className: 'step-marker',
               iconSize: 32,
+              iconAnchor: [16, 32],
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -891,7 +893,11 @@ export class GrwMap {
     let elevationTranslation = {
       'y: ': '',
       'x: ': '',
+      'Total Length: ': 'Longueur totale : ',
+      'Min Elevation: ': 'Altitude min : ',
+      'Max Elevation: ': 'Altitude max : ',
     };
+
     /* @ts-ignore */
     L.registerLocale('fr', elevationTranslation);
     /* @ts-ignore */
@@ -902,7 +908,7 @@ export class GrwMap {
       elevationDiv: `#elevation`,
       theme: `custom-theme${!this.useGradient ? ' use-theme-color' : ''}`,
       detached: true,
-      height: 270,
+      height: 300,
       wptIcons: true,
       wptLabels: true,
       collapsed: false,
@@ -910,7 +916,7 @@ export class GrwMap {
       distanceMarkers: { distance: false, direction: true },
       hotline: this.useGradient,
       closeBtn: false,
-      summary: false,
+      summary: 'inline',
       time: false,
       timestamps: false,
       legend: false,
@@ -943,6 +949,38 @@ export class GrwMap {
       features: [{ type: 'Feature', geometry: { type: 'LineString', coordinates: state.currentTrek.geometry.coordinates }, properties: null }],
     });
     (this.elevationControl as any).load(elevation);
+
+    const departureArrival: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: state.currentTrek.geometry.coordinates[state.currentTrek.geometry.coordinates.length - 1] },
+          properties: null,
+        },
+        {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: state.currentTrek.geometry.coordinates[0] },
+          properties: null,
+        },
+      ],
+    };
+
+    let index = 0;
+    this.departureArrivalLayer = L.geoJSON(departureArrival, {
+      pointToLayer: (_geoJsonPoint, latlng) => {
+        index += 1;
+        return L.marker(latlng, {
+          icon: L.divIcon({
+            html: `<div></div>`,
+            className: index === 1 ? 'departure-marker' : 'arrival-marker',
+            iconSize: 22,
+          } as any),
+          autoPanOnFocus: false,
+        } as any);
+      },
+    });
+    this.map.addLayer(this.departureArrivalLayer);
 
     const overlays = {};
     if (this.currentStepsLayer) {
@@ -1019,8 +1057,8 @@ export class GrwMap {
               ? `<div class="trek-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.practice} /></div>`
               : `<div class="trek-marker-container"></div>`,
             className: 'selected-trek-marker',
-            iconSize: 64,
-            iconAnchor: [32, 64],
+            iconSize: 48,
+            iconAnchor: [24, 48],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1107,7 +1145,8 @@ export class GrwMap {
           icon: L.divIcon({
             html: `<div class="step-marker-container"><div class="step-number">${geoJsonPoint.properties.index}</div></div>`,
             className: 'selected-step-marker',
-            iconSize: 64,
+            iconSize: 48,
+            iconAnchor: [24, 48],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1193,6 +1232,11 @@ export class GrwMap {
       this.elevationControl = null;
     }
 
+    if (this.departureArrivalLayer) {
+      this.map.removeLayer(this.departureArrivalLayer);
+      this.departureArrivalLayer = null;
+    }
+
     if (this.currentTrekLayer) {
       this.map.removeLayer(this.currentTrekLayer);
       this.currentTrekLayer = null;
@@ -1235,12 +1279,6 @@ export class GrwMap {
     if (this.currentToutisticEventsLayer) {
       this.map.removeLayer(this.currentToutisticEventsLayer);
       this.currentToutisticEventsLayer = null;
-    }
-  }
-
-  disconnectedCallback() {
-    if (this.resetStoreOnDisconnected) {
-      reset();
     }
   }
 
@@ -1515,7 +1553,7 @@ export class GrwMap {
               ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.category} /></div>`
               : `<div class="touristic-content-marker-container"></div>`,
             className: 'selected-touristic-content-marker',
-            iconSize: 64,
+            iconSize: 48,
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1720,7 +1758,7 @@ export class GrwMap {
               ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.category} /></div>`
               : `<div class="touristic-event-marker-container"></div>`,
             className: 'selected-touristic-event-marker',
-            iconSize: 64,
+            iconSize: 48,
           } as any),
           autoPanOnFocus: false,
         } as any),

@@ -100,11 +100,9 @@ export class GrwPoiDetail {
         <div class="poi-sub-container">
           <div class="poi-name">{this.poi.name}</div>
           <div class={this.displayShortDescription ? 'poi-description-short' : 'poi-description'} innerHTML={this.poi.description} ref={el => (this.descriptionRef = el)}></div>
-          {this.showPoiDescriptionButton && (
-            <div class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
-              {this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess}
-            </div>
-          )}
+          <div class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
+            {this.showPoiDescriptionButton && (this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess)}
+          </div>
         </div>
       </Host>
     );

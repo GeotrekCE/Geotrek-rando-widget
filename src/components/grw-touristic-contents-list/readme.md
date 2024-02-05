@@ -14,7 +14,6 @@
 | `colorSurfaceContainerLow`  | `color-surface-container-low`  |             | `string`  | `'#f7f2fa'` |
 | `fontFamily`                | `font-family`                  |             | `string`  | `'Roboto'`  |
 | `isLargeView`               | `is-large-view`                |             | `boolean` | `false`     |
-| `resetStoreOnDisconnected`  | `reset-store-on-disconnected`  |             | `boolean` | `true`      |
 
 
 ## Dependencies

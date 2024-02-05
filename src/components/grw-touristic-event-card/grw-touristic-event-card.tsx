@@ -1,4 +1,5 @@
 import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitter, Listen } from '@stencil/core';
+import { translate } from 'i18n/i18n';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
 import { TouristicEvent } from 'types/types';
@@ -91,7 +92,7 @@ export class GrwTouristicEvent {
             }
           }}
         >
-          <div class="touristic-event-type-img-container">
+          <div class="touristic-event-img-container">
             {this.isInsideHorizontalList ? (
               <div class="swiper" ref={el => (this.swiperTouristicEventRef = el)}>
                 <div class="swiper-wrapper">
@@ -150,8 +151,21 @@ export class GrwTouristicEvent {
             <div class="touristic-event-name">{this.touristicEvent.name}</div>
             {(this.touristicEvent.begin_date || this.touristicEvent.end_date) && (
               <div class="touristic-event-date-container">
-                {this.touristicEvent.begin_date && <div class="touristic-event-date">Date de début : {this.touristicEvent.begin_date}</div>}
-                {this.touristicEvent.end_date && <div class="touristic-event-date">Date de fin : {this.touristicEvent.end_date}</div>}
+                {this.touristicEvent.begin_date === this.touristicEvent.end_date && (
+                  <div class="touristic-event-date">
+                    {translate[state.language].date} : {this.touristicEvent.begin_date}
+                  </div>
+                )}
+                {this.touristicEvent.begin_date && this.touristicEvent.begin_date !== this.touristicEvent.end_date && (
+                  <div class="touristic-event-date">
+                    {translate[state.language].startDate} : {this.touristicEvent.begin_date}
+                  </div>
+                )}
+                {this.touristicEvent.end_date && this.touristicEvent.begin_date !== this.touristicEvent.end_date && (
+                  <div class="touristic-event-date">
+                    {translate[state.language].endDate} : {this.touristicEvent.end_date}
+                  </div>
+                )}
               </div>
             )}
           </div>

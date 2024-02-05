@@ -99,7 +99,6 @@ export namespace Components {
         "fontFamily": string;
         "isLargeView": boolean;
         "nameLayer": string;
-        "resetStoreOnDisconnected": boolean;
         "urlLayer": string;
         "useGradient": boolean;
         "zoom": number;
@@ -153,7 +152,6 @@ export namespace Components {
         "colorSurfaceContainerLow": string;
         "fontFamily": string;
         "isLargeView": boolean;
-        "resetStoreOnDisconnected": boolean;
     }
     interface GrwTouristicContentsProvider {
         "api": string;
@@ -197,7 +195,6 @@ export namespace Components {
         "colorSurfaceContainerLow": string;
         "fontFamily": string;
         "isLargeView": boolean;
-        "resetStoreOnDisconnected": boolean;
     }
     interface GrwTouristicEventsProvider {
         "api": string;
@@ -218,7 +215,6 @@ export namespace Components {
         "fontFamily": string;
         "isLargeView": boolean;
         "isStep": false;
-        "resetStoreOnDisconnected": boolean;
         "trek": Trek;
     }
     interface GrwTrekDetail {
@@ -233,7 +229,6 @@ export namespace Components {
         "emergencyNumber": number;
         "fontFamily": string;
         "isLargeView": boolean;
-        "resetStoreOnDisconnected": boolean;
         "trek": Trek;
         "weather": boolean;
     }
@@ -251,7 +246,6 @@ export namespace Components {
         "colorSurfaceContainerLow": string;
         "fontFamily": string;
         "isLargeView": boolean;
-        "resetStoreOnDisconnected": boolean;
     }
     interface GrwTreksProvider {
         "api": string;
@@ -591,7 +585,6 @@ declare namespace LocalJSX {
         "onTouristicContentCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTouristicEventCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
-        "resetStoreOnDisconnected"?: boolean;
         "urlLayer"?: string;
         "useGradient"?: boolean;
         "zoom"?: number;
@@ -648,7 +641,6 @@ declare namespace LocalJSX {
         "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
         "isLargeView"?: boolean;
-        "resetStoreOnDisconnected"?: boolean;
     }
     interface GrwTouristicContentsProvider {
         "api"?: string;
@@ -695,7 +687,6 @@ declare namespace LocalJSX {
         "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
         "isLargeView"?: boolean;
-        "resetStoreOnDisconnected"?: boolean;
     }
     interface GrwTouristicEventsProvider {
         "api"?: string;
@@ -719,7 +710,6 @@ declare namespace LocalJSX {
         "onCardTrekMouseLeave"?: (event: GrwTrekCardCustomEvent<any>) => void;
         "onCardTrekMouseOver"?: (event: GrwTrekCardCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwTrekCardCustomEvent<number>) => void;
-        "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
     }
     interface GrwTrekDetail {
@@ -743,7 +733,6 @@ declare namespace LocalJSX {
         "onStepsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
-        "resetStoreOnDisconnected"?: boolean;
         "trek"?: Trek;
         "weather"?: boolean;
     }
@@ -761,7 +750,6 @@ declare namespace LocalJSX {
         "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
         "isLargeView"?: boolean;
-        "resetStoreOnDisconnected"?: boolean;
     }
     interface GrwTreksProvider {
         "api"?: string;

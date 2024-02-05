@@ -1,6 +1,6 @@
 import { Component, Host, h, Element, State, Prop } from '@stencil/core';
 import { translate } from 'i18n/i18n';
-import state, { onChange, reset } from 'store/store';
+import state, { onChange } from 'store/store';
 import { TouristicEvents } from 'types/types';
 
 @Component({
@@ -20,7 +20,6 @@ export class GrwTouristicContentsList {
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
 
   @Prop() isLargeView = false;
-  @Prop() resetStoreOnDisconnected = true;
   step = 10;
   shouldAddInfiniteScrollEvent = true;
 
@@ -75,9 +74,6 @@ export class GrwTouristicContentsList {
   }
 
   disconnectedCallback() {
-    if (this.resetStoreOnDisconnected) {
-      reset();
-    }
     this.handleInfiniteScrollEvent(false);
   }
 

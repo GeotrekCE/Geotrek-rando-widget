@@ -73,7 +73,13 @@ export class GrwTouristicEventDetail {
           '--color-secondary-container': this.colorSecondaryContainer,
           '--color-on-secondary-container': this.colorOnSecondaryContainer,
           '--color-background': this.colorBackground,
-          '--detail-bottom-space-height': this.isLargeView ? '8px' : '152px',
+          '--detail-bottom-space-height': this.isLargeView
+            ? state.languages && state.languages.length > 1
+              ? '44px'
+              : '12px'
+            : state.languages && state.languages.length > 1
+            ? '204px'
+            : '164px',
         }}
       >
         {state.currentTouristicEvent && (
@@ -124,8 +130,21 @@ export class GrwTouristicEventDetail {
             <div class="name">{state.currentTouristicEvent.name}</div>
             {(state.currentTouristicEvent.begin_date || state.currentTouristicEvent.end_date) && (
               <div class="touristic-event-date-container">
-                {state.currentTouristicEvent.begin_date && <div class="touristic-event-date">Date de début : {state.currentTouristicEvent.begin_date}</div>}
-                {state.currentTouristicEvent.end_date && <div class="touristic-event-date">Date de fin : {state.currentTouristicEvent.end_date}</div>}
+                {state.currentTouristicEvent.begin_date === state.currentTouristicEvent.end_date && (
+                  <div class="touristic-event-date">
+                    {translate[state.language].date} : {state.currentTouristicEvent.begin_date}
+                  </div>
+                )}
+                {state.currentTouristicEvent.begin_date && state.currentTouristicEvent.begin_date !== state.currentTouristicEvent.end_date && (
+                  <div class="touristic-event-date">
+                    {translate[state.language].startDate} : {state.currentTouristicEvent.begin_date}
+                  </div>
+                )}
+                {state.currentTouristicEvent.end_date && state.currentTouristicEvent.begin_date !== state.currentTouristicEvent.end_date && (
+                  <div class="touristic-event-date">
+                    {translate[state.language].endDate} : {state.currentTouristicEvent.end_date}
+                  </div>
+                )}
               </div>
             )}
             <div class="divider"></div>
