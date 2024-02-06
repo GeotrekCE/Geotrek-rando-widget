@@ -53,31 +53,34 @@ export class GrwTouristicEventsProvider {
           : new Response('null'),
       );
 
-    Promise.all([...requests, fetch(touristicEventsRequest, this.init)])
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([cities, districts, touristicEventTypes, touristicEvents]) => {
-        state.trekNetworkError = false;
+    try {
+      Promise.all([...requests, fetch(touristicEventsRequest, this.init)])
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .then(([cities, districts, touristicEventTypes, touristicEvents]) => {
+          state.networkError = false;
 
-        if (cities) {
-          state.cities = cities.results;
-        }
-        if (districts) {
-          state.districts = districts.results;
-        }
-        if (touristicEventTypes) {
-          state.touristicEventTypes = touristicEventTypes.results;
-        }
-        state.touristicEvents = touristicEvents.results;
-        state.currentTouristicEvents = touristicEvents.results;
-      })
-      .catch(() => {
-        state.trekNetworkError = true;
-      });
+          if (cities) {
+            state.cities = cities.results;
+          }
+          if (districts) {
+            state.districts = districts.results;
+          }
+          if (touristicEventTypes) {
+            state.touristicEventTypes = touristicEventTypes.results;
+          }
+          state.touristicEvents = touristicEvents.results;
+          state.currentTouristicEvents = touristicEvents.results;
+        });
+    } catch (error) {
+      if (!(error.code === DOMException.ABORT_ERR)) {
+        state.networkError = true;
+      }
+    }
   }
 
   disconnectedCallback() {
     this.controller.abort();
-    state.trekNetworkError = false;
+    state.networkError = false;
   }
 
   render() {

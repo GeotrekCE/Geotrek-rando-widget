@@ -38,33 +38,36 @@ export class GrwTouristicEventProvider {
         : new Response('null'),
     );
 
-    Promise.all([
-      ...requests,
-      fetch(
-        `${state.api}touristicevent/${this.touristicEventId}/?language=${state.language}&fields=id,name,attachments,description,description_teaser,type,geometry,cities,pdf,practical_info,contact,email,website,begin_date,end_date&published=true`,
-        this.init,
-      ),
-    ])
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([cities, touristicEventTypes, touristicEvent]) => {
-        state.trekNetworkError = false;
+    try {
+      Promise.all([
+        ...requests,
+        fetch(
+          `${state.api}touristicevent/${this.touristicEventId}/?language=${state.language}&fields=id,name,attachments,description,description_teaser,type,geometry,cities,pdf,practical_info,contact,email,website,begin_date,end_date&published=true`,
+          this.init,
+        ),
+      ])
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .then(([cities, touristicEventTypes, touristicEvent]) => {
+          state.networkError = false;
 
-        if (cities) {
-          state.cities = cities.results;
-        }
-        if (touristicEventTypes) {
-          state.touristicEventTypes = touristicEventTypes.results;
-        }
-        state.currentTouristicEvent = touristicEvent;
-      })
-      .catch(() => {
-        state.trekNetworkError = true;
-      });
+          if (cities) {
+            state.cities = cities.results;
+          }
+          if (touristicEventTypes) {
+            state.touristicEventTypes = touristicEventTypes.results;
+          }
+          state.currentTouristicEvent = touristicEvent;
+        });
+    } catch (error) {
+      if (!(error.code === DOMException.ABORT_ERR)) {
+        state.networkError = true;
+      }
+    }
   }
 
   disconnectedCallback() {
     this.controller.abort();
-    state.trekNetworkError = false;
+    state.networkError = false;
   }
 
   render() {

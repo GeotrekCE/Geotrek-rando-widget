@@ -59,159 +59,162 @@ export class GrwTrekProvider {
     );
     requests.push(!state.ratings ? fetch(`${state.api}trek_ratingscale/?language=${state.language}&fields=id,name`, this.init) : new Response('null'));
 
-    Promise.all([
-      ...requests,
-      fetch(
-        `${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices`,
-        this.init,
-      )
-        .then(response => {
-          if (response.ok) {
-            return response;
-          } else {
-            throw new Error('Sentive area error');
-          }
-        })
-        .catch(() => {
-          return new Response('null');
-        }),
-      fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram`, this.init),
-      fetch(`${state.api}source/?language=${state.language}&fields=id,name,website,pictogram`, this.init),
-      fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
-      fetch(`${state.api}poi/?language=${state.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, this.init),
-      fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
-      fetch(
-        `${state.api}informationdesk/?language=${state.language}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
-        this.init,
-      ),
-      fetch(
-        `${state.api}touristiccontent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,category,geometry&page_size=999`,
-        this.init,
-      ),
-      fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
-      fetch(`${state.api}touristicevent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,type,geometry&page_size=999`, this.init),
-      fetch(`${state.api}touristicevent_type/?language=${state.language}&published=true&fields=id,type,pictogram&page_size=999`, this.init),
-      fetch(`${state.api}trek_network/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
-      fetch(
-        `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,ratings,ratings_description,information_desks,children,networks,web_links`,
-        this.init,
-      ),
-    ])
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(
-        async ([
-          difficulties,
-          routes,
-          practices,
-          themes,
-          cities,
-          accessibilities,
-          ratings,
-          ratingsScale,
-          sensitiveAreas,
-          labels,
-          sources,
-          accessibilitiesLevel,
-          pois,
-          poiTypes,
-          informationDesks,
-          touristicContent,
-          touristicContentCategory,
-          touristicEvent,
-          touristicEventType,
-          networks,
-          trek,
-        ]) => {
-          state.trekNetworkError = false;
-          if (trek.children.length > 0 || state.parentTrekId) {
-            const steps: number[] = [];
-            if (trek.children.length > 0) {
-              state.parentTrekId = trek.id;
-              state.parentTrek = trek;
-              steps.push(...trek.children);
+    try {
+      Promise.all([
+        ...requests,
+        fetch(
+          `${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices`,
+          this.init,
+        )
+          .then(response => {
+            if (response.ok) {
+              return response;
             } else {
-              const parentTrek = await fetch(`${state.api}trek/${state.parentTrekId}/?language=${state.language}&published=true&fields=name,children`).then(response =>
-                response.json(),
-              );
-              state.parentTrek = parentTrek;
-              steps.push(...parentTrek.children);
+              throw new Error('Sentive area error');
             }
-            const stepRequests = [];
-            steps.forEach(stepId => {
-              stepRequests.push(
-                fetch(
-                  `${state.api}trek/${stepId}/?language=${state.language}&published=true&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts,networks,web_links`,
-                ),
-              );
-            });
-            state.currentTrekSteps = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
-          }
+          })
+          .catch(() => {
+            return new Response('null');
+          }),
+        fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram`, this.init),
+        fetch(`${state.api}source/?language=${state.language}&fields=id,name,website,pictogram`, this.init),
+        fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
+        fetch(`${state.api}poi/?language=${state.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, this.init),
+        fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
+        fetch(
+          `${state.api}informationdesk/?language=${state.language}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
+          this.init,
+        ),
+        fetch(
+          `${state.api}touristiccontent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,category,geometry&page_size=999`,
+          this.init,
+        ),
+        fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
+        fetch(`${state.api}touristicevent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,type,geometry&page_size=999`, this.init),
+        fetch(`${state.api}touristicevent_type/?language=${state.language}&published=true&fields=id,type,pictogram&page_size=999`, this.init),
+        fetch(`${state.api}trek_network/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
+        fetch(
+          `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,ratings,ratings_description,information_desks,children,networks,web_links`,
+          this.init,
+        ),
+      ])
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .then(
+          async ([
+            difficulties,
+            routes,
+            practices,
+            themes,
+            cities,
+            accessibilities,
+            ratings,
+            ratingsScale,
+            sensitiveAreas,
+            labels,
+            sources,
+            accessibilitiesLevel,
+            pois,
+            poiTypes,
+            informationDesks,
+            touristicContent,
+            touristicContentCategory,
+            touristicEvent,
+            touristicEventType,
+            networks,
+            trek,
+          ]) => {
+            state.networkError = false;
+            if (trek.children.length > 0 || state.parentTrekId) {
+              const steps: number[] = [];
+              if (trek.children.length > 0) {
+                state.parentTrekId = trek.id;
+                state.parentTrek = trek;
+                steps.push(...trek.children);
+              } else {
+                const parentTrek = await fetch(`${state.api}trek/${state.parentTrekId}/?language=${state.language}&published=true&fields=name,children`).then(response =>
+                  response.json(),
+                );
+                state.parentTrek = parentTrek;
+                steps.push(...parentTrek.children);
+              }
+              const stepRequests = [];
+              steps.forEach(stepId => {
+                stepRequests.push(
+                  fetch(
+                    `${state.api}trek/${stepId}/?language=${state.language}&published=true&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts,networks,web_links`,
+                  ),
+                );
+              });
+              state.currentTrekSteps = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+            }
 
-          if (difficulties) {
-            state.difficulties = difficulties.results;
-          }
-          if (routes) {
-            state.routes = routes.results;
-          }
-          if (practices) {
-            state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
-          }
-          if (themes) {
-            state.themes = themes.results;
-          }
-          if (cities) {
-            state.cities = cities.results;
-          }
+            if (difficulties) {
+              state.difficulties = difficulties.results;
+            }
+            if (routes) {
+              state.routes = routes.results;
+            }
+            if (practices) {
+              state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
+            }
+            if (themes) {
+              state.themes = themes.results;
+            }
+            if (cities) {
+              state.cities = cities.results;
+            }
 
-          if (accessibilities) {
-            state.accessibilities = accessibilities.results;
-          }
+            if (accessibilities) {
+              state.accessibilities = accessibilities.results;
+            }
 
-          if (ratings) {
-            state.ratings = ratings.results;
-          }
+            if (ratings) {
+              state.ratings = ratings.results;
+            }
 
-          if (ratingsScale) {
-            state.ratingsScale = ratingsScale.results;
-          }
+            if (ratingsScale) {
+              state.ratingsScale = ratingsScale.results;
+            }
 
-          if (sensitiveAreas) {
-            state.currentSensitiveAreas = sensitiveAreas.results;
-          }
-          state.labels = labels.results;
-          state.sources = sources.results;
-          if (accessibilitiesLevel) {
-            state.accessibilitiesLevel = accessibilitiesLevel.results;
-          }
-          if (touristicContent) {
-            state.trekTouristicContents = touristicContent.results;
-          }
-          if (touristicContentCategory) {
-            state.touristicContentCategories = touristicContentCategory.results;
-          }
-          if (touristicEvent) {
-            state.trekTouristicEvents = touristicEvent.results;
-          }
-          if (touristicEventType) {
-            state.touristicEventTypes = touristicEventType.results;
-          }
-          if (networks) {
-            state.networks = networks.results;
-          }
-          state.currentPois = pois.results;
-          state.poiTypes = poiTypes.results;
-          state.currentInformationDesks = informationDesks.results;
-          state.currentTrek = trek;
-        },
-      )
-      .catch(() => {
-        state.trekNetworkError = true;
-      });
+            if (sensitiveAreas) {
+              state.currentSensitiveAreas = sensitiveAreas.results;
+            }
+            state.labels = labels.results;
+            state.sources = sources.results;
+            if (accessibilitiesLevel) {
+              state.accessibilitiesLevel = accessibilitiesLevel.results;
+            }
+            if (touristicContent) {
+              state.trekTouristicContents = touristicContent.results;
+            }
+            if (touristicContentCategory) {
+              state.touristicContentCategories = touristicContentCategory.results;
+            }
+            if (touristicEvent) {
+              state.trekTouristicEvents = touristicEvent.results;
+            }
+            if (touristicEventType) {
+              state.touristicEventTypes = touristicEventType.results;
+            }
+            if (networks) {
+              state.networks = networks.results;
+            }
+            state.currentPois = pois.results;
+            state.poiTypes = poiTypes.results;
+            state.currentInformationDesks = informationDesks.results;
+            state.currentTrek = trek;
+          },
+        );
+    } catch (error) {
+      if (!(error.code === DOMException.ABORT_ERR)) {
+        state.networkError = true;
+      }
+    }
   }
 
   disconnectedCallback() {
     this.controller.abort();
-    state.trekNetworkError = false;
+    state.networkError = false;
   }
 
   render() {

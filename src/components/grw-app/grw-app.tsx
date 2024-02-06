@@ -402,7 +402,7 @@ export class GrwApp {
           state.touristicEvents ||
           state.currentTouristicContent ||
           state.currentTouristicEvent ||
-          state.trekNetworkError) && (
+          state.networkError) && (
           <div class="app-container">
             {state.languages && state.languages.length > 1 && (
               <div class="languages-container">
@@ -452,7 +452,7 @@ export class GrwApp {
             </div>
 
             <div class={`content-container ${this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'content-trek' : 'content-treks'}`}>
-              {state.trekNetworkError && (
+              {state.networkError && (
                 <div class="error-container">
                   Une erreur est survenue.
                   <grw-common-button icon="refresh" name="Recharger la page" action={() => this.reload()}></grw-common-button>
@@ -499,16 +499,17 @@ export class GrwApp {
                   ></grw-touristic-events-list>
                 )}
               </div>
-              {(this.showTrek && !state.currentTrek) ||
+              {((this.showTrek && !state.currentTrek) ||
                 (this.showTouristicContent && !state.currentTouristicContent) ||
                 (this.showTouristicEvent && !state.currentTouristicEvent) ||
-                (!state.currentTreks && state.mode === 'treks') ||
-                (!state.touristicContents && state.mode === 'touristicContents' && (
-                  <div class={this.isLargeView ? 'large-view-loader-container' : 'loader-container'}>
-                    <grw-loader color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
-                  </div>
-                ))}
-              {state.currentTrek && (
+                (!state.treks && state.mode === 'treks') ||
+                (!state.touristicContents && state.mode === 'touristicContents') ||
+                (!state.touristicEvents && state.mode === 'touristicEvents')) && (
+                <div class={this.isLargeView ? 'large-view-loader-container' : 'loader-container'}>
+                  <grw-loader color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
+                </div>
+              )}
+              {this.showTrek && (
                 <div class={this.isLargeView ? 'large-view-app-trek-detail-container' : 'app-trek-detail-container'}>
                   <grw-trek-detail
                     style={{
@@ -571,7 +572,7 @@ export class GrwApp {
                   ></grw-touristic-event-detail>
                 </div>
               )}
-              {!state.trekNetworkError && (
+              {!state.networkError && (
                 <grw-map
                   reset-store-on-disconnected={'false'}
                   class={this.isLargeView ? 'large-view-app-map-container' : 'app-map-container'}

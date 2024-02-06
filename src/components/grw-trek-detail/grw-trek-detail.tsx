@@ -800,7 +800,7 @@ export class GrwTrekDetail {
                     }`}
                   </div>
                 ))}
-                {this.currentTrek.ratings_description && this.currentTrek.ratings_description !== '' && <div class="row">{this.currentTrek.ratings_description}</div>}
+                {this.currentTrek.ratings_description && this.currentTrek.ratings_description !== '' && <div class="row" innerHTML={this.currentTrek.ratings_description}></div>}
               </div>
             </div>
             <div class="divider"></div>

@@ -37,34 +37,36 @@ export class GrwTouristicContentProvider {
           )
         : new Response('null'),
     );
+    try {
+      Promise.all([
+        ...requests,
+        fetch(
+          `${state.api}touristiccontent/${this.touristicContentId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website`,
+          this.init,
+        ),
+      ])
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .then(([cities, touristicContentCategory, touristicContent]) => {
+          state.networkError = false;
 
-    Promise.all([
-      ...requests,
-      fetch(
-        `${state.api}touristiccontent/${this.touristicContentId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website`,
-        this.init,
-      ),
-    ])
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([cities, touristicContentCategory, touristicContent]) => {
-        state.trekNetworkError = false;
-
-        if (cities) {
-          state.cities = cities.results;
-        }
-        if (touristicContentCategory) {
-          state.touristicContentCategories = touristicContentCategory.results;
-        }
-        state.currentTouristicContent = touristicContent;
-      })
-      .catch(() => {
-        state.trekNetworkError = true;
-      });
+          if (cities) {
+            state.cities = cities.results;
+          }
+          if (touristicContentCategory) {
+            state.touristicContentCategories = touristicContentCategory.results;
+          }
+          state.currentTouristicContent = touristicContent;
+        });
+    } catch (error) {
+      if (!(error.code === DOMException.ABORT_ERR)) {
+        state.networkError = true;
+      }
+    }
   }
 
   disconnectedCallback() {
     this.controller.abort();
-    state.trekNetworkError = false;
+    state.networkError = false;
   }
 
   render() {

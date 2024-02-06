@@ -52,32 +52,34 @@ export class GrwTouristicContentsProvider {
             )
           : new Response('null'),
       );
+    try {
+      Promise.all([...requests, fetch(touristicContentsRequest, this.init)])
+        .then(responses => Promise.all(responses.map(response => response.json())))
+        .then(([cities, districts, touristicContentCategory, touristicContents]) => {
+          state.networkError = false;
 
-    Promise.all([...requests, fetch(touristicContentsRequest, this.init)])
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(([cities, districts, touristicContentCategory, touristicContents]) => {
-        state.trekNetworkError = false;
-
-        if (cities) {
-          state.cities = cities.results;
-        }
-        if (districts) {
-          state.districts = districts.results;
-        }
-        if (touristicContentCategory) {
-          state.touristicContentCategories = touristicContentCategory.results;
-        }
-        state.touristicContents = touristicContents.results;
-        state.currentTouristicContents = touristicContents.results;
-      })
-      .catch(() => {
-        state.trekNetworkError = true;
-      });
+          if (cities) {
+            state.cities = cities.results;
+          }
+          if (districts) {
+            state.districts = districts.results;
+          }
+          if (touristicContentCategory) {
+            state.touristicContentCategories = touristicContentCategory.results;
+          }
+          state.touristicContents = touristicContents.results;
+          state.currentTouristicContents = touristicContents.results;
+        });
+    } catch (error) {
+      if (!(error.code === DOMException.ABORT_ERR)) {
+        state.networkError = true;
+      }
+    }
   }
 
   disconnectedCallback() {
     this.controller.abort();
-    state.trekNetworkError = false;
+    state.networkError = false;
   }
 
   render() {

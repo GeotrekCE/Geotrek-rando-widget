@@ -1282,21 +1282,21 @@ export class GrwMap {
     }
   }
 
-  showTrekLine(id) {
-    getTrekGeometry(id).then(response => {
-      const currentTrekFeature: Feature = {
-        type: 'Feature',
-        geometry: response.geometry,
-        properties: {},
-      };
+  async showTrekLine(id) {
+    // this.removeSelectedCurrentTrek();
+    const trekLine = await getTrekGeometry(id);
+    const currentTrekFeature: Feature = {
+      type: 'Feature',
+      geometry: trekLine.geometry,
+      properties: {},
+    };
 
-      this.currentTrekLayer = L.geoJSON(currentTrekFeature, {
-        style: () => ({
-          color: this.colorTrekLine,
-        }),
-        interactive: false,
-      }).addTo(this.map);
-    });
+    this.currentTrekLayer = L.geoJSON(currentTrekFeature, {
+      style: () => ({
+        color: this.colorTrekLine,
+      }),
+      interactive: false,
+    }).addTo(this.map);
   }
 
   hideTrekLine() {
@@ -1337,7 +1337,7 @@ export class GrwMap {
                 ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous "src=${geoJsonPoint.properties.practice} /></div>`
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
-              iconSize: 32,
+              iconSize: 48,
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1400,6 +1400,7 @@ export class GrwMap {
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 32,
+              iconAnchor: [16, 32],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1502,7 +1503,7 @@ export class GrwMap {
                 ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.type} /></div>`
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
-              iconSize: 32,
+              iconSize: 48,
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1554,6 +1555,7 @@ export class GrwMap {
               : `<div class="touristic-content-marker-container"></div>`,
             className: 'selected-touristic-content-marker',
             iconSize: 48,
+            iconAnchor: [24, 48],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1651,6 +1653,7 @@ export class GrwMap {
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 32,
+              iconAnchor: [16, 32],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1759,6 +1762,7 @@ export class GrwMap {
               : `<div class="touristic-event-marker-container"></div>`,
             className: 'selected-touristic-event-marker',
             iconSize: 48,
+            iconAnchor: [24, 48],
           } as any),
           autoPanOnFocus: false,
         } as any),

@@ -60,8 +60,7 @@ const { state, onChange, reset } = createStore<{
   currentSensitiveAreas: SensitiveAreas;
   currentPois: Pois;
   currentInformationDesks: InformationDesks;
-  treksNetworkError: boolean;
-  trekNetworkError: boolean;
+  networkError: boolean;
   searchValue: string;
   selectedActivitiesFilters: number;
   selectedThemesFilters: number;
@@ -115,8 +114,7 @@ const { state, onChange, reset } = createStore<{
   currentTrek: null,
   currentPois: null,
   currentInformationDesks: null,
-  treksNetworkError: false,
-  trekNetworkError: false,
+  networkError: false,
   searchValue: null,
   selectedActivitiesFilters: 0,
   selectedThemesFilters: 0,
