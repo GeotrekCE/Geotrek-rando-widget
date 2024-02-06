@@ -90,18 +90,22 @@ export class GrwTouristicContentDetail {
                   {state.currentTouristicContent.attachments.length > 0 ? (
                     state.currentTouristicContent.attachments
                       .filter(attachment => attachment.type === 'image')
-                      .map(attachment => (
-                        <div class="swiper-slide">
-                          <img
-                            /* @ts-ignore */
-                            crossorigin="anonymous"
-                            class="image"
-                            src={attachment.url}
-                            loading="lazy"
-                            onClick={() => this.handleFullscreen()}
-                          />
-                        </div>
-                      ))
+                      .map(attachment => {
+                        const legend = [attachment.legend, attachment.author].filter(Boolean).join(' - ');
+                        return (
+                          <div class="swiper-slide">
+                            <div class="legend-container">{legend}</div>
+                            <img
+                              /* @ts-ignore */
+                              crossorigin="anonymous"
+                              class="image"
+                              src={attachment.url}
+                              loading="lazy"
+                              onClick={() => this.handleFullscreen()}
+                            />
+                          </div>
+                        );
+                      })
                   ) : (
                     <div class="swiper-slide">
                       <img

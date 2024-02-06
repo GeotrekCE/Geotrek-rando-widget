@@ -682,18 +682,22 @@ export class GrwTrekDetail {
                 <div class="swiper-wrapper">
                   {this.currentTrek.attachments
                     .filter(attachment => attachment.type === 'image')
-                    .map(attachment => (
-                      <div class="swiper-slide">
-                        <img
-                          /* @ts-ignore */
-                          crossorigin="anonymous"
-                          class="image"
-                          src={attachment.url}
-                          loading="lazy"
-                          onClick={() => this.handleFullscreen()}
-                        />
-                      </div>
-                    ))}
+                    .map(attachment => {
+                      const legend = [attachment.legend, attachment.author].filter(Boolean).join(' - ');
+                      return (
+                        <div class="swiper-slide">
+                          <div class="legend-container">{legend}</div>
+                          <img
+                            /* @ts-ignore */
+                            crossorigin="anonymous"
+                            class="image"
+                            src={attachment.url}
+                            loading="lazy"
+                            onClick={() => this.handleFullscreen()}
+                          />
+                        </div>
+                      );
+                    })}
                 </div>
                 <div class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
                 <div class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
