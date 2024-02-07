@@ -335,7 +335,7 @@ export class GrwApp {
           !state.currentTouristicEvent &&
           !state.currentTouristicContents &&
           !state.currentTouristicEvents && (
-            <div class="init-loader-container">
+            <div class="grw-init-loader-container">
               <grw-loader color-primary-container={this.colorPrimaryContainer} color-on-primary-container={this.colorOnPrimaryContainer}></grw-loader>
             </div>
           )}
@@ -403,15 +403,15 @@ export class GrwApp {
           state.currentTouristicContent ||
           state.currentTouristicEvent ||
           state.networkError) && (
-          <div class="app-container">
+          <div class="grw-app-container">
             {state.languages && state.languages.length > 1 && (
-              <div class="languages-container">
+              <div class="grw-languages-container">
                 <grw-select-language></grw-select-language>
               </div>
             )}
             <div
-              class={`${this.isLargeView ? 'large-view-header-container' : 'header-container'}${
-                this.showTrek || this.showTouristicContent || this.showTouristicEvent ? ' header-detail' : ''
+              class={`${this.isLargeView ? 'grw-large-view-header-container' : 'grw-header-container'}${
+                this.showTrek || this.showTouristicContent || this.showTouristicEvent ? ' grw-header-detail' : ''
               }`}
             >
               {Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 &&
@@ -426,11 +426,11 @@ export class GrwApp {
                   ></grw-segmented-segment>
                 )}
               {!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent ? (
-                <div class="handle-search-filters-container">
-                  <div class="handle-search-container">
+                <div class="grw-handle-search-filters-container">
+                  <div class="grw-handle-search-container">
                     <grw-search fontFamily={this.fontFamily}></grw-search>
                   </div>
-                  <div class="handle-filters-container">
+                  <div class="hgrw-andle-filters-container">
                     <grw-common-button
                       fontFamily={this.fontFamily}
                       action={() => this.handleFilters()}
@@ -440,8 +440,8 @@ export class GrwApp {
                   </div>
                 </div>
               ) : (
-                <div class="arrow-back-container">
-                  <button onClick={() => this.handleBackButton()} class="arrow-back-icon">
+                <div class="grw-arrow-back-container">
+                  <button onClick={() => this.handleBackButton()} class="grw-arrow-back-icon">
                     {/* @ts-ignore */}
                     <span translate={false} class="material-symbols material-symbols-outlined">
                       arrow_back
@@ -451,15 +451,15 @@ export class GrwApp {
               )}
             </div>
 
-            <div class={`content-container ${this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'content-trek' : 'content-treks'}`}>
+            <div class={`grw-content-container ${this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'grw-content-trek' : 'grw-content-treks'}`}>
               {state.networkError && (
-                <div class="error-container">
+                <div class="grw-error-container">
                   Une erreur est survenue.
                   <grw-common-button icon="refresh" name="Recharger la page" action={() => this.reload()}></grw-common-button>
                 </div>
               )}
               <div
-                class={this.isLargeView ? 'large-view-app-treks-list-container' : 'app-treks-list-container'}
+                class={this.isLargeView ? 'grw-large-view-app-treks-list-container' : 'grw-app-treks-list-container'}
                 style={{ display: this.showTrek || this.showTouristicContent || this.showTouristicEvent ? 'none' : 'flex', position: this.showTrek ? 'absolute' : 'relative' }}
               >
                 {state.mode === 'treks' && this.treks && (
@@ -505,12 +505,12 @@ export class GrwApp {
                 (!state.treks && state.mode === 'treks') ||
                 (!state.touristicContents && state.mode === 'touristicContents') ||
                 (!state.touristicEvents && state.mode === 'touristicEvents')) && (
-                <div class={this.isLargeView ? 'large-view-loader-container' : 'loader-container'}>
+                <div class={this.isLargeView ? 'grw-large-view-loader-container' : 'grw-loader-container'}>
                   <grw-loader color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
                 </div>
               )}
               {this.showTrek && (
-                <div class={this.isLargeView ? 'large-view-app-trek-detail-container' : 'app-trek-detail-container'}>
+                <div class={this.isLargeView ? 'grw-large-view-app-trek-detail-container' : 'grw-app-trek-detail-container'}>
                   <grw-trek-detail
                     style={{
                       visibility: (!this.showTrekMap && this.showTrek) || this.isLargeView ? 'visible' : 'hidden',
@@ -533,7 +533,7 @@ export class GrwApp {
                 </div>
               )}
               {this.showTouristicContent && (
-                <div class={this.isLargeView ? 'large-view-app-touristic-content-detail-container' : 'app-touristic-content-detail-container'}>
+                <div class={this.isLargeView ? 'grw-large-view-app-touristic-content-detail-container' : 'grw-app-touristic-content-detail-container'}>
                   <grw-touristic-content-detail
                     style={{
                       visibility: !this.showTouristicContentMap || this.isLargeView ? 'visible' : 'hidden',
@@ -553,7 +553,7 @@ export class GrwApp {
                 </div>
               )}
               {this.showTouristicEvent && (
-                <div class={this.isLargeView ? 'large-view-app-touristic-event-detail-container' : 'app-touristic-event-detail-container'}>
+                <div class={this.isLargeView ? 'grw-large-view-app-touristic-event-detail-container' : 'grw-app-touristic-event-detail-container'}>
                   <grw-touristic-event-detail
                     style={{
                       visibility: !this.showTouristicEventMap || this.isLargeView ? 'visible' : 'hidden',
@@ -575,7 +575,7 @@ export class GrwApp {
               {!state.networkError && (
                 <grw-map
                   reset-store-on-disconnected={'false'}
-                  class={this.isLargeView ? 'large-view-app-map-container' : 'app-map-container'}
+                  class={this.isLargeView ? 'grw-large-view-app-map-container' : 'grw-app-map-container'}
                   style={{
                     visibility:
                       (this.showHomeMap && !this.showTrek) ||
@@ -610,7 +610,7 @@ export class GrwApp {
               (this.showTrek && state.currentTrek) ||
               (this.showTouristicContent && state.currentTouristicContent) ||
               (this.showTouristicEvent && state.currentTouristicEvent)) && (
-              <div class="map-visibility-button-container">
+              <div class="grw-map-visibility-button-container">
                 <grw-extended-fab
                   fontFamily={this.fontFamily}
                   action={() => this.handleShowMap()}

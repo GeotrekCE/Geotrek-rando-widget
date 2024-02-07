@@ -8,7 +8,7 @@ grw-app {
   max-height: 100dvh;
 }
 
-.app-container {
+.grw-app-container {
   position: relative;
   background-color: var(--color-background);
   width: 100%;
@@ -16,22 +16,22 @@ grw-app {
   overflow: hidden;
 }
 
-.languages-container {
+.grw-languages-container {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   margin: 16px 16px 0px 0px;
 }
 
-.header-container,
-.large-view-header-container {
+.grw-header-container,
+.grw-large-view-header-container {
   height: var(--header-height);
-  .arrow-back-container {
+  .grw-arrow-back-container {
     display: flex;
     align-items: center;
     height: 100%;
     margin: 0px 16px;
-    .arrow-back-icon {
+    .grw-arrow-back-icon {
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       color: var(--color-on-surface);
@@ -46,35 +46,35 @@ grw-app {
   }
 }
 
-.handle-search-filters-container {
+.grw-handle-search-filters-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 0px 16px;
   height: 64px;
 
-  .handle-search-container {
+  .grw-handle-search-container {
     width: calc(50% + 48px);
     max-width: 220px;
   }
-  .handle-filters-container {
+  .grw-handle-filters-container {
     margin-left: 16px;
   }
 }
 
-.header-detail {
+.grw-header-detail {
   height: 64px;
 }
 
-.large-view-header-container {
-  .handle-search-filters-container {
+.grw-large-view-header-container {
+  .grw-handle-search-filters-container {
     justify-content: flex-start;
   }
 }
 
-.init-loader-container,
-.loader-container,
-.large-view-loader-container {
+.grw-init-loader-container,
+.grw-loader-container,
+.grw-large-view-loader-container {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -83,39 +83,39 @@ grw-app {
   background-color: var(--color-background);
 }
 
-.content-container {
+.grw-content-container {
   position: relative;
   display: flex;
   height: calc(100% - var(--header-height));
 }
 
-.content-treks {
+.grw-content-treks {
   height: calc(100% - var(--header-height));
 }
 
-.content-trek {
+.grw-content-trek {
   height: 100%;
 }
 
-.large-view-app-treks-list-container,
-.large-view-app-trek-detail-container,
-.large-view-app-touristic-content-detail-container,
-.large-view-app-touristic-event-detail-container,
-.large-view-app-treks-list-container,
-.large-view-app-trek-detail-container {
+.grw-large-view-app-treks-list-container,
+.grw-large-view-app-trek-detail-container,
+.grw-large-view-app-touristic-content-detail-container,
+.grw-large-view-app-touristic-event-detail-container,
+.grw-large-view-app-treks-list-container,
+.grw-large-view-app-trek-detail-container {
   display: flex;
   flex-direction: column;
   max-width: 100%;
   height: 100%;
 }
 
-.app-map-container,
-.large-view-app-map-container {
+.grw-app-map-container,
+.grw-large-view-app-map-container {
   width: 100%;
   height: 100%;
 }
 
-.map-visibility-button-container {
+.grw-map-visibility-button-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,15 +125,15 @@ grw-app {
   z-index: 4;
 }
 
-.init-loader-container,
-.loader-container {
+.grw-init-loader-container,
+.grw-loader-container {
   width: 100%;
 }
 
-.app-treks-list-container,
-.app-trek-detail-container,
-.app-touristic-content-detail-container,
-.app-touristic-event-detail-container {
+.grw-app-treks-list-container,
+.grw-app-trek-detail-container,
+.grw-app-touristic-content-detail-container,
+.grw-app-touristic-event-detail-container {
   width: 100%;
 }
 
@@ -153,28 +153,28 @@ grw-touristic-event-detail {
   max-height: calc(100vh - 64px);
 }
 
-.app-map-container {
+.grw-app-map-container {
   width: 100%;
   position: absolute;
 }
 
-.large-view-loader-container {
+.grw-large-view-loader-container {
   width: 50%;
 }
 
-.large-view-app-treks-list-container,
-.large-view-app-trek-detail-container,
-.large-view-app-touristic-content-detail-container,
-.large-view-app-touristic-event-detail-container {
+.grw-large-view-app-treks-list-container,
+.grw-large-view-app-trek-detail-container,
+.grw-large-view-app-touristic-content-detail-container,
+.grw-large-view-app-touristic-event-detail-container {
   width: 50%;
 }
 
-.large-view-app-map-container {
+.grw-large-view-app-map-container {
   position: relative;
   width: 50%;
 }
 
-.error-container {
+.grw-error-container {
   display: flex;
   flex-direction: column;
   align-items: center;
