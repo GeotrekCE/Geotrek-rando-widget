@@ -197,3 +197,21 @@ grw-touristic-content-detail {
   width: 100%;
   text-align: center;
 }
+
+.close-fullscreen-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 40;
+  top: 16px;
+  right: 16px;
+  color: var(--swiper-navigation-color, var(--swiper-theme-color));
+  background-color: var(--color-primary-container);
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--border-radius, 32px);
+  box-shadow: var(--elevation-1);
+  cursor: pointer;
+}

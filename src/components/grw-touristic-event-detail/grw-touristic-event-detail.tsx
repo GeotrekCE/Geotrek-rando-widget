@@ -49,9 +49,13 @@ export class GrwTouristicEventDetail {
     };
   }
 
-  handleFullscreen() {
-    if (state.currentTouristicEvent.attachments && state.currentTouristicEvent.attachments[0] && state.currentTouristicEvent.attachments[0].url) {
-      this.swiperImagesRef.requestFullscreen();
+  handleFullscreen(close: boolean = false) {
+    if (!close) {
+      if (state.currentTouristicEvent.attachments && state.currentTouristicEvent.attachments[0] && state.currentTouristicEvent.attachments[0].url) {
+        this.swiperImagesRef.requestFullscreen();
+      } else {
+        (document as any).exitFullscreen();
+      }
     }
   }
 
@@ -94,6 +98,14 @@ export class GrwTouristicEventDetail {
                         const legend = [attachment.legend, attachment.author].filter(Boolean).join(' - ');
                         return (
                           <div class="swiper-slide">
+                            {this.displayFullscreen && (
+                              <div class="close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
+                                {/* @ts-ignore */}
+                                <span translate={false} class="material-symbols material-symbols-outlined">
+                                  close
+                                </span>
+                              </div>
+                            )}
                             <div class="legend-container">{legend}</div>
                             <img
                               /* @ts-ignore */
