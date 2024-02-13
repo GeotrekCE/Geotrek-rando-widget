@@ -20,3 +20,7 @@ jobs:
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"
       - name: Build
         run : npm run build
+
+      - name: Test doc build
+        run: npm run docs:build
+

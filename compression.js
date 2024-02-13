@@ -1,6 +1,6 @@
-const fs = require('fs');
-const zlib = require('zlib');
-const glob = require('glob');
+import fs from 'fs';
+import zlib from 'zlib';
+import glob from 'glob';
 
 const precompress = async () => {
   const files = await glob('dist/**/*.{js,css,svg}');
