@@ -1,7 +1,7 @@
 {
   "name": "@geotrekce/geotrek-rando-widget",
   "version": "0.5.9",
-  "description": "Geotrek rando widget",
+  "description": "Geotrek web components",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
@@ -15,6 +15,7 @@
     "dist/",
     "loader/"
   ],
+  "type": "module",
   "scripts": {
     "start": "stencil build --dev --watch --serve",
     "generate": "stencil generate",
@@ -24,7 +25,10 @@
     "build": "stencil build --docs",
     "compression": "node compression",
     "postbuild": "npm run compression",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "@raruto/leaflet-elevation": "^2.4.0",
@@ -53,7 +57,8 @@
     "@types/leaflet.markercluster": "^1.5.2",
     "babel-loader": "^9.1.2",
     "glob": "^9.3.4",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitepress": "^1.0.0-rc.42"
   },
   "author": "bastien.alvez@makina-corpus.com",
   "license": "MIT"
