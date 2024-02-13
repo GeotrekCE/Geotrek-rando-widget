@@ -31,6 +31,8 @@ export const fr = defineConfig({
     sidebar: sidebar(),
     docFooter: { prev: 'Page précédente', next: 'Page suivante' },
     darkModeSwitchLabel: 'Apparence',
+    lightModeSwitchTitle: "Passer au thème clair",
+    darkModeSwitchTitle: "Passer au thème sombre",
   }
 })
 
