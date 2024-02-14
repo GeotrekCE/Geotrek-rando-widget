@@ -577,98 +577,109 @@ export class GrwTrekDetail {
         }}
       >
         {this.currentTrek && (
-          <div class="trek-options">
+          <div part="trek-options" class="trek-options">
             <a
+              part="trek-option"
+              class={`presentation trek-option${this.indicatorSelectedTrekOption.ref === 'presentationOptionRef' ? ' selected-trek-option' : ''}`}
               ref={el => (this.presentationOptionRef = el)}
               onClick={() => this.handleScrollTo(this.presentationRef)}
-              class={`presentation trek-option${this.indicatorSelectedTrekOption.ref === 'presentationOptionRef' ? ' selected-trek-option' : ''}`}
             >
               {translate[state.language].options.presentation}
             </a>
             {this.options.steps.visible && (
               <a
+                part="trek-option"
+                class={`steps trek-option${this.options.steps.indicator ? ' selected-trek-option' : ''}`}
                 ref={el => (this.stepsOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.stepsRef)}
-                class={`steps trek-option${this.options.steps.indicator ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.steps}
               </a>
             )}
             {this.options.description.visible && (
               <a
+                part="trek-option"
+                class={`description trek-option${this.indicatorSelectedTrekOption.ref === 'descriptionOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.descriptionOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.descriptionRef)}
-                class={`description trek-option${this.indicatorSelectedTrekOption.ref === 'descriptionOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.description}
               </a>
             )}
             {this.options.pois.visible && (
               <a
+                part="trek-option"
+                class={`pois trek-option${this.indicatorSelectedTrekOption.ref === 'poisOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.poisOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.poiRef)}
-                class={`pois trek-option${this.indicatorSelectedTrekOption.ref === 'poisOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.pois}
               </a>
             )}
             {this.options.recommendations.visible && (
               <a
+                part="trek-option"
+                class={`recommendations trek-option${this.indicatorSelectedTrekOption.ref === 'recommendationsOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.recommendationsOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.recommendationRef)}
-                class={`recommendations trek-option${this.indicatorSelectedTrekOption.ref === 'recommendationsOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.recommendations}
               </a>
             )}
             {this.options.sensitiveArea.visible && (
               <a
+                part="trek-option"
+                class={`sensitive-areas trek-option${this.indicatorSelectedTrekOption.ref === 'sensitiveAreaOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.sensitiveAreaOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.sensitiveAreaRef)}
-                class={`sensitive-areas trek-option${this.indicatorSelectedTrekOption.ref === 'sensitiveAreaOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.environmentalSensitiveAreas}
               </a>
             )}
             {this.options.informationPlaces.visible && (
               <a
+                part="trek-option"
+                class={`information-places trek-option${this.indicatorSelectedTrekOption.ref === 'informationPlacesOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.informationPlacesOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.informationPlacesRef)}
-                class={`information-places trek-option${this.indicatorSelectedTrekOption.ref === 'informationPlacesOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.informationPlaces}
               </a>
             )}
             {this.options.accessibility.visible && (
               <a
+                part="trek-option"
+                class={`accessibility trek-option${this.indicatorSelectedTrekOption.ref === 'accessibilityOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.accessibilityOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.accessibilityRef)}
-                class={`accessibility trek-option${this.indicatorSelectedTrekOption.ref === 'accessibilityOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.accessibility}
               </a>
             )}
             {this.options.touristicContents.visible && (
               <a
+                part="trek-option"
+                class={`touristic-content trek-option${this.indicatorSelectedTrekOption.ref === 'touristicContentsOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.touristicContentsOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.touristicContentsRef)}
-                class={`touristic-content trek-option${this.indicatorSelectedTrekOption.ref === 'touristicContentsOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.touristicContents}
               </a>
             )}
             {this.options.touristicEvents.visible && (
               <a
+                part="trek-option"
+                class={`touristic-event trek-option${this.indicatorSelectedTrekOption.ref === 'touristicEventsOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.touristicEventsOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.touristicEventsRef)}
-                class={`touristic-event trek-option${this.indicatorSelectedTrekOption.ref === 'touristicEventsOptionRef' ? ' selected-trek-option' : ''}`}
               >
                 {translate[state.language].options.touristicEvents}
               </a>
             )}
             {this.presentationOptionRef && (
               <span
-                class="indicator-selected-trek-option"
+                part="trek-indicator-selected-trek-option"
+                class="trek-indicator-selected-trek-option"
                 style={{
                   transform: `translateX(${this.indicatorSelectedTrekOption.translateX})`,
                   width: this.indicatorSelectedTrekOption.width,
@@ -679,29 +690,32 @@ export class GrwTrekDetail {
           </div>
         )}
         {this.currentTrek && (
-          <div class="trek-detail-container" ref={el => (this.trekDetailContainerRef = el)}>
-            <div class="images-container" ref={el => (this.presentationRef = el)}>
-              <div class="swiper swiper-images" ref={el => (this.swiperImagesRef = el)}>
-                <div class="swiper-wrapper">
+          <div part="trek-detail-container" class="trek-detail-container" ref={el => (this.trekDetailContainerRef = el)}>
+            <div part="trek-images" class="trek-images-container" ref={el => (this.presentationRef = el)}>
+              <div part="swiper-images" class="swiper swiper-images" ref={el => (this.swiperImagesRef = el)}>
+                <div part="swiper-wrapper" class="swiper-wrapper">
                   {this.currentTrek.attachments
                     .filter(attachment => attachment.type === 'image')
                     .map(attachment => {
                       const legend = [attachment.legend, attachment.author].filter(Boolean).join(' - ');
                       return (
-                        <div class="swiper-slide">
+                        <div part="swiper-slide" class="swiper-slide">
                           {this.displayFullscreen && (
-                            <div class="close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
+                            <div part="trek-close-fullscreen-button" class="trek-close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
                               {/* @ts-ignore */}
-                              <span translate={false} class="material-symbols material-symbols-outlined">
+                              <span part="trek-close-fullcreen-icon" class="trek-close-fullcreen-icon material-symbols material-symbols-outlined" translate={false}>
                                 close
                               </span>
                             </div>
                           )}
-                          <div class="legend-container">{legend}</div>
+                          <div part="trek-image-legend" class="trek-image-legend">
+                            {legend}
+                          </div>
                           <img
+                            part="trek-img"
+                            class="trek-img"
                             /* @ts-ignore */
                             crossorigin="anonymous"
-                            class="image"
                             src={attachment.url}
                             loading="lazy"
                             onClick={() => this.handleFullscreen()}
@@ -710,114 +724,146 @@ export class GrwTrekDetail {
                       );
                     })}
                 </div>
-                <div class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
-                <div class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
-                <div class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
+                <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
+                <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
+                <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
               </div>
             </div>
-            <div class="name">{this.currentTrek.name}</div>
+            <div part="trek-name" class="trek-name">
+              {this.currentTrek.name}
+            </div>
             {this.themes.length > 0 && (
-              <div class="themes-container">
+              <div part="themes-container" class="themes-container">
                 {this.themes.map(theme => (
-                  <div class="theme">{theme.label}</div>
+                  <div part="theme" class="theme">
+                    {theme.label}
+                  </div>
                 ))}
               </div>
             )}
-            <div class="sub-container">
-              <div class="icons-labels-container">
+            <div part="sub-container" class="sub-container">
+              <div part="icons-labels-container" class="icons-labels-container">
                 {this.difficulty && (
-                  <div class="icon-label difficulty">
+                  <div part="icon-label" class="icon-label difficulty">
                     {this.difficulty.pictogram && (
                       <img
+                        part="icon"
+                        class="icon"
                         /* @ts-ignore */
                         crossorigin="anonymous"
                         src={this.difficulty.pictogram}
                       />
                     )}
-                    {this.difficulty.label}
+                    <span part="label" class="label">
+                      {this.difficulty.label}
+                    </span>
                   </div>
                 )}
-                <div class="icon-label duration">
+                <div part="icon-label" class="icon-label duration">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined">
+                  <span part="icon" class="icon material-symbols material-symbols-outlined" translate={false}>
                     timelapse
                   </span>
-                  {formatDuration(this.currentTrek?.duration)}
+                  <span part="label" class="label">
+                    {formatDuration(this.currentTrek?.duration)}
+                  </span>
                 </div>
-                <div class="icon-label route">
+                <div part="icon-label" class="icon-label route">
                   {this.route?.pictogram && (
                     <img
+                      part="icon"
+                      class="icon"
                       /* @ts-ignore */
                       crossorigin="anonymous"
                       src={this.route.pictogram}
                     />
                   )}
-                  {this.route?.route}
+                  <span part="label" class="label">
+                    {this.route?.route}
+                  </span>
                 </div>
-                <div class="icon-label length">
+                <div part="icon-label" class="icon-label length">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined">
+                  <span part="icon" class="icon material-symbols material-symbols-outlined" translate={false}>
                     open_in_full
                   </span>
-                  {formatLength(this.currentTrek.length_2d)}
+                  <span part="label" class="label">
+                    {formatLength(this.currentTrek.length_2d)}
+                  </span>
                 </div>
                 {this.currentTrek.ascent && (
-                  <div class="icon-label ascent">
+                  <div part="icon-label" class="icon-label ascent">
                     {/* @ts-ignore */}
-                    <span translate={false} class="material-symbols material-symbols-outlined">
+                    <span part="icon" class="icon material-symbols material-symbols-outlined" translate={false}>
                       moving
                     </span>
-                    {formatAscent(this.currentTrek.ascent)}
+                    <span part="label" class="label">
+                      {formatAscent(this.currentTrek.ascent)}
+                    </span>
                   </div>
                 )}
                 {this.currentTrek.descent && (
-                  <div class="icon-label descent">
+                  <div part="icon-label" class="icon-label descent">
                     {/* @ts-ignore */}
-                    <span translate={false} class="material-symbols material-symbols-outlined">
+                    <span part="icon" class="icon material-symbols material-symbols-outlined" translate={false}>
                       moving
                     </span>
-                    {formatDescent(this.currentTrek.descent)}
+                    <span part="label" class="label">
+                      {formatDescent(this.currentTrek.descent)}
+                    </span>
                   </div>
                 )}
-                <div class="icon-label practice">
+                <div part="icon-label" class="icon-label practice">
                   {this.practice?.pictogram && (
                     <img
+                      part="icon"
+                      class="icon"
                       /* @ts-ignore */
                       crossorigin="anonymous"
                       src={this.practice.pictogram}
                     />
                   )}
-                  {this.practice?.name}
+                  <span part="label" class="label">
+                    {this.practice?.name}
+                  </span>
                 </div>
-                <div class="icon-label networks">
+                <div part="icon-label" class="icon-label networks">
                   {this.currentTrek.networks.map(networkId => {
                     const currentNetwork = state.networks.find(network => network.id === networkId);
                     return (
-                      <div class="network">
+                      <div part="network" class="network">
                         <img
+                          part="icon"
+                          class="icon"
                           /* @ts-ignore */
                           crossorigin="anonymous"
                           src={currentNetwork.pictogram}
                         />
-                        {currentNetwork.label}
+                        <span part="label" class="label">
+                          {currentNetwork.label}
+                        </span>
                       </div>
                     );
                   })}
                 </div>
                 {this.currentTrek.ratings.map(trekRating => (
-                  <div class="row">
+                  <div part="row" class="row">
                     {`${state.ratingsScale.find(ratingScale => ratingScale.id === state.ratings.find(rating => rating.id === trekRating).scale).name} : ${
                       state.ratings.find(rating => rating.id === trekRating).name
                     }`}
                   </div>
                 ))}
-                {this.currentTrek.ratings_description && this.currentTrek.ratings_description !== '' && <div class="row" innerHTML={this.currentTrek.ratings_description}></div>}
+                {this.currentTrek.ratings_description && this.currentTrek.ratings_description !== '' && (
+                  <div part="row" class="row" innerHTML={this.currentTrek.ratings_description}></div>
+                )}
               </div>
             </div>
-            <div class="divider"></div>
-            <div class="downloads-container">
-              <div class="download-title">{translate[state.language].downloads}</div>
-              <div class="links-container">
+            <div part="divider" class="divider"></div>
+            <div part="downloads-container" class="downloads-container">
+              <div part="download-title" class="download-title">
+                {translate[state.language].downloads}
+              </div>
+              <div part="links-container" class="links-container">
                 <a href={`${this.currentTrek.gpx}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
                   <span translate={false} class="material-symbols material-symbols-outlined">
@@ -841,14 +887,14 @@ export class GrwTrekDetail {
                 </a>
               </div>
             </div>
-            <div class="divider"></div>
-            {this.currentTrek.description_teaser && <div class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
-            {this.currentTrek.ambiance && <div class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
+            <div part="divider" class="divider"></div>
+            {this.currentTrek.description_teaser && <div part="description-teaser" class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
+            {this.currentTrek.ambiance && <div part="ambiance" class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
             {state.parentTrekId && state.parentTrek && this.currentTrek.id !== state.parentTrekId && (
               <div>
-                <div class="divider"></div>
-                <div class="parent-trek-container">
-                  <button class="parent-trek-title" onClick={() => this.parentTrekPress.emit(state.parentTrekId)}>
+                <div part="divider" class="divider"></div>
+                <div part="parent-trek-container" class="parent-trek-container">
+                  <button part="parent-trek-title" class="parent-trek-title" onClick={() => this.parentTrekPress.emit(state.parentTrekId)}>
                     <div>&lt;</div>
                     {state.parentTrek.name}
                   </button>
@@ -856,15 +902,16 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentTrekSteps && (
-              <div class="step-container">
-                <div class="step-title" ref={el => (this.stepsRef = el)}>{`${state.currentTrekSteps.length} ${translate[state.language].steps}`}</div>
-                <div class="swiper swiper-step" ref={el => (this.swiperStepRef = el)}>
-                  <div class="swiper-wrapper">
+              <div part="step-container" class="step-container">
+                <div part="step-title" class="step-title" ref={el => (this.stepsRef = el)}>{`${state.currentTrekSteps.length} ${translate[state.language].steps}`}</div>
+                <div part="swiper-step" class="swiper swiper-step" ref={el => (this.swiperStepRef = el)}>
+                  <div part="swiper-wrapper" class="swiper-wrapper">
                     {state.currentTrekSteps &&
                       state.currentTrekSteps.map(trek => {
                         return (
-                          <div class="swiper-slide">
+                          <div part="swiper-slide" class="swiper-slide">
                             <grw-trek-card
+                              exportparts="trek-card,trek-img-container,trek-img,trek-sub-container,trek-departure,trek-name,trek-themes-container,trek-theme,trek-icons-labels-container,trek-icon-label,trek-icon,trek-label"
                               key={`trek-${trek.id}`}
                               trek={trek}
                               is-large-view={false}
@@ -880,77 +927,88 @@ export class GrwTrekDetail {
                         );
                       })}
                   </div>
-                  <div class="swiper-scrollbar" ref={el => (this.stepSwiperScrollbar = el)}></div>
+                  <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.stepSwiperScrollbar = el)}></div>
                 </div>
               </div>
             )}
-            <div class="divider"></div>
+            <div part="divider" class="divider"></div>
             {this.currentTrek.description && (
-              <div class="description-container">
-                <div class="description-title" ref={el => (this.descriptionRef = el)}>
+              <div part="description-container" class="description-container">
+                <div part="description-title" class="description-title" ref={el => (this.descriptionRef = el)}>
                   {translate[state.language].description}
                 </div>
-                <div class="description" innerHTML={this.currentTrek.description}></div>
+                <div part="description" class="description" innerHTML={this.currentTrek.description}></div>
               </div>
             )}
             {this.currentTrek.departure && (
-              <div class="departure-container">
-                <div class="departure-title">{translate[state.language].departure} :&nbsp;</div>
-                <div innerHTML={this.currentTrek.departure}></div>
+              <div part="departure-container" class="departure-container">
+                <div part="departure-title" class="departure-title">
+                  {translate[state.language].departure} :&nbsp;
+                </div>
+                <div part="departure" innerHTML={this.currentTrek.departure}></div>
               </div>
             )}
             {this.currentTrek.arrival && (
-              <div class="arrival-container">
-                <div class="arrival-title">{translate[state.language].arrival} :&nbsp;</div>
-                <div innerHTML={this.currentTrek.arrival}></div>
+              <div part="arrival-container" class="arrival-container">
+                <div part="arrival-title" class="arrival-title">
+                  {translate[state.language].arrival} :&nbsp;
+                </div>
+                <div part="arrival" innerHTML={this.currentTrek.arrival}></div>
               </div>
             )}
             {this.currentTrek.cities && this.currentTrek.cities.length > 0 && (
-              <div class="cities-container">
-                <div class="cities-title">{translate[state.language].crossedCities} :&nbsp;</div>
-                <div innerHTML={this.cities.join(', ')}></div>
+              <div part="cities-container" class="cities-container">
+                <div part="cities-title" class="cities-title">
+                  {translate[state.language].crossedCities} :&nbsp;
+                </div>
+                <div part="cities" innerHTML={this.cities.join(', ')}></div>
               </div>
             )}
             {state.currentPois && state.currentPois.length > 0 && (
               <div>
-                <div class="divider"></div>
-                <div class="pois-container">
-                  <div class="pois-title" ref={el => (this.poiRef = el)}>
+                <div part="divider" class="divider"></div>
+                <div part="pois-container" class="pois-container">
+                  <div part="pois-title" class="pois-title" ref={el => (this.poiRef = el)}>
                     {translate[state.language].pois(state.currentPois.length)}
                   </div>
-                  <div class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
-                    <div class="swiper-wrapper">
+                  <div part="swiper-pois" class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
+                    <div part="swiper-wrapper" class="swiper-wrapper">
                       {state.currentPois.map(poi => (
-                        <div class="swiper-slide">
-                          <grw-poi poi={poi}></grw-poi>
+                        <div part="swiper-slide" class="swiper-slide">
+                          <grw-poi
+                            exportparts="poi-type-img-container,poi-type,swiper-poi,swiper-wrapper,swiper-slide,poi-img,default-poi-img,swiper-pagination,swiper-button-prev,swiper-button-next,poi-sub-container,poi-name,poi-description,handle-poi-description"
+                            poi={poi}
+                          ></grw-poi>
                         </div>
                       ))}
                     </div>
-                    <div class="swiper-scrollbar" ref={el => (this.poisSwiperScrollbar = el)}></div>
+                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.poisSwiperScrollbar = el)}></div>
                   </div>
                 </div>
               </div>
             )}
             {this.weather && this.currentTrek.departure_city && (
               <div>
-                <div class="divider"></div>
-                <div class="weather-container">
+                <div part="divider" class="divider"></div>
+                <div part="weather-container" class="weather-container">
                   <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${this.currentTrek.departure_city}0#${this.colorPrimaryApp}`}></iframe>
                 </div>
               </div>
             )}
             {this.currentTrek.access && (
               <div>
-                <div class="divider"></div>
-                <div class="access-container">
-                  <div class="access-title">{translate[state.language].roadAccessAndParking}</div>
-                  <div class="access" innerHTML={this.currentTrek.access}></div>
+                <div part="divider" class="divider"></div>
+                <div part="access-container" class="access-container">
+                  <div part="access-title" class="access-title">
+                    {translate[state.language].roadAccessAndParking}
+                  </div>
+                  <div part="access" class="access" innerHTML={this.currentTrek.access}></div>
                   {this.currentTrek.advised_parking && (
                     <div>
-                      <div class="advised-parking-title" ref={el => (this.parkingRef = el)}>
+                      <div part="advised-parking-title" class="advised-parking-title" ref={el => (this.parkingRef = el)}>
                         {translate[state.language].recommendedParking}
                       </div>
-                      <div class="advised-parking" innerHTML={this.currentTrek.advised_parking}></div>
+                      <div part="advised-parking" class="advised-parking" innerHTML={this.currentTrek.advised_parking}></div>
                     </div>
                   )}
                 </div>
@@ -958,41 +1016,43 @@ export class GrwTrekDetail {
             )}
             {this.currentTrek.public_transport && (
               <div>
-                <div class="divider"></div>
-                <div class="public-transport-container">
-                  <div class="public-transport-title">{translate[state.language].transport}</div>
-                  <div class="public-transport" innerHTML={this.currentTrek.public_transport}></div>
+                <div part="divider" class="divider"></div>
+                <div part="public-transport-container" class="public-transport-container">
+                  <div part="public-transport-title" class="public-transport-title">
+                    {translate[state.language].transport}
+                  </div>
+                  <div part="public-transport" class="public-transport" innerHTML={this.currentTrek.public_transport}></div>
                 </div>
               </div>
             )}
             {(this.currentTrek.advice || this.currentTrek.gear || this.labels.length > 0) && (
               <div>
-                <div class="divider"></div>
-                <div class="advice-container">
-                  <div class="advice-title" ref={el => (this.recommendationRef = el)}>
+                <div part="divider" class="divider"></div>
+                <div part="advice-container" class="advice-container">
+                  <div part="advice-title" class="advice-title" ref={el => (this.recommendationRef = el)}>
                     {translate[state.language].recommendations}
                   </div>
                   {this.currentTrek.advice && (
-                    <div class="current-advice-container">
+                    <div part="current-advice-container" class="current-advice-container">
                       {/* @ts-ignore */}
                       <span translate={false} class="material-symbols material-symbols-outlined">
                         warning
                       </span>
-                      <div class="advice" innerHTML={this.currentTrek.advice}></div>
+                      <div part="advice" class="advice" innerHTML={this.currentTrek.advice}></div>
                     </div>
                   )}
                   {this.currentTrek.gear && (
-                    <div class="gear-container">
+                    <div part="gear-container" class="gear-container">
                       {/* @ts-ignore */}
                       <span translate={false} class="material-symbols material-symbols-outlined">
                         backpack
                       </span>
-                      <div class="gear" innerHTML={this.currentTrek.gear}></div>
+                      <div part="gear" class="gear" innerHTML={this.currentTrek.gear}></div>
                     </div>
                   )}
                   {this.labels.map(label => (
-                    <div class="label-container">
-                      <div class="label-sub-container">
+                    <div part="label-container" class="label-container">
+                      <div part="label-sub-container" class="label-sub-container">
                         {label.pictogram && (
                           <img
                             /* @ts-ignore */
@@ -1000,9 +1060,9 @@ export class GrwTrekDetail {
                             src={label.pictogram}
                           />
                         )}
-                        <div class="label-name" innerHTML={label.name}></div>
+                        <div part="label-name" class="label-name" innerHTML={label.name}></div>
                       </div>
-                      <div class="label-advice" innerHTML={label.advice}></div>
+                      <div part="label-advice" class="label-advice" innerHTML={label.advice}></div>
                     </div>
                   ))}
                 </div>
@@ -1010,14 +1070,19 @@ export class GrwTrekDetail {
             )}
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
               <div>
-                <div class="divider"></div>
-                <div class="sensitive-areas-container">
-                  <div class="sensitive-areas-title" ref={el => (this.sensitiveAreaRef = el)}>
+                <div part="divider" class="divider"></div>
+                <div part="sensitive-areas-container" class="sensitive-areas-container">
+                  <div part="ensitive-areas-title" class="sensitive-areas-title" ref={el => (this.sensitiveAreaRef = el)}>
                     {translate[state.language].environmentalSensitiveAreas}
                   </div>
-                  <div class="sensitive-areas-description">{translate[state.language].sensitiveAreasDescription}</div>
+                  <div part="sensitive-areas-description" class="sensitive-areas-description">
+                    {translate[state.language].sensitiveAreasDescription}
+                  </div>
                   {state.currentSensitiveAreas.map(sensitiveArea => (
-                    <grw-sensitive-area-detail sensitiveArea={sensitiveArea}></grw-sensitive-area-detail>
+                    <grw-sensitive-area-detail
+                      exportparts="sensitive-area-title-container,sensitive-area-color-container,sensitive-area-title,sensitive-area-description,sensitive-area-practice-container,sensitive-area-practice-title,sensitive-area-practices,sensitive-area-practice,sensitive-area-period-container,sensitive-area-period-title,sensitive-area-periods,sensitive-area-period,sensitive-area-contact-container,sensitive-area-contact-title,sensitive-area-contact-value"
+                      sensitiveArea={sensitiveArea}
+                    ></grw-sensitive-area-detail>
                   ))}
                 </div>
               </div>
@@ -1025,22 +1090,25 @@ export class GrwTrekDetail {
             {state.currentInformationDesks &&
               state.currentInformationDesks.filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0 && (
                 <div>
-                  <div class="divider"></div>
-                  <div class="information-desks-container">
-                    <div class="information-desks-title" ref={el => (this.informationPlacesRef = el)}>
+                  <div part="divider" class="divider"></div>
+                  <div part="information-desks-container" class="information-desks-container">
+                    <div part="information-desks-title" class="information-desks-title" ref={el => (this.informationPlacesRef = el)}>
                       {translate[state.language].informationPlaces}
                     </div>
-                    <div class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
-                      <div class="swiper-wrapper">
+                    <div part="swiper-information-desks" class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
+                      <div part="swiper-wrapper" class="swiper-wrapper">
                         {state.currentInformationDesks
                           .filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id))
                           .map(informationDesk => (
-                            <div class="swiper-slide">
-                              <grw-information-desk informationDesk={informationDesk}></grw-information-desk>
+                            <div part="swiper-slide" class="swiper-slide">
+                              <grw-information-desk
+                                exportparts="information-desk-img-container,information-desk-img,information-desk-sub-container,information-desk-name,center-on-map-button,icon,label,information-desk-informations,phone-container,mail-container,link-container,information-desk-description-container,information-desk-description,handle-information-desk-description"
+                                informationDesk={informationDesk}
+                              ></grw-information-desk>
                             </div>
                           ))}
                       </div>
-                      <div class="swiper-scrollbar" ref={el => (this.informationDesksContentsSwiperScrollbar = el)}></div>
+                      <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.informationDesksContentsSwiperScrollbar = el)}></div>
                     </div>
                   </div>
                 </div>
@@ -1056,36 +1124,38 @@ export class GrwTrekDetail {
               this.currentTrek.accessibility_advice ||
               this.emergencyNumber) && (
               <div>
-                <div class="divider"></div>
-                <div class="accessibilities-container">
-                  <div class="accessibilities-title" ref={el => (this.accessibilityRef = el)}>
+                <div part="divider" class="divider"></div>
+                <div part="accessibilities-container" class="accessibilities-container">
+                  <div part="accessibilities-title" class="accessibilities-title" ref={el => (this.accessibilityRef = el)}>
                     {translate[state.language].accessibility}
                   </div>
-                  {this.currentTrek.disabled_infrastructure && <div innerHTML={this.currentTrek.disabled_infrastructure}></div>}
+                  {this.currentTrek.disabled_infrastructure && <div part="disabled-infrastructure" innerHTML={this.currentTrek.disabled_infrastructure}></div>}
                   {this.accessibilities && this.accessibilities.length > 0 && (
-                    <div class="accessibilities-content-container">
+                    <div part="accessibilities-content-container" class="accessibilities-content-container">
                       {this.accessibilities.map(accessibility => (
-                        <div class="accessibility-content-container">
+                        <div part="accessibility-content-container" class="accessibility-content-container">
                           <img
                             /* @ts-ignore */
                             crossorigin="anonymous"
                             src={accessibility.pictogram}
                           ></img>
-                          <div innerHTML={accessibility.name}></div>
+                          <div part="accessibility-name" innerHTML={accessibility.name}></div>
                         </div>
                       ))}
                     </div>
                   )}
                   {this.emergencyNumber && (
-                    <div class="accessibility-emergency-number-container">
-                      <div class="accessibility-emergency-number-title">{translate[state.language].emergencyNumber}</div>
-                      <div class="accessibility-emergency-number-content">
+                    <div part="accessibility-emergency-number-container" class="accessibility-emergency-number-container">
+                      <div part="accessibility-emergency-number-title" class="accessibility-emergency-number-title">
+                        {translate[state.language].emergencyNumber}
+                      </div>
+                      <div part="accessibility-emergency-number-content" class="accessibility-emergency-number-content">
                         {
                           <a href={`tel:${this.emergencyNumber.toString()}`}>
                             <span
+                              class="material-symbols material-symbols-outlined"
                               /* @ts-ignore */
                               translate={false}
-                              class="material-symbols material-symbols-outlined"
                             >
                               call
                             </span>
@@ -1096,45 +1166,59 @@ export class GrwTrekDetail {
                     </div>
                   )}
                   {this.currentTrek.accessibility_level && (
-                    <div class="accessibility-level-container">
-                      <div class="accessibility-level-title">{translate[state.language].accessibilityLevel}</div>
-                      <div innerHTML={this.accessibilityLevel.name}></div>
+                    <div part="accessibility-level-container" class="accessibility-level-container">
+                      <div part="accessibility-level-title" class="accessibility-level-title">
+                        {translate[state.language].accessibilityLevel}
+                      </div>
+                      <div part="accessibility-level-name" innerHTML={this.accessibilityLevel.name}></div>
                     </div>
                   )}
                   {this.currentTrek.accessibility_slope && (
-                    <div class="accessibility-slope-container">
-                      <div class="accessibility-slope-title">{translate[state.language].accessibilitySlope}</div>
-                      <div innerHTML={this.currentTrek.accessibility_slope}></div>
+                    <div part="accessibility-slope-container" class="accessibility-slope-container">
+                      <div part="accessibility-slope-title" class="accessibility-slope-title">
+                        {translate[state.language].accessibilitySlope}
+                      </div>
+                      <div part="accessibility-slope" innerHTML={this.currentTrek.accessibility_slope}></div>
                     </div>
                   )}
                   {this.currentTrek.accessibility_width && (
-                    <div class="accessibility-width-container">
-                      <div class="accessibility-width-title">{translate[state.language].accessibilityWidth}</div>
-                      <div innerHTML={this.currentTrek.accessibility_width}></div>
+                    <div part="accessibility-width-container" class="accessibility-width-container">
+                      <div part="accessibility-width-title" class="accessibility-width-title">
+                        {translate[state.language].accessibilityWidth}
+                      </div>
+                      <div part="accessibility-width" innerHTML={this.currentTrek.accessibility_width}></div>
                     </div>
                   )}
                   {this.currentTrek.accessibility_signage && (
-                    <div class="accessibility-signage-container">
-                      <div class="accessibility-signage-title">{translate[state.language].accessibilitySignage}</div>
-                      <div innerHTML={this.currentTrek.accessibility_signage}></div>
+                    <div part="accessibility-signage-container" class="accessibility-signage-container">
+                      <div part="accessibility-signage-title" class="accessibility-signage-title">
+                        {translate[state.language].accessibilitySignage}
+                      </div>
+                      <div part="accessibility-signage" innerHTML={this.currentTrek.accessibility_signage}></div>
                     </div>
                   )}
                   {this.currentTrek.accessibility_covering && (
-                    <div class="accessibility-covering-container">
-                      <div class="accessibility-covering-title">{translate[state.language].accessibilityCovering}</div>
-                      <div innerHTML={this.currentTrek.accessibility_covering}></div>
+                    <div part="accessibility-covering-container" class="accessibility-covering-container">
+                      <div part="accessibility-covering-title" class="accessibility-covering-title">
+                        {translate[state.language].accessibilityCovering}
+                      </div>
+                      <div part="accessibility-covering" innerHTML={this.currentTrek.accessibility_covering}></div>
                     </div>
                   )}
                   {this.currentTrek.accessibility_exposure && (
-                    <div class="accessibility-exposure-container">
-                      <div class="accessibility-exposure-title">{translate[state.language].accessibilityExposure}</div>
-                      <div innerHTML={this.currentTrek.accessibility_exposure}></div>
+                    <div part="accessibility-exposure-container" class="accessibility-exposure-container">
+                      <div part="accessibility-exposure-title" class="accessibility-exposure-title">
+                        {translate[state.language].accessibilityExposure}
+                      </div>
+                      <div part="accessibility-exposure" innerHTML={this.currentTrek.accessibility_exposure}></div>
                     </div>
                   )}
                   {this.currentTrek.accessibility_advice && (
-                    <div class="accessibility-advice-container">
-                      <div class="accessibility-advice-title">{translate[state.language].accessibilityAdvices}</div>
-                      <div innerHTML={this.currentTrek.accessibility_advice}></div>
+                    <div part="accessibility-advice-container" class="accessibility-advice-container">
+                      <div part="accessibility-advice-title" class="accessibility-advice-title">
+                        {translate[state.language].accessibilityAdvices}
+                      </div>
+                      <div part="accessibility-advice" innerHTML={this.currentTrek.accessibility_advice}></div>
                     </div>
                   )}
                 </div>
@@ -1142,51 +1226,62 @@ export class GrwTrekDetail {
             )}
             {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
               <div>
-                <div class="divider"></div>
-                <div class="touristic-content-container">
-                  <div class="touristic-content-title" ref={el => (this.touristicContentsRef = el)}>
+                <div part="divider" class="divider"></div>
+                <div part="touristic-content-container" class="touristic-content-container">
+                  <div part="touristic-content-title" class="touristic-content-title" ref={el => (this.touristicContentsRef = el)}>
                     {translate[state.language].touristicContents(state.trekTouristicContents.length)}
                   </div>
-                  <div class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
-                    <div class="swiper-wrapper">
+                  <div part="swiper-touristic-content" class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
+                    <div part="swiper-wrapper" class="swiper-wrapper">
                       {state.trekTouristicContents.map(touristicContent => (
-                        <div class="swiper-slide">
-                          <grw-touristic-content-card fontFamily={this.fontFamily} touristicContent={touristicContent} isInsideHorizontalList={true}></grw-touristic-content-card>
+                        <div part="swiper-slide" class="swiper-slide">
+                          <grw-touristic-content-card
+                            exportparts="touristic-content-card,touristic-content-img-container,swiper-touristic-content,swiper-wrapper,swiper-slide,touristic-content-img,default-touristic-content-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-content-sub-container,touristic-content-category-container,touristic-content-category-img,touristic-content-category-name,touristic-content-name,touristic-content-more-detail-container,more-details-button"
+                            fontFamily={this.fontFamily}
+                            touristicContent={touristicContent}
+                            isInsideHorizontalList={true}
+                          ></grw-touristic-content-card>
                         </div>
                       ))}
                     </div>
-                    <div class="swiper-scrollbar" ref={el => (this.touristicContentsSwiperScrollbar = el)}></div>
+                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.touristicContentsSwiperScrollbar = el)}></div>
                   </div>
                 </div>
               </div>
             )}
             {state.trekTouristicEvents && state.trekTouristicEvents.length > 0 && (
               <div>
-                <div class="divider"></div>
-                <div class="touristic-event-container">
-                  <div class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
+                <div part="divider" class="divider"></div>
+                <div part="touristic-event-container" class="touristic-event-container">
+                  <div part="touristic-event-title" class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
                     {translate[state.language].touristicEvents(state.trekTouristicEvents.length)}
                   </div>
-                  <div class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>
-                    <div class="swiper-wrapper">
+                  <div part="swiper-touristic-event" class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>
+                    <div part="swiper-wrapper" class="swiper-wrapper">
                       {state.trekTouristicEvents.map(touristicEvent => (
-                        <div class="swiper-slide">
-                          <grw-touristic-event-card fontFamily={this.fontFamily} touristicEvent={touristicEvent}></grw-touristic-event-card>
+                        <div part="swiper-slide" class="swiper-slide">
+                          <grw-touristic-event-card
+                            exportparts="touristic-event-card,touristic-event-img-container,swiper-touristic-event,swiper-wrapper,swiper-slide,touristic-event-img,default-touristic-event-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-event-sub-container,touristic-event-sub-container,touristic-event-type-img,touristic-event-type-name,touristic-event-name,touristic-event-date-container,touristic-event-date,touristic-event-more-detail-container,more-details-button"
+                            fontFamily={this.fontFamily}
+                            touristicEvent={touristicEvent}
+                          ></grw-touristic-event-card>
                         </div>
                       ))}
                     </div>
-                    <div class="swiper-scrollbar" ref={el => (this.touristicEventsSwiperScrollbar = el)}></div>
+                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.touristicEventsSwiperScrollbar = el)}></div>
                   </div>
                 </div>
               </div>
             )}
             {this.currentTrek.web_links && this.currentTrek.web_links.length > 0 && (
               <div>
-                <div class="divider"></div>
-                <div class="weblinks-container">
-                  <div class="weblinks-title">{translate[state.language].learnMore}</div>
+                <div part="divider" class="divider"></div>
+                <div part="weblinks-container" class="weblinks-container">
+                  <div part="weblinks-title" class="weblinks-title">
+                    {translate[state.language].learnMore}
+                  </div>
                   {this.currentTrek.web_links.map(weblink => (
-                    <a class="weblink-container" href={weblink.url} target="_blank" rel="noopener noreferrer">
+                    <a part="weblink-container" class="weblink-container" href={weblink.url} target="_blank" rel="noopener noreferrer">
                       {weblink.category && weblink.category.pictogram && (
                         <img
                           /* @ts-ignore */
@@ -1202,11 +1297,13 @@ export class GrwTrekDetail {
             )}
             {this.currentTrek.source && this.currentTrek.source.length > 0 && (
               <div>
-                <div class="divider"></div>
-                <div class="source-container">
-                  <div class="source-title">{translate[state.language].sources}</div>
+                <div part="divider" class="divider"></div>
+                <div part="source-container" class="source-container">
+                  <div part="source-title" class="source-title">
+                    {translate[state.language].sources}
+                  </div>
                   {this.sources.map(source => (
-                    <div class="source-sub-container">
+                    <div part="source-sub-container" class="source-sub-container">
                       {source.pictogram && (
                         <img
                           /* @ts-ignore */
@@ -1215,15 +1312,15 @@ export class GrwTrekDetail {
                         />
                       )}
                       <div>
-                        <div class="source-name" innerHTML={source.name}></div>
-                        <a class="source-advice" href={source.website} innerHTML={source.website}></a>
+                        <div part="source-name" class="source-name" innerHTML={source.name}></div>
+                        <a part="source-advice" class="source-advice" href={source.website} innerHTML={source.website}></a>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
-            <div class="detail-bottom-space"></div>
+            <div part="detail-bottom-space" class="detail-bottom-space"></div>
           </div>
         )}
       </Host>

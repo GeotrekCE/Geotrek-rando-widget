@@ -33,8 +33,10 @@ export class GrwInformationDeskDetail {
     return (
       <Host>
         {this.informationDesk.photo_url && (
-          <div class="information-desk-img">
+          <div part="information-desk-img-container" class="information-desk-img-container">
             <img
+              part="information-desk-img"
+              class="information-desk-img"
               /* @ts-ignore */
               crossorigin="anonymous"
               src={this.informationDesk.photo_url}
@@ -42,19 +44,23 @@ export class GrwInformationDeskDetail {
             />
           </div>
         )}
-        <div class="information-desk-sub-container">
-          {this.informationDesk.name && <div class="information-desk-name">{this.informationDesk.name}</div>}
+        <div part="information-desk-sub-container" class="information-desk-sub-container">
+          {this.informationDesk.name && (
+            <div part="information-desk-name" class="information-desk-name">
+              {this.informationDesk.name}
+            </div>
+          )}
           {this.informationDesk.latitude && this.informationDesk.longitude && (
-            <button class="center-on-map-button" onClick={() => this.handleCenterOnMap()}>
+            <button part="center-on-map-button" class="center-on-map-button" onClick={() => this.handleCenterOnMap()}>
               {/* @ts-ignore */}
-              <span translate={false} class="material-symbols material-symbols-outlined">
+              <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
                 location_searching
               </span>
-              {translate[state.language].centerOnMap}
+              <span part="label">{translate[state.language].centerOnMap}</span>
             </button>
           )}
           {(this.informationDesk.postal_code || this.informationDesk.municipality || this.informationDesk.street) && (
-            <div>
+            <div part="information-desk-informations" class="information-desk-informations">
               {this.informationDesk.postal_code && this.informationDesk.postal_code}
               {this.informationDesk.municipality && ` ${this.informationDesk.municipality}`}
               {this.informationDesk.street && ` ${this.informationDesk.street}`}
@@ -63,39 +69,46 @@ export class GrwInformationDeskDetail {
           {this.informationDesk.phone && (
             <div class="phone-container">
               {/* @ts-ignore */}
-              <span translate={false} class="material-symbols material-symbols-outlined">
+              <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
                 call
               </span>
-              <a href={`tel:${this.informationDesk.phone}`}>{this.informationDesk.phone}</a>
+              <a part="label" class="label" href={`tel:${this.informationDesk.phone}`}>
+                {this.informationDesk.phone}
+              </a>
             </div>
           )}
           {this.informationDesk.email && (
-            <div class="mail-container">
+            <div part="mail-container" class="mail-container">
               {/* @ts-ignore */}
-              <span translate={false} class="material-symbols material-symbols-outlined">
+              <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
                 mail
               </span>
-              <a href={`mailto:${this.informationDesk.email}`}>{this.informationDesk.email}</a>
+              <a part="label" class="label" href={`mailto:${this.informationDesk.email}`}>
+                {this.informationDesk.email}
+              </a>
             </div>
           )}
           {this.informationDesk.website && (
-            <div class="link-container">
+            <div part="link-container" class="link-container">
               {/* @ts-ignore */}
-              <span translate={false} class="material-symbols material-symbols-outlined">
+              <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
                 link
               </span>
-              <a href={`${this.informationDesk.website}`}>{this.informationDesk.website}</a>
+              <a part="label" class="label" href={`${this.informationDesk.website}`}>
+                {this.informationDesk.website}
+              </a>
             </div>
           )}
           {this.informationDesk.description && (
-            <div class="information-desk-description-container">
+            <div part="information-desk-description-container" class="information-desk-description-container">
               <div
-                class={this.displayShortDescription ? 'information-desk-description-short' : 'information-desk-description'}
+                part="information-desk-description"
+                class={this.displayShortDescription ? 'information-desk-description information-desk-description-short' : 'information-desk-description'}
                 innerHTML={this.informationDesk.description}
                 ref={el => (this.descriptionRef = el)}
               ></div>
               {false && (
-                <div class="handle-information-desk-description" onClick={() => this.handleInformationDeskDescription()}>
+                <div part="handle-information-desk-description" class="handle-information-desk-description" onClick={() => this.handleInformationDeskDescription()}>
                   {this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess}
                 </div>
               )}

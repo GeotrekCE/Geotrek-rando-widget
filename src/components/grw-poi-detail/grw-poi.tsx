@@ -58,21 +58,23 @@ export class GrwPoiDetail {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     return (
       <Host>
-        <div class="poi-type-img-container">
+        <div part="poi-type-img-container" class="poi-type-img-container">
           <img
+            part="poi-type"
+            class="poi-type"
             /* @ts-ignore */
             crossorigin="anonymous"
-            class="poi-type"
             src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`}
           />
-          <div class="swiper" ref={el => (this.swiperPoiRef = el)}>
-            <div class="swiper-wrapper">
+          <div part="swiper-poi" class="swiper swiper-poi" ref={el => (this.swiperPoiRef = el)}>
+            <div part="swiper-wrapper" class="swiper-wrapper">
               {this.poi.attachments.length > 0 ? (
                 this.poi.attachments
                   .filter(attachment => attachment.type === 'image')
                   .map(attachment => (
-                    <div class="swiper-slide">
+                    <div part="swiper-slide" class="swiper-slide">
                       <img
+                        part="poi-img"
                         class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                         src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                         loading="lazy"
@@ -81,26 +83,34 @@ export class GrwPoiDetail {
                     </div>
                   ))
               ) : (
-                <div class="swiper-slide">
+                <div part="swiper-slide" class="swiper-slide">
                   <img
+                    part="default-poi-img"
+                    class="default-poi-img"
                     /* @ts-ignore */
                     crossorigin="anonymous"
-                    class="default-poi-img"
                     src={defaultImageSrc}
                     loading="lazy"
                   />
                 </div>
               )}
             </div>
-            <div class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
-            <div class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
-            <div class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
+            <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
+            <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
+            <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
           </div>
         </div>
-        <div class="poi-sub-container">
-          <div class="poi-name">{this.poi.name}</div>
-          <div class={this.displayShortDescription ? 'poi-description-short' : 'poi-description'} innerHTML={this.poi.description} ref={el => (this.descriptionRef = el)}></div>
-          <div class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
+        <div part="poi-sub-container" class="poi-sub-container">
+          <div part="poi-name" class="poi-name">
+            {this.poi.name}
+          </div>
+          <div
+            part="poi-description"
+            class={this.displayShortDescription ? 'poi-description poi-description-short' : 'poi-description'}
+            innerHTML={this.poi.description}
+            ref={el => (this.descriptionRef = el)}
+          ></div>
+          <div part="handle-poi-description" class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
             {this.showPoiDescriptionButton && (this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess)}
           </div>
         </div>

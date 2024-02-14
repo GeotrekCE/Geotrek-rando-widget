@@ -336,7 +336,7 @@ export class GrwApp {
           !state.currentTouristicContents &&
           !state.currentTouristicEvents && (
             <div class="grw-init-loader-container">
-              <grw-loader color-primary-container={this.colorPrimaryContainer} color-on-primary-container={this.colorOnPrimaryContainer}></grw-loader>
+              <grw-loader exportparts="loader" color-primary-container={this.colorPrimaryContainer} color-on-primary-container={this.colorOnPrimaryContainer}></grw-loader>
             </div>
           )}
         {this.treks && state.mode === 'treks' && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && !state.currentTreks && (
@@ -430,8 +430,9 @@ export class GrwApp {
                   <div class="grw-handle-search-container">
                     <grw-search fontFamily={this.fontFamily}></grw-search>
                   </div>
-                  <div class="hgrw-andle-filters-container">
+                  <div class="grw-handle-filters-container">
                     <grw-common-button
+                      exportparts="common-button,common-button-icon,common-button-label"
                       fontFamily={this.fontFamily}
                       action={() => this.handleFilters()}
                       icon={'filter_list'}
@@ -455,7 +456,12 @@ export class GrwApp {
               {state.networkError && (
                 <div class="grw-error-container">
                   Une erreur est survenue.
-                  <grw-common-button icon="refresh" name="Recharger la page" action={() => this.reload()}></grw-common-button>
+                  <grw-common-button
+                    exportparts="common-button,common-button-icon,common-button-label"
+                    icon="refresh"
+                    name="Recharger la page"
+                    action={() => this.reload()}
+                  ></grw-common-button>
                 </div>
               )}
               <div
@@ -502,11 +508,11 @@ export class GrwApp {
               {((this.showTrek && !state.currentTrek) ||
                 (this.showTouristicContent && !state.currentTouristicContent) ||
                 (this.showTouristicEvent && !state.currentTouristicEvent) ||
-                (!state.treks && state.mode === 'treks') ||
+                (!state.treks && state.mode === 'treks' && !this.showTrek) ||
                 (!state.touristicContents && state.mode === 'touristicContents') ||
                 (!state.touristicEvents && state.mode === 'touristicEvents')) && (
                 <div class={this.isLargeView ? 'grw-large-view-loader-container' : 'grw-loader-container'}>
-                  <grw-loader color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
+                  <grw-loader exportparts="loader" color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
                 </div>
               )}
               {this.showTrek && (
@@ -574,6 +580,7 @@ export class GrwApp {
               )}
               {!state.networkError && (
                 <grw-map
+                  exportparts="map,elevation,map-bottom-space,map-loader-container,loader"
                   reset-store-on-disconnected={'false'}
                   class={this.isLargeView ? 'grw-large-view-app-map-container' : 'grw-app-map-container'}
                   style={{
@@ -612,6 +619,7 @@ export class GrwApp {
               (this.showTouristicEvent && state.currentTouristicEvent)) && (
               <div class="grw-map-visibility-button-container">
                 <grw-extended-fab
+                  exportparts="map-visibility-button,map-visibility-button-icon,map-visibility-button-label"
                   fontFamily={this.fontFamily}
                   action={() => this.handleShowMap()}
                   icon={() => this.getMapVisibilityIconButton()}

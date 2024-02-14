@@ -77,12 +77,13 @@ export class GrwTouristicEvent {
         }}
       >
         <div
+          part="touristic-event-card"
           class={
             this.isLargeView
-              ? `touristic-event-card-large-view-container${state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''}${
-                  !this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''
-                }`
-              : `touristic-event-card-container${state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''}${
+              ? `touristic-event-card touristic-event-card-large-view-container${
+                  state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''
+                }${!this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''}`
+              : ` touristic-event-card touristic-event-card-container${state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''}${
                   !this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''
                 }`
           }
@@ -92,16 +93,17 @@ export class GrwTouristicEvent {
             }
           }}
         >
-          <div class="touristic-event-img-container">
+          <div part="touristic-event-img-container" class="touristic-event-img-container">
             {this.isInsideHorizontalList ? (
-              <div class="swiper" ref={el => (this.swiperTouristicEventRef = el)}>
-                <div class="swiper-wrapper">
+              <div part="swiper-touristic-event" class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventRef = el)}>
+                <div part="swiper-wrapper" class="swiper-wrapper">
                   {this.touristicEvent.attachments.length > 0 ? (
                     this.touristicEvent.attachments
                       .filter(attachment => attachment.type === 'image')
                       .map(attachment => (
-                        <div class="swiper-slide">
+                        <div part="swiper-slide" class="swiper-slide">
                           <img
+                            part="touristic-event-img"
                             class={`touristic-event-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                             src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                             loading="lazy"
@@ -110,26 +112,28 @@ export class GrwTouristicEvent {
                         </div>
                       ))
                   ) : (
-                    <div class="swiper-slide">
+                    <div part="swiper-slide" class="swiper-slide">
                       <img
+                        part="default-touristic-event-img"
+                        class="default-touristic-event-img"
                         /* @ts-ignore */
                         crossorigin="anonymous"
-                        class="default-touristic-event-img"
                         src={defaultImageSrc}
                         loading="lazy"
                       />
                     </div>
                   )}
                 </div>
-                <div class="swiper-pagination" ref={el => (this.paginationElTouristicEventRef = el)}></div>
-                <div class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
-                <div class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
+                <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElTouristicEventRef = el)}></div>
+                <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
+                <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
               </div>
             ) : this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img
+                part="touristic-event-img"
+                class="touristic-event-img"
                 /* @ts-ignore */
                 crossorigin="anonymous"
-                class="image"
                 src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 loading="lazy"
               />
@@ -137,32 +141,40 @@ export class GrwTouristicEvent {
               <div></div>
             )}
           </div>
-          <div class="touristic-event-sub-container">
-            <div class="touristic-event-type-container">
+          <div part="touristic-event-sub-container" class="touristic-event-sub-container">
+            <div part="touristic-event-type-container" class="touristic-event-type-container">
               {touristicEventType && touristicEventType.pictogram && (
                 <img
+                  part="touristic-event-type-img"
+                  class="touristic-event-type-img"
                   /* @ts-ignore */
                   crossorigin="anonymous"
                   src={touristicEventType.pictogram}
                 />
               )}
-              <div class="touristic-event-type-name">{touristicEventType.type}</div>
+              {touristicEventType && touristicEventType.type && (
+                <div part="touristic-event-type-name" class="touristic-event-type-name">
+                  {touristicEventType.type}
+                </div>
+              )}
             </div>
-            <div class="touristic-event-name">{this.touristicEvent.name}</div>
+            <div part="touristic-event-name" class="touristic-event-name">
+              {this.touristicEvent.name}
+            </div>
             {(this.touristicEvent.begin_date || this.touristicEvent.end_date) && (
-              <div class="touristic-event-date-container">
+              <div part="touristic-event-date-container" class="touristic-event-date-container">
                 {this.touristicEvent.begin_date === this.touristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].date} : {this.touristicEvent.begin_date}
                   </div>
                 )}
                 {this.touristicEvent.begin_date && this.touristicEvent.begin_date !== this.touristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].startDate} : {this.touristicEvent.begin_date}
                   </div>
                 )}
                 {this.touristicEvent.end_date && this.touristicEvent.begin_date !== this.touristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].endDate} : {this.touristicEvent.end_date}
                   </div>
                 )}
@@ -171,8 +183,8 @@ export class GrwTouristicEvent {
           </div>
 
           {this.isInsideHorizontalList && (
-            <div class="touristic-event-more-detail-container">
-              <button class="more-details-button" onClick={() => this.touristicEventCardPress.emit(this.touristicEvent.id)}>
+            <div part="touristic-event-more-detail-container" class="touristic-event-more-detail-container">
+              <button part="more-details-button" class="more-details-button" onClick={() => this.touristicEventCardPress.emit(this.touristicEvent.id)}>
                 Plus de détails
               </button>
             </div>

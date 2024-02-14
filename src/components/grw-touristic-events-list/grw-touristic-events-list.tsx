@@ -81,13 +81,14 @@ export class GrwTouristicContentsList {
     return (
       <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.touristicEventsWithinBounds && (
-          <div class="current-touristic-events-within-bounds-length">{`${state.touristicEventsWithinBounds.length} ${
+          <div part="current-touristic-events-within-bounds-length" class="current-touristic-events-within-bounds-length">{`${state.touristicEventsWithinBounds.length} ${
             state.touristicEventsWithinBounds.length > 1 ? translate[state.language].home.touristicEvents : translate[state.language].home.touristicEvent
           }`}</div>
         )}
-        <div class="touristic-events-list-container">
+        <div part="touristic-events-list-container" class="touristic-events-list-container">
           {this.touristicEventsToDisplay.map(touristicEvent => (
             <grw-touristic-event-card
+              exportparts="touristic-event-card,touristic-event-img-container,swiper-touristic-event,swiper-wrapper,swiper-slide,touristic-event-img,default-touristic-event-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-event-sub-container,touristic-event-sub-container,touristic-event-type-img,touristic-event-type-name,touristic-event-name,touristic-event-date-container,touristic-event-date,touristic-event-more-detail-container,more-details-button"
               reset-store-on-disconnected="false"
               key={`touristic-event-${touristicEvent.id}`}
               touristicEvent={touristicEvent}
@@ -101,7 +102,7 @@ export class GrwTouristicContentsList {
             ></grw-touristic-event-card>
           ))}
         </div>
-        {!this.isLargeView && <div class="list-bottom-space"></div>}
+        <div part="list-bottom-space" class={!this.isLargeView ? 'list-bottom-space' : 'list-large-view-bottom-space'}></div>
       </Host>
     );
   }

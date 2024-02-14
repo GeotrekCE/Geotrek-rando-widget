@@ -12,7 +12,7 @@ export class GrwLoader {
   render() {
     return (
       <Host style={{ '--color-primary-container': this.colorPrimaryContainer, '--color-on-primary-container': this.colorOnPrimaryContainer }}>
-        <span class="loader"></span>
+        <span part="loader" class="loader"></span>
       </Host>
     );
   }

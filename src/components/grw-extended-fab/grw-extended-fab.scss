@@ -27,7 +27,8 @@
   &:hover {
     box-shadow: var(--elevation-4);
   }
-  span {
+  .icon,
+  .label {
     font-size: 24px;
     margin-right: 8px;
     color: var(--fab-color);

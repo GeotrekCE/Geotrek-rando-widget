@@ -1835,17 +1835,17 @@ export class GrwMap {
           '--map-bottom-space-height': this.isLargeView ? '0px' : '80px',
         }}
       >
-        <div id="map" style={{}} class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
+        <div id="map" part="map" class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
         {state.currentTrek && (
           <div>
-            <div id="elevation" ref={el => (this.elevationRef = el)}></div>
-            <div class="map-bottom-space"></div>
+            <div id="elevation" part="elevation" ref={el => (this.elevationRef = el)}></div>
+            <div part="map-bottom-space" class="map-bottom-space"></div>
           </div>
         )}
 
         {!this.mapIsReady && (
-          <div class="map-loader-container">
-            <span class="loader"></span>
+          <div part="map-loader-container" class="map-loader-container">
+            <span part="loader" class="loader"></span>
           </div>
         )}
       </Host>

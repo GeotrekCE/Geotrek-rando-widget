@@ -87,30 +87,33 @@ export class GrwTouristicEventDetail {
         }}
       >
         {state.currentTouristicEvent && (
-          <div class="touristic-event-detail-container" ref={el => (this.touristicEventDetailContainerRef = el)}>
-            <div class="images-container" ref={el => (this.presentationRef = el)}>
-              <div class="swiper swiper-images" ref={el => (this.swiperImagesRef = el)}>
-                <div class="swiper-wrapper">
+          <div part="touristic-event-detail-container" class="touristic-event-detail-container" ref={el => (this.touristicEventDetailContainerRef = el)}>
+            <div part="images-container" class="images-container" ref={el => (this.presentationRef = el)}>
+              <div part="swiper-images" class="swiper swiper-images" ref={el => (this.swiperImagesRef = el)}>
+                <div part="swiper-wrapper" class="swiper-wrapper">
                   {state.currentTouristicEvent.attachments.length > 0 ? (
                     state.currentTouristicEvent.attachments
                       .filter(attachment => attachment.type === 'image')
                       .map(attachment => {
                         const legend = [attachment.legend, attachment.author].filter(Boolean).join(' - ');
                         return (
-                          <div class="swiper-slide">
+                          <div part="swiper-slide" class="swiper-slide">
                             {this.displayFullscreen && (
-                              <div class="close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
+                              <div part="close-fullscreen-button" class="close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
                                 {/* @ts-ignore */}
-                                <span translate={false} class="material-symbols material-symbols-outlined">
+                                <span part="icon" translate={false} class="material-symbols material-symbols-outlined icon">
                                   close
                                 </span>
                               </div>
                             )}
-                            <div class="legend-container">{legend}</div>
+                            <div part="legend-container" class="legend-container">
+                              {legend}
+                            </div>
                             <img
+                              part="image"
+                              class="image"
                               /* @ts-ignore */
                               crossorigin="anonymous"
-                              class="image"
                               src={attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
@@ -119,114 +122,136 @@ export class GrwTouristicEventDetail {
                         );
                       })
                   ) : (
-                    <div class="swiper-slide">
+                    <div part="swiper-slide" class="swiper-slide">
                       <img
+                        part="default-poi-img"
+                        class="default-poi-img"
                         /* @ts-ignore */
                         crossorigin="anonymous"
-                        class="default-poi-img"
                         src={defaultImageSrc}
                         loading="lazy"
                       />
                     </div>
                   )}
                 </div>
-                <div class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
-                <div class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
-                <div class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
+                <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
+                <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
+                <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
               </div>
             </div>
-            <div class="touristic-event-category-container">
+            <div part="touristic-event-category-container" class="touristic-event-category-container">
               <img
+                part="touristic-event-category-img"
+                class="touristic-event-category-img"
                 /* @ts-ignore */
                 crossorigin="anonymous"
                 src={touristicEventType.pictogram}
               />
-              <div class="touristic-event-category-name">{touristicEventType.type}</div>
+              <div part="touristic-event-category-name" class="touristic-event-category-name">
+                {touristicEventType.type}
+              </div>
             </div>
-            <div class="name">{state.currentTouristicEvent.name}</div>
+            <div part="name" class="name">
+              {state.currentTouristicEvent.name}
+            </div>
             {(state.currentTouristicEvent.begin_date || state.currentTouristicEvent.end_date) && (
-              <div class="touristic-event-date-container">
+              <div part="touristic-event-date-container" class="touristic-event-date-container">
                 {state.currentTouristicEvent.begin_date === state.currentTouristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].date} : {state.currentTouristicEvent.begin_date}
                   </div>
                 )}
                 {state.currentTouristicEvent.begin_date && state.currentTouristicEvent.begin_date !== state.currentTouristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].startDate} : {state.currentTouristicEvent.begin_date}
                   </div>
                 )}
                 {state.currentTouristicEvent.end_date && state.currentTouristicEvent.begin_date !== state.currentTouristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].endDate} : {state.currentTouristicEvent.end_date}
                   </div>
                 )}
               </div>
             )}
-            <div class="divider"></div>
-            <div class="downloads-container">
-              <div class="download-title">{translate[state.language].download}</div>
-              <div class="links-container">
-                <a href={`${state.currentTouristicEvent.pdf}`} target="_blank" rel="noopener noreferrer">
+            <div part="divider" class="divider"></div>
+            <div part="downloads-container" class="downloads-container">
+              <div part="download-title" class="download-title">
+                {translate[state.language].download}
+              </div>
+              <div part="links-container" class="links-container">
+                <a part="link" class="link" href={`${state.currentTouristicEvent.pdf}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined">
+                  <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
                     download
                   </span>
-                  PDF
+                  <span part="label" class="label">
+                    PDF
+                  </span>
                 </a>
               </div>
             </div>
             {state.currentTouristicEvent.description_teaser && (
               <div>
-                <div class="divider"></div>
-                <div class="description-teaser" innerHTML={state.currentTouristicEvent.description_teaser}></div>
+                <div part="divider" class="divider"></div>
+                <div part="description-teaser" class="description-teaser" innerHTML={state.currentTouristicEvent.description_teaser}></div>
               </div>
             )}
-            <div class="divider"></div>
+            <div part="divider" class="divider"></div>
             {state.currentTouristicEvent.practical_info && (
-              <div class="description-container" ref={el => (this.descriptionRef = el)}>
-                <div class="description-title">{translate[state.language].description}</div>
-                <div class="description" innerHTML={state.currentTouristicEvent.description}></div>
+              <div part="description-container" class="description-container" ref={el => (this.descriptionRef = el)}>
+                <div part="description-title" class="description-title">
+                  {translate[state.language].description}
+                </div>
+                <div part="description" class="description" innerHTML={state.currentTouristicEvent.description}></div>
               </div>
             )}
             {cities && cities.length > 0 && (
-              <div class="cities-container">
-                <div class="cities-title">{translate[state.language].city} :&nbsp;</div>
-                <div innerHTML={cities.join(', ')}></div>
+              <div part="cities-container" class="cities-container">
+                <div part="cities-title" class="cities-title">
+                  {translate[state.language].city} :&nbsp;
+                </div>
+                <div part="cities" class="cities" innerHTML={cities.join(', ')}></div>
               </div>
             )}
             {state.currentTouristicEvent.practical_info && (
               <div>
-                <div class="divider"></div>
-                <div class="useful-information-container">
-                  <div class="useful-information-title">{translate[state.language].usefulInformation} :&nbsp;</div>
-                  <div innerHTML={state.currentTouristicEvent.practical_info}></div>
+                <div part="divider" class="divider"></div>
+                <div part="useful-information-container" class="useful-information-container">
+                  <div part="useful-information-title" class="useful-information-title">
+                    {translate[state.language].usefulInformation} :&nbsp;
+                  </div>
+                  <div part="useful-information" class="useful-information" innerHTML={state.currentTouristicEvent.practical_info}></div>
                 </div>
               </div>
             )}
             {(state.currentTouristicEvent.contact || state.currentTouristicEvent.email || state.currentTouristicEvent.website) && (
               <div>
-                <div class="divider"></div>
-
-                <div class="contact-container">
-                  <div class="contact-title">{translate[state.language].contact} :&nbsp;</div>
-                  {state.currentTouristicEvent.contact && <div innerHTML={state.currentTouristicEvent.contact}></div>}
+                <div part="divider" class="divider"></div>
+                <div part="contact-container" class="contact-container">
+                  <div part="contact-title" class="contact-title">
+                    {translate[state.language].contact} :&nbsp;
+                  </div>
+                  {state.currentTouristicEvent.contact && <div part="contact" class="contact" innerHTML={state.currentTouristicEvent.contact}></div>}
                   {state.currentTouristicEvent.email && (
-                    <div class="email-container">
-                      <div>{translate[state.language].email} :&nbsp;</div>
-                      <div innerHTML={state.currentTouristicEvent.email}></div>
+                    <div part="email-container" class="email-container">
+                      <div part="email-title" class="email-title">
+                        {translate[state.language].email} :&nbsp;
+                      </div>
+                      <div part="email" class="email" innerHTML={state.currentTouristicEvent.email}></div>
                     </div>
                   )}
                   {state.currentTouristicEvent.website && (
-                    <div class="website-container">
-                      <div>{translate[state.language].website} :&nbsp;</div>
-                      <div innerHTML={state.currentTouristicEvent.website}></div>
+                    <div part="website-container" class="website-container">
+                      <div part="website-title" class="website-title">
+                        {translate[state.language].website} :&nbsp;
+                      </div>
+                      <div part="website" class="website" innerHTML={state.currentTouristicEvent.website}></div>
                     </div>
                   )}
                 </div>
               </div>
             )}
-            <div class="detail-bottom-space"></div>
+            <div part="detail-bottom-space" class="detail-bottom-space"></div>
           </div>
         )}
       </Host>

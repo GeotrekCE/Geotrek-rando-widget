@@ -76,12 +76,13 @@ export class GrwTouristicContentCard {
         }}
       >
         <div
+          part="touristic-content-card"
           class={
             this.isLargeView
-              ? `touristic-content-card-large-view-container${state.selectedTouristicContentId === this.touristicContent.id ? ' selected-touristic-content-card' : ''}${
-                  !this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''
-                }`
-              : `touristic-content-card-container${state.selectedTouristicContentId === this.touristicContent.id ? ' selected-touristic-content-card' : ''}${
+              ? `touristic-content-card touristic-content-card-large-view-container${
+                  state.selectedTouristicContentId === this.touristicContent.id ? ' selected-touristic-content-card' : ''
+                }${!this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''}`
+              : `touristic-content-card touristic-content-card-container${state.selectedTouristicContentId === this.touristicContent.id ? ' selected-touristic-content-card' : ''}${
                   !this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''
                 }`
           }
@@ -91,16 +92,17 @@ export class GrwTouristicContentCard {
             }
           }}
         >
-          <div class="touristic-content-img-container">
+          <div part="touristic-content-img-container" class="touristic-content-img-container">
             {this.isInsideHorizontalList ? (
-              <div class="swiper" ref={el => (this.swiperTouristicContentRef = el)}>
-                <div class="swiper-wrapper">
+              <div part="swiper-touristic-content" class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentRef = el)}>
+                <div part="swiper-wrapper" class="swiper-wrapper">
                   {this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
                     this.touristicContent.attachments
                       .filter(attachment => attachment.type === 'image')
                       .map(attachment => (
-                        <div class="swiper-slide">
+                        <div part="swiper-slide" class="swiper-slide">
                           <img
+                            part="touristic-content-img"
                             class={`touristic-content-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                             src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                             loading="lazy"
@@ -109,26 +111,28 @@ export class GrwTouristicContentCard {
                         </div>
                       ))
                   ) : (
-                    <div class="swiper-slide">
+                    <div part="swiper-slide" class="swiper-slide">
                       <img
+                        part="default-touristic-content-img"
+                        class="default-touristic-content-img"
                         /* @ts-ignore */
                         crossorigin="anonymous"
-                        class="default-touristic-content-img"
                         src={defaultImageSrc}
                         loading="lazy"
                       />
                     </div>
                   )}
                 </div>
-                <div class="swiper-pagination" ref={el => (this.paginationElTouristicContentRef = el)}></div>
-                <div class="swiper-button-prev" ref={el => (this.prevElTouristicContentRef = el)}></div>
-                <div class="swiper-button-next" ref={el => (this.nextElTouristicContentRef = el)}></div>
+                <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElTouristicContentRef = el)}></div>
+                <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicContentRef = el)}></div>
+                <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicContentRef = el)}></div>
               </div>
             ) : this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img
+                part="touristic-content-img"
+                class="touristic-content-img"
                 /* @ts-ignore */
                 crossorigin="anonymous"
-                class="image"
                 src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 loading="lazy"
               />
@@ -136,22 +140,28 @@ export class GrwTouristicContentCard {
               <div></div>
             )}
           </div>
-          <div class="touristic-content-sub-container">
-            <div class="touristic-content-category-container">
+          <div part="touristic-content-sub-container" class="touristic-content-sub-container">
+            <div part="touristic-content-category-container" class="touristic-content-category-container">
               {touristicContentCategory && touristicContentCategory.pictogram && (
                 <img
+                  part="touristic-content-category-img"
+                  class="touristic-content-category-img"
                   /* @ts-ignore */
                   crossorigin="anonymous"
                   src={touristicContentCategory.pictogram}
                 />
               )}
-              <div class="touristic-content-category-name">{touristicContentCategory.label}</div>
+              <div part="touristic-content-category-name" class="touristic-content-category-name">
+                {touristicContentCategory.label}
+              </div>
             </div>
-            <div class="touristic-content-name">{this.touristicContent.name}</div>
+            <div part="touristic-content-name" class="touristic-content-name">
+              {this.touristicContent.name}
+            </div>
           </div>
           {this.isInsideHorizontalList && (
-            <div class="touristic-content-more-detail-container">
-              <button class="more-details-button" onClick={() => this.touristicContentCardPress.emit(this.touristicContent.id)}>
+            <div part="touristic-content-more-detail-container" class="touristic-content-more-detail-container">
+              <button part="more-details-button" class="more-details-button" onClick={() => this.touristicContentCardPress.emit(this.touristicContent.id)}>
                 Plus de détails
               </button>
             </div>
