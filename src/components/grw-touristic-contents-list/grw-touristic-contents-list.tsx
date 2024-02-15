@@ -90,7 +90,6 @@ export class GrwTouristicContentsList {
             <grw-touristic-content-card
               exportparts="touristic-content-card,touristic-content-img-container,swiper-touristic-content,swiper-wrapper,swiper-slide,touristic-content-img,default-touristic-content-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-content-sub-container,touristic-content-category-container,touristic-content-category-img,touristic-content-category-name,touristic-content-name,touristic-content-more-detail-container,more-details-button"
               fontFamily={this.fontFamily}
-              reset-store-on-disconnected="false"
               key={`touristic-content-${touristicContent.id}`}
               touristicContent={touristicContent}
               is-large-view={this.isLargeView}

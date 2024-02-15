@@ -470,7 +470,6 @@ export class GrwApp {
               >
                 {state.mode === 'treks' && this.treks && (
                   <grw-treks-list
-                    reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
                     fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
@@ -482,7 +481,6 @@ export class GrwApp {
                 )}
                 {state.mode === 'touristicContents' && this.touristicContents && (
                   <grw-touristic-contents-list
-                    reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
                     fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
@@ -494,7 +492,6 @@ export class GrwApp {
                 )}
                 {state.mode === 'touristicEvents' && this.touristicEvents && (
                   <grw-touristic-events-list
-                    reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
                     fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
@@ -522,7 +519,6 @@ export class GrwApp {
                       visibility: (!this.showTrekMap && this.showTrek) || this.isLargeView ? 'visible' : 'hidden',
                       zIndex: !this.showTrekMap ? '1' : '0',
                     }}
-                    reset-store-on-disconnected={'false'}
                     fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
@@ -581,7 +577,6 @@ export class GrwApp {
               {!state.networkError && (
                 <grw-map
                   exportparts="map,elevation,map-bottom-space,map-loader-container,loader"
-                  reset-store-on-disconnected={'false'}
                   class={this.isLargeView ? 'grw-large-view-app-map-container' : 'grw-app-map-container'}
                   style={{
                     visibility:

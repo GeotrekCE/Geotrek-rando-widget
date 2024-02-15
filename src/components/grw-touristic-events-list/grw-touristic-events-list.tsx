@@ -89,7 +89,6 @@ export class GrwTouristicContentsList {
           {this.touristicEventsToDisplay.map(touristicEvent => (
             <grw-touristic-event-card
               exportparts="touristic-event-card,touristic-event-img-container,swiper-touristic-event,swiper-wrapper,swiper-slide,touristic-event-img,default-touristic-event-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-event-sub-container,touristic-event-sub-container,touristic-event-type-img,touristic-event-type-name,touristic-event-name,touristic-event-date-container,touristic-event-date,touristic-event-more-detail-container,more-details-button"
-              reset-store-on-disconnected="false"
               key={`touristic-event-${touristicEvent.id}`}
               touristicEvent={touristicEvent}
               is-large-view={this.isLargeView}

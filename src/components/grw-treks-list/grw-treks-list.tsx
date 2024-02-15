@@ -87,7 +87,6 @@ export class GrwTreksList {
           {this.treksToDisplay.map(trek => (
             <grw-trek-card
               exportparts="trek-card,trek-img-container,trek-img,trek-sub-container,trek-departure,trek-name,trek-themes-container,trek-theme,trek-icons-labels-container,trek-icon-label,trek-icon,trek-label"
-              reset-store-on-disconnected="false"
               key={`trek-${trek.id}`}
               trek={trek}
               is-large-view={this.isLargeView}
