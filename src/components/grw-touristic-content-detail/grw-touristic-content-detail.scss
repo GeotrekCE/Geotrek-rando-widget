@@ -215,3 +215,10 @@ grw-touristic-content-detail {
   box-shadow: var(--elevation-1);
   cursor: pointer;
 }
+
+.touristic-content-category-img {
+  border-radius: 100%;
+  padding: 2px;
+  max-height: 20px;
+  max-width: 20px;
+}

@@ -140,16 +140,20 @@ export class GrwTouristicEventDetail {
               </div>
             </div>
             <div part="touristic-event-category-container" class="touristic-event-category-container">
-              <img
-                part="touristic-event-category-img"
-                class="touristic-event-category-img"
-                /* @ts-ignore */
-                crossorigin="anonymous"
-                src={touristicEventType.pictogram}
-              />
-              <div part="touristic-event-category-name" class="touristic-event-category-name">
-                {touristicEventType.type}
-              </div>
+              {touristicEventType && touristicEventType.pictogram && (
+                <img
+                  part="touristic-event-category-img"
+                  class="touristic-event-category-img"
+                  /* @ts-ignore */
+                  crossorigin="anonymous"
+                  src={touristicEventType.pictogram}
+                />
+              )}
+              {touristicEventType && touristicEventType.type && (
+                <div part="touristic-event-category-name" class="touristic-event-category-name">
+                  {touristicEventType.type}
+                </div>
+              )}
             </div>
             <div part="name" class="name">
               {state.currentTouristicEvent.name}

@@ -82,6 +82,7 @@ export class GrwApp {
     const parentTrek = state.parentTrekId ? state.parentTrekId : state.currentTrekSteps ? this.currentTrekId : null;
     state.currentTrek = null;
     this.currentTrekId = event.detail;
+    state.mode = 'treks';
     this.showTrek = true;
     this.showTrekMap = false;
     const url = new URL(window.location.toString());
@@ -96,6 +97,7 @@ export class GrwApp {
   onParentTrekPress(event: CustomEvent<number>) {
     state.currentTrek = null;
     this.currentTrekId = event.detail;
+    state.mode = 'treks';
     this.showTrek = true;
     this.showTrekMap = false;
     const url = new URL(window.location.toString());
@@ -110,6 +112,7 @@ export class GrwApp {
     this.currentTrekId = null;
     this.showTrek = false;
     this.currentTouristicContentId = event.detail;
+    state.mode = 'touristicContents';
     this.showTouristicContent = true;
     this.showTouristicContentMap = false;
     const url = new URL(window.location.toString());
@@ -124,6 +127,8 @@ export class GrwApp {
     this.currentTrekId = null;
     this.showTrek = false;
     this.currentTouristicEventId = event.detail;
+    ``;
+    state.mode = 'touristicEvents';
     this.showTouristicEvent = true;
     this.showTouristicEventMap = false;
     const url = new URL(window.location.toString());
@@ -166,14 +171,17 @@ export class GrwApp {
       window.history.replaceState({ isInitialHistoryWithDetails: true }, '', url);
       state.parentTrekId = parentTrekId ? Number(parentTrekId) : null;
       this.currentTrekId = Number(trekParam);
+      state.mode = 'treks';
       this.showTrek = true;
     } else if (touristicContentParam) {
       window.history.replaceState({ isInitialHistoryWithDetails: true }, '', url);
       this.currentTouristicContentId = Number(touristicContentParam);
+      state.mode = 'touristicContents';
       this.showTouristicContent = true;
     } else if (touristicEventParam) {
       window.history.replaceState({ isInitialHistoryWithDetails: true }, '', url);
       this.currentTouristicEventId = Number(touristicEventParam);
+      state.mode = 'touristicEvents';
       this.showTouristicEvent = true;
     }
   }
@@ -241,6 +249,7 @@ export class GrwApp {
       state.currentTouristicEvent = null;
       state.currentTrek = null;
       this.currentTrekId = trekParam;
+      state.mode = 'treks';
       this.showTrek = true;
     } else if (!trekParam && !touristicContentParam && !touristicEventParam) {
       this.onDetailsClose();
@@ -506,8 +515,8 @@ export class GrwApp {
                 (this.showTouristicContent && !state.currentTouristicContent) ||
                 (this.showTouristicEvent && !state.currentTouristicEvent) ||
                 (!state.treks && state.mode === 'treks' && !this.showTrek) ||
-                (!state.touristicContents && state.mode === 'touristicContents') ||
-                (!state.touristicEvents && state.mode === 'touristicEvents')) && (
+                (!state.touristicContents && state.mode === 'touristicContents' && !this.showTouristicContent) ||
+                (!state.touristicEvents && state.mode === 'touristicEvents' && !this.showTouristicEvent)) && (
                 <div class={this.isLargeView ? 'grw-large-view-loader-container' : 'grw-loader-container'}>
                   <grw-loader exportparts="loader" color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
                 </div>
