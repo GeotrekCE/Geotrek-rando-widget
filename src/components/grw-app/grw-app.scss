@@ -86,11 +86,10 @@ grw-app {
 .grw-content-container {
   position: relative;
   display: flex;
-  height: calc(100% - var(--header-height));
 }
 
 .grw-content-treks {
-  height: calc(100% - var(--header-height));
+  height: calc(100% - var(--header-height) - var(--header-with-segment));
 }
 
 .grw-content-trek {

@@ -908,7 +908,7 @@ export class GrwMap {
       elevationDiv: `#elevation`,
       theme: `custom-theme${!this.useGradient ? ' use-theme-color' : ''}`,
       detached: true,
-      height: 300,
+      height: 280,
       wptIcons: true,
       wptLabels: true,
       collapsed: false,

@@ -335,6 +335,7 @@ export class GrwApp {
           '--app-width': this.appWidth,
           '--app-height': this.appHeight,
           '--header-height': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 ? '136px' : '64px',
+          '--header-with-segment': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 ? '16px' : '0px',
           '--border-radius': this.rounded ? '' : '0px',
         }}
       >
