@@ -31,3 +31,15 @@ You can explore Geotrek-rando widget and create your own component [here](https:
 Once you made your component, you can get the code to copy-paste by clicking on _Docs_ then _Show code_.
 
 [![](https://geotrek.fr/assets/img/logo_autonomens-h120m.png)](https://datatheca.com/)
+
+## Documentation
+
+- [Presentation](https://geotrek-rando-widget.readthedocs.io/latest/documentation/introduction/overview.html)
+- [Get started](https://geotrek-rando-widget.readthedocs.io/latest/documentation/introduction/get-started.html)
+- [Configuration instructions](https://geotrek-rando-widget.readthedocs.io/latest/documentation/configuration/colors.html)
+
+## Contribution
+
+- [Development guide](https://geotrek-rando-widget.readthedocs.io/latest/documentation/contribution/development.html)
+- [Documentation guide](https://geotrek-rando-widget.readthedocs.io/latest/documentation/contribution/documentation.html)
+- [Translating guide](https://geotrek-rando-widget.readthedocs.io/latest/documentation/contribution/translation.html)

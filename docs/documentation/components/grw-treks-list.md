@@ -17,6 +17,9 @@
 - Filtre sur les randonnées rattachées à une ou plusieurs communes, secteurs, thèmes
 - Réinitialisation des filtres
 
+::: warning
+Actuellement Geotrek-rando-widget ne peut pas remonter plus de de 999 éléments dans la liste
+:::
 
 ## Désactiver l'affichage des randonnées dans le widget
 

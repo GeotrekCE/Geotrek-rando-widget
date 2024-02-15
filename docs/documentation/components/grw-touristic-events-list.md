@@ -15,7 +15,12 @@
 
 - Recherche d'un évènement par son nom
 - Filtre sur la catégorie d'évènement
+- Filtre sur la date
 - Réinitialisation des filtres
+
+::: warning
+Actuellement Geotrek-rando-widget ne peut pas remonter plus de de 999 éléments dans la liste
+:::
 
 ## Désactiver l'affichage des services dans le widget
 
@@ -28,6 +33,6 @@ Par défaut, ceux-ci sont visibles et matérialisés par une barre de segments p
 
 ```js
 <grw-app
-	touristic-events="false"
+	touristic-contents="false"
 ></grw-app>
 ```

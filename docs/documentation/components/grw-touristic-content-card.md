@@ -2,7 +2,7 @@
 
 Les informations affichées dans la vignette d'un contenu touristique sont :
 
-- La ou les photos (caroussel) 
+- La ou les photos du service (caroussel) 
 - Le type de contenu (hébergement, restauration, produits locaux, etc.)
 - Le nom du service
 

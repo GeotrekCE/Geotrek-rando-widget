@@ -16,6 +16,10 @@
 - Filtre sur la catégorie de service
 - Réinitialisation des filtres
 
+::: warning
+Actuellement Geotrek-rando-widget ne peut pas remonter plus de de 999 éléments dans la liste
+:::
+
 ## Désactiver l'affichage des services dans le widget
 
 Il est possible de paramétrer le widget de façon à valoriser une offre de contenus touristiques sans forcément mettre en avant les balades associées. 
@@ -27,6 +31,6 @@ Par défaut, celles ci sont visibles et matérialisées par une barre de segment
 
 ```js
 <grw-app
-	touristic-contents="false"
+	touristic-events="false"
 ></grw-app>
 ```

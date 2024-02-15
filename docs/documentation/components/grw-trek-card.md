@@ -2,7 +2,7 @@
 
 Les informations affichées dans la vignette d'une randonnée sont :
 
-- La ou les photos (caroussel) 
+- La ou les photos de l'itinéraire (caroussel) 
 - Le nom de la commune de départ
 - Le nom de l'itinéraire
 - Les thèmes associés (faune, géologie, archéologie et histoire, etc.)
@@ -17,9 +17,9 @@ Les informations affichées dans la vignette d'une randonnée sont :
   <a title="Vignette d'une randonnée"><img src="/components/card_trek.png" alt="Vignette d'une randonnée"></a>
 </center>
 
-# Vignettes présentes dans la fiche détail d'une randonnée
+# Vignettes présentes dans la fiche détaillée d'une randonnée
 
-La fiche détail d'une randonnée peut être même contenir des vignettes d'objets situés à proximté afin d'enrichir son contenu informatif.
+La fiche détaillée d'une randonnée peut être même contenir des vignettes d'objets situés à proximté afin d'enrichir son contenu informatif.
 
 ## Patrimoines à découvrir (POIs)
 
