@@ -13,6 +13,13 @@
 | `colorPrimaryContainer`   | `color-primary-container`    |             | `string` | `'#eaddff'` |
 
 
+## Shadow Parts
+
+| Part       | Description |
+| ---------- | ----------- |
+| `"loader"` |             |
+
+
 ## Dependencies
 
 ### Used by

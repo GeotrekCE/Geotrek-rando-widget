@@ -22,6 +22,31 @@
 | `touristicEventCardPress`      |             | `CustomEvent<number>` |
 
 
+## Shadow Parts
+
+| Part                                      | Description |
+| ----------------------------------------- | ----------- |
+| `"default-touristic-event-img"`           |             |
+| `"more-details-button"`                   |             |
+| `"swiper-button-next"`                    |             |
+| `"swiper-button-prev"`                    |             |
+| `"swiper-pagination"`                     |             |
+| `"swiper-slide"`                          |             |
+| `"swiper-touristic-event"`                |             |
+| `"swiper-wrapper"`                        |             |
+| `"touristic-event-card"`                  |             |
+| `"touristic-event-date"`                  |             |
+| `"touristic-event-date-container"`        |             |
+| `"touristic-event-img"`                   |             |
+| `"touristic-event-img-container"`         |             |
+| `"touristic-event-more-detail-container"` |             |
+| `"touristic-event-name"`                  |             |
+| `"touristic-event-sub-container"`         |             |
+| `"touristic-event-type-container"`        |             |
+| `"touristic-event-type-img"`              |             |
+| `"touristic-event-type-name"`             |             |
+
+
 ## Dependencies
 
 ### Used by

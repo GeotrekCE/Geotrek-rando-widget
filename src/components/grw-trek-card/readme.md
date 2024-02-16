@@ -29,6 +29,24 @@
 | `trekCardPress`      |             | `CustomEvent<number>` |
 
 
+## Shadow Parts
+
+| Part                            | Description |
+| ------------------------------- | ----------- |
+| `"trek-card"`                   |             |
+| `"trek-departure"`              |             |
+| `"trek-icon"`                   |             |
+| `"trek-icon-label"`             |             |
+| `"trek-icons-labels-container"` |             |
+| `"trek-img"`                    |             |
+| `"trek-img-container"`          |             |
+| `"trek-label"`                  |             |
+| `"trek-name"`                   |             |
+| `"trek-sub-container"`          |             |
+| `"trek-theme"`                  |             |
+| `"trek-themes-container"`       |             |
+
+
 ## Dependencies
 
 ### Used by

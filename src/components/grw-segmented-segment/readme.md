@@ -15,6 +15,14 @@
 | `treks`             | `treks`              |             | `boolean` | `true`     |
 
 
+## Shadow Parts
+
+| Part                            | Description |
+| ------------------------------- | ----------- |
+| `"segment"`                     |             |
+| `"segmented-buttons-container"` |             |
+
+
 ## Dependencies
 
 ### Used by

@@ -5,6 +5,15 @@
 <!-- Auto Generated Below -->
 
 
+## Shadow Parts
+
+| Part                       | Description |
+| -------------------------- | ----------- |
+| `"select-language-icon"`   |             |
+| `"select-language-option"` |             |
+| `"select-language-select"` |             |
+
+
 ## Dependencies
 
 ### Used by

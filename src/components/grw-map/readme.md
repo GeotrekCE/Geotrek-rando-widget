@@ -34,6 +34,17 @@
 | `trekCardPress`             |             | `CustomEvent<number>` |
 
 
+## Shadow Parts
+
+| Part                     | Description |
+| ------------------------ | ----------- |
+| `"elevation"`            |             |
+| `"loader"`               |             |
+| `"map"`                  |             |
+| `"map-bottom-space"`     |             |
+| `"map-loader-container"` |             |
+
+
 ## Dependencies
 
 ### Used by

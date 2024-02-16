@@ -16,6 +16,15 @@
 | `name`       | --            |             | `Function` | `undefined` |
 
 
+## Shadow Parts
+
+| Part                            | Description |
+| ------------------------------- | ----------- |
+| `"map-visibility-button"`       |             |
+| `"map-visibility-button-icon"`  |             |
+| `"map-visibility-button-label"` |             |
+
+
 ## Dependencies
 
 ### Used by

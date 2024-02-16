@@ -22,6 +22,29 @@
 | `touristicContentCardPress`      |             | `CustomEvent<number>` |
 
 
+## Shadow Parts
+
+| Part                                        | Description |
+| ------------------------------------------- | ----------- |
+| `"default-touristic-content-img"`           |             |
+| `"more-details-button"`                     |             |
+| `"swiper-button-next"`                      |             |
+| `"swiper-button-prev"`                      |             |
+| `"swiper-pagination"`                       |             |
+| `"swiper-slide"`                            |             |
+| `"swiper-touristic-content"`                |             |
+| `"swiper-wrapper"`                          |             |
+| `"touristic-content-card"`                  |             |
+| `"touristic-content-category-container"`    |             |
+| `"touristic-content-category-img"`          |             |
+| `"touristic-content-category-name"`         |             |
+| `"touristic-content-img"`                   |             |
+| `"touristic-content-img-container"`         |             |
+| `"touristic-content-more-detail-container"` |             |
+| `"touristic-content-name"`                  |             |
+| `"touristic-content-sub-container"`         |             |
+
+
 ## Dependencies
 
 ### Used by

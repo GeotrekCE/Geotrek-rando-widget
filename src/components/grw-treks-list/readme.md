@@ -16,6 +16,15 @@
 | `isLargeView`               | `is-large-view`                |             | `boolean` | `false`     |
 
 
+## Shadow Parts
+
+| Part                                   | Description |
+| -------------------------------------- | ----------- |
+| `"current-treks-within-bounds-length"` |             |
+| `"list-bottom-space"`                  |             |
+| `"treks-list-container"`               |             |
+
+
 ## Dependencies
 
 ### Used by

@@ -16,6 +16,15 @@
 | `isLargeView`               | `is-large-view`                |             | `boolean` | `false`     |
 
 
+## Shadow Parts
+
+| Part                                                | Description |
+| --------------------------------------------------- | ----------- |
+| `"current-touristic-contents-within-bounds-length"` |             |
+| `"list-bottom-space"`                               |             |
+| `"touristic-contents-list-container"`               |             |
+
+
 ## Dependencies
 
 ### Used by
