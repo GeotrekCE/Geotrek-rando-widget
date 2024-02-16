@@ -161,7 +161,7 @@ export const translate: AvailableTranslations = {
       description: 'Description',
       recommendations: 'Recommandations',
       environmentalSensitiveAreas: 'Zones sensibles',
-      informationPlaces: "Lieux d'informations",
+      informationPlaces: 'Lieux de renseignement',
       pois: 'Patrimoines',
       steps: 'Étapes',
       touristicContents: 'À proximité',
