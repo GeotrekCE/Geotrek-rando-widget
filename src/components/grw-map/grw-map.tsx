@@ -1483,13 +1483,14 @@ export class GrwMap {
     };
 
     if (state.currentTouristicEvent) {
+      const touristicEventType = state.touristicEventTypes.find(touristicEventType => touristicEventType.id === state.currentTouristicEvent.type);
       touristicEventsFeatureCollection.features.push({
         type: 'Feature',
         geometry: { type: 'Point', coordinates: state.currentTouristicEvent.geometry.coordinates },
         properties: {
           id: state.currentTouristicEvent.id,
           name: state.currentTouristicEvent.name,
-          type: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === state.currentTouristicEvent.type).pictogram,
+          type: touristicEventType ? touristicEventType.pictogram : null,
         },
       });
     }
