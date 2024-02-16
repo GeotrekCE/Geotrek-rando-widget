@@ -2,7 +2,7 @@
 
 Les informations affichées dans la vignette d'un évènement touristique sont :
 
-- La ou les photos (caroussel) 
+- La ou les photos de l'évènement (caroussel) 
 - Le type d'évènement (nature et détente, culture, etc.)
 - Le nom de la commune où se déroule l'évènement et son nom
 - Les dates de début et de fin

@@ -47,5 +47,5 @@ L’application Geotrek utilise les technologies open source suivantes :
 
 * **Angular**, framework utilisé pour l'application Geotrek-mobile.
 * **Ionic**, composant UI
-* **Capacitor**, boîte à outils nécessaires à la création d'applications mobile
+* **Capacitor**, boîte à outils nécessaires à la création d'applications mobiles
 * **MapLibre**, utilisé comme librairie cartographique 

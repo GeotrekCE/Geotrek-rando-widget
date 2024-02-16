@@ -31,10 +31,10 @@ Ce widget, développé dans le cadre du projet communautaire Geotrek, est **libr
 - L'utilisateur peut filtrer et rechercher finement un objet dans la vue *liste*
 - Il affiche les objets publiés (itinéraires, services, évènements touristiques, etc.) dans une vue *liste*
 - Dans la vue *liste* les éléments suivants s'affichent : une photo principale, le nom de l'objet, quelques caractéristiques (difficulté, distance, dénivelé)
-- Au clic sur un objet de la liste, une fiche *détail* s'ouvre avec l'ensemble des éléments textuels (dont POI, zones sensibles, lieux de renseignement, recommandations, et étiquettes, etc.) définis dans Geotrek-admin.
-- Depuis la fiche *détail*, l'utilisateur peut télécharger les traces GPX/KML de l'itinéraire ainsi que sa fiche PDF
+- Au clic sur un objet de la liste, une fiche *détaillée* s'ouvre avec l'ensemble des éléments textuels (dont POI, zones sensibles, lieux de renseignement, recommandations, et étiquettes, etc.) définis dans Geotrek-admin.
+- Depuis la fiche *détaillée*, l'utilisateur peut télécharger les traces GPX/KML de l'itinéraire ainsi que sa fiche PDF
 - Le contenu de la vue *liste* est synchronisé avec les éléments affichés sur la carte
-- L'utilisateur peut copier l'URL d'une fiche *détail* pour la partager auprès d'autres internautes
+- L'utilisateur peut copier l'URL d'une fiche *détaillée* pour la partager auprès d'autres internautes
 
 
 ## Exemples d'intégration sur des sites tiers
