@@ -32,6 +32,7 @@ export class GrwPoiDetail {
       pagination: { el: this.paginationElPoiRef },
       allowTouchMove: false,
       keyboard: false,
+      loop: true,
     });
     this.swiperPoiRef.onfullscreenchange = () => {
       this.displayFullscreen = !this.displayFullscreen;

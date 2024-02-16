@@ -183,6 +183,7 @@ export class GrwTrekDetail {
       pagination: { el: this.paginationElImagesRef },
       allowTouchMove: false,
       keyboard: false,
+      loop: true,
     });
     this.swiperImagesRef.onfullscreenchange = () => {
       this.displayFullscreen = !this.displayFullscreen;
@@ -207,6 +208,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
+      loop: true,
     });
     this.swiperPois = new Swiper(this.swiperPoisRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -226,6 +228,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
+      loop: true,
     });
     this.swiperInformationDesks = new Swiper(this.swiperInformationDesksRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -245,6 +248,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
+      loop: true,
     });
     this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -264,6 +268,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
+      loop: true,
     });
     this.swiperTouristicEvents = new Swiper(this.swiperTouristicEventsRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -283,6 +288,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
+      loop: true,
     });
     if (this.presentationRef) {
       this.presentationObserver = new IntersectionObserver(

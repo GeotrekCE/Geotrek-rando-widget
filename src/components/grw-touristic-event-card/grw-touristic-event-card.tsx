@@ -38,6 +38,7 @@ export class GrwTouristicEvent {
         pagination: { el: this.paginationElTouristicEventRef },
         allowTouchMove: false,
         keyboard: false,
+        loop: true,
       });
       this.swiperTouristicEventRef.onfullscreenchange = () => {
         this.displayFullscreen = !this.displayFullscreen;

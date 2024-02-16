@@ -42,6 +42,7 @@ export class GrwTouristicEventDetail {
       pagination: { el: this.paginationElImagesRef },
       allowTouchMove: false,
       keyboard: false,
+      loop: true,
     });
     this.swiperImagesRef.onfullscreenchange = () => {
       this.displayFullscreen = !this.displayFullscreen;

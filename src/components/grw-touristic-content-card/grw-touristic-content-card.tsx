@@ -37,6 +37,7 @@ export class GrwTouristicContentCard {
         pagination: { el: this.paginationElTouristicContentRef },
         allowTouchMove: false,
         keyboard: false,
+        loop: true,
       });
       this.swiperTouristicContentRef.onfullscreenchange = () => {
         this.displayFullscreen = !this.displayFullscreen;
