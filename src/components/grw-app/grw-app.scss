@@ -89,7 +89,7 @@ grw-app {
 }
 
 .grw-content-treks {
-  height: calc(100% - var(--header-height) - var(--header-with-segment));
+  height: calc(100% - var(--header-height) - var(--header-with-segment) - var(--header-with-languages));
 }
 
 .grw-content-trek {
