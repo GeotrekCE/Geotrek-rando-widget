@@ -26,7 +26,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         ],
       },
       {
-        text: 'Configuration',
+        text: 'Theme',
         collapsed: true,
         items: [
           { text: 'Colors', link: '/en/documentation/theme/colors' },

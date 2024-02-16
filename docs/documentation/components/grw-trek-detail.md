@@ -15,7 +15,6 @@ La vue détaillée est composée de trois parties :
 - Description détaillée de l'itinérance pour permettre l’affichage d’un fil de suivi avec les étapes sous forme de ronds colorés
 - Liens vers les contenus touristiques associés (services)
 
-
 ## Fiche détaillée d'une randonnée
 
 La fiche détaillée d'une randonnée comporte plusieurs sections intéragissant dynamiquement avec la carte.
@@ -53,16 +52,15 @@ Les pictogrammes des POIs s'affichent sur la carte lorsque l'utilisateur arrive 
 :::
 
 En plus d'afficher les vignettes des éléments de patrimoines (POIs) situés à proximités de la randonnée (rayon de 500m par défaut), La section "Patrimoine", peut présenter des informations complémentaires comme :
+
 - le widget Météo France
 - Les accès routiers et parkings
 - Les transports en commun pour venir
 
 #### Paramétrage du widget Météo France
 
-```js
-<grw-app
-	weather="true"
-></grw-app>
+```html
+<grw-app weather="true"></grw-app>
 ```
 
 <center>
@@ -73,12 +71,11 @@ En plus d'afficher les vignettes des éléments de patrimoines (POIs) situés à
 
 La section "Recommandations" présente les recommandations sur les risques, danger ou meilleure période pour pratiquer l’itinéraire, ainsi que tout autre élément d'information utile à connaître.
 
-La section "Lieux d'informations" présente les lieux de renseignement (office du tourisme, bureau d'information, etc.) sous forme de vignettes. 
+La section "Lieux d'informations" présente les lieux de renseignement (office du tourisme, bureau d'information, etc.) sous forme de vignettes.
 
 ::: info
 En cliquant sur le bouton "Centrer sur la carte", la carte est zoomée sur le lieu en question.
 :::
-
 
 <center>
   <a title="Fiche détail d'une randonnée - section Recommandations et Lieux d'informations"><img src="/components/detail_trek_informationdesk.png" alt="Fiche détail d'une randonnée - section Recommandations et Lieux d'informations"></a>

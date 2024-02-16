@@ -18,22 +18,16 @@ Les fonctionnalités du composant cartographique de **Geotrek-rando-widget** son
 
 ### Configuration de deux fonds de plan
 
-```js
+```html
 <grw-app
-	name-layer="IGN,OpenStreetMap"
-    url-layer="https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x},https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>,OpenStreetMap"
+  name-layer="IGN,OpenStreetMap"
+  url-layer="https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x},https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>,OpenStreetMap"
 ></grw-app>
 ```
 
 ### Personnalisation des couleurs d'objets sur la carte
 
-```js
-<grw-app
-	color-trek-line="#6b0030"
-    color-departure-icon="#006b3b"
-    color-arrival-icon="#85003b"
-    color-sensitive-area="#4974a5"
-    color-poi-icon="#974c6e"
-></grw-app>
+```html
+<grw-app color-trek-line="#6b0030" color-departure-icon="#006b3b" color-arrival-icon="#85003b" color-sensitive-area="#4974a5" color-poi-icon="#974c6e"></grw-app>
 ```

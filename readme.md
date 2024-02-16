@@ -36,7 +36,7 @@ Once you made your component, you can get the code to copy-paste by clicking on 
 
 - [Presentation](https://geotrek-rando-widget.readthedocs.io/latest/documentation/introduction/overview.html)
 - [Get started](https://geotrek-rando-widget.readthedocs.io/latest/documentation/introduction/get-started.html)
-- [Configuration instructions](https://geotrek-rando-widget.readthedocs.io/latest/documentation/configuration/colors.html)
+- [Theme](https://geotrek-rando-widget.readthedocs.io/latest/documentation/theme/colors.html)
 
 ## Contribution
 

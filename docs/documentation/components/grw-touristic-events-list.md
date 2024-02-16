@@ -4,7 +4,6 @@
   <a title="Liste des évènements"><img src="/components/list_touristic_event.png" alt="Liste des évènements"></a>
 </center>
 
-
 ## Comportement et design
 
 - Au survol d'un évènement dans la liste, le pictogramme est agrandi sur la carte
@@ -24,15 +23,12 @@ Actuellement Geotrek-rando-widget ne peut pas remonter plus de de 999 éléments
 
 ## Désactiver l'affichage des services dans le widget
 
-Il est possible de paramétrer le widget de façon à valoriser une offre de contenus touristiques sans forcément mettre en avant les évènements associés. 
+Il est possible de paramétrer le widget de façon à valoriser une offre de contenus touristiques sans forcément mettre en avant les évènements associés.
 
 ::: info
 Par défaut, ceux-ci sont visibles et matérialisés par une barre de segments permettant de les filtrer séparément des autres contenus (itinéraires, contenus touristiques).
 :::
 
-
-```js
-<grw-app
-	touristic-contents="false"
-></grw-app>
+```html
+<grw-app touristic-contents="false"></grw-app>
 ```

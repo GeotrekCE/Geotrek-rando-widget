@@ -62,7 +62,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         ],
       },
       {
-        text: 'Paramétrages',
+        text: 'Thème',
         collapsed: true,
         items: [
           { text: 'Les couleurs', link: '/documentation/theme/colors' },
