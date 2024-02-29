@@ -134,7 +134,9 @@
     height: 100%;
     .image {
       width: 250px;
-      height: 200px;
+      height: inherit;
+      border-bottom-left-radius: var(--border-radius, 12px);
+      border-top-right-radius: var(--border-radius, 0px);
     }
   }
 }
