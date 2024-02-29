@@ -134,7 +134,13 @@ export class GrwTouristicEvent {
                 loading="lazy"
               />
             ) : (
-              <div></div>
+              <img
+              /* @ts-ignore */
+              crossorigin="anonymous"
+              class="image default-touristic-event-img"
+              src={defaultImageSrc}
+              loading="lazy"
+            />
             )}
           </div>
           <div class="touristic-event-sub-container">

@@ -133,7 +133,13 @@ export class GrwTouristicContentCard {
                 loading="lazy"
               />
             ) : (
-              <div></div>
+              <img
+              /* @ts-ignore */
+              crossorigin="anonymous"
+              class="image default-touristic-content-img"
+              src={defaultImageSrc}
+              loading="lazy"
+            />
             )}
           </div>
           <div class="touristic-content-sub-container">
