@@ -1225,7 +1225,11 @@ export class GrwTrekDetail {
                     KML
                   </span>
                 </a>
-                <a href={`${this.currentTrek.pdf}`} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={`${this.currentTrek.pdf}${state.portalsFromProviders && state.portalsFromProviders.length === 1 ? '?portal=' + state.portalsFromProviders[0] : ''}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {/* @ts-ignore */}
                   <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
                     download
