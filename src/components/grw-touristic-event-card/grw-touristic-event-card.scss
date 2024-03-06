@@ -166,6 +166,8 @@
   .touristic-event-img {
     width: 250px;
     height: 100%;
+    border-bottom-left-radius: var(--border-radius, 12px);
+    border-top-right-radius: var(--border-radius, 0px);
   }
 }
 
