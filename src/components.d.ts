@@ -22,6 +22,7 @@ export namespace Components {
         "colorOnSurface": string;
         "colorOnSurfaceVariant": string;
         "colorPoiIcon": string;
+        "colorPrimary": string;
         "colorPrimaryApp": string;
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
@@ -539,6 +540,7 @@ declare namespace LocalJSX {
         "colorOnSurface"?: string;
         "colorOnSurfaceVariant"?: string;
         "colorPoiIcon"?: string;
+        "colorPrimary"?: string;
         "colorPrimaryApp"?: string;
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;

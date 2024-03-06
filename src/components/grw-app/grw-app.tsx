@@ -44,6 +44,7 @@ export class GrwApp {
 
   @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6750a4';
+  @Prop() colorPrimary = '#6750a4';
   @Prop() colorOnPrimary = '#ffffff';
   @Prop() colorSurface = '#1c1b1f';
   @Prop() colorOnSurface = '#49454e';
@@ -392,6 +393,7 @@ export class GrwApp {
         style={{
           '--font-family': this.fontFamily,
           '--color-primary-app': this.colorPrimaryApp,
+          '--color-primary': this.colorPrimary,
           '--color-on-primary': this.colorOnPrimary,
           '--color-surface': this.colorSurface,
           '--color-on-surface': this.colorOnSurface,

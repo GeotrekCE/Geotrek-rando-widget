@@ -20,6 +20,7 @@
 | `colorOnSurface`            | `color-on-surface`              |             | `string`  | `'#49454e'` |
 | `colorOnSurfaceVariant`     | `color-on-surface-variant`      |             | `string`  | `'#1c1b1f'` |
 | `colorPoiIcon`              | `color-poi-icon`                |             | `string`  | `'#974c6e'` |
+| `colorPrimary`              | `color-primary`                 |             | `string`  | `'#6750a4'` |
 | `colorPrimaryApp`           | `color-primary-app`             |             | `string`  | `'#6750a4'` |
 | `colorPrimaryContainer`     | `color-primary-container`       |             | `string`  | `'#eaddff'` |
 | `colorSecondaryContainer`   | `color-secondary-container`     |             | `string`  | `'#e8def8'` |
