@@ -412,8 +412,8 @@ export class GrwApp {
           '--header-height':
             Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1
               ? this.enableOffline
-                ? '136px'
-                : '188px'
+                ? '188px'
+                : '136px'
               : this.enableOffline
               ? '116px'
               : '64px',
