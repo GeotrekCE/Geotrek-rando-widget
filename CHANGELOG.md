@@ -1,6 +1,17 @@
 # Changelog
 
-## [0.7.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.7.0...v0.7.1) (2024-03-06)
+## [0.8.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.7.1...0.8.0) (2024-03-06)
+
+
+### Features
+
+* handle pdf portal ([cc08f0a](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/cc08f0a21cb80ce166ce7b427aed34e4f2bba735))
+
+### Bug Fixes
+
+* improve image card style
+
+## [0.7.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.7.0...0.7.1) (2024-03-06)
 
 
 ### Bug Fixes
@@ -9,7 +20,7 @@
 * header height ([41107ed](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/41107ed8ce2c04a786a9fe6f1eda7b0542f52fe3))
 * switch color ([59c6338](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/59c63389fdf34ac6befc2735378ed65c922101ab))
 
-## [0.7.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.6.0...v0.7.0) (2024-03-06)
+## [0.7.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.6.0...0.7.0) (2024-03-06)
 
 
 ### Features
