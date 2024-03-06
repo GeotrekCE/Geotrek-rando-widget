@@ -1,3 +1,4 @@
+import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import { TouristicContents, TouristicContentsFilters, TouristicEvents, TouristicEventsFilters, TrekFilters, Treks } from 'types/types';
 
@@ -108,7 +109,9 @@ export function handleTreksFiltersAndSearch(): Treks {
     }
   }
 
-  const searchTreks = isUsingFilter ? filtersTreks : state.treks;
+  let searchTreks = isUsingFilter ? filtersTreks : state.treks;
+  searchTreks = searchTreks.filter(trek => !state.offlineTreks || (state.offlineTreks && trek.offline));
+
   return Boolean(state.searchValue) ? searchTreks.filter(currentTrek => currentTrek.name.toLowerCase().includes(state.searchValue.toLowerCase())) : searchTreks;
 }
 
@@ -179,7 +182,6 @@ export function handleTouristicContentsFiltersAndSearch(): TouristicContents {
     }
   }
   const searchTouristicContents = isUsingFilter ? filtersTouristicContents : state.touristicContents;
-
   return Boolean(state.searchValue)
     ? searchTouristicContents.filter(currentTouristicContents => currentTouristicContents.name.toLowerCase().includes(state.searchValue.toLowerCase()))
     : searchTouristicContents;
@@ -257,3 +259,71 @@ export function handleTouristicEventsFiltersAndSearch(): TouristicEvents {
     ? searchTouristicEvents.filter(currentTouristicEvent => currentTouristicEvent.name.toLowerCase().includes(state.searchValue.toLowerCase()))
     : searchTouristicEvents;
 }
+
+export const durations = [
+  { id: 1, name: '0 - 1h', minValue: 0, maxValue: 1, selected: false },
+  { id: 2, name: '1 - 2h', minValue: 1, maxValue: 2, selected: false },
+  { id: 3, name: '2 - 5h', minValue: 2, maxValue: 5, selected: false },
+  { id: 4, name: '5 - 10h', minValue: 5, maxValue: 10, selected: false },
+];
+
+export const lengths = [
+  { id: 1, name: '0 - 5km', minValue: 0, maxValue: 5000, selected: false },
+  { id: 2, name: '5 - 10km', minValue: 5000, maxValue: 10000, selected: false },
+  { id: 3, name: '10 - 15km', minValue: 10000, maxValue: 15000, selected: false },
+  { id: 4, name: '15 - 50km', minValue: 15000, maxValue: 50000, selected: false },
+];
+
+export const elevations = [
+  { id: 1, name: '0 - 500m', minValue: 0, maxValue: 500, selected: false },
+  { id: 2, name: '500m - 1km', minValue: 500, maxValue: 1000, selected: false },
+];
+
+export function blobToArrayBuffer(blob): Promise<string | ArrayBuffer> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener('loadend', () => {
+      resolve(reader.result);
+    });
+    reader.addEventListener('error', reject);
+    reader.readAsArrayBuffer(blob);
+  });
+}
+
+export function arrayBufferToBlob(buffer, type) {
+  return new Blob([buffer], { type: type });
+}
+
+export function getFilesToStore(value: Object, regExp: RegExp, onlyFirstArrayFile = false): string[] {
+  const filesToStore: any[] = [];
+  for (const keyValue of Object.keys(value)) {
+    if (value[keyValue]) {
+      if (typeof value[keyValue] === 'object' && (!Array.isArray(value[keyValue]) || !onlyFirstArrayFile)) {
+        filesToStore.push(...getFilesToStore(value[keyValue], regExp));
+      } else if (typeof value[keyValue] === 'string' && regExp.test(value[keyValue].toLowerCase())) {
+        filesToStore.push(value[keyValue]);
+      } else if (typeof value[keyValue] === 'object' && Array.isArray(value[keyValue]) && onlyFirstArrayFile && value[keyValue].length > 0) {
+        filesToStore.push(...getFilesToStore(value[keyValue][0], regExp));
+      }
+    }
+  }
+
+  return [...new Set(filesToStore)];
+}
+
+export async function setFilesFromStore(value: Object, regExp: RegExp) {
+  for (const keyValue of Object.keys(value)) {
+    if (value[keyValue]) {
+      if (typeof value[keyValue] === 'object') {
+        setFilesFromStore(value[keyValue], regExp);
+      } else if (typeof value[keyValue] === 'string' && regExp.test(value[keyValue].toLowerCase())) {
+        const image = await getDataInStore('images', value[keyValue]);
+        if (image) {
+          value[keyValue] = window.URL.createObjectURL(arrayBufferToBlob(image.data, image.type));
+        }
+      }
+    }
+  }
+}
+
+export const imagesRegExp = new RegExp('^(http(s)?://|www.).*(.png|.jpg|.jpeg|.svg)$');

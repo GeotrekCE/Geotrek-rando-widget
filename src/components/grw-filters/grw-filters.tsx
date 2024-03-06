@@ -88,28 +88,29 @@ export class GrwFilters {
           '--font-family': this.fontFamily,
         }}
       >
-        <div class="options-container">
-          <div class="filters-container">
+        <div part="options-container" class="options-container">
+          <div part="filters-container" class="filters-container">
             {state.mode === 'treks' && (
-              <div class="filters-treks-container">
-                <div class="filters-options-container">
+              <div part="filters-treks-container" class="filters-treks-container">
+                <div part="filters-options-container" class="filters-options-container">
                   {state.treksWithinBounds && (
-                    <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
+                    <div part="current-treks-within-bounds-length" class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
                       state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek
                     }`}</div>
                   )}
-                  <div class="filters-options-buttons-container">
-                    <button class="filter-option-button" onClick={() => this.handleEraseTreksFilters()}>
+                  <div part="filters-options-buttons-container" class="filters-options-buttons-container">
+                    <button part="filter-option-button" class="filter-option-button" onClick={() => this.handleEraseTreksFilters()}>
                       {translate[state.language].erase}
                     </button>
-                    <button class="filter-option-button" onClick={() => this.handleOkTreksFilters()}>
+                    <button part="filter-option-button" class="filter-option-button" onClick={() => this.handleOkTreksFilters()}>
                       {translate[state.language].ok}
                     </button>
                   </div>
                 </div>
-                <div class="segmented-buttons-container">
+                <div part="segmented-buttons-container" class="segmented-buttons-container">
                   {this.handleSegment('selectedActivitiesFilters') && (
                     <label
+                      part="segment"
                       class={`segment${this.selectedSegment === 'selectedActivitiesFilters' ? ' selected-segment' : ''}`}
                       onClick={() => this.handleSelectedSegment('selectedActivitiesFilters')}
                     >
@@ -118,6 +119,7 @@ export class GrwFilters {
                   )}
                   {this.handleSegment('selectedThemesFilters') && (
                     <label
+                      part="segment"
                       class={`segment${this.selectedSegment === 'selectedThemesFilters' ? ' selected-segment' : ''}`}
                       onClick={() => this.handleSelectedSegment('selectedThemesFilters')}
                     >
@@ -126,6 +128,7 @@ export class GrwFilters {
                   )}
                   {this.handleSegment('selectedLocationFilters') && (
                     <label
+                      part="segment"
                       class={`segment${this.selectedSegment === 'selectedLocationFilters' ? ' selected-segment' : ''}`}
                       onClick={() => this.handleSelectedSegment('selectedLocationFilters')}
                     >
@@ -133,12 +136,13 @@ export class GrwFilters {
                     </label>
                   )}
                 </div>
-                <div class="filters-segment-container">
+                <div part="filters-segment-container" class="filters-segment-container">
                   {this.selectedSegment === 'selectedActivitiesFilters' && (
-                    <div key="treks-activities-segment-container" class="segment-container">
+                    <div part="segment-container" class="segment-container" key="treks-activities-segment-container">
                       {state['practices'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].practice}
                             filterType="practices"
@@ -149,8 +153,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['difficulties'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].difficulty}
                             filterType="difficulties"
@@ -160,8 +165,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['durations'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].duration}
                             filterType="durations"
@@ -171,8 +177,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['lengths'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].length}
                             filterType="lengths"
@@ -182,8 +189,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['elevations'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].elevation}
                             filterType="elevations"
@@ -193,8 +201,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['routes'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].routes}
                             filterType="routes"
@@ -204,8 +213,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['accessibilities'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].accessibility}
                             filterType="accessibilities"
@@ -215,8 +225,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['labels'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].activities}
                             filterType="labels"
@@ -228,10 +239,11 @@ export class GrwFilters {
                     </div>
                   )}
                   {this.selectedSegment === 'selectedThemesFilters' && (
-                    <div key="treks-themes-segment-container" class="segment-container">
+                    <div part="filter-container" class="segment-container" key="treks-themes-segment-container">
                       {state['themes'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].themes}
                             filterPlaceholder={translate[state.language].placeholderThemes}
@@ -244,10 +256,11 @@ export class GrwFilters {
                     </div>
                   )}
                   {this.selectedSegment === 'selectedLocationFilters' && (
-                    <div key="treks-location-segment-container" class="segment-container">
+                    <div part="segment-container" class="segment-container" key="treks-location-segment-container">
                       {state['districts'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].districts}
                             filterType="districts"
@@ -257,8 +270,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['cities'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].crossedCities}
                             filterPlaceholder={translate[state.language].placeholderCrossedCities}
@@ -274,25 +288,26 @@ export class GrwFilters {
               </div>
             )}
             {state.mode === 'touristicContents' && (
-              <div class="filters-touristic-contents-container">
-                <div class="filters-options-container">
+              <div part="filters-touristic-contents-container" class="filters-touristic-contents-container">
+                <div part="filters-options-container" class="filters-options-container">
                   {state.touristicContentsWithinBounds && (
-                    <div class="current-treks-within-bounds-length">{`${state.touristicContentsWithinBounds.length} ${
+                    <div part="current-treks-within-bounds-length" class="current-treks-within-bounds-length">{`${state.touristicContentsWithinBounds.length} ${
                       state.touristicContentsWithinBounds.length > 1 ? translate[state.language].home.touristicContents : translate[state.language].home.touristicContent
                     }`}</div>
                   )}
-                  <div class="filters-options-buttons-container">
-                    <button class="filter-option-button" onClick={() => this.handleEraseTouristicContentsFilters()}>
+                  <div part="filters-options-buttons-container" class="filters-options-buttons-container">
+                    <button part="filter-option-button" class="filter-option-button" onClick={() => this.handleEraseTouristicContentsFilters()}>
                       {translate[state.language].erase}
                     </button>
-                    <button class="filter-option-button" onClick={() => this.handleOkTouristicContentsFilters()}>
+                    <button part="filter-option-button" class="filter-option-button" onClick={() => this.handleOkTouristicContentsFilters()}>
                       {translate[state.language].ok}
                     </button>
                   </div>
                 </div>
-                <div class="segmented-buttons-container">
+                <div part="segmented-buttons-container" class="segmented-buttons-container">
                   {this.handleSegment('selectedActivitiesFilters') && (
                     <label
+                      part="segment"
                       class={`segment${this.selectedSegment === 'selectedActivitiesFilters' ? ' selected-segment' : ''}`}
                       onClick={() => this.handleSelectedSegment('selectedActivitiesFilters')}
                     >
@@ -301,6 +316,7 @@ export class GrwFilters {
                   )}
                   {this.handleSegment('selectedLocationFilters') && (
                     <label
+                      part="segment"
                       class={`segment${this.selectedSegment === 'selectedLocationFilters' ? ' selected-segment' : ''}`}
                       onClick={() => this.handleSelectedSegment('selectedLocationFilters')}
                     >
@@ -308,12 +324,13 @@ export class GrwFilters {
                     </label>
                   )}
                 </div>
-                <div class="filters-segment-container">
+                <div part="filters-segment-container" class="filters-segment-container">
                   {this.selectedSegment === 'selectedActivitiesFilters' && (
-                    <div key="touristic-contents-activities-segment-container" class="segment-container">
+                    <div part="segment-container" class="segment-container" key="touristic-contents-activities-segment-container">
                       {state['touristicContentCategories'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].category}
                             filterType="touristicContentCategories"
@@ -325,10 +342,11 @@ export class GrwFilters {
                     </div>
                   )}
                   {this.selectedSegment === 'selectedLocationFilters' && (
-                    <div key="touristic-contents-location-segment-container" class="segment-container">
+                    <div part="segment-container" class="segment-container" key="touristic-contents-location-segment-container">
                       {state['districts'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].districts}
                             filterType="districts"
@@ -338,8 +356,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['cities'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].crossedCities}
                             filterPlaceholder={translate[state.language].placeholderCrossedCities}
@@ -355,25 +374,26 @@ export class GrwFilters {
               </div>
             )}
             {state.mode === 'touristicEvents' && (
-              <div class="filters-touristic-events-container">
-                <div class="filters-options-container">
+              <div part="filters-touristic-events-container" class="filters-touristic-events-container">
+                <div part="filters-options-container" class="filters-options-container">
                   {state.touristicEventsWithinBounds && (
-                    <div class="current-treks-within-bounds-length">{`${state.touristicEventsWithinBounds.length} ${
+                    <div part="current-treks-within-bounds-length" class="current-treks-within-bounds-length">{`${state.touristicEventsWithinBounds.length} ${
                       state.touristicEventsWithinBounds.length > 1 ? translate[state.language].home.touristicEvents : translate[state.language].home.touristicEvent
                     }`}</div>
                   )}
-                  <div class="filters-options-buttons-container">
-                    <button class="filter-option-button" onClick={() => this.handleEraseTouristicEventsFilters()}>
+                  <div part="filters-options-buttons-container" class="filters-options-buttons-container">
+                    <button part="filter-option-button" class="filter-option-button" onClick={() => this.handleEraseTouristicEventsFilters()}>
                       {translate[state.language].erase}
                     </button>
-                    <button class="filter-option-button" onClick={() => this.handleOkTouristicEventsFilters()}>
+                    <button part="filter-option-button" class="filter-option-button" onClick={() => this.handleOkTouristicEventsFilters()}>
                       {translate[state.language].ok}
                     </button>
                   </div>
                 </div>
-                <div class="segmented-buttons-container">
+                <div part="segmented-buttons-container" class="segmented-buttons-container">
                   {this.handleSegment('selectedActivitiesFilters') && (
                     <label
+                      part="segment"
                       class={`segment${this.selectedSegment === 'selectedActivitiesFilters' ? ' selected-segment' : ''}`}
                       onClick={() => this.handleSelectedSegment('selectedActivitiesFilters')}
                     >
@@ -382,6 +402,7 @@ export class GrwFilters {
                   )}
                   {this.handleSegment('selectedLocationFilters') && (
                     <label
+                      part="segment"
                       class={`segment${this.selectedSegment === 'selectedLocationFilters' ? ' selected-segment' : ''}`}
                       onClick={() => this.handleSelectedSegment('selectedLocationFilters')}
                     >
@@ -389,12 +410,13 @@ export class GrwFilters {
                     </label>
                   )}
                 </div>
-                <div class="filters-segment-container">
+                <div part="filters-segment-container" class="filters-segment-container">
                   {this.selectedSegment === 'selectedActivitiesFilters' && (
-                    <div key="touristic-contents-activities-segment-container" class="segment-container">
+                    <div part="segment-container" class="segment-container" key="touristic-contents-activities-segment-container">
                       {state['touristicEventTypes'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].type}
                             filterPlaceholder={translate[state.language].placeholderType}
@@ -407,10 +429,11 @@ export class GrwFilters {
                     </div>
                   )}
                   {this.selectedSegment === 'selectedLocationFilters' && (
-                    <div key="touristic-events-location-segment-container" class="segment-container">
+                    <div part="segment-container" class="segment-container" key="touristic-events-location-segment-container">
                       {state['districts'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].districts}
                             filterType="districts"
@@ -420,8 +443,9 @@ export class GrwFilters {
                         </div>
                       )}
                       {state['cities'].length > 0 && (
-                        <div class="filter-container">
+                        <div part="filter-container" class="filter-container">
                           <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
                             fontFamily={this.fontFamily}
                             filterName={translate[state.language].crossedCities}
                             filterPlaceholder={translate[state.language].placeholderCrossedCities}
@@ -437,7 +461,7 @@ export class GrwFilters {
               </div>
             )}
           </div>
-          <div onClick={() => this.handleFilters()} class="back-filters-container"></div>
+          <div part="back-filters-container" class="back-filters-container" onClick={() => this.handleFilters()}></div>
         </div>
       </Host>
     );

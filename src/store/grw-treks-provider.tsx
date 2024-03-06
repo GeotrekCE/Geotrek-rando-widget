@@ -1,5 +1,9 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { getAllDataInStore } from 'services/grw-db.service';
+import { getDistricts, getTreksList, trekIsAvailableOffline } from 'services/treks.service';
 import state from 'store/store';
+import { Treks } from 'types/types';
+import { durations, elevations, lengths } from 'utils/utils';
 
 @Component({
   tag: 'grw-treks-provider',
@@ -27,6 +31,16 @@ export class GrwTreksProvider {
       state.languages = this.languages.split(',');
       state.language = state.languages[0];
     }
+
+    state.portalsFromProviders = this.portals;
+    state.inBboxFromProviders = this.inBbox;
+    state.citiesFromProviders = this.cities;
+    state.districtsFromProviders = this.districts;
+    state.structuresFromProviders = this.structures;
+    state.themesFromProviders = this.themes;
+    state.routesFromProviders = this.routes;
+    state.practicesFromProviders = this.practices;
+
     this.handleTreks();
   }
 
@@ -35,75 +49,113 @@ export class GrwTreksProvider {
     state.networkError = false;
   }
 
-  handleTreks() {
-    let treksRequest = `${this.api}trek/?language=${state.language}&published=true`;
+  async handleTreks() {
+    this.handleOnlineTreks();
+  }
 
-    this.inBbox && (treksRequest += `&in_bbox=${this.inBbox}`);
-    this.cities && (treksRequest += `&cities=${this.cities}`);
-    this.districts && (treksRequest += `&districts=${this.districts}`);
-    this.structures && (treksRequest += `&structures=${this.structures}`);
-    this.themes && (treksRequest += `&themes=${this.themes}`);
-    this.portals && (treksRequest += `&portals=${this.portals}`);
-    this.routes && (treksRequest += `&routes=${this.routes}`);
-    this.practices && (treksRequest += `&practices=${this.practices}`);
-
-    treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts&page_size=999`;
-
-    try {
-      Promise.all([
-        fetch(`${state.api}trek_difficulty/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init),
-        fetch(`${state.api}trek_route/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,route,pictogram`, this.init),
-        fetch(`${state.api}trek_practice/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init),
-        fetch(`${state.api}theme/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init),
-        fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init),
-        fetch(
-          `${state.api}trek_accessibility/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram&published=true&page_size=999`,
-          this.init,
-        ),
-        fetch(
-          `${state.api}label/?language=${state.language}${
-            this.portals ? '&portals='.concat(this.portals) : ''
-          }&fields=id,name,advice,pictogram,filter&published=true&page_size=999`,
-          this.init,
-        ),
-        fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init),
-        fetch(treksRequest, this.init),
-      ])
-        .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(([difficulties, routes, practices, themes, cities, accessibility, labels, districts, treks]) => {
-          state.networkError = false;
-          state.difficulties = difficulties.results;
-          state.routes = routes.results;
-          state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
-          state.themes = themes.results;
-          state.cities = cities.results;
-          state.accessibilities = accessibility.results;
-          state.durations = [
-            { id: 1, name: '0 - 1h', minValue: 0, maxValue: 1, selected: false },
-            { id: 2, name: '1 - 2h', minValue: 1, maxValue: 2, selected: false },
-            { id: 3, name: '2 - 5h', minValue: 2, maxValue: 5, selected: false },
-            { id: 4, name: '5 - 10h', minValue: 5, maxValue: 10, selected: false },
-          ];
-          state.lengths = [
-            { id: 1, name: '0 - 5km', minValue: 0, maxValue: 5000, selected: false },
-            { id: 2, name: '5 - 10km', minValue: 5000, maxValue: 10000, selected: false },
-            { id: 3, name: '10 - 15km', minValue: 10000, maxValue: 15000, selected: false },
-            { id: 4, name: '15 - 50km', minValue: 15000, maxValue: 50000, selected: false },
-          ];
-          state.elevations = [
-            { id: 1, name: '0 - 500m', minValue: 0, maxValue: 500, selected: false },
-            { id: 2, name: '500m - 1km', minValue: 500, maxValue: 1000, selected: false },
-          ];
-          state.labels = labels.results;
-          state.districts = districts.results;
-          state.treks = treks.results;
-          state.currentTreks = treks.results;
-        });
-    } catch (error) {
-      if (!(error.code === DOMException.ABORT_ERR)) {
-        state.networkError = true;
-      }
+  async handleOfflineTreks(treks: Treks) {
+    if (!state.difficulties) {
+      state.difficulties = await getAllDataInStore('difficulties');
     }
+    if (!state.routes) {
+      state.routes = await getAllDataInStore('routes');
+    }
+    if (!state.practices) {
+      state.practices = await getAllDataInStore('practices');
+    }
+    if (!state.themes) {
+      state.themes = await getAllDataInStore('themes');
+    }
+    if (!state.cities) {
+      state.cities = await getAllDataInStore('cities');
+    }
+    if (!state.accessibilities) {
+      state.accessibilities = await getAllDataInStore('accessibilities');
+    }
+    if (!state.labels) {
+      state.labels = await getAllDataInStore('labels');
+    }
+    if (!state.districts) {
+      state.districts = await getAllDataInStore('districts');
+    }
+    if (!state.durations) {
+      state.durations = durations;
+    }
+    if (!state.lengths) {
+      state.lengths = lengths;
+    }
+    if (!state.elevations) {
+      state.elevations = elevations;
+    }
+    this.sortTreks(treks);
+    state.treks = treks;
+    state.currentTreks = treks;
+  }
+
+  sortTreks(treks) {
+    treks.sort((a, b) => {
+      return a.name.localeCompare(b.name, undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      });
+    });
+  }
+
+  handleOnlineTreks() {
+    Promise.all([
+      fetch(`${state.api}trek_difficulty/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init),
+      fetch(`${state.api}trek_route/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,route,pictogram`, this.init),
+      fetch(`${state.api}trek_practice/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init),
+      fetch(`${state.api}theme/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init),
+      fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init),
+      fetch(
+        `${state.api}trek_accessibility/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram&published=true&page_size=999`,
+        this.init,
+      ),
+      fetch(
+        `${state.api}label/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,advice,pictogram,filter&published=true&page_size=999`,
+        this.init,
+      ),
+      getDistricts(state.api, state.language, this.init),
+      getTreksList(this.api, state.language, this.inBbox, this.cities, this.districts, this.structures, this.themes, this.portals, this.routes, this.practices, this.init),
+    ])
+      .then(responses => {
+        responses.forEach(response => {
+          if (response.status !== 200) {
+            throw new Error('network error');
+          }
+        });
+        return Promise.all(responses.map(response => response.json()));
+      })
+      .then(async ([difficulties, routes, practices, themes, cities, accessibility, labels, districts, treks]) => {
+        state.networkError = false;
+        state.difficulties = difficulties.results;
+        state.routes = routes.results;
+        state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
+        state.themes = themes.results;
+        state.cities = cities.results;
+        state.accessibilities = accessibility.results;
+        state.labels = labels.results;
+        state.districts = districts.results;
+        state.durations = durations;
+        state.lengths = lengths;
+        state.elevations = elevations;
+        const treksWithOfflineValue = [];
+        for (let index = 0; index < treks.results.length; index++) {
+          const offline = await trekIsAvailableOffline(treks.results[index].id);
+          treksWithOfflineValue.push({ ...treks.results[index], offline });
+        }
+        state.treks = treksWithOfflineValue;
+        state.currentTreks = treksWithOfflineValue;
+      })
+      .catch(async () => {
+        const treksInStore: Treks = await getAllDataInStore('treks');
+        if (treksInStore && treksInStore.length > 0) {
+          this.handleOfflineTreks(treksInStore);
+        } else {
+          state.networkError = true;
+        }
+      });
   }
 
   render() {

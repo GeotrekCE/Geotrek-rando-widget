@@ -19,6 +19,25 @@
 | `centerOnMap` |             | `CustomEvent<{ latitude: number; longitude: number; }>` |
 
 
+## Shadow Parts
+
+| Part                                       | Description |
+| ------------------------------------------ | ----------- |
+| `"center-on-map-button"`                   |             |
+| `"handle-information-desk-description"`    |             |
+| `"icon"`                                   |             |
+| `"information-desk-description"`           |             |
+| `"information-desk-description-container"` |             |
+| `"information-desk-img"`                   |             |
+| `"information-desk-img-container"`         |             |
+| `"information-desk-informations"`          |             |
+| `"information-desk-name"`                  |             |
+| `"information-desk-sub-container"`         |             |
+| `"label"`                                  |             |
+| `"link-container"`                         |             |
+| `"mail-container"`                         |             |
+
+
 ## Dependencies
 
 ### Used by

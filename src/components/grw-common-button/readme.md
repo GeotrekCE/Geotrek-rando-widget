@@ -15,6 +15,15 @@
 | `name`       | `name`        |             | `string`   | `undefined` |
 
 
+## Shadow Parts
+
+| Part                    | Description |
+| ----------------------- | ----------- |
+| `"common-button"`       |             |
+| `"common-button-icon"`  |             |
+| `"common-button-label"` |             |
+
+
 ## Dependencies
 
 ### Used by

@@ -18,12 +18,12 @@ export class GrwSelectLanguage {
     return (
       <Host>
         {/* @ts-ignore */}
-        <span translate={false} class="material-symbols material-symbols-outlined margin-right-icon">
+        <span part="select-language-icon" class="material-symbols material-symbols-outlined icon" translate={false}>
           translate
         </span>
-        <select onInput={event => this.handleSelect(event)} name="languages" id="language-select">
+        <select part="select-language-select" onInput={event => this.handleSelect(event)} name="languages" id="language-select">
           {state.languages.map(language => (
-            <option selected={language === state.language} value={language.toLocaleLowerCase()}>
+            <option part="select-language-option" selected={language === state.language} value={language.toLocaleLowerCase()}>
               {language.toLocaleUpperCase()}
             </option>
           ))}

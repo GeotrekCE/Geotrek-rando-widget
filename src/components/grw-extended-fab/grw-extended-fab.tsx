@@ -20,12 +20,14 @@ export class GrwExtendedFab {
           '--font-family': this.fontFamily,
         }}
       >
-        <button onClick={() => this.action()} class="map-visibility-button" style={{ display: this.display }}>
+        <button part="map-visibility-button" class="map-visibility-button" onClick={() => this.action()} style={{ display: this.display }}>
           {/* @ts-ignore */}
-          <span translate={false} class="material-symbols material-symbols-outlined">
+          <span part="map-visibility-button-icon" class="material-symbols material-symbols-outlined icon" translate={false}>
             {this.icon()}
           </span>
-          {this.name()}
+          <span part="map-visibility-button-label" class="label">
+            {this.name()}
+          </span>
         </button>
       </Host>
     );

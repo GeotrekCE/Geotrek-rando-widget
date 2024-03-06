@@ -75,8 +75,7 @@
       font-family: var(--font-family);
     }
   }
-  .filter-button,
-  .selected-filter-button {
+  .filter-button {
     cursor: pointer;
     user-select: none;
     font-size: 14px;
@@ -107,7 +106,7 @@
   .selected-filter-button {
     color: var(--color-on-secondary-container);
     background-color: var(--color-secondary-container);
-    span {
+    .icon {
       font-size: 24px;
       margin-right: 8px;
       color: var(--color-on-secondary-container);

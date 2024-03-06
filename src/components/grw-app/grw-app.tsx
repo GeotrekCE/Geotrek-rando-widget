@@ -1,6 +1,7 @@
-import { Component, Host, h, Listen, State, Prop, Element, Watch } from '@stencil/core';
+import { Component, Host, h, Listen, State, Prop, Element, Watch, Event, EventEmitter, Fragment } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { reset } from 'store/store';
+import { handleTreksFiltersAndSearch } from 'utils/utils';
 
 @Component({
   tag: 'grw-app',
@@ -43,6 +44,7 @@ export class GrwApp {
 
   @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6750a4';
+  @Prop() colorPrimary = '#6750a4';
   @Prop() colorOnPrimary = '#ffffff';
   @Prop() colorSurface = '#1c1b1f';
   @Prop() colorOnSurface = '#49454e';
@@ -68,6 +70,23 @@ export class GrwApp {
   @Prop() touristicContents = false;
   @Prop() touristicEvents = false;
 
+  @Prop() enableOffline = false;
+  @Prop() globalTilesMinZoomOffline = 0;
+  @Prop() globalTilesMaxZoomOffline = 11;
+  @Prop() trekTilesMinZoomOffline = 12;
+  @Prop() trekTilesMaxZoomOffline = 16;
+
+  @State() showOfflineModal = false;
+  @State() showConfirmModal = false;
+  @State() showLoaderModal = false;
+  @State() showSuccessModal = false;
+  @State() showConfirmDeleteModal = false;
+  @State() showDeletingMessage = false;
+  @State() showDeleteSuccessMessage = false;
+
+  @Event() trekDownloadPress: EventEmitter<number>;
+  @Event() trekDeletePress: EventEmitter<number>;
+
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
@@ -82,6 +101,7 @@ export class GrwApp {
     const parentTrek = state.parentTrekId ? state.parentTrekId : state.currentTrekSteps ? this.currentTrekId : null;
     state.currentTrek = null;
     this.currentTrekId = event.detail;
+    state.mode = 'treks';
     this.showTrek = true;
     this.showTrekMap = false;
     const url = new URL(window.location.toString());
@@ -96,6 +116,7 @@ export class GrwApp {
   onParentTrekPress(event: CustomEvent<number>) {
     state.currentTrek = null;
     this.currentTrekId = event.detail;
+    state.mode = 'treks';
     this.showTrek = true;
     this.showTrekMap = false;
     const url = new URL(window.location.toString());
@@ -110,6 +131,7 @@ export class GrwApp {
     this.currentTrekId = null;
     this.showTrek = false;
     this.currentTouristicContentId = event.detail;
+    state.mode = 'touristicContents';
     this.showTouristicContent = true;
     this.showTouristicContentMap = false;
     const url = new URL(window.location.toString());
@@ -124,6 +146,8 @@ export class GrwApp {
     this.currentTrekId = null;
     this.showTrek = false;
     this.currentTouristicEventId = event.detail;
+    ``;
+    state.mode = 'touristicEvents';
     this.showTouristicEvent = true;
     this.showTouristicEventMap = false;
     const url = new URL(window.location.toString());
@@ -142,6 +166,40 @@ export class GrwApp {
     if (!this.isLargeView) {
       this.showTrekMap = true;
     }
+  }
+
+  @Listen('trekDownloadConfirm', { target: 'window' })
+  onTrekDownloadConfirm() {
+    this.showLoaderModal = false;
+    this.showSuccessModal = false;
+    this.showDeleteSuccessMessage = false;
+    this.showDeletingMessage = false;
+    this.showConfirmDeleteModal = false;
+    this.showOfflineModal = true;
+    this.showConfirmModal = true;
+  }
+
+  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
+  onTrekDownloadedSuccessConfirm() {
+    this.showLoaderModal = false;
+    this.showSuccessModal = true;
+  }
+
+  @Listen('trekDeleteConfirm', { target: 'window' })
+  onTrekDeleteConfirm() {
+    this.showLoaderModal = false;
+    this.showSuccessModal = false;
+    this.showDeleteSuccessMessage = false;
+    this.showOfflineModal = true;
+    this.showConfirmModal = true;
+    this.showConfirmDeleteModal = true;
+  }
+
+  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
+  onTrekDeleteSuccessConfirm() {
+    this.showLoaderModal = false;
+    this.showSuccessModal = true;
+    this.showDeleteSuccessMessage = true;
   }
 
   @Watch('isLargeView')
@@ -166,14 +224,17 @@ export class GrwApp {
       window.history.replaceState({ isInitialHistoryWithDetails: true }, '', url);
       state.parentTrekId = parentTrekId ? Number(parentTrekId) : null;
       this.currentTrekId = Number(trekParam);
+      state.mode = 'treks';
       this.showTrek = true;
     } else if (touristicContentParam) {
       window.history.replaceState({ isInitialHistoryWithDetails: true }, '', url);
       this.currentTouristicContentId = Number(touristicContentParam);
+      state.mode = 'touristicContents';
       this.showTouristicContent = true;
     } else if (touristicEventParam) {
       window.history.replaceState({ isInitialHistoryWithDetails: true }, '', url);
       this.currentTouristicEventId = Number(touristicEventParam);
+      state.mode = 'touristicEvents';
       this.showTouristicEvent = true;
     }
   }
@@ -241,6 +302,7 @@ export class GrwApp {
       state.currentTouristicEvent = null;
       state.currentTrek = null;
       this.currentTrekId = trekParam;
+      state.mode = 'treks';
       this.showTrek = true;
     } else if (!trekParam && !touristicContentParam && !touristicEventParam) {
       this.onDetailsClose();
@@ -302,12 +364,36 @@ export class GrwApp {
     window.removeEventListener('popstate', this.handlePopStateBind);
   }
 
+  handleOkDeleteModal() {
+    this.trekDeletePress.emit();
+    this.showDeletingMessage = true;
+    this.showConfirmDeleteModal = false;
+    this.showConfirmModal = false;
+    this.showLoaderModal = true;
+  }
+
+  handleOkDownloadModal() {
+    this.trekDownloadPress.emit();
+    this.showConfirmModal = false;
+    this.showLoaderModal = true;
+  }
+
+  handleCancelModal() {
+    this.showOfflineModal = false;
+  }
+
+  handleOffline() {
+    state.offlineTreks = !state.offlineTreks;
+    state.currentTreks = handleTreksFiltersAndSearch();
+  }
+
   render() {
     return (
       <Host
         style={{
           '--font-family': this.fontFamily,
           '--color-primary-app': this.colorPrimaryApp,
+          '--color-primary': this.colorPrimary,
           '--color-on-primary': this.colorOnPrimary,
           '--color-surface': this.colorSurface,
           '--color-on-surface': this.colorOnSurface,
@@ -325,7 +411,16 @@ export class GrwApp {
           '--color-sensitive-area': this.colorSensitiveArea,
           '--app-width': this.appWidth,
           '--app-height': this.appHeight,
-          '--header-height': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 ? '136px' : '64px',
+          '--header-height':
+            Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1
+              ? this.enableOffline
+                ? '188px'
+                : '136px'
+              : this.enableOffline
+              ? '116px'
+              : '64px',
+          '--header-with-segment': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) > 1 ? '16px' : '0px',
+          '--header-with-languages': this.languages.split(',').length > 1 ? '38px' : '0px',
           '--border-radius': this.rounded ? '' : '0px',
         }}
       >
@@ -336,25 +431,37 @@ export class GrwApp {
           !state.currentTouristicContents &&
           !state.currentTouristicEvents && (
             <div class="grw-init-loader-container">
-              <grw-loader color-primary-container={this.colorPrimaryContainer} color-on-primary-container={this.colorOnPrimaryContainer}></grw-loader>
+              <grw-loader exportparts="loader" color-primary-container={this.colorPrimaryContainer} color-on-primary-container={this.colorOnPrimaryContainer}></grw-loader>
             </div>
           )}
         {this.treks && state.mode === 'treks' && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && !state.currentTreks && (
           <grw-treks-provider
             api={this.api}
             languages={this.languages}
+            portals={this.portals}
             in-bbox={this.inBbox}
             cities={this.cities}
             districts={this.districts}
             structures={this.structures}
             themes={this.themes}
-            portals={this.portals}
             routes={this.routes}
             practices={this.practices}
           ></grw-treks-provider>
         )}
         {this.showTrek && this.currentTrekId && !state.currentTrek && (
-          <grw-trek-provider api={this.api} languages={this.languages} trek-id={this.currentTrekId} portals={this.portals}></grw-trek-provider>
+          <grw-trek-provider
+            api={this.api}
+            languages={this.languages}
+            trek-id={this.currentTrekId}
+            portals={this.portals}
+            in-bbox={this.inBbox}
+            cities={this.cities}
+            districts={this.districts}
+            structures={this.structures}
+            themes={this.themes}
+            routes={this.routes}
+            practices={this.practices}
+          ></grw-trek-provider>
         )}
         {this.showTouristicContent && this.currentTouristicContentId && (
           <grw-touristic-content-provider
@@ -426,24 +533,33 @@ export class GrwApp {
                   ></grw-segmented-segment>
                 )}
               {!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent ? (
-                <div class="grw-handle-search-filters-container">
-                  <div class="grw-handle-search-container">
-                    <grw-search fontFamily={this.fontFamily}></grw-search>
+                <Fragment>
+                  <div class="grw-handle-search-filters-container">
+                    <div class="grw-handle-search-container">
+                      <grw-search fontFamily={this.fontFamily}></grw-search>
+                    </div>
+                    <div class="grw-handle-filters-container">
+                      <grw-common-button
+                        exportparts="common-button,common-button-icon,common-button-label"
+                        fontFamily={this.fontFamily}
+                        action={() => this.handleFilters()}
+                        icon={'filter_list'}
+                        name={translate[state.language].filter}
+                      ></grw-common-button>
+                    </div>
                   </div>
-                  <div class="hgrw-andle-filters-container">
-                    <grw-common-button
-                      fontFamily={this.fontFamily}
-                      action={() => this.handleFilters()}
-                      icon={'filter_list'}
-                      name={translate[state.language].filter}
-                    ></grw-common-button>
-                  </div>
-                </div>
+                  {this.enableOffline && (
+                    <div part="grw-offline-container" class="grw-offline-container">
+                      <div class="grw-offline-label">Afficher uniquement les itinéraires hors ligne</div>
+                      <grw-switch exportparts="common-button,common-button-icon,common-button-label" fontFamily={this.fontFamily} action={() => this.handleOffline()}></grw-switch>
+                    </div>
+                  )}
+                </Fragment>
               ) : (
                 <div class="grw-arrow-back-container">
                   <button onClick={() => this.handleBackButton()} class="grw-arrow-back-icon">
                     {/* @ts-ignore */}
-                    <span translate={false} class="material-symbols material-symbols-outlined">
+                    <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
                       arrow_back
                     </span>
                   </button>
@@ -455,7 +571,12 @@ export class GrwApp {
               {state.networkError && (
                 <div class="grw-error-container">
                   Une erreur est survenue.
-                  <grw-common-button icon="refresh" name="Recharger la page" action={() => this.reload()}></grw-common-button>
+                  <grw-common-button
+                    exportparts="common-button,common-button-icon,common-button-label"
+                    icon="refresh"
+                    name="Recharger la page"
+                    action={() => this.reload()}
+                  ></grw-common-button>
                 </div>
               )}
               <div
@@ -464,7 +585,6 @@ export class GrwApp {
               >
                 {state.mode === 'treks' && this.treks && (
                   <grw-treks-list
-                    reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
                     fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
@@ -476,7 +596,6 @@ export class GrwApp {
                 )}
                 {state.mode === 'touristicContents' && this.touristicContents && (
                   <grw-touristic-contents-list
-                    reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
                     fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
@@ -488,7 +607,6 @@ export class GrwApp {
                 )}
                 {state.mode === 'touristicEvents' && this.touristicEvents && (
                   <grw-touristic-events-list
-                    reset-store-on-disconnected={'false'}
                     is-large-view={this.isLargeView}
                     fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
@@ -502,11 +620,11 @@ export class GrwApp {
               {((this.showTrek && !state.currentTrek) ||
                 (this.showTouristicContent && !state.currentTouristicContent) ||
                 (this.showTouristicEvent && !state.currentTouristicEvent) ||
-                (!state.treks && state.mode === 'treks') ||
-                (!state.touristicContents && state.mode === 'touristicContents') ||
-                (!state.touristicEvents && state.mode === 'touristicEvents')) && (
+                (!state.treks && state.mode === 'treks' && !this.showTrek) ||
+                (!state.touristicContents && state.mode === 'touristicContents' && !this.showTouristicContent) ||
+                (!state.touristicEvents && state.mode === 'touristicEvents' && !this.showTouristicEvent)) && (
                 <div class={this.isLargeView ? 'grw-large-view-loader-container' : 'grw-loader-container'}>
-                  <grw-loader color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
+                  <grw-loader exportparts="loader" color-primary-container={this.colorSecondaryContainer} color-on-primary-container={this.colorOnSecondaryContainer}></grw-loader>
                 </div>
               )}
               {this.showTrek && (
@@ -516,7 +634,6 @@ export class GrwApp {
                       visibility: (!this.showTrekMap && this.showTrek) || this.isLargeView ? 'visible' : 'hidden',
                       zIndex: !this.showTrekMap ? '1' : '0',
                     }}
-                    reset-store-on-disconnected={'false'}
                     fontFamily={this.fontFamily}
                     color-primary-app={this.colorPrimaryApp}
                     color-on-surface={this.colorOnSurface}
@@ -529,7 +646,66 @@ export class GrwApp {
                     weather={this.weather}
                     is-large-view={this.isLargeView}
                     emergency-number={this.emergencyNumber}
+                    defaultBackgroundLayerUrl={this.urlLayer.split(',http').map((url, index) => (index === 0 ? url : 'http' + url))[0]}
+                    defaultBackgroundLayerAttribution={this.attributionLayer ? this.attributionLayer.split(',')[0] : []}
+                    enable-offline={this.enableOffline}
+                    global-tiles-min-zoom-offline={this.globalTilesMinZoomOffline}
+                    global-tiles-max-zoom-offline={this.globalTilesMaxZoomOffline}
+                    trek-tiles-min-zoom-offline={this.trekTilesMinZoomOffline}
+                    trek-tiles-max-zoom-offline={this.trekTilesMaxZoomOffline}
                   ></grw-trek-detail>
+                  {this.showOfflineModal && (
+                    <div class="modal-container">
+                      <div class="modal-content-container">
+                        {this.showConfirmModal && !this.showConfirmDeleteModal && (
+                          <Fragment>
+                            <div class="modal-message-container">Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?</div>
+                            <div class="modal-buttons-container">
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
+                                ANNULER
+                              </button>
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleOkDownloadModal()}>
+                                OK
+                              </button>
+                            </div>
+                          </Fragment>
+                        )}
+                        {this.showConfirmDeleteModal && (
+                          <Fragment>
+                            <div class="modal-message-container">Êtes-vous sûr de vouloir supprimer cet itinéraire du hors ligne ?</div>
+                            <div class="modal-buttons-container">
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
+                                ANNULER
+                              </button>
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleOkDeleteModal()}>
+                                OK
+                              </button>
+                            </div>
+                          </Fragment>
+                        )}
+                        {this.showLoaderModal && (
+                          <Fragment>
+                            <div class="modal-message-container">
+                              <div class="modal-loader"></div>
+                              {this.showDeletingMessage ? 'Suppression en cours' : 'Téléchargement en cours'}
+                            </div>
+                          </Fragment>
+                        )}
+                        {this.showSuccessModal && (
+                          <Fragment>
+                            <div class="modal-message-container">
+                              {this.showDeleteSuccessMessage ? "L'itinéraire est supprimé du hors ligne" : "L'itinéraire est disponible hors ligne"}
+                            </div>
+                            <div class="modal-button-container">
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
+                                OK
+                              </button>
+                            </div>
+                          </Fragment>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {this.showTouristicContent && (
@@ -574,7 +750,7 @@ export class GrwApp {
               )}
               {!state.networkError && (
                 <grw-map
-                  reset-store-on-disconnected={'false'}
+                  exportparts="map,elevation,map-bottom-space,map-loader-container,loader"
                   class={this.isLargeView ? 'grw-large-view-app-map-container' : 'grw-app-map-container'}
                   style={{
                     visibility:
@@ -603,6 +779,7 @@ export class GrwApp {
                   color-poi-icon={this.colorPoiIcon}
                   is-large-view={this.isLargeView}
                   use-gradient={this.useGradient}
+                  trek-tiles-max-zoom-offline={this.trekTilesMaxZoomOffline}
                 ></grw-map>
               )}
             </div>
@@ -612,6 +789,7 @@ export class GrwApp {
               (this.showTouristicEvent && state.currentTouristicEvent)) && (
               <div class="grw-map-visibility-button-container">
                 <grw-extended-fab
+                  exportparts="map-visibility-button,map-visibility-button-icon,map-visibility-button-label"
                   fontFamily={this.fontFamily}
                   action={() => this.handleShowMap()}
                   icon={() => this.getMapVisibilityIconButton()}

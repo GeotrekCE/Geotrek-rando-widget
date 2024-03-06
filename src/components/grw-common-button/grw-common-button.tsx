@@ -19,12 +19,14 @@ export class GrwCommonButton {
           '--font-family': this.fontFamily,
         }}
       >
-        <button onClick={() => this.action()} class="common-button">
+        <button part="common-button" class="common-button" onClick={() => this.action()}>
           {/* @ts-ignore */}
-          <span translate={false} class="material-symbols material-symbols-outlined margin-right-icon">
+          <span part="common-button-icon" class="material-symbols material-symbols-outlined icon" translate={false}>
             {this.icon}
           </span>
-          {this.name}
+          <span part="common-button-label" class="label">
+            {this.name}
+          </span>
         </button>
       </Host>
     );

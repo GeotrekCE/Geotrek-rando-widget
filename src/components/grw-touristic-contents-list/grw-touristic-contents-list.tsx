@@ -81,15 +81,15 @@ export class GrwTouristicContentsList {
     return (
       <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.touristicContentsWithinBounds && (
-          <div class="current-touristic-contents-within-bounds-length">{`${state.touristicContentsWithinBounds.length} ${
+          <div part="current-touristic-contents-within-bounds-length" class="current-touristic-contents-within-bounds-length">{`${state.touristicContentsWithinBounds.length} ${
             state.touristicContentsWithinBounds.length > 1 ? translate[state.language].home.touristicContents : translate[state.language].home.touristicContent
           }`}</div>
         )}
-        <div class="touristic-contents-list-container">
+        <div part="touristic-contents-list-container" class="touristic-contents-list-container">
           {this.touristicContentsToDisplay.map(touristicContent => (
             <grw-touristic-content-card
+              exportparts="touristic-content-card,touristic-content-img-container,swiper-touristic-content,swiper-wrapper,swiper-slide,touristic-content-img,default-touristic-content-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-content-sub-container,touristic-content-category-container,touristic-content-category-img,touristic-content-category-name,touristic-content-name,touristic-content-more-detail-container,more-details-button"
               fontFamily={this.fontFamily}
-              reset-store-on-disconnected="false"
               key={`touristic-content-${touristicContent.id}`}
               touristicContent={touristicContent}
               is-large-view={this.isLargeView}
@@ -101,7 +101,7 @@ export class GrwTouristicContentsList {
             ></grw-touristic-content-card>
           ))}
         </div>
-        {!this.isLargeView && <div class="list-bottom-space"></div>}
+        <div part="list-bottom-space" class={!this.isLargeView ? 'list-bottom-space' : 'list-large-view-bottom-space'}></div>
       </Host>
     );
   }

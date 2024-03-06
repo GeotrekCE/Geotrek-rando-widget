@@ -1,8 +1,9 @@
-import { Component, Host, h, Prop, State, Build, getAssetPath } from '@stencil/core';
+import { Component, Host, h, Prop, State, Build, getAssetPath, Listen } from '@stencil/core';
 import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
 import state from 'store/store';
-import { Poi } from 'types/types';
+import { Poi, Trek } from 'types/types';
 import { translate } from 'i18n/i18n';
+import { getDataInStore } from 'services/grw-db.service';
 
 @Component({
   tag: 'grw-poi',
@@ -22,7 +23,21 @@ export class GrwPoiDetail {
   @State() showPoiDescriptionButton = false;
   @State() displayFullscreen = false;
 
+  @State() offline = false;
+
+  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
+  onTrekDownloadedSuccessConfirm() {
+    this.swiperPoi.slideTo(0);
+    this.offline = true;
+  }
+
+  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
+  onTrekDeleteSuccessConfirm() {
+    this.offline = false;
+  }
+
   componentDidLoad() {
+    this.handleOffline();
     this.swiperPoi = new Swiper(this.swiperPoiRef, {
       modules: [Navigation, Pagination, Keyboard],
       navigation: {
@@ -32,9 +47,10 @@ export class GrwPoiDetail {
       pagination: { el: this.paginationElPoiRef },
       allowTouchMove: false,
       keyboard: false,
+      loop: true,
     });
     this.swiperPoiRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen;
+      this.displayFullscreen = !this.displayFullscreen && !this.offline;
       if (this.displayFullscreen) {
         this.swiperPoi.keyboard.enable();
       } else {
@@ -54,53 +70,77 @@ export class GrwPoiDetail {
     }
   }
 
+  async handleOffline() {
+    if (this.poi) {
+      const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
+      const poiInStore: Poi = await getDataInStore('pois', this.poi.id);
+      this.offline = trekInStore && trekInStore.offline && Boolean(poiInStore);
+    }
+  }
+
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     return (
       <Host>
-        <div class="poi-type-img-container">
+        <div part="poi-type-img-container" class="poi-type-img-container">
           <img
+            part="poi-type"
+            class="poi-type"
             /* @ts-ignore */
             crossorigin="anonymous"
-            class="poi-type"
             src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`}
           />
-          <div class="swiper" ref={el => (this.swiperPoiRef = el)}>
-            <div class="swiper-wrapper">
+          <div part="swiper-poi" class="swiper swiper-poi" ref={el => (this.swiperPoiRef = el)}>
+            <div part="swiper-wrapper" class="swiper-wrapper">
               {this.poi.attachments.length > 0 ? (
                 this.poi.attachments
                   .filter(attachment => attachment.type === 'image')
                   .map(attachment => (
-                    <div class="swiper-slide">
+                    <div part="swiper-slide" class="swiper-slide">
                       <img
+                        part="poi-img"
                         class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                         src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                         loading="lazy"
+                        /* @ts-ignore */
+                        onerror={event => {
+                          event.target.onerror = null;
+                          event.target.className = 'default-poi-img';
+                          event.target.src = defaultImageSrc;
+                        }}
                         onClick={() => this.handleFullscreen()}
                       />
                     </div>
                   ))
               ) : (
-                <div class="swiper-slide">
+                <div part="swiper-slide" class="swiper-slide">
                   <img
+                    part="default-poi-img"
+                    class="default-poi-img"
                     /* @ts-ignore */
                     crossorigin="anonymous"
-                    class="default-poi-img"
                     src={defaultImageSrc}
                     loading="lazy"
                   />
                 </div>
               )}
             </div>
-            <div class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
-            <div class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
-            <div class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
+            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
+            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
+            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
           </div>
         </div>
-        <div class="poi-sub-container">
-          <div class="poi-name">{this.poi.name}</div>
-          <div class={this.displayShortDescription ? 'poi-description-short' : 'poi-description'} innerHTML={this.poi.description} ref={el => (this.descriptionRef = el)}></div>
-          <div class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
+        <div part="poi-sub-container" class="poi-sub-container">
+          <div part="poi-name" class="poi-name">
+            {this.poi.name}
+          </div>
+          <div
+            part="poi-description"
+            class={this.displayShortDescription ? 'poi-description poi-description-short' : 'poi-description'}
+            innerHTML={this.poi.description}
+            ref={el => (this.descriptionRef = el)}
+          ></div>
+          <div part="handle-poi-description" class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
             {this.showPoiDescriptionButton && (this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess)}
           </div>
         </div>

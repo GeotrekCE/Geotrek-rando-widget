@@ -29,10 +29,10 @@ export class GrwSearch {
         }}
       >
         {/* @ts-ignore */}
-        <span translate={false} class="material-symbols material-symbols-outlined">
+        <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
           search
         </span>
-        <input onInput={e => this.onSearchChange(e)} class="search-input" type="search" placeholder="Rechercher" value={state.searchValue}></input>
+        <input part="search-input" class="search-input" onInput={e => this.onSearchChange(e)} type="search" placeholder="Rechercher" value={state.searchValue}></input>
       </Host>
     );
   }

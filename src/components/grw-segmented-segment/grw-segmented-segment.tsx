@@ -59,19 +59,19 @@ export class GrwSegmentedSegment {
           '--font-family': this.fontFamily,
         }}
       >
-        <div class="segmented-buttons-container">
+        <div part="segmented-buttons-container" class="segmented-buttons-container">
           {this.treks && (
-            <label class={`segment${state.mode === 'treks' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('treks')}>
+            <label part="segment" class={`segment${state.mode === 'treks' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('treks')}>
               {translate[state.language].home.segment.treks}
             </label>
           )}
           {this.touristicContents && (
-            <label class={`segment${state.mode === 'touristicContents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicContents')}>
+            <label part="segment" class={`segment${state.mode === 'touristicContents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicContents')}>
               {translate[state.language].home.segment.touristicContents}
             </label>
           )}
           {this.touristicEvents && (
-            <label class={`segment${state.mode === 'touristicEvents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicEvents')}>
+            <label part="segment" class={`segment${state.mode === 'touristicEvents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicEvents')}>
               {translate[state.language].home.segment.touristicEvents}
             </label>
           )}

@@ -128,21 +128,23 @@ export class GrwFilter {
           '--font-family': this.fontFamily,
         }}
       >
-        <div class="filter-name display-large">{this.filterName}</div>
-        <div class="filter-button-container">
+        <div part="filter-name" class="filter-name display-large">{this.filterName}</div>
+        <div part="filter-button-container" class="filter-button-container">
           {state[this.filterType].length > 9 ? (
-            <select multiple ref={el => (this.choicesRef = el)}></select>
+            <select part="filter-select" multiple ref={el => (this.choicesRef = el)}></select>
           ) : (
             state[this.filterType]
               .filter(currentFilter => !currentFilter.hasOwnProperty('filter') || (currentFilter.hasOwnProperty('filter') && currentFilter.filter))
               .map(currentFilter => (
-                <button onClick={event => this.handleFilter(event, currentFilter)} class={currentFilter.selected ? 'selected-filter-button' : 'filter-button'}>
+                <button part="filter-button" class={currentFilter.selected ? 'filter-button selected-filter-button' : 'filter-button'} onClick={event => this.handleFilter(event, currentFilter)}>
                   {/* @ts-ignore */}
-                  {currentFilter.selected && (<span translate={false} class="material-symbols material-symbols-outlined">
+                  {currentFilter.selected && (<span  part="selected-filter-icon"  class="material-symbols material-symbols-outlined icon" translate={false}>
                       check
                     </span>
                   )}
-                  {currentFilter[this.filterNameProperty]}
+                  <span part="filter-label" class="filter-label">
+                    {currentFilter[this.filterNameProperty]}
+                  </span>
                 </button>
               ))
           )}

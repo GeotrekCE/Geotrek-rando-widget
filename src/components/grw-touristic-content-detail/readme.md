@@ -19,6 +19,55 @@
 | `isLargeView`               | `is-large-view`                |             | `boolean` | `false`     |
 
 
+## Shadow Parts
+
+| Part                                     | Description |
+| ---------------------------------------- | ----------- |
+| `"cities"`                               |             |
+| `"cities-container"`                     |             |
+| `"cities-title"`                         |             |
+| `"close-fullscreen-button"`              |             |
+| `"contact"`                              |             |
+| `"contact-container"`                    |             |
+| `"contact-title"`                        |             |
+| `"default-poi-img"`                      |             |
+| `"description"`                          |             |
+| `"description-container"`                |             |
+| `"description-teaser"`                   |             |
+| `"description-title"`                    |             |
+| `"detail-bottom-space"`                  |             |
+| `"divider"`                              |             |
+| `"download-title"`                       |             |
+| `"downloads-container"`                  |             |
+| `"email"`                                |             |
+| `"email-container"`                      |             |
+| `"email-title"`                          |             |
+| `"icon"`                                 |             |
+| `"image"`                                |             |
+| `"images-container"`                     |             |
+| `"label"`                                |             |
+| `"legend-container"`                     |             |
+| `"link-container"`                       |             |
+| `"links-container"`                      |             |
+| `"name"`                                 |             |
+| `"swiper-button-next"`                   |             |
+| `"swiper-button-prev"`                   |             |
+| `"swiper-images"`                        |             |
+| `"swiper-pagination"`                    |             |
+| `"swiper-slide"`                         |             |
+| `"swiper-wrapper"`                       |             |
+| `"touristic-content-category-container"` |             |
+| `"touristic-content-category-img"`       |             |
+| `"touristic-content-category-name"`      |             |
+| `"touristic-content-detail-container"`   |             |
+| `"useful-information"`                   |             |
+| `"useful-information-container"`         |             |
+| `"useful-information-title"`             |             |
+| `"website"`                              |             |
+| `"website-container"`                    |             |
+| `"website-title"`                        |             |
+
+
 ## Dependencies
 
 ### Used by

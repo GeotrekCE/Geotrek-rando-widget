@@ -9,6 +9,10 @@ import 'leaflet.markercluster/dist/leaflet.markercluster.js';
 import state, { onChange } from 'store/store';
 import { translate } from 'i18n/i18n';
 import { getTrekGeometry } from 'services/treks.service';
+import { tileLayerOffline } from 'leaflet.offline';
+import { Trek } from 'components';
+import { getDataInStore } from 'services/grw-db.service';
+import { arrayBufferToBlob } from 'utils/utils';
 
 @Component({
   tag: 'grw-map',
@@ -42,6 +46,7 @@ export class GrwMap {
   @Prop() colorSensitiveArea = '#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
   @Prop() useGradient = false;
+  @Prop() trekTilesMaxZoomOffline = 16;
 
   @Prop() isLargeView = false;
   map: L.Map;
@@ -49,7 +54,7 @@ export class GrwMap {
   bounds;
   treksLayer: L.GeoJSON<any>;
   toutisticContentsLayer: L.GeoJSON<any>;
-  toutisticEventsLayer: L.GeoJSON<any>;
+  touristicEventsLayer: L.GeoJSON<any>;
 
   treksMarkerClusterGroup: MarkerClusterGroup;
   touristicContentsMarkerClusterGroup: MarkerClusterGroup;
@@ -66,7 +71,7 @@ export class GrwMap {
   currentPoisLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
   currentToutisticContentsLayer: L.GeoJSON<any>;
-  currentToutisticEventsLayer: L.GeoJSON<any>;
+  currenttouristicEventsLayer: L.GeoJSON<any>;
   currentToutisticContentLayer: L.GeoJSON<any>;
   currentToutisticEventLayer: L.GeoJSON<any>;
   elevationControl: L.Control.Layers;
@@ -141,8 +146,8 @@ export class GrwMap {
 
   @Listen('touristicEventsIsInViewport', { target: 'window' })
   touristicEventsIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentToutisticEventsLayer) {
-      this.handleLayerVisibility(event.detail, this.currentToutisticEventsLayer);
+    if (this.currenttouristicEventsLayer) {
+      this.handleLayerVisibility(event.detail, this.currenttouristicEventsLayer);
     }
   }
 
@@ -198,6 +203,16 @@ export class GrwMap {
     this.removeSelectedTouristicEvent();
   }
 
+  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
+  onTrekDownloadedSuccessConfirm() {
+    this.map.setMaxZoom(this.trekTilesMaxZoomOffline);
+  }
+
+  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
+  onTrekDeleteSuccessConfirm() {
+    this.map.setMaxZoom(this.maxZoom);
+  }
+
   componentDidLoad() {
     this.map = L.map(this.mapRef, {
       center: this.center.split(',').map(Number) as L.LatLngExpression,
@@ -215,7 +230,7 @@ export class GrwMap {
     urlLayers.forEach((urlLayer, index) => {
       this.tileLayer.push({
         key: `${nameLayers[index]}`,
-        value: L.tileLayer(urlLayer, {
+        value: tileLayerOffline(urlLayer, {
           maxZoom: this.maxZoom,
           attribution: `${
             attributionLayers[index] && attributionLayers[index] !== '' ? attributionLayers[index].concat(' | ') : ''
@@ -224,6 +239,7 @@ export class GrwMap {
         }),
       });
     });
+
     this.tileLayer[0].value.addTo(this.map);
 
     if (urlLayers.length > 1) {
@@ -234,28 +250,28 @@ export class GrwMap {
           { collapsed: true },
         )
         .addTo(this.map);
-
-      (L.Control as any).Contract = L.Control.extend({
-        onAdd: () => {
-          const contractContainer = L.DomUtil.create('div');
-          contractContainer.className = 'leaflet-bar leaflet-control';
-          const contract = contractContainer.appendChild(L.DomUtil.create('a'));
-          contract.href = '#';
-          contract.style.backgroundImage = `var(--contract-image-src)`;
-          contractContainer.onclick = e => {
-            this.bounds && this.map.fitBounds(this.bounds);
-            e.preventDefault();
-          };
-          return contractContainer;
-        },
-      });
-
-      (L.control as any).contract = opts => {
-        return new (L.Control as any).Contract(opts);
-      };
-
-      (L.control as any).contract({ position: 'topleft' }).addTo(this.map);
     }
+
+    (L.Control as any).Contract = L.Control.extend({
+      onAdd: () => {
+        const contractContainer = L.DomUtil.create('div');
+        contractContainer.className = 'leaflet-bar leaflet-control';
+        const contract = contractContainer.appendChild(L.DomUtil.create('a'));
+        contract.href = '#';
+        contract.style.backgroundImage = `var(--contract-image-src)`;
+        contractContainer.onclick = e => {
+          this.bounds && this.map.fitBounds(this.bounds);
+          e.preventDefault();
+        };
+        return contractContainer;
+      },
+    });
+
+    (L.control as any).contract = opts => {
+      return new (L.Control as any).Contract(opts);
+    };
+
+    (L.control as any).contract({ position: 'topleft' }).addTo(this.map);
 
     if (state.currentTrek) {
       this.addTrek();
@@ -401,7 +417,7 @@ export class GrwMap {
     this.handleLayersControlEvent();
   }
 
-  addTreks(resetBounds = false) {
+  async addTreks(resetBounds = false) {
     state.treksWithinBounds = state.currentTreks;
 
     const treksCurrentDepartureCoordinates = [];
@@ -434,12 +450,15 @@ export class GrwMap {
           this.bounds = state.currentMapBounds;
         }
       }
+
+      const treksIcons = await this.getIcons(treksFeatureCollection, 'practice');
+
       this.treksLayer = L.geoJSON(treksFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.practice
-                ? `<div class="trek-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.practice} /></div>`
+              html: treksIcons[geoJsonPoint.properties.practice]
+                ? `<div class="trek-marker-container"><img crossorigin="anonymous" src=${treksIcons[geoJsonPoint.properties.practice]} /></div>`
                 : `<div class="trek-marker-container"></div>`,
               className: 'trek-marker',
               iconSize: 32,
@@ -448,12 +467,18 @@ export class GrwMap {
             autoPanOnFocus: false,
           } as any),
         onEachFeature: (geoJsonPoint, layer) => {
-          layer.once('click', () => {
+          layer.once('click', async () => {
+            const dataInStore = await getDataInStore('images', geoJsonPoint.properties.imgSrc);
+            const imgSrc = dataInStore
+              ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type))
+              : geoJsonPoint.properties.imgSrc
+              ? geoJsonPoint.properties.imgSrc
+              : null;
             const trekDeparturePopup = L.DomUtil.create('div');
             trekDeparturePopup.className = 'trek-departure-popup';
-            if (geoJsonPoint.properties.imgSrc) {
+            if (imgSrc) {
               const trekImg = L.DomUtil.create('img');
-              trekImg.src = geoJsonPoint.properties.imgSrc;
+              trekImg.src = imgSrc;
               trekImg.crossOrigin = 'anonymous';
               trekDeparturePopup.appendChild(trekImg);
             }
@@ -499,8 +524,7 @@ export class GrwMap {
       this.treksMarkerClusterGroup.clearLayers();
       this.treksMarkerClusterGroup.addLayer(this.treksLayer);
     }
-
-    this.bounds && this.map.fitBounds(this.bounds);
+    this.bounds && this.bounds._northEast && this.bounds._southWest && this.map.fitBounds(this.bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
     this.map.on('moveend', this.handleTreksWithinBoundsBind);
@@ -547,7 +571,13 @@ export class GrwMap {
     }
   }
 
-  addTrek() {
+  async addTrek() {
+    const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
+    if (trekInStore) {
+      this.map.setMaxZoom(this.trekTilesMaxZoomOffline);
+    } else {
+      this.map.setMaxZoom(this.maxZoom);
+    }
     this.trekPopupIsOpen = false;
     state.selectedTrekId = null;
     this.hideTrekLine();
@@ -642,11 +672,13 @@ export class GrwMap {
         });
       }
 
+      const poiIcons = await this.getIcons(currentPoisFeatureCollection, 'type_pictogram');
+
       this.currentPoisLayer = L.geoJSON(currentPoisFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type_pictogram ? `<img crossorigin="anonymous" src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
+              html: poiIcons[geoJsonPoint.properties.type_pictogram] ? `<img crossorigin="anonymous" src=${poiIcons[geoJsonPoint.properties.type_pictogram]} />` : `<img />`,
               className: 'poi-icon',
               iconSize: 48,
             } as any),
@@ -683,16 +715,21 @@ export class GrwMap {
         });
       }
 
+      const toutisticContentsIcons = await this.getIcons(currentTouristicContentsFeatureCollection, 'category_pictogram');
+
       this.currentToutisticContentsLayer = L.geoJSON(currentTouristicContentsFeatureCollection, {
-        pointToLayer: (geoJsonPoint, latlng) =>
-          L.marker(latlng, {
+        pointToLayer: (geoJsonPoint, latlng) => {
+          return L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.category_pictogram ? `<img crossorigin="anonymous "src=${geoJsonPoint.properties.category_pictogram} />` : `<img />`,
+              html: toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]
+                ? `<img crossorigin="anonymous "src=${toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]} />`
+                : `<img />`,
               className: 'touristic-content-icon',
               iconSize: 48,
             } as any),
             autoPanOnFocus: false,
-          } as any),
+          } as any);
+        },
         onEachFeature: (geoJsonPoint, layer) => {
           layer.once('mouseover', () => {
             const touristicContentTooltip = L.DomUtil.create('div');
@@ -724,13 +761,14 @@ export class GrwMap {
         });
       }
 
-      this.currentToutisticEventsLayer = L.geoJSON(currentTouristicEventsFeatureCollection, {
+      const toutisticEventsIcons = await this.getIcons(currentTouristicEventsFeatureCollection, 'type_pictogram');
+      this.currenttouristicEventsLayer = L.geoJSON(currentTouristicEventsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type_pictogram
+              html: toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]
                 ? `
-            <img crossorigin="anonymous" src=${geoJsonPoint.properties.type_pictogram} />`
+            <img crossorigin="anonymous" src=${toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]} />`
                 : `<img />`,
               className: 'touristic-event-icon',
               iconSize: 48,
@@ -770,11 +808,14 @@ export class GrwMap {
       }
 
       if (currentInformationDesksFeatureCollection.features.length > 0) {
+        const informationDesksIcons = await this.getIcons(currentInformationDesksFeatureCollection, 'type_pictogram');
         this.currentInformationDesksLayer = L.geoJSON(currentInformationDesksFeatureCollection, {
           pointToLayer: (geoJsonPoint, latlng) =>
             L.marker(latlng, {
               icon: L.divIcon({
-                html: geoJsonPoint.properties.type_pictogram ? `<img crossorigin="anonymous" src=${geoJsonPoint.properties.type_pictogram} />` : `<img />`,
+                html: informationDesksIcons[geoJsonPoint.properties.type_pictogram]
+                  ? `<img crossorigin="anonymous" src=${informationDesksIcons[geoJsonPoint.properties.type_pictogram]} />`
+                  : `<img />`,
                 className: 'information-desks-icon',
                 iconSize: 48,
               } as any),
@@ -861,12 +902,18 @@ export class GrwMap {
           } as any);
         },
         onEachFeature: (geoJsonPoint, layer) => {
-          layer.once('click', () => {
+          layer.once('click', async () => {
+            const dataInStore = await getDataInStore('images', geoJsonPoint.properties.imgSrc);
+            const imgSrc = dataInStore
+              ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type))
+              : geoJsonPoint.properties.imgSrc
+              ? geoJsonPoint.properties.imgSrc
+              : null;
             const trekDeparturePopup = L.DomUtil.create('div');
             trekDeparturePopup.className = 'trek-departure-popup';
-            if (geoJsonPoint.properties.imgSrc) {
+            if (imgSrc) {
               const trekImg = L.DomUtil.create('img');
-              trekImg.src = geoJsonPoint.properties.imgSrc;
+              trekImg.src = imgSrc;
               trekImg.crossOrigin = 'anonymous';
               trekDeparturePopup.appendChild(trekImg);
             }
@@ -908,7 +955,7 @@ export class GrwMap {
       elevationDiv: `#elevation`,
       theme: `custom-theme${!this.useGradient ? ' use-theme-color' : ''}`,
       detached: true,
-      height: 300,
+      height: 280,
       wptIcons: true,
       wptLabels: true,
       collapsed: false,
@@ -1005,8 +1052,8 @@ export class GrwMap {
       overlays[translate[state.language].layers.touristicContents] = this.currentToutisticContentsLayer;
     }
 
-    if (this.currentToutisticEventsLayer) {
-      overlays[translate[state.language].layers.touristicEvents] = this.currentToutisticEventsLayer;
+    if (this.currenttouristicEventsLayer) {
+      overlays[translate[state.language].layers.touristicEvents] = this.currenttouristicEventsLayer;
     }
 
     if (this.layersControl) {
@@ -1025,7 +1072,22 @@ export class GrwMap {
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
 
-  addSelectedCurrentTrek(id, customCoordinates?) {
+  async getIcons(featuresCollection, property) {
+    const icons = {};
+    for (let index = 0; index < featuresCollection.features.length; index++) {
+      if (featuresCollection.features[index].properties[property]) {
+        icons[featuresCollection.features[index].properties[property]] = await this.getIcon(featuresCollection.features[index].properties[property]);
+      }
+    }
+    return icons;
+  }
+  async getIcon(pictogram) {
+    const dataInStore = await getDataInStore('images', pictogram);
+    const icon = dataInStore ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type)) : pictogram ? pictogram : null;
+    return icon;
+  }
+
+  async addSelectedCurrentTrek(id, customCoordinates?) {
     const treksFeatureCollection: FeatureCollection = {
       type: 'FeatureCollection',
       features: [],
@@ -1048,13 +1110,14 @@ export class GrwMap {
     this.removeSelectedCurrentTrek();
     state.selectedTrekId = id;
 
+    const treksIcons = await this.getIcons(treksFeatureCollection, 'practice');
     this.selectedCurrentTrekLayer = L.geoJSON(treksFeatureCollection, {
       pointToLayer: (geoJsonPoint, latlng) =>
         L.marker(latlng, {
           zIndexOffset: 4000000,
           icon: L.divIcon({
-            html: geoJsonPoint.properties.practice
-              ? `<div class="trek-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.practice} /></div>`
+            html: treksIcons[geoJsonPoint.properties.practice]
+              ? `<div class="trek-marker-container"><img crossorigin="anonymous" src=${treksIcons[geoJsonPoint.properties.practice]} /></div>`
               : `<div class="trek-marker-container"></div>`,
             className: 'selected-trek-marker',
             iconSize: 48,
@@ -1063,12 +1126,18 @@ export class GrwMap {
           autoPanOnFocus: false,
         } as any),
       onEachFeature: (geoJsonPoint, layer) => {
-        layer.once('click', () => {
+        layer.once('click', async () => {
+          const dataInStore = await getDataInStore('images', geoJsonPoint.properties.imgSrc);
+          const imgSrc = dataInStore
+            ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type))
+            : geoJsonPoint.properties.imgSrc
+            ? geoJsonPoint.properties.imgSrc
+            : null;
           const trekDeparturePopup = L.DomUtil.create('div');
           trekDeparturePopup.className = 'trek-departure-popup';
-          if (geoJsonPoint.properties.imgSrc) {
+          if (imgSrc) {
             const trekImg = L.DomUtil.create('img');
-            trekImg.src = geoJsonPoint.properties.imgSrc;
+            trekImg.src = imgSrc;
             trekImg.crossOrigin = 'anonymous';
             trekDeparturePopup.appendChild(trekImg);
           }
@@ -1151,12 +1220,18 @@ export class GrwMap {
           autoPanOnFocus: false,
         } as any),
       onEachFeature: (geoJsonPoint, layer) => {
-        layer.once('click', () => {
+        layer.once('click', async () => {
+          const dataInStore = await getDataInStore('images', geoJsonPoint.properties.imgSrc);
+          const imgSrc = dataInStore
+            ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type))
+            : geoJsonPoint.properties.imgSrc
+            ? geoJsonPoint.properties.imgSrc
+            : null;
           const trekDeparturePopup = L.DomUtil.create('div');
           trekDeparturePopup.className = 'trek-departure-popup';
-          if (geoJsonPoint.properties.imgSrc) {
+          if (imgSrc) {
             const trekImg = L.DomUtil.create('img');
-            trekImg.src = geoJsonPoint.properties.imgSrc;
+            trekImg.src = imgSrc;
             trekImg.crossOrigin = 'anonymous';
             trekDeparturePopup.appendChild(trekImg);
           }
@@ -1276,9 +1351,9 @@ export class GrwMap {
       this.map.removeLayer(this.currentToutisticContentsLayer);
       this.currentToutisticContentsLayer = null;
     }
-    if (this.currentToutisticEventsLayer) {
-      this.map.removeLayer(this.currentToutisticEventsLayer);
-      this.currentToutisticEventsLayer = null;
+    if (this.currenttouristicEventsLayer) {
+      this.map.removeLayer(this.currenttouristicEventsLayer);
+      this.currenttouristicEventsLayer = null;
     }
   }
 
@@ -1306,7 +1381,7 @@ export class GrwMap {
     }
   }
 
-  addTouristicContent() {
+  async addTouristicContent() {
     this.touristicContentPopupIsOpen = false;
     state.selectedTouristicContentId = null;
     this.removeSelectedTouristicContent();
@@ -1329,12 +1404,13 @@ export class GrwMap {
     }
 
     if (!this.currentToutisticContentLayer) {
+      const toutisticContentIcons = await this.getIcons(touristicContentsFeatureCollection, 'practice');
       this.currentToutisticContentLayer = L.geoJSON(touristicContentsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.practice
-                ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous "src=${geoJsonPoint.properties.practice} /></div>`
+              html: toutisticContentIcons[geoJsonPoint.properties.practice]
+                ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous "src=${toutisticContentIcons[geoJsonPoint.properties.practice]} /></div>`
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 48,
@@ -1356,7 +1432,7 @@ export class GrwMap {
     }
   }
 
-  addTouristicContents(resetBounds = false) {
+  async addTouristicContents(resetBounds = false) {
     state.touristicContentsWithinBounds = state.currentTouristicContents;
 
     const touristicContentsCurrentCoordinates = [];
@@ -1391,12 +1467,13 @@ export class GrwMap {
           this.bounds = state.currentMapBounds;
         }
       }
+      const toutisticContentIcons = await this.getIcons(touristicContentsFeatureCollection, 'practice');
       this.toutisticContentsLayer = L.geoJSON(touristicContentsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.practice
-                ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.practice} /></div>`
+              html: toutisticContentIcons[geoJsonPoint.properties.practice]
+                ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous" src=${toutisticContentIcons[geoJsonPoint.properties.practice]} /></div>`
                 : `<div class="touristic-content-marker-container"></div>`,
               className: 'touristic-content-marker',
               iconSize: 32,
@@ -1476,31 +1553,33 @@ export class GrwMap {
     }
   }
 
-  addTouristicEvent() {
+  async addTouristicEvent() {
     const touristicEventsFeatureCollection: FeatureCollection = {
       type: 'FeatureCollection',
       features: [],
     };
 
     if (state.currentTouristicEvent) {
+      const touristicEventType = state.touristicEventTypes.find(touristicEventType => touristicEventType.id === state.currentTouristicEvent.type);
       touristicEventsFeatureCollection.features.push({
         type: 'Feature',
         geometry: { type: 'Point', coordinates: state.currentTouristicEvent.geometry.coordinates },
         properties: {
           id: state.currentTouristicEvent.id,
           name: state.currentTouristicEvent.name,
-          type: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === state.currentTouristicEvent.type).pictogram,
+          type: touristicEventType ? touristicEventType.pictogram : null,
         },
       });
     }
 
     if (!this.currentToutisticEventLayer) {
+      const toutisticEventsIcons = await this.getIcons(touristicEventsFeatureCollection, 'type');
       this.currentToutisticEventLayer = L.geoJSON(touristicEventsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type
-                ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.type} /></div>`
+              html: toutisticEventsIcons[geoJsonPoint.properties.type]
+                ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${toutisticEventsIcons[geoJsonPoint.properties.type]} /></div>`
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 48,
@@ -1522,7 +1601,7 @@ export class GrwMap {
     }
   }
 
-  addSelectedTouristicContent(id, customCoordinates?) {
+  async addSelectedTouristicContent(id, customCoordinates?) {
     const touristicContentFeatureCollection: FeatureCollection = {
       type: 'FeatureCollection',
       features: [],
@@ -1545,13 +1624,14 @@ export class GrwMap {
     this.removeSelectedTouristicContent();
     state.selectedTouristicContentId = id;
 
+    const toutisticContentIcons = await this.getIcons(touristicContentFeatureCollection, 'category');
     this.selectedTouristicContentLayer = L.geoJSON(touristicContentFeatureCollection, {
       pointToLayer: (geoJsonPoint, latlng) =>
         L.marker(latlng, {
           zIndexOffset: 4000000,
           icon: L.divIcon({
-            html: geoJsonPoint.properties.category
-              ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.category} /></div>`
+            html: toutisticContentIcons[geoJsonPoint.properties.category]
+              ? `<div class="touristic-content-marker-container"><img crossorigin="anonymous" src=${toutisticContentIcons[geoJsonPoint.properties.category]} /></div>`
               : `<div class="touristic-content-marker-container"></div>`,
             className: 'selected-touristic-content-marker',
             iconSize: 48,
@@ -1609,7 +1689,7 @@ export class GrwMap {
     this.selectedTouristicContentLayer = null;
   }
 
-  addTouristicEvents(resetBounds = false) {
+  async addTouristicEvents(resetBounds = false) {
     state.touristicEventsWithinBounds = state.currentTouristicEvents;
 
     const touristicEventsCurrentCoordinates = [];
@@ -1636,7 +1716,7 @@ export class GrwMap {
       }
     }
 
-    if (!this.toutisticEventsLayer) {
+    if (!this.touristicEventsLayer) {
       if ((touristicEventsCurrentCoordinates.length > 0 && !state.currentMapBounds) || resetBounds) {
         this.bounds = L.latLngBounds(touristicEventsCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
       } else {
@@ -1644,12 +1724,13 @@ export class GrwMap {
           this.bounds = state.currentMapBounds;
         }
       }
-      this.toutisticEventsLayer = L.geoJSON(touristicEventsFeatureCollection, {
+      const touristicEventsIcons = await this.getIcons(touristicEventsFeatureCollection, 'type');
+      this.touristicEventsLayer = L.geoJSON(touristicEventsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: geoJsonPoint.properties.type
-                ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.type} /></div>`
+              html: touristicEventsIcons[geoJsonPoint.properties.type]
+                ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${touristicEventsIcons[geoJsonPoint.properties.type]} /></div>`
                 : `<div class="touristic-event-marker-container"></div>`,
               className: 'touristic-event-marker',
               iconSize: 32,
@@ -1698,7 +1779,7 @@ export class GrwMap {
         },
       });
 
-      this.touristicEventsMarkerClusterGroup.addLayer(this.toutisticEventsLayer);
+      this.touristicEventsMarkerClusterGroup.addLayer(this.touristicEventsLayer);
       this.map.addLayer(this.touristicEventsMarkerClusterGroup);
     } else {
       if (touristicEventsCurrentCoordinates.length > 0) {
@@ -1706,10 +1787,10 @@ export class GrwMap {
       } else {
         this.map.fire('moveend');
       }
-      this.toutisticEventsLayer.clearLayers();
-      this.toutisticEventsLayer.addData(touristicEventsFeatureCollection);
+      this.touristicEventsLayer.clearLayers();
+      this.touristicEventsLayer.addData(touristicEventsFeatureCollection);
       this.touristicEventsMarkerClusterGroup.clearLayers();
-      this.touristicEventsMarkerClusterGroup.addLayer(this.toutisticEventsLayer);
+      this.touristicEventsMarkerClusterGroup.addLayer(this.touristicEventsLayer);
     }
 
     this.bounds && this.map.fitBounds(this.bounds);
@@ -1720,16 +1801,16 @@ export class GrwMap {
   }
 
   removeTouristicEvents() {
-    if (this.toutisticEventsLayer) {
+    if (this.touristicEventsLayer) {
       state.currentMapBounds = this.map.getBounds();
       this.map.removeLayer(this.touristicEventsMarkerClusterGroup);
-      this.toutisticEventsLayer = null;
+      this.touristicEventsLayer = null;
       this.touristicEventsMarkerClusterGroup = null;
       this.map.off('moveend', this.handleTouristicEventsWithinBoundsBind);
     }
   }
 
-  addSelectedTouristicEvent(id, customCoordinates?) {
+  async addSelectedTouristicEvent(id, customCoordinates?) {
     const touristicEventFeatureCollection: FeatureCollection = {
       type: 'FeatureCollection',
       features: [],
@@ -1752,13 +1833,14 @@ export class GrwMap {
     this.removeSelectedTouristicEvent();
     state.selectedTouristicEventId = id;
 
+    const touristicEventsIcons = await this.getIcons(touristicEventFeatureCollection, 'category');
     this.selectedTouristicEventLayer = L.geoJSON(touristicEventFeatureCollection, {
       pointToLayer: (geoJsonPoint, latlng) =>
         L.marker(latlng, {
           zIndexOffset: 4000000,
           icon: L.divIcon({
-            html: geoJsonPoint.properties.category
-              ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${geoJsonPoint.properties.category} /></div>`
+            html: touristicEventsIcons[geoJsonPoint.properties.category]
+              ? `<div class="touristic-event-marker-container"><img crossorigin="anonymous" src=${touristicEventsIcons[geoJsonPoint.properties.category]} /></div>`
               : `<div class="touristic-event-marker-container"></div>`,
             className: 'selected-touristic-event-marker',
             iconSize: 48,
@@ -1835,17 +1917,17 @@ export class GrwMap {
           '--map-bottom-space-height': this.isLargeView ? '0px' : '80px',
         }}
       >
-        <div id="map" style={{}} class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
+        <div id="map" part="map" class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
         {state.currentTrek && (
           <div>
-            <div id="elevation" ref={el => (this.elevationRef = el)}></div>
-            <div class="map-bottom-space"></div>
+            <div id="elevation" part="elevation" ref={el => (this.elevationRef = el)}></div>
+            <div part="map-bottom-space" class="map-bottom-space"></div>
           </div>
         )}
 
         {!this.mapIsReady && (
-          <div class="map-loader-container">
-            <span class="loader"></span>
+          <div part="map-loader-container" class="map-loader-container">
+            <span part="loader" class="loader"></span>
           </div>
         )}
       </Host>

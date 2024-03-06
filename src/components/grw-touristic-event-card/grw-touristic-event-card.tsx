@@ -1,8 +1,9 @@
 import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitter, Listen } from '@stencil/core';
 import { translate } from 'i18n/i18n';
+import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
-import { TouristicEvent } from 'types/types';
+import { TouristicEvent, Trek } from 'types/types';
 
 @Component({
   tag: 'grw-touristic-event-card',
@@ -27,7 +28,21 @@ export class GrwTouristicEvent {
   @Event() cardTouristicEventMouseOver: EventEmitter<number>;
   @Event() cardTouristicEventMouseLeave: EventEmitter;
 
+  @State() offline = false;
+
+  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
+  onTrekDownloadedSuccessConfirm() {
+    this.swiperTouristicEvent.slideTo(0);
+    this.offline = true;
+  }
+
+  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
+  onTrekDeleteSuccessConfirm() {
+    this.offline = false;
+  }
+
   componentDidLoad() {
+    this.handleOffline();
     if (this.swiperTouristicEventRef) {
       this.swiperTouristicEvent = new Swiper(this.swiperTouristicEventRef, {
         modules: [Navigation, Pagination, Keyboard],
@@ -38,15 +53,24 @@ export class GrwTouristicEvent {
         pagination: { el: this.paginationElTouristicEventRef },
         allowTouchMove: false,
         keyboard: false,
+        loop: true,
       });
       this.swiperTouristicEventRef.onfullscreenchange = () => {
-        this.displayFullscreen = !this.displayFullscreen;
+        this.displayFullscreen = !this.displayFullscreen && !this.offline;
         if (this.displayFullscreen) {
           this.swiperTouristicEvent.keyboard.enable();
         } else {
           this.swiperTouristicEvent.keyboard.disable();
         }
       };
+    }
+  }
+
+  async handleOffline() {
+    if (state.currentTrek) {
+      const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
+      const touristicEventInStore: TouristicEvent = await getDataInStore('touristicEvents', this.touristicEvent.id);
+      this.offline = trekInStore && trekInStore.offline && touristicEventInStore && touristicEventInStore.offline;
     }
   }
 
@@ -77,12 +101,13 @@ export class GrwTouristicEvent {
         }}
       >
         <div
+          part="touristic-event-card"
           class={
             this.isLargeView
-              ? `touristic-event-card-large-view-container${state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''}${
-                  !this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''
-                }`
-              : `touristic-event-card-container${state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''}${
+              ? `touristic-event-card touristic-event-card-large-view-container${
+                  state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''
+                }${!this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''}`
+              : ` touristic-event-card touristic-event-card-container${state.selectedTouristicEventId === this.touristicEvent.id ? ' selected-touristic-event-card' : ''}${
                   !this.isInsideHorizontalList ? ' is-inside-vertical-list' : ''
                 }`
           }
@@ -92,44 +117,58 @@ export class GrwTouristicEvent {
             }
           }}
         >
-          <div class="touristic-event-img-container">
+          <div part="touristic-event-img-container" class="touristic-event-img-container">
             {this.isInsideHorizontalList ? (
-              <div class="swiper" ref={el => (this.swiperTouristicEventRef = el)}>
-                <div class="swiper-wrapper">
+              <div part="swiper-touristic-event" class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventRef = el)}>
+                <div part="swiper-wrapper" class="swiper-wrapper">
                   {this.touristicEvent.attachments.length > 0 ? (
                     this.touristicEvent.attachments
                       .filter(attachment => attachment.type === 'image')
                       .map(attachment => (
-                        <div class="swiper-slide">
+                        <div part="swiper-slide" class="swiper-slide">
                           <img
+                            part="touristic-event-img"
                             class={`touristic-event-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                             src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                             loading="lazy"
+                            /* @ts-ignore */
+                            onerror={event => {
+                              event.target.onerror = null;
+                              event.target.className = 'default-touristic-event-img';
+                              event.target.src = defaultImageSrc;
+                            }}
                             onClick={() => this.handleFullscreen()}
                           />
                         </div>
                       ))
                   ) : (
-                    <div class="swiper-slide">
+                    <div part="swiper-slide" class="swiper-slide">
                       <img
+                        part="default-touristic-event-img"
+                        class="default-touristic-event-img"
                         /* @ts-ignore */
                         crossorigin="anonymous"
-                        class="default-touristic-event-img"
                         src={defaultImageSrc}
                         loading="lazy"
                       />
                     </div>
                   )}
                 </div>
-                <div class="swiper-pagination" ref={el => (this.paginationElTouristicEventRef = el)}></div>
-                <div class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
-                <div class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
+                <div
+                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  part="swiper-pagination"
+                  class="swiper-pagination"
+                  ref={el => (this.paginationElTouristicEventRef = el)}
+                ></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
               </div>
             ) : this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img
+                part="touristic-event-img"
+                class="touristic-event-img"
                 /* @ts-ignore */
                 crossorigin="anonymous"
-                class="image"
                 src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 loading="lazy"
               />
@@ -143,32 +182,40 @@ export class GrwTouristicEvent {
             />
             )}
           </div>
-          <div class="touristic-event-sub-container">
-            <div class="touristic-event-type-container">
+          <div part="touristic-event-sub-container" class="touristic-event-sub-container">
+            <div part="touristic-event-type-container" class="touristic-event-type-container">
               {touristicEventType && touristicEventType.pictogram && (
                 <img
+                  part="touristic-event-type-img"
+                  class="touristic-event-type-img"
                   /* @ts-ignore */
                   crossorigin="anonymous"
                   src={touristicEventType.pictogram}
                 />
               )}
-              <div class="touristic-event-type-name">{touristicEventType.type}</div>
+              {touristicEventType && touristicEventType.type && (
+                <div part="touristic-event-type-name" class="touristic-event-type-name">
+                  {touristicEventType.type}
+                </div>
+              )}
             </div>
-            <div class="touristic-event-name">{this.touristicEvent.name}</div>
+            <div part="touristic-event-name" class="touristic-event-name">
+              {this.touristicEvent.name}
+            </div>
             {(this.touristicEvent.begin_date || this.touristicEvent.end_date) && (
-              <div class="touristic-event-date-container">
+              <div part="touristic-event-date-container" class="touristic-event-date-container">
                 {this.touristicEvent.begin_date === this.touristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].date} : {this.touristicEvent.begin_date}
                   </div>
                 )}
                 {this.touristicEvent.begin_date && this.touristicEvent.begin_date !== this.touristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].startDate} : {this.touristicEvent.begin_date}
                   </div>
                 )}
                 {this.touristicEvent.end_date && this.touristicEvent.begin_date !== this.touristicEvent.end_date && (
-                  <div class="touristic-event-date">
+                  <div part="touristic-event-date" class="touristic-event-date">
                     {translate[state.language].endDate} : {this.touristicEvent.end_date}
                   </div>
                 )}
@@ -177,8 +224,8 @@ export class GrwTouristicEvent {
           </div>
 
           {this.isInsideHorizontalList && (
-            <div class="touristic-event-more-detail-container">
-              <button class="more-details-button" onClick={() => this.touristicEventCardPress.emit(this.touristicEvent.id)}>
+            <div part="touristic-event-more-detail-container" class="touristic-event-more-detail-container">
+              <button part="more-details-button" class="more-details-button" onClick={() => this.touristicEventCardPress.emit(this.touristicEvent.id)}>
                 Plus de détails
               </button>
             </div>

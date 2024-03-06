@@ -1,5 +1,11 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
+import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
+import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
+import { getTrek } from 'services/treks.service';
 import state from 'store/store';
+import { Trek } from 'types/types';
+import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-trek-provider',
@@ -8,8 +14,16 @@ import state from 'store/store';
 export class GrwTrekProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
-  @Prop() trekId: string;
+  @Prop() trekId: number;
+
   @Prop() portals: string;
+  @Prop() inBbox: string;
+  @Prop() cities: string;
+  @Prop() districts: string;
+  @Prop() structures: string;
+  @Prop() themes: string;
+  @Prop() routes: string;
+  @Prop() practices: string;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -21,10 +35,131 @@ export class GrwTrekProvider {
       state.languages = this.languages.split(',');
       state.language = state.languages[0];
     }
+
+    state.portalsFromProviders = this.portals;
+    state.inBboxFromProviders = this.inBbox;
+    state.citiesFromProviders = this.cities;
+    state.districtsFromProviders = this.districts;
+    state.structuresFromProviders = this.structures;
+    state.themesFromProviders = this.themes;
+    state.routesFromProviders = this.routes;
+    state.practicesFromProviders = this.practices;
+
     this.handleTrek();
   }
 
-  handleTrek() {
+  disconnectedCallback() {
+    this.controller.abort();
+    state.networkError = false;
+  }
+
+  async handleTrek() {
+    const trekInStore: Trek = await getDataInStore('treks', this.trekId);
+    if (trekInStore && trekInStore.offline) {
+      this.handleOfflineTrek(trekInStore);
+    } else {
+      this.handleOnlineTrek();
+    }
+  }
+
+  async handleOfflineTrek(trek: Trek) {
+    if ((trek && trek.children.length > 0) || state.parentTrekId) {
+      const steps: number[] = [];
+      if (trek.children.length > 0) {
+        state.parentTrekId = trek.id;
+        state.parentTrek = trek;
+        steps.push(...trek.children);
+      } else {
+        const parentTrek = await getDataInStore('treks', state.parentTrekId);
+        state.parentTrek = parentTrek;
+        steps.push(...parentTrek.children);
+      }
+      const stepRequests = [];
+      steps.forEach(stepId => {
+        stepRequests.push(getDataInStore('treks', stepId));
+      });
+      state.currentTrekSteps = await Promise.all([...stepRequests]).then(responses => responses);
+    }
+
+    if (!state.difficulties) {
+      const difficulties = await getAllDataInStore('difficulties');
+      setFilesFromStore(difficulties, imagesRegExp);
+      state.difficulties = difficulties;
+    }
+    if (!state.routes) {
+      state.routes = await getAllDataInStore('routes');
+    }
+    if (!state.practices) {
+      state.practices = await getAllDataInStore('practices');
+    }
+    if (!state.themes) {
+      state.themes = await getAllDataInStore('themes');
+    }
+    if (!state.cities) {
+      state.cities = await getAllDataInStore('cities');
+    }
+    if (!state.accessibilities) {
+      state.accessibilities = await getAllDataInStore('accessibilities');
+    }
+    if (!state.ratings) {
+      state.ratings = await getAllDataInStore('ratings');
+    }
+    if (!state.ratingsScale) {
+      state.ratingsScale = await getAllDataInStore('ratingsScale');
+    }
+    if (!state.currentSensitiveAreas) {
+      // filter trek items
+      state.currentSensitiveAreas = await getAllDataInStore('sensitiveAreas');
+    }
+    if (!state.labels) {
+      state.labels = await getAllDataInStore('labels');
+    }
+    if (!state.sources) {
+      state.sources = await getAllDataInStore('sources');
+    }
+    if (!state.accessibilitiesLevel) {
+      state.accessibilitiesLevel = await getAllDataInStore('accessibilitiesLevel');
+    }
+    if (!state.trekTouristicContents) {
+      // filter trek items
+      const touristicContents = await getAllDataInStore('touristicContents');
+      setFilesFromStore(touristicContents, imagesRegExp);
+      state.trekTouristicContents = touristicContents;
+    }
+    if (!state.touristicContentCategories) {
+      state.touristicContentCategories = await getAllDataInStore('touristicContentCategories');
+    }
+    if (!state.trekTouristicEvents) {
+      // filter trek items
+      state.trekTouristicEvents = await getAllDataInStore('touristicEvents');
+    }
+    if (!state.touristicEventTypes) {
+      state.touristicEventTypes = await getAllDataInStore('touristicEventTypes');
+    }
+    if (!state.networks) {
+      state.networks = await getAllDataInStore('networks');
+    }
+    if (!state.currentPois) {
+      // filter trek items
+      const pois = await getAllDataInStore('pois');
+      setFilesFromStore(pois, imagesRegExp);
+      state.currentPois = pois;
+    }
+
+    if (!state.poiTypes) {
+      state.poiTypes = await getAllDataInStore('poiTypes');
+    }
+    if (!state.currentInformationDesks) {
+      // filter trek items
+      state.currentInformationDesks = await getAllDataInStore('informationDesks');
+    }
+
+    // handle images
+    setFilesFromStore(trek, imagesRegExp);
+    state.currentTrek = trek;
+  }
+
+  handleOnlineTrek() {
     const requests = [];
     requests.push(
       !state.difficulties
@@ -85,18 +220,12 @@ export class GrwTrekProvider {
           `${state.api}informationdesk/?language=${state.language}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
           this.init,
         ),
-        fetch(
-          `${state.api}touristiccontent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,category,geometry&page_size=999`,
-          this.init,
-        ),
+        getTouristicContentsNearTrek(state.api, state.language, this.trekId, this.init),
         fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
-        fetch(`${state.api}touristicevent/?language=${state.language}&near_trek=${this.trekId}&published=true&fields=id,name,attachments,type,geometry&page_size=999`, this.init),
+        getTouristicEventsNearTrek(state.api, state.language, this.trekId, this.init),
         fetch(`${state.api}touristicevent_type/?language=${state.language}&published=true&fields=id,type,pictogram&page_size=999`, this.init),
         fetch(`${state.api}trek_network/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
-        fetch(
-          `${state.api}trek/${this.trekId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,ratings,ratings_description,information_desks,children,networks,web_links`,
-          this.init,
-        ),
+        getTrek(state.api, state.language, this.trekId, this.init),
       ])
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(
@@ -124,7 +253,7 @@ export class GrwTrekProvider {
             trek,
           ]) => {
             state.networkError = false;
-            if (trek.children.length > 0 || state.parentTrekId) {
+            if ((trek && trek.children.length > 0) || state.parentTrekId) {
               const steps: number[] = [];
               if (trek.children.length > 0) {
                 state.parentTrekId = trek.id;
@@ -139,11 +268,7 @@ export class GrwTrekProvider {
               }
               const stepRequests = [];
               steps.forEach(stepId => {
-                stepRequests.push(
-                  fetch(
-                    `${state.api}trek/${stepId}/?language=${state.language}&published=true&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts,networks,web_links`,
-                  ),
-                );
+                stepRequests.push(getTrek(state.api, state.language, stepId, this.init));
               });
               state.currentTrekSteps = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
             }
@@ -163,24 +288,24 @@ export class GrwTrekProvider {
             if (cities) {
               state.cities = cities.results;
             }
-
             if (accessibilities) {
               state.accessibilities = accessibilities.results;
             }
-
             if (ratings) {
               state.ratings = ratings.results;
             }
-
             if (ratingsScale) {
               state.ratingsScale = ratingsScale.results;
             }
-
             if (sensitiveAreas) {
               state.currentSensitiveAreas = sensitiveAreas.results;
             }
-            state.labels = labels.results;
-            state.sources = sources.results;
+            if (labels) {
+              state.labels = labels.results;
+            }
+            if (sources) {
+              state.sources = sources.results;
+            }
             if (accessibilitiesLevel) {
               state.accessibilitiesLevel = accessibilitiesLevel.results;
             }
@@ -199,10 +324,18 @@ export class GrwTrekProvider {
             if (networks) {
               state.networks = networks.results;
             }
-            state.currentPois = pois.results;
-            state.poiTypes = poiTypes.results;
-            state.currentInformationDesks = informationDesks.results;
-            state.currentTrek = trek;
+            if (pois) {
+              state.currentPois = pois.results;
+            }
+            if (poiTypes) {
+              state.poiTypes = poiTypes.results;
+            }
+            if (informationDesks) {
+              state.currentInformationDesks = informationDesks.results;
+            }
+            if (trek) {
+              state.currentTrek = trek;
+            }
           },
         );
     } catch (error) {
@@ -210,11 +343,6 @@ export class GrwTrekProvider {
         state.networkError = true;
       }
     }
-  }
-
-  disconnectedCallback() {
-    this.controller.abort();
-    state.networkError = false;
   }
 
   render() {

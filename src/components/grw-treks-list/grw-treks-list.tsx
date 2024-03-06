@@ -18,8 +18,9 @@ export class GrwTreksList {
   @Prop() colorSecondaryContainer = '#e8def8';
   @Prop() colorOnSecondaryContainer = '#1d192b';
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
-
+  @Prop() displayOnlyOfflineTreks = false;
   @Prop() isLargeView = false;
+
   step = 10;
   shouldAddInfiniteScrollEvent = true;
 
@@ -79,14 +80,14 @@ export class GrwTreksList {
     return (
       <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.treksWithinBounds && (
-          <div class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
+          <div part="current-treks-within-bounds-length" class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
             state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek
           }`}</div>
         )}
-        <div class="treks-list-container">
+        <div part="treks-list-container" class="treks-list-container">
           {this.treksToDisplay.map(trek => (
             <grw-trek-card
-              reset-store-on-disconnected="false"
+              exportparts="trek-card,trek-img-container,trek-img,trek-sub-container,trek-departure,trek-name,trek-themes-container,trek-theme,trek-icons-labels-container,trek-icon-label,trek-icon,trek-label"
               key={`trek-${trek.id}`}
               trek={trek}
               is-large-view={this.isLargeView}
@@ -99,7 +100,7 @@ export class GrwTreksList {
             ></grw-trek-card>
           ))}
         </div>
-        {!this.isLargeView && <div class="list-bottom-space"></div>}
+        <div part="list-bottom-space" class={!this.isLargeView ? 'list-bottom-space' : 'list-large-view-bottom-space'}></div>
       </Host>
     );
   }

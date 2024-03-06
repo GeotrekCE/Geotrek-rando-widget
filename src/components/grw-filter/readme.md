@@ -17,6 +17,18 @@
 | `segment`            | `segment`              |             | `string` | `undefined` |
 
 
+## Shadow Parts
+
+| Part                        | Description |
+| --------------------------- | ----------- |
+| `"filter-button"`           |             |
+| `"filter-button-container"` |             |
+| `"filter-label"`            |             |
+| `"filter-name"`             |             |
+| `"filter-select"`           |             |
+| `"selected-filter-icon"`    |             |
+
+
 ## Dependencies
 
 ### Used by

@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Event, EventEmitter, State, Listen, Fragment, getAssetPath, Build } from '@stencil/core';
+import { trekIsAvailableOffline } from 'services/treks.service';
 import state, { onChange } from 'store/store';
 import { City, Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
@@ -30,6 +31,19 @@ export class GrwTrekCard {
   @Event() cardTrekMouseOver: EventEmitter<number>;
   @Event() cardTrekMouseLeave: EventEmitter;
 
+  @State() isAvailableOffline = false;
+  @State() showDefaultImage = false;
+
+  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
+  onTrekDownloadedSuccessConfirm() {
+    this.isAvailableOffline = true;
+  }
+
+  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
+  onTrekDeleteSuccessConfirm() {
+    this.isAvailableOffline = false;
+  }
+
   connectedCallback() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
     if (this.currentTrek) {
@@ -38,6 +52,7 @@ export class GrwTrekCard {
       this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
       this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
       this.departureCity = state.cities.find(city => city.id === this.currentTrek.departure_city);
+      this.handleOffline(this.currentTrek.id);
     }
     onChange('currentTrek', () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
@@ -47,8 +62,13 @@ export class GrwTrekCard {
         this.practice = this.currentTrek.practice && state.practices ? state.practices.find(practice => practice.id === this.currentTrek.practice) : null;
         this.themes = this.currentTrek.themes && state.themes ? state.themes.filter(theme => this.currentTrek.themes.includes(theme.id)) : null;
         this.departureCity = this.currentTrek.departure_city && state.cities ? state.cities.find(city => city.id === this.currentTrek.departure_city) : null;
+        this.handleOffline(this.currentTrek.id);
       }
     });
+  }
+
+  async handleOffline(trekId) {
+    this.isAvailableOffline = await trekIsAvailableOffline(trekId);
   }
 
   @Listen('mouseover')
@@ -77,104 +97,144 @@ export class GrwTrekCard {
       >
         {this.currentTrek && (
           <div
+            part="trek-card"
             class={
               this.isStep
-                ? `trek-card-container trek-step-card${state.selectedStepId === this.currentTrek.id ? ' selected-trek-card' : ''} ${
+                ? `trek-card trek-card-container trek-step-card${state.selectedStepId === this.currentTrek.id ? ' selected-trek-card' : ''} ${
                     state.currentTrek.id === this.currentTrek.id ? 'is-current-step' : ''
                   }`
                 : this.isLargeView
-                ? `trek-card-large-view-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
-                : `trek-card-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
+                ? `trek-card trek-card-large-view-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
+                : `trek-card trek-card-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
             }
             onClick={() => this.trekCardPress.emit(this.currentTrek.id)}
           >
-            <div class="trek-img-container">
+            <div part="trek-img-container" class="trek-img-container">
+              {this.isAvailableOffline && (
+                <div part="offline-indicator" class="offline-indicator">
+                  {/* @ts-ignore */}
+                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
+                    offline_pin
+                  </span>
+                </div>
+              )}
               {this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
                 <img
+                  part="trek-img"
+                  class="trek-img"
                   /* @ts-ignore */
                   crossorigin="anonymous"
-                  class="image"
                   src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                   loading="lazy"
+                  /* @ts-ignore */
+                  onerror={event => {
+                    event.target.onerror = null;
+                    event.target.className = 'trek-img default-trek-img';
+                    event.target.src = defaultImageSrc;
+                  }}
                 />
               ) : (
                 <img
+                  part="trek-img"
+                  class="trek-img default-trek-img"
                   /* @ts-ignore */
                   crossorigin="anonymous"
-                  class="image default-trek-img"
                   src={defaultImageSrc}
                   loading="lazy"
                 />
               )}
             </div>
-            <div class="sub-container">
-              {this.departureCity && <div class="departure">{this.departureCity.name}</div>}
-              <div class="name">{this.currentTrek?.name}</div>
+            <div part="trek-sub-container" class="trek-sub-container">
+              {this.departureCity && (
+                <div part="trek-departure" class="trek-departure">
+                  {this.departureCity.name}
+                </div>
+              )}
+              <div part="trek-name" class="trek-name">
+                {this.currentTrek?.name}
+              </div>
               {!this.isStep && this.themes && (
-                <div class="themes-container">
+                <div part="trek-themes-container" class="trek-themes-container">
                   {this.themes.map(theme => (
-                    <div class="theme">{theme.label}</div>
+                    <div part="trek-theme" class="trek-theme">
+                      {theme.label}
+                    </div>
                   ))}
                 </div>
               )}
-              <div class="icons-labels-container">
+              <div part="trek-icons-labels-container" class="trek-icons-labels-container">
                 {this.difficulty && (
-                  <div class="icon-label">
+                  <div part="trek-icon-label" class="trek-icon-label difficulty">
                     {this.difficulty.pictogram && (
                       <img
+                        part="trek-icon"
+                        class="trek-icon"
                         /* @ts-ignore */
                         crossorigin="anonymous"
-                        class="icon"
                         src={this.difficulty.pictogram}
                       />
                     )}
-                    <span class="difficulty">{this.difficulty.label}</span>
+                    <span part="trek-label" class="trek-label">
+                      {this.difficulty.label}
+                    </span>
                   </div>
                 )}
-                <div class="icon-label duration">
+                <div part="trek-icon-label" class="trek-icon-label duration">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined icon">
+                  <span part="trek-icon" class="trek-icon material-symbols material-symbols-outlined" translate={false}>
                     timelapse
                   </span>
-                  {formatDuration(this.currentTrek.duration)}
+                  <span part="trek-label" class="trek-label">
+                    {formatDuration(this.currentTrek.duration)}
+                  </span>
                 </div>
-                <div class="icon-label length">
+                <div part="trek-icon-label" class="trek-icon-label length">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined icon">
+                  <span part="trek-icon" class="trek-icon material-symbols material-symbols-outlined" translate={false}>
                     open_in_full
                   </span>
-                  {formatLength(this.currentTrek.length_2d)}
+                  <span part="trek-label" class="trek-label">
+                    {formatLength(this.currentTrek.length_2d)}
+                  </span>
                 </div>
-                <div class="icon-label ascent">
+                <div part="trek-icon-label" class="trek-icon-label ascent">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined icon">
+                  <span part="trek-icon" class="trek-icon material-symbols material-symbols-outlined" translate={false}>
                     moving
                   </span>
-                  {formatAscent(this.currentTrek.ascent)}
+                  <span part="trek-label" class="trek-label">
+                    {formatAscent(this.currentTrek.ascent)}
+                  </span>
                 </div>
                 {!this.isStep && (
                   <Fragment>
-                    <div class="icon-label route">
+                    <div part="trek-icon-label" class="trek-icon-label route">
                       {this.route?.pictogram && (
                         <img
+                          part="trek-icon"
+                          class="trek-icon"
                           /* @ts-ignore */
                           crossorigin="anonymous"
-                          class="icon"
                           src={this.route.pictogram}
                         />
                       )}
-                      {this.route?.route}
+                      <span part="trek-label" class="trek-label">
+                        {this.route?.route}
+                      </span>
                     </div>
-                    <div class="icon-label practice">
+                    <div part="trek-icon-label" class="trek-icon-label practice">
                       {this.practice?.pictogram && (
                         <img
+                          part="trek-icon"
+                          class="trek-icon"
                           /* @ts-ignore */
                           crossorigin="anonymous"
-                          class="icon"
                           src={this.practice.pictogram}
                         />
                       )}
-                      {this.practice?.name}
+                      <span part="trek-label" class="trek-label">
+                        {this.practice?.name}
+                      </span>
                     </div>
                   </Fragment>
                 )}

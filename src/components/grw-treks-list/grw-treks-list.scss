@@ -20,9 +20,11 @@ grw-trek-card {
 }
 
 .list-bottom-space {
-  min-height: 104px;
   height: 104px;
-  width: 100%;
+}
+
+.list-large-view-bottom-space {
+  height: 52px;
 }
 
 .current-treks-within-bounds-length {

@@ -20,6 +20,27 @@
 | `resetFilter` |             | `CustomEvent<any>` |
 
 
+## Shadow Parts
+
+| Part                                     | Description |
+| ---------------------------------------- | ----------- |
+| `"back-filters-container"`               |             |
+| `"current-treks-within-bounds-length"`   |             |
+| `"filter-container"`                     |             |
+| `"filter-option-button"`                 |             |
+| `"filters-container"`                    |             |
+| `"filters-options-buttons-container"`    |             |
+| `"filters-options-container"`            |             |
+| `"filters-segment-container"`            |             |
+| `"filters-touristic-contents-container"` |             |
+| `"filters-touristic-events-container"`   |             |
+| `"filters-treks-container"`              |             |
+| `"options-container"`                    |             |
+| `"segment"`                              |             |
+| `"segment-container"`                    |             |
+| `"segmented-buttons-container"`          |             |
+
+
 ## Dependencies
 
 ### Used by

@@ -12,6 +12,14 @@
 | `fontFamily` | `font-family` |             | `string` | `'Roboto'` |
 
 
+## Shadow Parts
+
+| Part             | Description |
+| ---------------- | ----------- |
+| `"icon"`         |             |
+| `"search-input"` |             |
+
+
 ## Dependencies
 
 ### Used by
