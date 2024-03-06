@@ -18,8 +18,9 @@ export class GrwTreksList {
   @Prop() colorSecondaryContainer = '#e8def8';
   @Prop() colorOnSecondaryContainer = '#1d192b';
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
-
+  @Prop() displayOnlyOfflineTreks = false;
   @Prop() isLargeView = false;
+
   step = 10;
   shouldAddInfiniteScrollEvent = true;
 

@@ -1,5 +1,9 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { TouristicEvent } from 'components';
+import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
+import { getTouristicEvent } from 'services/touristic-events.service';
 import state from 'store/store';
+import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-touristic-event-provider',
@@ -24,7 +28,27 @@ export class GrwTouristicEventProvider {
     this.handleTouristicEvent();
   }
 
-  handleTouristicEvent() {
+  async handleTouristicEvent() {
+    const touristicEventInStore: TouristicEvent = await getDataInStore('touristicEvents', this.touristicEventId);
+    if (touristicEventInStore && touristicEventInStore.offline) {
+      this.handleOfflineTouristicEvent(touristicEventInStore);
+    } else {
+      this.handleOnlineTouristicEvent();
+    }
+  }
+
+  async handleOfflineTouristicEvent(touristicEvent: TouristicEvent) {
+    if (!state.cities) {
+      state.cities = await getAllDataInStore('cities');
+    }
+    if (!state.touristicEventTypes) {
+      state.touristicEventTypes = await getAllDataInStore('touristicEventTypes');
+    }
+    setFilesFromStore(touristicEvent, imagesRegExp);
+    state.currentTouristicEvent = touristicEvent;
+  }
+
+  handleOnlineTouristicEvent() {
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
     requests.push(
@@ -39,17 +63,10 @@ export class GrwTouristicEventProvider {
     );
 
     try {
-      Promise.all([
-        ...requests,
-        fetch(
-          `${state.api}touristicevent/${this.touristicEventId}/?language=${state.language}&fields=id,name,attachments,description,description_teaser,type,geometry,cities,pdf,practical_info,contact,email,website,begin_date,end_date&published=true`,
-          this.init,
-        ),
-      ])
+      Promise.all([...requests, getTouristicEvent(state.api, state.language, this.touristicEventId, this.init)])
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(([cities, touristicEventTypes, touristicEvent]) => {
           state.networkError = false;
-
           if (cities) {
             state.cities = cities.results;
           }

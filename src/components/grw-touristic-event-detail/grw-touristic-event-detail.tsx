@@ -17,6 +17,7 @@ export class GrwTouristicEventDetail {
   presentationRef?: HTMLDivElement;
 
   @State() displayFullscreen = false;
+  @State() offline = false;
 
   @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
@@ -46,8 +47,9 @@ export class GrwTouristicEventDetail {
     });
     this.swiperImagesRef.onfullscreenchange = () => {
       this.displayFullscreen = !this.displayFullscreen;
-      this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
+      this.displayFullscreen && !this.offline ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
     };
+    this.offline = state.currentTouristicEvent.offline;
   }
 
   handleFullscreen(close: boolean = false) {
@@ -92,7 +94,7 @@ export class GrwTouristicEventDetail {
             <div part="images-container" class="images-container" ref={el => (this.presentationRef = el)}>
               <div part="swiper-images" class="swiper swiper-images" ref={el => (this.swiperImagesRef = el)}>
                 <div part="swiper-wrapper" class="swiper-wrapper">
-                  {state.currentTouristicEvent.attachments.length > 0 ? (
+                  {state.currentTouristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
                     state.currentTouristicEvent.attachments
                       .filter(attachment => attachment.type === 'image')
                       .map(attachment => {
@@ -135,9 +137,9 @@ export class GrwTouristicEventDetail {
                     </div>
                   )}
                 </div>
-                <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
-                <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
-                <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
               </div>
             </div>
             <div part="touristic-event-category-container" class="touristic-event-category-container">

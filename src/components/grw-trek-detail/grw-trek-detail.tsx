@@ -1,9 +1,15 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Build, Listen, getAssetPath } from '@stencil/core';
 import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel, Scrollbar } from 'swiper';
 import { translate } from 'i18n/i18n';
 import state, { onChange } from 'store/store';
-import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek, Option, Options } from 'types/types';
-import { formatDuration, formatLength, formatAscent, formatDescent } from 'utils/utils';
+import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek, Option, Options, Treks } from 'types/types';
+import { formatDuration, formatLength, formatAscent, formatDescent, imagesRegExp } from 'utils/utils';
+import { getAllDataInStore, getDataInStore, writeOrUpdateDataInStore, writeOrUpdateFilesInStore, writeOrUpdateTilesInStore } from 'services/grw-db.service';
+import { tileLayerOffline } from 'leaflet.offline';
+import L from 'leaflet';
+import { getDistricts, getTrek, getTreksList } from 'services/treks.service';
+import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
+import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
 
 const threshold = 1;
 const presentation: Option = {
@@ -156,6 +162,8 @@ export class GrwTrekDetail {
   @State() displayFullscreen = false;
   @State() cities: string[];
   @State() options: Options;
+  @State() offline = false;
+
   @Prop() trek: Trek;
   @Prop() emergencyNumber: number;
 
@@ -171,6 +179,22 @@ export class GrwTrekDetail {
 
   @Prop() weather = false;
   @Prop() isLargeView = false;
+
+  @Prop() defaultBackgroundLayerUrl;
+  @Prop() defaultBackgroundLayerAttribution;
+
+  @Prop() enableOffline = false;
+  @Prop() globalTilesMinZoomOffline = 0;
+  @Prop() globalTilesMaxZoomOffline = 11;
+  @Prop() trekTilesMinZoomOffline = 12;
+  @Prop() trekTilesMaxZoomOffline = 16;
+
+  @Event() trekDownloadConfirm: EventEmitter<number>;
+  @Event() trekDownloadedSuccessConfirm: EventEmitter<number>;
+
+  @Event() trekDeleteConfirm: EventEmitter<number>;
+  @Event() trekDeleteSuccessConfirm: EventEmitter<number>;
+
   indicatorSelectedTrekOption = { translateX: null, width: null, backgroundSize: null, ref: null };
 
   componentDidLoad() {
@@ -187,7 +211,7 @@ export class GrwTrekDetail {
     });
     this.swiperImagesRef.onfullscreenchange = () => {
       this.displayFullscreen = !this.displayFullscreen;
-      this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
+      this.displayFullscreen && !this.offline ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
     };
     this.swiperStep = new Swiper(this.swiperStepRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -208,7 +232,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
-      loop: true,
+      loop: false,
     });
     this.swiperPois = new Swiper(this.swiperPoisRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -228,7 +252,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
-      loop: true,
+      loop: false,
     });
     this.swiperInformationDesks = new Swiper(this.swiperInformationDesksRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -248,7 +272,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
-      loop: true,
+      loop: false,
     });
     this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -268,7 +292,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
-      loop: true,
+      loop: false,
     });
     this.swiperTouristicEvents = new Swiper(this.swiperTouristicEventsRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
@@ -288,7 +312,7 @@ export class GrwTrekDetail {
           slidesPerView: 2.5,
         },
       },
-      loop: true,
+      loop: false,
     });
     if (this.presentationRef) {
       this.presentationObserver = new IntersectionObserver(
@@ -424,9 +448,10 @@ export class GrwTrekDetail {
     }
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
     if (this.currentTrek) {
+      this.offline = this.currentTrek.offline;
       this.defaultOptions = this.handleOptions();
       this.options = { ...this.defaultOptions, presentation: { ...this.defaultOptions.presentation, indicator: true } };
       this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
@@ -442,9 +467,10 @@ export class GrwTrekDetail {
       this.cities = this.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
       this.hasStep = this.currentTrek.children.length > 0;
     }
-    onChange('currentTrek', () => {
+    onChange('currentTrek', async () => {
       this.currentTrek = this.trek ? this.trek : state.currentTrek;
       if (this.currentTrek) {
+        this.offline = this.currentTrek.offline;
         this.defaultOptions = this.handleOptions();
         this.options = { ...this.defaultOptions, presentation: { ...this.defaultOptions.presentation, indicator: true } };
         this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
@@ -513,6 +539,7 @@ export class GrwTrekDetail {
       touristicEvents: { ...touristicEvents, visible: Boolean(state.trekTouristicEvents && state.trekTouristicEvents.length > 0) },
     };
   }
+
   handleFullscreen(close: boolean = false) {
     if (!close) {
       if (this.currentTrek.attachments && this.currentTrek.attachments[0] && this.currentTrek.attachments[0].url) {
@@ -561,7 +588,276 @@ export class GrwTrekDetail {
     return state.currentTrekSteps ? state.currentTrekSteps.findIndex(step => step.id === this.currentTrek.id) : 0;
   }
 
+  async downloadGlobalTiles(url, attribution) {
+    const offlineLayer = tileLayerOffline(url, { attribution });
+
+    const treksDepartureCoordinates = [];
+
+    if (state.treks) {
+      for (const trek of state.treks) {
+        treksDepartureCoordinates.push(trek.departure_geom);
+      }
+    }
+
+    const bounds = L.latLngBounds(treksDepartureCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+
+    await writeOrUpdateTilesInStore(offlineLayer, bounds, this.globalTilesMinZoomOffline, this.globalTilesMaxZoomOffline);
+  }
+
+  async downloadTrekTiles(url, attribution) {
+    const offlineLayer = tileLayerOffline(url, { attribution });
+
+    const bounds = L.latLngBounds(this.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+
+    await writeOrUpdateTilesInStore(offlineLayer, bounds, this.trekTilesMinZoomOffline, this.trekTilesMaxZoomOffline);
+  }
+
+  async downloadTrek() {
+    // download treks list data
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+    const offlineTreks = (await getAllDataInStore('treks')).filter(trek => trek.offline === true);
+    let treks;
+    if (!state.treks) {
+      const treksList = await getTreksList(
+        state.api,
+        state.language,
+        state.inBboxFromProviders,
+        state.citiesFromProviders,
+        state.districts,
+        state.structuresFromProviders,
+        state.themesFromProviders,
+        state.portalsFromProviders,
+        state.routesFromProviders,
+        state.practicesFromProviders,
+        init,
+      );
+      state.treks = (await treksList.json()).results;
+    }
+    treks = state.treks;
+    treks = treks.filter(trek => offlineTreks.findIndex(offlineTrek => offlineTrek.id === trek.id) === -1);
+
+    if (!state.districts) {
+      const districtsList = await getDistricts(state.api, state.language, init);
+      state.districts = (await districtsList.json()).results;
+    }
+
+    await writeOrUpdateDataInStore('treks', treks);
+    await writeOrUpdateDataInStore('districts', state.districts);
+
+    // download global tiles
+    // await this.downloadGlobalTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
+
+    // download trek tiles
+    // await this.downloadTrekTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
+
+    // download global medias
+    await writeOrUpdateFilesInStore(state.difficulties, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.routes, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.practices, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.themes, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.labels, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.districts, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.sources, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.accessibilities, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.poiTypes, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.touristicContentCategories, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.touristicEventTypes, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.networks, imagesRegExp);
+
+    // // download trek images
+    await writeOrUpdateFilesInStore(this.currentTrek, imagesRegExp, true);
+
+    // // download trek data
+    await writeOrUpdateDataInStore('difficulties', state.difficulties);
+    await writeOrUpdateDataInStore('routes', state.routes);
+    await writeOrUpdateDataInStore(
+      'practices',
+      state.practices.map(practice => ({ ...practice, selected: false })),
+    );
+    await writeOrUpdateDataInStore('themes', state.themes);
+    await writeOrUpdateDataInStore('cities', state.cities);
+    await writeOrUpdateDataInStore('accessibilities', state.accessibilities);
+    await writeOrUpdateDataInStore('ratings', state.ratings);
+    await writeOrUpdateDataInStore('ratingsScale', state.ratingsScale);
+    await writeOrUpdateDataInStore('sensitiveAreas', state.currentSensitiveAreas);
+    await writeOrUpdateDataInStore('labels', state.labels);
+    await writeOrUpdateDataInStore('sources', state.sources);
+    await writeOrUpdateDataInStore('accessibilitiesLevel', state.accessibilitiesLevel);
+    await writeOrUpdateDataInStore('touristicContentCategories', state.touristicContentCategories);
+    await writeOrUpdateDataInStore('touristicEvents', state.trekTouristicEvents);
+    await writeOrUpdateDataInStore('touristicEventTypes', state.touristicEventTypes);
+    await writeOrUpdateDataInStore('networks', state.networks);
+    await writeOrUpdateDataInStore('pois', state.currentPois);
+    await writeOrUpdateDataInStore('poiTypes', state.poiTypes);
+    await writeOrUpdateDataInStore('informationDesks', state.currentInformationDesks);
+
+    await writeOrUpdateDataInStore('treks', [{ ...this.currentTrek, offline: true }]);
+
+    await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true);
+    await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp, true);
+
+    // download items data
+    await writeOrUpdateFilesInStore(state.trekTouristicContents, imagesRegExp, true);
+    state.trekTouristicContents.forEach(trekTouristicContent => {
+      trekTouristicContent.offline = true;
+    });
+    await writeOrUpdateDataInStore('touristicContents', state.trekTouristicContents);
+
+    await writeOrUpdateFilesInStore(state.trekTouristicEvents, imagesRegExp, true);
+    state.trekTouristicEvents.forEach(trekTouristicEvent => {
+      trekTouristicEvent.offline = true;
+    });
+    await writeOrUpdateDataInStore('touristicEvents', state.trekTouristicEvents);
+
+    // download itinerancy
+    if (this.currentTrek.children && this.currentTrek.children.length > 0) {
+      // fetch and store children treks
+      const steps: number[] = [];
+      steps.push(...this.currentTrek.children);
+      const stepRequests = [];
+      const stepsTouristicContentsRequests = [];
+      const stepsTouristicEventsRequests = [];
+
+      steps.forEach(stepId => {
+        stepRequests.push(getTrek(state.api, state.language, stepId, init));
+        stepsTouristicContentsRequests.push(getTouristicContentsNearTrek(state.api, state.language, stepId, init));
+        stepsTouristicEventsRequests.push(getTouristicEventsNearTrek(state.api, state.language, stepId, init));
+      });
+
+      const trekSteps: Treks = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+
+      const stepsTouristicContentsResponses = await Promise.all([...stepsTouristicContentsRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+
+      const stepsTouristicEventsResponses = await Promise.all([...stepsTouristicEventsRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+
+      for (let index = 0; index < trekSteps.length; index++) {
+        trekSteps[index].offline = true;
+        await writeOrUpdateDataInStore('treks', [trekSteps[index]]);
+        await writeOrUpdateFilesInStore(trekSteps[index], imagesRegExp, true);
+      }
+
+      for (let index = 0; index < stepsTouristicContentsResponses.length; index++) {
+        const stepsTouristicContentsResponse = stepsTouristicContentsResponses[index];
+        for (let index = 0; index < stepsTouristicContentsResponse.results.length; index++) {
+          stepsTouristicContentsResponse.results[index].offline = true;
+          await writeOrUpdateDataInStore('touristicContents', [stepsTouristicContentsResponse.results[index]]);
+          await writeOrUpdateFilesInStore(stepsTouristicContentsResponse.results[index], imagesRegExp, true);
+        }
+      }
+
+      for (let index = 0; index < stepsTouristicEventsResponses.length; index++) {
+        const stepsTouristicEventsResponse = stepsTouristicEventsResponses[index];
+        for (let index = 0; index < stepsTouristicEventsResponse.results.length; index++) {
+          stepsTouristicEventsResponse[index].offline = true;
+          await writeOrUpdateDataInStore('touristicEvents', [stepsTouristicEventsResponse[index]]);
+          await writeOrUpdateFilesInStore(stepsTouristicEventsResponse[index], imagesRegExp, true);
+        }
+      }
+    }
+
+    state.treks.find(trek => trek.id === this.currentTrek.id).offline = true;
+    if (!state.currentTreks) {
+      state.currentTreks = state.treks;
+    }
+    state.currentTreks.find(trek => trek.id === this.currentTrek.id).offline = true;
+    this.swiperImages.slideTo(0);
+    this.offline = true;
+    this.trekDownloadedSuccessConfirm.emit();
+  }
+
+  async deleteTrek() {
+    const treksInStore: Treks = [];
+    const trekInStore = await getDataInStore('treks', this.currentTrek.id);
+    this.deleteOfflineTrekProperties(trekInStore);
+    treksInStore.push(trekInStore);
+    if (this.currentTrek.children.length > 0) {
+      for (let index = 0; index < this.currentTrek.children.length; index++) {
+        const trekInStore = await getDataInStore('treks', this.currentTrek.children[index]);
+        this.deleteOfflineTrekProperties(trekInStore);
+        treksInStore.push(trekInStore);
+      }
+    }
+    await writeOrUpdateDataInStore('treks', treksInStore);
+
+    if (state.treks) {
+      delete state.treks.find(trek => trek.id === this.currentTrek.id).offline;
+
+      if (!state.currentTreks) {
+        state.currentTreks = state.treks;
+      }
+      delete state.currentTreks.find(trek => trek.id === this.currentTrek.id).offline;
+    }
+
+    if (state.parentTrek) {
+      delete state.parentTrek.offline;
+    }
+
+    if (state.currentTrekSteps) {
+      state.currentTrekSteps.forEach(currentTrekStep => {
+        delete currentTrekStep.offline;
+      });
+    }
+
+    this.offline = false;
+    this.trekDeleteSuccessConfirm.emit();
+  }
+
+  displayTrekDownloadModal() {
+    this.trekDownloadConfirm.emit();
+  }
+
+  displayTrekDeleteModal() {
+    this.trekDeleteConfirm.emit();
+  }
+
+  @Listen('trekDownloadPress', { target: 'window' })
+  onTrekDownloadPress() {
+    this.downloadTrek();
+  }
+
+  @Listen('trekDeletePress', { target: 'window' })
+  onTrekDeletePress() {
+    this.deleteTrek();
+  }
+
+  deleteOfflineTrekProperties(trekInStore) {
+    delete trekInStore.descent;
+    delete trekInStore.geometry;
+    delete trekInStore.gpx;
+    delete trekInStore.kml;
+    delete trekInStore.pdf;
+    delete trekInStore.parking_location;
+    delete trekInStore.arrival;
+    delete trekInStore.ambiance;
+    delete trekInStore.access;
+    delete trekInStore.public_transport;
+    delete trekInStore.advice;
+    delete trekInStore.advised_parking;
+    delete trekInStore.gear;
+    delete trekInStore.source;
+    delete trekInStore.points_reference;
+    delete trekInStore.disabled_infrastructure;
+    delete trekInStore.accessibility_level;
+    delete trekInStore.accessibility_slope;
+    delete trekInStore.accessibility_width;
+    delete trekInStore.accessibility_signage;
+    delete trekInStore.accessibility_covering;
+    delete trekInStore.accessibility_exposure;
+    delete trekInStore.accessibility_advice;
+    delete trekInStore.ratings;
+    delete trekInStore.ratings_description;
+    delete trekInStore.children;
+    delete trekInStore.networks;
+    delete trekInStore.web_links;
+    delete trekInStore.update_datetime;
+    delete trekInStore.offline;
+  }
+
   render() {
+    const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     return (
       <Host
         style={{
@@ -700,39 +996,58 @@ export class GrwTrekDetail {
             <div part="trek-images" class="trek-images-container" ref={el => (this.presentationRef = el)}>
               <div part="swiper-images" class="swiper swiper-images" ref={el => (this.swiperImagesRef = el)}>
                 <div part="swiper-wrapper" class="swiper-wrapper">
-                  {this.currentTrek.attachments
-                    .filter(attachment => attachment.type === 'image')
-                    .map(attachment => {
-                      const legend = [attachment.legend, attachment.author].filter(Boolean).join(' - ');
-                      return (
-                        <div part="swiper-slide" class="swiper-slide">
-                          {this.displayFullscreen && (
-                            <div part="trek-close-fullscreen-button" class="trek-close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
-                              {/* @ts-ignore */}
-                              <span part="trek-close-fullcreen-icon" class="trek-close-fullcreen-icon material-symbols material-symbols-outlined" translate={false}>
-                                close
-                              </span>
+                  {this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
+                    this.currentTrek.attachments
+                      .filter(attachment => attachment.type === 'image')
+                      .map(attachment => {
+                        const legend = [attachment.legend, attachment.author].filter(Boolean).join(' - ');
+                        return (
+                          <div part="swiper-slide" class="swiper-slide">
+                            {this.displayFullscreen && (
+                              <div part="trek-close-fullscreen-button" class="trek-close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
+                                {/* @ts-ignore */}
+                                <span part="trek-close-fullcreen-icon" class="trek-close-fullcreen-icon material-symbols material-symbols-outlined" translate={false}>
+                                  close
+                                </span>
+                              </div>
+                            )}
+                            <div part="trek-image-legend" class="trek-image-legend">
+                              {legend}
                             </div>
-                          )}
-                          <div part="trek-image-legend" class="trek-image-legend">
-                            {legend}
+                            <img
+                              part="trek-img"
+                              class="trek-img"
+                              /* @ts-ignore */
+                              crossorigin="anonymous"
+                              src={attachment.url}
+                              loading="lazy"
+                              onClick={() => this.handleFullscreen()}
+                              /* @ts-ignore */
+                              onerror={event => {
+                                event.target.onerror = null;
+                                event.target.className = 'trek-img default-trek-img';
+                                event.target.src = defaultImageSrc;
+                              }}
+                            />
                           </div>
-                          <img
-                            part="trek-img"
-                            class="trek-img"
-                            /* @ts-ignore */
-                            crossorigin="anonymous"
-                            src={attachment.url}
-                            loading="lazy"
-                            onClick={() => this.handleFullscreen()}
-                          />
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                  ) : (
+                    <img
+                      part="trek-img"
+                      class="trek-img default-trek-img"
+                      /* @ts-ignore */
+                      crossorigin="anonymous"
+                      src={defaultImageSrc}
+                      loading="lazy"
+                    />
+                  )}
                 </div>
-                <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
-                <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
-                <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }}>
+                  <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
+                  <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
+                  <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
+                </div>
               </div>
             </div>
             <div part="trek-name" class="trek-name">
@@ -869,27 +1184,55 @@ export class GrwTrekDetail {
               <div part="download-title" class="download-title">
                 {translate[state.language].downloads}
               </div>
+              {this.enableOffline && !this.offline && (
+                <button part="offline-button" class="offline-button" onClick={() => this.displayTrekDownloadModal()}>
+                  {/* @ts-ignore */}
+                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
+                    download_for_offline
+                  </span>
+                  <span part="label" class="label">
+                    RENDRE DISPONIBLE HORS LIGNE
+                  </span>
+                </button>
+              )}
+              {this.enableOffline && this.offline && (
+                <button part="offline-button" class="offline-button" onClick={() => this.displayTrekDeleteModal()}>
+                  {/* @ts-ignore */}
+                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
+                    delete
+                  </span>
+                  <span part="label" class="label">
+                    SUPPRIMER DU HORS LIGNE
+                  </span>
+                </button>
+              )}
               <div part="links-container" class="links-container">
                 <a href={`${this.currentTrek.gpx}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined">
+                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
                     download
                   </span>
-                  GPX
+                  <span part="label" class="label">
+                    GPX
+                  </span>
                 </a>
                 <a href={`${this.currentTrek.kml}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined">
+                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
                     download
                   </span>
-                  KML
+                  <span part="label" class="label">
+                    KML
+                  </span>
                 </a>
                 <a href={`${this.currentTrek.pdf}`} target="_blank" rel="noopener noreferrer">
                   {/* @ts-ignore */}
-                  <span translate={false} class="material-symbols material-symbols-outlined">
+                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
                     download
                   </span>
-                  PDF
+                  <span part="label" class="label">
+                    PDF
+                  </span>
                 </a>
               </div>
             </div>
@@ -1041,7 +1384,7 @@ export class GrwTrekDetail {
                   {this.currentTrek.advice && (
                     <div part="current-advice-container" class="current-advice-container">
                       {/* @ts-ignore */}
-                      <span translate={false} class="material-symbols material-symbols-outlined">
+                      <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
                         warning
                       </span>
                       <div part="advice" class="advice" innerHTML={this.currentTrek.advice}></div>
@@ -1050,7 +1393,7 @@ export class GrwTrekDetail {
                   {this.currentTrek.gear && (
                     <div part="gear-container" class="gear-container">
                       {/* @ts-ignore */}
-                      <span translate={false} class="material-symbols material-symbols-outlined">
+                      <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
                         backpack
                       </span>
                       <div part="gear" class="gear" innerHTML={this.currentTrek.gear}></div>
@@ -1159,13 +1502,16 @@ export class GrwTrekDetail {
                         {
                           <a href={`tel:${this.emergencyNumber.toString()}`}>
                             <span
-                              class="material-symbols material-symbols-outlined"
+                              part="icon"
+                              class="material-symbols material-symbols-outlined icon"
                               /* @ts-ignore */
                               translate={false}
                             >
                               call
                             </span>
-                            {this.emergencyNumber.toString()}
+                            <span part="emergency-number" class="emergency-number">
+                              {this.emergencyNumber.toString()}
+                            </span>
                           </a>
                         }
                       </div>

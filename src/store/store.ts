@@ -2,7 +2,7 @@ import { createStore } from '@stencil/store';
 import { LatLngBounds } from 'leaflet';
 import {
   Accessibilities,
-  accessibilitiesLevel,
+  AccessibilitiesLevel,
   Difficulties,
   Durations,
   InformationDesks,
@@ -54,7 +54,7 @@ const { state, onChange, reset } = createStore<{
   ratings: Ratings;
   ratingsScale: RatingsScale;
   accessibilities: Accessibilities;
-  accessibilitiesLevel: accessibilitiesLevel;
+  accessibilitiesLevel: AccessibilitiesLevel;
   poiTypes: PoiTypes;
   currentTrek: Trek;
   currentSensitiveAreas: SensitiveAreas;
@@ -85,6 +85,15 @@ const { state, onChange, reset } = createStore<{
   selectedTouristicContentId: number;
   selectedTouristicEventId: number;
   networks: Networks;
+  portalsFromProviders: string;
+  inBboxFromProviders: string;
+  citiesFromProviders: string;
+  districtsFromProviders: string;
+  structuresFromProviders: string;
+  themesFromProviders: string;
+  routesFromProviders: string;
+  practicesFromProviders: string;
+  offlineTreks: boolean;
 }>({
   mode: null,
   api: null,
@@ -139,6 +148,15 @@ const { state, onChange, reset } = createStore<{
   selectedTouristicContentId: null,
   selectedTouristicEventId: null,
   networks: null,
+  portalsFromProviders: null,
+  inBboxFromProviders: null,
+  citiesFromProviders: null,
+  districtsFromProviders: null,
+  structuresFromProviders: null,
+  themesFromProviders: null,
+  routesFromProviders: null,
+  practicesFromProviders: null,
+  offlineTreks: false,
 });
 
 export { onChange, reset };

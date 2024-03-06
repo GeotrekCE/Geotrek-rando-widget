@@ -1,5 +1,9 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
+import { getTouristicContent } from 'services/touristic-contents.service';
 import state from 'store/store';
+import { TouristicContent } from 'types/types';
+import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-touristic-content-provider',
@@ -8,7 +12,7 @@ import state from 'store/store';
 export class GrwTouristicContentProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
-  @Prop() touristicContentId: string;
+  @Prop() touristicContentId: number;
   @Prop() portals: string;
 
   controller = new AbortController();
@@ -24,7 +28,27 @@ export class GrwTouristicContentProvider {
     this.handleTouristicContent();
   }
 
-  handleTouristicContent() {
+  async handleTouristicContent() {
+    const touristicContentInStore: TouristicContent = await getDataInStore('touristicContents', this.touristicContentId);
+    if (touristicContentInStore && touristicContentInStore.offline) {
+      this.handleOfflineTouristicContent(touristicContentInStore);
+    } else {
+      this.handleOnlineTouristicContent();
+    }
+  }
+
+  async handleOfflineTouristicContent(touristicContent: TouristicContent) {
+    if (!state.cities) {
+      state.cities = await getAllDataInStore('cities');
+    }
+    if (!state.touristicContentCategories) {
+      state.touristicContentCategories = await getAllDataInStore('touristicContentCategories');
+    }
+    setFilesFromStore(touristicContent, imagesRegExp);
+    state.currentTouristicContent = touristicContent;
+  }
+
+  handleOnlineTouristicContent() {
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
     requests.push(
@@ -38,13 +62,7 @@ export class GrwTouristicContentProvider {
         : new Response('null'),
     );
     try {
-      Promise.all([
-        ...requests,
-        fetch(
-          `${state.api}touristiccontent/${this.touristicContentId}/?language=${state.language}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website`,
-          this.init,
-        ),
-      ])
+      Promise.all([...requests, getTouristicContent(state.api, state.language, this.touristicContentId, this.init)])
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(([cities, touristicContentCategory, touristicContent]) => {
           state.networkError = false;

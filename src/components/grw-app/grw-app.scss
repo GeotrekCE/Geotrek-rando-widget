@@ -185,3 +185,94 @@ grw-touristic-event-detail {
     margin-top: 16px;
   }
 }
+
+.modal-container {
+  z-index: 40000;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family);
+  top: -64px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  .modal-content-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 380px;
+    height: 120px;
+    padding: 16px;
+    margin: 0px 16px;
+    background-color: var(--color-background);
+    border-radius: var(--border-radius, 8px);
+  }
+
+  .modal-message-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .modal-loader {
+      width: 16px;
+      height: 16px;
+      border: 3px solid var(--color-primary-container);
+      border-bottom-color: var(--color-on-primary-container);
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+      margin-right: 16px;
+    }
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  .modal-buttons-container,
+  .modal-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    .modal-button {
+      cursor: pointer;
+      user-select: none;
+      font-size: 14px;
+      font-weight: 500;
+      height: 32px;
+      box-shadow: var(--elevation-0);
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 20px;
+      color: var(--color-on-primary-container);
+      background-color: transparent;
+      font-family: var(--font-family);
+    }
+  }
+  .modal-button-container {
+    justify-content: flex-end;
+  }
+}
+
+.grw-offline-container {
+  display: flex;
+  align-items: center;
+  margin: 0px 0px 0px 16px;
+  height: 48px;
+  .grw-offline-label {
+    display: flex;
+  }
+  grw-switch {
+    margin-top: -10px;
+  }
+}
