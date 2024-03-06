@@ -1,8 +1,9 @@
 import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitter, Listen } from '@stencil/core';
 import { translate } from 'i18n/i18n';
+import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
-import { TouristicEvent } from 'types/types';
+import { TouristicEvent, Trek } from 'types/types';
 
 @Component({
   tag: 'grw-touristic-event-card',
@@ -27,7 +28,21 @@ export class GrwTouristicEvent {
   @Event() cardTouristicEventMouseOver: EventEmitter<number>;
   @Event() cardTouristicEventMouseLeave: EventEmitter;
 
+  @State() offline = false;
+
+  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
+  onTrekDownloadedSuccessConfirm() {
+    this.swiperTouristicEvent.slideTo(0);
+    this.offline = true;
+  }
+
+  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
+  onTrekDeleteSuccessConfirm() {
+    this.offline = false;
+  }
+
   componentDidLoad() {
+    this.handleOffline();
     if (this.swiperTouristicEventRef) {
       this.swiperTouristicEvent = new Swiper(this.swiperTouristicEventRef, {
         modules: [Navigation, Pagination, Keyboard],
@@ -41,13 +56,21 @@ export class GrwTouristicEvent {
         loop: true,
       });
       this.swiperTouristicEventRef.onfullscreenchange = () => {
-        this.displayFullscreen = !this.displayFullscreen;
+        this.displayFullscreen = !this.displayFullscreen && !this.offline;
         if (this.displayFullscreen) {
           this.swiperTouristicEvent.keyboard.enable();
         } else {
           this.swiperTouristicEvent.keyboard.disable();
         }
       };
+    }
+  }
+
+  async handleOffline() {
+    if (state.currentTrek) {
+      const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
+      const touristicEventInStore: TouristicEvent = await getDataInStore('touristicEvents', this.touristicEvent.id);
+      this.offline = trekInStore && trekInStore.offline && touristicEventInStore && touristicEventInStore.offline;
     }
   }
 
@@ -108,6 +131,12 @@ export class GrwTouristicEvent {
                             class={`touristic-event-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                             src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                             loading="lazy"
+                            /* @ts-ignore */
+                            onerror={event => {
+                              event.target.onerror = null;
+                              event.target.className = 'default-touristic-event-img';
+                              event.target.src = defaultImageSrc;
+                            }}
                             onClick={() => this.handleFullscreen()}
                           />
                         </div>
@@ -125,9 +154,14 @@ export class GrwTouristicEvent {
                     </div>
                   )}
                 </div>
-                <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElTouristicEventRef = el)}></div>
-                <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
-                <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
+                <div
+                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  part="swiper-pagination"
+                  class="swiper-pagination"
+                  ref={el => (this.paginationElTouristicEventRef = el)}
+                ></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
               </div>
             ) : this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img

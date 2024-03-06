@@ -5,12 +5,12 @@
 
 ## Properties
 
-| Property                 | Attribute                   | Description | Type                                                                                                                                                                                                                                                                             | Default     |
-| ------------------------ | --------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `fontFamily`             | `font-family`               |             | `string`                                                                                                                                                                                                                                                                         | `'Roboto'`  |
-| `isInsideHorizontalList` | `is-inside-horizontal-list` |             | `boolean`                                                                                                                                                                                                                                                                        | `false`     |
-| `isLargeView`            | `is-large-view`             |             | `boolean`                                                                                                                                                                                                                                                                        | `false`     |
-| `touristicContent`       | --                          |             | `{ id: number; name: string; attachments: Attachments; description?: string; description_teaser?: string; practical_info?: string; category: number; geometry: Point; cities?: string[]; source?: number[]; pdf?: string; contact?: string; email?: string; website?: string; }` | `undefined` |
+| Property                 | Attribute                   | Description | Type                                                                                                                                                                                                                                                                                                | Default     |
+| ------------------------ | --------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `fontFamily`             | `font-family`               |             | `string`                                                                                                                                                                                                                                                                                            | `'Roboto'`  |
+| `isInsideHorizontalList` | `is-inside-horizontal-list` |             | `boolean`                                                                                                                                                                                                                                                                                           | `false`     |
+| `isLargeView`            | `is-large-view`             |             | `boolean`                                                                                                                                                                                                                                                                                           | `false`     |
+| `touristicContent`       | --                          |             | `{ id: number; name: string; attachments: Attachments; description?: string; description_teaser?: string; practical_info?: string; category: number; geometry: Point; cities?: string[]; source?: number[]; pdf?: string; contact?: string; email?: string; website?: string; offline?: boolean; }` | `undefined` |
 
 
 ## Events
@@ -26,7 +26,7 @@
 
 | Part                                        | Description |
 | ------------------------------------------- | ----------- |
-| `"default-touristic-content-img"`           |             |
+| `"default-touristic-event-img"`             |             |
 | `"more-details-button"`                     |             |
 | `"swiper-button-next"`                      |             |
 | `"swiper-button-prev"`                      |             |

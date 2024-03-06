@@ -51,6 +51,8 @@ export type Trek = {
   ratings_description?: string;
   networks: number[];
   web_links: Weblink[];
+  update_datetime: string;
+  offline?: boolean;
 };
 
 export type Attachments = Attachment[];
@@ -141,7 +143,7 @@ export type Accessibility = {
   pictogram: string;
 };
 
-export type accessibilitiesLevel = AccessibilityLevel[];
+export type AccessibilitiesLevel = AccessibilityLevel[];
 
 export type AccessibilityLevel = {
   id: number;
@@ -248,6 +250,7 @@ export type TouristicContent = {
   contact?: string;
   email?: string;
   website?: string;
+  offline?: boolean;
 };
 
 export type TouristicContents = TouristicContent[];
@@ -277,6 +280,7 @@ export type TouristicEvent = {
   website?: string;
   begin_date?: string;
   end_date?: string;
+  offline?: boolean;
 };
 
 export type TouristicEvents = TouristicEvent[];
@@ -356,3 +360,5 @@ export type WeblinkCategory = {
   label: string;
   pictogram: string;
 };
+
+export type ImageInStore = { url: string; data: string | ArrayBuffer; type: string };

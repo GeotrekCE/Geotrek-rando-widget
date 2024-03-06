@@ -34,11 +34,13 @@
     "@raruto/leaflet-elevation": "^1.9.0",
     "@stencil/core": "^3.4.1",
     "choices.js": "^10.2.0",
+    "idb": "^8.0.0",
     "leaflet": "^1.9.4",
     "leaflet-i18n": "^0.3.3",
     "leaflet-rotate": "^0.2.8",
     "leaflet.locatecontrol": "^0.79.0",
     "leaflet.markercluster": "^1.5.3",
+    "leaflet.offline": "^3.0.1",
     "swiper": "^9.4.1"
   },
   "devDependencies": {

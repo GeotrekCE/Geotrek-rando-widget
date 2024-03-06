@@ -12,6 +12,7 @@
 | `colorPrimaryApp`           | `color-primary-app`            |             | `string`  | `'#6b0030'` |
 | `colorSecondaryContainer`   | `color-secondary-container`    |             | `string`  | `'#e8def8'` |
 | `colorSurfaceContainerLow`  | `color-surface-container-low`  |             | `string`  | `'#f7f2fa'` |
+| `displayOnlyOfflineTreks`   | `display-only-offline-treks`   |             | `boolean` | `false`     |
 | `fontFamily`                | `font-family`                  |             | `string`  | `'Roboto'`  |
 | `isLargeView`               | `is-large-view`                |             | `boolean` | `false`     |
 

@@ -113,6 +113,10 @@ grw-trek-detail {
     height: 100%;
     object-fit: cover;
   }
+  .default-trek-img {
+    background-color: var(--color-primary-container);
+    object-fit: contain;
+  }
   .sub-container {
     padding: 24px 24px 0px 24px;
     .icons-labels-container {
@@ -659,6 +663,7 @@ grw-trek-detail {
 .trek-image-legend {
   position: absolute;
   top: 16px;
+  font-size: 12px;
   color: #ffffff;
   width: 100%;
   text-align: center;
@@ -688,5 +693,27 @@ grw-trek-detail {
     padding: 2px;
     max-height: 20px;
     max-width: 20px;
+  }
+}
+
+.offline-button {
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  border-radius: var(--border-radius, 8px);
+  padding: 8px 16px;
+  box-shadow: var(--elevation-1);
+  height: 32px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    box-shadow: var(--elevation-2);
+  }
+  .icon {
+    font-size: 16px;
   }
 }

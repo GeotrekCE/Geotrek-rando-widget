@@ -1,7 +1,8 @@
 import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitter, Listen } from '@stencil/core';
+import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
-import { TouristicContent } from 'types/types';
+import { TouristicContent, Trek } from 'types/types';
 
 @Component({
   tag: 'grw-touristic-content-card',
@@ -26,7 +27,21 @@ export class GrwTouristicContentCard {
   @Event() cardTouristicContentMouseOver: EventEmitter<number>;
   @Event() cardTouristicContentMouseLeave: EventEmitter;
 
+  @State() offline = false;
+
+  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
+  onTrekDownloadedSuccessConfirm() {
+    this.swiperTouristicContent.slideTo(0);
+    this.offline = true;
+  }
+
+  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
+  onTrekDeleteSuccessConfirm() {
+    this.offline = false;
+  }
+
   componentDidLoad() {
+    this.handleOffline();
     if (this.swiperTouristicContentRef) {
       this.swiperTouristicContent = new Swiper(this.swiperTouristicContentRef, {
         modules: [Navigation, Pagination, Keyboard],
@@ -40,13 +55,21 @@ export class GrwTouristicContentCard {
         loop: true,
       });
       this.swiperTouristicContentRef.onfullscreenchange = () => {
-        this.displayFullscreen = !this.displayFullscreen;
+        this.displayFullscreen = !this.displayFullscreen && !this.offline;
         if (this.displayFullscreen) {
           this.swiperTouristicContent.keyboard.enable();
         } else {
           this.swiperTouristicContent.keyboard.disable();
         }
       };
+    }
+  }
+
+  async handleOffline() {
+    if (state.currentTrek) {
+      const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
+      const touristicContentInStore: TouristicContent = await getDataInStore('touristicContents', this.touristicContent.id);
+      this.offline = trekInStore && trekInStore.offline && touristicContentInStore && touristicContentInStore.offline;
     }
   }
 
@@ -107,6 +130,12 @@ export class GrwTouristicContentCard {
                             class={`touristic-content-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                             src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                             loading="lazy"
+                            /* @ts-ignore */
+                            onerror={event => {
+                              event.target.onerror = null;
+                              event.target.className = 'default-touristic-event-img';
+                              event.target.src = defaultImageSrc;
+                            }}
                             onClick={() => this.handleFullscreen()}
                           />
                         </div>
@@ -114,7 +143,7 @@ export class GrwTouristicContentCard {
                   ) : (
                     <div part="swiper-slide" class="swiper-slide">
                       <img
-                        part="default-touristic-content-img"
+                        part="default-touristic-event-img"
                         class="default-touristic-content-img"
                         /* @ts-ignore */
                         crossorigin="anonymous"
@@ -124,9 +153,24 @@ export class GrwTouristicContentCard {
                     </div>
                   )}
                 </div>
-                <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElTouristicContentRef = el)}></div>
-                <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicContentRef = el)}></div>
-                <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicContentRef = el)}></div>
+                <div
+                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  part="swiper-pagination"
+                  class="swiper-pagination"
+                  ref={el => (this.paginationElTouristicContentRef = el)}
+                ></div>
+                <div
+                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  part="swiper-button-prev"
+                  class="swiper-button-prev"
+                  ref={el => (this.prevElTouristicContentRef = el)}
+                ></div>
+                <div
+                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  part="swiper-button-next"
+                  class="swiper-button-next"
+                  ref={el => (this.nextElTouristicContentRef = el)}
+                ></div>
               </div>
             ) : this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img

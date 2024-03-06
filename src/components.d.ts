@@ -33,9 +33,12 @@ export namespace Components {
         "colorTrekLine": string;
         "districts": string;
         "emergencyNumber": number;
+        "enableOffline": boolean;
         "fabBackgroundColor": string;
         "fabColor": string;
         "fontFamily": string;
+        "globalTilesMaxZoomOffline": number;
+        "globalTilesMinZoomOffline": number;
         "inBbox": string;
         "languages": string;
         "nameLayer": string;
@@ -47,6 +50,8 @@ export namespace Components {
         "themes": string;
         "touristicContents": boolean;
         "touristicEvents": boolean;
+        "trekTilesMaxZoomOffline": number;
+        "trekTilesMinZoomOffline": number;
         "treks": boolean;
         "urlLayer": string;
         "useGradient": boolean;
@@ -99,6 +104,7 @@ export namespace Components {
         "fontFamily": string;
         "isLargeView": boolean;
         "nameLayer": string;
+        "trekTilesMaxZoomOffline": number;
         "urlLayer": string;
         "useGradient": boolean;
         "zoom": number;
@@ -119,6 +125,10 @@ export namespace Components {
     }
     interface GrwSensitiveAreaDetail {
         "sensitiveArea": SensitiveArea;
+    }
+    interface GrwSwitch {
+        "action": Function;
+        "fontFamily": string;
     }
     interface GrwTouristicContentCard {
         "fontFamily": string;
@@ -142,7 +152,7 @@ export namespace Components {
         "api": string;
         "languages": string;
         "portals": string;
-        "touristicContentId": string;
+        "touristicContentId": number;
     }
     interface GrwTouristicContentsList {
         "colorOnSecondaryContainer": string;
@@ -226,17 +236,31 @@ export namespace Components {
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "defaultBackgroundLayerAttribution": any;
+        "defaultBackgroundLayerUrl": any;
         "emergencyNumber": number;
+        "enableOffline": boolean;
         "fontFamily": string;
+        "globalTilesMaxZoomOffline": number;
+        "globalTilesMinZoomOffline": number;
         "isLargeView": boolean;
         "trek": Trek;
+        "trekTilesMaxZoomOffline": number;
+        "trekTilesMinZoomOffline": number;
         "weather": boolean;
     }
     interface GrwTrekProvider {
         "api": string;
+        "cities": string;
+        "districts": string;
+        "inBbox": string;
         "languages": string;
         "portals": string;
-        "trekId": string;
+        "practices": string;
+        "routes": string;
+        "structures": string;
+        "themes": string;
+        "trekId": number;
     }
     interface GrwTreksList {
         "colorOnSecondaryContainer": string;
@@ -244,6 +268,7 @@ export namespace Components {
         "colorPrimaryApp": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "displayOnlyOfflineTreks": boolean;
         "fontFamily": string;
         "isLargeView": boolean;
     }
@@ -259,6 +284,10 @@ export namespace Components {
         "structures": string;
         "themes": string;
     }
+}
+export interface GrwAppCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwAppElement;
 }
 export interface GrwFiltersCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -367,6 +396,12 @@ declare global {
         prototype: HTMLGrwSensitiveAreaDetailElement;
         new (): HTMLGrwSensitiveAreaDetailElement;
     };
+    interface HTMLGrwSwitchElement extends Components.GrwSwitch, HTMLStencilElement {
+    }
+    var HTMLGrwSwitchElement: {
+        prototype: HTMLGrwSwitchElement;
+        new (): HTMLGrwSwitchElement;
+    };
     interface HTMLGrwTouristicContentCardElement extends Components.GrwTouristicContentCard, HTMLStencilElement {
     }
     var HTMLGrwTouristicContentCardElement: {
@@ -471,6 +506,7 @@ declare global {
         "grw-segmented-segment": HTMLGrwSegmentedSegmentElement;
         "grw-select-language": HTMLGrwSelectLanguageElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
+        "grw-switch": HTMLGrwSwitchElement;
         "grw-touristic-content-card": HTMLGrwTouristicContentCardElement;
         "grw-touristic-content-detail": HTMLGrwTouristicContentDetailElement;
         "grw-touristic-content-provider": HTMLGrwTouristicContentProviderElement;
@@ -514,12 +550,17 @@ declare namespace LocalJSX {
         "colorTrekLine"?: string;
         "districts"?: string;
         "emergencyNumber"?: number;
+        "enableOffline"?: boolean;
         "fabBackgroundColor"?: string;
         "fabColor"?: string;
         "fontFamily"?: string;
+        "globalTilesMaxZoomOffline"?: number;
+        "globalTilesMinZoomOffline"?: number;
         "inBbox"?: string;
         "languages"?: string;
         "nameLayer"?: string;
+        "onTrekDeletePress"?: (event: GrwAppCustomEvent<number>) => void;
+        "onTrekDownloadPress"?: (event: GrwAppCustomEvent<number>) => void;
         "portals"?: string;
         "practices"?: string;
         "rounded"?: boolean;
@@ -528,6 +569,8 @@ declare namespace LocalJSX {
         "themes"?: string;
         "touristicContents"?: boolean;
         "touristicEvents"?: boolean;
+        "trekTilesMaxZoomOffline"?: number;
+        "trekTilesMinZoomOffline"?: number;
         "treks"?: boolean;
         "urlLayer"?: string;
         "useGradient"?: boolean;
@@ -585,6 +628,7 @@ declare namespace LocalJSX {
         "onTouristicContentCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTouristicEventCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
+        "trekTilesMaxZoomOffline"?: number;
         "urlLayer"?: string;
         "useGradient"?: boolean;
         "zoom"?: number;
@@ -605,6 +649,10 @@ declare namespace LocalJSX {
     }
     interface GrwSensitiveAreaDetail {
         "sensitiveArea"?: SensitiveArea;
+    }
+    interface GrwSwitch {
+        "action"?: Function;
+        "fontFamily"?: string;
     }
     interface GrwTouristicContentCard {
         "fontFamily"?: string;
@@ -631,7 +679,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "languages"?: string;
         "portals"?: string;
-        "touristicContentId"?: string;
+        "touristicContentId"?: number;
     }
     interface GrwTouristicContentsList {
         "colorOnSecondaryContainer"?: string;
@@ -721,8 +769,13 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "defaultBackgroundLayerAttribution"?: any;
+        "defaultBackgroundLayerUrl"?: any;
         "emergencyNumber"?: number;
+        "enableOffline"?: boolean;
         "fontFamily"?: string;
+        "globalTilesMaxZoomOffline"?: number;
+        "globalTilesMinZoomOffline"?: number;
         "isLargeView"?: boolean;
         "onDescriptionIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onInformationPlacesIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
@@ -733,14 +786,27 @@ declare namespace LocalJSX {
         "onStepsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onTrekDeleteConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
+        "onTrekDeleteSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
+        "onTrekDownloadConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
+        "onTrekDownloadedSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "trek"?: Trek;
+        "trekTilesMaxZoomOffline"?: number;
+        "trekTilesMinZoomOffline"?: number;
         "weather"?: boolean;
     }
     interface GrwTrekProvider {
         "api"?: string;
+        "cities"?: string;
+        "districts"?: string;
+        "inBbox"?: string;
         "languages"?: string;
         "portals"?: string;
-        "trekId"?: string;
+        "practices"?: string;
+        "routes"?: string;
+        "structures"?: string;
+        "themes"?: string;
+        "trekId"?: number;
     }
     interface GrwTreksList {
         "colorOnSecondaryContainer"?: string;
@@ -748,6 +814,7 @@ declare namespace LocalJSX {
         "colorPrimaryApp"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "displayOnlyOfflineTreks"?: boolean;
         "fontFamily"?: string;
         "isLargeView"?: boolean;
     }
@@ -777,6 +844,7 @@ declare namespace LocalJSX {
         "grw-segmented-segment": GrwSegmentedSegment;
         "grw-select-language": GrwSelectLanguage;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
+        "grw-switch": GrwSwitch;
         "grw-touristic-content-card": GrwTouristicContentCard;
         "grw-touristic-content-detail": GrwTouristicContentDetail;
         "grw-touristic-content-provider": GrwTouristicContentProvider;
@@ -811,6 +879,7 @@ declare module "@stencil/core" {
             "grw-segmented-segment": LocalJSX.GrwSegmentedSegment & JSXBase.HTMLAttributes<HTMLGrwSegmentedSegmentElement>;
             "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
+            "grw-switch": LocalJSX.GrwSwitch & JSXBase.HTMLAttributes<HTMLGrwSwitchElement>;
             "grw-touristic-content-card": LocalJSX.GrwTouristicContentCard & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardElement>;
             "grw-touristic-content-detail": LocalJSX.GrwTouristicContentDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicContentDetailElement>;
             "grw-touristic-content-provider": LocalJSX.GrwTouristicContentProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentProviderElement>;

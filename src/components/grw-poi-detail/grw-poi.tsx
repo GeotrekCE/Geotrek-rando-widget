@@ -1,8 +1,9 @@
-import { Component, Host, h, Prop, State, Build, getAssetPath } from '@stencil/core';
+import { Component, Host, h, Prop, State, Build, getAssetPath, Listen } from '@stencil/core';
 import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
 import state from 'store/store';
-import { Poi } from 'types/types';
+import { Poi, Trek } from 'types/types';
 import { translate } from 'i18n/i18n';
+import { getDataInStore } from 'services/grw-db.service';
 
 @Component({
   tag: 'grw-poi',
@@ -22,7 +23,21 @@ export class GrwPoiDetail {
   @State() showPoiDescriptionButton = false;
   @State() displayFullscreen = false;
 
+  @State() offline = false;
+
+  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
+  onTrekDownloadedSuccessConfirm() {
+    this.swiperPoi.slideTo(0);
+    this.offline = true;
+  }
+
+  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
+  onTrekDeleteSuccessConfirm() {
+    this.offline = false;
+  }
+
   componentDidLoad() {
+    this.handleOffline();
     this.swiperPoi = new Swiper(this.swiperPoiRef, {
       modules: [Navigation, Pagination, Keyboard],
       navigation: {
@@ -35,7 +50,7 @@ export class GrwPoiDetail {
       loop: true,
     });
     this.swiperPoiRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen;
+      this.displayFullscreen = !this.displayFullscreen && !this.offline;
       if (this.displayFullscreen) {
         this.swiperPoi.keyboard.enable();
       } else {
@@ -52,6 +67,14 @@ export class GrwPoiDetail {
   handleFullscreen() {
     if (this.poi.attachments && this.poi.attachments[0] && this.poi.attachments[0].url) {
       this.swiperPoiRef.requestFullscreen();
+    }
+  }
+
+  async handleOffline() {
+    if (this.poi) {
+      const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
+      const poiInStore: Poi = await getDataInStore('pois', this.poi.id);
+      this.offline = trekInStore && trekInStore.offline && Boolean(poiInStore);
     }
   }
 
@@ -79,6 +102,12 @@ export class GrwPoiDetail {
                         class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                         src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                         loading="lazy"
+                        /* @ts-ignore */
+                        onerror={event => {
+                          event.target.onerror = null;
+                          event.target.className = 'default-poi-img';
+                          event.target.src = defaultImageSrc;
+                        }}
                         onClick={() => this.handleFullscreen()}
                       />
                     </div>
@@ -96,9 +125,9 @@ export class GrwPoiDetail {
                 </div>
               )}
             </div>
-            <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
-            <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
-            <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
+            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
+            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
+            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
           </div>
         </div>
         <div part="poi-sub-container" class="poi-sub-container">

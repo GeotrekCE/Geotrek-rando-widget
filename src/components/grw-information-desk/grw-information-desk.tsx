@@ -1,7 +1,8 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build } from '@stencil/core';
 import state from 'store/store';
 import { translate } from 'i18n/i18n';
-import { InformationDesk } from 'types/types';
+import { InformationDesk, Trek } from 'types/types';
+import { getDataInStore } from 'services/grw-db.service';
 
 @Component({
   tag: 'grw-information-desk',
@@ -15,7 +16,11 @@ export class GrwInformationDeskDetail {
   @State() showInformationDeskDescriptionButton = false;
   @Prop() informationDesk: InformationDesk;
 
+  @State() offline = false;
+  @State() showDefaultImage = false;
+
   componentDidLoad() {
+    this.handleOffline();
     if (this.descriptionRef) {
       this.showInformationDeskDescriptionButton = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
     }
@@ -29,7 +34,16 @@ export class GrwInformationDeskDetail {
     this.centerOnMap.emit({ latitude: this.informationDesk.latitude, longitude: this.informationDesk.longitude });
   }
 
+  async handleOffline() {
+    if (this.informationDesk) {
+      const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
+      const informationDeskInStore: InformationDesk = await getDataInStore('informationDesks', this.informationDesk.id);
+      this.offline = trekInStore && trekInStore.offline && Boolean(informationDeskInStore);
+    }
+  }
+
   render() {
+    const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     return (
       <Host>
         {this.informationDesk.photo_url && (
@@ -41,6 +55,11 @@ export class GrwInformationDeskDetail {
               crossorigin="anonymous"
               src={this.informationDesk.photo_url}
               loading="lazy"
+              /* @ts-ignore */
+              onerror={event => {
+                event.target.onerror = null;
+                event.target.src = defaultImageSrc;
+              }}
             />
           </div>
         )}
