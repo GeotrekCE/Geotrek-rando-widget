@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.7.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.7.0...v0.7.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* buttons color ([118531f](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/118531f00b388ccfe877ef81bb88f66936e8dd02))
+* header height ([41107ed](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/41107ed8ce2c04a786a9fe6f1eda7b0542f52fe3))
+* switch color ([59c6338](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/59c63389fdf34ac6befc2735378ed65c922101ab))
+
 ## [0.7.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.6.0...v0.7.0) (2024-03-06)
 
 
