@@ -1,4 +1,5 @@
 import { Component, Host, Prop, h } from '@stencil/core';
+import state from 'store/store';
 
 @Component({
   tag: 'grw-switch',
@@ -18,7 +19,7 @@ export class GrwSwitch {
         }}
       >
         <label class="md3 switch">
-          <input onChange={() => this.action()} type="checkbox" id="darkmode" name="darkmode" />
+          <input checked={state.offlineTreks} onChange={() => this.action()} type="checkbox" id="darkmode" name="darkmode" />
           <span class="slider">
             {/* @ts-ignore */}
             <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
