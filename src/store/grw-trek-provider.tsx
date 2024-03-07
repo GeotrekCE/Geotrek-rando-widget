@@ -2,7 +2,7 @@ import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
 import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
 import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
-import { getTrek } from 'services/treks.service';
+import { getPoisNearTrek, getSensitiveAreasNearTrek, getTrek } from 'services/treks.service';
 import state from 'store/store';
 import { Trek } from 'types/types';
 import { imagesRegExp, setFilesFromStore } from 'utils/utils';
@@ -107,10 +107,6 @@ export class GrwTrekProvider {
     if (!state.ratingsScale) {
       state.ratingsScale = await getAllDataInStore('ratingsScale');
     }
-    if (!state.currentSensitiveAreas) {
-      // filter trek items
-      state.currentSensitiveAreas = await getAllDataInStore('sensitiveAreas');
-    }
     if (!state.labels) {
       state.labels = await getAllDataInStore('labels');
     }
@@ -120,18 +116,8 @@ export class GrwTrekProvider {
     if (!state.accessibilitiesLevel) {
       state.accessibilitiesLevel = await getAllDataInStore('accessibilitiesLevel');
     }
-    if (!state.trekTouristicContents) {
-      // filter trek items
-      const touristicContents = await getAllDataInStore('touristicContents');
-      setFilesFromStore(touristicContents, imagesRegExp);
-      state.trekTouristicContents = touristicContents;
-    }
     if (!state.touristicContentCategories) {
       state.touristicContentCategories = await getAllDataInStore('touristicContentCategories');
-    }
-    if (!state.trekTouristicEvents) {
-      // filter trek items
-      state.trekTouristicEvents = await getAllDataInStore('touristicEvents');
     }
     if (!state.touristicEventTypes) {
       state.touristicEventTypes = await getAllDataInStore('touristicEventTypes');
@@ -139,22 +125,41 @@ export class GrwTrekProvider {
     if (!state.networks) {
       state.networks = await getAllDataInStore('networks');
     }
-    if (!state.currentPois) {
-      // filter trek items
-      const pois = await getAllDataInStore('pois');
-      setFilesFromStore(pois, imagesRegExp);
-      state.currentPois = pois;
-    }
 
     if (!state.poiTypes) {
       state.poiTypes = await getAllDataInStore('poiTypes');
     }
-    if (!state.currentInformationDesks) {
-      // filter trek items
-      state.currentInformationDesks = await getAllDataInStore('informationDesks');
-    }
 
-    // handle images
+    const informationDesksInStore = await getAllDataInStore('informationDesks');
+    const informationDesks = informationDesksInStore.filter(informationDeskInStore =>
+      trek.information_desks.some(information_desk => information_desk === informationDeskInStore.id),
+    );
+    setFilesFromStore(informationDesks, imagesRegExp);
+    state.currentInformationDesks = informationDesks;
+
+    const poisInStore = await getAllDataInStore('pois');
+    const pois = poisInStore.filter(poiInStore => trek.pois.some(trekPoi => trekPoi === poiInStore.id));
+    setFilesFromStore(pois, imagesRegExp);
+    state.currentPois = pois;
+
+    const touristicContentsInStore = await getAllDataInStore('touristicContents');
+    const touristicContents = touristicContentsInStore.filter(touristicContentInStore =>
+      trek.touristicContents.some(trekTouristicContent => trekTouristicContent === touristicContentInStore.id),
+    );
+    setFilesFromStore(touristicContents, imagesRegExp);
+    state.trekTouristicContents = touristicContents;
+
+    const touristicEventsInStore = await getAllDataInStore('touristicEvents');
+    const touristicEvents = touristicEventsInStore.filter(touristicEventInStore =>
+      trek.touristicEvents.some(trekTouristicEvent => trekTouristicEvent === touristicEventInStore.id),
+    );
+    setFilesFromStore(touristicEvents, imagesRegExp);
+    state.trekTouristicEvents = await getAllDataInStore('touristicEvents');
+
+    const sensitiveAreasInStore = await getAllDataInStore('sensitiveAreas');
+    const sensitiveAreas = sensitiveAreasInStore.filter(sensitiveAreaInStore => trek.sensitiveAreas.some(trekSensitiveArea => trekSensitiveArea === sensitiveAreaInStore.id));
+    state.currentSensitiveAreas = sensitiveAreas;
+
     setFilesFromStore(trek, imagesRegExp);
     state.currentTrek = trek;
   }
@@ -197,10 +202,7 @@ export class GrwTrekProvider {
     try {
       Promise.all([
         ...requests,
-        fetch(
-          `${this.api}sensitivearea/?language=${state.language}&published=true&trek=${this.trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices`,
-          this.init,
-        )
+        getSensitiveAreasNearTrek(state.api, state.language, this.trekId, this.init)
           .then(response => {
             if (response.ok) {
               return response;
@@ -214,7 +216,7 @@ export class GrwTrekProvider {
         fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram`, this.init),
         fetch(`${state.api}source/?language=${state.language}&fields=id,name,website,pictogram`, this.init),
         fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
-        fetch(`${state.api}poi/?language=${state.language}&trek=${this.trekId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, this.init),
+        getPoisNearTrek(state.api, state.language, this.trekId, this.init),
         fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
         fetch(
           `${state.api}informationdesk/?language=${state.language}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,

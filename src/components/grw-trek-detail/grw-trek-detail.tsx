@@ -7,7 +7,7 @@ import { formatDuration, formatLength, formatAscent, formatDescent, imagesRegExp
 import { getAllDataInStore, getDataInStore, writeOrUpdateDataInStore, writeOrUpdateFilesInStore, writeOrUpdateTilesInStore } from 'services/grw-db.service';
 import { tileLayerOffline } from 'leaflet.offline';
 import L from 'leaflet';
-import { getDistricts, getTrek, getTreksList } from 'services/treks.service';
+import { getDistricts, getPoisNearTrek, getSensitiveAreasNearTrek, getTrek, getTreksList } from 'services/treks.service';
 import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
 import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
 
@@ -647,10 +647,10 @@ export class GrwTrekDetail {
     await writeOrUpdateDataInStore('districts', state.districts);
 
     // download global tiles
-    // await this.downloadGlobalTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
+    await this.downloadGlobalTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
 
     // download trek tiles
-    // await this.downloadTrekTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
+    await this.downloadTrekTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
 
     // download global medias
     await writeOrUpdateFilesInStore(state.difficulties, imagesRegExp);
@@ -687,14 +687,21 @@ export class GrwTrekDetail {
     await writeOrUpdateDataInStore('sources', state.sources);
     await writeOrUpdateDataInStore('accessibilitiesLevel', state.accessibilitiesLevel);
     await writeOrUpdateDataInStore('touristicContentCategories', state.touristicContentCategories);
-    await writeOrUpdateDataInStore('touristicEvents', state.trekTouristicEvents);
     await writeOrUpdateDataInStore('touristicEventTypes', state.touristicEventTypes);
     await writeOrUpdateDataInStore('networks', state.networks);
     await writeOrUpdateDataInStore('pois', state.currentPois);
     await writeOrUpdateDataInStore('poiTypes', state.poiTypes);
     await writeOrUpdateDataInStore('informationDesks', state.currentInformationDesks);
-
-    await writeOrUpdateDataInStore('treks', [{ ...this.currentTrek, offline: true }]);
+    await writeOrUpdateDataInStore('treks', [
+      {
+        ...this.currentTrek,
+        offline: true,
+        pois: state.currentPois.map(poi => poi.id),
+        touristicContents: state.trekTouristicContents.map(trekTouristicContent => trekTouristicContent.id),
+        touristicEvents: state.trekTouristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
+        sensitiveAreas: state.currentSensitiveAreas ? state.currentSensitiveAreas.map(currentSensitiveArea => currentSensitiveArea.id) : [],
+      },
+    ]);
 
     await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true);
     await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp, true);
@@ -720,42 +727,51 @@ export class GrwTrekDetail {
       const stepRequests = [];
       const stepsTouristicContentsRequests = [];
       const stepsTouristicEventsRequests = [];
+      const stepsPoisRequests = [];
+      const stepsSensitiveAreasRequests = [];
 
       steps.forEach(stepId => {
         stepRequests.push(getTrek(state.api, state.language, stepId, init));
         stepsTouristicContentsRequests.push(getTouristicContentsNearTrek(state.api, state.language, stepId, init));
         stepsTouristicEventsRequests.push(getTouristicEventsNearTrek(state.api, state.language, stepId, init));
+        stepsPoisRequests.push(getPoisNearTrek(state.api, state.language, stepId, init));
+        stepsSensitiveAreasRequests.push(getSensitiveAreasNearTrek(state.api, state.language, stepId, init));
       });
 
       const trekSteps: Treks = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
 
       const stepsTouristicContentsResponses = await Promise.all([...stepsTouristicContentsRequests]).then(responses => Promise.all(responses.map(response => response.json())));
-
       const stepsTouristicEventsResponses = await Promise.all([...stepsTouristicEventsRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+      const stepsPoisResponses = await Promise.all([...stepsPoisRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+      const stepsSensitiveAreasResponses = await Promise.all([...stepsSensitiveAreasRequests]).then(responses => Promise.all(responses.map(response => response.json())));
 
       for (let index = 0; index < trekSteps.length; index++) {
         trekSteps[index].offline = true;
+        trekSteps[index].pois = stepsPoisResponses[index].results.map(poi => poi.id);
+        trekSteps[index].touristicContents = stepsTouristicContentsResponses[index].results.map(trekTouristicContent => trekTouristicContent.id);
+        trekSteps[index].touristicEvents = stepsTouristicEventsResponses[index].results.map(trekTouristicEvent => trekTouristicEvent.id);
+        trekSteps[index].sensitiveAreas = stepsSensitiveAreasResponses[index].results.map(currentSensitiveArea => currentSensitiveArea.id);
         await writeOrUpdateDataInStore('treks', [trekSteps[index]]);
         await writeOrUpdateFilesInStore(trekSteps[index], imagesRegExp, true);
       }
 
-      for (let index = 0; index < stepsTouristicContentsResponses.length; index++) {
-        const stepsTouristicContentsResponse = stepsTouristicContentsResponses[index];
-        for (let index = 0; index < stepsTouristicContentsResponse.results.length; index++) {
-          stepsTouristicContentsResponse.results[index].offline = true;
-          await writeOrUpdateDataInStore('touristicContents', [stepsTouristicContentsResponse.results[index]]);
-          await writeOrUpdateFilesInStore(stepsTouristicContentsResponse.results[index], imagesRegExp, true);
-        }
-      }
+      // for (let index = 0; index < stepsTouristicContentsResponses.length; index++) {
+      //   const stepsTouristicContentsResponse = stepsTouristicContentsResponses[index];
+      //   for (let index = 0; index < stepsTouristicContentsResponse.results.length; index++) {
+      //     stepsTouristicContentsResponse.results[index].offline = true;
+      //     await writeOrUpdateDataInStore('touristicContents', [stepsTouristicContentsResponse.results[index]]);
+      //     await writeOrUpdateFilesInStore(stepsTouristicContentsResponse.results[index], imagesRegExp, true);
+      //   }
+      // }
 
-      for (let index = 0; index < stepsTouristicEventsResponses.length; index++) {
-        const stepsTouristicEventsResponse = stepsTouristicEventsResponses[index];
-        for (let index = 0; index < stepsTouristicEventsResponse.results.length; index++) {
-          stepsTouristicEventsResponse[index].offline = true;
-          await writeOrUpdateDataInStore('touristicEvents', [stepsTouristicEventsResponse[index]]);
-          await writeOrUpdateFilesInStore(stepsTouristicEventsResponse[index], imagesRegExp, true);
-        }
-      }
+      // for (let index = 0; index < stepsTouristicEventsResponses.length; index++) {
+      //   const stepsTouristicEventsResponse = stepsTouristicEventsResponses[index];
+      //   for (let index = 0; index < stepsTouristicEventsResponse.results.length; index++) {
+      //     stepsTouristicEventsResponse[index].offline = true;
+      //     await writeOrUpdateDataInStore('touristicEvents', [stepsTouristicEventsResponse[index]]);
+      //     await writeOrUpdateFilesInStore(stepsTouristicEventsResponse[index], imagesRegExp, true);
+      //   }
+      // }
     }
 
     state.treks.find(trek => trek.id === this.currentTrek.id).offline = true;
@@ -853,7 +869,11 @@ export class GrwTrekDetail {
     delete trekInStore.networks;
     delete trekInStore.web_links;
     delete trekInStore.update_datetime;
-    delete trekInStore.offline;
+    delete trekInStore.information_desks;
+    delete trekInStore.pois;
+    delete trekInStore.touristicContents;
+    delete trekInStore.touristicEvents;
+    delete trekInStore.sensitiveAreas;
   }
 
   render() {

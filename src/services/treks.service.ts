@@ -40,3 +40,11 @@ export async function trekIsAvailableOffline(trekId) {
   const trek = await getDataInStore('treks', trekId);
   return trek && trek.offline;
 }
+
+export function getPoisNearTrek(api, language, trekId, init) {
+  return fetch(`${api}poi/?language=${language}&trek=${trekId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, init);
+}
+
+export function getSensitiveAreasNearTrek(api, language, trekId, init) {
+  return fetch(`${api}sensitivearea/?language=${language}&published=true&trek=${trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices`, init);
+}

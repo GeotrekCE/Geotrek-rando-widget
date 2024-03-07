@@ -45,7 +45,6 @@ export type Trek = {
   accessibility_exposure?: string;
   accessibility_advice?: string;
   cities?: string[];
-  information_desks?: number[];
   children?: number[];
   ratings?: number[];
   ratings_description?: string;
@@ -53,6 +52,11 @@ export type Trek = {
   web_links: Weblink[];
   update_datetime: string;
   offline?: boolean;
+  information_desks?: number[];
+  pois?: number[];
+  touristicContents?: number[];
+  touristicEvents?: number[];
+  sensitiveAreas?: number[];
 };
 
 export type Attachments = Attachment[];
