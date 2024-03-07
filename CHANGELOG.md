@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.8.0...v0.8.1) (2024-03-07)
+
+
+### Bug Fixes
+
+* filter offline trek contents ([af764ae](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/af764ae1207190c4ec96f7393f199c809ae28968))
+* handle checked switch value ([e17e7e5](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/e17e7e5f803c55d11d0e16d78fb3095bd5a999a3))
+
 ## [0.8.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.7.1...0.8.0) (2024-03-06)
 
 
