@@ -195,13 +195,13 @@ export class GrwTouristicContentDetail {
                   {state.currentTouristicContent.email && (
                     <div class="email-container">
                       <div>{translate[state.language].email} :&nbsp;</div>
-                      <div innerHTML={state.currentTouristicContent.email}></div>
+                      <a href={'mailto:' + state.currentTouristicContent.email} innerHTML={state.currentTouristicContent.email}></a>
                     </div>
                   )}
                   {state.currentTouristicContent.website && (
                     <div class="website-container">
                       <div>{translate[state.language].website} :&nbsp;</div>
-                      <div innerHTML={state.currentTouristicContent.website}></div>
+                      <a href={state.currentTouristicContent.website} innerHTML={state.currentTouristicContent.website}></a>
                     </div>
                   )}
                 </div>
