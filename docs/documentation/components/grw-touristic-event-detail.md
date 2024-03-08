@@ -20,5 +20,5 @@ La fiche détaillée comporte les informations suivantes :
 - Les informations de contacts (adresse, téléphone, email, site web)
 
 <center>
-  <a title="Fiche détail d'un évènement"><img src="/components/detail_touristic_event.png" alt="Fiche détail d'un évènement"></a>
+  <a title="Fiche détail d'un évènement"><img src="/components/detail_touristic_event.jpg" alt="Fiche détail d'un évènement"></a>
 </center>

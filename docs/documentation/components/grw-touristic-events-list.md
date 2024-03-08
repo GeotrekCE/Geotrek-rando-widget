@@ -1,7 +1,7 @@
 # Gestion de la liste des évènements touristiques
 
 <center>
-  <a title="Liste des évènements"><img src="/components/list_touristic_event.png" alt="Liste des évènements"></a>
+  <a title="Liste des évènements"><img src="/components/list_touristic_event.jpg" alt="Liste des évènements"></a>
 </center>
 
 ## Comportement et design

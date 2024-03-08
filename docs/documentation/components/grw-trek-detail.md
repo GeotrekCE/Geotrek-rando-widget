@@ -28,7 +28,7 @@ La section "Présentation" est constituée :
 - du chapeau (bref résumé) et de l'ambiance (attractions principales et intérêts) de la randonnée
 
 <center>
-  <a title="Fiche détail d'une randonnée"><img src="/components/detail_trek.png" alt="Fiche détail d'une randonnée"></a>
+  <a title="Fiche détail d'une randonnée"><img src="/components/detail_trek.jpg" alt="Fiche détail d'une randonnée"></a>
 </center>
 
 ### Section "Description"
@@ -36,7 +36,7 @@ La section "Présentation" est constituée :
 Cette section comporte une description technique pas à pas de l’itinéraire avec le plus souvent une liste numérotée (que l'on sur la carte) des différentes étapes clés.
 
 <center>
-  <a title="Fiche détail d'une randonnée - section Description"><img src="/components/detail_trek_description.png" alt="Fiche détail d'une randonnée - section Description"></a>
+  <a title="Fiche détail d'une randonnée - section Description"><img src="/components/detail_trek_description.jpg" alt="Fiche détail d'une randonnée - section Description"></a>
 </center>
 
 ### Section "Patrimoines"
@@ -64,7 +64,7 @@ En plus d'afficher les vignettes des éléments de patrimoines (POIs) situés à
 ```
 
 <center>
-  <a title="Fiche détail d'une randonnée - section Patrimoines"><img src="/components/detail_trek_poi.png" alt="Fiche détail d'une randonnée - section Patrimoines"></a>
+  <a title="Fiche détail d'une randonnée - section Patrimoines"><img src="/components/detail_trek_poi.jpg" alt="Fiche détail d'une randonnée - section Patrimoines"></a>
 </center>
 
 ### Sections "Recommandations" et "Lieux d'informations"
@@ -78,7 +78,7 @@ En cliquant sur le bouton "Centrer sur la carte", la carte est zoomée sur le li
 :::
 
 <center>
-  <a title="Fiche détail d'une randonnée - section Recommandations et Lieux d'informations"><img src="/components/detail_trek_informationdesk.png" alt="Fiche détail d'une randonnée - section Recommandations et Lieux d'informations"></a>
+  <a title="Fiche détail d'une randonnée - section Recommandations et Lieux d'informations"><img src="/components/detail_trek_informationdesk.jpg" alt="Fiche détail d'une randonnée - section Recommandations et Lieux d'informations"></a>
 </center>
 
 ### Sections "Accessibilité" et "A proximité"
@@ -94,5 +94,5 @@ Les pictogrammes des services s'affichent sur la carte lorsque l'utilisateur arr
 :::
 
 <center>
-  <a title="Fiche détail d'une randonnée - section Accessibilité et A proximité"><img src="/components/detail_trek_touristis_content.png" alt="Fiche détail d'une randonnée - section Accessibilité et A proximité"></a>
+  <a title="Fiche détail d'une randonnée - section Accessibilité et A proximité"><img src="/components/detail_trek_touristis_content.jpg" alt="Fiche détail d'une randonnée - section Accessibilité et A proximité"></a>
 </center>

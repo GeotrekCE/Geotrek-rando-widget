@@ -19,5 +19,5 @@ La fiche détaillée comporte les informations suivantes :
 - Les informations de contacts (adresse, téléphone, email, site web)
 
 <center>
-  <a title="Fiche détail d'un service"><img src="/components/detail_touristic_content.png" alt="Fiche détail d'un service"></a>
+  <a title="Fiche détail d'un service"><img src="/components/detail_touristic_content.jpg" alt="Fiche détail d'un service"></a>
 </center>
