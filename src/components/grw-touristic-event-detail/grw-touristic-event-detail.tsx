@@ -244,7 +244,7 @@ export class GrwTouristicEventDetail {
                       <div part="email-title" class="email-title">
                         {translate[state.language].email} :&nbsp;
                       </div>
-                      <div part="email" class="email" innerHTML={state.currentTouristicEvent.email}></div>
+                      <a href={"mailto:" + state.currentTouristicEvent.email} part="email" class="email" innerHTML={state.currentTouristicEvent.email}></a>
                     </div>
                   )}
                   {state.currentTouristicEvent.website && (
@@ -252,7 +252,7 @@ export class GrwTouristicEventDetail {
                       <div part="website-title" class="website-title">
                         {translate[state.language].website} :&nbsp;
                       </div>
-                      <div part="website" class="website" innerHTML={state.currentTouristicEvent.website}></div>
+                      <a href={state.currentTouristicEvent.website} part="website" class="website" innerHTML={state.currentTouristicEvent.website}></a>
                     </div>
                   )}
                 </div>
