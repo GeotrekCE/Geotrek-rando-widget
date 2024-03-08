@@ -1,7 +1,7 @@
 # Gestion de la carte
 
 <center>
-  <a title="Carte des randonnées"><img src="/components/map.png" alt="Carte des randonnées"></a>
+  <a title="Carte des randonnées"><img src="/components/map.jpg" alt="Carte des randonnées"></a>
 </center>
 
 Les fonctionnalités du composant cartographique de **Geotrek-rando-widget** sont très similaires à celles présentées sur **Geotrek-rando** :

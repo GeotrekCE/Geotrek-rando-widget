@@ -13,7 +13,7 @@ Voici les différentes étapes à suivre :
 3. Se rendre sur l'onglet Docs puis cliquer sur Show code pour afficher le code source qu'il vous faudra inclure dans votre site Web
 
 <center>
-  <a title="Storybook"><img src="/introduction/storybook.png" alt="Storybook"></a>
+  <a title="Storybook"><img src="/introduction/storybook.jpg" alt="Storybook"></a>
 </center>
  
  ::: tip

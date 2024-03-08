@@ -1,7 +1,7 @@
 # Gestion de la liste des randonnées
 
 <center>
-  <a title="Liste des randonnées"><img src="/components/list_trek.png" alt="Liste des randonnées"></a>
+  <a title="Liste des randonnées"><img src="/components/list_trek.jpg" alt="Liste des randonnées"></a>
 </center>
 
 ## Comportement et design

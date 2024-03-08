@@ -1,7 +1,7 @@
 # Gestion de la liste des contenus touristiques (services)
 
 <center>
-  <a title="Liste des services"><img src="/components/list_touristic_content.png" alt="Liste des services"></a>
+  <a title="Liste des services"><img src="/components/list_touristic_content.jpg" alt="Liste des services"></a>
 </center>
 
 ## Comportement et design

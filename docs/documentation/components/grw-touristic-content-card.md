@@ -7,6 +7,6 @@ Les informations affichées dans la vignette d'un contenu touristique sont :
 - Le nom du service
 
 <center>
-  <a title="Vignette d'un contenu touristique"><img src="/components/card_touristic_content.png" alt="Vignette d'un contenu touristique"></a>
+  <a title="Vignette d'un contenu touristique"><img src="/components/card_touristic_content.jpg" alt="Vignette d'un contenu touristique"></a>
 </center>
 

@@ -14,7 +14,7 @@ Les informations affichées dans la vignette d'une randonnée sont :
 - Le type de pratique (pédestre, vélo, cheval, etc.)
 
 <center>
-  <a title="Vignette d'une randonnée"><img src="/components/card_trek.png" alt="Vignette d'une randonnée"></a>
+  <a title="Vignette d'une randonnée"><img src="/components/card_trek.jpg" alt="Vignette d'une randonnée"></a>
 </center>
 
 # Vignettes présentes dans la fiche détaillée d'une randonnée
@@ -24,17 +24,17 @@ La fiche détaillée d'une randonnée peut être même contenir des vignettes d'
 ## Patrimoines à découvrir (POIs)
 
 <center>
-  <a title="Vignette des patrimoines à découvrir"><img src="/components/card_trek_poi.png" alt="Vignette des patrimoines à découvrir"></a>
+  <a title="Vignette des patrimoines à découvrir"><img src="/components/card_trek_poi.jpg" alt="Vignette des patrimoines à découvrir"></a>
 </center>
 
 ## Lieux de renseignement
 
 <center>
-  <a title="Vignette des lieux de renseignement"><img src="/components/card_trek_informationdesk.png" alt="Vignette des lieux de renseignement"></a>
+  <a title="Vignette des lieux de renseignement"><img src="/components/card_trek_informationdesk.jpg" alt="Vignette des lieux de renseignement"></a>
 </center>
 
 ## Services à proximité
 
 <center>
-  <a title="Vignette des services à proximité"><img src="/components/card_trek_touristic_content.png" alt="Vignette des services à proximité"></a>
+  <a title="Vignette des services à proximité"><img src="/components/card_trek_touristic_content.jpg" alt="Vignette des services à proximité"></a>
 </center>

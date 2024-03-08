@@ -8,6 +8,6 @@ Les informations affichées dans la vignette d'un évènement touristique sont :
 - Les dates de début et de fin
 
 <center>
-  <a title="Vignette d'un évènement touristique"><img src="/components/card_touristic_event.png" alt="Vignette d'un évènement touristique"></a>
+  <a title="Vignette d'un évènement touristique"><img src="/components/card_touristic_event.jpg" alt="Vignette d'un évènement touristique"></a>
 </center>
 
