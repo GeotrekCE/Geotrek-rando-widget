@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { InformationDesk, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "types/types";
-export { InformationDesk, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "types/types";
+import { InformationDesk, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
+export { InformationDesk, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
@@ -319,7 +319,19 @@ export interface GrwTrekDetailCustomEvent<T> extends CustomEvent<T> {
     target: HTMLGrwTrekDetailElement;
 }
 declare global {
+    interface HTMLGrwAppElementEventMap {
+        "trekDownloadPress": number;
+        "trekDeletePress": number;
+    }
     interface HTMLGrwAppElement extends Components.GrwApp, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwAppElementEventMap>(type: K, listener: (this: HTMLGrwAppElement, ev: GrwAppCustomEvent<HTMLGrwAppElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwAppElementEventMap>(type: K, listener: (this: HTMLGrwAppElement, ev: GrwAppCustomEvent<HTMLGrwAppElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwAppElement: {
         prototype: HTMLGrwAppElement;
@@ -343,13 +355,35 @@ declare global {
         prototype: HTMLGrwFilterElement;
         new (): HTMLGrwFilterElement;
     };
+    interface HTMLGrwFiltersElementEventMap {
+        "resetFilter": any;
+    }
     interface HTMLGrwFiltersElement extends Components.GrwFilters, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwFiltersElementEventMap>(type: K, listener: (this: HTMLGrwFiltersElement, ev: GrwFiltersCustomEvent<HTMLGrwFiltersElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwFiltersElementEventMap>(type: K, listener: (this: HTMLGrwFiltersElement, ev: GrwFiltersCustomEvent<HTMLGrwFiltersElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwFiltersElement: {
         prototype: HTMLGrwFiltersElement;
         new (): HTMLGrwFiltersElement;
     };
+    interface HTMLGrwInformationDeskElementEventMap {
+        "centerOnMap": { latitude: number; longitude: number };
+    }
     interface HTMLGrwInformationDeskElement extends Components.GrwInformationDesk, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwInformationDeskElementEventMap>(type: K, listener: (this: HTMLGrwInformationDeskElement, ev: GrwInformationDeskCustomEvent<HTMLGrwInformationDeskElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwInformationDeskElementEventMap>(type: K, listener: (this: HTMLGrwInformationDeskElement, ev: GrwInformationDeskCustomEvent<HTMLGrwInformationDeskElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwInformationDeskElement: {
         prototype: HTMLGrwInformationDeskElement;
@@ -361,7 +395,20 @@ declare global {
         prototype: HTMLGrwLoaderElement;
         new (): HTMLGrwLoaderElement;
     };
+    interface HTMLGrwMapElementEventMap {
+        "trekCardPress": number;
+        "touristicContentCardPress": number;
+        "touristicEventCardPress": number;
+    }
     interface HTMLGrwMapElement extends Components.GrwMap, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwMapElementEventMap>(type: K, listener: (this: HTMLGrwMapElement, ev: GrwMapCustomEvent<HTMLGrwMapElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwMapElementEventMap>(type: K, listener: (this: HTMLGrwMapElement, ev: GrwMapCustomEvent<HTMLGrwMapElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwMapElement: {
         prototype: HTMLGrwMapElement;
@@ -403,7 +450,20 @@ declare global {
         prototype: HTMLGrwSwitchElement;
         new (): HTMLGrwSwitchElement;
     };
+    interface HTMLGrwTouristicContentCardElementEventMap {
+        "touristicContentCardPress": number;
+        "cardTouristicContentMouseOver": number;
+        "cardTouristicContentMouseLeave": any;
+    }
     interface HTMLGrwTouristicContentCardElement extends Components.GrwTouristicContentCard, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwTouristicContentCardElementEventMap>(type: K, listener: (this: HTMLGrwTouristicContentCardElement, ev: GrwTouristicContentCardCustomEvent<HTMLGrwTouristicContentCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwTouristicContentCardElementEventMap>(type: K, listener: (this: HTMLGrwTouristicContentCardElement, ev: GrwTouristicContentCardCustomEvent<HTMLGrwTouristicContentCardElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwTouristicContentCardElement: {
         prototype: HTMLGrwTouristicContentCardElement;
@@ -433,7 +493,20 @@ declare global {
         prototype: HTMLGrwTouristicContentsProviderElement;
         new (): HTMLGrwTouristicContentsProviderElement;
     };
+    interface HTMLGrwTouristicEventCardElementEventMap {
+        "touristicEventCardPress": number;
+        "cardTouristicEventMouseOver": number;
+        "cardTouristicEventMouseLeave": any;
+    }
     interface HTMLGrwTouristicEventCardElement extends Components.GrwTouristicEventCard, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwTouristicEventCardElementEventMap>(type: K, listener: (this: HTMLGrwTouristicEventCardElement, ev: GrwTouristicEventCardCustomEvent<HTMLGrwTouristicEventCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwTouristicEventCardElementEventMap>(type: K, listener: (this: HTMLGrwTouristicEventCardElement, ev: GrwTouristicEventCardCustomEvent<HTMLGrwTouristicEventCardElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwTouristicEventCardElement: {
         prototype: HTMLGrwTouristicEventCardElement;
@@ -463,13 +536,49 @@ declare global {
         prototype: HTMLGrwTouristicEventsProviderElement;
         new (): HTMLGrwTouristicEventsProviderElement;
     };
+    interface HTMLGrwTrekCardElementEventMap {
+        "trekCardPress": number;
+        "cardTrekMouseOver": number;
+        "cardTrekMouseLeave": any;
+    }
     interface HTMLGrwTrekCardElement extends Components.GrwTrekCard, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwTrekCardElementEventMap>(type: K, listener: (this: HTMLGrwTrekCardElement, ev: GrwTrekCardCustomEvent<HTMLGrwTrekCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwTrekCardElementEventMap>(type: K, listener: (this: HTMLGrwTrekCardElement, ev: GrwTrekCardCustomEvent<HTMLGrwTrekCardElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwTrekCardElement: {
         prototype: HTMLGrwTrekCardElement;
         new (): HTMLGrwTrekCardElement;
     };
+    interface HTMLGrwTrekDetailElementEventMap {
+        "descriptionIsInViewport": boolean;
+        "parkingIsInViewport": boolean;
+        "sensitiveAreaIsInViewport": boolean;
+        "informationPlacesIsInViewport": boolean;
+        "poiIsInViewport": boolean;
+        "stepsIsInViewport": boolean;
+        "touristicContentsIsInViewport": boolean;
+        "touristicEventsIsInViewport": boolean;
+        "parentTrekPress": number;
+        "trekDownloadConfirm": number;
+        "trekDownloadedSuccessConfirm": number;
+        "trekDeleteConfirm": number;
+        "trekDeleteSuccessConfirm": number;
+    }
     interface HTMLGrwTrekDetailElement extends Components.GrwTrekDetail, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwTrekDetailElementEventMap>(type: K, listener: (this: HTMLGrwTrekDetailElement, ev: GrwTrekDetailCustomEvent<HTMLGrwTrekDetailElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwTrekDetailElementEventMap>(type: K, listener: (this: HTMLGrwTrekDetailElement, ev: GrwTrekDetailCustomEvent<HTMLGrwTrekDetailElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwTrekDetailElement: {
         prototype: HTMLGrwTrekDetailElement;
