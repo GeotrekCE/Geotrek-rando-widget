@@ -9,3 +9,12 @@
   --vp-c-brand-2: #b2c24f;
   --vp-button-brand-bg: #b9cb46;
 }
+
+#advanted-customization-result-container {
+  grw-treks-list::part(trek-card) {
+    background-color: #ff0000;
+  }
+  grw-trek-detail::part(trek-name) {
+    color: #ff0000;
+  }
+}
