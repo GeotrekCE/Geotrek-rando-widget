@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.9.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/geotrek-rando-widget-v0.8.1...geotrek-rando-widget-0.9.0) (2024-03-14)
+## [0.9.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/geotrek-rando-widget-0.8.1...geotrek-rando-widget-0.9.0) (2024-03-14)
 
 
 ### Features
