@@ -1038,8 +1038,6 @@ export class GrwTrekDetail {
                             <img
                               part="trek-img"
                               class="trek-img"
-                              /* @ts-ignore */
-                              crossorigin="anonymous"
                               src={attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
@@ -1058,7 +1056,7 @@ export class GrwTrekDetail {
                       part="trek-img"
                       class="trek-img default-trek-img"
                       /* @ts-ignore */
-                      crossorigin="anonymous"
+
                       src={defaultImageSrc}
                       loading="lazy"
                     />
@@ -1092,7 +1090,7 @@ export class GrwTrekDetail {
                         part="icon"
                         class="icon"
                         /* @ts-ignore */
-                        crossorigin="anonymous"
+
                         src={this.difficulty.pictogram}
                       />
                     )}
@@ -1116,7 +1114,7 @@ export class GrwTrekDetail {
                       part="icon"
                       class="icon"
                       /* @ts-ignore */
-                      crossorigin="anonymous"
+
                       src={this.route.pictogram}
                     />
                   )}
@@ -1161,7 +1159,7 @@ export class GrwTrekDetail {
                       part="icon"
                       class="icon"
                       /* @ts-ignore */
-                      crossorigin="anonymous"
+
                       src={this.practice.pictogram}
                     />
                   )}
@@ -1178,7 +1176,7 @@ export class GrwTrekDetail {
                           part="icon"
                           class="icon"
                           /* @ts-ignore */
-                          crossorigin="anonymous"
+
                           src={currentNetwork.pictogram}
                         />
                         <span part="label" class="label">
@@ -1430,7 +1428,7 @@ export class GrwTrekDetail {
                         {label.pictogram && (
                           <img
                             /* @ts-ignore */
-                            crossorigin="anonymous"
+
                             src={label.pictogram}
                           />
                         )}
@@ -1510,7 +1508,7 @@ export class GrwTrekDetail {
                         <div part="accessibility-content-container" class="accessibility-content-container">
                           <img
                             /* @ts-ignore */
-                            crossorigin="anonymous"
+
                             src={accessibility.pictogram}
                           ></img>
                           <div part="accessibility-name" innerHTML={accessibility.name}></div>
@@ -1662,7 +1660,7 @@ export class GrwTrekDetail {
                       {weblink.category && weblink.category.pictogram && (
                         <img
                           /* @ts-ignore */
-                          crossorigin="anonymous"
+
                           src={weblink.category.pictogram}
                         />
                       )}
@@ -1684,7 +1682,7 @@ export class GrwTrekDetail {
                       {source.pictogram && (
                         <img
                           /* @ts-ignore */
-                          crossorigin="anonymous"
+
                           src={source.pictogram}
                         />
                       )}

@@ -123,7 +123,7 @@ export class GrwTrekCard {
                   part="trek-img"
                   class="trek-img"
                   /* @ts-ignore */
-                  crossorigin="anonymous"
+
                   src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                   loading="lazy"
                   /* @ts-ignore */
@@ -138,7 +138,7 @@ export class GrwTrekCard {
                   part="trek-img"
                   class="trek-img default-trek-img"
                   /* @ts-ignore */
-                  crossorigin="anonymous"
+
                   src={defaultImageSrc}
                   loading="lazy"
                 />
@@ -170,7 +170,7 @@ export class GrwTrekCard {
                         part="trek-icon"
                         class="trek-icon"
                         /* @ts-ignore */
-                        crossorigin="anonymous"
+
                         src={this.difficulty.pictogram}
                       />
                     )}
@@ -214,7 +214,7 @@ export class GrwTrekCard {
                           part="trek-icon"
                           class="trek-icon"
                           /* @ts-ignore */
-                          crossorigin="anonymous"
+
                           src={this.route.pictogram}
                         />
                       )}
@@ -228,7 +228,7 @@ export class GrwTrekCard {
                           part="trek-icon"
                           class="trek-icon"
                           /* @ts-ignore */
-                          crossorigin="anonymous"
+
                           src={this.practice.pictogram}
                         />
                       )}

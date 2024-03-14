@@ -112,15 +112,7 @@ export class GrwTouristicEventDetail {
                             <div part="legend-container" class="legend-container">
                               {legend}
                             </div>
-                            <img
-                              part="image"
-                              class="image"
-                              /* @ts-ignore */
-                              crossorigin="anonymous"
-                              src={attachment.url}
-                              loading="lazy"
-                              onClick={() => this.handleFullscreen()}
-                            />
+                            <img part="image" class="image" src={attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
                           </div>
                         );
                       })
@@ -130,7 +122,7 @@ export class GrwTouristicEventDetail {
                         part="default-poi-img"
                         class="default-poi-img"
                         /* @ts-ignore */
-                        crossorigin="anonymous"
+
                         src={defaultImageSrc}
                         loading="lazy"
                       />
@@ -148,7 +140,7 @@ export class GrwTouristicEventDetail {
                   part="touristic-event-category-img"
                   class="touristic-event-category-img"
                   /* @ts-ignore */
-                  crossorigin="anonymous"
+
                   src={touristicEventType.pictogram}
                 />
               )}
@@ -244,7 +236,7 @@ export class GrwTouristicEventDetail {
                       <div part="email-title" class="email-title">
                         {translate[state.language].email} :&nbsp;
                       </div>
-                      <a href={"mailto:" + state.currentTouristicEvent.email} part="email" class="email" innerHTML={state.currentTouristicEvent.email}></a>
+                      <a href={'mailto:' + state.currentTouristicEvent.email} part="email" class="email" innerHTML={state.currentTouristicEvent.email}></a>
                     </div>
                   )}
                   {state.currentTouristicEvent.website && (

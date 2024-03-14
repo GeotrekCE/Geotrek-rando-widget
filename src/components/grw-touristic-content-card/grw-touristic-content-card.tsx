@@ -146,7 +146,7 @@ export class GrwTouristicContentCard {
                         part="default-touristic-event-img"
                         class="default-touristic-content-img"
                         /* @ts-ignore */
-                        crossorigin="anonymous"
+
                         src={defaultImageSrc}
                         loading="lazy"
                       />
@@ -177,18 +177,12 @@ export class GrwTouristicContentCard {
                 part="touristic-content-img"
                 class="touristic-content-img"
                 /* @ts-ignore */
-                crossorigin="anonymous"
+
                 src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 loading="lazy"
               />
             ) : (
-              <img
-              /* @ts-ignore */
-              crossorigin="anonymous"
-              class="image default-touristic-content-img"
-              src={defaultImageSrc}
-              loading="lazy"
-            />
+              <img class="image default-touristic-content-img" src={defaultImageSrc} loading="lazy" />
             )}
           </div>
           <div part="touristic-content-sub-container" class="touristic-content-sub-container">
@@ -198,7 +192,7 @@ export class GrwTouristicContentCard {
                   part="touristic-content-category-img"
                   class="touristic-content-category-img"
                   /* @ts-ignore */
-                  crossorigin="anonymous"
+
                   src={touristicContentCategory.pictogram}
                 />
               )}

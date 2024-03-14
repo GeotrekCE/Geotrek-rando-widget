@@ -112,15 +112,7 @@ export class GrwTouristicContentDetail {
                             <div part="legend-container" class="legend-container">
                               {legend}
                             </div>
-                            <img
-                              part="image"
-                              class="image"
-                              /* @ts-ignore */
-                              crossorigin="anonymous"
-                              src={attachment.url}
-                              loading="lazy"
-                              onClick={() => this.handleFullscreen()}
-                            />
+                            <img part="image" class="image" src={attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
                           </div>
                         );
                       })
@@ -130,7 +122,7 @@ export class GrwTouristicContentDetail {
                         part="default-poi-img"
                         class="default-poi-img"
                         /* @ts-ignore */
-                        crossorigin="anonymous"
+
                         src={defaultImageSrc}
                         loading="lazy"
                       />
@@ -147,7 +139,7 @@ export class GrwTouristicContentDetail {
                 part="touristic-content-category-img"
                 class="touristic-content-category-img"
                 /* @ts-ignore */
-                crossorigin="anonymous"
+
                 src={touristicContentCategory.pictogram}
               />
               <div part="touristic-content-category-name" class="touristic-content-category-name">
@@ -221,7 +213,7 @@ export class GrwTouristicContentDetail {
                       <div part="email-title" class="email-title">
                         {translate[state.language].email} :&nbsp;
                       </div>
-                      <a href={"mailto:" + state.currentTouristicContent.email} part="email" class="email" innerHTML={state.currentTouristicContent.email}></a>
+                      <a href={'mailto:' + state.currentTouristicContent.email} part="email" class="email" innerHTML={state.currentTouristicContent.email}></a>
                     </div>
                   )}
                   {state.currentTouristicContent.website && (

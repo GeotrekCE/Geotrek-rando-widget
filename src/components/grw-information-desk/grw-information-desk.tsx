@@ -51,8 +51,6 @@ export class GrwInformationDeskDetail {
             <img
               part="information-desk-img"
               class="information-desk-img"
-              /* @ts-ignore */
-              crossorigin="anonymous"
               src={this.informationDesk.photo_url}
               loading="lazy"
               /* @ts-ignore */

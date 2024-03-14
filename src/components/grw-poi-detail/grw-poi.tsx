@@ -87,7 +87,7 @@ export class GrwPoiDetail {
             part="poi-type"
             class="poi-type"
             /* @ts-ignore */
-            crossorigin="anonymous"
+
             src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`}
           />
           <div part="swiper-poi" class="swiper swiper-poi" ref={el => (this.swiperPoiRef = el)}>
@@ -118,7 +118,7 @@ export class GrwPoiDetail {
                     part="default-poi-img"
                     class="default-poi-img"
                     /* @ts-ignore */
-                    crossorigin="anonymous"
+
                     src={defaultImageSrc}
                     loading="lazy"
                   />
