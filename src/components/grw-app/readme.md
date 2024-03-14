@@ -39,6 +39,7 @@
 | `globalTilesMaxZoomOffline` | `global-tiles-max-zoom-offline` |             | `number`  | `11`        |
 | `globalTilesMinZoomOffline` | `global-tiles-min-zoom-offline` |             | `number`  | `0`         |
 | `inBbox`                    | `in-bbox`                       |             | `string`  | `undefined` |
+| `labels`                    | `labels`                        |             | `string`  | `undefined` |
 | `languages`                 | `languages`                     |             | `string`  | `'fr'`      |
 | `nameLayer`                 | `name-layer`                    |             | `string`  | `undefined` |
 | `portals`                   | `portals`                       |             | `string`  | `undefined` |

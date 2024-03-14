@@ -20,6 +20,7 @@ export class GrwTreksProvider {
   @Prop() portals: string;
   @Prop() routes: string;
   @Prop() practices: string;
+  @Prop() labels: string;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -40,6 +41,7 @@ export class GrwTreksProvider {
     state.themesFromProviders = this.themes;
     state.routesFromProviders = this.routes;
     state.practicesFromProviders = this.practices;
+    state.labelsFromProviders = this.labels;
 
     this.handleTreks();
   }
@@ -117,7 +119,20 @@ export class GrwTreksProvider {
         this.init,
       ),
       getDistricts(state.api, state.language, this.init),
-      getTreksList(this.api, state.language, this.inBbox, this.cities, this.districts, this.structures, this.themes, this.portals, this.routes, this.practices, this.init),
+      getTreksList(
+        this.api,
+        state.language,
+        this.inBbox,
+        this.cities,
+        this.districts,
+        this.structures,
+        this.themes,
+        this.portals,
+        this.routes,
+        this.practices,
+        this.labels,
+        this.init,
+      ),
     ])
       .then(responses => {
         responses.forEach(response => {

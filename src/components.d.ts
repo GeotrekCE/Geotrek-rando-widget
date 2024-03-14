@@ -41,6 +41,7 @@ export namespace Components {
         "globalTilesMaxZoomOffline": number;
         "globalTilesMinZoomOffline": number;
         "inBbox": string;
+        "labels": string;
         "languages": string;
         "nameLayer": string;
         "portals": string;
@@ -255,6 +256,7 @@ export namespace Components {
         "cities": string;
         "districts": string;
         "inBbox": string;
+        "labels": string;
         "languages": string;
         "portals": string;
         "practices": string;
@@ -278,6 +280,7 @@ export namespace Components {
         "cities": string;
         "districts": string;
         "inBbox": string;
+        "labels": string;
         "languages": string;
         "portals": string;
         "practices": string;
@@ -668,6 +671,7 @@ declare namespace LocalJSX {
         "globalTilesMaxZoomOffline"?: number;
         "globalTilesMinZoomOffline"?: number;
         "inBbox"?: string;
+        "labels"?: string;
         "languages"?: string;
         "nameLayer"?: string;
         "onTrekDeletePress"?: (event: GrwAppCustomEvent<number>) => void;
@@ -911,6 +915,7 @@ declare namespace LocalJSX {
         "cities"?: string;
         "districts"?: string;
         "inBbox"?: string;
+        "labels"?: string;
         "languages"?: string;
         "portals"?: string;
         "practices"?: string;
@@ -934,6 +939,7 @@ declare namespace LocalJSX {
         "cities"?: string;
         "districts"?: string;
         "inBbox"?: string;
+        "labels"?: string;
         "languages"?: string;
         "portals"?: string;
         "practices"?: string;

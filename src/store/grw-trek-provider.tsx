@@ -24,6 +24,7 @@ export class GrwTrekProvider {
   @Prop() themes: string;
   @Prop() routes: string;
   @Prop() practices: string;
+  @Prop() labels: string;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -44,6 +45,7 @@ export class GrwTrekProvider {
     state.themesFromProviders = this.themes;
     state.routesFromProviders = this.routes;
     state.practicesFromProviders = this.practices;
+    state.labelsFromProviders = this.labels;
 
     this.handleTrek();
   }

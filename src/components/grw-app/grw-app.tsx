@@ -34,6 +34,7 @@ export class GrwApp {
   @Prop() portals: string;
   @Prop() routes: string;
   @Prop() practices: string;
+  @Prop() labels: string;
   @Prop() center: string;
   @Prop() zoom: number;
   @Prop() nameLayer: string;
@@ -446,6 +447,7 @@ export class GrwApp {
             themes={this.themes}
             routes={this.routes}
             practices={this.practices}
+            labels={this.labels}
           ></grw-treks-provider>
         )}
         {this.showTrek && this.currentTrekId && !state.currentTrek && (
@@ -461,6 +463,7 @@ export class GrwApp {
             themes={this.themes}
             routes={this.routes}
             practices={this.practices}
+            labels={this.labels}
           ></grw-trek-provider>
         )}
         {this.showTouristicContent && this.currentTouristicContentId && (

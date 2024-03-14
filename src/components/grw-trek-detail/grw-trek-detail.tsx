@@ -631,6 +631,7 @@ export class GrwTrekDetail {
         state.portalsFromProviders,
         state.routesFromProviders,
         state.practicesFromProviders,
+        state.labelsFromProviders,
         init,
       );
       state.treks = (await treksList.json()).results;

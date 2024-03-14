@@ -8,7 +8,7 @@ export function getTrekGeometry(id: number) {
   );
 }
 
-export function getTreksList(api, language, inBbox, cities, districts, structures, themes, portals, routes, practices, init) {
+export function getTreksList(api, language, inBbox, cities, districts, structures, themes, portals, routes, practices, labels, init) {
   let treksRequest = `${api}trek/?language=${language}&published=true`;
 
   inBbox && (treksRequest += `&in_bbox=${inBbox}`);
@@ -19,6 +19,7 @@ export function getTreksList(api, language, inBbox, cities, districts, structure
   portals && (treksRequest += `&portals=${portals}`);
   routes && (treksRequest += `&routes=${routes}`);
   practices && (treksRequest += `&practices=${practices}`);
+  labels && (treksRequest += `&labels=${labels}`);
 
   treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts&page_size=999`;
 

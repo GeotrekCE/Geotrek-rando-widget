@@ -93,6 +93,7 @@ const { state, onChange, reset } = createStore<{
   themesFromProviders: string;
   routesFromProviders: string;
   practicesFromProviders: string;
+  labelsFromProviders: string;
   offlineTreks: boolean;
 }>({
   mode: null,
@@ -156,6 +157,7 @@ const { state, onChange, reset } = createStore<{
   themesFromProviders: null,
   routesFromProviders: null,
   practicesFromProviders: null,
+  labelsFromProviders: null,
   offlineTreks: false,
 });
 
