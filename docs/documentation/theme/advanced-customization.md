@@ -13,7 +13,16 @@ head:
       rel: stylesheet
 ---
 
-# Personnalisations avancées
+# Personnalisation avancée
+
+::: info
+Nous allons dans cette section voir comment surcharger finement le style de chaque composant existant de le widget Geotrek.
+
+Dans la plupart des cas, la configuration standard du widget répond aux principaux besoins via la possibilité de modifier les couleurs, les arrondis, les fonds de plan, etc. Pour cela il faut s eréférer aux autres sections dédiées de la documentation.
+
+La personnalisation décrite sur cette page est un concept avancé, par conséquent il faut un minimum de compétence en développement et en CSS pour bien en mesurer les enjeux.
+:::
+
 
 ## Personnalisation et shadow dom
 
@@ -25,7 +34,7 @@ Il existe quand même une solution afin de pouvoir personnaliser le rendu visuel
 
 Part fonctionne relativement comme les classes mais a quelques particularités.
 
-Une part est indépendante. On ne peut donc pas personnalisé un autre élément à partir de celle-ci comme on pourrait le faire en css, par exemple :
+Une part est indépendante. On ne peut donc pas personnaliser un autre élément à partir de celle-ci comme on pourrait le faire en css, par exemple :
 
 ```css
 .container .element {
@@ -34,7 +43,7 @@ Une part est indépendante. On ne peut donc pas personnalisé un autre élément
 ```
 
 De plus, on doit sélectionner la part depuis le premier élément de son arbre.
-Donc si on veut personnalider grw-card et qu'on l'utilise directement, on peut le faire de cette façon :
+Donc si on veut personnaliser grw-card et qu'on l'utilise directement, on peut le faire de cette façon :
 
 ```css
 grw-trek-card::part(trek-name) {
@@ -56,8 +65,7 @@ grw-app est un composant particulier et n'utilise pas le shadow-dom donc il ne s
 
 ## Comment trouver la part cible
 
-Cette personnalisation est un concept avancée, on part du principe que vous avez un minimum de compétence en développement.
-Le plus simple est d'utiliser l'inspecteur de code afin de trouver le nom de la part que l'on veut utiliser.
+Le plus simple est d'utiliser l'inspecteur de code de votre navigateur et de parcourir les composants HTML qui composent votre widget afin de trouver le nom de la part que l'on veut utiliser.
 
 ## Exemple de personnalisation en utilisant grw-app
 
@@ -75,7 +83,7 @@ grw-trek-detail::part(trek-name) {
 
 Ce qui donne ce résultat :
 
-<div id="advanted-customization-result-container">
+<div id="advanced-customization-result-container">
 <grw-app
       api="https://geotrek-admin.portcros-parcnational.fr/api/v2/"
       name-layer="IGN"

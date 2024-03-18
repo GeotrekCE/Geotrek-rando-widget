@@ -10,7 +10,7 @@
   --vp-button-brand-bg: #b9cb46;
 }
 
-#advanted-customization-result-container {
+#advanced-customization-result-container {
   grw-treks-list::part(trek-card) {
     background-color: #ff0000;
   }
