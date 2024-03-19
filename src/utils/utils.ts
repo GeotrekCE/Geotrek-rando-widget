@@ -1,4 +1,5 @@
-import { getDataInStore } from 'services/grw-db.service';
+import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 import state from 'store/store';
 import { TouristicContents, TouristicContentsFilters, TouristicEvents, TouristicEventsFilters, TrekFilters, Treks } from 'types/types';
 
@@ -279,21 +280,6 @@ export const elevations = [
   { id: 2, name: '500m - 1km', minValue: 500, maxValue: 1000, selected: false },
 ];
 
-export function blobToArrayBuffer(blob): Promise<string | ArrayBuffer> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.addEventListener('loadend', () => {
-      resolve(reader.result);
-    });
-    reader.addEventListener('error', reject);
-    reader.readAsArrayBuffer(blob);
-  });
-}
-
-export function arrayBufferToBlob(buffer, type) {
-  return new Blob([buffer], { type: type });
-}
-
 export function getFilesToStore(value: Object, regExp: RegExp, onlyFirstArrayFile = false): string[] {
   const filesToStore: any[] = [];
   for (const keyValue of Object.keys(value)) {
@@ -315,11 +301,21 @@ export async function setFilesFromStore(value: Object, regExp: RegExp) {
   for (const keyValue of Object.keys(value)) {
     if (value[keyValue]) {
       if (typeof value[keyValue] === 'object') {
-        setFilesFromStore(value[keyValue], regExp);
+        await setFilesFromStore(value[keyValue], regExp);
       } else if (typeof value[keyValue] === 'string' && regExp.test(value[keyValue].toLowerCase())) {
-        const image = await getDataInStore('images', value[keyValue]);
-        if (image) {
-          value[keyValue] = window.URL.createObjectURL(arrayBufferToBlob(image.data, image.type));
+        if (!Capacitor.isNativePlatform()) {
+          const image = await getFileInStore(value[keyValue]);
+          if (image) {
+            value[keyValue] = window.URL.createObjectURL(image.data as Blob);
+          }
+        } else {
+          const image = await Filesystem.getUri({
+            path: value[keyValue],
+            directory: Directory.Data,
+          });
+          if (image) {
+            value[keyValue] = Capacitor.convertFileSrc(image.uri);
+          }
         }
       }
     }
@@ -327,3 +323,19 @@ export async function setFilesFromStore(value: Object, regExp: RegExp) {
 }
 
 export const imagesRegExp = new RegExp('^(http(s)?://|www.).*(.png|.jpg|.jpeg|.svg)$');
+
+export async function getFileInStore(value) {
+  const image = await Filesystem.readFile({
+    path: value,
+    directory: Directory.Data,
+  }).catch(() => null);
+  return image;
+}
+
+export async function checkFileInStore(value) {
+  const image = await Filesystem.stat({
+    path: value,
+    directory: Directory.Data,
+  }).catch(() => null);
+  return image;
+}

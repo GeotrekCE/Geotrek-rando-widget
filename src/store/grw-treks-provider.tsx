@@ -160,6 +160,7 @@ export class GrwTreksProvider {
           const offline = await trekIsAvailableOffline(treks.results[index].id);
           treksWithOfflineValue.push({ ...treks.results[index], offline });
         }
+        this.sortTreks(treksWithOfflineValue);
         state.treks = treksWithOfflineValue;
         state.currentTreks = treksWithOfflineValue;
       })

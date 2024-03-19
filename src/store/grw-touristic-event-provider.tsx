@@ -12,7 +12,7 @@ import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 export class GrwTouristicEventProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
-  @Prop() touristicEventId: string;
+  @Prop() touristicEventId: number;
   @Prop() portals: string;
 
   controller = new AbortController();

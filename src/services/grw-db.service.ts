@@ -48,7 +48,9 @@ import {
   Districts,
   ImageInStore,
 } from 'types/types';
-import { blobToArrayBuffer, getFilesToStore } from 'utils/utils';
+import { checkFileInStore, getFilesToStore } from 'utils/utils';
+import { Directory } from '@capacitor/filesystem';
+import write_blob from 'capacitor-blob-writer';
 
 type ObjectStores = ObjectStore[];
 
@@ -76,8 +78,7 @@ type ObjectStoresName =
   | 'networks'
   | 'pois'
   | 'poiTypes'
-  | 'informationDesks'
-  | 'images';
+  | 'informationDesks';
 
 type KeyPath = 'id' | 'url';
 
@@ -125,8 +126,6 @@ type ObjectStoresType<T> = T extends 'districts'
   ? PoiType
   : T extends 'informationDesks'
   ? InformationDesk
-  : T extends 'images'
-  ? ImageInStore
   : never;
 
 type ObjectStoresData =
@@ -243,10 +242,6 @@ interface GrwDB extends DBSchema {
     value: InformationDesk;
     key: number;
   };
-  images: {
-    value: ImageInStore;
-    key: string;
-  };
 }
 
 const grwDbVersion = 1;
@@ -277,7 +272,6 @@ export async function getGrwDB() {
         { name: 'pois', keyPath: 'id' },
         { name: 'poiTypes', keyPath: 'id' },
         { name: 'informationDesks', keyPath: 'id' },
-        { name: 'images', keyPath: 'url' },
       ];
 
       objectStoresNames.forEach(objectStoresName => {
@@ -290,7 +284,7 @@ export async function getGrwDB() {
   return grwDb;
 }
 
-export async function getDataInStore<T extends ObjectStoresName>(name: T, dataId: number | string): Promise<ObjectStoresType<T>> {
+export async function getDataInStore<T extends ObjectStoresName>(name: T, dataId: number): Promise<ObjectStoresType<T>> {
   const grwDb = await getGrwDB();
   const data = await grwDb.get(name, dataId);
   grwDb.close();
@@ -321,11 +315,14 @@ export async function deleteDataInStore(name: ObjectStoresName, dataId: number[]
 }
 
 export async function writeOrUpdateFilesInStore(value, imagesRegExp, onlyFirstArrayFile = false) {
-  const filesToStore = await getFilesToStore(value, imagesRegExp, onlyFirstArrayFile);
+  const filesToStore = getFilesToStore(value, imagesRegExp, onlyFirstArrayFile);
 
   const filesToStoreNotInStore = [];
   for (let i = 0; i < filesToStore.length; i++) {
-    if (!(await getDataInStore('images', filesToStore[i]))) filesToStoreNotInStore.push(filesToStore[i]);
+    const image = await checkFileInStore(filesToStore[i]);
+    if (!image) {
+      filesToStoreNotInStore.push(filesToStore[i]);
+    }
   }
 
   const filesToStorePromises = filesToStoreNotInStore.map(fileToStore => fetch(fileToStore));
@@ -338,8 +335,13 @@ export async function writeOrUpdateFilesInStore(value, imagesRegExp, onlyFirstAr
     );
 
     for (let index = 0; index < filesToStore.length; index++) {
-      const data = await blobToArrayBuffer(filesToStore[index]);
-      await writeOrUpdateDataInStore('images', [{ url: filesToStoreToBlobPromises[index].url, data, type: filesToStore[index].type }]);
+      await write_blob({
+        path: filesToStoreToBlobPromises[index].url,
+        directory: Directory.Data,
+        blob: filesToStore[index],
+        fast_mode: true,
+        recursive: true,
+      });
     }
   }
 }

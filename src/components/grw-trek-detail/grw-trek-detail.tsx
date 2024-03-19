@@ -164,7 +164,6 @@ export class GrwTrekDetail {
   @State() options: Options;
   @State() offline = false;
 
-  @Prop() trek: Trek;
   @Prop() emergencyNumber: number;
 
   @Prop() fontFamily = 'Roboto';
@@ -449,42 +448,43 @@ export class GrwTrekDetail {
   }
 
   async connectedCallback() {
-    this.currentTrek = this.trek ? this.trek : state.currentTrek;
-    if (this.currentTrek) {
-      this.offline = this.currentTrek.offline;
+    if (state.currentTrek) {
+      this.offline = state.currentTrek.offline;
       this.defaultOptions = this.handleOptions();
       this.options = { ...this.defaultOptions, presentation: { ...this.defaultOptions.presentation, indicator: true } };
-      this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
-      this.route = state.routes.find(route => route.id === this.currentTrek.route);
-      this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
-      this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
-      this.labels = state.labels.filter(label => this.currentTrek.labels.includes(label.id));
-      this.sources = state.sources.filter(source => this.currentTrek.source.includes(source.id));
-      this.accessibilities = state.accessibilities.filter(accessibility => this.currentTrek.accessibilities.includes(accessibility.id));
+      this.difficulty = state.difficulties.find(difficulty => difficulty.id === state.currentTrek.difficulty);
+      this.route = state.routes.find(route => route.id === state.currentTrek.route);
+      this.practice = state.practices.find(practice => practice.id === state.currentTrek.practice);
+      this.themes = state.themes.filter(theme => state.currentTrek.themes.includes(theme.id));
+      this.labels = state.labels.filter(label => state.currentTrek.labels.includes(label.id));
+      this.sources = state.sources.filter(source => state.currentTrek.source.includes(source.id));
+      this.accessibilities = state.accessibilities.filter(accessibility => state.currentTrek.accessibilities.includes(accessibility.id));
       if (state.accessibilitiesLevel) {
-        this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
+        this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => state.currentTrek.accessibility_level === accessibilityLevel.id);
       }
-      this.cities = this.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
-      this.hasStep = this.currentTrek.children.length > 0;
+      this.cities = state.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+      this.hasStep = state.currentTrek.children.length > 0;
+      this.currentTrek = state.currentTrek;
     }
+
     onChange('currentTrek', async () => {
-      this.currentTrek = this.trek ? this.trek : state.currentTrek;
-      if (this.currentTrek) {
-        this.offline = this.currentTrek.offline;
+      if (state.currentTrek) {
+        this.offline = state.currentTrek.offline;
         this.defaultOptions = this.handleOptions();
         this.options = { ...this.defaultOptions, presentation: { ...this.defaultOptions.presentation, indicator: true } };
-        this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
-        this.route = state.routes.find(route => route.id === this.currentTrek.route);
-        this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
-        this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
-        this.labels = state.labels.filter(label => this.currentTrek.labels.includes(label.id));
-        this.sources = state.sources.filter(source => this.currentTrek.source.includes(source.id));
-        this.accessibilities = state.accessibilities.filter(accessibility => this.currentTrek.accessibilities.includes(accessibility.id));
+        this.difficulty = state.difficulties.find(difficulty => difficulty.id === state.currentTrek.difficulty);
+        this.route = state.routes.find(route => route.id === state.currentTrek.route);
+        this.practice = state.practices.find(practice => practice.id === state.currentTrek.practice);
+        this.themes = state.themes.filter(theme => state.currentTrek.themes.includes(theme.id));
+        this.labels = state.labels.filter(label => state.currentTrek.labels.includes(label.id));
+        this.sources = state.sources.filter(source => state.currentTrek.source.includes(source.id));
+        this.accessibilities = state.accessibilities.filter(accessibility => state.currentTrek.accessibilities.includes(accessibility.id));
         if (state.accessibilitiesLevel) {
-          this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => this.currentTrek.accessibility_level === accessibilityLevel.id);
+          this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => state.currentTrek.accessibility_level === accessibilityLevel.id);
         }
-        this.cities = this.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
-        this.hasStep = this.currentTrek.children.length > 0;
+        this.cities = state.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+        this.hasStep = state.currentTrek.children.length > 0;
+        this.currentTrek = state.currentTrek;
       }
     });
   }
@@ -509,29 +509,29 @@ export class GrwTrekDetail {
       ...options,
       presentation: { ...presentation },
       steps: { ...steps, visible: Boolean(state.parentTrek) },
-      description: { ...description, visible: Boolean(this.currentTrek.description) },
+      description: { ...description, visible: Boolean(state.currentTrek.description) },
       pois: { ...pois, visible: Boolean(state.currentPois && state.currentPois.length > 0) },
-      recommendations: { ...recommendations, visible: Boolean(this.currentTrek.advice || (this.labels && this.labels.length > 0)) },
+      recommendations: { ...recommendations, visible: Boolean(state.currentTrek.advice || (this.labels && this.labels.length > 0)) },
       sensitiveArea: { ...sensitiveArea, visible: Boolean(state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0) },
       informationPlaces: {
         ...informationPlaces,
         visible: Boolean(
           state.currentInformationDesks &&
-            state.currentInformationDesks.filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0,
+            state.currentInformationDesks.filter(currentInformationDesks => state.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0,
         ),
       },
       accessibility: {
         ...accessibility,
         visible: Boolean(
-          this.currentTrek.disabled_infrastructure ||
+          state.currentTrek.disabled_infrastructure ||
             (this.accessibilities && this.accessibilities.length > 0) ||
-            this.currentTrek.accessibility_level ||
-            this.currentTrek.accessibility_slope ||
-            this.currentTrek.accessibility_width ||
-            this.currentTrek.accessibility_signage ||
-            this.currentTrek.accessibility_covering ||
-            this.currentTrek.accessibility_exposure ||
-            this.currentTrek.accessibility_advice ||
+            state.currentTrek.accessibility_level ||
+            state.currentTrek.accessibility_slope ||
+            state.currentTrek.accessibility_width ||
+            state.currentTrek.accessibility_signage ||
+            state.currentTrek.accessibility_covering ||
+            state.currentTrek.accessibility_exposure ||
+            state.currentTrek.accessibility_advice ||
             this.emergencyNumber,
         ),
       },
@@ -755,24 +755,6 @@ export class GrwTrekDetail {
         await writeOrUpdateDataInStore('treks', [trekSteps[index]]);
         await writeOrUpdateFilesInStore(trekSteps[index], imagesRegExp, true);
       }
-
-      // for (let index = 0; index < stepsTouristicContentsResponses.length; index++) {
-      //   const stepsTouristicContentsResponse = stepsTouristicContentsResponses[index];
-      //   for (let index = 0; index < stepsTouristicContentsResponse.results.length; index++) {
-      //     stepsTouristicContentsResponse.results[index].offline = true;
-      //     await writeOrUpdateDataInStore('touristicContents', [stepsTouristicContentsResponse.results[index]]);
-      //     await writeOrUpdateFilesInStore(stepsTouristicContentsResponse.results[index], imagesRegExp, true);
-      //   }
-      // }
-
-      // for (let index = 0; index < stepsTouristicEventsResponses.length; index++) {
-      //   const stepsTouristicEventsResponse = stepsTouristicEventsResponses[index];
-      //   for (let index = 0; index < stepsTouristicEventsResponse.results.length; index++) {
-      //     stepsTouristicEventsResponse[index].offline = true;
-      //     await writeOrUpdateDataInStore('touristicEvents', [stepsTouristicEventsResponse[index]]);
-      //     await writeOrUpdateFilesInStore(stepsTouristicEventsResponse[index], imagesRegExp, true);
-      //   }
-      // }
     }
 
     state.treks.find(trek => trek.id === this.currentTrek.id).offline = true;
@@ -875,6 +857,7 @@ export class GrwTrekDetail {
     delete trekInStore.touristicContents;
     delete trekInStore.touristicEvents;
     delete trekInStore.sensitiveAreas;
+    delete trekInStore.offline;
   }
 
   render() {
