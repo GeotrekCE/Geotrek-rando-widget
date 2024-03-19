@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/geotrek-rando-widget-0.9.0...geotrek-rando-widget-0.10.0) (2024-03-19)
+
+
+### Features
+
+* android and ios applications ([3a2a1dc](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/3a2a1dcc375470ae32b958a2716c4fc9c28ac2ea))
+
 ## [0.9.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/geotrek-rando-widget-0.8.1...geotrek-rando-widget-0.9.0) (2024-03-14)
 
 
