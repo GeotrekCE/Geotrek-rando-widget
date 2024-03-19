@@ -85,7 +85,7 @@ export class GrwTrekProvider {
 
     if (!state.difficulties) {
       const difficulties = await getAllDataInStore('difficulties');
-      setFilesFromStore(difficulties, imagesRegExp);
+      await setFilesFromStore(difficulties, imagesRegExp);
       state.difficulties = difficulties;
     }
     if (!state.routes) {
@@ -136,33 +136,33 @@ export class GrwTrekProvider {
     const informationDesks = informationDesksInStore.filter(informationDeskInStore =>
       trek.information_desks.some(information_desk => information_desk === informationDeskInStore.id),
     );
-    setFilesFromStore(informationDesks, imagesRegExp);
+    await setFilesFromStore(informationDesks, imagesRegExp);
     state.currentInformationDesks = informationDesks;
 
     const poisInStore = await getAllDataInStore('pois');
     const pois = poisInStore.filter(poiInStore => trek.pois.some(trekPoi => trekPoi === poiInStore.id));
-    setFilesFromStore(pois, imagesRegExp);
+    await setFilesFromStore(pois, imagesRegExp);
     state.currentPois = pois;
 
     const touristicContentsInStore = await getAllDataInStore('touristicContents');
     const touristicContents = touristicContentsInStore.filter(touristicContentInStore =>
       trek.touristicContents.some(trekTouristicContent => trekTouristicContent === touristicContentInStore.id),
     );
-    setFilesFromStore(touristicContents, imagesRegExp);
+    await setFilesFromStore(touristicContents, imagesRegExp);
     state.trekTouristicContents = touristicContents;
 
     const touristicEventsInStore = await getAllDataInStore('touristicEvents');
     const touristicEvents = touristicEventsInStore.filter(touristicEventInStore =>
       trek.touristicEvents.some(trekTouristicEvent => trekTouristicEvent === touristicEventInStore.id),
     );
-    setFilesFromStore(touristicEvents, imagesRegExp);
+    await setFilesFromStore(touristicEvents, imagesRegExp);
     state.trekTouristicEvents = await getAllDataInStore('touristicEvents');
 
     const sensitiveAreasInStore = await getAllDataInStore('sensitiveAreas');
     const sensitiveAreas = sensitiveAreasInStore.filter(sensitiveAreaInStore => trek.sensitiveAreas.some(trekSensitiveArea => trekSensitiveArea === sensitiveAreaInStore.id));
     state.currentSensitiveAreas = sensitiveAreas;
 
-    setFilesFromStore(trek, imagesRegExp);
+    await setFilesFromStore(trek, imagesRegExp);
     state.currentTrek = trek;
   }
 

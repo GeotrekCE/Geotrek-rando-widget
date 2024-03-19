@@ -27,3 +27,7 @@ UserInterfaceState.xcuserstate
 
 docs/.vitepress/cache
 docs/.vitepress/dist
+
+app/
+android/
+ios/

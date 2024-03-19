@@ -12,7 +12,9 @@ import { getTrekGeometry } from 'services/treks.service';
 import { tileLayerOffline } from 'leaflet.offline';
 import { Trek } from 'components';
 import { getDataInStore } from 'services/grw-db.service';
-import { arrayBufferToBlob } from 'utils/utils';
+import { checkFileInStore, getFileInStore } from 'utils/utils';
+import { Capacitor } from '@capacitor/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 
 @Component({
   tag: 'grw-map',
@@ -468,12 +470,8 @@ export class GrwMap {
           } as any),
         onEachFeature: (geoJsonPoint, layer) => {
           layer.once('click', async () => {
-            const dataInStore = await getDataInStore('images', geoJsonPoint.properties.imgSrc);
-            const imgSrc = dataInStore
-              ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type))
-              : geoJsonPoint.properties.imgSrc
-              ? geoJsonPoint.properties.imgSrc
-              : null;
+            const dataInStore = await this.getIcon(geoJsonPoint.properties.imgSrc);
+            const imgSrc = dataInStore ? dataInStore : geoJsonPoint.properties.imgSrc ? geoJsonPoint.properties.imgSrc : null;
             const trekDeparturePopup = L.DomUtil.create('div');
             /* @ts-ignore */
             trekDeparturePopup.part = 'trek-departure-popup';
@@ -940,12 +938,8 @@ export class GrwMap {
         },
         onEachFeature: (geoJsonPoint, layer) => {
           layer.once('click', async () => {
-            const dataInStore = await getDataInStore('images', geoJsonPoint.properties.imgSrc);
-            const imgSrc = dataInStore
-              ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type))
-              : geoJsonPoint.properties.imgSrc
-              ? geoJsonPoint.properties.imgSrc
-              : null;
+            const dataInStore = await this.getIcon(geoJsonPoint.properties.imgSrc);
+            const imgSrc = dataInStore ? dataInStore : geoJsonPoint.properties.imgSrc ? geoJsonPoint.properties.imgSrc : null;
             const trekDeparturePopup = L.DomUtil.create('div');
             /* @ts-ignore */
             trekDeparturePopup.part = 'trek-departure-popup';
@@ -1123,9 +1117,22 @@ export class GrwMap {
     }
     return icons;
   }
+
   async getIcon(pictogram) {
-    const dataInStore = await getDataInStore('images', pictogram);
-    const icon = dataInStore ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type)) : pictogram ? pictogram : null;
+    let icon;
+    if (!Capacitor.isNativePlatform()) {
+      const dataInStore = await checkFileInStore(pictogram);
+      icon = dataInStore ? window.URL.createObjectURL((await getFileInStore(pictogram)).data) : pictogram ? pictogram : null;
+    } else {
+      const image = await Filesystem.getUri({
+        path: pictogram,
+        directory: Directory.Data,
+      });
+      if (image) {
+        icon = Capacitor.convertFileSrc(image.uri);
+      }
+    }
+
     return icon;
   }
 
@@ -1171,12 +1178,8 @@ export class GrwMap {
         } as any),
       onEachFeature: (geoJsonPoint, layer) => {
         layer.once('click', async () => {
-          const dataInStore = await getDataInStore('images', geoJsonPoint.properties.imgSrc);
-          const imgSrc = dataInStore
-            ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type))
-            : geoJsonPoint.properties.imgSrc
-            ? geoJsonPoint.properties.imgSrc
-            : null;
+          const dataInStore = await this.getIcon(geoJsonPoint.properties.imgSrc);
+          const imgSrc = dataInStore ? dataInStore : geoJsonPoint.properties.imgSrc ? geoJsonPoint.properties.imgSrc : null;
           const trekDeparturePopup = L.DomUtil.create('div');
           /* @ts-ignore */
           trekDeparturePopup.part = 'trek-departure-popup';
@@ -1272,12 +1275,8 @@ export class GrwMap {
         } as any),
       onEachFeature: (geoJsonPoint, layer) => {
         layer.once('click', async () => {
-          const dataInStore = await getDataInStore('images', geoJsonPoint.properties.imgSrc);
-          const imgSrc = dataInStore
-            ? window.URL.createObjectURL(arrayBufferToBlob(dataInStore.data, dataInStore.type))
-            : geoJsonPoint.properties.imgSrc
-            ? geoJsonPoint.properties.imgSrc
-            : null;
+          const dataInStore = await this.getIcon(geoJsonPoint.properties.imgSrc);
+          const imgSrc = dataInStore ? dataInStore : geoJsonPoint.properties.imgSrc ? geoJsonPoint.properties.imgSrc : null;
           const trekDeparturePopup = L.DomUtil.create('div');
           /* @ts-ignore */
           trekDeparturePopup.part = 'trek-departure-popup';

@@ -197,7 +197,7 @@ export namespace Components {
         "api": string;
         "languages": string;
         "portals": string;
-        "touristicEventId": string;
+        "touristicEventId": number;
     }
     interface GrwTouristicEventsList {
         "colorOnSecondaryContainer": string;
@@ -246,7 +246,6 @@ export namespace Components {
         "globalTilesMaxZoomOffline": number;
         "globalTilesMinZoomOffline": number;
         "isLargeView": boolean;
-        "trek": Trek;
         "trekTilesMaxZoomOffline": number;
         "trekTilesMinZoomOffline": number;
         "weather": boolean;
@@ -840,7 +839,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "languages"?: string;
         "portals"?: string;
-        "touristicEventId"?: string;
+        "touristicEventId"?: number;
     }
     interface GrwTouristicEventsList {
         "colorOnSecondaryContainer"?: string;
@@ -905,7 +904,6 @@ declare namespace LocalJSX {
         "onTrekDeleteSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onTrekDownloadConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onTrekDownloadedSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
-        "trek"?: Trek;
         "trekTilesMaxZoomOffline"?: number;
         "trekTilesMinZoomOffline"?: number;
         "weather"?: boolean;
