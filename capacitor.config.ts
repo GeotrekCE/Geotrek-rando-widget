@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.grw.hauteloire',
-  appName: 'RANDO(S) en HAUTE-LOIRE',
+  appId: 'io.grw.app',
+  appName: 'grw app',
   webDir: 'app',
 };
 
