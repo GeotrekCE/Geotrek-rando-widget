@@ -10,6 +10,16 @@ import L from 'leaflet';
 import { getDistricts, getPoisNearTrek, getSensitiveAreasNearTrek, getTrek, getTreksList } from 'services/treks.service';
 import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
 import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
+import CloseIcon from '../../assets/close.svg';
+import TimelapseIcon from '../../assets/timelapse.svg';
+import OpenInFullIcon from '../../assets/open_in_full.svg';
+import MovingIcon from '../../assets/moving.svg';
+import DownloadForOfflineIcon from '../../assets/download_for_offline.svg';
+import DeleteIcon from '../../assets/delete.svg';
+import DownloadIcon from '../../assets/download.svg';
+import WarningIcon from '../../assets/warning.svg';
+import BackpackIcon from '../../assets/backpack.svg';
+import CallIcon from '../../assets/call.svg';
 
 const threshold = 1;
 const presentation: Option = {
@@ -669,7 +679,7 @@ export class GrwTrekDetail {
     await writeOrUpdateFilesInStore(state.networks, imagesRegExp);
 
     // // download trek images
-    await writeOrUpdateFilesInStore(this.currentTrek, imagesRegExp, true);
+    await writeOrUpdateFilesInStore(this.currentTrek, imagesRegExp, true, ['url']);
 
     // // download trek data
     await writeOrUpdateDataInStore('difficulties', state.difficulties);
@@ -704,17 +714,17 @@ export class GrwTrekDetail {
       },
     ]);
 
-    await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true);
+    await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true, ['url']);
     await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp, true);
 
     // download items data
-    await writeOrUpdateFilesInStore(state.trekTouristicContents, imagesRegExp, true);
+    await writeOrUpdateFilesInStore(state.trekTouristicContents, imagesRegExp, true, ['url']);
     state.trekTouristicContents.forEach(trekTouristicContent => {
       trekTouristicContent.offline = true;
     });
     await writeOrUpdateDataInStore('touristicContents', state.trekTouristicContents);
 
-    await writeOrUpdateFilesInStore(state.trekTouristicEvents, imagesRegExp, true);
+    await writeOrUpdateFilesInStore(state.trekTouristicEvents, imagesRegExp, true, ['url']);
     state.trekTouristicEvents.forEach(trekTouristicEvent => {
       trekTouristicEvent.offline = true;
     });
@@ -753,7 +763,7 @@ export class GrwTrekDetail {
         trekSteps[index].touristicEvents = stepsTouristicEventsResponses[index].results.map(trekTouristicEvent => trekTouristicEvent.id);
         trekSteps[index].sensitiveAreas = stepsSensitiveAreasResponses[index].results.map(currentSensitiveArea => currentSensitiveArea.id);
         await writeOrUpdateDataInStore('treks', [trekSteps[index]]);
-        await writeOrUpdateFilesInStore(trekSteps[index], imagesRegExp, true);
+        await writeOrUpdateFilesInStore(trekSteps[index], imagesRegExp, true, ['url']);
       }
     }
 
@@ -762,7 +772,9 @@ export class GrwTrekDetail {
       state.currentTreks = state.treks;
     }
     state.currentTreks.find(trek => trek.id === this.currentTrek.id).offline = true;
-    this.swiperImages.slideTo(0);
+    if (this.swiperImages) {
+      this.swiperImages.slideTo(0);
+    }
     this.offline = true;
     this.trekDownloadedSuccessConfirm.emit();
   }
@@ -862,6 +874,7 @@ export class GrwTrekDetail {
 
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
+
     return (
       <Host
         style={{
@@ -1009,10 +1022,7 @@ export class GrwTrekDetail {
                           <div part="swiper-slide" class="swiper-slide">
                             {this.displayFullscreen && (
                               <div part="trek-close-fullscreen-button" class="trek-close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
-                                {/* @ts-ignore */}
-                                <span part="trek-close-fullcreen-icon" class="trek-close-fullcreen-icon material-symbols material-symbols-outlined" translate={false}>
-                                  close
-                                </span>
+                                <span part="trek-close-fullcreen-icon" class="trek-close-fullcreen-icon" innerHTML={CloseIcon}></span>
                               </div>
                             )}
                             <div part="trek-image-legend" class="trek-image-legend">
@@ -1021,7 +1031,7 @@ export class GrwTrekDetail {
                             <img
                               part="trek-img"
                               class="trek-img"
-                              src={attachment.url}
+                              src={this.offline ? attachment.thumbnail : attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
                               /* @ts-ignore */
@@ -1035,14 +1045,7 @@ export class GrwTrekDetail {
                         );
                       })
                   ) : (
-                    <img
-                      part="trek-img"
-                      class="trek-img default-trek-img"
-                      /* @ts-ignore */
-
-                      src={defaultImageSrc}
-                      loading="lazy"
-                    />
+                    <img part="trek-img" class="trek-img default-trek-img" src={defaultImageSrc} loading="lazy" />
                   )}
                 </div>
                 <div style={{ display: this.offline ? 'none' : 'flex' }}>
@@ -1068,58 +1071,33 @@ export class GrwTrekDetail {
               <div part="icons-labels-container" class="icons-labels-container">
                 {this.difficulty && (
                   <div part="icon-label" class="icon-label difficulty">
-                    {this.difficulty.pictogram && (
-                      <img
-                        part="icon"
-                        class="icon"
-                        /* @ts-ignore */
-
-                        src={this.difficulty.pictogram}
-                      />
-                    )}
+                    {this.difficulty.pictogram && <img part="icon" class="icon" src={this.difficulty.pictogram} />}
                     <span part="label" class="label">
                       {this.difficulty.label}
                     </span>
                   </div>
                 )}
                 <div part="icon-label" class="icon-label duration">
-                  {/* @ts-ignore */}
-                  <span part="icon" class="icon material-symbols material-symbols-outlined" translate={false}>
-                    timelapse
-                  </span>
+                  <span part="icon" class="icon" innerHTML={TimelapseIcon}></span>
                   <span part="label" class="label">
                     {formatDuration(this.currentTrek?.duration)}
                   </span>
                 </div>
                 <div part="icon-label" class="icon-label route">
-                  {this.route?.pictogram && (
-                    <img
-                      part="icon"
-                      class="icon"
-                      /* @ts-ignore */
-
-                      src={this.route.pictogram}
-                    />
-                  )}
+                  {this.route?.pictogram && <img part="icon" class="icon" src={this.route.pictogram} />}
                   <span part="label" class="label">
                     {this.route?.route}
                   </span>
                 </div>
                 <div part="icon-label" class="icon-label length">
-                  {/* @ts-ignore */}
-                  <span part="icon" class="icon material-symbols material-symbols-outlined" translate={false}>
-                    open_in_full
-                  </span>
+                  <span part="icon" class="icon" innerHTML={OpenInFullIcon}></span>
                   <span part="label" class="label">
                     {formatLength(this.currentTrek.length_2d)}
                   </span>
                 </div>
                 {this.currentTrek.ascent && (
                   <div part="icon-label" class="icon-label ascent">
-                    {/* @ts-ignore */}
-                    <span part="icon" class="icon material-symbols material-symbols-outlined" translate={false}>
-                      moving
-                    </span>
+                    <span part="icon" class="icon" innerHTML={MovingIcon}></span>
                     <span part="label" class="label">
                       {formatAscent(this.currentTrek.ascent)}
                     </span>
@@ -1127,25 +1105,14 @@ export class GrwTrekDetail {
                 )}
                 {this.currentTrek.descent && (
                   <div part="icon-label" class="icon-label descent">
-                    {/* @ts-ignore */}
-                    <span part="icon" class="icon material-symbols material-symbols-outlined" translate={false}>
-                      moving
-                    </span>
+                    <span part="icon" class="icon" innerHTML={MovingIcon}></span>
                     <span part="label" class="label">
                       {formatDescent(this.currentTrek.descent)}
                     </span>
                   </div>
                 )}
                 <div part="icon-label" class="icon-label practice">
-                  {this.practice?.pictogram && (
-                    <img
-                      part="icon"
-                      class="icon"
-                      /* @ts-ignore */
-
-                      src={this.practice.pictogram}
-                    />
-                  )}
+                  {this.practice?.pictogram && <img part="icon" class="icon" src={this.practice.pictogram} />}
                   <span part="label" class="label">
                     {this.practice?.name}
                   </span>
@@ -1155,13 +1122,7 @@ export class GrwTrekDetail {
                     const currentNetwork = state.networks.find(network => network.id === networkId);
                     return (
                       <div part="network" class="network">
-                        <img
-                          part="icon"
-                          class="icon"
-                          /* @ts-ignore */
-
-                          src={currentNetwork.pictogram}
-                        />
+                        <img part="icon" class="icon" src={currentNetwork.pictogram} />
                         <span part="label" class="label">
                           {currentNetwork.label}
                         </span>
@@ -1188,10 +1149,7 @@ export class GrwTrekDetail {
               </div>
               {this.enableOffline && !this.offline && (
                 <button part="offline-button" class="offline-button" onClick={() => this.displayTrekDownloadModal()}>
-                  {/* @ts-ignore */}
-                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                    download_for_offline
-                  </span>
+                  <span part="icon" class="icon" innerHTML={DownloadForOfflineIcon}></span>
                   <span part="label" class="label">
                     RENDRE DISPONIBLE HORS LIGNE
                   </span>
@@ -1199,10 +1157,7 @@ export class GrwTrekDetail {
               )}
               {this.enableOffline && this.offline && (
                 <button part="offline-button" class="offline-button" onClick={() => this.displayTrekDeleteModal()}>
-                  {/* @ts-ignore */}
-                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                    delete
-                  </span>
+                  <span part="icon" class="icon" innerHTML={DeleteIcon}></span>
                   <span part="label" class="label">
                     SUPPRIMER DU HORS LIGNE
                   </span>
@@ -1210,19 +1165,13 @@ export class GrwTrekDetail {
               )}
               <div part="links-container" class="links-container">
                 <a href={`${this.currentTrek.gpx}`} target="_blank" rel="noopener noreferrer">
-                  {/* @ts-ignore */}
-                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                    download
-                  </span>
+                  <span part="icon" class=" icon" innerHTML={DownloadIcon}></span>
                   <span part="label" class="label">
                     GPX
                   </span>
                 </a>
                 <a href={`${this.currentTrek.kml}`} target="_blank" rel="noopener noreferrer">
-                  {/* @ts-ignore */}
-                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                    download
-                  </span>
+                  <span part="icon" class="icon" innerHTML={DownloadIcon}></span>
                   <span part="label" class="label">
                     KML
                   </span>
@@ -1232,10 +1181,7 @@ export class GrwTrekDetail {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {/* @ts-ignore */}
-                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                    download
-                  </span>
+                  <span part="icon" class="icon" innerHTML={DownloadIcon}></span>
                   <span part="label" class="label">
                     PDF
                   </span>
@@ -1389,32 +1335,20 @@ export class GrwTrekDetail {
                   </div>
                   {this.currentTrek.advice && (
                     <div part="current-advice-container" class="current-advice-container">
-                      {/* @ts-ignore */}
-                      <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                        warning
-                      </span>
+                      <span part="icon" class="icon" innerHTML={WarningIcon}></span>
                       <div part="advice" class="advice" innerHTML={this.currentTrek.advice}></div>
                     </div>
                   )}
                   {this.currentTrek.gear && (
                     <div part="gear-container" class="gear-container">
-                      {/* @ts-ignore */}
-                      <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                        backpack
-                      </span>
+                      <span part="icon" class="icon" innerHTML={BackpackIcon}></span>
                       <div part="gear" class="gear" innerHTML={this.currentTrek.gear}></div>
                     </div>
                   )}
                   {this.labels.map(label => (
                     <div part="label-container" class="label-container">
                       <div part="label-sub-container" class="label-sub-container">
-                        {label.pictogram && (
-                          <img
-                            /* @ts-ignore */
-
-                            src={label.pictogram}
-                          />
-                        )}
+                        {label.pictogram && <img src={label.pictogram} />}
                         <div part="label-name" class="label-name" innerHTML={label.name}></div>
                       </div>
                       <div part="label-advice" class="label-advice" innerHTML={label.advice}></div>
@@ -1507,14 +1441,7 @@ export class GrwTrekDetail {
                       <div part="accessibility-emergency-number-content" class="accessibility-emergency-number-content">
                         {
                           <a href={`tel:${this.emergencyNumber.toString()}`}>
-                            <span
-                              part="icon"
-                              class="material-symbols material-symbols-outlined icon"
-                              /* @ts-ignore */
-                              translate={false}
-                            >
-                              call
-                            </span>
+                            <span part="icon" class="icon" innerHTML={CallIcon}></span>
                             <span part="emergency-number" class="emergency-number">
                               {this.emergencyNumber.toString()}
                             </span>

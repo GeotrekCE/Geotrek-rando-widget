@@ -2,6 +2,8 @@ import { Build, Component, Host, Prop, State, getAssetPath, h } from '@stencil/c
 import { translate } from 'i18n/i18n';
 import state from 'store/store';
 import Swiper, { FreeMode, Keyboard, Mousewheel, Navigation, Pagination } from 'swiper';
+import CloseIcon from '../../assets/close.svg';
+import DownloadIcon from '../../assets/download.svg';
 
 @Component({
   tag: 'grw-touristic-content-detail',
@@ -103,16 +105,13 @@ export class GrwTouristicContentDetail {
                           <div part="swiper-slide" class="swiper-slide">
                             {this.displayFullscreen && (
                               <div part="close-fullscreen-button" class="close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
-                                {/* @ts-ignore */}
-                                <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-                                  close
-                                </span>
+                                <span part="icon" class="icon" innerHTML={CloseIcon}></span>
                               </div>
                             )}
                             <div part="legend-container" class="legend-container">
                               {legend}
                             </div>
-                            <img part="image" class="image" src={attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
+                            <img part="image" class="image" src={this.offline ? attachment.thumbnail : attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
                           </div>
                         );
                       })
@@ -156,10 +155,7 @@ export class GrwTouristicContentDetail {
               </div>
               <div part="links-container" class="links-container">
                 <a part="link-container" class="link-container" href={`${state.currentTouristicContent.pdf}`} target="_blank" rel="noopener noreferrer">
-                  {/* @ts-ignore */}
-                  <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-                    download
-                  </span>
+                  <span part="icon" class="icon" innerHTML={DownloadIcon}></span>
                   <span part="label" class="">
                     PDF
                   </span>

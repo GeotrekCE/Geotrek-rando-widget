@@ -99,56 +99,56 @@ export class GrwMap {
 
   @Listen('stepsIsInViewport', { target: 'window' })
   stepsIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentStepsLayer) {
+    if (this.currentStepsLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentStepsLayer);
     }
   }
 
   @Listen('descriptionIsInViewport', { target: 'window' })
   descriptionIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentReferencePointsLayer) {
+    if (this.currentReferencePointsLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentReferencePointsLayer);
     }
   }
 
   @Listen('parkingIsInViewport', { target: 'window' })
   parkingIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentParkingLayer) {
+    if (this.currentParkingLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentParkingLayer);
     }
   }
 
   @Listen('informationDeskIsInViewport', { target: 'window' })
   onInformationDesksIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentInformationDesksLayer) {
+    if (this.currentInformationDesksLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentInformationDesksLayer);
     }
   }
 
   @Listen('sensitiveAreaIsInViewport', { target: 'window' })
   sensitiveAreaIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentSensitiveAreasLayer) {
+    if (this.currentSensitiveAreasLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentSensitiveAreasLayer);
     }
   }
 
   @Listen('poiIsInViewport', { target: 'window' })
   poiIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentPoisLayer) {
+    if (this.currentPoisLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentPoisLayer);
     }
   }
 
   @Listen('touristicContentsIsInViewport', { target: 'window' })
   touristicContentsIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentToutisticContentsLayer) {
+    if (this.currentToutisticContentsLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentToutisticContentsLayer);
     }
   }
 
   @Listen('touristicEventsIsInViewport', { target: 'window' })
   touristicEventsIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currenttouristicEventsLayer) {
+    if (this.currenttouristicEventsLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currenttouristicEventsLayer);
     }
   }

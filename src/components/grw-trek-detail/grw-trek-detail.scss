@@ -7,14 +7,6 @@
   z-index: 0;
 }
 
-.material-symbols {
-  font-family: 'Material Symbols Outlined';
-}
-
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-}
-
 :host {
   --swiper-navigation-size: 24px;
   --swiper-navigation-color: var(--color-on-primary-container);
@@ -130,7 +122,7 @@ grw-trek-detail {
         justify-content: flex-start;
         align-items: center;
         .icon {
-          font-size: 24px;
+          display: flex;
           width: 24px;
           height: auto;
           color: var(--color-primary-app);
@@ -144,6 +136,7 @@ grw-trek-detail {
       }
       .practice {
         .icon {
+          display: flex;
           background-color: var(--color-primary-app);
         }
       }
@@ -198,6 +191,9 @@ grw-trek-detail {
         }
         &:hover {
           box-shadow: var(--elevation-2);
+        }
+        .icon {
+          display: flex;
         }
       }
     }
@@ -434,8 +430,7 @@ grw-trek-detail {
   border: 2px solid var(--color-outline);
   border-radius: var(--border-radius, 12px);
   font-size: 16px;
-  .material-symbols {
-    font-size: 24px;
+  .icon img {
     width: 26px;
     margin-right: 8px;
   }
@@ -638,6 +633,7 @@ grw-trek-detail {
 }
 
 .descent .icon {
+  display: flex;
   transform: rotateX(180deg);
 }
 
@@ -689,6 +685,7 @@ grw-trek-detail {
 
 .practice {
   .icon {
+    display: flex;
     border-radius: 100%;
     padding: 2px;
     max-height: 20px;
@@ -714,6 +711,6 @@ grw-trek-detail {
     box-shadow: var(--elevation-2);
   }
   .icon {
-    font-size: 16px;
+    display: flex;
   }
 }

@@ -3,6 +3,10 @@ import state from 'store/store';
 import { translate } from 'i18n/i18n';
 import { InformationDesk, Trek } from 'types/types';
 import { getDataInStore } from 'services/grw-db.service';
+import LocationSearchingIcon from '../../assets/location_searching.svg';
+import CallIcon from '../../assets/call.svg';
+import MailIcon from '../../assets/mail.svg';
+import LinkIcon from '../../assets/link.svg';
 
 @Component({
   tag: 'grw-information-desk',
@@ -44,6 +48,7 @@ export class GrwInformationDeskDetail {
 
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
+
     return (
       <Host>
         {this.informationDesk.photo_url && (
@@ -69,10 +74,7 @@ export class GrwInformationDeskDetail {
           )}
           {this.informationDesk.latitude && this.informationDesk.longitude && (
             <button part="center-on-map-button" class="center-on-map-button" onClick={() => this.handleCenterOnMap()}>
-              {/* @ts-ignore */}
-              <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-                location_searching
-              </span>
+              <span part="icon" class="icon" innerHTML={LocationSearchingIcon}></span>
               <span part="label">{translate[state.language].centerOnMap}</span>
             </button>
           )}
@@ -85,10 +87,7 @@ export class GrwInformationDeskDetail {
           )}
           {this.informationDesk.phone && (
             <div class="phone-container">
-              {/* @ts-ignore */}
-              <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-                call
-              </span>
+              <span part="icon" class="icon" innerHTML={CallIcon}></span>
               <a part="label" class="label" href={`tel:${this.informationDesk.phone}`}>
                 {this.informationDesk.phone}
               </a>
@@ -96,10 +95,7 @@ export class GrwInformationDeskDetail {
           )}
           {this.informationDesk.email && (
             <div part="mail-container" class="mail-container">
-              {/* @ts-ignore */}
-              <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-                mail
-              </span>
+              <span part="icon" class="icon" innerHTML={MailIcon}></span>
               <a part="label" class="label" href={`mailto:${this.informationDesk.email}`}>
                 {this.informationDesk.email}
               </a>
@@ -107,10 +103,7 @@ export class GrwInformationDeskDetail {
           )}
           {this.informationDesk.website && (
             <div part="link-container" class="link-container">
-              {/* @ts-ignore */}
-              <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-                link
-              </span>
+              <span part="icon" class="icon" innerHTML={LinkIcon}></span>
               <a part="label" class="label" href={`${this.informationDesk.website}`}>
                 {this.informationDesk.website}
               </a>

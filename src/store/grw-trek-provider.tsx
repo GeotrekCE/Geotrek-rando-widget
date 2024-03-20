@@ -83,87 +83,56 @@ export class GrwTrekProvider {
       state.currentTrekSteps = await Promise.all([...stepRequests]).then(responses => responses);
     }
 
-    if (!state.difficulties) {
-      const difficulties = await getAllDataInStore('difficulties');
-      await setFilesFromStore(difficulties, imagesRegExp);
-      state.difficulties = difficulties;
-    }
-    if (!state.routes) {
-      state.routes = await getAllDataInStore('routes');
-    }
-    if (!state.practices) {
-      state.practices = await getAllDataInStore('practices');
-    }
-    if (!state.themes) {
-      state.themes = await getAllDataInStore('themes');
-    }
-    if (!state.cities) {
-      state.cities = await getAllDataInStore('cities');
-    }
-    if (!state.accessibilities) {
-      state.accessibilities = await getAllDataInStore('accessibilities');
-    }
-    if (!state.ratings) {
-      state.ratings = await getAllDataInStore('ratings');
-    }
-    if (!state.ratingsScale) {
-      state.ratingsScale = await getAllDataInStore('ratingsScale');
-    }
-    if (!state.labels) {
-      state.labels = await getAllDataInStore('labels');
-    }
-    if (!state.sources) {
-      state.sources = await getAllDataInStore('sources');
-    }
-    if (!state.accessibilitiesLevel) {
-      state.accessibilitiesLevel = await getAllDataInStore('accessibilitiesLevel');
-    }
-    if (!state.touristicContentCategories) {
-      state.touristicContentCategories = await getAllDataInStore('touristicContentCategories');
-    }
-    if (!state.touristicEventTypes) {
-      state.touristicEventTypes = await getAllDataInStore('touristicEventTypes');
-    }
-    if (!state.networks) {
-      state.networks = await getAllDataInStore('networks');
-    }
+    state.difficulties = await this.handleOfflineProperty('difficulties');
+    state.routes = await this.handleOfflineProperty('routes');
+    state.practices = await this.handleOfflineProperty('practices');
+    state.themes = await this.handleOfflineProperty('themes');
+    state.cities = await this.handleOfflineProperty('cities');
+    state.accessibilities = await this.handleOfflineProperty('accessibilities');
+    state.ratings = await this.handleOfflineProperty('ratings');
+    state.ratingsScale = await this.handleOfflineProperty('ratingsScale');
+    state.labels = await this.handleOfflineProperty('labels');
+    state.sources = await this.handleOfflineProperty('sources');
+    state.accessibilitiesLevel = await this.handleOfflineProperty('accessibilitiesLevel');
+    state.touristicContentCategories = await this.handleOfflineProperty('touristicContentCategories');
+    state.touristicEventTypes = await this.handleOfflineProperty('touristicEventTypes');
+    state.networks = await this.handleOfflineProperty('networks');
+    state.poiTypes = await this.handleOfflineProperty('poiTypes');
 
-    if (!state.poiTypes) {
-      state.poiTypes = await getAllDataInStore('poiTypes');
-    }
-
-    const informationDesksInStore = await getAllDataInStore('informationDesks');
+    const informationDesksInStore = await this.handleOfflineProperty('informationDesks');
     const informationDesks = informationDesksInStore.filter(informationDeskInStore =>
       trek.information_desks.some(information_desk => information_desk === informationDeskInStore.id),
     );
-    await setFilesFromStore(informationDesks, imagesRegExp);
     state.currentInformationDesks = informationDesks;
 
-    const poisInStore = await getAllDataInStore('pois');
+    const poisInStore = await this.handleOfflineProperty('pois', ['url']);
     const pois = poisInStore.filter(poiInStore => trek.pois.some(trekPoi => trekPoi === poiInStore.id));
-    await setFilesFromStore(pois, imagesRegExp);
     state.currentPois = pois;
 
-    const touristicContentsInStore = await getAllDataInStore('touristicContents');
+    const touristicContentsInStore = await this.handleOfflineProperty('touristicContents', ['url']);
     const touristicContents = touristicContentsInStore.filter(touristicContentInStore =>
       trek.touristicContents.some(trekTouristicContent => trekTouristicContent === touristicContentInStore.id),
     );
-    await setFilesFromStore(touristicContents, imagesRegExp);
     state.trekTouristicContents = touristicContents;
 
-    const touristicEventsInStore = await getAllDataInStore('touristicEvents');
+    const touristicEventsInStore = await this.handleOfflineProperty('touristicEvents', ['url']);
     const touristicEvents = touristicEventsInStore.filter(touristicEventInStore =>
       trek.touristicEvents.some(trekTouristicEvent => trekTouristicEvent === touristicEventInStore.id),
     );
-    await setFilesFromStore(touristicEvents, imagesRegExp);
-    state.trekTouristicEvents = await getAllDataInStore('touristicEvents');
+    state.trekTouristicEvents = touristicEvents;
 
-    const sensitiveAreasInStore = await getAllDataInStore('sensitiveAreas');
+    const sensitiveAreasInStore = await this.handleOfflineProperty('sensitiveAreas');
     const sensitiveAreas = sensitiveAreasInStore.filter(sensitiveAreaInStore => trek.sensitiveAreas.some(trekSensitiveArea => trekSensitiveArea === sensitiveAreaInStore.id));
     state.currentSensitiveAreas = sensitiveAreas;
 
-    await setFilesFromStore(trek, imagesRegExp);
+    await setFilesFromStore(trek, imagesRegExp, ['url']);
     state.currentTrek = trek;
+  }
+
+  async handleOfflineProperty(property, exclude: string[] = []) {
+    const data = await getAllDataInStore(property);
+    await setFilesFromStore(data, imagesRegExp, exclude);
+    return data as any;
   }
 
   handleOnlineTrek() {

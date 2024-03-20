@@ -314,8 +314,8 @@ export async function deleteDataInStore(name: ObjectStoresName, dataId: number[]
   grwDb.close();
 }
 
-export async function writeOrUpdateFilesInStore(value, imagesRegExp, onlyFirstArrayFile = false) {
-  const filesToStore = getFilesToStore(value, imagesRegExp, onlyFirstArrayFile);
+export async function writeOrUpdateFilesInStore(value, imagesRegExp, onlyFirstArrayFile = false, exclude: string[] = []) {
+  const filesToStore = getFilesToStore(value, imagesRegExp, onlyFirstArrayFile, exclude);
 
   const filesToStoreNotInStore = [];
   for (let i = 0; i < filesToStore.length; i++) {

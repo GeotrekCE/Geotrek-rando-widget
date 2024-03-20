@@ -32,7 +32,9 @@ export class GrwTouristicEvent {
 
   @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
   onTrekDownloadedSuccessConfirm() {
-    this.swiperTouristicEvent.slideTo(0);
+    if (this.swiperTouristicEvent) {
+      this.swiperTouristicEvent.slideTo(0);
+    }
     this.offline = true;
   }
 
@@ -129,7 +131,7 @@ export class GrwTouristicEvent {
                           <img
                             part="touristic-event-img"
                             class={`touristic-event-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
-                            src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                            src={this.displayFullscreen ? (this.offline ? attachment.thumbnail : attachment.url) : attachment.thumbnail}
                             loading="lazy"
                             /* @ts-ignore */
                             onerror={event => {
