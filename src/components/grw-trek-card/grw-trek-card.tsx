@@ -125,6 +125,7 @@ export class GrwTrekCard {
                   /* @ts-ignore */
 
                   src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                  alt={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                   loading="lazy"
                   /* @ts-ignore */
                   onerror={event => {
@@ -140,6 +141,7 @@ export class GrwTrekCard {
                   /* @ts-ignore */
 
                   src={defaultImageSrc}
+                  alt=""
                   loading="lazy"
                 />
               )}
@@ -172,6 +174,7 @@ export class GrwTrekCard {
                         /* @ts-ignore */
 
                         src={this.difficulty.pictogram}
+                        alt=""
                       />
                     )}
                     <span part="trek-label" class="trek-label">
@@ -216,6 +219,7 @@ export class GrwTrekCard {
                           /* @ts-ignore */
 
                           src={this.route.pictogram}
+                          alt=""
                         />
                       )}
                       <span part="trek-label" class="trek-label">
@@ -230,6 +234,7 @@ export class GrwTrekCard {
                           /* @ts-ignore */
 
                           src={this.practice.pictogram}
+                          alt=""
                         />
                       )}
                       <span part="trek-label" class="trek-label">

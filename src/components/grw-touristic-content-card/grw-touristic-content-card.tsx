@@ -129,6 +129,7 @@ export class GrwTouristicContentCard {
                             part="touristic-content-img"
                             class={`touristic-content-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                             src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                            alt={attachment.legend}
                             loading="lazy"
                             /* @ts-ignore */
                             onerror={event => {
@@ -148,6 +149,7 @@ export class GrwTouristicContentCard {
                         /* @ts-ignore */
 
                         src={defaultImageSrc}
+                        alt=""
                         loading="lazy"
                       />
                     </div>
@@ -179,10 +181,11 @@ export class GrwTouristicContentCard {
                 /* @ts-ignore */
 
                 src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                alt={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
               />
             ) : (
-              <img class="image default-touristic-content-img" src={defaultImageSrc} loading="lazy" />
+              <img class="image default-touristic-content-img" src={defaultImageSrc} loading="lazy" alt="" />
             )}
           </div>
           <div part="touristic-content-sub-container" class="touristic-content-sub-container">
@@ -194,6 +197,7 @@ export class GrwTouristicContentCard {
                   /* @ts-ignore */
 
                   src={touristicContentCategory.pictogram}
+                  alt=""
                 />
               )}
               <div part="touristic-content-category-name" class="touristic-content-category-name">

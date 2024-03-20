@@ -112,7 +112,7 @@ export class GrwTouristicContentDetail {
                             <div part="legend-container" class="legend-container">
                               {legend}
                             </div>
-                            <img part="image" class="image" src={attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
+                            <img part="image" class="image" src={attachment.url} alt={attachment.legend} loading="lazy" onClick={() => this.handleFullscreen()} />
                           </div>
                         );
                       })
@@ -124,6 +124,7 @@ export class GrwTouristicContentDetail {
                         /* @ts-ignore */
 
                         src={defaultImageSrc}
+                        alt=""
                         loading="lazy"
                       />
                     </div>
@@ -141,6 +142,7 @@ export class GrwTouristicContentDetail {
                 /* @ts-ignore */
 
                 src={touristicContentCategory.pictogram}
+                alt=""
               />
               <div part="touristic-content-category-name" class="touristic-content-category-name">
                 {touristicContentCategory.label}

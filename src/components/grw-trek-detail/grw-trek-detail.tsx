@@ -1022,6 +1022,7 @@ export class GrwTrekDetail {
                               part="trek-img"
                               class="trek-img"
                               src={attachment.url}
+                              alt={attachment.legend}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
                               /* @ts-ignore */
@@ -1041,6 +1042,7 @@ export class GrwTrekDetail {
                       /* @ts-ignore */
 
                       src={defaultImageSrc}
+                      alt=""
                       loading="lazy"
                     />
                   )}
@@ -1075,6 +1077,7 @@ export class GrwTrekDetail {
                         /* @ts-ignore */
 
                         src={this.difficulty.pictogram}
+                        alt=""
                       />
                     )}
                     <span part="label" class="label">
@@ -1099,6 +1102,7 @@ export class GrwTrekDetail {
                       /* @ts-ignore */
 
                       src={this.route.pictogram}
+                      alt=""
                     />
                   )}
                   <span part="label" class="label">
@@ -1144,6 +1148,7 @@ export class GrwTrekDetail {
                       /* @ts-ignore */
 
                       src={this.practice.pictogram}
+                      alt=""
                     />
                   )}
                   <span part="label" class="label">
@@ -1161,6 +1166,7 @@ export class GrwTrekDetail {
                           /* @ts-ignore */
 
                           src={currentNetwork.pictogram}
+                          alt=""
                         />
                         <span part="label" class="label">
                           {currentNetwork.label}
@@ -1413,6 +1419,7 @@ export class GrwTrekDetail {
                             /* @ts-ignore */
 
                             src={label.pictogram}
+                            alt=""
                           />
                         )}
                         <div part="label-name" class="label-name" innerHTML={label.name}></div>
@@ -1493,6 +1500,7 @@ export class GrwTrekDetail {
                             /* @ts-ignore */
 
                             src={accessibility.pictogram}
+                            alt=""
                           ></img>
                           <div part="accessibility-name" innerHTML={accessibility.name}></div>
                         </div>
@@ -1645,6 +1653,7 @@ export class GrwTrekDetail {
                           /* @ts-ignore */
 
                           src={weblink.category.pictogram}
+                          alt={weblink.category.label}
                         />
                       )}
                       {weblink.name}
@@ -1667,6 +1676,7 @@ export class GrwTrekDetail {
                           /* @ts-ignore */
 
                           src={source.pictogram}
+                          alt=""
                         />
                       )}
                       <div>

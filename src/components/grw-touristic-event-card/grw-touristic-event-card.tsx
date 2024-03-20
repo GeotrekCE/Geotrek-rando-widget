@@ -130,6 +130,7 @@ export class GrwTouristicEvent {
                             part="touristic-event-img"
                             class={`touristic-event-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                             src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                            alt={attachment.legend}
                             loading="lazy"
                             /* @ts-ignore */
                             onerror={event => {
@@ -149,6 +150,7 @@ export class GrwTouristicEvent {
                         /* @ts-ignore */
 
                         src={defaultImageSrc}
+                        alt=""
                         loading="lazy"
                       />
                     </div>
@@ -170,10 +172,11 @@ export class GrwTouristicEvent {
                 /* @ts-ignore */
 
                 src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                alt={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
               />
             ) : (
-              <img class="image default-touristic-event-img" src={defaultImageSrc} loading="lazy" />
+              <img class="image default-touristic-event-img" src={defaultImageSrc} alt="" loading="lazy" />
             )}
           </div>
           <div part="touristic-event-sub-container" class="touristic-event-sub-container">
@@ -185,6 +188,7 @@ export class GrwTouristicEvent {
                   /* @ts-ignore */
 
                   src={touristicEventType.pictogram}
+                  alt=""
                 />
               )}
               {touristicEventType && touristicEventType.type && (
