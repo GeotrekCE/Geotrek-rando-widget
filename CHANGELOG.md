@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.10.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.10.0...0.10.1) (2024-03-21)
+
+
+### Bug Fixes
+
+* optimize offline ([dbd88a1](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/dbd88a10546af540613d5ffeef0c828a678342b8))
+
+
+### Performance Improvements
+
+* add alt attributes to all images to improve accessibility ([010e9ef](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/010e9efc8c5a5eaf973c8f4253eadd010a466056))
+
 ## [0.10.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/geotrek-rando-widget-0.9.0...geotrek-rando-widget-0.10.0) (2024-03-19)
 
 
