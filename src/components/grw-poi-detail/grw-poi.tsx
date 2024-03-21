@@ -91,6 +91,7 @@ export class GrwPoiDetail {
             /* @ts-ignore */
 
             src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`}
+            alt=""
           />
           <div part="swiper-poi" class="swiper swiper-poi" ref={el => (this.swiperPoiRef = el)}>
             <div part="swiper-wrapper" class="swiper-wrapper">
@@ -103,6 +104,7 @@ export class GrwPoiDetail {
                         part="poi-img"
                         class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                         src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                        alt={attachment.legend}
                         loading="lazy"
                         /* @ts-ignore */
                         onerror={event => {
@@ -122,6 +124,7 @@ export class GrwPoiDetail {
                     /* @ts-ignore */
 
                     src={defaultImageSrc}
+                    alt=""
                     loading="lazy"
                   />
                 </div>

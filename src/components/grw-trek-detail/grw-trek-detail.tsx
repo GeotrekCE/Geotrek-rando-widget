@@ -1040,12 +1040,13 @@ export class GrwTrekDetail {
                                 event.target.className = 'trek-img default-trek-img';
                                 event.target.src = defaultImageSrc;
                               }}
+                              alt={attachment.legend}
                             />
                           </div>
                         );
                       })
                   ) : (
-                    <img part="trek-img" class="trek-img default-trek-img" src={defaultImageSrc} loading="lazy" />
+                    <img part="trek-img" class="trek-img default-trek-img" src={defaultImageSrc} loading="lazy" alt="" />
                   )}
                 </div>
                 <div style={{ display: this.offline ? 'none' : 'flex' }}>
@@ -1071,7 +1072,7 @@ export class GrwTrekDetail {
               <div part="icons-labels-container" class="icons-labels-container">
                 {this.difficulty && (
                   <div part="icon-label" class="icon-label difficulty">
-                    {this.difficulty.pictogram && <img part="icon" class="icon" src={this.difficulty.pictogram} />}
+                    {this.difficulty.pictogram && <img part="icon" class="icon" src={this.difficulty.pictogram} alt="" />}
                     <span part="label" class="label">
                       {this.difficulty.label}
                     </span>
@@ -1084,7 +1085,7 @@ export class GrwTrekDetail {
                   </span>
                 </div>
                 <div part="icon-label" class="icon-label route">
-                  {this.route?.pictogram && <img part="icon" class="icon" src={this.route.pictogram} />}
+                  {this.route?.pictogram && <img part="icon" class="icon" src={this.route.pictogram} alt="" />}
                   <span part="label" class="label">
                     {this.route?.route}
                   </span>
@@ -1112,7 +1113,7 @@ export class GrwTrekDetail {
                   </div>
                 )}
                 <div part="icon-label" class="icon-label practice">
-                  {this.practice?.pictogram && <img part="icon" class="icon" src={this.practice.pictogram} />}
+                  {this.practice?.pictogram && <img part="icon" class="icon" src={this.practice.pictogram} alt="" />}
                   <span part="label" class="label">
                     {this.practice?.name}
                   </span>
@@ -1122,7 +1123,7 @@ export class GrwTrekDetail {
                     const currentNetwork = state.networks.find(network => network.id === networkId);
                     return (
                       <div part="network" class="network">
-                        <img part="icon" class="icon" src={currentNetwork.pictogram} />
+                        <img part="icon" class="icon" src={currentNetwork.pictogram} alt="" />
                         <span part="label" class="label">
                           {currentNetwork.label}
                         </span>
@@ -1348,7 +1349,7 @@ export class GrwTrekDetail {
                   {this.labels.map(label => (
                     <div part="label-container" class="label-container">
                       <div part="label-sub-container" class="label-sub-container">
-                        {label.pictogram && <img src={label.pictogram} />}
+                        {label.pictogram && <img src={label.pictogram} alt="" />}
                         <div part="label-name" class="label-name" innerHTML={label.name}></div>
                       </div>
                       <div part="label-advice" class="label-advice" innerHTML={label.advice}></div>
@@ -1427,6 +1428,7 @@ export class GrwTrekDetail {
                             /* @ts-ignore */
 
                             src={accessibility.pictogram}
+                            alt=""
                           ></img>
                           <div part="accessibility-name" innerHTML={accessibility.name}></div>
                         </div>
@@ -1572,6 +1574,7 @@ export class GrwTrekDetail {
                           /* @ts-ignore */
 
                           src={weblink.category.pictogram}
+                          alt={weblink.category.label}
                         />
                       )}
                       {weblink.name}
@@ -1594,6 +1597,7 @@ export class GrwTrekDetail {
                           /* @ts-ignore */
 
                           src={source.pictogram}
+                          alt=""
                         />
                       )}
                       <div>

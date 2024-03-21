@@ -127,6 +127,7 @@ export class GrwTrekCard {
                   /* @ts-ignore */
 
                   src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                  alt={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                   loading="lazy"
                   /* @ts-ignore */
                   onerror={event => {
@@ -142,6 +143,7 @@ export class GrwTrekCard {
                   /* @ts-ignore */
 
                   src={defaultImageSrc}
+                  alt=""
                   loading="lazy"
                 />
               )}
@@ -167,7 +169,7 @@ export class GrwTrekCard {
               <div part="trek-icons-labels-container" class="trek-icons-labels-container">
                 {this.difficulty && (
                   <div part="trek-icon-label" class="trek-icon-label difficulty">
-                    {this.difficulty.pictogram && <img part="trek-icon" class="trek-icon" src={this.difficulty.pictogram} />}
+                    {this.difficulty.pictogram && <img part="trek-icon" class="trek-icon" src={this.difficulty.pictogram} alt="" />}
                     <span part="trek-label" class="trek-label">
                       {this.difficulty.label}
                     </span>
@@ -194,13 +196,13 @@ export class GrwTrekCard {
                 {!this.isStep && (
                   <Fragment>
                     <div part="trek-icon-label" class="trek-icon-label route">
-                      {this.route?.pictogram && <img part="trek-icon" class="trek-icon" src={this.route.pictogram} />}
+                      {this.route?.pictogram && <img part="trek-icon" class="trek-icon" src={this.route.pictogram} alt="" />}
                       <span part="trek-label" class="trek-label">
                         {this.route?.route}
                       </span>
                     </div>
                     <div part="trek-icon-label" class="trek-icon-label practice">
-                      {this.practice?.pictogram && <img part="trek-icon" class="trek-icon" src={this.practice.pictogram} />}
+                      {this.practice?.pictogram && <img part="trek-icon" class="trek-icon" src={this.practice.pictogram} alt="" />}
                       <span part="trek-label" class="trek-label">
                         {this.practice?.name}
                       </span>

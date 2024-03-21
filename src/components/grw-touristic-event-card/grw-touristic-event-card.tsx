@@ -140,6 +140,7 @@ export class GrwTouristicEvent {
                               event.target.src = defaultImageSrc;
                             }}
                             onClick={() => this.handleFullscreen()}
+                            alt={attachment.legend}
                           />
                         </div>
                       ))
@@ -151,6 +152,7 @@ export class GrwTouristicEvent {
                         /* @ts-ignore */
 
                         src={defaultImageSrc}
+                        alt=""
                         loading="lazy"
                       />
                     </div>
@@ -172,10 +174,11 @@ export class GrwTouristicEvent {
                 /* @ts-ignore */
 
                 src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                alt={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
               />
             ) : (
-              <img class="image default-touristic-event-img" src={defaultImageSrc} loading="lazy" />
+              <img class="image default-touristic-event-img" src={defaultImageSrc} alt="" loading="lazy" />
             )}
           </div>
           <div part="touristic-event-sub-container" class="touristic-event-sub-container">
@@ -187,6 +190,7 @@ export class GrwTouristicEvent {
                   /* @ts-ignore */
 
                   src={touristicEventType.pictogram}
+                  alt=""
                 />
               )}
               {touristicEventType && touristicEventType.type && (

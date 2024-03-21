@@ -112,7 +112,7 @@ export class GrwTouristicEventDetail {
                             <div part="legend-container" class="legend-container">
                               {legend}
                             </div>
-                            <img part="image" class="image" src={this.offline ? attachment.thumbnail : attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} />
+                            <img part="image" class="image" src={this.offline ? attachment.thumbnail : attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} alt={attachment.legend} />
                           </div>
                         );
                       })

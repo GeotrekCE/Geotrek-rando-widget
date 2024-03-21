@@ -57,6 +57,7 @@ export class GrwInformationDeskDetail {
               part="information-desk-img"
               class="information-desk-img"
               src={this.informationDesk.photo_url}
+              alt={this.informationDesk.name}
               loading="lazy"
               /* @ts-ignore */
               onerror={event => {
