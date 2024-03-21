@@ -3,7 +3,7 @@ import zlib from 'zlib';
 import glob from 'glob';
 
 const precompress = async () => {
-  const files = await glob('dist/**/*.{js,css,svg}');
+  const files = await glob('dist/**/*.{js,css,svg,ttf}');
   files.forEach(file => {
     fs.writeFileSync(
       `${file}.br`,
