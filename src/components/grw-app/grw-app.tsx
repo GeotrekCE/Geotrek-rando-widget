@@ -1,7 +1,9 @@
+import { Capacitor } from '@capacitor/core';
 import { Component, Host, h, Listen, State, Prop, Element, Watch, Event, EventEmitter, Fragment } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { reset } from 'store/store';
-import { handleTreksFiltersAndSearch } from 'utils/utils';
+import { handleTreksFiltersAndSearch, imagesRegExp, revokeObjectURL } from 'utils/utils';
+import ArrowBackIcon from '../../assets/arrow-back.svg';
 
 @Component({
   tag: 'grw-app',
@@ -279,6 +281,13 @@ export class GrwApp {
 
   handleBackButton() {
     if (window.history.state && window.history.state.isInitialHistoryWithDetails) {
+      if (state.currentTrek.offline && !Capacitor.isNativePlatform()) {
+        revokeObjectURL(state.currentPois, imagesRegExp, ['url']);
+        revokeObjectURL(state.trekTouristicEvents, imagesRegExp, ['url']);
+        revokeObjectURL(state.trekTouristicContents, imagesRegExp, ['url']);
+        revokeObjectURL(state.currentInformationDesks, imagesRegExp);
+        revokeObjectURL(state.currentTrek, imagesRegExp, ['url']);
+      }
       this.onDetailsClose();
       const url = new URL(window.location.toString());
       url.searchParams.delete('trek');
@@ -561,10 +570,7 @@ export class GrwApp {
               ) : (
                 <div class="grw-arrow-back-container">
                   <button onClick={() => this.handleBackButton()} class="grw-arrow-back-icon">
-                    {/* @ts-ignore */}
-                    <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                      arrow_back
-                    </span>
+                    <span part="icon" class="icon" innerHTML={ArrowBackIcon}></span>
                   </button>
                 </div>
               )}

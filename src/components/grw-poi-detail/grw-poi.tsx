@@ -27,7 +27,9 @@ export class GrwPoiDetail {
 
   @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
   onTrekDownloadedSuccessConfirm() {
-    this.swiperPoi.slideTo(0);
+    if (this.swiperPoi) {
+      this.swiperPoi.slideTo(0);
+    }
     this.offline = true;
   }
 

@@ -3,7 +3,7 @@ import { getAllDataInStore } from 'services/grw-db.service';
 import { getDistricts, getTreksList, trekIsAvailableOffline } from 'services/treks.service';
 import state from 'store/store';
 import { Treks } from 'types/types';
-import { durations, elevations, lengths } from 'utils/utils';
+import { durations, elevations, imagesRegExp, lengths, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-treks-provider',
@@ -56,39 +56,18 @@ export class GrwTreksProvider {
   }
 
   async handleOfflineTreks(treks: Treks) {
-    if (!state.difficulties) {
-      state.difficulties = await getAllDataInStore('difficulties');
-    }
-    if (!state.routes) {
-      state.routes = await getAllDataInStore('routes');
-    }
-    if (!state.practices) {
-      state.practices = await getAllDataInStore('practices');
-    }
-    if (!state.themes) {
-      state.themes = await getAllDataInStore('themes');
-    }
-    if (!state.cities) {
-      state.cities = await getAllDataInStore('cities');
-    }
-    if (!state.accessibilities) {
-      state.accessibilities = await getAllDataInStore('accessibilities');
-    }
-    if (!state.labels) {
-      state.labels = await getAllDataInStore('labels');
-    }
-    if (!state.districts) {
-      state.districts = await getAllDataInStore('districts');
-    }
-    if (!state.durations) {
-      state.durations = durations;
-    }
-    if (!state.lengths) {
-      state.lengths = lengths;
-    }
-    if (!state.elevations) {
-      state.elevations = elevations;
-    }
+    state.difficulties = await this.handleOfflineProperty('difficulties');
+    state.routes = await this.handleOfflineProperty('routes');
+    state.practices = await this.handleOfflineProperty('practices');
+    state.themes = await this.handleOfflineProperty('themes');
+    state.cities = await this.handleOfflineProperty('cities');
+    state.accessibilities = await this.handleOfflineProperty('accessibilities');
+    state.labels = await this.handleOfflineProperty('labels');
+    state.districts = await this.handleOfflineProperty('districts');
+    state.durations = durations;
+    state.lengths = lengths;
+    state.elevations = elevations;
+    treks = await this.handleOfflineProperty('treks');
     this.sortTreks(treks);
     state.treks = treks;
     state.currentTreks = treks;
@@ -101,6 +80,12 @@ export class GrwTreksProvider {
         sensitivity: 'base',
       });
     });
+  }
+
+  async handleOfflineProperty(property, exclude: string[] = []) {
+    const data = await getAllDataInStore(property);
+    await setFilesFromStore(data, imagesRegExp, exclude);
+    return data as any;
   }
 
   handleOnlineTreks() {

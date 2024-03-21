@@ -1,5 +1,6 @@
 import { Config } from '@stencil/core';
 import { sass } from '@stencil/sass';
+import { inlineSvg } from 'stencil-inline-svg';
 
 export const config: Config = {
   hydratedFlag: {
@@ -33,7 +34,7 @@ export const config: Config = {
       serviceWorker: null, // disable service workers
     },
   ],
-  plugins: [sass()],
+  plugins: [sass(), inlineSvg()],
   globalStyle: 'src/global/global.scss',
   sourceMap: true,
 };

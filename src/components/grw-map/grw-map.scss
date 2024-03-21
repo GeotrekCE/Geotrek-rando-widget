@@ -3,10 +3,6 @@
 @use '~@raruto/leaflet-elevation/dist/leaflet-elevation.min.css';
 @use '~leaflet.markercluster/dist/MarkerCluster.css';
 
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-}
-
 #map {
   position: relative;
   font-family: var(--font-family);

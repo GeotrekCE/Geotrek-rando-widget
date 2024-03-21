@@ -280,16 +280,18 @@ export const elevations = [
   { id: 2, name: '500m - 1km', minValue: 500, maxValue: 1000, selected: false },
 ];
 
-export function getFilesToStore(value: Object, regExp: RegExp, onlyFirstArrayFile = false): string[] {
+export function getFilesToStore(value: Object, regExp: RegExp, onlyFirstArrayFile = false, exclude: string[] = []): string[] {
   const filesToStore: any[] = [];
   for (const keyValue of Object.keys(value)) {
     if (value[keyValue]) {
       if (typeof value[keyValue] === 'object' && (!Array.isArray(value[keyValue]) || !onlyFirstArrayFile)) {
-        filesToStore.push(...getFilesToStore(value[keyValue], regExp));
+        filesToStore.push(...getFilesToStore(value[keyValue], regExp, onlyFirstArrayFile, exclude));
       } else if (typeof value[keyValue] === 'string' && regExp.test(value[keyValue].toLowerCase())) {
-        filesToStore.push(value[keyValue]);
+        if (!exclude.includes(keyValue)) {
+          filesToStore.push(value[keyValue]);
+        }
       } else if (typeof value[keyValue] === 'object' && Array.isArray(value[keyValue]) && onlyFirstArrayFile && value[keyValue].length > 0) {
-        filesToStore.push(...getFilesToStore(value[keyValue][0], regExp));
+        filesToStore.push(...getFilesToStore(value[keyValue][0], regExp, onlyFirstArrayFile, exclude));
       }
     }
   }
@@ -297,24 +299,43 @@ export function getFilesToStore(value: Object, regExp: RegExp, onlyFirstArrayFil
   return [...new Set(filesToStore)];
 }
 
-export async function setFilesFromStore(value: Object, regExp: RegExp) {
+export async function setFilesFromStore(value: Object, regExp: RegExp, exclude: string[] = []) {
   for (const keyValue of Object.keys(value)) {
     if (value[keyValue]) {
       if (typeof value[keyValue] === 'object') {
         await setFilesFromStore(value[keyValue], regExp);
       } else if (typeof value[keyValue] === 'string' && regExp.test(value[keyValue].toLowerCase())) {
-        if (!Capacitor.isNativePlatform()) {
+        if (!exclude.includes(keyValue)) {
+          if (!Capacitor.isNativePlatform()) {
+            const image = await getFileInStore(value[keyValue]);
+            if (image) {
+              value[keyValue] = window.URL.createObjectURL(image.data as Blob);
+            }
+          } else {
+            const image = await Filesystem.getUri({
+              path: value[keyValue],
+              directory: Directory.Data,
+            });
+            if (image) {
+              value[keyValue] = Capacitor.convertFileSrc(image.uri);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+export async function revokeObjectURL(value: Object, regExp: RegExp, exclude: string[] = []) {
+  for (const keyValue of Object.keys(value)) {
+    if (!exclude.includes(keyValue)) {
+      if (value[keyValue]) {
+        if (typeof value[keyValue] === 'object') {
+          await setFilesFromStore(value[keyValue], regExp);
+        } else if (typeof value[keyValue] === 'string' && regExp.test(value[keyValue].toLowerCase())) {
           const image = await getFileInStore(value[keyValue]);
           if (image) {
-            value[keyValue] = window.URL.createObjectURL(image.data as Blob);
-          }
-        } else {
-          const image = await Filesystem.getUri({
-            path: value[keyValue],
-            directory: Directory.Data,
-          });
-          if (image) {
-            value[keyValue] = Capacitor.convertFileSrc(image.uri);
+            URL.revokeObjectURL(value[keyValue]);
           }
         }
       }

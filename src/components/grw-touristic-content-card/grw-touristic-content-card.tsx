@@ -31,7 +31,9 @@ export class GrwTouristicContentCard {
 
   @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
   onTrekDownloadedSuccessConfirm() {
-    this.swiperTouristicContent.slideTo(0);
+    if (this.swiperTouristicContent) {
+      this.swiperTouristicContent.slideTo(0);
+    }
     this.offline = true;
   }
 
@@ -128,8 +130,7 @@ export class GrwTouristicContentCard {
                           <img
                             part="touristic-content-img"
                             class={`touristic-content-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
-                            src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
-                            alt={attachment.legend}
+                            src={this.displayFullscreen ? (this.offline ? attachment.thumbnail : attachment.url) : attachment.thumbnail}
                             loading="lazy"
                             /* @ts-ignore */
                             onerror={event => {
@@ -138,6 +139,7 @@ export class GrwTouristicContentCard {
                               event.target.src = defaultImageSrc;
                             }}
                             onClick={() => this.handleFullscreen()}
+                            alt={attachment.legend}
                           />
                         </div>
                       ))

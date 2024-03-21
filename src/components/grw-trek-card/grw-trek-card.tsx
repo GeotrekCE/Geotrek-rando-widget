@@ -3,6 +3,10 @@ import { trekIsAvailableOffline } from 'services/treks.service';
 import state, { onChange } from 'store/store';
 import { City, Difficulty, Practice, Route, Themes, Trek } from 'types/types';
 import { formatDuration, formatLength, formatAscent } from 'utils/utils';
+import OfflinePinIcon from '../../assets/offline_pin.svg';
+import TimelapseIcon from '../../assets/timelapse.svg';
+import OpenInFullIcon from '../../assets/open_in_full.svg';
+import MovingIcon from '../../assets/moving.svg';
 
 @Component({
   tag: 'grw-trek-card',
@@ -83,6 +87,7 @@ export class GrwTrekCard {
 
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
+
     return (
       <Host
         style={{
@@ -112,10 +117,7 @@ export class GrwTrekCard {
             <div part="trek-img-container" class="trek-img-container">
               {this.isAvailableOffline && (
                 <div part="offline-indicator" class="offline-indicator">
-                  {/* @ts-ignore */}
-                  <span translate={false} part="icon" class="material-symbols material-symbols-outlined icon">
-                    offline_pin
-                  </span>
+                  <span part="icon" class="icon" innerHTML={OfflinePinIcon}></span>
                 </div>
               )}
               {this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
@@ -167,44 +169,26 @@ export class GrwTrekCard {
               <div part="trek-icons-labels-container" class="trek-icons-labels-container">
                 {this.difficulty && (
                   <div part="trek-icon-label" class="trek-icon-label difficulty">
-                    {this.difficulty.pictogram && (
-                      <img
-                        part="trek-icon"
-                        class="trek-icon"
-                        /* @ts-ignore */
-
-                        src={this.difficulty.pictogram}
-                        alt=""
-                      />
-                    )}
+                    {this.difficulty.pictogram && <img part="trek-icon" class="trek-icon" src={this.difficulty.pictogram} alt="" />}
                     <span part="trek-label" class="trek-label">
                       {this.difficulty.label}
                     </span>
                   </div>
                 )}
                 <div part="trek-icon-label" class="trek-icon-label duration">
-                  {/* @ts-ignore */}
-                  <span part="trek-icon" class="trek-icon material-symbols material-symbols-outlined" translate={false}>
-                    timelapse
-                  </span>
+                  <span part="trek-icon" class="trek-icon" innerHTML={TimelapseIcon}></span>
                   <span part="trek-label" class="trek-label">
                     {formatDuration(this.currentTrek.duration)}
                   </span>
                 </div>
                 <div part="trek-icon-label" class="trek-icon-label length">
-                  {/* @ts-ignore */}
-                  <span part="trek-icon" class="trek-icon material-symbols material-symbols-outlined" translate={false}>
-                    open_in_full
-                  </span>
+                  <span part="trek-icon" class="trek-icon" innerHTML={OpenInFullIcon}></span>
                   <span part="trek-label" class="trek-label">
                     {formatLength(this.currentTrek.length_2d)}
                   </span>
                 </div>
                 <div part="trek-icon-label" class="trek-icon-label ascent">
-                  {/* @ts-ignore */}
-                  <span part="trek-icon" class="trek-icon material-symbols material-symbols-outlined" translate={false}>
-                    moving
-                  </span>
+                  <span part="trek-icon" class="trek-icon" innerHTML={MovingIcon}></span>
                   <span part="trek-label" class="trek-label">
                     {formatAscent(this.currentTrek.ascent)}
                   </span>
@@ -212,31 +196,13 @@ export class GrwTrekCard {
                 {!this.isStep && (
                   <Fragment>
                     <div part="trek-icon-label" class="trek-icon-label route">
-                      {this.route?.pictogram && (
-                        <img
-                          part="trek-icon"
-                          class="trek-icon"
-                          /* @ts-ignore */
-
-                          src={this.route.pictogram}
-                          alt=""
-                        />
-                      )}
+                      {this.route?.pictogram && <img part="trek-icon" class="trek-icon" src={this.route.pictogram} alt="" />}
                       <span part="trek-label" class="trek-label">
                         {this.route?.route}
                       </span>
                     </div>
                     <div part="trek-icon-label" class="trek-icon-label practice">
-                      {this.practice?.pictogram && (
-                        <img
-                          part="trek-icon"
-                          class="trek-icon"
-                          /* @ts-ignore */
-
-                          src={this.practice.pictogram}
-                          alt=""
-                        />
-                      )}
+                      {this.practice?.pictogram && <img part="trek-icon" class="trek-icon" src={this.practice.pictogram} alt="" />}
                       <span part="trek-label" class="trek-label">
                         {this.practice?.name}
                       </span>

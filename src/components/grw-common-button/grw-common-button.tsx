@@ -1,4 +1,6 @@
 import { Component, Host, Prop, h } from '@stencil/core';
+import RefreshIcon from '../../assets/refresh.svg';
+import FilterListIcon from '../../assets/filter_list.svg';
 
 @Component({
   tag: 'grw-common-button',
@@ -20,10 +22,7 @@ export class GrwCommonButton {
         }}
       >
         <button part="common-button" class="common-button" onClick={() => this.action()}>
-          {/* @ts-ignore */}
-          <span part="common-button-icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-            {this.icon}
-          </span>
+          <span part="common-button-icon" class="icon" innerHTML={this.icon === 'refresh' ? RefreshIcon : FilterListIcon}></span>
           <span part="common-button-label" class="label">
             {this.name}
           </span>

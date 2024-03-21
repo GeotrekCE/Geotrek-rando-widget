@@ -1,16 +1,8 @@
-.material-symbols {
-  font-family: 'Material Symbols Outlined';
-}
-
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-}
-
 :host {
   display: flex;
   align-items: center;
   .icon {
-    font-size: 18px;
+    display: flex;
   }
   #language-select {
     border: none;

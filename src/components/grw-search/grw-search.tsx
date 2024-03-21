@@ -1,6 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import state from 'store/store';
 import { handleTouristicContentsFiltersAndSearch, handleTouristicEventsFiltersAndSearch, handleTreksFiltersAndSearch } from 'utils/utils';
+import SearchIcon from '../../assets/search.svg';
 
 @Component({
   tag: 'grw-search',
@@ -28,10 +29,7 @@ export class GrwSearch {
           '--font-family': this.fontFamily,
         }}
       >
-        {/* @ts-ignore */}
-        <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-          search
-        </span>
+        <span part="icon" class="icon" innerHTML={SearchIcon}></span>
         <input part="search-input" class="search-input" onInput={e => this.onSearchChange(e)} type="search" placeholder="Rechercher" value={state.searchValue}></input>
       </Host>
     );
