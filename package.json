@@ -67,7 +67,8 @@
     "glob": "^9.3.4",
     "stencil-inline-svg": "^1.1.0",
     "typescript": "^5.4.2",
-    "vitepress": "^1.0.0-rc.45"
+    "vitepress": "^1.0.0-rc.45",
+    "workbox-build": "^4.3.1"
   },
   "author": "bastien.alvez@makina-corpus.com",
   "license": "MIT"
