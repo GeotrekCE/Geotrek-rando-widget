@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.11.0...0.11.1) (2024-03-21)
+
+
+### Bug Fixes
+
+* handle roboto from assets ([1310ce9](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/1310ce939dc7e1328fb9a49b4524a07c808f274a))
+
 ## [0.11.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.10.1...0.11.0) (2024-03-21)
 
 
