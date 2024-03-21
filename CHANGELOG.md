@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.11.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.10.1...0.11.0) (2024-03-21)
+
+
+### Features
+
+* create sw on www target ([cb5558b](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/cb5558b0bd9a7b68ac24e73e624f2be2de6ee0e3))
+
+
+### Bug Fixes
+
+* handle roboto from assets ([85ba81f](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/85ba81f710183ce0b4e2988ed4112ac11d858a66))
+
 ## [0.10.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.10.0...0.10.1) (2024-03-21)
 
 
