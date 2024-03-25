@@ -103,6 +103,13 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         ],
       },
       {
+        text: 'Extras',
+        collapsed: true,
+        items: [
+          { text: 'Progressive web app', link: '/documentation/extras/progressive-web-app' },
+        ],
+      },
+      {
         text: 'Exemples',
         collapsed: true,
         items: [
