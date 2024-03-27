@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.8.1...v0.8.2) (2024-03-27)
+
+
+### Bug Fixes
+
+* add parts on leaflet html ([3958a7e](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/3958a7e1f3e6e34304d3a8287405ee6f3d5568e1))
+
 ## [0.8.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.8.0...0.8.1) (2024-03-07)
 
 
