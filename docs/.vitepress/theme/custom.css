@@ -1,20 +1,20 @@
 :root {
-  --vp-c-brand-1: #b9cb46;
+  --vp-c-brand-1: #68750b;
   --vp-c-brand-2: #b2c24f;
-  --vp-button-brand-bg: #b9cb46;
+  --vp-button-brand-bg: #68750b;
 }
 
 .dark {
-  --vp-c-brand-1: #b9cb46;
+  --vp-c-brand-1: #68750b;
   --vp-c-brand-2: #b2c24f;
-  --vp-button-brand-bg: #b9cb46;
+  --vp-button-brand-bg: #68750b;
 }
 
 #advanced-customization-result-container {
   grw-treks-list::part(trek-card) {
-    background-color: #ff0000;
+    background-color: #388385;
   }
   grw-trek-detail::part(trek-name) {
-    color: #ff0000;
+    color: #388385;
   }
 }
