@@ -6,7 +6,7 @@ Le widget peut être facilement testé et configuré à l'aide d'un outil de con
 
 Voici les différentes étapes à suivre :
 
-1. L'API doit au préalable autoriser les requêtes issues de geotrekce.github.io
+1. L'API doit au préalable autoriser les requêtes issues de `geotrekce.github.io`
 
 2. Adapter le code du widget dans le Storybook en éditant les controls : changer le fond de plan cartographique, les couleurs, la langue, l'attribution, l'API, les paramètres de requête
 

@@ -67,7 +67,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         items: [
           { text: 'Les couleurs', link: '/documentation/theme/colors' },
           { text: 'Responsive design', link: '/documentation/theme/responsive-design' },
-          { text: 'Personnalisations avancées', link: '/documentation/theme/advanced-customization' },
+          { text: 'Personnalisation avancée', link: '/documentation/theme/advanced-customization' },
           { text: 'Paramètres supplémentaires', link: '/documentation/theme/additional-settings' },
         ],
       },
