@@ -47,6 +47,8 @@ La balise `grw-app` peut embarquer de nombreux paramètres mais les seuls obliga
 - `api`
 - `name-layer`, `url-layer`, `attribution-layer`
 
+
+
 ## Description des éléments
 
 
@@ -95,26 +97,28 @@ Ce tableau liste l'ensemble des paramètres inhérents aux fonds de plan (fond d
 
 Ce tableau liste l'ensemble des paramètres permettant de personnaliser un thème (couleurs, police). Les paramètres reprennent les variables de [material ui](https://m3.material.io/styles/color/roles).
 
+
 | Property                    | Attribute                       | Description | Type      | Default     |
 | --------------------------- | ------------------------------- | ----------- | --------- | ----------- |
-| `colorBackground`           | `color-background`              |   Couleur d'arrière-plan          | `string`  | `'#fef7ff'` |
-| `colorPrimary`              | `color-primary`                 |   Couleur affichée le plus souvent sur les fenêtres et composants les plus importants          | `string`  | `'#6750a4'` |
-| `colorPrimaryContainer`     | `color-primary-container`       |  Couleur de remplissage du fond pour les composants les plus importants           | `string`  | `'#eaddff'` |
-| `colorOnPrimary`            | `color-on-primary`              |   Couleur utilisée pour le texte et les icônes par rapport à la couleur de remplissage principale          | `string`  | `'#ffffff'` |
-| `colorOnPrimaryContainer`   | `color-on-primary-container`    | Couleur appliquée au contenu (icônes, texte, etc.) qui se trouve au-dessus du conteneur principal            | `string`  | `'#21005e'` |
-| `colorSecondaryContainer`   | `color-secondary-container`     |  Couleur secondaire de remplissage      | `string`  | `'#e8def8'` |
-| `colorOnSecondaryContainer` | `color-on-secondary-container`  |   Couleur utilisée pour les textes et icônes sur le conteneur secondaire          | `string`  | `'#1d192b'` |
-| `colorSurface`              | `color-surface`                 |    Couleur par défaut pour les fonds des éléments       | `string`  | `'#1c1b1f'` |
-| `colorSurfaceContainerHigh` | `color-surface-container-high`  |  Couleur du conteneur fortement accentuée           | `string`  | `'#ece6f0'` |
-| `colorSurfaceContainerLow`  | `color-surface-container-low`   |  Couleur du conteneur faiblement accentuée           | `string`  | `'#f7f2fa'` |
-| `colorSurfaceVariant`       | `color-surface-variant`         |  Variante de la couleur de surface           | `string`  | `'#fef7ff'` |
-| `colorOnSurface`            | `color-on-surface`              |  Couleur utilisée pour le texte et les icônes lorsqu’elle est dessinée au-dessus de la couleur de surface           | `string`  | `'#49454e'` |
-| `colorOnSurfaceVariant`     | `color-on-surface-variant`      |   Couleur utilisée pour le texte et les icônes lorsqu’elle est dessinée au-dessus de la variante de la couleur de surface         | `string`  | `'#1c1b1f'` |
-| `fabBackgroundColor`        | `fab-background-color`          |   Couleur de fond du bouton flottant d'action (voir la carte / voir la liste) affiché au format mobile et tablette         | `string`  | `'#eaddff'` |
-| `fabColor`                  | `fab-color`                     |   Couleur du bouton flottant d'action affiché au format mobile et tablette          | `string`  | `'#21005d'` |
-| `colorTrekLine`             | `color-trek-line`               |  Couleur du tracé des itinéraires sur la carte           | `string`  | `'#6b0030'` |
-| `colorSensitiveArea`        | `color-sensitive-area`          |     Couleur des zones sensibles sur la carte et sur la fiche détaillée d'un itinéraire        | `string`  | `'#4974a5'` |
-| `colorPoiIcon`              | `color-poi-icon`                |    Couleur de fond des POIs sur la carte         | `string`  | `'#974c6e'` |
+| `colorBackground`           | `color-background`              |   Couleur d'arrière-plan          | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #CBB6EC; width:12px; height:12px;margin-right:6px"> </div><code>#CBB6EC</code></div> |
+| `colorPrimary`              | `color-primary`                 |   Couleur affichée le plus souvent sur les fenêtres et composants les plus importants          | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #6750a4; width:12px; height:12px;margin-right:6px"> </div><code>#6750a4</code></div> |
+| `colorPrimaryContainer`     | `color-primary-container`       |  Couleur de remplissage du fond pour les composants les plus importants           | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #eaddff; width:12px; height:12px;margin-right:6px"> </div><code>#eaddff</code></div> |
+| `colorOnPrimary`            | `color-on-primary`              |   Couleur utilisée pour le texte et les icônes par rapport à la couleur de remplissage principale          | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #ffffff; width:12px; height:12px;margin-right:6px"> </div><code>#ffffff</code></div> |
+| `colorOnPrimaryContainer`   | `color-on-primary-container`    | Couleur appliquée au contenu (icônes, texte, etc.) qui se trouve au-dessus du conteneur principal            | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #21005e; width:12px; height:12px;margin-right:6px"> </div><code>#21005e</code></div> |
+| `colorSecondaryContainer`   | `color-secondary-container`     |  Couleur secondaire de remplissage      | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #e8def8; width:12px; height:12px;margin-right:6px"> </div><code>#e8def8</code></div> |
+| `colorOnSecondaryContainer` | `color-on-secondary-container`  |   Couleur utilisée pour les textes et icônes sur le conteneur secondaire          | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #1d192b; width:12px; height:12px;margin-right:6px"> </div><code>#1d192b</code></div> |
+| `colorSurface`              | `color-surface`                 |    Couleur par défaut pour les fonds des éléments       | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #1c1b1f; width:12px; height:12px;margin-right:6px"> </div><code>#1c1b1f</code></div>|
+| `colorSurfaceContainerHigh` | `color-surface-container-high`  |  Couleur du conteneur fortement accentuée           | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #AE9ACD; width:12px; height:12px;margin-right:6px"> </div><code>#AE9ACD</code></div> |
+| `colorSurfaceContainerLow`  | `color-surface-container-low`   |  Couleur du conteneur faiblement accentuée           | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #D3CAE1; width:12px; height:12px;margin-right:6px"> </div><code>#D3CAE1</code></div> |
+| `colorSurfaceVariant`       | `color-surface-variant`         |  Variante de la couleur de surface           | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #B48AF5; width:12px; height:12px;margin-right:6px"> </div><code>#B48AF5</code></div> |
+| `colorOnSurface`            | `color-on-surface`              |  Couleur utilisée pour le texte et les icônes lorsqu’elle est dessinée au-dessus de la couleur de surface           | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #49454e; width:12px; height:12px;margin-right:6px"> </div><code>#49454e</code></div> |
+| `colorOnSurfaceVariant`     | `color-on-surface-variant`      |   Couleur utilisée pour le texte et les icônes lorsqu’elle est dessinée au-dessus de la variante de la couleur de surface         | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #1c1b1f; width:12px; height:12px;margin-right:6px"> </div><code>#1c1b1f</code></div> |
+| `fabBackgroundColor`        | `fab-background-color`          |   Couleur de fond du bouton flottant d'action (voir la carte / voir la liste) affiché au format mobile et tablette         | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #eaddff; width:12px; height:12px;margin-right:6px"> </div><code>#eaddff</code></div> |
+| `fabColor`                  | `fab-color`                     |   Couleur du bouton flottant d'action affiché au format mobile et tablette          | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #21005d; width:12px; height:12px;margin-right:6px"> </div><code>#21005d</code></div> |
+| `colorTrekLine`             | `color-trek-line`               |  Couleur du tracé des itinéraires sur la carte           | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #6b0030; width:12px; height:12px;margin-right:6px"> </div><code>#6b0030</code></div> |
+| `colorSensitiveArea`        | `color-sensitive-area`          |     Couleur des zones sensibles sur la carte et sur la fiche détaillée d'un itinéraire        | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #4974a5; width:12px; height:12px;margin-right:6px"> </div><code>#4974a5</code></div> |
+| `colorPoiIcon`              | `color-poi-icon`                |    Couleur de fond des POIs sur la carte         | `string`  | <div style="display:flex;align-items: center;"><div style="background-color: #974c6e; width:12px; height:12px;margin-right:6px"> </div><code>#974c6e</code></div> |
 | `fontFamily`                | `font-family`                   |   Police des contenus         | `string`  | `'Roboto'`  |
 | `rounded`                   | `rounded`                       |  Arrondir les bordures sur les principaux composants           | `boolean` | `true`      |
 
+Pour retrouver l'intégralité des propriétés de `grw-app` se référer à la [page du projet](https://github.com/GeotrekCE/Geotrek-rando-widget/tree/main/src/components/grw-app) 
