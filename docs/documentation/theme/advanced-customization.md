@@ -38,7 +38,7 @@ Ce dernier étant indépendant, il n'est donc pas possible de personnaliser un a
 
 ```css
 .container .element {
-  background-color: #ff0000;
+  background-color: #FFFFFF;
 }
 ```
 
@@ -48,7 +48,7 @@ Par conséquent, si l'on veut personnaliser la balise `grw-card` et qu'on l'util
 
 ```css
 grw-trek-card::part(trek-name) {
-  background-color: #ff0000;
+  background-color: #FFFFFF;
 }
 ```
 
@@ -56,7 +56,7 @@ En revanche, si l'on utilise la balise `grw-treks-list` qui affiche une liste de
 
 ```css
 grw-treks-list::part(trek-name) {
-  background-color: #ff0000;
+  background-color: #FFFFFF;
 }
 ```
 
@@ -74,11 +74,11 @@ Cet exemple illustre le changement de la couleur de fond du composant `grw-trek-
 
 ```css
 grw-treks-list::part(trek-card) {
-  background-color: #ff0000;
+  background-color: #FFFFFF;
 }
 
 grw-trek-detail::part(trek-name) {
-  color: #ff0000;
+  color: #000000;
 }
 ```
 
