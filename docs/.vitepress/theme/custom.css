@@ -12,9 +12,9 @@
 
 #advanced-customization-result-container {
   grw-treks-list::part(trek-card) {
-    background-color: #388385;
+    background-color: #FFFFFF;
   }
   grw-trek-detail::part(trek-name) {
-    color: #388385;
+    color: #000000;
   }
 }
