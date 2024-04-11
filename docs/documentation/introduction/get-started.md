@@ -36,7 +36,9 @@ Voici les différentes étapes à suivre :
 ```
 
  ::: tip
-  Dans le cadre d'un environnement en production, il est préférable d'indiquer le numéro de la version (exemple : `https://rando-widget.geotrek.fr/0.13.0/dist/geotrek-rando-widget/geotrek-rando-widget.css`) plutôt que `latest` afin d'éviter les régressions.
+  - Utiliser le tag `latest` permet de bénéficier de la dernière version à jour du widget. 
+
+  - Il peut cependant être préférable d'indiquer le numéro de la version (exemple : `https://rando-widget.geotrek.fr/0.13.0/dist/geotrek-rando-widget/geotrek-rando-widget.css`) plutôt que `latest` afin de figer une version précise du widget en production pour conserver un comportement stable et éviter les breaking changes.
 
 :::
 
