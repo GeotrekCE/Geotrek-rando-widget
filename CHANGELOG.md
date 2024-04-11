@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.12.1...0.13.0) (2024-04-11)
+
+
+### Features
+
+* add color-clusters and color-markers properties ([9c0f055](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/9c0f055840696d2881f9becb45d62b50a9ebc32a))
+
 ## [0.12.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.12.0...0.12.1) (2024-04-11)
 
 
