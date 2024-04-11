@@ -29,6 +29,13 @@ import {
   Ratings,
   RatingsScale,
   Networks,
+  OutdoorSites,
+  OutdoorCourses,
+  OutdoorSiteTypes,
+  OutdoorPractices,
+  OutdoorSite,
+  OutdoorCourse,
+  OutdoorCourseTypes,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -53,6 +60,8 @@ const { state, onChange, reset } = createStore<{
   sources: Sources;
   ratings: Ratings;
   ratingsScale: RatingsScale;
+  outdoorRatings: Ratings;
+  outdoorRatingsScale: RatingsScale;
   accessibilities: Accessibilities;
   accessibilitiesLevel: AccessibilitiesLevel;
   poiTypes: PoiTypes;
@@ -93,7 +102,22 @@ const { state, onChange, reset } = createStore<{
   themesFromProviders: string;
   routesFromProviders: string;
   practicesFromProviders: string;
+  labelsFromProviders: string;
   offlineTreks: boolean;
+  currentOutdoorSites: OutdoorSites;
+  outdoorSites: OutdoorSites;
+  outdoorSitesWithinBounds: OutdoorSites;
+  currentOutdoorCourses: OutdoorCourses;
+  outdoorCourses: OutdoorCourses;
+  outdoorSiteTypes: OutdoorSiteTypes;
+  outdoorPractices: OutdoorPractices;
+  selectedOutdoorSiteId: number;
+  currentOutdoorSite: OutdoorSite;
+  currentRelatedOutdoorSites: OutdoorSites;
+  currentRelatedOutdoorCourses: OutdoorCourses;
+  selectedOutdoorCourseId: number;
+  outdoorCourseTypes: OutdoorCourseTypes;
+  currentOutdoorCourse: OutdoorCourse;
 }>({
   mode: null,
   api: null,
@@ -156,7 +180,24 @@ const { state, onChange, reset } = createStore<{
   themesFromProviders: null,
   routesFromProviders: null,
   practicesFromProviders: null,
+  labelsFromProviders: null,
   offlineTreks: false,
+  currentOutdoorSites: null,
+  outdoorSites: null,
+  outdoorSitesWithinBounds: null,
+  currentOutdoorCourses: null,
+  outdoorCourses: null,
+  outdoorSiteTypes: null,
+  outdoorPractices: null,
+  selectedOutdoorSiteId: null,
+  currentOutdoorSite: null,
+  currentRelatedOutdoorSites: null,
+  currentRelatedOutdoorCourses: null,
+  selectedOutdoorCourseId: null,
+  outdoorCourseTypes: null,
+  currentOutdoorCourse: null,
+  outdoorRatings: null,
+  outdoorRatingsScale: null,
 });
 
 export { onChange, reset };

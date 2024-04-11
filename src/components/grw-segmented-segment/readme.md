@@ -10,6 +10,7 @@
 | Property            | Attribute            | Description | Type      | Default    |
 | ------------------- | -------------------- | ----------- | --------- | ---------- |
 | `fontFamily`        | `font-family`        |             | `string`  | `'Roboto'` |
+| `outdoor`           | `outdoor`            |             | `boolean` | `false`    |
 | `touristicContents` | `touristic-contents` |             | `boolean` | `false`    |
 | `touristicEvents`   | `touristic-events`   |             | `boolean` | `false`    |
 | `treks`             | `treks`              |             | `boolean` | `true`     |

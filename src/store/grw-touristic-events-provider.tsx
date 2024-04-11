@@ -41,17 +41,17 @@ export class GrwTouristicEventsProvider {
 
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
-    requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null')),
-      requests.push(
-        !state.touristicEventTypes
-          ? fetch(
-              `${state.api}touristicevent_type/?language=${state.language}${
-                this.portals ? '&portals='.concat(this.portals) : ''
-              }&published=true&fields=id,type,pictogram&page_size=999`,
-              this.init,
-            )
-          : new Response('null'),
-      );
+    requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
+    requests.push(
+      !state.touristicEventTypes
+        ? fetch(
+            `${state.api}touristicevent_type/?language=${state.language}${
+              this.portals ? '&portals='.concat(this.portals) : ''
+            }&published=true&fields=id,type,pictogram&page_size=999`,
+            this.init,
+          )
+        : new Response('null'),
+    );
 
     try {
       Promise.all([...requests, fetch(touristicEventsRequest, this.init)])

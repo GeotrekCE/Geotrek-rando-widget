@@ -8,7 +8,7 @@ export function getTrekGeometry(id: number) {
   );
 }
 
-export function getTreksList(api, language, inBbox, cities, districts, structures, themes, portals, routes, practices, init) {
+export function getTreksList(api, language, inBbox, cities, districts, structures, themes, portals, routes, practices, labels, init) {
   let treksRequest = `${api}trek/?language=${language}&published=true`;
 
   inBbox && (treksRequest += `&in_bbox=${inBbox}`);
@@ -19,6 +19,7 @@ export function getTreksList(api, language, inBbox, cities, districts, structure
   portals && (treksRequest += `&portals=${portals}`);
   routes && (treksRequest += `&routes=${routes}`);
   practices && (treksRequest += `&practices=${practices}`);
+  labels && (treksRequest += `&labels=${labels}`);
 
   treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts&page_size=999`;
 
@@ -47,4 +48,19 @@ export function getPoisNearTrek(api, language, trekId, init) {
 
 export function getSensitiveAreasNearTrek(api, language, trekId, init) {
   return fetch(`${api}sensitivearea/?language=${language}&published=true&trek=${trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices`, init);
+}
+
+export function getCities(api, language, init) {
+  return fetch(`${api}city/?language=${language}&fields=id,name&published=true&page_size=999`, init);
+}
+
+export function getThemes(api, language, portals, init) {
+  return fetch(`${api}theme/?language=${language}${portals ? '&portals='.concat(portals) : ''}&fields=id,label,pictogram`, init);
+}
+
+export function getInformationsDesks(api, language, init) {
+  return fetch(
+    `${api}informationdesk/?language=${language}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
+    init,
+  );
 }

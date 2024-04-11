@@ -42,11 +42,13 @@
 
 ### Used by
 
+ - [grw-outdoor-site-detail](../grw-outdoor-site-detail)
  - [grw-trek-detail](../grw-trek-detail)
 
 ### Graph
 ```mermaid
 graph TD;
+  grw-outdoor-site-detail --> grw-information-desk
   grw-trek-detail --> grw-information-desk
   style grw-information-desk fill:#f9f,stroke:#333,stroke-width:4px
 ```

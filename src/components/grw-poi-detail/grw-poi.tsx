@@ -27,7 +27,9 @@ export class GrwPoiDetail {
 
   @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
   onTrekDownloadedSuccessConfirm() {
-    this.swiperPoi.slideTo(0);
+    if (this.swiperPoi) {
+      this.swiperPoi.slideTo(0);
+    }
     this.offline = true;
   }
 
@@ -71,7 +73,7 @@ export class GrwPoiDetail {
   }
 
   async handleOffline() {
-    if (this.poi) {
+    if (state.currentTrek) {
       const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
       const poiInStore: Poi = await getDataInStore('pois', this.poi.id);
       this.offline = trekInStore && trekInStore.offline && Boolean(poiInStore);
@@ -87,8 +89,8 @@ export class GrwPoiDetail {
             part="poi-type"
             class="poi-type"
             /* @ts-ignore */
-            crossorigin="anonymous"
             src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`}
+            alt=""
           />
           <div part="swiper-poi" class="swiper swiper-poi" ref={el => (this.swiperPoiRef = el)}>
             <div part="swiper-wrapper" class="swiper-wrapper">
@@ -101,6 +103,7 @@ export class GrwPoiDetail {
                         part="poi-img"
                         class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                         src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                        alt={attachment.legend}
                         loading="lazy"
                         /* @ts-ignore */
                         onerror={event => {
@@ -118,16 +121,31 @@ export class GrwPoiDetail {
                     part="default-poi-img"
                     class="default-poi-img"
                     /* @ts-ignore */
-                    crossorigin="anonymous"
                     src={defaultImageSrc}
+                    alt=""
                     loading="lazy"
                   />
                 </div>
               )}
             </div>
-            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
-            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
-            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
+            <div
+              style={{ display: this.offline || this.poi.attachments.length <= 1 ? 'none' : 'flex' }}
+              part="swiper-pagination"
+              class="swiper-pagination"
+              ref={el => (this.paginationElPoiRef = el)}
+            ></div>
+            <div
+              style={{ display: this.offline || this.poi.attachments.length <= 1 ? 'none' : 'flex' }}
+              part="swiper-button-prev"
+              class="swiper-button-prev"
+              ref={el => (this.prevElPoiRef = el)}
+            ></div>
+            <div
+              style={{ display: this.offline || this.poi.attachments.length <= 1 ? 'none' : 'flex' }}
+              part="swiper-button-next"
+              class="swiper-button-next"
+              ref={el => (this.nextElPoiRef = el)}
+            ></div>
           </div>
         </div>
         <div part="poi-sub-container" class="poi-sub-container">

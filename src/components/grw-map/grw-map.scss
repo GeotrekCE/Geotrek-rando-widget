@@ -3,10 +3,6 @@
 @use '~@raruto/leaflet-elevation/dist/leaflet-elevation.min.css';
 @use '~leaflet.markercluster/dist/MarkerCluster.css';
 
-.material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
-}
-
 #map {
   position: relative;
   font-family: var(--font-family);
@@ -24,6 +20,10 @@
 
 .trek-map {
   height: calc(100% - 350px - var(--map-bottom-space-height));
+}
+
+.common-map {
+  height: calc(100% - 64px);
 }
 
 #elevation {
@@ -95,7 +95,8 @@
 
 .treks-marker-cluster-group-icon,
 .touristic-content-marker-cluster-group-icon,
-.touristic-event-marker-cluster-group-icon {
+.touristic-event-marker-cluster-group-icon,
+.outdoor-site-marker-cluster-group-icon {
   background-color: var(--color-primary-app);
   border-radius: 50%;
   display: flex;
@@ -111,16 +112,19 @@
 .step-marker,
 .touristic-content-marker,
 .touristic-event-marker,
+.outdoor-site-marker,
 .selected-trek-marker,
 .selected-step-marker,
 .selected-touristic-content-marker,
 .selected-touristic-event-marker,
+.selected-outdoor-site-marker,
 .departure-marker,
 .arrival-marker {
   .trek-marker-container,
   .step-marker-container,
   .touristic-content-marker-container,
-  .touristic-event-marker-container {
+  .touristic-event-marker-container,
+  .outdoor-site-marker-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -128,7 +132,7 @@
     border: 2px solid #ffffff;
     width: 100%;
     height: 100%;
-    transform: rotate(-45deg);
+    transform: rotate(-44deg);
     img,
     .step-number {
       display: flex;
@@ -142,7 +146,8 @@
   }
   .trek-marker-container,
   .touristic-content-marker-container,
-  .touristic-event-marker-container {
+  .touristic-event-marker-container,
+  .outdoor-site-marker-container {
     background-color: var(--color-surface);
   }
   .step-marker-container {
@@ -169,11 +174,15 @@
 .selected-trek-marker,
 .selected-step-marker,
 .selected-touristic-content-marker,
-.selected-touristic-event-marker {
+.selected-touristic-event-marker,
+.selected-outdoor-site-marker {
+  height: 100%;
+  width: 100%;
   .trek-marker-container,
   .step-marker-container,
   .touristic-content-marker-container,
-  .touristic-event-marker-container {
+  .touristic-event-marker-container,
+  .outdoor-site-marker-container {
     width: 100%;
     height: 100%;
     .trek-marker,
@@ -220,7 +229,8 @@
 
 .trek-departure-popup,
 .touristic-content-coordinates-popup,
-.touristic-event-coordinates-popup {
+.touristic-event-coordinates-popup,
+.outdoor-site-coordinates-popup {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -230,7 +240,8 @@
   }
   .trek-name,
   .touristic-content-name,
-  .touristic-event-name {
+  .touristic-event-name,
+  .outdoor-site-name {
     color: var(--color-primary-app);
     font-weight: 400;
     font-size: 16px;
@@ -239,7 +250,8 @@
   }
   .trek-button,
   .touristic-content-button,
-  .touristic-event-button {
+  .touristic-event-button,
+  .outdoor-site-button {
     margin: 0px 8px 8px 8px;
     user-select: none;
     cursor: pointer;
@@ -249,8 +261,8 @@
     align-items: center;
     justify-content: center;
     border: none;
-    background-color: var(--color-background);
-    color: var(--color-on-surface);
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
     padding: 12px 24px;
     border-radius: var(--border-radius, 20px);
     box-sizing: border-box;
@@ -309,7 +321,8 @@
 .poi-marker,
 .information-desks-marker,
 .touristic-content-marker,
-.touristic-event-marker {
+.touristic-event-marker,
+.outdoor-site-marker {
   background-color: var(--color-poi-icon);
   border-radius: 50%;
   display: flex;

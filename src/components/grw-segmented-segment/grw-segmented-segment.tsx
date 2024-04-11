@@ -4,9 +4,11 @@ import state from 'store/store';
 import { Mode } from 'types/types';
 
 import {
+  handleOutdoorSitesFiltersAndSearch,
   handleTouristicContentsFiltersAndSearch,
   handleTouristicEventsFiltersAndSearch,
   handleTreksFiltersAndSearch,
+  outdoorSitesFilters,
   touristicContentsFilters,
   touristicEventsFilters,
   treksFilters,
@@ -21,33 +23,52 @@ export class GrwSegmentedSegment {
   @Prop() treks = true;
   @Prop() touristicContents = false;
   @Prop() touristicEvents = false;
+  @Prop() outdoor = false;
 
   @Prop() fontFamily = 'Roboto';
 
   changeMode(mode: Mode) {
     state.searchValue = '';
-    if (mode === 'treks' && state.currentTreks) {
+    if (mode === 'treks') {
       treksFilters.forEach(filter => {
-        state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+        state[filter.property] && state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
       });
       state.selectedActivitiesFilters = 0;
       state.selectedThemesFilters = 0;
       state.selectedLocationFilters = 0;
-      state.currentTreks = handleTreksFiltersAndSearch();
-    } else if (mode === 'touristicContents' && state.currentTouristicContents) {
+      if (state.treks) {
+        state.currentTreks = [...handleTreksFiltersAndSearch()];
+      }
+    } else if (mode === 'touristicContents') {
       touristicContentsFilters.forEach(filter => {
-        state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+        state[filter.property] && state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
       });
       state.selectedActivitiesFilters = 0;
+      state.selectedThemesFilters = 0;
       state.selectedLocationFilters = 0;
-      state.currentTouristicContents = handleTouristicContentsFiltersAndSearch();
-    } else if (mode === 'touristicEvents' && state.currentTouristicEvents) {
+      if (state.touristicContents) {
+        state.currentTouristicContents = [...handleTouristicContentsFiltersAndSearch()];
+      }
+    } else if (mode === 'touristicEvents') {
       touristicEventsFilters.forEach(filter => {
-        state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+        state[filter.property] && state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
       });
       state.selectedActivitiesFilters = 0;
+      state.selectedThemesFilters = 0;
       state.selectedLocationFilters = 0;
-      state.currentTouristicEvents = handleTouristicEventsFiltersAndSearch();
+      if (state.touristicEvents) {
+        state.currentTouristicEvents = [...handleTouristicEventsFiltersAndSearch()];
+      }
+    } else if (mode === 'outdoor') {
+      outdoorSitesFilters.forEach(filter => {
+        state[filter.property] && state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+      });
+      state.selectedActivitiesFilters = 0;
+      state.selectedThemesFilters = 0;
+      state.selectedLocationFilters = 0;
+      if (state.outdoorSites) {
+        state.currentOutdoorSites = [...handleOutdoorSitesFiltersAndSearch()];
+      }
     }
     state.mode = mode;
   }
@@ -73,6 +94,11 @@ export class GrwSegmentedSegment {
           {this.touristicEvents && (
             <label part="segment" class={`segment${state.mode === 'touristicEvents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicEvents')}>
               {translate[state.language].home.segment.touristicEvents}
+            </label>
+          )}
+          {this.outdoor && (
+            <label part="segment" class={`segment${state.mode === 'outdoor' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('outdoor')}>
+              {translate[state.language].home.segment.outdoorSites}
             </label>
           )}
         </div>

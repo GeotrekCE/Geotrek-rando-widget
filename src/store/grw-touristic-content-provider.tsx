@@ -3,7 +3,6 @@ import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
 import { getTouristicContent } from 'services/touristic-contents.service';
 import state from 'store/store';
 import { TouristicContent } from 'types/types';
-import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-touristic-content-provider',
@@ -44,7 +43,6 @@ export class GrwTouristicContentProvider {
     if (!state.touristicContentCategories) {
       state.touristicContentCategories = await getAllDataInStore('touristicContentCategories');
     }
-    setFilesFromStore(touristicContent, imagesRegExp);
     state.currentTouristicContent = touristicContent;
   }
 

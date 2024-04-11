@@ -7,8 +7,11 @@ import {
   handleTouristicContentsFiltersAndSearch,
   touristicEventsFilters,
   handleTouristicEventsFiltersAndSearch,
+  outdoorSitesFilters,
+  handleOutdoorSitesFiltersAndSearch,
 } from 'utils/utils';
 import 'choices.js/public/assets/scripts/choices.min.js';
+import CheckIcon from '../../assets/check.svg';
 
 @Component({
   tag: 'grw-filter',
@@ -66,6 +69,14 @@ export class GrwFilter {
         });
 
       state.currentTouristicEvents = handleTouristicEventsFiltersAndSearch();
+    } else if (state.mode === 'outdoor') {
+      outdoorSitesFilters
+        .filter(filter => filter.segment === this.segment)
+        .forEach(filter => {
+          state[this.segment] += state[filter.property].filter(filter => filter.selected).length;
+        });
+
+      state.currentOutdoorSites = handleOutdoorSitesFiltersAndSearch();
     }
   }
 
@@ -128,7 +139,9 @@ export class GrwFilter {
           '--font-family': this.fontFamily,
         }}
       >
-        <div part="filter-name" class="filter-name display-large">{this.filterName}</div>
+        <div part="filter-name" class="filter-name display-large">
+          {this.filterName}
+        </div>
         <div part="filter-button-container" class="filter-button-container">
           {state[this.filterType].length > 9 ? (
             <select part="filter-select" multiple ref={el => (this.choicesRef = el)}></select>
@@ -136,12 +149,12 @@ export class GrwFilter {
             state[this.filterType]
               .filter(currentFilter => !currentFilter.hasOwnProperty('filter') || (currentFilter.hasOwnProperty('filter') && currentFilter.filter))
               .map(currentFilter => (
-                <button part="filter-button" class={currentFilter.selected ? 'filter-button selected-filter-button' : 'filter-button'} onClick={event => this.handleFilter(event, currentFilter)}>
-                  {/* @ts-ignore */}
-                  {currentFilter.selected && (<span  part="selected-filter-icon"  class="material-symbols material-symbols-outlined icon" translate={false}>
-                      check
-                    </span>
-                  )}
+                <button
+                  part="filter-button"
+                  class={currentFilter.selected ? 'filter-button selected-filter-button' : 'filter-button'}
+                  onClick={event => this.handleFilter(event, currentFilter)}
+                >
+                  {currentFilter.selected && <span part="selected-filter-icon" class="icon" innerHTML={CheckIcon}></span>}
                   <span part="filter-label" class="filter-label">
                     {currentFilter[this.filterNameProperty]}
                   </span>

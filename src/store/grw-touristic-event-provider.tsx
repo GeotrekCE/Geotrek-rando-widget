@@ -3,7 +3,6 @@ import { TouristicEvent } from 'components';
 import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
 import { getTouristicEvent } from 'services/touristic-events.service';
 import state from 'store/store';
-import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-touristic-event-provider',
@@ -12,7 +11,7 @@ import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 export class GrwTouristicEventProvider {
   @Prop() languages = 'fr';
   @Prop() api: string;
-  @Prop() touristicEventId: string;
+  @Prop() touristicEventId: number;
   @Prop() portals: string;
 
   controller = new AbortController();
@@ -44,7 +43,6 @@ export class GrwTouristicEventProvider {
     if (!state.touristicEventTypes) {
       state.touristicEventTypes = await getAllDataInStore('touristicEventTypes');
     }
-    setFilesFromStore(touristicEvent, imagesRegExp);
     state.currentTouristicEvent = touristicEvent;
   }
 

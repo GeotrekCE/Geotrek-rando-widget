@@ -1,0 +1,354 @@
+@use '~swiper/swiper.scss';
+@use '~swiper/modules/navigation/navigation.scss';
+@use '~swiper/modules/pagination/pagination.scss';
+@use '~swiper/modules/scrollbar/scrollbar.scss';
+
+.swiper {
+  z-index: 0;
+}
+
+:host {
+  --swiper-navigation-size: 24px;
+  --swiper-navigation-color: var(--color-on-primary-container);
+  --swiper-pagination-color: var(--color-primary-container);
+  --swiper-pagination-bullet-size: 12px;
+  .swiper-button-prev,
+  .swiper-button-next {
+    background-color: var(--color-primary-container);
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--border-radius, 32px);
+    box-shadow: var(--elevation-1);
+    &:hover {
+      box-shadow: var(--elevation-2);
+    }
+  }
+}
+
+grw-outdoor-course-detail {
+  overflow: hidden;
+}
+
+.outdoor-course-detail-container {
+  font-family: var(--font-family);
+  color: var(--color-on-surface);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  .outdoor-course-name {
+    color: var(--color-primary-app);
+    font-size: 32px;
+    line-height: 28px;
+    font-weight: 600;
+    padding: 0px 24px;
+    margin: 16px 0px;
+  }
+  .outdoor-course-img {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .default-outdoor-course-img {
+    background-color: var(--color-primary-container);
+    object-fit: contain;
+  }
+  .outdoor-course-image-legend {
+    position: absolute;
+    top: 16px;
+    font-size: 12px;
+    color: #ffffff;
+    width: 100%;
+    text-align: center;
+  }
+  .outdoor-course-close-fullscreen-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 40;
+    top: 16px;
+    right: 16px;
+    color: var(--swiper-navigation-color, var(--swiper-theme-color));
+    background-color: var(--color-primary-container);
+    padding: 4px;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--border-radius, 32px);
+    box-shadow: var(--elevation-1);
+    cursor: pointer;
+  }
+  .sub-container {
+    padding: 24px 24px 0px 24px;
+    .icons-labels-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      .icon-label {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .icon {
+          display: flex;
+          width: 24px;
+          height: 24px;
+          color: var(--color-primary-app);
+          margin-right: 8px;
+        }
+        .network {
+          &:not(:last-child) {
+            margin-right: 16px;
+          }
+        }
+      }
+      .practice {
+        .icon {
+          display: flex;
+          background-color: var(--color-primary-app);
+        }
+      }
+      .network {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+  .row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    .icon {
+      margin-right: 8px;
+      color: var(--color-primary-app);
+    }
+  }
+  .downloads-container {
+    padding: 0px 24px 0px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .download-title {
+      color: var(--color-on-surface);
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 500;
+    }
+    .links-container {
+      display: flex;
+      flex-wrap: wrap;
+      a {
+        margin-top: 8px;
+        background-color: var(--color-primary-container);
+        color: var(--color-on-primary-container);
+        border-radius: var(--border-radius, 8px);
+        padding: 8px 16px;
+        box-shadow: var(--elevation-1);
+        height: 32px;
+        gap: 8px;
+        box-sizing: border-box;
+        text-align: start;
+        vertical-align: middle;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        text-decoration: none;
+        font-family: var(--font-family);
+        &:nth-child(2) {
+          margin: 8px 12px 0px 12px;
+        }
+        &:hover {
+          box-shadow: var(--elevation-2);
+        }
+        .icon {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .description-container,
+  .advice-container,
+  .weather-container,
+  .touristic-content-container,
+  .touristic-event-container {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    a {
+      color: var(--color-primary-app);
+    }
+  }
+  .description-title,
+  .advice-title,
+  .touristic-content-title,
+  .touristic-event-title {
+    color: var(--color-on-surface);
+    font-size: 22px;
+    line-height: 28px;
+    font-weight: 400;
+    font-weight: bold;
+  }
+  .description-title,
+  .advice-title,
+  .touristic-content-title,
+  .touristic-event-title {
+    margin-bottom: 16px;
+  }
+  .description-container,
+  .advice-container,
+  .weather-container,
+  .touristic-content-title,
+  .touristic-event-title {
+    padding: 0px 24px 0px 24px;
+  }
+  .description-container {
+    .description {
+      ol {
+        position: relative;
+        counter-reset: referencePoint;
+        &:before {
+          content: '';
+          position: absolute;
+          width: 4px;
+          top: 0px;
+          bottom: 0px;
+          left: 14px;
+          background-color: var(--color-primary-app);
+        }
+        li {
+          position: relative;
+          list-style-type: none;
+          counter-increment: referencePoint;
+          p {
+            margin: 0;
+          }
+          &:not(:first-child) {
+            margin-top: 12px;
+          }
+        }
+        li:before {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          content: counter(referencePoint);
+          width: 24px;
+          height: 24px;
+          background: #f04141;
+          border-radius: 12px;
+          font-weight: bold;
+          font-size: 0.8em;
+          color: white;
+          margin-left: -36px;
+          top: calc(50% - 12px);
+        }
+      }
+    }
+  }
+  .current-advice-container {
+    display: flex;
+    padding: 12px;
+    border: 2px solid var(--color-outline);
+    border-radius: var(--border-radius, 12px);
+    font-size: 16px;
+    .icon img {
+      width: 26px;
+      margin-right: 8px;
+    }
+    margin-bottom: 12px;
+  }
+  .advice-container {
+    div:last-child {
+      margin-bottom: 0px;
+    }
+  }
+  .departure-container,
+  .cities-container {
+    display: flex;
+    align-items: center;
+    padding: 0px 24px 24px 24px;
+    .departure-title,
+    .cities-title {
+      color: var(--color-on-surface);
+      font-weight: bold;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+  }
+  .weather-container {
+    iframe {
+      width: 100%;
+    }
+  }
+  .divider {
+    margin: 16px;
+    border-top: 1px solid var(--color-outline);
+  }
+
+  .detail-bottom-space {
+    min-height: var(--detail-bottom-space-height);
+    height: var(--detail-bottom-space-height);
+    width: 100%;
+    background-color: var(--color-background);
+  }
+  .type {
+    .icon {
+      display: flex;
+      border-radius: 100%;
+      padding: 2px;
+      max-height: 20px;
+      max-width: 20px;
+    }
+  }
+
+  .offline-button {
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    border-radius: var(--border-radius, 8px);
+    padding: 8px 16px;
+    box-shadow: var(--elevation-1);
+    height: 32px;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      box-shadow: var(--elevation-2);
+    }
+    .icon {
+      display: flex;
+    }
+  }
+
+  .departure-container {
+    padding-top: 24px;
+  }
+
+  .advice-container {
+    .icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.swiper-information-desks,
+.swiper-pois,
+.swiper-step,
+.swiper-touristic-content,
+.swiper-touristic-event {
+  padding-right: 32px;
+  padding-left: 32px;
+  padding-bottom: 20px;
+}

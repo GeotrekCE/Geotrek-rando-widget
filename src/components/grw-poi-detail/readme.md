@@ -36,11 +36,15 @@
 
 ### Used by
 
+ - [grw-outdoor-course-detail](../grw-outdoor-course-detail)
+ - [grw-outdoor-site-detail](../grw-outdoor-site-detail)
  - [grw-trek-detail](../grw-trek-detail)
 
 ### Graph
 ```mermaid
 graph TD;
+  grw-outdoor-course-detail --> grw-poi
+  grw-outdoor-site-detail --> grw-poi
   grw-trek-detail --> grw-poi
   style grw-poi fill:#f9f,stroke:#333,stroke-width:4px
 ```

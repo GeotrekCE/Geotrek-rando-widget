@@ -31,7 +31,9 @@ export class GrwTouristicContentCard {
 
   @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
   onTrekDownloadedSuccessConfirm() {
-    this.swiperTouristicContent.slideTo(0);
+    if (this.swiperTouristicContent) {
+      this.swiperTouristicContent.slideTo(0);
+    }
     this.offline = true;
   }
 
@@ -128,7 +130,7 @@ export class GrwTouristicContentCard {
                           <img
                             part="touristic-content-img"
                             class={`touristic-content-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
-                            src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                            src={this.displayFullscreen ? (this.offline ? attachment.thumbnail : attachment.url) : attachment.thumbnail}
                             loading="lazy"
                             /* @ts-ignore */
                             onerror={event => {
@@ -137,6 +139,7 @@ export class GrwTouristicContentCard {
                               event.target.src = defaultImageSrc;
                             }}
                             onClick={() => this.handleFullscreen()}
+                            alt={attachment.legend}
                           />
                         </div>
                       ))
@@ -146,8 +149,8 @@ export class GrwTouristicContentCard {
                         part="default-touristic-event-img"
                         class="default-touristic-content-img"
                         /* @ts-ignore */
-                        crossorigin="anonymous"
                         src={defaultImageSrc}
+                        alt=""
                         loading="lazy"
                       />
                     </div>
@@ -177,18 +180,12 @@ export class GrwTouristicContentCard {
                 part="touristic-content-img"
                 class="touristic-content-img"
                 /* @ts-ignore */
-                crossorigin="anonymous"
                 src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                alt={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
               />
             ) : (
-              <img
-              /* @ts-ignore */
-              crossorigin="anonymous"
-              class="image default-touristic-content-img"
-              src={defaultImageSrc}
-              loading="lazy"
-            />
+              <img class="image default-touristic-content-img" src={defaultImageSrc} loading="lazy" alt="" />
             )}
           </div>
           <div part="touristic-content-sub-container" class="touristic-content-sub-container">
@@ -198,8 +195,9 @@ export class GrwTouristicContentCard {
                   part="touristic-content-category-img"
                   class="touristic-content-category-img"
                   /* @ts-ignore */
-                  crossorigin="anonymous"
+
                   src={touristicContentCategory.pictogram}
+                  alt=""
                 />
               )}
               <div part="touristic-content-category-name" class="touristic-content-category-name">

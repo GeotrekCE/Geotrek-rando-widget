@@ -2,6 +2,8 @@ import { Build, Component, Host, Prop, State, getAssetPath, h } from '@stencil/c
 import { translate } from 'i18n/i18n';
 import state from 'store/store';
 import Swiper, { FreeMode, Keyboard, Mousewheel, Navigation, Pagination } from 'swiper';
+import CloseIcon from '../../assets/close.svg';
+import DownloadIcon from '../../assets/download.svg';
 
 @Component({
   tag: 'grw-touristic-event-detail',
@@ -64,6 +66,7 @@ export class GrwTouristicEventDetail {
 
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
+
     const touristicEventType =
       state.touristicEventTypes &&
       state.currentTouristicEvent &&
@@ -103,24 +106,13 @@ export class GrwTouristicEventDetail {
                           <div part="swiper-slide" class="swiper-slide">
                             {this.displayFullscreen && (
                               <div part="close-fullscreen-button" class="close-fullscreen-button" onClick={() => this.handleFullscreen(true)}>
-                                {/* @ts-ignore */}
-                                <span part="icon" translate={false} class="material-symbols material-symbols-outlined icon">
-                                  close
-                                </span>
+                                <span part="icon" class="icon" innerHTML={CloseIcon}></span>
                               </div>
                             )}
                             <div part="legend-container" class="legend-container">
                               {legend}
                             </div>
-                            <img
-                              part="image"
-                              class="image"
-                              /* @ts-ignore */
-                              crossorigin="anonymous"
-                              src={attachment.url}
-                              loading="lazy"
-                              onClick={() => this.handleFullscreen()}
-                            />
+                            <img part="image" class="image" src={this.offline ? attachment.thumbnail : attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} alt={attachment.legend} />
                           </div>
                         );
                       })
@@ -130,7 +122,7 @@ export class GrwTouristicEventDetail {
                         part="default-poi-img"
                         class="default-poi-img"
                         /* @ts-ignore */
-                        crossorigin="anonymous"
+
                         src={defaultImageSrc}
                         loading="lazy"
                       />
@@ -148,7 +140,7 @@ export class GrwTouristicEventDetail {
                   part="touristic-event-category-img"
                   class="touristic-event-category-img"
                   /* @ts-ignore */
-                  crossorigin="anonymous"
+
                   src={touristicEventType.pictogram}
                 />
               )}
@@ -187,10 +179,7 @@ export class GrwTouristicEventDetail {
               </div>
               <div part="links-container" class="links-container">
                 <a part="link" class="link" href={`${state.currentTouristicEvent.pdf}`} target="_blank" rel="noopener noreferrer">
-                  {/* @ts-ignore */}
-                  <span part="icon" class="material-symbols material-symbols-outlined icon" translate={false}>
-                    download
-                  </span>
+                  <span part="icon" class="icon" innerHTML={DownloadIcon}></span>
                   <span part="label" class="label">
                     PDF
                   </span>
@@ -244,7 +233,7 @@ export class GrwTouristicEventDetail {
                       <div part="email-title" class="email-title">
                         {translate[state.language].email} :&nbsp;
                       </div>
-                      <a href={"mailto:" + state.currentTouristicEvent.email} part="email" class="email" innerHTML={state.currentTouristicEvent.email}></a>
+                      <a href={'mailto:' + state.currentTouristicEvent.email} part="email" class="email" innerHTML={state.currentTouristicEvent.email}></a>
                     </div>
                   )}
                   {state.currentTouristicEvent.website && (

@@ -32,7 +32,9 @@ export class GrwTouristicEvent {
 
   @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
   onTrekDownloadedSuccessConfirm() {
-    this.swiperTouristicEvent.slideTo(0);
+    if (this.swiperTouristicEvent) {
+      this.swiperTouristicEvent.slideTo(0);
+    }
     this.offline = true;
   }
 
@@ -129,7 +131,7 @@ export class GrwTouristicEvent {
                           <img
                             part="touristic-event-img"
                             class={`touristic-event-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
-                            src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                            src={this.displayFullscreen ? (this.offline ? attachment.thumbnail : attachment.url) : attachment.thumbnail}
                             loading="lazy"
                             /* @ts-ignore */
                             onerror={event => {
@@ -138,6 +140,7 @@ export class GrwTouristicEvent {
                               event.target.src = defaultImageSrc;
                             }}
                             onClick={() => this.handleFullscreen()}
+                            alt={attachment.legend}
                           />
                         </div>
                       ))
@@ -147,8 +150,8 @@ export class GrwTouristicEvent {
                         part="default-touristic-event-img"
                         class="default-touristic-event-img"
                         /* @ts-ignore */
-                        crossorigin="anonymous"
                         src={defaultImageSrc}
+                        alt=""
                         loading="lazy"
                       />
                     </div>
@@ -168,18 +171,13 @@ export class GrwTouristicEvent {
                 part="touristic-event-img"
                 class="touristic-event-img"
                 /* @ts-ignore */
-                crossorigin="anonymous"
+
                 src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                alt={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
               />
             ) : (
-              <img
-              /* @ts-ignore */
-              crossorigin="anonymous"
-              class="image default-touristic-event-img"
-              src={defaultImageSrc}
-              loading="lazy"
-            />
+              <img class="image default-touristic-event-img" src={defaultImageSrc} alt="" loading="lazy" />
             )}
           </div>
           <div part="touristic-event-sub-container" class="touristic-event-sub-container">
@@ -189,8 +187,9 @@ export class GrwTouristicEvent {
                   part="touristic-event-type-img"
                   class="touristic-event-type-img"
                   /* @ts-ignore */
-                  crossorigin="anonymous"
+
                   src={touristicEventType.pictogram}
+                  alt=""
                 />
               )}
               {touristicEventType && touristicEventType.type && (

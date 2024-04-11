@@ -49,12 +49,16 @@
 
 ### Used by
 
+ - [grw-outdoor-course-detail](../grw-outdoor-course-detail)
+ - [grw-outdoor-site-detail](../grw-outdoor-site-detail)
  - [grw-touristic-contents-list](../grw-touristic-contents-list)
  - [grw-trek-detail](../grw-trek-detail)
 
 ### Graph
 ```mermaid
 graph TD;
+  grw-outdoor-course-detail --> grw-touristic-content-card
+  grw-outdoor-site-detail --> grw-touristic-content-card
   grw-touristic-contents-list --> grw-touristic-content-card
   grw-trek-detail --> grw-touristic-content-card
   style grw-touristic-content-card fill:#f9f,stroke:#333,stroke-width:4px

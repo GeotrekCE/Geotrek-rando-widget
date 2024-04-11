@@ -2,7 +2,7 @@ import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
 import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
 import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
-import { getPoisNearTrek, getSensitiveAreasNearTrek, getTrek } from 'services/treks.service';
+import { getInformationsDesks, getPoisNearTrek, getSensitiveAreasNearTrek, getTrek } from 'services/treks.service';
 import state from 'store/store';
 import { Trek } from 'types/types';
 import { imagesRegExp, setFilesFromStore } from 'utils/utils';
@@ -24,6 +24,7 @@ export class GrwTrekProvider {
   @Prop() themes: string;
   @Prop() routes: string;
   @Prop() practices: string;
+  @Prop() labels: string;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -44,6 +45,7 @@ export class GrwTrekProvider {
     state.themesFromProviders = this.themes;
     state.routesFromProviders = this.routes;
     state.practicesFromProviders = this.practices;
+    state.labelsFromProviders = this.labels;
 
     this.handleTrek();
   }
@@ -81,87 +83,56 @@ export class GrwTrekProvider {
       state.currentTrekSteps = await Promise.all([...stepRequests]).then(responses => responses);
     }
 
-    if (!state.difficulties) {
-      const difficulties = await getAllDataInStore('difficulties');
-      setFilesFromStore(difficulties, imagesRegExp);
-      state.difficulties = difficulties;
-    }
-    if (!state.routes) {
-      state.routes = await getAllDataInStore('routes');
-    }
-    if (!state.practices) {
-      state.practices = await getAllDataInStore('practices');
-    }
-    if (!state.themes) {
-      state.themes = await getAllDataInStore('themes');
-    }
-    if (!state.cities) {
-      state.cities = await getAllDataInStore('cities');
-    }
-    if (!state.accessibilities) {
-      state.accessibilities = await getAllDataInStore('accessibilities');
-    }
-    if (!state.ratings) {
-      state.ratings = await getAllDataInStore('ratings');
-    }
-    if (!state.ratingsScale) {
-      state.ratingsScale = await getAllDataInStore('ratingsScale');
-    }
-    if (!state.labels) {
-      state.labels = await getAllDataInStore('labels');
-    }
-    if (!state.sources) {
-      state.sources = await getAllDataInStore('sources');
-    }
-    if (!state.accessibilitiesLevel) {
-      state.accessibilitiesLevel = await getAllDataInStore('accessibilitiesLevel');
-    }
-    if (!state.touristicContentCategories) {
-      state.touristicContentCategories = await getAllDataInStore('touristicContentCategories');
-    }
-    if (!state.touristicEventTypes) {
-      state.touristicEventTypes = await getAllDataInStore('touristicEventTypes');
-    }
-    if (!state.networks) {
-      state.networks = await getAllDataInStore('networks');
-    }
+    state.difficulties = await this.handleOfflineProperty('difficulties');
+    state.routes = await this.handleOfflineProperty('routes');
+    state.practices = await this.handleOfflineProperty('practices');
+    state.themes = await this.handleOfflineProperty('themes');
+    state.cities = await this.handleOfflineProperty('cities');
+    state.accessibilities = await this.handleOfflineProperty('accessibilities');
+    state.ratings = await this.handleOfflineProperty('ratings');
+    state.ratingsScale = await this.handleOfflineProperty('ratingsScale');
+    state.labels = await this.handleOfflineProperty('labels');
+    state.sources = await this.handleOfflineProperty('sources');
+    state.accessibilitiesLevel = await this.handleOfflineProperty('accessibilitiesLevel');
+    state.touristicContentCategories = await this.handleOfflineProperty('touristicContentCategories');
+    state.touristicEventTypes = await this.handleOfflineProperty('touristicEventTypes');
+    state.networks = await this.handleOfflineProperty('networks');
+    state.poiTypes = await this.handleOfflineProperty('poiTypes');
 
-    if (!state.poiTypes) {
-      state.poiTypes = await getAllDataInStore('poiTypes');
-    }
-
-    const informationDesksInStore = await getAllDataInStore('informationDesks');
+    const informationDesksInStore = await this.handleOfflineProperty('informationDesks');
     const informationDesks = informationDesksInStore.filter(informationDeskInStore =>
       trek.information_desks.some(information_desk => information_desk === informationDeskInStore.id),
     );
-    setFilesFromStore(informationDesks, imagesRegExp);
     state.currentInformationDesks = informationDesks;
 
-    const poisInStore = await getAllDataInStore('pois');
+    const poisInStore = await this.handleOfflineProperty('pois', ['url']);
     const pois = poisInStore.filter(poiInStore => trek.pois.some(trekPoi => trekPoi === poiInStore.id));
-    setFilesFromStore(pois, imagesRegExp);
     state.currentPois = pois;
 
-    const touristicContentsInStore = await getAllDataInStore('touristicContents');
+    const touristicContentsInStore = await this.handleOfflineProperty('touristicContents', ['url']);
     const touristicContents = touristicContentsInStore.filter(touristicContentInStore =>
       trek.touristicContents.some(trekTouristicContent => trekTouristicContent === touristicContentInStore.id),
     );
-    setFilesFromStore(touristicContents, imagesRegExp);
     state.trekTouristicContents = touristicContents;
 
-    const touristicEventsInStore = await getAllDataInStore('touristicEvents');
+    const touristicEventsInStore = await this.handleOfflineProperty('touristicEvents', ['url']);
     const touristicEvents = touristicEventsInStore.filter(touristicEventInStore =>
       trek.touristicEvents.some(trekTouristicEvent => trekTouristicEvent === touristicEventInStore.id),
     );
-    setFilesFromStore(touristicEvents, imagesRegExp);
-    state.trekTouristicEvents = await getAllDataInStore('touristicEvents');
+    state.trekTouristicEvents = touristicEvents;
 
-    const sensitiveAreasInStore = await getAllDataInStore('sensitiveAreas');
+    const sensitiveAreasInStore = await this.handleOfflineProperty('sensitiveAreas');
     const sensitiveAreas = sensitiveAreasInStore.filter(sensitiveAreaInStore => trek.sensitiveAreas.some(trekSensitiveArea => trekSensitiveArea === sensitiveAreaInStore.id));
     state.currentSensitiveAreas = sensitiveAreas;
 
-    setFilesFromStore(trek, imagesRegExp);
+    await setFilesFromStore(trek, imagesRegExp, ['url']);
     state.currentTrek = trek;
+  }
+
+  async handleOfflineProperty(property, exclude: string[] = []) {
+    const data = await getAllDataInStore(property);
+    await setFilesFromStore(data, imagesRegExp, exclude);
+    return data as any;
   }
 
   handleOnlineTrek() {
@@ -197,7 +168,7 @@ export class GrwTrekProvider {
         ? fetch(`${state.api}trek_rating/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,scale`, this.init)
         : new Response('null'),
     );
-    requests.push(!state.ratings ? fetch(`${state.api}trek_ratingscale/?language=${state.language}&fields=id,name`, this.init) : new Response('null'));
+    requests.push(!state.ratingsScale ? fetch(`${state.api}trek_ratingscale/?language=${state.language}&fields=id,name`, this.init) : new Response('null'));
 
     try {
       Promise.all([
@@ -218,10 +189,7 @@ export class GrwTrekProvider {
         fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
         getPoisNearTrek(state.api, state.language, this.trekId, this.init),
         fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
-        fetch(
-          `${state.api}informationdesk/?language=${state.language}&fields=id,name,description,type,phone,email,website,municipality,postal_code,street,photo_url,latitude,longitude&page_size=999`,
-          this.init,
-        ),
+        getInformationsDesks(state.api, state.language, this.init),
         getTouristicContentsNearTrek(state.api, state.language, this.trekId, this.init),
         fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
         getTouristicEventsNearTrek(state.api, state.language, this.trekId, this.init),
