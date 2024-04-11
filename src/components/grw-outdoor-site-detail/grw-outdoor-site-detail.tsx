@@ -516,6 +516,17 @@ export class GrwOutdoorSiteDetail {
                 </div>
               </div>
             )}
+            {this.currentOutdoorSite.accessibility && (
+              <div>
+                <div part="divider" class="divider"></div>
+                <div part="accessibilities-container" class="accessibilities-container">
+                  <div part="accessibilites-title" class="accessibilities-title">
+                    {translate[state.language].accessibility}
+                  </div>
+                  <div part="accessibilities" innerHTML={this.currentOutdoorSite.accessibility}></div>
+                </div>
+              </div>
+            )}
             {state.currentInformationDesks &&
               state.currentInformationDesks.filter(currentInformationDesks => this.currentOutdoorSite.information_desks.includes(currentInformationDesks.id)).length > 0 && (
                 <div>

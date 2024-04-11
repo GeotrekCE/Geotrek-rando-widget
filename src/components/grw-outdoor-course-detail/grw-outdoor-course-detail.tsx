@@ -383,6 +383,17 @@ export class GrwOutdoorCourseDetail {
                 </div>
               </div>
             )}
+            {this.currentOutdoorCourse.accessibility && (
+              <div>
+                <div part="divider" class="divider"></div>
+                <div part="accessibilities-container" class="accessibilities-container">
+                  <div part="accessibilites-title" class="accessibilities-title">
+                    {translate[state.language].accessibility}
+                  </div>
+                  <div part="accessibilities" innerHTML={this.currentOutdoorCourse.accessibility}></div>
+                </div>
+              </div>
+            )}
             {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
