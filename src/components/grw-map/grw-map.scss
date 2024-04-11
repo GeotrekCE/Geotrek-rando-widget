@@ -148,7 +148,7 @@
   .touristic-content-marker-container,
   .touristic-event-marker-container,
   .outdoor-site-marker-container {
-    background-color: var(--color-surface);
+    background-color: var(--color-primary-app);
   }
   .step-marker-container {
     background-color: var(--color-surface-variant);
@@ -243,16 +243,16 @@
   .touristic-event-name,
   .outdoor-site-name {
     color: var(--color-primary-app);
-    font-weight: 400;
+    font-weight: 700;
     font-size: 16px;
     line-height: 24px;
-    padding: 8px;
+    padding: 12px;
   }
   .trek-button,
   .touristic-content-button,
   .touristic-event-button,
   .outdoor-site-button {
-    margin: 0px 8px 8px 8px;
+    margin: 0px 8px 16px 8px;
     user-select: none;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -260,11 +260,11 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border: none;
-    background-color: var(--color-primary-container);
+    border: 1px solid var(--color-on-primary-container);
+    background-color: var(--color-background);
     color: var(--color-on-primary-container);
     padding: 12px 24px;
-    border-radius: var(--border-radius, 20px);
+    border-radius: var(--border-radius, 8px);
     box-sizing: border-box;
     position: relative;
     gap: 8px;
@@ -273,9 +273,11 @@
     letter-spacing: 0.1000000015px;
     font-size: 14px;
     font-weight: 500;
-    box-shadow: var(--elevation-1);
     transition: box-shadow 0.2s ease-in-out 0s;
     font-family: var(--font-family);
+    &:hover {
+      background-color: var(--color-primary-container);
+    }
   }
 }
 
@@ -361,7 +363,7 @@
 
 .leaflet-popup {
   bottom: 40px !important;
-  left: -70px !important;
+  left: -110px !important;
 }
 
 .leaflet-popup-content-wrapper {
@@ -372,6 +374,6 @@
 }
 
 .leaflet-popup-content {
-  width: 144px;
+  width: 221px;
   margin: 0;
 }
