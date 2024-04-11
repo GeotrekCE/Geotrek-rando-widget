@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.12.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.11.1...0.12.0) (2024-04-11)
+
+
+### Features
+
+* add outdoor ([4e36f9f](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/4e36f9fcd5711dfc8aad005b11e3ec4edf8cc4f9))
+
+
+### Bug Fixes
+
+* handle roboto from assets ([a7f8691](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/a7f869113a6e05d12230b8701e049b70e342bb06))
+
 ## [0.11.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.11.0...0.11.1) (2024-03-21)
 
 
