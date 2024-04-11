@@ -42,11 +42,14 @@ interface Translation {
       treks: string;
       touristicContents: string;
       touristicEvents: string;
+      outdoorSites: string;
     };
     touristicContents: string;
     touristicContent: string;
     touristicEvents: string;
     touristicEvent: string;
+    outdoorSites: string;
+    outdoorSite: string;
   };
   options: {
     presentation: string;
@@ -69,6 +72,8 @@ interface Translation {
     steps: string;
     touristicContents: string;
     touristicEvents: string;
+    sites: string;
+    courses: string;
   };
   themes: string;
   placeholderThemes: string;
@@ -98,6 +103,11 @@ interface Translation {
   date: string;
   startDate: string;
   endDate: string;
+  outdoorSites: string;
+  outdoorSite: string;
+  relatedOutdoorSites: Function;
+  relatedOutdoorCourses: Function;
+  cardinalPoints: { n: string; ne: string; e: string; se: string; s?: string; sw: string; w: string; nw: string };
 }
 
 interface AvailableTranslations {
@@ -150,11 +160,14 @@ export const translate: AvailableTranslations = {
         treks: 'Itinéraires',
         touristicContents: 'Services',
         touristicEvents: 'Événements',
+        outdoorSites: 'Activités',
       },
       touristicContents: 'Services',
       touristicContent: 'Service',
       touristicEvents: 'Événements',
       touristicEvent: 'Événement',
+      outdoorSites: 'Activités',
+      outdoorSite: 'Activité',
     },
     options: {
       presentation: 'Présentation',
@@ -177,6 +190,8 @@ export const translate: AvailableTranslations = {
       steps: 'Étapes',
       touristicContents: 'À proximité',
       touristicEvents: 'Événements',
+      sites: 'Activités',
+      courses: 'Parcours',
     },
     themes: 'Thèmes',
     placeholderThemes: 'Sélectionner un ou plusieurs thèmes',
@@ -207,6 +222,11 @@ export const translate: AvailableTranslations = {
     date: 'Date',
     startDate: 'Date de début',
     endDate: 'Date de fin',
+    outdoorSites: 'activités',
+    outdoorSite: 'activité',
+    relatedOutdoorSites: (relatedOutdoorSitesLength: number) => `Activités (${relatedOutdoorSitesLength})`,
+    relatedOutdoorCourses: (relatedOutdoorCoursesLength: number) => `Parcours (${relatedOutdoorCoursesLength})`,
+    cardinalPoints: { n: 'Nord', ne: 'Nord-est', e: 'Est', se: 'Sud-est', s: 'Sud', sw: 'Sud-ouest', w: 'Ouest', nw: 'Nord-ouest' },
   },
   en: {
     filter: 'Filter',
@@ -252,11 +272,14 @@ export const translate: AvailableTranslations = {
         treks: 'Routes',
         touristicContents: 'Services',
         touristicEvents: 'Events',
+        outdoorSites: 'Activities',
       },
       touristicContents: 'Services',
       touristicContent: 'Service',
       touristicEvents: 'Events',
       touristicEvent: 'Event',
+      outdoorSites: 'Activities',
+      outdoorSite: 'Activity',
     },
     options: {
       presentation: 'Presentation',
@@ -279,6 +302,8 @@ export const translate: AvailableTranslations = {
       steps: 'Steps',
       touristicContents: 'Near',
       touristicEvents: 'Events',
+      sites: 'Activities',
+      courses: 'Courses',
     },
     themes: 'Themes',
     placeholderThemes: 'Select one or more themes',
@@ -309,5 +334,10 @@ export const translate: AvailableTranslations = {
     date: 'Date',
     startDate: 'Start date',
     endDate: 'End date',
+    outdoorSites: 'activities',
+    outdoorSite: 'activity',
+    relatedOutdoorSites: (relatedOutdoorSitesLength: number) => `Activities (${relatedOutdoorSitesLength})`,
+    relatedOutdoorCourses: (relatedOutdoorCoursesLength: number) => `Courses (${relatedOutdoorCoursesLength})`,
+    cardinalPoints: { n: 'North', ne: 'North-east', e: 'East', se: 'South-east', s: 'South', sw: 'South-west', w: 'West', nw: 'North-west' },
   },
 };

@@ -1,6 +1,6 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import state from 'store/store';
-import { handleTouristicContentsFiltersAndSearch, handleTouristicEventsFiltersAndSearch, handleTreksFiltersAndSearch } from 'utils/utils';
+import { handleOutdoorSitesFiltersAndSearch, handleTouristicContentsFiltersAndSearch, handleTouristicEventsFiltersAndSearch, handleTreksFiltersAndSearch } from 'utils/utils';
 import SearchIcon from '../../assets/search.svg';
 
 @Component({
@@ -19,6 +19,8 @@ export class GrwSearch {
       state.currentTouristicContents = handleTouristicContentsFiltersAndSearch();
     } else if (state.mode === 'touristicEvents') {
       state.currentTouristicEvents = handleTouristicEventsFiltersAndSearch();
+    } else if (state.mode === 'outdoor') {
+      state.currentOutdoorSites = handleOutdoorSitesFiltersAndSearch();
     }
   }
 

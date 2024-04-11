@@ -41,17 +41,17 @@ export class GrwTouristicContentsProvider {
 
     const requests = [];
     requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
-    requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null')),
-      requests.push(
-        !state.touristicContentCategories
-          ? fetch(
-              `${state.api}touristiccontent_category/?language=${state.language}${
-                this.portals ? '&portals='.concat(this.portals) : ''
-              }&published=true&fields=id,label,pictogram&page_size=999`,
-              this.init,
-            )
-          : new Response('null'),
-      );
+    requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
+    requests.push(
+      !state.touristicContentCategories
+        ? fetch(
+            `${state.api}touristiccontent_category/?language=${state.language}${
+              this.portals ? '&portals='.concat(this.portals) : ''
+            }&published=true&fields=id,label,pictogram&page_size=999`,
+            this.init,
+          )
+        : new Response('null'),
+    );
     try {
       Promise.all([...requests, fetch(touristicContentsRequest, this.init)])
         .then(responses => Promise.all(responses.map(response => response.json())))

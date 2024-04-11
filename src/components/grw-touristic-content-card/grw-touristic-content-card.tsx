@@ -149,7 +149,6 @@ export class GrwTouristicContentCard {
                         part="default-touristic-event-img"
                         class="default-touristic-content-img"
                         /* @ts-ignore */
-
                         src={defaultImageSrc}
                         alt=""
                         loading="lazy"
@@ -181,7 +180,6 @@ export class GrwTouristicContentCard {
                 part="touristic-content-img"
                 class="touristic-content-img"
                 /* @ts-ignore */
-
                 src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 alt={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"

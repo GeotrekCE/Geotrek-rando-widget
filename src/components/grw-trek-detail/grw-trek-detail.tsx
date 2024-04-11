@@ -123,7 +123,6 @@ export class GrwTrekDetail {
   descriptionOptionRef?: HTMLAnchorElement;
   recommendationsOptionRef?: HTMLAnchorElement;
   accessibilityOptionRef?: HTMLAnchorElement;
-  OptionRef?: HTMLAnchorElement;
   sensitiveAreaOptionRef?: HTMLAnchorElement;
   informationPlacesOptionRef?: HTMLAnchorElement;
   poisOptionRef?: HTMLAnchorElement;
@@ -453,7 +452,7 @@ export class GrwTrekDetail {
         },
         { threshold },
       );
-      this.touristicEventObserver.observe(this.touristicContentsRef);
+      this.touristicEventObserver.observe(this.touristicEventsRef);
     }
   }
 
@@ -1551,6 +1550,7 @@ export class GrwTrekDetail {
                             exportparts="touristic-event-card,touristic-event-img-container,swiper-touristic-event,swiper-wrapper,swiper-slide,touristic-event-img,default-touristic-event-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-event-sub-container,touristic-event-sub-container,touristic-event-type-img,touristic-event-type-name,touristic-event-name,touristic-event-date-container,touristic-event-date,touristic-event-more-detail-container,more-details-button"
                             fontFamily={this.fontFamily}
                             touristicEvent={touristicEvent}
+                            isInsideHorizontalList={true}
                           ></grw-touristic-event-card>
                         </div>
                       ))}

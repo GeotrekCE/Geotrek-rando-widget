@@ -1,7 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import state from 'store/store';
-import { TouristicContents, TouristicContentsFilters, TouristicEvents, TouristicEventsFilters, TrekFilters, Treks } from 'types/types';
+import { OutdoorSitesFilters, TouristicContents, TouristicContentsFilters, TouristicEvents, TouristicEventsFilters, TrekFilters, Treks } from 'types/types';
 
 export function formatDuration(duration: number) {
   let formattedDuration = '';
@@ -54,6 +54,13 @@ export const touristicEventsFilters: TouristicEventsFilters = [
   { property: 'touristicEventTypes', touristicEventProperty: 'type', touristicEventPropertyIsArray: false, type: 'include', segment: 'selectedActivitiesFilters' },
   { property: 'cities', touristicEventProperty: 'cities', touristicEventPropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
   { property: 'districts', touristicEventProperty: 'districts', touristicEventPropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
+];
+
+export const outdoorSitesFilters: OutdoorSitesFilters = [
+  { property: 'outdoorPractices', outdoorSiteProperty: 'practice', outdoorSitePropertyIsArray: false, type: 'include', segment: 'selectedActivitiesFilters' },
+  { property: 'cities', outdoorSiteProperty: 'cities', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
+  { property: 'districts', outdoorSiteProperty: 'districts', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
+  { property: 'themes', outdoorSiteProperty: 'themes', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedThemesFilters' },
 ];
 
 export function handleTreksFiltersAndSearch(): Treks {
@@ -259,6 +266,73 @@ export function handleTouristicEventsFiltersAndSearch(): TouristicEvents {
   return Boolean(state.searchValue)
     ? searchTouristicEvents.filter(currentTouristicEvent => currentTouristicEvent.name.toLowerCase().includes(state.searchValue.toLowerCase()))
     : searchTouristicEvents;
+}
+
+export function handleOutdoorSitesFiltersAndSearch() {
+  let isUsingFilter = false;
+  let filtersOutdoorSites = [];
+  for (const filter of outdoorSitesFilters) {
+    const currentFiltersId: number[] = state[filter.property].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
+
+    if (currentFiltersId.length > 0) {
+      if (filtersOutdoorSites.length > 0) {
+        if (filter.type === 'include') {
+          if (filter.outdoorSitePropertyIsArray) {
+            filtersOutdoorSites = [
+              ...filtersOutdoorSites.filter(outdoorSite => outdoorSite[filter.outdoorSiteProperty].some(outdoorSiteProperty => currentFiltersId.includes(outdoorSiteProperty))),
+            ];
+          } else {
+            filtersOutdoorSites = [...filtersOutdoorSites.filter(outdoorSite => currentFiltersId.includes(outdoorSite[filter.outdoorSiteProperty]))];
+          }
+        } else if (filter.type === 'interval') {
+          filtersOutdoorSites = [
+            ...filtersOutdoorSites.filter(outdoorSite => {
+              for (const currentFilterId of currentFiltersId) {
+                const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
+                if (outdoorSite[filter.outdoorSiteProperty] >= currentFilter.minValue && outdoorSite[filter.outdoorSiteProperty] <= currentFilter.maxValue) {
+                  return true;
+                }
+              }
+              return false;
+            }),
+          ];
+        }
+      } else {
+        if (!isUsingFilter) {
+          isUsingFilter = true;
+        }
+        if (filter.type === 'include') {
+          if (filter.outdoorSitePropertyIsArray) {
+            filtersOutdoorSites = [
+              ...state.outdoorSites.filter(outdoorSite => outdoorSite[filter.outdoorSiteProperty].some(outdoorSiteProperty => currentFiltersId.includes(outdoorSiteProperty))),
+            ];
+          } else {
+            filtersOutdoorSites = [...state.outdoorSites.filter(outdoorSite => currentFiltersId.includes(outdoorSite[filter.outdoorSiteProperty]))];
+          }
+        } else if (filter.type === 'interval') {
+          let minValue: number;
+          let maxValue: number;
+          for (const currentFilterId of currentFiltersId) {
+            const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
+            if (isNaN(minValue) || currentFilter.minValue < minValue) {
+              minValue = currentFilter.minValue;
+            }
+            if (isNaN(maxValue) || currentFilter.maxValue > maxValue) {
+              maxValue = currentFilter.maxValue;
+            }
+          }
+          filtersOutdoorSites = [
+            ...state.outdoorSites.filter(outdoorSite => outdoorSite[filter.outdoorSiteProperty] >= minValue && outdoorSite[filter.outdoorSiteProperty] <= maxValue),
+          ];
+        }
+      }
+    }
+  }
+
+  const searchOutdoorSites = isUsingFilter ? filtersOutdoorSites : state.outdoorSites;
+  return Boolean(state.searchValue)
+    ? searchOutdoorSites.filter(currentOutdoorSite => currentOutdoorSite.name.toLowerCase().includes(state.searchValue.toLowerCase()))
+    : searchOutdoorSites;
 }
 
 export const durations = [

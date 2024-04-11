@@ -10,11 +10,12 @@ import state, { onChange } from 'store/store';
 import { translate } from 'i18n/i18n';
 import { getTrekGeometry } from 'services/treks.service';
 import { tileLayerOffline } from 'leaflet.offline';
-import { Trek } from 'components';
 import { getDataInStore } from 'services/grw-db.service';
 import { checkFileInStore, getFileInStore } from 'utils/utils';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
+import { Trek } from 'components';
+import pointOnFeature from '@turf/point-on-feature';
 
 @Component({
   tag: 'grw-map',
@@ -29,13 +30,13 @@ export class GrwMap {
   @Event() trekCardPress: EventEmitter<number>;
   @Event() touristicContentCardPress: EventEmitter<number>;
   @Event() touristicEventCardPress: EventEmitter<number>;
+  @Event() outdoorSiteCardPress: EventEmitter<number>;
+  @Event() outdoorCourseCardPress: EventEmitter<number>;
 
   @State() mapIsReady = false;
   @Prop() nameLayer: string;
   @Prop() urlLayer: string;
   @Prop() attributionLayer: string;
-  @Prop() center = '1, 1';
-  @Prop() zoom = 10;
 
   @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
@@ -47,6 +48,8 @@ export class GrwMap {
   @Prop() colorTrekLine = '#6b0030';
   @Prop() colorSensitiveArea = '#4974a5';
   @Prop() colorPoiIcon = '#974c6e';
+  @Prop() colorOutdoorArea = '#ffb700';
+
   @Prop() useGradient = false;
   @Prop() trekTilesMaxZoomOffline = 16;
 
@@ -61,21 +64,29 @@ export class GrwMap {
   treksMarkerClusterGroup: MarkerClusterGroup;
   touristicContentsMarkerClusterGroup: MarkerClusterGroup;
   touristicEventsMarkerClusterGroup: MarkerClusterGroup;
+  outdoorSitesMarkerClusterGroup: MarkerClusterGroup;
+  outdoorSitesLayer: L.GeoJSON<any>;
   currentTrekLayer: L.GeoJSON<any>;
   currentStepsLayer: L.GeoJSON<any>;
   selectedCurrentTrekLayer: L.GeoJSON<any>;
   selectedCurrentStepLayer: L.GeoJSON<any>;
   selectedTouristicContentLayer: L.GeoJSON<any>;
   selectedTouristicEventLayer: L.GeoJSON<any>;
+  selectedOutdoorSiteLayer: L.GeoJSON<any>;
+  selectedOutdoorCourseLayer: L.GeoJSON<any>;
   currentReferencePointsLayer: L.GeoJSON<any>;
   currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
   currentPoisLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
   currentToutisticContentsLayer: L.GeoJSON<any>;
-  currenttouristicEventsLayer: L.GeoJSON<any>;
+  currentTouristicEventsLayer: L.GeoJSON<any>;
   currentToutisticContentLayer: L.GeoJSON<any>;
   currentToutisticEventLayer: L.GeoJSON<any>;
+  currentOutdoorSiteLayer: L.GeoJSON<any>;
+  currentOutdoorCourseLayer: L.GeoJSON<any>;
+  currentRelatedOutdoorSitesLayer: L.GeoJSON<any>;
+  currentRelatedOutdoorCoursesLayer: L.GeoJSON<any>;
   elevationControl: L.Control.Layers;
   departureArrivalLayer: L.GeoJSON<any>;
   layersControl: L.Control.Layers;
@@ -87,10 +98,13 @@ export class GrwMap {
   stepPopupIsOpen: boolean;
   touristicContentPopupIsOpen: boolean;
   touristicEventPopupIsOpen: boolean;
+  outdoorSitePopupIsOpen: boolean;
+  outdoorCoursePopupIsOpen: boolean;
 
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
   handleTouristicContentsWithinBoundsBind: (event: any) => void = this.handleTouristicContentsWithinBounds.bind(this);
   handleTouristicEventsWithinBoundsBind: (event: any) => void = this.handleTouristicEventsWithinBounds.bind(this);
+  handleOutdoorSitesWithinBoundsBind: (event: any) => void = this.handleOutdoorSitesWithinBounds.bind(this);
 
   @Listen('centerOnMap', { target: 'window' })
   onCenterOnMap(event: CustomEvent<{ latitude: number; longitude: number }>) {
@@ -118,8 +132,8 @@ export class GrwMap {
     }
   }
 
-  @Listen('informationDeskIsInViewport', { target: 'window' })
-  onInformationDesksIsInViewport(event: CustomEvent<boolean>) {
+  @Listen('informationPlacesIsInViewport', { target: 'window' })
+  onInformationPlacesIsInViewport(event: CustomEvent<boolean>) {
     if (this.currentInformationDesksLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentInformationDesksLayer);
     }
@@ -148,8 +162,22 @@ export class GrwMap {
 
   @Listen('touristicEventsIsInViewport', { target: 'window' })
   touristicEventsIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currenttouristicEventsLayer && this.layersControl) {
-      this.handleLayerVisibility(event.detail, this.currenttouristicEventsLayer);
+    if (this.currentTouristicEventsLayer && this.layersControl) {
+      this.handleLayerVisibility(event.detail, this.currentTouristicEventsLayer);
+    }
+  }
+
+  @Listen('sitesIsInViewport', { target: 'window' })
+  sitesIsInViewport(event: CustomEvent<boolean>) {
+    if (this.currentRelatedOutdoorSitesLayer && this.layersControl) {
+      this.handleLayerVisibility(event.detail, this.currentRelatedOutdoorSitesLayer);
+    }
+  }
+
+  @Listen('coursesIsInViewport', { target: 'window' })
+  coursesIsInViewport(event: CustomEvent<boolean>) {
+    if (this.currentRelatedOutdoorCoursesLayer && this.layersControl) {
+      this.handleLayerVisibility(event.detail, this.currentRelatedOutdoorCoursesLayer);
     }
   }
 
@@ -215,11 +243,21 @@ export class GrwMap {
     this.map.setMaxZoom(this.maxZoom);
   }
 
+  @Listen('cardOutdoorSiteMouseOver', { target: 'window' })
+  onOutdoorSiteMouseOver(event: CustomEvent<number>) {
+    this.outdoorSitePopupIsOpen = false;
+    state.selectedOutdoorSiteId = null;
+    this.addSelectedOutdoorSite(event.detail);
+  }
+
+  @Listen('cardOutdoorSiteMouseLeave', { target: 'window' })
+  onOutdoorSiteMouseLeave() {
+    state.selectedOutdoorSiteId = null;
+    this.removeSelectedOutdoorSite();
+  }
+
   componentDidLoad() {
-    this.map = L.map(this.mapRef, {
-      center: this.center.split(',').map(Number) as L.LatLngExpression,
-      zoom: this.zoom,
-    });
+    this.map = L.map(this.mapRef, { zoom: 4, center: [47, 2] });
 
     L.control.scale({ metric: true, imperial: false }).addTo(this.map);
     (L.control as any).locate({ showPopup: false }).addTo(this.map);
@@ -283,10 +321,16 @@ export class GrwMap {
       this.addTouristicContent();
     } else if (state.currentTouristicEvent) {
       this.addTouristicEvent();
+    } else if (state.currentOutdoorSite) {
+      this.addOutdoorSite();
+    } else if (state.currentOutdoorCourse) {
+      this.addOutdoorCourse();
     } else if (state.touristicContents) {
       this.addTouristicContents();
     } else if (state.touristicEvents) {
       this.addTouristicEvents();
+    } else if (state.outdoorSites) {
+      this.addOutdoorSites();
     }
 
     onChange('currentTreks', () => {
@@ -301,10 +345,21 @@ export class GrwMap {
         this.removeTreks();
         this.removeTouristicContents();
         this.removeTouristicEvents();
+        this.removeOutdoorSites();
         this.removeTrek();
         this.removeTouristicContent();
         this.removeTouristicEvent();
         this.addTreks(true);
+      }
+    });
+
+    onChange('currentOutdoorSites', () => {
+      if (state.currentOutdoorSites) {
+        this.removeTreks();
+        this.removeTouristicContents();
+        this.removeTouristicEvents();
+        this.removeOutdoorSites();
+        this.addOutdoorSites();
       }
     });
 
@@ -317,6 +372,24 @@ export class GrwMap {
         this.removeTouristicContent();
         this.removeTouristicEvent();
         this.addTreks();
+      }
+    });
+
+    onChange('currentOutdoorSite', () => {
+      if (state.currentOutdoorSite) {
+        this.removeOutdoorCourse();
+        this.removeOutdoorSites();
+        this.addOutdoorSite();
+      } else if (state.currentOutdoorSites) {
+        this.removeOutdoorSite();
+        this.addOutdoorSites();
+      }
+    });
+
+    onChange('currentOutdoorSite', () => {
+      if (state.currentOutdoorCourse) {
+        this.removeOutdoorSite();
+        this.addOutdoorCourse();
       }
     });
 
@@ -362,6 +435,7 @@ export class GrwMap {
       } else if (state.currentTouristicContents) {
         this.removeTreks();
         this.removeTouristicEvents();
+        this.removeOutdoorSites();
         this.removeTouristicContent();
         this.addTouristicContents(true);
       }
@@ -378,34 +452,9 @@ export class GrwMap {
       } else if (state.currentTouristicEvents) {
         this.removeTreks();
         this.removeTouristicContents();
+        this.removeOutdoorSites();
         this.removeTouristicEvent();
         this.addTouristicEvents(true);
-      }
-    });
-
-    onChange('mode', () => {
-      this.hideTrekLine();
-      this.removeSelectedCurrentTrek();
-      this.removeSelectedTouristicContent();
-      this.removeSelectedTouristicEvent();
-      if (state.mode === 'treks') {
-        if (state.treks) {
-          this.removeTouristicContents();
-          this.removeTouristicEvents();
-          this.addTreks(true);
-        }
-      } else if (state.mode === 'touristicContents') {
-        if (state.touristicContents) {
-          this.removeTreks();
-          this.removeTouristicEvents();
-          this.addTouristicContents(true);
-        }
-      } else if (state.mode === 'touristicEvents') {
-        if (state.touristicEvents) {
-          this.removeTreks();
-          this.removeTouristicContents();
-          this.addTouristicEvents(true);
-        }
       }
     });
   }
@@ -580,6 +629,18 @@ export class GrwMap {
     }
   }
 
+  handleOutdoorSitesWithinBounds() {
+    if (
+      (state.currentOutdoorSites && !state.currentMapBounds) ||
+      (state.currentOutdoorSites && state.currentMapBounds && state.currentMapBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
+    ) {
+      state.outdoorSitesWithinBounds = state.currentOutdoorSites.filter(outdoorSite => {
+        const coordinates = pointOnFeature(outdoorSite.geometry as any).geometry.coordinates;
+        return this.map.getBounds().contains(L.latLng(coordinates[1], coordinates[0]));
+      });
+    }
+  }
+
   async addTrek() {
     const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
     if (trekInStore) {
@@ -675,201 +736,13 @@ export class GrwMap {
       });
     }
 
-    if (state.currentPois && state.currentPois.length > 0) {
-      const currentPoisFeatureCollection: FeatureCollection = {
-        type: 'FeatureCollection',
-        features: [],
-      };
+    await this.addCurrentInformationDesks(state.currentTrek);
 
-      for (const currentPoi of state.currentPois) {
-        currentPoisFeatureCollection.features.push({
-          type: 'Feature',
-          properties: { name: currentPoi.name, type_pictogram: state.poiTypes.find(poiType => poiType.id === currentPoi.type)?.pictogram },
-          geometry: currentPoi.geometry,
-        });
-      }
+    await this.addCurrentPois();
 
-      const poiIcons = await this.getIcons(currentPoisFeatureCollection, 'type_pictogram');
+    await this.addCurrentTouristicContents();
 
-      this.currentPoisLayer = L.geoJSON(currentPoisFeatureCollection, {
-        pointToLayer: (geoJsonPoint, latlng) =>
-          L.marker(latlng, {
-            icon: L.divIcon({
-              html: poiIcons[geoJsonPoint.properties.type_pictogram]
-                ? `<div part="poi-marker" class="poi-marker"><img  src=${poiIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
-                : `<div part="poi-marker" class="poi-marker"><img /></div>`,
-              className: '',
-              iconSize: 48,
-            } as any),
-            autoPanOnFocus: false,
-          } as any),
-        onEachFeature: (geoJsonPoint, layer) => {
-          layer.once('mouseover', () => {
-            const poiTooltip = L.DomUtil.create('div');
-            /* @ts-ignore */
-            poiTooltip.part = 'poi-tooltip';
-            poiTooltip.className = 'poi-tooltip';
-            const poiName = L.DomUtil.create('div');
-            poiName.innerHTML = geoJsonPoint.properties.name;
-            /* @ts-ignore */
-            poiName.part = 'poi-name';
-            poiName.className = 'poi-name';
-            poiTooltip.appendChild(poiName);
-            layer.bindTooltip(poiTooltip).openTooltip();
-          });
-        },
-      });
-    }
-
-    if (state.trekTouristicContents && state.trekTouristicContents.length > 0) {
-      const currentTouristicContentsFeatureCollection: FeatureCollection = {
-        type: 'FeatureCollection',
-        features: [],
-      };
-
-      for (const touristicContent of state.trekTouristicContents) {
-        currentTouristicContentsFeatureCollection.features.push({
-          type: 'Feature',
-          properties: {
-            name: touristicContent.name,
-            category_pictogram: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category)?.pictogram,
-          },
-          geometry: touristicContent.geometry,
-        });
-      }
-
-      const toutisticContentsIcons = await this.getIcons(currentTouristicContentsFeatureCollection, 'category_pictogram');
-
-      this.currentToutisticContentsLayer = L.geoJSON(currentTouristicContentsFeatureCollection, {
-        pointToLayer: (geoJsonPoint, latlng) => {
-          return L.marker(latlng, {
-            icon: L.divIcon({
-              html: toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]
-                ? `<div part="touristic-content-marker" class="touristic-content-marker"><img src=${toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]} /></div>`
-                : `<div part="touristic-content-marker" class="touristic-content-marker"><img /></div>`,
-              className: '',
-              iconSize: 48,
-            } as any),
-            autoPanOnFocus: false,
-          } as any);
-        },
-        onEachFeature: (geoJsonPoint, layer) => {
-          layer.once('mouseover', () => {
-            const touristicContentTooltip = L.DomUtil.create('div');
-            /* @ts-ignore */
-            touristicContentTooltip.part = 'touristic-content-tooltip';
-            touristicContentTooltip.className = 'touristic-content-tooltip';
-            const touristicContentName = L.DomUtil.create('div');
-            touristicContentName.innerHTML = geoJsonPoint.properties.name;
-            /* @ts-ignore */
-            touristicContentName.part = 'touristic-content-name';
-            touristicContentName.className = 'touristic-content-name';
-            touristicContentTooltip.appendChild(touristicContentName);
-            layer.bindTooltip(touristicContentTooltip).openTooltip();
-          });
-        },
-      });
-    }
-
-    if (state.touristicEvents && state.touristicEvents.length > 0) {
-      const currentTouristicEventsFeatureCollection: FeatureCollection = {
-        type: 'FeatureCollection',
-        features: [],
-      };
-
-      for (const touristicEvent of state.touristicEvents) {
-        currentTouristicEventsFeatureCollection.features.push({
-          type: 'Feature',
-          properties: {
-            name: touristicEvent.name,
-            type_pictogram: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === touristicEvent.type)?.pictogram,
-          },
-          geometry: touristicEvent.geometry,
-        });
-      }
-
-      const toutisticEventsIcons = await this.getIcons(currentTouristicEventsFeatureCollection, 'type_pictogram');
-      this.currenttouristicEventsLayer = L.geoJSON(currentTouristicEventsFeatureCollection, {
-        pointToLayer: (geoJsonPoint, latlng) =>
-          L.marker(latlng, {
-            icon: L.divIcon({
-              html: toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]
-                ? `
-                <div part="touristic-event-marker" class="touristic-event-marker"><img src=${toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
-                : `<div part="touristic-event-marker" class="touristic-event-marker"><img /></div>`,
-              className: '',
-              iconSize: 48,
-            } as any),
-            autoPanOnFocus: false,
-          } as any),
-        onEachFeature: (geoJsonPoint, layer) => {
-          layer.once('mouseover', () => {
-            const touristicEventTooltip = L.DomUtil.create('div');
-            /* @ts-ignore */
-            touristicEventTooltip.part = 'touristic-event-tooltip';
-            touristicEventTooltip.className = 'touristic-event-tooltip';
-            const touristicEventName = L.DomUtil.create('div');
-            /* @ts-ignore */
-            touristicEventName.part = 'touristic-event-name';
-            touristicEventName.innerHTML = geoJsonPoint.properties.name;
-            touristicEventName.className = 'touristic-event-name';
-            touristicEventTooltip.appendChild(touristicEventName);
-            layer.bindTooltip(touristicEventTooltip).openTooltip();
-          });
-        },
-      });
-    }
-
-    if (state.currentInformationDesks && state.currentInformationDesks.length > 0) {
-      const currentInformationDesksFeatureCollection: FeatureCollection = {
-        type: 'FeatureCollection',
-        features: [],
-      };
-
-      for (const currentInformationDesk of state.currentInformationDesks.filter(currentInformationDesks =>
-        state.currentTrek.information_desks.includes(currentInformationDesks.id),
-      )) {
-        if (currentInformationDesk.latitude && currentInformationDesk.longitude) {
-          currentInformationDesksFeatureCollection.features.push({
-            type: 'Feature',
-            properties: { name: currentInformationDesk.name, type_pictogram: currentInformationDesk.type.pictogram },
-            geometry: { type: 'Point', coordinates: [Number(currentInformationDesk.longitude), Number(currentInformationDesk.latitude)] },
-          });
-        }
-      }
-
-      if (currentInformationDesksFeatureCollection.features.length > 0) {
-        const informationDesksIcons = await this.getIcons(currentInformationDesksFeatureCollection, 'type_pictogram');
-        this.currentInformationDesksLayer = L.geoJSON(currentInformationDesksFeatureCollection, {
-          pointToLayer: (geoJsonPoint, latlng) =>
-            L.marker(latlng, {
-              icon: L.divIcon({
-                html: informationDesksIcons[geoJsonPoint.properties.type_pictogram]
-                  ? `<div part="information-desks-marker" class="information-desks-marker"><img src=${informationDesksIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
-                  : `<div part="information-desks-marker" class="information-desks-marker"><img /></div>`,
-                className: '',
-                iconSize: 48,
-              } as any),
-              autoPanOnFocus: false,
-            } as any),
-          onEachFeature: (geoJsonPoint, layer) => {
-            layer.once('mouseover', () => {
-              const informationDesksTooltip = L.DomUtil.create('div');
-              /* @ts-ignore */
-              informationDesksTooltip.part = 'information-desks-tooltip';
-              informationDesksTooltip.className = 'information-desks-tooltip';
-              const informationDesksName = L.DomUtil.create('div');
-              /* @ts-ignore */
-              informationDesksName.part = 'information-desks-name';
-              informationDesksName.innerHTML = geoJsonPoint.properties.name;
-              informationDesksName.className = 'information-desks-name';
-              informationDesksTooltip.appendChild(informationDesksName);
-              layer.bindTooltip(informationDesksTooltip).openTooltip();
-            });
-          },
-        });
-      }
-    }
+    await this.addCurrentTouristicEvents();
 
     if (state.currentTrek.points_reference) {
       const currentReferencePointsFeatureCollection: FeatureCollection = {
@@ -1065,42 +938,7 @@ export class GrwMap {
     });
     this.map.addLayer(this.departureArrivalLayer);
 
-    const overlays = {};
-    if (this.currentStepsLayer) {
-      overlays[translate[state.language].layers.steps] = this.currentStepsLayer;
-    }
-    if (this.currentReferencePointsLayer) {
-      overlays[translate[state.language].layers.referencePoints] = this.currentReferencePointsLayer;
-    }
-    if (this.currentParkingLayer) {
-      overlays[translate[state.language].layers.parking] = this.currentParkingLayer;
-    }
-    if (this.currentSensitiveAreasLayer) {
-      overlays[translate[state.language].layers.sensitiveArea] = this.currentSensitiveAreasLayer;
-    }
-    if (this.currentInformationDesksLayer) {
-      overlays[translate[state.language].layers.informationPlaces] = this.currentInformationDesksLayer;
-    }
-    if (this.currentPoisLayer) {
-      overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
-    }
-    if (this.currentToutisticContentsLayer) {
-      overlays[translate[state.language].layers.touristicContents] = this.currentToutisticContentsLayer;
-    }
-
-    if (this.currenttouristicEventsLayer) {
-      overlays[translate[state.language].layers.touristicEvents] = this.currenttouristicEventsLayer;
-    }
-
-    if (this.layersControl) {
-      Object.keys(overlays).forEach(key => {
-        this.layersControl.addOverlay(overlays[key], key);
-      });
-    } else {
-      this.layersControl = L.control.layers({}, overlays, { collapsed: true }).addTo(this.map);
-    }
-
-    this.handleLayersControlEvent();
+    this.handleLayersControl();
 
     this.bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
     this.bounds && this.map.fitBounds(this.bounds);
@@ -1345,77 +1183,11 @@ export class GrwMap {
   }
 
   removeTrek() {
-    if (this.layersControl) {
-      if (!(this.layersControl as any)._layers.some(layer => !layer.overlay)) {
-        this.map.removeControl(this.layersControl);
-        this.layersControl = null;
-      } else {
-        (this.layersControl as any)._layers
-          .filter(layer => layer.overlay)
-          .forEach(layer => {
-            this.layersControl.removeLayer(layer.layer);
-          });
-      }
-    }
-
-    if (this.elevationControl) {
-      (this.elevationControl as any).clear();
-      this.map.removeControl(this.elevationControl);
-      this.elevationControl = null;
-    }
-
-    if (this.departureArrivalLayer) {
-      this.map.removeLayer(this.departureArrivalLayer);
-      this.departureArrivalLayer = null;
-    }
-
-    if (this.currentTrekLayer) {
-      this.map.removeLayer(this.currentTrekLayer);
-      this.currentTrekLayer = null;
-    }
-
-    if (this.currentParkingLayer) {
-      this.map.removeLayer(this.currentParkingLayer);
-      this.currentParkingLayer = null;
-    }
-
-    if (this.currentSensitiveAreasLayer) {
-      this.map.removeLayer(this.currentSensitiveAreasLayer);
-      this.currentSensitiveAreasLayer = null;
-    }
-
-    if (this.currentPoisLayer) {
-      this.map.removeLayer(this.currentPoisLayer);
-      this.currentPoisLayer = null;
-    }
-
-    if (this.currentInformationDesksLayer) {
-      this.map.removeLayer(this.currentInformationDesksLayer);
-      this.currentInformationDesksLayer = null;
-    }
-
-    if (this.currentReferencePointsLayer) {
-      this.map.removeLayer(this.currentReferencePointsLayer);
-      this.currentReferencePointsLayer = null;
-    }
-
-    if (this.currentStepsLayer) {
-      this.map.removeLayer(this.currentStepsLayer);
-      this.currentStepsLayer = null;
-    }
-
-    if (this.currentToutisticContentsLayer) {
-      this.map.removeLayer(this.currentToutisticContentsLayer);
-      this.currentToutisticContentsLayer = null;
-    }
-    if (this.currenttouristicEventsLayer) {
-      this.map.removeLayer(this.currenttouristicEventsLayer);
-      this.currenttouristicEventsLayer = null;
-    }
+    this.handleLayersOnRemove();
   }
 
   async showTrekLine(id) {
-    // this.removeSelectedCurrentTrek();
+    this.removeSelectedCurrentTrek();
     const trekLine = await getTrekGeometry(id);
     const currentTrekFeature: Feature = {
       type: 'Feature',
@@ -1898,6 +1670,284 @@ export class GrwMap {
     }
   }
 
+  async addOutdoorSites(resetBounds = false) {
+    state.outdoorSitesWithinBounds = state.currentOutdoorSites;
+
+    const outdoorSitesCurrentCoordinates = [];
+
+    const outdoorSitesFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentOutdoorSites) {
+      for (const currentOutdoorSite of state.currentOutdoorSites) {
+        outdoorSitesFeatureCollection.features.push({
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: pointOnFeature(currentOutdoorSite.geometry as any).geometry.coordinates },
+          properties: {
+            id: currentOutdoorSite.id,
+            name: currentOutdoorSite.name,
+            practice: state.outdoorPractices.find(practice => practice.id === currentOutdoorSite.practice)?.pictogram,
+            imgSrc: currentOutdoorSite.attachments && currentOutdoorSite.attachments.length > 0 && currentOutdoorSite.attachments[0].thumbnail,
+          },
+        });
+      }
+    }
+
+    if (!this.outdoorSitesLayer) {
+      if ((outdoorSitesCurrentCoordinates.length > 0 && !state.currentMapBounds) || resetBounds) {
+        this.bounds = L.latLngBounds(outdoorSitesCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      } else {
+        if (state.currentMapBounds) {
+          this.bounds = state.currentMapBounds;
+        }
+      }
+      const outdoorSitesIcons = await this.getIcons(outdoorSitesFeatureCollection, 'practice');
+      this.outdoorSitesLayer = L.geoJSON(outdoorSitesFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: outdoorSitesIcons[geoJsonPoint.properties.practice]
+                ? `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"><img part="outdoor-site-marker-icon" src=${
+                    outdoorSitesIcons[geoJsonPoint.properties.practice]
+                  } /></div></div>`
+                : `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
+              className: '',
+              iconSize: 32,
+              iconAnchor: [16, 32],
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('click', () => {
+            const outdoorSiteCoordinatesPopup = L.DomUtil.create('div');
+            /* @ts-ignore */
+            outdoorSiteCoordinatesPopup.part = 'outdoor-site-coordinates-popup';
+            outdoorSiteCoordinatesPopup.className = 'outdoor-site-coordinates-popup';
+            if (geoJsonPoint.properties.imgSrc) {
+              const outdoorSiteImg = L.DomUtil.create('img');
+              /* @ts-ignore */
+              outdoorSiteImg.part = 'outdoor-site-coordinates-image';
+              outdoorSiteImg.src = geoJsonPoint.properties.imgSrc;
+              outdoorSiteCoordinatesPopup.appendChild(outdoorSiteImg);
+            }
+            const outdoorSiteName = L.DomUtil.create('div');
+            outdoorSiteName.innerHTML = geoJsonPoint.properties.name;
+            /* @ts-ignore */
+            outdoorSiteName.part = 'outdoor-site-name';
+            outdoorSiteName.className = 'outdoor-site-name';
+            outdoorSiteCoordinatesPopup.appendChild(outdoorSiteName);
+
+            const outdoorSiteButton = L.DomUtil.create('button');
+            outdoorSiteButton.innerHTML = 'Afficher le détail';
+            /* @ts-ignore */
+            outdoorSiteButton.part = 'outdoor-site-button';
+            outdoorSiteButton.className = 'outdoor-site-button';
+            outdoorSiteButton.onclick = () => this.outdoorSiteCardPress.emit(geoJsonPoint.properties.id);
+            outdoorSiteCoordinatesPopup.appendChild(outdoorSiteButton);
+
+            layer.bindPopup(outdoorSiteCoordinatesPopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+          });
+          layer.on('mouseover', e => {
+            this.addSelectedOutdoorSite(geoJsonPoint.properties.id, e.latlng);
+          });
+        },
+      });
+
+      this.outdoorSitesMarkerClusterGroup = L.markerClusterGroup({
+        showCoverageOnHover: false,
+        removeOutsideVisibleBounds: false,
+        iconCreateFunction: cluster => {
+          return L.divIcon({
+            html: '<div part="outdoor-site-marker-cluster-group-icon" class="outdoor-site-marker-cluster-group-icon"><div>' + cluster.getChildCount() + '</div></div>',
+            className: '',
+            iconSize: 48,
+          } as any);
+        },
+      });
+
+      this.outdoorSitesMarkerClusterGroup.addLayer(this.outdoorSitesLayer);
+      this.map.addLayer(this.outdoorSitesMarkerClusterGroup);
+    } else {
+      if (outdoorSitesCurrentCoordinates.length > 0) {
+        this.bounds = L.latLngBounds(outdoorSitesCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+      } else {
+        this.map.fire('moveend');
+      }
+      this.outdoorSitesLayer.clearLayers();
+      this.outdoorSitesLayer.addData(outdoorSitesFeatureCollection);
+      this.outdoorSitesMarkerClusterGroup.clearLayers();
+      this.outdoorSitesMarkerClusterGroup.addLayer(this.outdoorSitesLayer);
+    }
+
+    this.bounds && this.map.fitBounds(this.bounds);
+
+    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+
+    this.map.on('moveend', this.handleOutdoorSitesWithinBoundsBind);
+  }
+
+  removeOutdoorSites() {
+    if (this.outdoorSitesLayer) {
+      state.currentMapBounds = this.map.getBounds();
+      this.map.removeLayer(this.outdoorSitesMarkerClusterGroup);
+      this.outdoorSitesLayer = null;
+      this.outdoorSitesMarkerClusterGroup = null;
+      this.map.off('moveend', this.handleOutdoorSitesWithinBoundsBind);
+    }
+  }
+
+  async addOutdoorSite() {
+    const OutdoorSiteFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentOutdoorSite) {
+      const outdoorSitePractice = state.outdoorPractices.find(outdoorPractice => outdoorPractice.id === state.currentOutdoorSite.practice);
+      OutdoorSiteFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: state.currentOutdoorSite.geometry,
+        properties: {
+          id: state.currentOutdoorSite.id,
+          name: state.currentOutdoorSite.name,
+          practice: outdoorSitePractice ? outdoorSitePractice.pictogram : null,
+        },
+      });
+    }
+
+    if (!this.currentOutdoorSiteLayer) {
+      const outdoorSitesIcons = await this.getIcons(OutdoorSiteFeatureCollection, 'practice');
+
+      this.currentOutdoorSiteLayer = L.geoJSON(OutdoorSiteFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) => {
+          return L.marker(latlng, {
+            icon: L.divIcon({
+              html: outdoorSitesIcons[geoJsonPoint.properties.practice]
+                ? `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"><img part="outdoor-site-marker-icon" src=${
+                    outdoorSitesIcons[geoJsonPoint.properties.practice]
+                  } /></div></div>`
+                : `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any);
+        },
+        style: () => ({ color: this.colorOutdoorArea, interactive: false }),
+      });
+
+      this.map.addLayer(this.currentOutdoorSiteLayer);
+    }
+
+    await this.addCurrentInformationDesks(state.currentOutdoorSite);
+
+    await this.addCurrentPois();
+
+    await this.addCurrentTouristicContents();
+
+    await this.addCurrentTouristicEvents();
+
+    await this.addCurrentRelatedOutdoorSites();
+
+    await this.addCurrentRelatedOutdoorCourses();
+
+    this.handleLayersControl();
+
+    this.map.fitBounds(this.currentOutdoorSiteLayer.getBounds());
+    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+  }
+
+  async addCurrentRelatedOutdoorSites() {
+    const currentRelatedOutdoorSiteFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentRelatedOutdoorSites) {
+      for (const currentRelatedOutdoorSite of state.currentRelatedOutdoorSites) {
+        currentRelatedOutdoorSiteFeatureCollection.features.push({
+          type: 'Feature',
+          geometry: currentRelatedOutdoorSite.geometry,
+          properties: {
+            id: currentRelatedOutdoorSite.id,
+            name: currentRelatedOutdoorSite.name,
+            practice: state.outdoorPractices.find(practice => practice.id === currentRelatedOutdoorSite.practice)?.pictogram,
+            imgSrc: currentRelatedOutdoorSite.attachments && currentRelatedOutdoorSite.attachments.length > 0 && currentRelatedOutdoorSite.attachments[0].thumbnail,
+          },
+        });
+      }
+    }
+
+    if (!this.currentRelatedOutdoorSitesLayer && currentRelatedOutdoorSiteFeatureCollection.features.length > 0) {
+      const outdoorSitesIcons = await this.getIcons(currentRelatedOutdoorSiteFeatureCollection, 'practice');
+
+      this.currentRelatedOutdoorSitesLayer = L.geoJSON(currentRelatedOutdoorSiteFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) => {
+          return L.marker(latlng, {
+            icon: L.divIcon({
+              html: outdoorSitesIcons[geoJsonPoint.properties.practice]
+                ? `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"><img part="outdoor-site-marker-icon" src=${
+                    outdoorSitesIcons[geoJsonPoint.properties.practice]
+                  } /></div></div>`
+                : `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any);
+        },
+        style: () => ({ color: this.colorOutdoorArea, interactive: false }),
+      });
+    }
+  }
+
+  async addCurrentRelatedOutdoorCourses() {
+    const currentRelatedOutdoorCourseFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentRelatedOutdoorCourses) {
+      for (const currentRelatedOutdoorCourse of state.currentRelatedOutdoorCourses) {
+        currentRelatedOutdoorCourseFeatureCollection.features.push({
+          type: 'Feature',
+          geometry: currentRelatedOutdoorCourse.geometry,
+          properties: {
+            id: currentRelatedOutdoorCourse.id,
+            name: currentRelatedOutdoorCourse.name,
+            type: state.outdoorCourseTypes.find(type => type.id === currentRelatedOutdoorCourse.type)?.pictogram,
+            imgSrc: currentRelatedOutdoorCourse.attachments && currentRelatedOutdoorCourse.attachments.length > 0 && currentRelatedOutdoorCourse.attachments[0].thumbnail,
+          },
+        });
+      }
+    }
+
+    if (!this.currentRelatedOutdoorCoursesLayer && currentRelatedOutdoorCourseFeatureCollection.features.length > 0) {
+      const outdoorCoursesIcons = await this.getIcons(currentRelatedOutdoorCourseFeatureCollection, 'type');
+
+      this.currentRelatedOutdoorCoursesLayer = L.geoJSON(currentRelatedOutdoorCourseFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) => {
+          return L.marker(latlng, {
+            icon: L.divIcon({
+              html: outdoorCoursesIcons[geoJsonPoint.properties.practice]
+                ? `<div part="outdoor-courses-marker" class="outdoor-courses-marker"><div part="outdoor-courses-marker-container" class="outdoor-courses-marker-container"><img part="outdoor-courses-marker-icon" src=${
+                    outdoorCoursesIcons[geoJsonPoint.properties.practice]
+                  } /></div></div>`
+                : `<div part="outdoor-courses-marker" class="outdoor-courses-marker"><div part="outdoor-courses-marker-container" class="outdoor-courses-marker-container"></div></div>`,
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any);
+        },
+        style: () => ({ color: this.colorOutdoorArea, interactive: false }),
+      });
+    }
+  }
+
+  removeOutdoorSite() {
+    this.handleLayersOnRemove();
+  }
+
   async addSelectedTouristicEvent(id, customCoordinates?) {
     const touristicEventFeatureCollection: FeatureCollection = {
       type: 'FeatureCollection',
@@ -1906,6 +1956,7 @@ export class GrwMap {
 
     if (state.touristicEvents) {
       const touristicEvent = state.touristicEvents.find(touristicEvent => touristicEvent.id === id);
+
       touristicEventFeatureCollection.features.push({
         type: 'Feature',
         geometry: { type: 'Point', coordinates: customCoordinates ? [customCoordinates.lng, customCoordinates.lat] : touristicEvent.geometry.coordinates },
@@ -1995,6 +2046,597 @@ export class GrwMap {
     this.selectedTouristicEventLayer = null;
   }
 
+  async addOutdoorCourse() {
+    const OutdoorCourseFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentOutdoorCourse) {
+      const outdoorCourseType = state.outdoorCourseTypes.find(outdoorCourseType => outdoorCourseType.id === state.currentOutdoorCourse.type);
+      OutdoorCourseFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: state.currentOutdoorCourse.geometry,
+        properties: {
+          id: state.currentOutdoorCourse.id,
+          name: state.currentOutdoorCourse.name,
+          type: outdoorCourseType ? outdoorCourseType.pictogram : null,
+        },
+      });
+    }
+
+    if (!this.currentOutdoorCourseLayer) {
+      const outdoorCoursesIcons = await this.getIcons(OutdoorCourseFeatureCollection, 'type');
+      this.currentOutdoorCourseLayer = L.geoJSON(OutdoorCourseFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) => {
+          return L.marker(latlng, {
+            icon: L.divIcon({
+              html: outdoorCoursesIcons[geoJsonPoint.properties.practice]
+                ? `<div part="outdoor-course-marker" class="outdoor-course-marker"><div part="outdoor-course-marker-container" class="outdoor-course-marker-container"><img part="outdoor-course-marker-icon" src=${
+                    outdoorCoursesIcons[geoJsonPoint.properties.practice]
+                  } /></div></div>`
+                : `<div part="outdoor-course-marker" class="outdoor-course-marker"><div part="outdoor-course-marker-container" class="outdoor-course-marker-container"></div></div>`,
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any);
+        },
+        style: () => ({ color: this.colorOutdoorArea, interactive: false }),
+      });
+
+      this.map.addLayer(this.currentOutdoorCourseLayer);
+    }
+
+    await this.addCurrentPois();
+
+    await this.addCurrentTouristicContents();
+
+    await this.addCurrentTouristicEvents();
+
+    this.handleLayersControl();
+
+    this.map.fitBounds(this.currentOutdoorCourseLayer.getBounds());
+    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+  }
+
+  removeOutdoorCourse() {
+    this.handleLayersOnRemove();
+  }
+
+  async addSelectedOutdoorSite(id, _customCoordinates?) {
+    const outdoorSiteFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentOutdoorSites) {
+      const outdoorSite = state.currentOutdoorSites.find(currentOutdoorSite => currentOutdoorSite.id === id);
+      outdoorSiteFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: pointOnFeature(outdoorSite.geometry as any).geometry.coordinates },
+        properties: {
+          id: outdoorSite.id,
+          name: outdoorSite.name,
+          practice: state.outdoorPractices.find(practice => practice.id === outdoorSite.practice)?.pictogram,
+          imgSrc: outdoorSite.attachments && outdoorSite.attachments.length > 0 && outdoorSite.attachments[0].thumbnail,
+        },
+      });
+      outdoorSiteFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: outdoorSite.geometry,
+        properties: {},
+      });
+    }
+
+    this.removeSelectedOutdoorSite();
+    state.selectedOutdoorSiteId = id;
+
+    const outdoorSitesIcons = await this.getIcons(outdoorSiteFeatureCollection, 'practice');
+    this.selectedOutdoorSiteLayer = L.geoJSON(outdoorSiteFeatureCollection, {
+      pointToLayer: (geoJsonPoint, latlng) =>
+        L.marker(latlng, {
+          zIndexOffset: 4000000,
+          icon: L.divIcon({
+            html: outdoorSitesIcons[geoJsonPoint.properties.practice]
+              ? `<div part="selected-outdoor-site-marker" class="selected-outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"><img  part="outdoor-site-marker-icon" src=${
+                  outdoorSitesIcons[geoJsonPoint.properties.practice]
+                } /></div></div>`
+              : `<div part="selected-outdoor-site-marker" class="selected-outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
+            className: '',
+            iconSize: 48,
+            iconAnchor: [24, 48],
+          } as any),
+          autoPanOnFocus: false,
+        } as any),
+      onEachFeature: (geoJsonPoint, layer) => {
+        layer.once('click', () => {
+          const outdoorSiteDeparturePopup = L.DomUtil.create('div');
+          /* @ts-ignore */
+          outdoorSiteDeparturePopup.part = 'outdoor-site-coordinates-popup';
+          outdoorSiteDeparturePopup.className = 'outdoor-site-coordinates-popup';
+          if (geoJsonPoint.properties.imgSrc) {
+            const outdoorSiteImg = L.DomUtil.create('img');
+            /* @ts-ignore */
+            outdoorSiteImg.part = 'outdoor-site-coordinates-image';
+            outdoorSiteImg.src = geoJsonPoint.properties.imgSrc;
+            outdoorSiteDeparturePopup.appendChild(outdoorSiteImg);
+          }
+
+          const outdoorSiteName = L.DomUtil.create('div');
+          outdoorSiteName.innerHTML = geoJsonPoint.properties.name;
+          /* @ts-ignore */
+          outdoorSiteName.part = 'outdoor-site-name';
+          outdoorSiteName.className = 'outdoor-site-name';
+          outdoorSiteDeparturePopup.appendChild(outdoorSiteName);
+
+          const outdoorSiteButton = L.DomUtil.create('button');
+          outdoorSiteButton.innerHTML = 'Afficher le détail';
+          /* @ts-ignore */
+          outdoorSiteButton.part = 'outdoor-site-button';
+          outdoorSiteButton.className = 'outdoor-site-button';
+          outdoorSiteButton.onclick = () => this.outdoorSiteCardPress.emit(geoJsonPoint.properties.id);
+          outdoorSiteDeparturePopup.appendChild(outdoorSiteButton);
+
+          layer.bindPopup(outdoorSiteDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+        });
+        layer.on('mouseout', () => {
+          if (!this.outdoorSitePopupIsOpen) {
+            state.selectedOutdoorSiteId = null;
+            this.removeSelectedOutdoorSite();
+          }
+        });
+        layer.on('popupopen', () => {
+          this.outdoorSitePopupIsOpen = Boolean(state.selectedOutdoorSiteId);
+        });
+        layer.on('popupclose', () => {
+          if (state.selectedOutdoorSiteId) {
+            this.outdoorSitePopupIsOpen = false;
+            state.selectedOutdoorSiteId = null;
+            this.removeSelectedOutdoorSite();
+          }
+        });
+      },
+      style: { color: this.colorOutdoorArea, interactive: false },
+    }).addTo(this.map);
+  }
+
+  removeSelectedOutdoorSite() {
+    state.selectedOutdoorSiteId = null;
+    this.selectedOutdoorSiteLayer && this.map.removeLayer(this.selectedOutdoorSiteLayer);
+    this.selectedOutdoorSiteLayer = null;
+  }
+
+  async addSelectedOutdoorCourse(id, _customCoordinates?) {
+    const outdoorCourseFeatureCollection: FeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    };
+
+    if (state.currentOutdoorCourse) {
+      const outdoorCourse = state.currentOutdoorCourse;
+      outdoorCourseFeatureCollection.features.push({
+        type: 'Feature',
+        geometry: { type: 'Point', coordinates: pointOnFeature(outdoorCourse.geometry as any).geometry.coordinates },
+        properties: {
+          id: outdoorCourse.id,
+          name: outdoorCourse.name,
+          type: state.outdoorCourseTypes.find(type => type.id === outdoorCourse.type)?.pictogram,
+          imgSrc: outdoorCourse.attachments && outdoorCourse.attachments.length > 0 && outdoorCourse.attachments[0].thumbnail,
+        },
+      });
+    }
+
+    this.removeSelectedOutdoorCourse();
+    state.selectedOutdoorCourseId = id;
+
+    const outdoorCoursesIcons = await this.getIcons(outdoorCourseFeatureCollection, 'type');
+    this.selectedOutdoorCourseLayer = L.geoJSON(outdoorCourseFeatureCollection, {
+      pointToLayer: (geoJsonPoint, latlng) =>
+        L.marker(latlng, {
+          zIndexOffset: 4000000,
+          icon: L.divIcon({
+            html: outdoorCoursesIcons[geoJsonPoint.properties.type]
+              ? `<div part="selected-outdoor-course-marker" class="selected-outdoor-course-marker"><div part="outdoor-course-marker-container" class="outdoor-course-marker-container"><img  part="outdoor-course-marker-icon" src=${
+                  outdoorCoursesIcons[geoJsonPoint.properties.type]
+                } /></div></div>`
+              : `<div part="selected-outdoor-course-marker" class="selected-outdoor-course-marker"><div part="outdoor-course-marker-container" class="outdoor-course-marker-container"></div></div>`,
+            className: '',
+            iconSize: 48,
+            iconAnchor: [24, 48],
+          } as any),
+          autoPanOnFocus: false,
+        } as any),
+      onEachFeature: (geoJsonPoint, layer) => {
+        layer.once('click', () => {
+          const outdoorCourseDeparturePopup = L.DomUtil.create('div');
+          /* @ts-ignore */
+          outdoorCourseDeparturePopup.part = 'outdoor-course-coordinates-popup';
+          outdoorCourseDeparturePopup.className = 'outdoor-course-coordinates-popup';
+          if (geoJsonPoint.properties.imgSrc) {
+            const outdoorCourseImg = L.DomUtil.create('img');
+            /* @ts-ignore */
+            outdoorCourseImg.part = 'outdoor-course-coordinates-image';
+            outdoorCourseImg.src = geoJsonPoint.properties.imgSrc;
+            outdoorCourseDeparturePopup.appendChild(outdoorCourseImg);
+          }
+
+          const outdoorCourseName = L.DomUtil.create('div');
+          outdoorCourseName.innerHTML = geoJsonPoint.properties.name;
+          /* @ts-ignore */
+          outdoorCourseName.part = 'outdoor-course-name';
+          outdoorCourseName.className = 'outdoor-course-name';
+          outdoorCourseDeparturePopup.appendChild(outdoorCourseName);
+
+          const outdoorCourseButton = L.DomUtil.create('button');
+          outdoorCourseButton.innerHTML = 'Afficher le détail';
+          /* @ts-ignore */
+          outdoorCourseButton.part = 'outdoor-course-button';
+          outdoorCourseButton.className = 'outdoor-course-button';
+          outdoorCourseButton.onclick = () => this.outdoorCourseCardPress.emit(geoJsonPoint.properties.id);
+          outdoorCourseDeparturePopup.appendChild(outdoorCourseButton);
+
+          layer.bindPopup(outdoorCourseDeparturePopup, { interactive: true, autoPan: false, closeButton: false } as any).openPopup();
+        });
+        layer.on('mouseout', () => {
+          if (!this.outdoorCoursePopupIsOpen) {
+            state.selectedOutdoorCourseId = null;
+            this.removeSelectedOutdoorCourse();
+          }
+        });
+        layer.on('popupopen', () => {
+          this.outdoorCoursePopupIsOpen = Boolean(state.selectedOutdoorCourseId);
+        });
+        layer.on('popupclose', () => {
+          if (state.selectedOutdoorCourseId) {
+            this.outdoorCoursePopupIsOpen = false;
+            state.selectedOutdoorCourseId = null;
+            this.removeSelectedOutdoorCourse();
+          }
+        });
+      },
+    }).addTo(this.map);
+  }
+
+  removeSelectedOutdoorCourse() {
+    state.selectedOutdoorCourseId = null;
+    this.selectedOutdoorCourseLayer && this.map.removeLayer(this.selectedOutdoorCourseLayer);
+    this.selectedOutdoorCourseLayer = null;
+  }
+
+  async addCurrentPois() {
+    if (state.currentPois && state.currentPois.length > 0) {
+      const currentPoisFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const currentPoi of state.currentPois) {
+        currentPoisFeatureCollection.features.push({
+          type: 'Feature',
+          properties: { name: currentPoi.name, type_pictogram: state.poiTypes.find(poiType => poiType.id === currentPoi.type)?.pictogram },
+          geometry: currentPoi.geometry,
+        });
+      }
+
+      const poiIcons = await this.getIcons(currentPoisFeatureCollection, 'type_pictogram');
+
+      this.currentPoisLayer = L.geoJSON(currentPoisFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: poiIcons[geoJsonPoint.properties.type_pictogram]
+                ? `<div part="poi-marker" class="poi-marker"><img  src=${poiIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
+                : `<div part="poi-marker" class="poi-marker"><img /></div>`,
+              className: '',
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('mouseover', () => {
+            const poiTooltip = L.DomUtil.create('div');
+            /* @ts-ignore */
+            poiTooltip.part = 'poi-tooltip';
+            poiTooltip.className = 'poi-tooltip';
+            const poiName = L.DomUtil.create('div');
+            poiName.innerHTML = geoJsonPoint.properties.name;
+            /* @ts-ignore */
+            poiName.part = 'poi-name';
+            poiName.className = 'poi-name';
+            poiTooltip.appendChild(poiName);
+            layer.bindTooltip(poiTooltip).openTooltip();
+          });
+        },
+      });
+    }
+  }
+
+  async addCurrentTouristicContents() {
+    if (state.trekTouristicContents && state.trekTouristicContents.length > 0) {
+      const currentTouristicContentsFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const touristicContent of state.trekTouristicContents) {
+        currentTouristicContentsFeatureCollection.features.push({
+          type: 'Feature',
+          properties: {
+            name: touristicContent.name,
+            category_pictogram: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category)?.pictogram,
+          },
+          geometry: touristicContent.geometry,
+        });
+      }
+
+      const toutisticContentsIcons = await this.getIcons(currentTouristicContentsFeatureCollection, 'category_pictogram');
+
+      this.currentToutisticContentsLayer = L.geoJSON(currentTouristicContentsFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) => {
+          return L.marker(latlng, {
+            icon: L.divIcon({
+              html: toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]
+                ? `<div part="touristic-content-marker" class="touristic-content-marker"><img src=${toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]} /></div>`
+                : `<div part="touristic-content-marker" class="touristic-content-marker"><img /></div>`,
+              className: '',
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any);
+        },
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('mouseover', () => {
+            const touristicContentTooltip = L.DomUtil.create('div');
+            /* @ts-ignore */
+            touristicContentTooltip.part = 'touristic-content-tooltip';
+            touristicContentTooltip.className = 'touristic-content-tooltip';
+            const touristicContentName = L.DomUtil.create('div');
+            touristicContentName.innerHTML = geoJsonPoint.properties.name;
+            /* @ts-ignore */
+            touristicContentName.part = 'touristic-content-name';
+            touristicContentName.className = 'touristic-content-name';
+            touristicContentTooltip.appendChild(touristicContentName);
+            layer.bindTooltip(touristicContentTooltip).openTooltip();
+          });
+        },
+      });
+    }
+  }
+
+  async addCurrentTouristicEvents() {
+    if (state.trekTouristicEvents && state.trekTouristicEvents.length > 0) {
+      const currentTouristicEventsFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const touristicEvent of state.trekTouristicEvents) {
+        currentTouristicEventsFeatureCollection.features.push({
+          type: 'Feature',
+          properties: {
+            name: touristicEvent.name,
+            type_pictogram: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === touristicEvent.type)?.pictogram,
+          },
+          geometry: touristicEvent.geometry,
+        });
+      }
+
+      const toutisticEventsIcons = await this.getIcons(currentTouristicEventsFeatureCollection, 'type_pictogram');
+      this.currentTouristicEventsLayer = L.geoJSON(currentTouristicEventsFeatureCollection, {
+        pointToLayer: (geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]
+                ? `
+                <div part="touristic-event-marker" class="touristic-event-marker"><img src=${toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
+                : `<div part="touristic-event-marker" class="touristic-event-marker"><img /></div>`,
+              className: '',
+              iconSize: 48,
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('mouseover', () => {
+            const touristicEventTooltip = L.DomUtil.create('div');
+            /* @ts-ignore */
+            touristicEventTooltip.part = 'touristic-event-tooltip';
+            touristicEventTooltip.className = 'touristic-event-tooltip';
+            const touristicEventName = L.DomUtil.create('div');
+            /* @ts-ignore */
+            touristicEventName.part = 'touristic-event-name';
+            touristicEventName.innerHTML = geoJsonPoint.properties.name;
+            touristicEventName.className = 'touristic-event-name';
+            touristicEventTooltip.appendChild(touristicEventName);
+            layer.bindTooltip(touristicEventTooltip).openTooltip();
+          });
+        },
+      });
+    }
+  }
+
+  async addCurrentInformationDesks(currentData) {
+    if (state.currentInformationDesks && state.currentInformationDesks.length > 0) {
+      const currentInformationDesksFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const currentInformationDesk of state.currentInformationDesks.filter(currentInformationDesks => currentData.information_desks.includes(currentInformationDesks.id))) {
+        if (currentInformationDesk.latitude && currentInformationDesk.longitude) {
+          currentInformationDesksFeatureCollection.features.push({
+            type: 'Feature',
+            properties: { name: currentInformationDesk.name, type_pictogram: currentInformationDesk.type.pictogram },
+            geometry: { type: 'Point', coordinates: [Number(currentInformationDesk.longitude), Number(currentInformationDesk.latitude)] },
+          });
+        }
+      }
+
+      if (currentInformationDesksFeatureCollection.features.length > 0) {
+        const informationDesksIcons = await this.getIcons(currentInformationDesksFeatureCollection, 'type_pictogram');
+        this.currentInformationDesksLayer = L.geoJSON(currentInformationDesksFeatureCollection, {
+          pointToLayer: (geoJsonPoint, latlng) =>
+            L.marker(latlng, {
+              icon: L.divIcon({
+                html: informationDesksIcons[geoJsonPoint.properties.type_pictogram]
+                  ? `<div part="information-desks-marker" class="information-desks-marker"><img src=${informationDesksIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
+                  : `<div part="information-desks-marker" class="information-desks-marker"><img /></div>`,
+                className: '',
+                iconSize: 48,
+              } as any),
+              autoPanOnFocus: false,
+            } as any),
+          onEachFeature: (geoJsonPoint, layer) => {
+            layer.once('mouseover', () => {
+              const informationDesksTooltip = L.DomUtil.create('div');
+              /* @ts-ignore */
+              informationDesksTooltip.part = 'information-desks-tooltip';
+              informationDesksTooltip.className = 'information-desks-tooltip';
+              const informationDesksName = L.DomUtil.create('div');
+              /* @ts-ignore */
+              informationDesksName.part = 'information-desks-name';
+              informationDesksName.innerHTML = geoJsonPoint.properties.name;
+              informationDesksName.className = 'information-desks-name';
+              informationDesksTooltip.appendChild(informationDesksName);
+              layer.bindTooltip(informationDesksTooltip).openTooltip();
+            });
+          },
+        });
+      }
+    }
+  }
+
+  handleLayersControl() {
+    const overlays = {};
+    if (this.currentStepsLayer) {
+      overlays[translate[state.language].layers.steps] = this.currentStepsLayer;
+    }
+    if (this.currentReferencePointsLayer) {
+      overlays[translate[state.language].layers.referencePoints] = this.currentReferencePointsLayer;
+    }
+    if (this.currentParkingLayer) {
+      overlays[translate[state.language].layers.parking] = this.currentParkingLayer;
+    }
+    if (this.currentSensitiveAreasLayer) {
+      overlays[translate[state.language].layers.sensitiveArea] = this.currentSensitiveAreasLayer;
+    }
+    if (this.currentInformationDesksLayer) {
+      overlays[translate[state.language].layers.informationPlaces] = this.currentInformationDesksLayer;
+    }
+    if (this.currentPoisLayer) {
+      overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
+    }
+    if (this.currentToutisticContentsLayer) {
+      overlays[translate[state.language].layers.touristicContents] = this.currentToutisticContentsLayer;
+    }
+    if (this.currentTouristicEventsLayer) {
+      overlays[translate[state.language].layers.touristicEvents] = this.currentTouristicEventsLayer;
+    }
+
+    if (this.currentRelatedOutdoorSitesLayer) {
+      overlays[translate[state.language].layers.sites] = this.currentRelatedOutdoorSitesLayer;
+    }
+
+    if (this.currentRelatedOutdoorCoursesLayer) {
+      overlays[translate[state.language].layers.courses] = this.currentRelatedOutdoorCoursesLayer;
+    }
+
+    if (this.layersControl) {
+      Object.keys(overlays).forEach(key => {
+        this.layersControl.addOverlay(overlays[key], key);
+      });
+    } else if (Object.keys(overlays).length > 0) {
+      this.layersControl = L.control.layers({}, overlays, { collapsed: true }).addTo(this.map);
+    }
+
+    this.handleLayersControlEvent();
+  }
+
+  handleLayersOnRemove() {
+    if (this.layersControl) {
+      if (!(this.layersControl as any)._layers.some(layer => !layer.overlay)) {
+        this.map.removeControl(this.layersControl);
+        this.layersControl = null;
+      } else {
+        (this.layersControl as any)._layers
+          .filter(layer => layer.overlay)
+          .forEach(layer => {
+            this.layersControl.removeLayer(layer.layer);
+          });
+      }
+    }
+
+    if (this.elevationControl) {
+      (this.elevationControl as any).clear();
+      this.map.removeControl(this.elevationControl);
+      this.elevationControl = null;
+    }
+
+    if (this.departureArrivalLayer) {
+      this.map.removeLayer(this.departureArrivalLayer);
+      this.departureArrivalLayer = null;
+    }
+
+    if (this.currentTrekLayer) {
+      this.map.removeLayer(this.currentTrekLayer);
+      this.currentTrekLayer = null;
+    }
+
+    if (this.currentParkingLayer) {
+      this.map.removeLayer(this.currentParkingLayer);
+      this.currentParkingLayer = null;
+    }
+
+    if (this.currentSensitiveAreasLayer) {
+      this.map.removeLayer(this.currentSensitiveAreasLayer);
+      this.currentSensitiveAreasLayer = null;
+    }
+
+    if (this.currentPoisLayer) {
+      this.map.removeLayer(this.currentPoisLayer);
+      this.currentPoisLayer = null;
+    }
+
+    if (this.currentInformationDesksLayer) {
+      this.map.removeLayer(this.currentInformationDesksLayer);
+      this.currentInformationDesksLayer = null;
+    }
+
+    if (this.currentReferencePointsLayer) {
+      this.map.removeLayer(this.currentReferencePointsLayer);
+      this.currentReferencePointsLayer = null;
+    }
+
+    if (this.currentStepsLayer) {
+      this.map.removeLayer(this.currentStepsLayer);
+      this.currentStepsLayer = null;
+    }
+
+    if (this.currentToutisticContentsLayer) {
+      this.map.removeLayer(this.currentToutisticContentsLayer);
+      this.currentToutisticContentsLayer = null;
+    }
+    if (this.currentTouristicEventsLayer) {
+      this.map.removeLayer(this.currentTouristicEventsLayer);
+      this.currentTouristicEventsLayer = null;
+    }
+    if (this.currentOutdoorSiteLayer) {
+      this.map.removeLayer(this.currentOutdoorSiteLayer);
+      this.currentOutdoorSiteLayer = null;
+    }
+    if (this.currentOutdoorCourseLayer) {
+      this.map.removeLayer(this.currentOutdoorCourseLayer);
+      this.currentOutdoorCourseLayer = null;
+    }
+    if (this.currentRelatedOutdoorSitesLayer) {
+      this.map.removeLayer(this.currentRelatedOutdoorSitesLayer);
+      this.currentRelatedOutdoorSitesLayer = null;
+    }
+    if (this.currentRelatedOutdoorCoursesLayer) {
+      this.map.removeLayer(this.currentRelatedOutdoorCoursesLayer);
+      this.currentRelatedOutdoorCoursesLayer = null;
+    }
+  }
+
   render() {
     const layersImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/layers.svg`);
     const contractImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/contract.svg`);
@@ -2014,7 +2656,18 @@ export class GrwMap {
           '--map-bottom-space-height': this.isLargeView ? '0px' : '80px',
         }}
       >
-        <div id="map" part="map" class={state.currentTrek ? 'trek-map' : 'treks-map'} ref={el => (this.mapRef = el)}></div>
+        <div
+          id="map"
+          part="map"
+          class={
+            state.currentTouristicContent || state.currentTouristicEvent || state.currentOutdoorSite || state.currentOutdoorCourse
+              ? 'common-map'
+              : state.currentTrek
+              ? 'trek-map'
+              : 'treks-map'
+          }
+          ref={el => (this.mapRef = el)}
+        ></div>
         {state.currentTrek && (
           <div>
             <div id="elevation" part="elevation" ref={el => (this.elevationRef = el)}></div>

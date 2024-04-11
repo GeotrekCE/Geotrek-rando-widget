@@ -39,7 +39,7 @@ export class GrwInformationDeskDetail {
   }
 
   async handleOffline() {
-    if (this.informationDesk) {
+    if (this.informationDesk && state.currentTrek) {
       const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
       const informationDeskInStore: InformationDesk = await getDataInStore('informationDesks', this.informationDesk.id);
       this.offline = trekInStore && trekInStore.offline && Boolean(informationDeskInStore);

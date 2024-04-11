@@ -150,7 +150,6 @@ export class GrwTouristicEvent {
                         part="default-touristic-event-img"
                         class="default-touristic-event-img"
                         /* @ts-ignore */
-
                         src={defaultImageSrc}
                         alt=""
                         loading="lazy"

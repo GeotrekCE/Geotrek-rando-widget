@@ -45,7 +45,6 @@
         padding: 8px 16px;
         margin: 0px 8px 8px 0px;
         box-shadow: var(--elevation-0);
-        height: 32px;
         gap: 8px;
         box-sizing: border-box;
         text-align: start;
@@ -55,7 +54,6 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        text-wrap: nowrap;
       }
     }
     .trek-icons-labels-container {
@@ -74,7 +72,7 @@
           display: flex;
           font-size: 24px;
           width: 24px;
-          height: auto;
+          height: 24px;
           color: var(--color-primary-app);
           margin-right: 8px;
         }

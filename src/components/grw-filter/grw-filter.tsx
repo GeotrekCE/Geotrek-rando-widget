@@ -7,6 +7,8 @@ import {
   handleTouristicContentsFiltersAndSearch,
   touristicEventsFilters,
   handleTouristicEventsFiltersAndSearch,
+  outdoorSitesFilters,
+  handleOutdoorSitesFiltersAndSearch,
 } from 'utils/utils';
 import 'choices.js/public/assets/scripts/choices.min.js';
 import CheckIcon from '../../assets/check.svg';
@@ -67,6 +69,14 @@ export class GrwFilter {
         });
 
       state.currentTouristicEvents = handleTouristicEventsFiltersAndSearch();
+    } else if (state.mode === 'outdoor') {
+      outdoorSitesFilters
+        .filter(filter => filter.segment === this.segment)
+        .forEach(filter => {
+          state[this.segment] += state[filter.property].filter(filter => filter.selected).length;
+        });
+
+      state.currentOutdoorSites = handleOutdoorSitesFiltersAndSearch();
     }
   }
 

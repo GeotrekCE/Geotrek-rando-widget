@@ -1,4 +1,4 @@
-import { LineString, Geometry, Position, MultiPoint, Point } from 'geojson';
+import { LineString, Geometry, Position, MultiPoint, Point, GeometryCollection } from 'geojson';
 
 export type Treks = Trek[];
 
@@ -49,7 +49,7 @@ export type Trek = {
   ratings?: number[];
   ratings_description?: string;
   networks: number[];
-  web_links: Weblink[];
+  web_links: Weblinks;
   update_datetime: string;
   offline?: boolean;
   information_desks?: number[];
@@ -309,6 +309,10 @@ export type TouristicEventsFilters = TouristicEventsFilter[];
 
 export type TouristicEventsFilter = { property: string; touristicEventProperty: string; touristicEventPropertyIsArray: boolean; type: string; segment: string };
 
+export type OutdoorSitesFilters = OutdoorSitesFilter[];
+
+export type OutdoorSitesFilter = { property: string; outdoorSiteProperty: string; outdoorSitePropertyIsArray: boolean; type: string; segment: string };
+
 export type Option = {
   visible: boolean;
   indicator: boolean;
@@ -328,7 +332,7 @@ export type Options = {
   touristicEvents: Option;
 };
 
-export type Mode = 'treks' | 'touristicContents' | 'touristicEvents';
+export type Mode = 'treks' | 'touristicContents' | 'touristicEvents' | 'outdoor';
 
 export type Ratings = Rating[];
 
@@ -353,6 +357,8 @@ export type Network = {
   pictogram: string;
 };
 
+export type Weblinks = Weblink[];
+
 export type Weblink = {
   name: string;
   url: string;
@@ -366,3 +372,96 @@ export type WeblinkCategory = {
 };
 
 export type ImageInStore = { url: string; data: string | ArrayBuffer; type: string };
+
+export type OutdoorSites = OutdoorSite[];
+
+export type OutdoorSite = {
+  id: number;
+  name: string;
+  geometry: GeometryCollection;
+  accessibility: string;
+  advice: string;
+  ambiance: string;
+  attachments: Attachments;
+  cities: string[];
+  children: number[];
+  description: string;
+  description_teaser: string;
+  districts: number[];
+  information_desks: number[];
+  labels: number[];
+  managers: number[];
+  orientation: string[];
+  pdf: string;
+  period: string;
+  parent: number;
+  portal: number[];
+  practice: number;
+  provider: string;
+  ratings: number[];
+  sector: number;
+  source: number[];
+  structure: number;
+  themes: number[];
+  view_points: [];
+  type: number;
+  courses: number[];
+  web_links: Weblinks;
+  wind: string[];
+};
+
+export type OutdoorCourses = OutdoorCourse[];
+
+export type OutdoorCourse = {
+  id: number;
+  name: string;
+  geometry: GeometryCollection;
+  accessibility: string;
+  advice: string;
+  attachments: Attachments;
+  children: number[];
+  cities: string[];
+  description: string;
+  districts: number[];
+  duration: number | null;
+  equipment: string;
+  gear: string;
+  height: number | null;
+  length: number;
+  max_elevation: number;
+  min_elevation: number;
+  parents: number[];
+  pdf: string;
+  points_reference: MultiPoint | null;
+  provider: string;
+  ratings: number[];
+  ratings_description: string;
+  sites: number[];
+  structure: number;
+  type: number | null;
+};
+
+export type OutdoorSiteTypes = OutdoorSiteType[];
+
+export type OutdoorSiteType = {
+  id: number;
+  name: string;
+  practice: number;
+};
+
+export type OutdoorPractices = OutdoorPractice[];
+
+export type OutdoorPractice = {
+  id: number;
+  name: string;
+  sector: number;
+  pictogram: string;
+};
+
+export type OutdoorCourseTypes = OutdoorCourseType[];
+
+export type OutdoorCourseType = {
+  id: number;
+  name: string;
+  pictogram: string;
+};

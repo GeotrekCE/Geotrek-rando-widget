@@ -31,6 +31,7 @@
 | `"filters-container"`                    |             |
 | `"filters-options-buttons-container"`    |             |
 | `"filters-options-container"`            |             |
+| `"filters-outdoor-sites-container"`      |             |
 | `"filters-segment-container"`            |             |
 | `"filters-touristic-contents-container"` |             |
 | `"filters-touristic-events-container"`   |             |

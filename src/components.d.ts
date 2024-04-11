@@ -5,15 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { InformationDesk, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
-export { InformationDesk, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
+import { InformationDesk, OutdoorCourse, OutdoorSite, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
+export { InformationDesk, OutdoorCourse, OutdoorSite, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
         "appHeight": string;
         "appWidth": string;
         "attributionLayer": string;
-        "center": string;
         "cities": string;
         "colorBackground": string;
         "colorOnPrimary": string;
@@ -21,6 +20,7 @@ export namespace Components {
         "colorOnSecondaryContainer": string;
         "colorOnSurface": string;
         "colorOnSurfaceVariant": string;
+        "colorOutdoorArea": string;
         "colorPoiIcon": string;
         "colorPrimary": string;
         "colorPrimaryApp": string;
@@ -44,6 +44,7 @@ export namespace Components {
         "labels": string;
         "languages": string;
         "nameLayer": string;
+        "outdoor": boolean;
         "portals": string;
         "practices": string;
         "rounded": boolean;
@@ -58,7 +59,6 @@ export namespace Components {
         "urlLayer": string;
         "useGradient": boolean;
         "weather": boolean;
-        "zoom": number;
     }
     interface GrwCommonButton {
         "action": Function;
@@ -94,10 +94,10 @@ export namespace Components {
     }
     interface GrwMap {
         "attributionLayer": string;
-        "center": string;
         "colorBackground": string;
         "colorOnPrimaryContainer": string;
         "colorOnSurface": string;
+        "colorOutdoorArea": string;
         "colorPoiIcon": string;
         "colorPrimaryApp": string;
         "colorPrimaryContainer": string;
@@ -109,7 +109,95 @@ export namespace Components {
         "trekTilesMaxZoomOffline": number;
         "urlLayer": string;
         "useGradient": boolean;
-        "zoom": number;
+    }
+    interface GrwOutdoorCourseCard {
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "fontFamily": string;
+        "isInsideHorizontalList": boolean;
+        "isLargeView": boolean;
+        "outdoorCourse": OutdoorCourse;
+    }
+    interface GrwOutdoorCourseDetail {
+        "colorBackground": string;
+        "colorOnPrimaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "fontFamily": string;
+        "isLargeView": boolean;
+        "weather": boolean;
+    }
+    interface GrwOutdoorCourseProvider {
+        "api": string;
+        "languages": string;
+        "outdoorCourseId": number;
+        "portals": string;
+    }
+    interface GrwOutdoorCoursesProvider {
+        "api": string;
+        "cities": string;
+        "districts": string;
+        "inBbox": string;
+        "languages": string;
+        "portals": string;
+        "structures": string;
+        "themes": string;
+    }
+    interface GrwOutdoorSiteCard {
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "fontFamily": string;
+        "isInsideHorizontalList": boolean;
+        "isLargeView": boolean;
+        "outdoorSite": OutdoorSite;
+    }
+    interface GrwOutdoorSiteDetail {
+        "colorBackground": string;
+        "colorOnPrimaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "fontFamily": string;
+        "isLargeView": boolean;
+        "weather": boolean;
+    }
+    interface GrwOutdoorSiteProvider {
+        "api": string;
+        "languages": string;
+        "outdoorSiteId": number;
+        "portals": string;
+    }
+    interface GrwOutdoorSitesList {
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "fontFamily": string;
+        "isLargeView": boolean;
+    }
+    interface GrwOutdoorSitesProvider {
+        "api": string;
+        "cities": string;
+        "districts": string;
+        "inBbox": string;
+        "languages": string;
+        "portals": string;
+        "structures": string;
+        "themes": string;
     }
     interface GrwPoi {
         "poi": Poi;
@@ -119,6 +207,7 @@ export namespace Components {
     }
     interface GrwSegmentedSegment {
         "fontFamily": string;
+        "outdoor": boolean;
         "touristicContents": boolean;
         "touristicEvents": boolean;
         "treks": boolean;
@@ -304,6 +393,22 @@ export interface GrwMapCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwMapElement;
 }
+export interface GrwOutdoorCourseCardCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwOutdoorCourseCardElement;
+}
+export interface GrwOutdoorCourseDetailCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwOutdoorCourseDetailElement;
+}
+export interface GrwOutdoorSiteCardCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwOutdoorSiteCardElement;
+}
+export interface GrwOutdoorSiteDetailCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwOutdoorSiteDetailElement;
+}
 export interface GrwTouristicContentCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwTouristicContentCardElement;
@@ -401,6 +506,8 @@ declare global {
         "trekCardPress": number;
         "touristicContentCardPress": number;
         "touristicEventCardPress": number;
+        "outdoorSiteCardPress": number;
+        "outdoorCourseCardPress": number;
     }
     interface HTMLGrwMapElement extends Components.GrwMap, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGrwMapElementEventMap>(type: K, listener: (this: HTMLGrwMapElement, ev: GrwMapCustomEvent<HTMLGrwMapElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -415,6 +522,115 @@ declare global {
     var HTMLGrwMapElement: {
         prototype: HTMLGrwMapElement;
         new (): HTMLGrwMapElement;
+    };
+    interface HTMLGrwOutdoorCourseCardElementEventMap {
+        "outdoorCourseCardPress": number;
+        "cardOutdoorCourseMouseOver": number;
+        "cardOutdoorCourseMouseLeave": any;
+    }
+    interface HTMLGrwOutdoorCourseCardElement extends Components.GrwOutdoorCourseCard, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwOutdoorCourseCardElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorCourseCardElement, ev: GrwOutdoorCourseCardCustomEvent<HTMLGrwOutdoorCourseCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwOutdoorCourseCardElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorCourseCardElement, ev: GrwOutdoorCourseCardCustomEvent<HTMLGrwOutdoorCourseCardElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGrwOutdoorCourseCardElement: {
+        prototype: HTMLGrwOutdoorCourseCardElement;
+        new (): HTMLGrwOutdoorCourseCardElement;
+    };
+    interface HTMLGrwOutdoorCourseDetailElementEventMap {
+        "poiIsInViewport": boolean;
+        "touristicContentsIsInViewport": boolean;
+        "touristicEventsIsInViewport": boolean;
+    }
+    interface HTMLGrwOutdoorCourseDetailElement extends Components.GrwOutdoorCourseDetail, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwOutdoorCourseDetailElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorCourseDetailElement, ev: GrwOutdoorCourseDetailCustomEvent<HTMLGrwOutdoorCourseDetailElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwOutdoorCourseDetailElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorCourseDetailElement, ev: GrwOutdoorCourseDetailCustomEvent<HTMLGrwOutdoorCourseDetailElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGrwOutdoorCourseDetailElement: {
+        prototype: HTMLGrwOutdoorCourseDetailElement;
+        new (): HTMLGrwOutdoorCourseDetailElement;
+    };
+    interface HTMLGrwOutdoorCourseProviderElement extends Components.GrwOutdoorCourseProvider, HTMLStencilElement {
+    }
+    var HTMLGrwOutdoorCourseProviderElement: {
+        prototype: HTMLGrwOutdoorCourseProviderElement;
+        new (): HTMLGrwOutdoorCourseProviderElement;
+    };
+    interface HTMLGrwOutdoorCoursesProviderElement extends Components.GrwOutdoorCoursesProvider, HTMLStencilElement {
+    }
+    var HTMLGrwOutdoorCoursesProviderElement: {
+        prototype: HTMLGrwOutdoorCoursesProviderElement;
+        new (): HTMLGrwOutdoorCoursesProviderElement;
+    };
+    interface HTMLGrwOutdoorSiteCardElementEventMap {
+        "outdoorSiteCardPress": number;
+        "cardOutdoorSiteMouseOver": number;
+        "cardOutdoorSiteMouseLeave": any;
+    }
+    interface HTMLGrwOutdoorSiteCardElement extends Components.GrwOutdoorSiteCard, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwOutdoorSiteCardElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorSiteCardElement, ev: GrwOutdoorSiteCardCustomEvent<HTMLGrwOutdoorSiteCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwOutdoorSiteCardElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorSiteCardElement, ev: GrwOutdoorSiteCardCustomEvent<HTMLGrwOutdoorSiteCardElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGrwOutdoorSiteCardElement: {
+        prototype: HTMLGrwOutdoorSiteCardElement;
+        new (): HTMLGrwOutdoorSiteCardElement;
+    };
+    interface HTMLGrwOutdoorSiteDetailElementEventMap {
+        "informationPlacesIsInViewport": boolean;
+        "poiIsInViewport": boolean;
+        "touristicContentsIsInViewport": boolean;
+        "touristicEventsIsInViewport": boolean;
+        "sitesIsInViewport": boolean;
+        "coursesIsInViewport": boolean;
+    }
+    interface HTMLGrwOutdoorSiteDetailElement extends Components.GrwOutdoorSiteDetail, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwOutdoorSiteDetailElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorSiteDetailElement, ev: GrwOutdoorSiteDetailCustomEvent<HTMLGrwOutdoorSiteDetailElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwOutdoorSiteDetailElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorSiteDetailElement, ev: GrwOutdoorSiteDetailCustomEvent<HTMLGrwOutdoorSiteDetailElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGrwOutdoorSiteDetailElement: {
+        prototype: HTMLGrwOutdoorSiteDetailElement;
+        new (): HTMLGrwOutdoorSiteDetailElement;
+    };
+    interface HTMLGrwOutdoorSiteProviderElement extends Components.GrwOutdoorSiteProvider, HTMLStencilElement {
+    }
+    var HTMLGrwOutdoorSiteProviderElement: {
+        prototype: HTMLGrwOutdoorSiteProviderElement;
+        new (): HTMLGrwOutdoorSiteProviderElement;
+    };
+    interface HTMLGrwOutdoorSitesListElement extends Components.GrwOutdoorSitesList, HTMLStencilElement {
+    }
+    var HTMLGrwOutdoorSitesListElement: {
+        prototype: HTMLGrwOutdoorSitesListElement;
+        new (): HTMLGrwOutdoorSitesListElement;
+    };
+    interface HTMLGrwOutdoorSitesProviderElement extends Components.GrwOutdoorSitesProvider, HTMLStencilElement {
+    }
+    var HTMLGrwOutdoorSitesProviderElement: {
+        prototype: HTMLGrwOutdoorSitesProviderElement;
+        new (): HTMLGrwOutdoorSitesProviderElement;
     };
     interface HTMLGrwPoiElement extends Components.GrwPoi, HTMLStencilElement {
     }
@@ -613,6 +829,15 @@ declare global {
         "grw-information-desk": HTMLGrwInformationDeskElement;
         "grw-loader": HTMLGrwLoaderElement;
         "grw-map": HTMLGrwMapElement;
+        "grw-outdoor-course-card": HTMLGrwOutdoorCourseCardElement;
+        "grw-outdoor-course-detail": HTMLGrwOutdoorCourseDetailElement;
+        "grw-outdoor-course-provider": HTMLGrwOutdoorCourseProviderElement;
+        "grw-outdoor-courses-provider": HTMLGrwOutdoorCoursesProviderElement;
+        "grw-outdoor-site-card": HTMLGrwOutdoorSiteCardElement;
+        "grw-outdoor-site-detail": HTMLGrwOutdoorSiteDetailElement;
+        "grw-outdoor-site-provider": HTMLGrwOutdoorSiteProviderElement;
+        "grw-outdoor-sites-list": HTMLGrwOutdoorSitesListElement;
+        "grw-outdoor-sites-provider": HTMLGrwOutdoorSitesProviderElement;
         "grw-poi": HTMLGrwPoiElement;
         "grw-search": HTMLGrwSearchElement;
         "grw-segmented-segment": HTMLGrwSegmentedSegmentElement;
@@ -642,7 +867,6 @@ declare namespace LocalJSX {
         "appHeight"?: string;
         "appWidth"?: string;
         "attributionLayer"?: string;
-        "center"?: string;
         "cities"?: string;
         "colorBackground"?: string;
         "colorOnPrimary"?: string;
@@ -650,6 +874,7 @@ declare namespace LocalJSX {
         "colorOnSecondaryContainer"?: string;
         "colorOnSurface"?: string;
         "colorOnSurfaceVariant"?: string;
+        "colorOutdoorArea"?: string;
         "colorPoiIcon"?: string;
         "colorPrimary"?: string;
         "colorPrimaryApp"?: string;
@@ -675,6 +900,7 @@ declare namespace LocalJSX {
         "nameLayer"?: string;
         "onTrekDeletePress"?: (event: GrwAppCustomEvent<number>) => void;
         "onTrekDownloadPress"?: (event: GrwAppCustomEvent<number>) => void;
+        "outdoor"?: boolean;
         "portals"?: string;
         "practices"?: string;
         "rounded"?: boolean;
@@ -689,7 +915,6 @@ declare namespace LocalJSX {
         "urlLayer"?: string;
         "useGradient"?: boolean;
         "weather"?: boolean;
-        "zoom"?: number;
     }
     interface GrwCommonButton {
         "action"?: Function;
@@ -727,10 +952,10 @@ declare namespace LocalJSX {
     }
     interface GrwMap {
         "attributionLayer"?: string;
-        "center"?: string;
         "colorBackground"?: string;
         "colorOnPrimaryContainer"?: string;
         "colorOnSurface"?: string;
+        "colorOutdoorArea"?: string;
         "colorPoiIcon"?: string;
         "colorPrimaryApp"?: string;
         "colorPrimaryContainer"?: string;
@@ -739,13 +964,118 @@ declare namespace LocalJSX {
         "fontFamily"?: string;
         "isLargeView"?: boolean;
         "nameLayer"?: string;
+        "onOutdoorCourseCardPress"?: (event: GrwMapCustomEvent<number>) => void;
+        "onOutdoorSiteCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTouristicContentCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTouristicEventCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "trekTilesMaxZoomOffline"?: number;
         "urlLayer"?: string;
         "useGradient"?: boolean;
-        "zoom"?: number;
+    }
+    interface GrwOutdoorCourseCard {
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
+        "isInsideHorizontalList"?: boolean;
+        "isLargeView"?: boolean;
+        "onCardOutdoorCourseMouseLeave"?: (event: GrwOutdoorCourseCardCustomEvent<any>) => void;
+        "onCardOutdoorCourseMouseOver"?: (event: GrwOutdoorCourseCardCustomEvent<number>) => void;
+        "onOutdoorCourseCardPress"?: (event: GrwOutdoorCourseCardCustomEvent<number>) => void;
+        "outdoorCourse"?: OutdoorCourse;
+    }
+    interface GrwOutdoorCourseDetail {
+        "colorBackground"?: string;
+        "colorOnPrimaryContainer"?: string;
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorPrimaryContainer"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
+        "isLargeView"?: boolean;
+        "onPoiIsInViewport"?: (event: GrwOutdoorCourseDetailCustomEvent<boolean>) => void;
+        "onTouristicContentsIsInViewport"?: (event: GrwOutdoorCourseDetailCustomEvent<boolean>) => void;
+        "onTouristicEventsIsInViewport"?: (event: GrwOutdoorCourseDetailCustomEvent<boolean>) => void;
+        "weather"?: boolean;
+    }
+    interface GrwOutdoorCourseProvider {
+        "api"?: string;
+        "languages"?: string;
+        "outdoorCourseId"?: number;
+        "portals"?: string;
+    }
+    interface GrwOutdoorCoursesProvider {
+        "api"?: string;
+        "cities"?: string;
+        "districts"?: string;
+        "inBbox"?: string;
+        "languages"?: string;
+        "portals"?: string;
+        "structures"?: string;
+        "themes"?: string;
+    }
+    interface GrwOutdoorSiteCard {
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
+        "isInsideHorizontalList"?: boolean;
+        "isLargeView"?: boolean;
+        "onCardOutdoorSiteMouseLeave"?: (event: GrwOutdoorSiteCardCustomEvent<any>) => void;
+        "onCardOutdoorSiteMouseOver"?: (event: GrwOutdoorSiteCardCustomEvent<number>) => void;
+        "onOutdoorSiteCardPress"?: (event: GrwOutdoorSiteCardCustomEvent<number>) => void;
+        "outdoorSite"?: OutdoorSite;
+    }
+    interface GrwOutdoorSiteDetail {
+        "colorBackground"?: string;
+        "colorOnPrimaryContainer"?: string;
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorPrimaryContainer"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
+        "isLargeView"?: boolean;
+        "onCoursesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "onInformationPlacesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "onPoiIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "onSitesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "onTouristicContentsIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "onTouristicEventsIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "weather"?: boolean;
+    }
+    interface GrwOutdoorSiteProvider {
+        "api"?: string;
+        "languages"?: string;
+        "outdoorSiteId"?: number;
+        "portals"?: string;
+    }
+    interface GrwOutdoorSitesList {
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
+        "isLargeView"?: boolean;
+    }
+    interface GrwOutdoorSitesProvider {
+        "api"?: string;
+        "cities"?: string;
+        "districts"?: string;
+        "inBbox"?: string;
+        "languages"?: string;
+        "portals"?: string;
+        "structures"?: string;
+        "themes"?: string;
     }
     interface GrwPoi {
         "poi"?: Poi;
@@ -755,6 +1085,7 @@ declare namespace LocalJSX {
     }
     interface GrwSegmentedSegment {
         "fontFamily"?: string;
+        "outdoor"?: boolean;
         "touristicContents"?: boolean;
         "touristicEvents"?: boolean;
         "treks"?: boolean;
@@ -954,6 +1285,15 @@ declare namespace LocalJSX {
         "grw-information-desk": GrwInformationDesk;
         "grw-loader": GrwLoader;
         "grw-map": GrwMap;
+        "grw-outdoor-course-card": GrwOutdoorCourseCard;
+        "grw-outdoor-course-detail": GrwOutdoorCourseDetail;
+        "grw-outdoor-course-provider": GrwOutdoorCourseProvider;
+        "grw-outdoor-courses-provider": GrwOutdoorCoursesProvider;
+        "grw-outdoor-site-card": GrwOutdoorSiteCard;
+        "grw-outdoor-site-detail": GrwOutdoorSiteDetail;
+        "grw-outdoor-site-provider": GrwOutdoorSiteProvider;
+        "grw-outdoor-sites-list": GrwOutdoorSitesList;
+        "grw-outdoor-sites-provider": GrwOutdoorSitesProvider;
         "grw-poi": GrwPoi;
         "grw-search": GrwSearch;
         "grw-segmented-segment": GrwSegmentedSegment;
@@ -989,6 +1329,15 @@ declare module "@stencil/core" {
             "grw-information-desk": LocalJSX.GrwInformationDesk & JSXBase.HTMLAttributes<HTMLGrwInformationDeskElement>;
             "grw-loader": LocalJSX.GrwLoader & JSXBase.HTMLAttributes<HTMLGrwLoaderElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
+            "grw-outdoor-course-card": LocalJSX.GrwOutdoorCourseCard & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseCardElement>;
+            "grw-outdoor-course-detail": LocalJSX.GrwOutdoorCourseDetail & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseDetailElement>;
+            "grw-outdoor-course-provider": LocalJSX.GrwOutdoorCourseProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseProviderElement>;
+            "grw-outdoor-courses-provider": LocalJSX.GrwOutdoorCoursesProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorCoursesProviderElement>;
+            "grw-outdoor-site-card": LocalJSX.GrwOutdoorSiteCard & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteCardElement>;
+            "grw-outdoor-site-detail": LocalJSX.GrwOutdoorSiteDetail & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteDetailElement>;
+            "grw-outdoor-site-provider": LocalJSX.GrwOutdoorSiteProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteProviderElement>;
+            "grw-outdoor-sites-list": LocalJSX.GrwOutdoorSitesList & JSXBase.HTMLAttributes<HTMLGrwOutdoorSitesListElement>;
+            "grw-outdoor-sites-provider": LocalJSX.GrwOutdoorSitesProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorSitesProviderElement>;
             "grw-poi": LocalJSX.GrwPoi & JSXBase.HTMLAttributes<HTMLGrwPoiElement>;
             "grw-search": LocalJSX.GrwSearch & JSXBase.HTMLAttributes<HTMLGrwSearchElement>;
             "grw-segmented-segment": LocalJSX.GrwSegmentedSegment & JSXBase.HTMLAttributes<HTMLGrwSegmentedSegmentElement>;

@@ -11,7 +11,6 @@
 | `appHeight`                 | `app-height`                    |             | `string`  | `'100vh'`   |
 | `appWidth`                  | `app-width`                     |             | `string`  | `'100%'`    |
 | `attributionLayer`          | `attribution-layer`             |             | `string`  | `undefined` |
-| `center`                    | `center`                        |             | `string`  | `undefined` |
 | `cities`                    | `cities`                        |             | `string`  | `undefined` |
 | `colorBackground`           | `color-background`              |             | `string`  | `'#fef7ff'` |
 | `colorOnPrimary`            | `color-on-primary`              |             | `string`  | `'#ffffff'` |
@@ -19,6 +18,7 @@
 | `colorOnSecondaryContainer` | `color-on-secondary-container`  |             | `string`  | `'#1d192b'` |
 | `colorOnSurface`            | `color-on-surface`              |             | `string`  | `'#49454e'` |
 | `colorOnSurfaceVariant`     | `color-on-surface-variant`      |             | `string`  | `'#1c1b1f'` |
+| `colorOutdoorArea`          | `color-outdoor-area`            |             | `string`  | `'#ffb700'` |
 | `colorPoiIcon`              | `color-poi-icon`                |             | `string`  | `'#974c6e'` |
 | `colorPrimary`              | `color-primary`                 |             | `string`  | `'#6750a4'` |
 | `colorPrimaryApp`           | `color-primary-app`             |             | `string`  | `'#6750a4'` |
@@ -42,6 +42,7 @@
 | `labels`                    | `labels`                        |             | `string`  | `undefined` |
 | `languages`                 | `languages`                     |             | `string`  | `'fr'`      |
 | `nameLayer`                 | `name-layer`                    |             | `string`  | `undefined` |
+| `outdoor`                   | `outdoor`                       |             | `boolean` | `false`     |
 | `portals`                   | `portals`                       |             | `string`  | `undefined` |
 | `practices`                 | `practices`                     |             | `string`  | `undefined` |
 | `rounded`                   | `rounded`                       |             | `boolean` | `true`      |
@@ -56,7 +57,6 @@
 | `urlLayer`                  | `url-layer`                     |             | `string`  | `undefined` |
 | `useGradient`               | `use-gradient`                  |             | `boolean` | `false`     |
 | `weather`                   | `weather`                       |             | `boolean` | `false`     |
-| `zoom`                      | `zoom`                          |             | `number`  | `undefined` |
 
 
 ## Events
@@ -85,8 +85,11 @@
 - [grw-trek-provider](../../store)
 - [grw-touristic-content-provider](../../store)
 - [grw-touristic-event-provider](../../store)
+- [grw-outdoor-site-provider](../../store)
+- [grw-outdoor-course-provider](../../store)
 - [grw-touristic-contents-provider](../../store)
 - [grw-touristic-events-provider](../../store)
+- [grw-outdoor-sites-provider](../../store)
 - [grw-select-language](../grw-select-language)
 - [grw-segmented-segment](../grw-segmented-segment)
 - [grw-search](../grw-search)
@@ -95,9 +98,12 @@
 - [grw-treks-list](../grw-treks-list)
 - [grw-touristic-contents-list](../grw-touristic-contents-list)
 - [grw-touristic-events-list](../grw-touristic-events-list)
+- [grw-outdoor-sites-list](../grw-outdoor-sites-list)
 - [grw-trek-detail](../grw-trek-detail)
 - [grw-touristic-content-detail](../grw-touristic-content-detail)
 - [grw-touristic-event-detail](../grw-touristic-event-detail)
+- [grw-outdoor-site-detail](../grw-outdoor-site-detail)
+- [grw-outdoor-course-detail](../grw-outdoor-course-detail)
 - [grw-map](../grw-map)
 - [grw-extended-fab](../grw-extended-fab)
 - [grw-filters](../grw-filters)
@@ -110,8 +116,11 @@ graph TD;
   grw-app --> grw-trek-provider
   grw-app --> grw-touristic-content-provider
   grw-app --> grw-touristic-event-provider
+  grw-app --> grw-outdoor-site-provider
+  grw-app --> grw-outdoor-course-provider
   grw-app --> grw-touristic-contents-provider
   grw-app --> grw-touristic-events-provider
+  grw-app --> grw-outdoor-sites-provider
   grw-app --> grw-select-language
   grw-app --> grw-segmented-segment
   grw-app --> grw-search
@@ -120,21 +129,34 @@ graph TD;
   grw-app --> grw-treks-list
   grw-app --> grw-touristic-contents-list
   grw-app --> grw-touristic-events-list
+  grw-app --> grw-outdoor-sites-list
   grw-app --> grw-trek-detail
   grw-app --> grw-touristic-content-detail
   grw-app --> grw-touristic-event-detail
+  grw-app --> grw-outdoor-site-detail
+  grw-app --> grw-outdoor-course-detail
   grw-app --> grw-map
   grw-app --> grw-extended-fab
   grw-app --> grw-filters
   grw-treks-list --> grw-trek-card
   grw-touristic-contents-list --> grw-touristic-content-card
   grw-touristic-events-list --> grw-touristic-event-card
+  grw-outdoor-sites-list --> grw-outdoor-site-card
   grw-trek-detail --> grw-trek-card
   grw-trek-detail --> grw-poi
   grw-trek-detail --> grw-sensitive-area-detail
   grw-trek-detail --> grw-information-desk
   grw-trek-detail --> grw-touristic-content-card
   grw-trek-detail --> grw-touristic-event-card
+  grw-outdoor-site-detail --> grw-information-desk
+  grw-outdoor-site-detail --> grw-outdoor-site-card
+  grw-outdoor-site-detail --> grw-outdoor-course-card
+  grw-outdoor-site-detail --> grw-touristic-content-card
+  grw-outdoor-site-detail --> grw-touristic-event-card
+  grw-outdoor-site-detail --> grw-poi
+  grw-outdoor-course-detail --> grw-touristic-content-card
+  grw-outdoor-course-detail --> grw-touristic-event-card
+  grw-outdoor-course-detail --> grw-poi
   grw-filters --> grw-filter
   style grw-app fill:#f9f,stroke:#333,stroke-width:4px
 ```

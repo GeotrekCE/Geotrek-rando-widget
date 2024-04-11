@@ -8,10 +8,10 @@
 | Property                  | Attribute                     | Description | Type      | Default     |
 | ------------------------- | ----------------------------- | ----------- | --------- | ----------- |
 | `attributionLayer`        | `attribution-layer`           |             | `string`  | `undefined` |
-| `center`                  | `center`                      |             | `string`  | `'1, 1'`    |
 | `colorBackground`         | `color-background`            |             | `string`  | `'#fef7ff'` |
 | `colorOnPrimaryContainer` | `color-on-primary-container`  |             | `string`  | `'#21005e'` |
 | `colorOnSurface`          | `color-on-surface`            |             | `string`  | `'#49454e'` |
+| `colorOutdoorArea`        | `color-outdoor-area`          |             | `string`  | `'#ffb700'` |
 | `colorPoiIcon`            | `color-poi-icon`              |             | `string`  | `'#974c6e'` |
 | `colorPrimaryApp`         | `color-primary-app`           |             | `string`  | `'#6b0030'` |
 | `colorPrimaryContainer`   | `color-primary-container`     |             | `string`  | `'#eaddff'` |
@@ -23,13 +23,14 @@
 | `trekTilesMaxZoomOffline` | `trek-tiles-max-zoom-offline` |             | `number`  | `16`        |
 | `urlLayer`                | `url-layer`                   |             | `string`  | `undefined` |
 | `useGradient`             | `use-gradient`                |             | `boolean` | `false`     |
-| `zoom`                    | `zoom`                        |             | `number`  | `10`        |
 
 
 ## Events
 
 | Event                       | Description | Type                  |
 | --------------------------- | ----------- | --------------------- |
+| `outdoorCourseCardPress`    |             | `CustomEvent<number>` |
+| `outdoorSiteCardPress`      |             | `CustomEvent<number>` |
 | `touristicContentCardPress` |             | `CustomEvent<number>` |
 | `touristicEventCardPress`   |             | `CustomEvent<number>` |
 | `trekCardPress`             |             | `CustomEvent<number>` |
