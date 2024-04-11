@@ -86,6 +86,11 @@ export class GrwSegmentedSegment {
               {translate[state.language].home.segment.treks}
             </label>
           )}
+          {this.outdoor && (
+            <label part="segment" class={`segment${state.mode === 'outdoor' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('outdoor')}>
+              {translate[state.language].home.segment.outdoorSites}
+            </label>
+          )}
           {this.touristicContents && (
             <label part="segment" class={`segment${state.mode === 'touristicContents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicContents')}>
               {translate[state.language].home.segment.touristicContents}
@@ -94,11 +99,6 @@ export class GrwSegmentedSegment {
           {this.touristicEvents && (
             <label part="segment" class={`segment${state.mode === 'touristicEvents' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('touristicEvents')}>
               {translate[state.language].home.segment.touristicEvents}
-            </label>
-          )}
-          {this.outdoor && (
-            <label part="segment" class={`segment${state.mode === 'outdoor' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('outdoor')}>
-              {translate[state.language].home.segment.outdoorSites}
             </label>
           )}
         </div>
