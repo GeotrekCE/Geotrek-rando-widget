@@ -35,4 +35,9 @@ Voici les différentes étapes à suivre :
 <script nomodule src="https://rando-widget.geotrek.fr/latest/dist/geotrek-rando-widget/geotrek-rando-widget.js"></script>
 ```
 
+ ::: tip
+  Dans le cadre d'un environnement en production, il est préférable d'indiquer le numéro de la version (exemple : `https://rando-widget.geotrek.fr/0.13.0/dist/geotrek-rando-widget/geotrek-rando-widget.css`) plutôt que `latest` afin d'éviter les régressions.
+
+:::
+
 3. Insérer le code source du widget généré à la dernière étape de la section précédente, dans la section du site Web dans laquelle il devra s'afficher
