@@ -97,7 +97,7 @@
 .touristic-content-marker-cluster-group-icon,
 .touristic-event-marker-cluster-group-icon,
 .outdoor-site-marker-cluster-group-icon {
-  background-color: var(--color-primary-app);
+  background-color: var(--color-clusters);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -148,10 +148,10 @@
   .touristic-content-marker-container,
   .touristic-event-marker-container,
   .outdoor-site-marker-container {
-    background-color: var(--color-primary-app);
+    background-color: var(--color-markers);
   }
   .step-marker-container {
-    background-color: var(--color-surface-variant);
+    background-color: var(--color-markers);
   }
 }
 
@@ -325,7 +325,7 @@
 .touristic-content-marker,
 .touristic-event-marker,
 .outdoor-site-marker {
-  background-color: var(--color-poi-icon);
+  background-color: var(--color-markers);
   border-radius: 50%;
   display: flex;
   justify-content: center;

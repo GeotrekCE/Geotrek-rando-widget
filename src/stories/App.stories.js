@@ -56,7 +56,6 @@ App.args = {
   fabColor: '#21005d',
   colorTrekLine: '#6b0030',
   colorSensitiveArea: '#4974a5',
-  colorPoiIcon: '#974c6e',
   useGradient: false,
   treks: true,
   touristicContents: false,

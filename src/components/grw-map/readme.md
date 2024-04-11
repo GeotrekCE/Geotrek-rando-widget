@@ -9,10 +9,11 @@
 | ------------------------- | ----------------------------- | ----------- | --------- | ----------- |
 | `attributionLayer`        | `attribution-layer`           |             | `string`  | `undefined` |
 | `colorBackground`         | `color-background`            |             | `string`  | `'#fef7ff'` |
+| `colorClusters`           | `color-clusters`              |             | `any`     | `null`      |
+| `colorMarkers`            | `color-markers`               |             | `any`     | `null`      |
 | `colorOnPrimaryContainer` | `color-on-primary-container`  |             | `string`  | `'#21005e'` |
 | `colorOnSurface`          | `color-on-surface`            |             | `string`  | `'#49454e'` |
 | `colorOutdoorArea`        | `color-outdoor-area`          |             | `string`  | `'#ffb700'` |
-| `colorPoiIcon`            | `color-poi-icon`              |             | `string`  | `'#974c6e'` |
 | `colorPrimaryApp`         | `color-primary-app`           |             | `string`  | `'#6b0030'` |
 | `colorPrimaryContainer`   | `color-primary-container`     |             | `string`  | `'#eaddff'` |
 | `colorSensitiveArea`      | `color-sensitive-area`        |             | `string`  | `'#4974a5'` |

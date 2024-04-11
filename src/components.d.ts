@@ -15,13 +15,14 @@ export namespace Components {
         "attributionLayer": string;
         "cities": string;
         "colorBackground": string;
+        "colorClusters": any;
+        "colorMarkers": any;
         "colorOnPrimary": string;
         "colorOnPrimaryContainer": string;
         "colorOnSecondaryContainer": string;
         "colorOnSurface": string;
         "colorOnSurfaceVariant": string;
         "colorOutdoorArea": string;
-        "colorPoiIcon": string;
         "colorPrimary": string;
         "colorPrimaryApp": string;
         "colorPrimaryContainer": string;
@@ -95,10 +96,11 @@ export namespace Components {
     interface GrwMap {
         "attributionLayer": string;
         "colorBackground": string;
+        "colorClusters": any;
+        "colorMarkers": any;
         "colorOnPrimaryContainer": string;
         "colorOnSurface": string;
         "colorOutdoorArea": string;
-        "colorPoiIcon": string;
         "colorPrimaryApp": string;
         "colorPrimaryContainer": string;
         "colorSensitiveArea": string;
@@ -869,13 +871,14 @@ declare namespace LocalJSX {
         "attributionLayer"?: string;
         "cities"?: string;
         "colorBackground"?: string;
+        "colorClusters"?: any;
+        "colorMarkers"?: any;
         "colorOnPrimary"?: string;
         "colorOnPrimaryContainer"?: string;
         "colorOnSecondaryContainer"?: string;
         "colorOnSurface"?: string;
         "colorOnSurfaceVariant"?: string;
         "colorOutdoorArea"?: string;
-        "colorPoiIcon"?: string;
         "colorPrimary"?: string;
         "colorPrimaryApp"?: string;
         "colorPrimaryContainer"?: string;
@@ -953,10 +956,11 @@ declare namespace LocalJSX {
     interface GrwMap {
         "attributionLayer"?: string;
         "colorBackground"?: string;
+        "colorClusters"?: any;
+        "colorMarkers"?: any;
         "colorOnPrimaryContainer"?: string;
         "colorOnSurface"?: string;
         "colorOutdoorArea"?: string;
-        "colorPoiIcon"?: string;
         "colorPrimaryApp"?: string;
         "colorPrimaryContainer"?: string;
         "colorSensitiveArea"?: string;

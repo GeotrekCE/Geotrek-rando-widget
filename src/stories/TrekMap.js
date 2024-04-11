@@ -13,7 +13,6 @@ export const createTrekMap = ({
   colorBackground,
   colorTrekLine,
   colorSensitiveArea,
-  colorPoiIcon,
   useGradient,
 }) => {
   const container = document.createElement('div');
@@ -36,7 +35,6 @@ export const createTrekMap = ({
   trekMap.setAttribute('color-background', colorBackground);
   trekMap.setAttribute('color-trek-line', colorTrekLine);
   trekMap.setAttribute('color-sensitive-area', colorSensitiveArea);
-  trekMap.setAttribute('color-poi-icon', colorPoiIcon);
   trekMap.setAttribute('use-gradient', useGradient);
   container.appendChild(trekMap);
   return container;

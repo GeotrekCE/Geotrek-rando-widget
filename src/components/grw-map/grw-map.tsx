@@ -47,7 +47,8 @@ export class GrwMap {
 
   @Prop() colorTrekLine = '#6b0030';
   @Prop() colorSensitiveArea = '#4974a5';
-  @Prop() colorPoiIcon = '#974c6e';
+  @Prop() colorMarkers = null;
+  @Prop() colorClusters = null;
   @Prop() colorOutdoorArea = '#ffb700';
 
   @Prop() useGradient = false;
@@ -55,7 +56,6 @@ export class GrwMap {
 
   @Prop() isLargeView = false;
   map: L.Map;
-  resizeObserver: ResizeObserver;
   bounds;
   treksLayer: L.GeoJSON<any>;
   toutisticContentsLayer: L.GeoJSON<any>;
@@ -2649,7 +2649,8 @@ export class GrwMap {
           '--color-primary-container': this.colorPrimaryContainer,
           '--color-on-primary-container': this.colorOnPrimaryContainer,
           '--color-background': this.colorBackground,
-          '--color-poi-icon': this.colorPoiIcon,
+          '--color-markers': this.colorMarkers ? this.colorMarkers : this.colorPrimaryApp,
+          '--color-clusters': this.colorClusters ? this.colorClusters : this.colorPrimaryApp,
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
           '--contract-image-src': `url(${contractImageSrc})`,

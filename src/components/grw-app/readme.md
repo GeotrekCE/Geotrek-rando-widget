@@ -13,13 +13,14 @@
 | `attributionLayer`          | `attribution-layer`             |             | `string`  | `undefined` |
 | `cities`                    | `cities`                        |             | `string`  | `undefined` |
 | `colorBackground`           | `color-background`              |             | `string`  | `'#fef7ff'` |
+| `colorClusters`             | `color-clusters`                |             | `any`     | `null`      |
+| `colorMarkers`              | `color-markers`                 |             | `any`     | `null`      |
 | `colorOnPrimary`            | `color-on-primary`              |             | `string`  | `'#ffffff'` |
 | `colorOnPrimaryContainer`   | `color-on-primary-container`    |             | `string`  | `'#21005e'` |
 | `colorOnSecondaryContainer` | `color-on-secondary-container`  |             | `string`  | `'#1d192b'` |
 | `colorOnSurface`            | `color-on-surface`              |             | `string`  | `'#49454e'` |
 | `colorOnSurfaceVariant`     | `color-on-surface-variant`      |             | `string`  | `'#1c1b1f'` |
 | `colorOutdoorArea`          | `color-outdoor-area`            |             | `string`  | `'#ffb700'` |
-| `colorPoiIcon`              | `color-poi-icon`                |             | `string`  | `'#974c6e'` |
 | `colorPrimary`              | `color-primary`                 |             | `string`  | `'#6750a4'` |
 | `colorPrimaryApp`           | `color-primary-app`             |             | `string`  | `'#6750a4'` |
 | `colorPrimaryContainer`     | `color-primary-container`       |             | `string`  | `'#eaddff'` |

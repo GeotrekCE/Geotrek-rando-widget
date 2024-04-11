@@ -3,7 +3,7 @@ export const parameters = {
   controls: {
     matchers: {
       color:
-        /(colorPrimaryApp|colorOnPrimary|colorSurface|colorOnSurface|colorSurfaceVariant|colorOnSurfaceVariant|colorPrimaryContainer|colorOnPrimaryContainer|colorSecondaryContainer|colorOnSecondaryContainer|colorBackground|colorSurfaceContainerHigh|colorSurfaceContainerLow|fabBackgroundColor|fabColor|colorTrekLine|colorSensitiveArea|colorPoiIcon)$/i,
+        /(colorPrimaryApp|colorOnPrimary|colorSurface|colorOnSurface|colorSurfaceVariant|colorOnSurfaceVariant|colorPrimaryContainer|colorOnPrimaryContainer|colorSecondaryContainer|colorOnSecondaryContainer|colorBackground|colorSurfaceContainerHigh|colorSurfaceContainerLow|fabBackgroundColor|fabColor|colorTrekLine|colorSensitiveArea)$/i,
     },
   },
 };

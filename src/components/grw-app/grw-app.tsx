@@ -72,7 +72,8 @@ export class GrwApp {
 
   @Prop() colorTrekLine = '#6b0030';
   @Prop() colorSensitiveArea = '#4974a5';
-  @Prop() colorPoiIcon = '#974c6e';
+  @Prop() colorMarkers = null;
+  @Prop() colorClusters = null;
   @Prop() colorOutdoorArea = '#ffb700';
 
   @Prop() useGradient = false;
@@ -985,7 +986,8 @@ export class GrwApp {
                   color-background={this.colorBackground}
                   color-trek-line={this.colorTrekLine}
                   color-sensitive-area={this.colorSensitiveArea}
-                  color-poi-icon={this.colorPoiIcon}
+                  color-markers={this.colorMarkers ? this.colorMarkers : this.colorPrimaryApp}
+                  color-clusters={this.colorClusters ? this.colorClusters : this.colorPrimaryApp}
                   is-large-view={this.isLargeView}
                   use-gradient={this.useGradient}
                   trek-tiles-max-zoom-offline={this.trekTilesMaxZoomOffline}
