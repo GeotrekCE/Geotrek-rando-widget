@@ -1147,7 +1147,7 @@ export class GrwTrekDetail {
               <div part="download-title" class="download-title">
                 {translate[state.language].downloads}
               </div>
-              {this.enableOffline && !this.offline && (
+              {this.enableOffline && !this.offline && (!this.currentTrek.parents || this.currentTrek.parents.length === 0) && (
                 <button part="offline-button" class="offline-button" onClick={() => this.displayDownloadModal()}>
                   <span part="icon" class="icon" innerHTML={DownloadForOfflineIcon}></span>
                   <span part="label" class="label">
@@ -1155,7 +1155,7 @@ export class GrwTrekDetail {
                   </span>
                 </button>
               )}
-              {this.enableOffline && this.offline && (
+              {this.enableOffline && this.offline && (!this.currentTrek.parents || this.currentTrek.parents.length === 0) && (
                 <button part="offline-button" class="offline-button" onClick={() => this.displayDeleteModal()}>
                   <span part="icon" class="icon" innerHTML={DeleteIcon}></span>
                   <span part="label" class="label">

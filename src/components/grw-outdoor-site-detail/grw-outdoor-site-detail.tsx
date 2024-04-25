@@ -744,7 +744,7 @@ export class GrwOutdoorSiteDetail {
               <div part="download-title" class="download-title">
                 {translate[state.language].downloads}
               </div>
-              {this.enableOffline && !this.offline && (
+              {this.enableOffline && !this.offline && (!this.currentOutdoorSite.parents || this.currentOutdoorSite.parents.length === 0) && (
                 <button part="offline-button" class="offline-button" onClick={() => this.displayDownloadModal()}>
                   <span part="icon" class="icon" innerHTML={DownloadForOfflineIcon}></span>
                   <span part="label" class="label">

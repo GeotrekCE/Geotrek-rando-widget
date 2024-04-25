@@ -28,7 +28,7 @@ export function getTreksList(api, language, inBbox, cities, districts, structure
 
 export function getTrek(api, language, trekId, init) {
   return fetch(
-    `${api}trek/${trekId}/?language=${language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,ratings,ratings_description,information_desks,children,networks,web_links,update_datetime,departure_geom,districts`,
+    `${api}trek/${trekId}/?language=${language}&published=true&fields=id,name,attachments,description,description_teaser,difficulty,duration,ascent,descent,length_2d,practice,themes,route,geometry,gpx,kml,pdf,parking_location,departure,departure_city,arrival,cities,ambiance,access,public_transport,advice,advised_parking,gear,labels,source,points_reference,disabled_infrastructure,accessibility_level,accessibility_slope,accessibility_width,accessibility_signage,accessibility_covering,accessibility_exposure,accessibility_advice,accessibilities,ratings,ratings_description,information_desks,children,networks,web_links,update_datetime,departure_geom,districts,parents`,
     init,
   );
 }

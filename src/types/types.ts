@@ -57,6 +57,7 @@ export type Trek = {
   touristicContents?: number[];
   touristicEvents?: number[];
   sensitiveAreas?: number[];
+  parents?: number[];
 };
 
 export type Attachments = Attachment[];
