@@ -44,6 +44,9 @@ function sidebar(): DefaultTheme.SidebarItem[] {
           { text: 'Treks list', link: '/en/documentation/components/grw-treks-list' },
           { text: "Trek card", link: '/en/documentation/components/grw-trek-card' },
           { text: "Trek detail", link: '/en/documentation/components/grw-trek-detail' },
+          { text: 'Outdoors list', link: '/en/documentation/components/grw-outdoor-list' },
+          { text: "Outdoor card", link: '/en/documentation/components/grw-outdoor-card' },
+          { text: "Outdoor detail", link: '/en/documentation/components/grw-outdoor-detail' },
           { text: 'Touristic contents list', link: '/en/documentation/components/grw-touristic-contents-list' },
           { text: "Touristic content card", link: '/en/documentation/components/grw-touristic-content-card' },
           { text: "Touristic content detail", link: '/en/documentation/components/grw-touristic-content-detail' },
@@ -79,10 +82,12 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         items: [
           { text: 'Application', link: '/en/documentation/examples/application' },
           { text: 'Treks app', link: '/en/documentation/examples/app-treks' },
+          { text: 'Outdoors app', link: '/en/documentation/examples/app-outdoors' },
           { text: 'Touristic contents app', link: '/en/documentation/examples/app-touristic-contents' },
           { text: 'Touristic events app', link: '/en/documentation/examples/app-touristic-events' },
           { text: 'Treks list', link: '/en/documentation/examples/treks-list' },
-          { text: "Trek detail", link: '/en/documentation/examples/trek-detail-and-map' },
+          { text: 'Trek detail', link: '/en/documentation/examples/trek-detail' },
+          { text: "Trek detail with map", link: '/en/documentation/examples/trek-detail-and-map' },
         ],
       },
       {

@@ -19,7 +19,7 @@ Les informations affichées dans la vignette d'une randonnée sont :
 
 # Vignettes présentes dans la fiche détaillée d'une randonnée
 
-La fiche détaillée d'une randonnée peut être même contenir des vignettes d'objets situés à proximté afin d'enrichir son contenu informatif.
+La fiche détaillée d'une randonnée peut elle même contenir des vignettes d'objets situés à proximité afin d'enrichir son contenu informatif.
 
 ## Patrimoines à découvrir (POIs)
 
@@ -37,4 +37,10 @@ La fiche détaillée d'une randonnée peut être même contenir des vignettes d'
 
 <center>
   <a title="Vignette des services à proximité"><img src="/components/card_trek_touristic_content.jpg" alt="Vignette des services à proximité"></a>
+</center>
+
+## Évènements à proximité
+
+<center>
+  <a title="Vignette des évènements à proximité"><img src="/components/card_trek_touristic_event.jpg" alt="Vignette des évènements à proximité"></a>
 </center>
