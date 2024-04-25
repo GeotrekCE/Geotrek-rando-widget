@@ -47,8 +47,17 @@ import {
   District,
   Districts,
   ImageInStore,
+  OutdoorSites,
+  OutdoorSite,
+  OutdoorPractices,
+  OutdoorSiteType,
+  OutdoorPractice,
+  OutdoorSiteTypes,
+  OutdoorCourse,
+  OutdoorCourses,
+  OutdoorCourseTypes,
 } from 'types/types';
-import { checkFileInStore, getFilesToStore } from 'utils/utils';
+import { checkFileInStore, getFilesToStore, imagesRegExp, setFilesFromStore } from 'utils/utils';
 import { Directory } from '@capacitor/filesystem';
 import write_blob from 'capacitor-blob-writer';
 
@@ -78,7 +87,14 @@ type ObjectStoresName =
   | 'networks'
   | 'pois'
   | 'poiTypes'
-  | 'informationDesks';
+  | 'informationDesks'
+  | 'outdoorSites'
+  | 'outdoorSiteTypes'
+  | 'outdoorPractices'
+  | 'outdoorCourses'
+  | 'outdoorCourseTypes'
+  | 'outdoorRatings'
+  | 'outdoorRatingsScale';
 
 type KeyPath = 'id' | 'url';
 
@@ -126,6 +142,20 @@ type ObjectStoresType<T> = T extends 'districts'
   ? PoiType
   : T extends 'informationDesks'
   ? InformationDesk
+  : T extends 'outdoorSites'
+  ? OutdoorSite
+  : T extends 'outdoorSiteTypes'
+  ? OutdoorSiteType
+  : T extends 'outdoorPractices'
+  ? OutdoorPractice
+  : T extends 'outdoorCourses'
+  ? OutdoorCourse
+  : T extends 'outdoorCourseTypes'
+  ? OutdoorCourse
+  : T extends 'outdoorRatings'
+  ? Ratings
+  : T extends 'outdoorRatingsScale'
+  ? RatingsScale
   : never;
 
 type ObjectStoresData =
@@ -151,7 +181,14 @@ type ObjectStoresData =
   | Pois
   | PoiTypes
   | InformationDesks
-  | ImageInStore[];
+  | ImageInStore[]
+  | OutdoorSites
+  | OutdoorSiteTypes
+  | OutdoorPractices
+  | OutdoorCourses
+  | OutdoorCourseTypes
+  | Ratings
+  | RatingsScale;
 
 interface GrwDB extends DBSchema {
   districts: {
@@ -242,43 +279,91 @@ interface GrwDB extends DBSchema {
     value: InformationDesk;
     key: number;
   };
+  outdoorSites: {
+    value: OutdoorSite;
+    key: number;
+  };
+  outdoorSiteTypes: {
+    value: OutdoorSite;
+    key: number;
+  };
+  outdoorPractices: {
+    value: OutdoorSite;
+    key: number;
+  };
+  outdoorCourses: {
+    value: OutdoorCourse;
+    key: number;
+  };
+  outdoorCourseTypes: {
+    value: OutdoorCourseTypes;
+    key: number;
+  };
+  outdoorRatings: {
+    value: Ratings;
+    key: number;
+  };
+  outdoorRatingsScale: {
+    value: RatingsScale;
+    key: number;
+  };
 }
 
-const grwDbVersion = 1;
+const grwDbVersion = 2;
 
 export async function getGrwDB() {
   const grwDb = await openDB<GrwDB>('grw', grwDbVersion, {
-    upgrade(db) {
-      const objectStoresNames: ObjectStores = [
-        { name: 'districts', keyPath: 'id' },
-        { name: 'treks', keyPath: 'id' },
-        { name: 'difficulties', keyPath: 'id' },
-        { name: 'routes', keyPath: 'id' },
-        { name: 'practices', keyPath: 'id' },
-        { name: 'themes', keyPath: 'id' },
-        { name: 'cities', keyPath: 'id' },
-        { name: 'accessibilities', keyPath: 'id' },
-        { name: 'ratings', keyPath: 'id' },
-        { name: 'ratingsScale', keyPath: 'id' },
-        { name: 'sensitiveAreas', keyPath: 'id' },
-        { name: 'labels', keyPath: 'id' },
-        { name: 'sources', keyPath: 'id' },
-        { name: 'accessibilitiesLevel', keyPath: 'id' },
-        { name: 'touristicContents', keyPath: 'id' },
-        { name: 'touristicContentCategories', keyPath: 'id' },
-        { name: 'touristicEvents', keyPath: 'id' },
-        { name: 'touristicEventTypes', keyPath: 'id' },
-        { name: 'networks', keyPath: 'id' },
-        { name: 'pois', keyPath: 'id' },
-        { name: 'poiTypes', keyPath: 'id' },
-        { name: 'informationDesks', keyPath: 'id' },
-      ];
+    upgrade(db, oldVersion) {
+      switch (oldVersion) {
+        case 0: {
+          const objectStoresNames: ObjectStores = [
+            { name: 'districts', keyPath: 'id' },
+            { name: 'treks', keyPath: 'id' },
+            { name: 'difficulties', keyPath: 'id' },
+            { name: 'routes', keyPath: 'id' },
+            { name: 'practices', keyPath: 'id' },
+            { name: 'themes', keyPath: 'id' },
+            { name: 'cities', keyPath: 'id' },
+            { name: 'accessibilities', keyPath: 'id' },
+            { name: 'ratings', keyPath: 'id' },
+            { name: 'ratingsScale', keyPath: 'id' },
+            { name: 'sensitiveAreas', keyPath: 'id' },
+            { name: 'labels', keyPath: 'id' },
+            { name: 'sources', keyPath: 'id' },
+            { name: 'accessibilitiesLevel', keyPath: 'id' },
+            { name: 'touristicContents', keyPath: 'id' },
+            { name: 'touristicContentCategories', keyPath: 'id' },
+            { name: 'touristicEvents', keyPath: 'id' },
+            { name: 'touristicEventTypes', keyPath: 'id' },
+            { name: 'networks', keyPath: 'id' },
+            { name: 'pois', keyPath: 'id' },
+            { name: 'poiTypes', keyPath: 'id' },
+            { name: 'informationDesks', keyPath: 'id' },
+          ];
 
-      objectStoresNames.forEach(objectStoresName => {
-        if (!db.objectStoreNames.contains(objectStoresName.name)) {
-          db.createObjectStore(objectStoresName.name, { keyPath: objectStoresName.keyPath });
+          objectStoresNames.forEach(objectStoresName => {
+            if (!db.objectStoreNames.contains(objectStoresName.name)) {
+              db.createObjectStore(objectStoresName.name, { keyPath: objectStoresName.keyPath });
+            }
+          });
         }
-      });
+        case 1: {
+          const objectStoresNames: ObjectStores = [
+            { name: 'outdoorSites', keyPath: 'id' },
+            { name: 'outdoorSiteTypes', keyPath: 'id' },
+            { name: 'outdoorPractices', keyPath: 'id' },
+            { name: 'outdoorCourses', keyPath: 'id' },
+            { name: 'outdoorCourseTypes', keyPath: 'id' },
+            { name: 'outdoorRatings', keyPath: 'id' },
+            { name: 'outdoorRatingsScale', keyPath: 'id' },
+          ];
+          objectStoresNames.forEach(objectStoresName => {
+            if (!db.objectStoreNames.contains(objectStoresName.name)) {
+              db.createObjectStore(objectStoresName.name, { keyPath: objectStoresName.keyPath });
+            }
+          });
+        }
+      }
     },
   });
   return grwDb;
@@ -348,6 +433,7 @@ export async function writeOrUpdateFilesInStore(value, imagesRegExp, onlyFirstAr
 
 export async function writeOrUpdateTilesInStore(offlineLayer: TileLayerOffline, bounds, minZoom, MaxZoom) {
   const tilesToStore: TileInfo[] = [];
+
   for (let index = minZoom; index <= MaxZoom; index++) {
     tilesToStore.push(
       ...offlineLayer.getTileUrls(L.bounds(L.CRS.EPSG3857.latLngToPoint(bounds.getNorthWest(), index), L.CRS.EPSG3857.latLngToPoint(bounds.getSouthEast(), index)), index),
@@ -365,4 +451,10 @@ export async function writeOrUpdateTilesInStore(offlineLayer: TileLayerOffline, 
   for (let index = 0; index < tilesBlob.length; index++) {
     await saveTile(tilesToStore[index], tilesBlob[index]);
   }
+}
+
+export async function handleOfflineProperty(property, exclude: string[] = []) {
+  const data = await getAllDataInStore(property);
+  await setFilesFromStore(data, imagesRegExp, exclude);
+  return data as any;
 }

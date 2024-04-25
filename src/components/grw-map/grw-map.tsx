@@ -16,6 +16,7 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Trek } from 'components';
 import pointOnFeature from '@turf/point-on-feature';
+import bbox from '@turf/bbox';
 
 @Component({
   tag: 'grw-map',
@@ -52,7 +53,7 @@ export class GrwMap {
   @Prop() colorOutdoorArea = '#ffb700';
 
   @Prop() useGradient = false;
-  @Prop() trekTilesMaxZoomOffline = 16;
+  @Prop() tilesMaxZoomOffline = 16;
 
   @Prop() isLargeView = false;
   map: L.Map;
@@ -235,7 +236,7 @@ export class GrwMap {
 
   @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
   onTrekDownloadedSuccessConfirm() {
-    this.map.setMaxZoom(this.trekTilesMaxZoomOffline);
+    this.map.setMaxZoom(this.tilesMaxZoomOffline);
   }
 
   @Listen('trekDeleteSuccessConfirm', { target: 'window' })
@@ -359,7 +360,7 @@ export class GrwMap {
         this.removeTouristicContents();
         this.removeTouristicEvents();
         this.removeOutdoorSites();
-        this.addOutdoorSites();
+        this.addOutdoorSites(true);
       }
     });
 
@@ -644,7 +645,7 @@ export class GrwMap {
   async addTrek() {
     const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
     if (trekInStore) {
-      this.map.setMaxZoom(this.trekTilesMaxZoomOffline);
+      this.map.setMaxZoom(this.tilesMaxZoomOffline);
     } else {
       this.map.setMaxZoom(this.maxZoom);
     }
@@ -1172,14 +1173,16 @@ export class GrwMap {
   }
 
   handleLayersControlEvent() {
-    const userLayersState: HTMLInputElement[] = (this.layersControl as any)._layerControlInputs;
-    userLayersState.forEach((userLayerState: any) => {
-      if ((this.layersControl as any)._layers.find(layer => layer.layer._leaflet_id === userLayerState.layerId).overlay) {
-        userLayerState.onchange = event => {
-          this.userLayersState[userLayerState.layerId] = (event.target as any).checked;
-        };
-      }
-    });
+    if (this.layersControl) {
+      const userLayersState: HTMLInputElement[] = (this.layersControl as any)._layerControlInputs;
+      userLayersState.forEach((userLayerState: any) => {
+        if ((this.layersControl as any)._layers.find(layer => layer.layer._leaflet_id === userLayerState.layerId).overlay) {
+          userLayerState.onchange = event => {
+            this.userLayersState[userLayerState.layerId] = (event.target as any).checked;
+          };
+        }
+      });
+    }
   }
 
   removeTrek() {
@@ -1697,7 +1700,8 @@ export class GrwMap {
 
     if (!this.outdoorSitesLayer) {
       if ((outdoorSitesCurrentCoordinates.length > 0 && !state.currentMapBounds) || resetBounds) {
-        this.bounds = L.latLngBounds(outdoorSitesCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+        const outdoorSitesBbox = bbox(outdoorSitesFeatureCollection);
+        this.bounds = L.latLngBounds([outdoorSitesBbox[1], outdoorSitesBbox[0]], [outdoorSitesBbox[3], outdoorSitesBbox[2]]);
       } else {
         if (state.currentMapBounds) {
           this.bounds = state.currentMapBounds;

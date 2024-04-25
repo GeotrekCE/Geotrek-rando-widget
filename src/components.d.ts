@@ -52,10 +52,10 @@ export namespace Components {
         "routes": string;
         "structures": string;
         "themes": string;
+        "tilesMaxZoomOffline": number;
+        "tilesMinZoomOffline": number;
         "touristicContents": boolean;
         "touristicEvents": boolean;
-        "trekTilesMaxZoomOffline": number;
-        "trekTilesMinZoomOffline": number;
         "treks": boolean;
         "urlLayer": string;
         "useGradient": boolean;
@@ -108,7 +108,7 @@ export namespace Components {
         "fontFamily": string;
         "isLargeView": boolean;
         "nameLayer": string;
-        "trekTilesMaxZoomOffline": number;
+        "tilesMaxZoomOffline": number;
         "urlLayer": string;
         "useGradient": boolean;
     }
@@ -172,8 +172,15 @@ export namespace Components {
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
+        "defaultBackgroundLayerAttribution": any;
+        "defaultBackgroundLayerUrl": any;
+        "enableOffline": boolean;
         "fontFamily": string;
+        "globalTilesMaxZoomOffline": number;
+        "globalTilesMinZoomOffline": number;
         "isLargeView": boolean;
+        "tilesMaxZoomOffline": number;
+        "tilesMinZoomOffline": number;
         "weather": boolean;
     }
     interface GrwOutdoorSiteProvider {
@@ -221,6 +228,7 @@ export namespace Components {
     }
     interface GrwSwitch {
         "action": Function;
+        "checked": boolean;
         "fontFamily": string;
     }
     interface GrwTouristicContentCard {
@@ -337,8 +345,8 @@ export namespace Components {
         "globalTilesMaxZoomOffline": number;
         "globalTilesMinZoomOffline": number;
         "isLargeView": boolean;
-        "trekTilesMaxZoomOffline": number;
-        "trekTilesMinZoomOffline": number;
+        "tilesMaxZoomOffline": number;
+        "tilesMinZoomOffline": number;
         "weather": boolean;
     }
     interface GrwTrekProvider {
@@ -429,8 +437,8 @@ export interface GrwTrekDetailCustomEvent<T> extends CustomEvent<T> {
 }
 declare global {
     interface HTMLGrwAppElementEventMap {
-        "trekDownloadPress": number;
-        "trekDeletePress": number;
+        "downloadPress": number;
+        "deletePress": number;
     }
     interface HTMLGrwAppElement extends Components.GrwApp, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGrwAppElementEventMap>(type: K, listener: (this: HTMLGrwAppElement, ev: GrwAppCustomEvent<HTMLGrwAppElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -601,6 +609,10 @@ declare global {
         "touristicEventsIsInViewport": boolean;
         "sitesIsInViewport": boolean;
         "coursesIsInViewport": boolean;
+        "downloadConfirm": number;
+        "downloadedSuccessConfirm": number;
+        "deleteConfirm": number;
+        "deleteSuccessConfirm": number;
     }
     interface HTMLGrwOutdoorSiteDetailElement extends Components.GrwOutdoorSiteDetail, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGrwOutdoorSiteDetailElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorSiteDetailElement, ev: GrwOutdoorSiteDetailCustomEvent<HTMLGrwOutdoorSiteDetailElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -785,10 +797,10 @@ declare global {
         "touristicContentsIsInViewport": boolean;
         "touristicEventsIsInViewport": boolean;
         "parentTrekPress": number;
-        "trekDownloadConfirm": number;
-        "trekDownloadedSuccessConfirm": number;
-        "trekDeleteConfirm": number;
-        "trekDeleteSuccessConfirm": number;
+        "downloadConfirm": number;
+        "downloadedSuccessConfirm": number;
+        "deleteConfirm": number;
+        "deleteSuccessConfirm": number;
     }
     interface HTMLGrwTrekDetailElement extends Components.GrwTrekDetail, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGrwTrekDetailElementEventMap>(type: K, listener: (this: HTMLGrwTrekDetailElement, ev: GrwTrekDetailCustomEvent<HTMLGrwTrekDetailElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -901,8 +913,8 @@ declare namespace LocalJSX {
         "labels"?: string;
         "languages"?: string;
         "nameLayer"?: string;
-        "onTrekDeletePress"?: (event: GrwAppCustomEvent<number>) => void;
-        "onTrekDownloadPress"?: (event: GrwAppCustomEvent<number>) => void;
+        "onDeletePress"?: (event: GrwAppCustomEvent<number>) => void;
+        "onDownloadPress"?: (event: GrwAppCustomEvent<number>) => void;
         "outdoor"?: boolean;
         "portals"?: string;
         "practices"?: string;
@@ -910,10 +922,10 @@ declare namespace LocalJSX {
         "routes"?: string;
         "structures"?: string;
         "themes"?: string;
+        "tilesMaxZoomOffline"?: number;
+        "tilesMinZoomOffline"?: number;
         "touristicContents"?: boolean;
         "touristicEvents"?: boolean;
-        "trekTilesMaxZoomOffline"?: number;
-        "trekTilesMinZoomOffline"?: number;
         "treks"?: boolean;
         "urlLayer"?: string;
         "useGradient"?: boolean;
@@ -973,7 +985,7 @@ declare namespace LocalJSX {
         "onTouristicContentCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTouristicEventCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
-        "trekTilesMaxZoomOffline"?: number;
+        "tilesMaxZoomOffline"?: number;
         "urlLayer"?: string;
         "useGradient"?: boolean;
     }
@@ -1046,14 +1058,25 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
+        "defaultBackgroundLayerAttribution"?: any;
+        "defaultBackgroundLayerUrl"?: any;
+        "enableOffline"?: boolean;
         "fontFamily"?: string;
+        "globalTilesMaxZoomOffline"?: number;
+        "globalTilesMinZoomOffline"?: number;
         "isLargeView"?: boolean;
         "onCoursesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "onDeleteConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
+        "onDeleteSuccessConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
+        "onDownloadConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
+        "onDownloadedSuccessConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
         "onInformationPlacesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onPoiIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onSitesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "tilesMaxZoomOffline"?: number;
+        "tilesMinZoomOffline"?: number;
         "weather"?: boolean;
     }
     interface GrwOutdoorSiteProvider {
@@ -1101,6 +1124,7 @@ declare namespace LocalJSX {
     }
     interface GrwSwitch {
         "action"?: Function;
+        "checked"?: boolean;
         "fontFamily"?: string;
     }
     interface GrwTouristicContentCard {
@@ -1226,7 +1250,11 @@ declare namespace LocalJSX {
         "globalTilesMaxZoomOffline"?: number;
         "globalTilesMinZoomOffline"?: number;
         "isLargeView"?: boolean;
+        "onDeleteConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
+        "onDeleteSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDescriptionIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onDownloadConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
+        "onDownloadedSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onInformationPlacesIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onParentTrekPress"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onParkingIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
@@ -1235,12 +1263,8 @@ declare namespace LocalJSX {
         "onStepsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
-        "onTrekDeleteConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
-        "onTrekDeleteSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
-        "onTrekDownloadConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
-        "onTrekDownloadedSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
-        "trekTilesMaxZoomOffline"?: number;
-        "trekTilesMinZoomOffline"?: number;
+        "tilesMaxZoomOffline"?: number;
+        "tilesMinZoomOffline"?: number;
         "weather"?: boolean;
     }
     interface GrwTrekProvider {

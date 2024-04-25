@@ -84,8 +84,8 @@ Ce tableau liste l'ensemble des paramètres inhérents aux fonds de plan (fond d
 | `attributionLayer`          | `attribution-layer`             | Attribution du ou des fonds de plan                                                                                             | `string` | `undefined` |
 | `globalTilesMaxZoomOffline` | `global-tiles-max-zoom-offline` | Niveau de zoom maximum pour lequel les tuiles de fond de plan de la carte globale sont téléchargées en mode hors ligne          | `number` | `11`        |
 | `globalTilesMinZoomOffline` | `global-tiles-min-zoom-offline` | Niveau de zoom minimum pour lequel les tuiles de fond de plan de la carte globale sont téléchargées en mode hors ligne          | `number` | `0`         |
-| `trekTilesMaxZoomOffline`   | `trek-tiles-max-zoom-offline`   | Niveau de zoom maximum pour lequel les tuiles de fond de plan sont téléchargées en mode hors ligne sur la carte d'un itinéraire | `number` | `16`        |
-| `trekTilesMinZoomOffline`   | `trek-tiles-min-zoom-offline`   | Niveau de zoom minimal pour lequel les tuiles de fond de plan sont téléchargées en mode hors ligne sur la carte d'un itinéraire | `number` | `12`        |
+| `tilesMaxZoomOffline`       | `tiles-max-zoom-offline`        | Niveau de zoom maximum pour lequel les tuiles de fond de plan sont téléchargées en mode hors ligne sur la carte d'un itinéraire | `number` | `16`        |
+| `tilesMinZoomOffline`       | `tiles-min-zoom-offline`        | Niveau de zoom minimal pour lequel les tuiles de fond de plan sont téléchargées en mode hors ligne sur la carte d'un itinéraire | `number` | `12`        |
 
 ### Éléments de personnalisation de l'apparence
 

@@ -194,14 +194,14 @@ export class GrwTrekDetail {
   @Prop() enableOffline = false;
   @Prop() globalTilesMinZoomOffline = 0;
   @Prop() globalTilesMaxZoomOffline = 11;
-  @Prop() trekTilesMinZoomOffline = 12;
-  @Prop() trekTilesMaxZoomOffline = 16;
+  @Prop() tilesMinZoomOffline = 12;
+  @Prop() tilesMaxZoomOffline = 16;
 
-  @Event() trekDownloadConfirm: EventEmitter<number>;
-  @Event() trekDownloadedSuccessConfirm: EventEmitter<number>;
+  @Event() downloadConfirm: EventEmitter<number>;
+  @Event() downloadedSuccessConfirm: EventEmitter<number>;
 
-  @Event() trekDeleteConfirm: EventEmitter<number>;
-  @Event() trekDeleteSuccessConfirm: EventEmitter<number>;
+  @Event() deleteConfirm: EventEmitter<number>;
+  @Event() deleteSuccessConfirm: EventEmitter<number>;
 
   indicatorSelectedTrekOption = { translateX: null, width: null, backgroundSize: null, ref: null };
 
@@ -618,7 +618,7 @@ export class GrwTrekDetail {
 
     const bounds = L.latLngBounds(this.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
 
-    await writeOrUpdateTilesInStore(offlineLayer, bounds, this.trekTilesMinZoomOffline, this.trekTilesMaxZoomOffline);
+    await writeOrUpdateTilesInStore(offlineLayer, bounds, this.tilesMinZoomOffline, this.tilesMaxZoomOffline);
   }
 
   async downloadTrek() {
@@ -677,7 +677,7 @@ export class GrwTrekDetail {
     await writeOrUpdateFilesInStore(state.touristicEventTypes, imagesRegExp);
     await writeOrUpdateFilesInStore(state.networks, imagesRegExp);
 
-    // // download trek images
+    // download trek images
     await writeOrUpdateFilesInStore(this.currentTrek, imagesRegExp, true, ['url']);
 
     // // download trek data
@@ -775,7 +775,7 @@ export class GrwTrekDetail {
       this.swiperImages.slideTo(0);
     }
     this.offline = true;
-    this.trekDownloadedSuccessConfirm.emit();
+    this.downloadedSuccessConfirm.emit();
   }
 
   async deleteTrek() {
@@ -812,24 +812,24 @@ export class GrwTrekDetail {
     }
 
     this.offline = false;
-    this.trekDeleteSuccessConfirm.emit();
+    this.deleteSuccessConfirm.emit();
   }
 
-  displayTrekDownloadModal() {
-    this.trekDownloadConfirm.emit();
+  displayDownloadModal() {
+    this.downloadConfirm.emit();
   }
 
-  displayTrekDeleteModal() {
-    this.trekDeleteConfirm.emit();
+  displayDeleteModal() {
+    this.deleteConfirm.emit();
   }
 
-  @Listen('trekDownloadPress', { target: 'window' })
-  onTrekDownloadPress() {
+  @Listen('downloadPress', { target: 'window' })
+  onDownloadPress() {
     this.downloadTrek();
   }
 
-  @Listen('trekDeletePress', { target: 'window' })
-  onTrekDeletePress() {
+  @Listen('deletePress', { target: 'window' })
+  onDeletePress() {
     this.deleteTrek();
   }
 
@@ -1148,7 +1148,7 @@ export class GrwTrekDetail {
                 {translate[state.language].downloads}
               </div>
               {this.enableOffline && !this.offline && (
-                <button part="offline-button" class="offline-button" onClick={() => this.displayTrekDownloadModal()}>
+                <button part="offline-button" class="offline-button" onClick={() => this.displayDownloadModal()}>
                   <span part="icon" class="icon" innerHTML={DownloadForOfflineIcon}></span>
                   <span part="label" class="label">
                     RENDRE DISPONIBLE HORS LIGNE
@@ -1156,7 +1156,7 @@ export class GrwTrekDetail {
                 </button>
               )}
               {this.enableOffline && this.offline && (
-                <button part="offline-button" class="offline-button" onClick={() => this.displayTrekDeleteModal()}>
+                <button part="offline-button" class="offline-button" onClick={() => this.displayDeleteModal()}>
                   <span part="icon" class="icon" innerHTML={DeleteIcon}></span>
                   <span part="label" class="label">
                     SUPPRIMER DU HORS LIGNE

@@ -388,7 +388,6 @@ export type OutdoorSite = {
   description: string;
   description_teaser: string;
   districts: number[];
-  information_desks: number[];
   labels: number[];
   managers: number[];
   orientation: string[];
@@ -408,6 +407,12 @@ export type OutdoorSite = {
   courses: number[];
   web_links: Weblinks;
   wind: string[];
+  offline?: boolean;
+  information_desks: number[];
+  pois?: number[];
+  touristicContents?: number[];
+  touristicEvents?: number[];
+  parents?: number[];
 };
 
 export type OutdoorCourses = OutdoorCourse[];
@@ -439,6 +444,10 @@ export type OutdoorCourse = {
   sites: number[];
   structure: number;
   type: number | null;
+  offline?: boolean;
+  pois?: number[];
+  touristicContents?: number[];
+  touristicEvents?: number[];
 };
 
 export type OutdoorSiteTypes = OutdoorSiteType[];

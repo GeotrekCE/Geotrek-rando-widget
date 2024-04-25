@@ -1,10 +1,13 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { OutdoorSite } from 'components';
+import { getDataInStore, handleOfflineProperty } from 'services/grw-db.service';
 import { getOutdoorCourse, getOutdoorCourseTypes } from 'services/outdoor-courses.service';
 import { getOutdoorPractices, getOutdoorSite, getOutdoorSiteTypes, getPoisNearSite } from 'services/outdoor-sites.service';
 import { getTouristicContentsNearOutdoorSite } from 'services/touristic-contents.service';
 import { getTouristicEventsNearOutdoorSite } from 'services/touristic-events.service';
 import { getCities, getDistricts, getInformationsDesks, getThemes } from 'services/treks.service';
 import state from 'store/store';
+import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-outdoor-site-provider',
@@ -32,7 +35,67 @@ export class GrwOutdoorSiteProvider {
     this.handleOutdoorSite();
   }
 
-  handleOutdoorSite() {
+  async handleOutdoorSite() {
+    const outdoorSiteInStore: OutdoorSite = await getDataInStore('outdoorSites', this.outdoorSiteId);
+    if (outdoorSiteInStore && outdoorSiteInStore.offline) {
+      this.handleOfflineOutdoorSite(outdoorSiteInStore);
+    } else {
+      this.handleOnlineOutdoorSite();
+    }
+  }
+
+  async handleOfflineOutdoorSite(outdoorSite: OutdoorSite) {
+    state.cities = await handleOfflineProperty('cities');
+    state.districts = await handleOfflineProperty('districts');
+    state.themes = await handleOfflineProperty('themes');
+    state.outdoorSiteTypes = await handleOfflineProperty('outdoorSiteTypes');
+    state.outdoorPractices = await handleOfflineProperty('outdoorPractices');
+    state.outdoorRatings = await handleOfflineProperty('outdoorRatings');
+    state.outdoorRatingsScale = await handleOfflineProperty('outdoorRatingsScale');
+    state.touristicContentCategories = await handleOfflineProperty('touristicContentCategories');
+    state.touristicEventTypes = await handleOfflineProperty('touristicEventTypes');
+    state.poiTypes = await handleOfflineProperty('poiTypes');
+    state.outdoorCourseTypes = await handleOfflineProperty('outdoorCourseTypes');
+
+    const informationDesksInStore = await handleOfflineProperty('informationDesks');
+    const informationDesks = informationDesksInStore.filter(informationDeskInStore =>
+      outdoorSite.information_desks.some(information_desk => information_desk === informationDeskInStore.id),
+    );
+    state.currentInformationDesks = informationDesks;
+
+    const poisInStore = await handleOfflineProperty('pois', ['url']);
+    const pois = poisInStore.filter(poiInStore => outdoorSite.pois.some(outdoorSitePoi => outdoorSitePoi === poiInStore.id));
+    state.currentPois = pois;
+
+    const touristicContentsInStore = await handleOfflineProperty('touristicContents', ['url']);
+    const touristicContents = touristicContentsInStore.filter(touristicContentInStore =>
+      outdoorSite.touristicContents.some(outdoorSiteTouristicContent => outdoorSiteTouristicContent === touristicContentInStore.id),
+    );
+    state.trekTouristicContents = touristicContents;
+
+    const touristicEventsInStore = await handleOfflineProperty('touristicEvents', ['url']);
+    const touristicEvents = touristicEventsInStore.filter(touristicEventInStore =>
+      outdoorSite.touristicEvents.some(outdoorSiteTouristicEvent => outdoorSiteTouristicEvent === touristicEventInStore.id),
+    );
+    state.trekTouristicEvents = touristicEvents;
+
+    const outdoorSitesInStore = await handleOfflineProperty('outdoorSites', ['url']);
+    const relatedOutdoorSites = outdoorSitesInStore.filter(relatedOutdoorSiteInStore =>
+      outdoorSite.children.some(relatedOutdoorSite => relatedOutdoorSite === relatedOutdoorSiteInStore.id),
+    );
+    state.currentRelatedOutdoorSites = relatedOutdoorSites;
+
+    const outdoorCoursesInStore = await handleOfflineProperty('outdoorCourses', ['url']);
+    const relatedOutdoorCourses = outdoorCoursesInStore.filter(outdoorCourseInStore =>
+      outdoorSite.courses.some(relatedOutdoorCourse => relatedOutdoorCourse === outdoorCourseInStore.id),
+    );
+    state.currentRelatedOutdoorCourses = relatedOutdoorCourses;
+
+    await setFilesFromStore(outdoorSite, imagesRegExp, ['url']);
+    state.currentOutdoorSite = outdoorSite;
+  }
+
+  handleOnlineOutdoorSite() {
     const requests = [];
     requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));
@@ -143,6 +206,7 @@ export class GrwOutdoorSiteProvider {
             if (outdoorCourseTypes) {
               state.outdoorCourseTypes = outdoorCourseTypes.results;
             }
+
             state.currentOutdoorSite = outdoorSite;
           },
         );

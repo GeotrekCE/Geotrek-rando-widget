@@ -329,7 +329,9 @@ export function handleOutdoorSitesFiltersAndSearch() {
     }
   }
 
-  const searchOutdoorSites = isUsingFilter ? filtersOutdoorSites : state.outdoorSites;
+  let searchOutdoorSites = isUsingFilter ? filtersOutdoorSites : state.outdoorSites;
+  searchOutdoorSites = searchOutdoorSites.filter(outdoorSite => !state.offlineOutdoorSites || (state.offlineOutdoorSites && outdoorSite.offline));
+
   return Boolean(state.searchValue)
     ? searchOutdoorSites.filter(currentOutdoorSite => currentOutdoorSite.name.toLowerCase().includes(state.searchValue.toLowerCase()))
     : searchOutdoorSites;

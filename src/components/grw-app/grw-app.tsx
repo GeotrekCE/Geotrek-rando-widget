@@ -2,7 +2,7 @@ import { Capacitor } from '@capacitor/core';
 import { Component, Host, h, Listen, State, Prop, Element, Watch, Event, EventEmitter, Fragment } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { reset } from 'store/store';
-import { handleTreksFiltersAndSearch, imagesRegExp, revokeObjectURL } from 'utils/utils';
+import { handleOutdoorSitesFiltersAndSearch, handleTreksFiltersAndSearch, imagesRegExp, revokeObjectURL } from 'utils/utils';
 import ArrowBackIcon from '../../assets/arrow-back.svg';
 
 @Component({
@@ -86,8 +86,8 @@ export class GrwApp {
   @Prop() enableOffline = false;
   @Prop() globalTilesMinZoomOffline = 0;
   @Prop() globalTilesMaxZoomOffline = 11;
-  @Prop() trekTilesMinZoomOffline = 12;
-  @Prop() trekTilesMaxZoomOffline = 16;
+  @Prop() tilesMinZoomOffline = 12;
+  @Prop() tilesMaxZoomOffline = 16;
 
   @State() showOfflineModal = false;
   @State() showConfirmModal = false;
@@ -97,8 +97,8 @@ export class GrwApp {
   @State() showDeletingMessage = false;
   @State() showDeleteSuccessMessage = false;
 
-  @Event() trekDownloadPress: EventEmitter<number>;
-  @Event() trekDeletePress: EventEmitter<number>;
+  @Event() downloadPress: EventEmitter<number>;
+  @Event() deletePress: EventEmitter<number>;
 
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
@@ -222,8 +222,8 @@ export class GrwApp {
     }
   }
 
-  @Listen('trekDownloadConfirm', { target: 'window' })
-  onTrekDownloadConfirm() {
+  @Listen('downloadConfirm', { target: 'window' })
+  onDownloadConfirm() {
     this.showLoaderModal = false;
     this.showSuccessModal = false;
     this.showDeleteSuccessMessage = false;
@@ -233,14 +233,14 @@ export class GrwApp {
     this.showConfirmModal = true;
   }
 
-  @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
-  onTrekDownloadedSuccessConfirm() {
+  @Listen('downloadedSuccessConfirm', { target: 'window' })
+  onDownloadedSuccessConfirm() {
     this.showLoaderModal = false;
     this.showSuccessModal = true;
   }
 
-  @Listen('trekDeleteConfirm', { target: 'window' })
-  onTrekDeleteConfirm() {
+  @Listen('deleteConfirm', { target: 'window' })
+  onDeleteConfirm() {
     this.showLoaderModal = false;
     this.showSuccessModal = false;
     this.showDeleteSuccessMessage = false;
@@ -249,8 +249,8 @@ export class GrwApp {
     this.showConfirmDeleteModal = true;
   }
 
-  @Listen('trekDeleteSuccessConfirm', { target: 'window' })
-  onTrekDeleteSuccessConfirm() {
+  @Listen('deleteSuccessConfirm', { target: 'window' })
+  onDeleteSuccessConfirm() {
     this.showLoaderModal = false;
     this.showSuccessModal = true;
     this.showDeleteSuccessMessage = true;
@@ -464,17 +464,17 @@ export class GrwApp {
   }
 
   handleOkDeleteModal() {
-    this.trekDeletePress.emit();
     this.showDeletingMessage = true;
     this.showConfirmDeleteModal = false;
     this.showConfirmModal = false;
     this.showLoaderModal = true;
+    this.deletePress.emit();
   }
 
   handleOkDownloadModal() {
-    this.trekDownloadPress.emit();
     this.showConfirmModal = false;
     this.showLoaderModal = true;
+    this.downloadPress.emit();
   }
 
   handleCancelModal() {
@@ -482,8 +482,13 @@ export class GrwApp {
   }
 
   handleOffline() {
-    state.offlineTreks = !state.offlineTreks;
-    state.currentTreks = handleTreksFiltersAndSearch();
+    if (state.mode === 'treks') {
+      state.offlineTreks = !state.offlineTreks;
+      state.currentTreks = handleTreksFiltersAndSearch();
+    } else {
+      state.offlineOutdoorSites = !state.offlineOutdoorSites;
+      state.currentOutdoorSites = handleOutdoorSitesFiltersAndSearch();
+    }
   }
 
   getFiltersName() {
@@ -697,8 +702,15 @@ export class GrwApp {
                   </div>
                   {this.enableOffline && (
                     <div part="grw-offline-container" class="grw-offline-container">
-                      <div class="grw-offline-label">Afficher uniquement les itinéraires hors ligne</div>
-                      <grw-switch exportparts="common-button,common-button-icon,common-button-label" font-family={this.fontFamily} action={() => this.handleOffline()}></grw-switch>
+                      <div class="grw-offline-label">
+                        {state.mode === 'treks' ? 'Afficher uniquement les itinéraires hors ligne' : 'Afficher uniquement les outdoor hors ligne'}
+                      </div>
+                      <grw-switch
+                        exportparts="common-button,common-button-icon,common-button-label"
+                        font-family={this.fontFamily}
+                        action={() => this.handleOffline()}
+                        checked={state.mode === 'treks' ? state.offlineTreks : state.offlineOutdoorSites}
+                      ></grw-switch>
                     </div>
                   )}
                 </Fragment>
@@ -730,7 +742,7 @@ export class GrwApp {
               {((state.mode === 'treks' && this.treks) ||
                 (state.mode === 'touristicContents' && this.touristicContents) ||
                 (state.mode === 'touristicEvents' && this.touristicEvents) ||
-                (state.mode === 'outdoor' && this.outdoor && state.outdoorSites)) && (
+                (state.mode === 'outdoor' && this.outdoor)) && (
                 <div
                   class={this.isLargeView ? 'grw-large-view-app-list-container' : 'grw-app-list-container'}
                   style={{
@@ -816,20 +828,26 @@ export class GrwApp {
                     weather={this.weather}
                     is-large-view={this.isLargeView}
                     emergency-number={this.emergencyNumber}
-                    defaultBackgroundLayerUrl={this.urlLayer.split(',http').map((url, index) => (index === 0 ? url : 'http' + url))[0]}
-                    defaultBackgroundLayerAttribution={this.attributionLayer ? this.attributionLayer.split(',')[0] : []}
+                    default-background-layer-url={this.urlLayer.split(',http').map((url, index) => (index === 0 ? url : 'http' + url))[0]}
+                    default-background-layer-attribution={this.attributionLayer ? this.attributionLayer.split(',')[0] : []}
                     enable-offline={this.enableOffline}
                     global-tiles-min-zoom-offline={this.globalTilesMinZoomOffline}
                     global-tiles-max-zoom-offline={this.globalTilesMaxZoomOffline}
-                    trek-tiles-min-zoom-offline={this.trekTilesMinZoomOffline}
-                    trek-tiles-max-zoom-offline={this.trekTilesMaxZoomOffline}
+                    tiles-min-zoom-offline={this.tilesMinZoomOffline}
+                    tiles-max-zoom-offline={this.tilesMaxZoomOffline}
                   ></grw-trek-detail>
                   {this.showOfflineModal && (
                     <div class="modal-container">
                       <div class="modal-content-container">
                         {this.showConfirmModal && !this.showConfirmDeleteModal && (
                           <Fragment>
-                            <div class="modal-message-container">Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?</div>
+                            <div class="modal-message-container">{`${
+                              this.showTrek
+                                ? 'Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?'
+                                : this.showOutdoorSite
+                                ? 'Êtes-vous sûr de vouloir rendre cet outdoor disponible hors ligne ?'
+                                : ''
+                            }`}</div>
                             <div class="modal-buttons-container">
                               <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
                                 ANNULER
@@ -936,7 +954,68 @@ export class GrwApp {
                     color-background={this.colorBackground}
                     is-large-view={this.isLargeView}
                     weather={this.weather}
+                    default-background-layer-url={this.urlLayer.split(',http').map((url, index) => (index === 0 ? url : 'http' + url))[0]}
+                    default-background-layer-attribution={this.attributionLayer ? this.attributionLayer.split(',')[0] : []}
+                    enable-offline={this.enableOffline}
                   ></grw-outdoor-site-detail>
+                  {this.showOfflineModal && (
+                    <div class="modal-container">
+                      <div class="modal-content-container">
+                        {this.showConfirmModal && !this.showConfirmDeleteModal && (
+                          <Fragment>
+                            <div class="modal-message-container">{`${
+                              this.showTrek
+                                ? 'Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?'
+                                : this.showOutdoorSite
+                                ? 'Êtes-vous sûr de vouloir rendre cet outdoor disponible hors ligne ?'
+                                : ''
+                            }`}</div>
+                            <div class="modal-buttons-container">
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
+                                ANNULER
+                              </button>
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleOkDownloadModal()}>
+                                OK
+                              </button>
+                            </div>
+                          </Fragment>
+                        )}
+                        {this.showConfirmDeleteModal && (
+                          <Fragment>
+                            <div class="modal-message-container">Êtes-vous sûr de vouloir supprimer cet itinéraire du hors ligne ?</div>
+                            <div class="modal-buttons-container">
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
+                                ANNULER
+                              </button>
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleOkDeleteModal()}>
+                                OK
+                              </button>
+                            </div>
+                          </Fragment>
+                        )}
+                        {this.showLoaderModal && (
+                          <Fragment>
+                            <div class="modal-message-container">
+                              <div class="modal-loader"></div>
+                              {this.showDeletingMessage ? 'Suppression en cours' : 'Téléchargement en cours'}
+                            </div>
+                          </Fragment>
+                        )}
+                        {this.showSuccessModal && (
+                          <Fragment>
+                            <div class="modal-message-container">
+                              {this.showDeleteSuccessMessage ? "L'itinéraire est supprimé du hors ligne" : "L'itinéraire est disponible hors ligne"}
+                            </div>
+                            <div class="modal-button-container">
+                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
+                                OK
+                              </button>
+                            </div>
+                          </Fragment>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {this.showOutdoorCourse && state.currentOutdoorCourse && (
@@ -990,7 +1069,7 @@ export class GrwApp {
                   color-clusters={this.colorClusters ? this.colorClusters : this.colorPrimaryApp}
                   is-large-view={this.isLargeView}
                   use-gradient={this.useGradient}
-                  trek-tiles-max-zoom-offline={this.trekTilesMaxZoomOffline}
+                  tiles-max-zoom-offline={this.tilesMaxZoomOffline}
                 ></grw-map>
               )}
             </div>

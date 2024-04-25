@@ -118,6 +118,7 @@ const { state, onChange, reset } = createStore<{
   selectedOutdoorCourseId: number;
   outdoorCourseTypes: OutdoorCourseTypes;
   currentOutdoorCourse: OutdoorCourse;
+  offlineOutdoorSites: boolean;
 }>({
   mode: null,
   api: null,
@@ -198,6 +199,7 @@ const { state, onChange, reset } = createStore<{
   currentOutdoorCourse: null,
   outdoorRatings: null,
   outdoorRatingsScale: null,
+  offlineOutdoorSites: false,
 });
 
 export { onChange, reset };

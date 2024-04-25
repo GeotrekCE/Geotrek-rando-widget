@@ -1,5 +1,4 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import state from 'store/store';
 import DoneIcon from '../../assets/done.svg';
 
 @Component({
@@ -12,6 +11,8 @@ export class GrwSwitch {
 
   @Prop() fontFamily = 'Roboto';
 
+  @Prop() checked: boolean;
+
   render() {
     return (
       <Host
@@ -20,7 +21,7 @@ export class GrwSwitch {
         }}
       >
         <label class="md3 switch">
-          <input checked={state.offlineTreks} onChange={() => this.action()} type="checkbox" id="darkmode" name="darkmode" />
+          <input checked={this.checked} onChange={() => this.action()} type="checkbox" id="darkmode" name="darkmode" />
           <span class="slider">
             <span part="icon" class="icon" innerHTML={DoneIcon}></span>
           </span>

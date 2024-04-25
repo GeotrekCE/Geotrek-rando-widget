@@ -50,10 +50,10 @@
 | `routes`                    | `routes`                        |             | `string`  | `undefined` |
 | `structures`                | `structures`                    |             | `string`  | `undefined` |
 | `themes`                    | `themes`                        |             | `string`  | `undefined` |
+| `tilesMaxZoomOffline`       | `tiles-max-zoom-offline`        |             | `number`  | `16`        |
+| `tilesMinZoomOffline`       | `tiles-min-zoom-offline`        |             | `number`  | `12`        |
 | `touristicContents`         | `touristic-contents`            |             | `boolean` | `false`     |
 | `touristicEvents`           | `touristic-events`              |             | `boolean` | `false`     |
-| `trekTilesMaxZoomOffline`   | `trek-tiles-max-zoom-offline`   |             | `number`  | `16`        |
-| `trekTilesMinZoomOffline`   | `trek-tiles-min-zoom-offline`   |             | `number`  | `12`        |
 | `treks`                     | `treks`                         |             | `boolean` | `true`      |
 | `urlLayer`                  | `url-layer`                     |             | `string`  | `undefined` |
 | `useGradient`               | `use-gradient`                  |             | `boolean` | `false`     |
@@ -62,10 +62,10 @@
 
 ## Events
 
-| Event               | Description | Type                  |
-| ------------------- | ----------- | --------------------- |
-| `trekDeletePress`   |             | `CustomEvent<number>` |
-| `trekDownloadPress` |             | `CustomEvent<number>` |
+| Event           | Description | Type                  |
+| --------------- | ----------- | --------------------- |
+| `deletePress`   |             | `CustomEvent<number>` |
+| `downloadPress` |             | `CustomEvent<number>` |
 
 
 ## Shadow Parts

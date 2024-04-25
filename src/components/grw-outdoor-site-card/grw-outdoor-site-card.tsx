@@ -96,7 +96,7 @@ export class GrwOutdoorSiteCard {
             <div part="outdoor-site-name" class="outdoor-site-name">
               {this.outdoorSite.name}
             </div>
-            {state.themes && state.themes.filter(theme => this.outdoorSite.themes.includes(theme.id)).length > 0 && (
+            {!this.isInsideHorizontalList && state.themes && state.themes.filter(theme => this.outdoorSite.themes.includes(theme.id)).length > 0 && (
               <div part="themes-container" class="themes-container">
                 {state.themes
                   .filter(theme => this.outdoorSite.themes.includes(theme.id))

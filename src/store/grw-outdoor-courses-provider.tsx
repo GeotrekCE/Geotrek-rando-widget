@@ -1,7 +1,9 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { getAllDataInStore, handleOfflineProperty } from 'services/grw-db.service';
 import { getOutdoorCourses } from 'services/outdoor-courses.service';
 import { getCities, getDistricts, getThemes } from 'services/treks.service';
 import state from 'store/store';
+import { OutdoorCourses } from 'types/types';
 
 @Component({
   tag: 'grw-outdoor-courses-provider',
@@ -27,39 +29,55 @@ export class GrwOutdoorCoursesProvider {
       state.languages = this.languages.split(',');
       state.language = state.languages[0];
     }
-    this.handleOutdoorSites();
+    this.handleOutdoorCourses();
   }
 
-  handleOutdoorSites() {
+  handleOutdoorCourses() {
+    this.handleOnlineOutdoorCourses();
+  }
+
+  async handleOfflineOutdoorCourses(outdoorCourses: OutdoorCourses) {
+    state.cities = await handleOfflineProperty('cities');
+    state.districts = await handleOfflineProperty('districts');
+    state.themes = await handleOfflineProperty('themes');
+    outdoorCourses = await handleOfflineProperty('outdoorCourses');
+
+    state.outdoorCourses = outdoorCourses;
+    state.currentOutdoorCourses = outdoorCourses;
+  }
+
+  handleOnlineOutdoorCourses() {
     const requests = [];
     requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.themes ? getThemes(state.api, state.language, this.portals, this.init) : new Response('null'));
     requests.push(getOutdoorCourses(state.api, state.language, this.inBbox, this.cities, this.districts, this.structures, this.themes, this.portals, this.init));
-    try {
-      Promise.all([...requests])
-        .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(([cities, districts, themes, outdoorCourses]) => {
-          state.networkError = false;
+    Promise.all([...requests])
+      .then(responses => Promise.all(responses.map(response => response.json())))
+      .then(([cities, districts, themes, outdoorCourses]) => {
+        state.networkError = false;
 
-          if (cities) {
-            state.cities = cities.results;
-          }
-          if (districts) {
-            state.districts = districts.results;
-          }
-          if (themes) {
-            state.themes = themes.results;
-          }
+        if (cities) {
+          state.cities = cities.results;
+        }
+        if (districts) {
+          state.districts = districts.results;
+        }
+        if (themes) {
+          state.themes = themes.results;
+        }
 
-          state.outdoorCourses = outdoorCourses.results;
-          state.currentOutdoorCourses = outdoorCourses.results;
-        });
-    } catch (error) {
-      if (!(error.code === DOMException.ABORT_ERR)) {
-        state.networkError = true;
-      }
-    }
+        state.outdoorCourses = outdoorCourses.results;
+        state.currentOutdoorCourses = outdoorCourses.results;
+      })
+      .catch(async () => {
+        const outdoorCoursesInStore: OutdoorCourses = await getAllDataInStore('outdoorCourses');
+        if (outdoorCoursesInStore && outdoorCoursesInStore.length > 0) {
+          this.handleOfflineOutdoorCourses(outdoorCoursesInStore);
+        } else {
+          state.networkError = true;
+        }
+      });
   }
 
   disconnectedCallback() {

@@ -23,8 +23,8 @@
 | `globalTilesMaxZoomOffline`         | `global-tiles-max-zoom-offline`        |             | `number`  | `11`        |
 | `globalTilesMinZoomOffline`         | `global-tiles-min-zoom-offline`        |             | `number`  | `0`         |
 | `isLargeView`                       | `is-large-view`                        |             | `boolean` | `false`     |
-| `trekTilesMaxZoomOffline`           | `trek-tiles-max-zoom-offline`          |             | `number`  | `16`        |
-| `trekTilesMinZoomOffline`           | `trek-tiles-min-zoom-offline`          |             | `number`  | `12`        |
+| `tilesMaxZoomOffline`               | `tiles-max-zoom-offline`               |             | `number`  | `16`        |
+| `tilesMinZoomOffline`               | `tiles-min-zoom-offline`               |             | `number`  | `12`        |
 | `weather`                           | `weather`                              |             | `boolean` | `false`     |
 
 
@@ -32,7 +32,11 @@
 
 | Event                           | Description | Type                   |
 | ------------------------------- | ----------- | ---------------------- |
+| `deleteConfirm`                 |             | `CustomEvent<number>`  |
+| `deleteSuccessConfirm`          |             | `CustomEvent<number>`  |
 | `descriptionIsInViewport`       |             | `CustomEvent<boolean>` |
+| `downloadConfirm`               |             | `CustomEvent<number>`  |
+| `downloadedSuccessConfirm`      |             | `CustomEvent<number>`  |
 | `informationPlacesIsInViewport` |             | `CustomEvent<boolean>` |
 | `parentTrekPress`               |             | `CustomEvent<number>`  |
 | `parkingIsInViewport`           |             | `CustomEvent<boolean>` |
@@ -41,10 +45,6 @@
 | `stepsIsInViewport`             |             | `CustomEvent<boolean>` |
 | `touristicContentsIsInViewport` |             | `CustomEvent<boolean>` |
 | `touristicEventsIsInViewport`   |             | `CustomEvent<boolean>` |
-| `trekDeleteConfirm`             |             | `CustomEvent<number>`  |
-| `trekDeleteSuccessConfirm`      |             | `CustomEvent<number>`  |
-| `trekDownloadConfirm`           |             | `CustomEvent<number>`  |
-| `trekDownloadedSuccessConfirm`  |             | `CustomEvent<number>`  |
 
 
 ## Shadow Parts

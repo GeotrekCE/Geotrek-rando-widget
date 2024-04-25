@@ -10,6 +10,7 @@
 | Property     | Attribute     | Description | Type       | Default     |
 | ------------ | ------------- | ----------- | ---------- | ----------- |
 | `action`     | --            |             | `Function` | `undefined` |
+| `checked`    | `checked`     |             | `boolean`  | `undefined` |
 | `fontFamily` | `font-family` |             | `string`   | `'Roboto'`  |
 
 

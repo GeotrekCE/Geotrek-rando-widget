@@ -1,4 +1,4 @@
-import { Build, Component, Host, Prop, State, getAssetPath, h, Event, EventEmitter } from '@stencil/core';
+import { Build, Component, Host, Prop, State, getAssetPath, h, Event, EventEmitter, Listen } from '@stencil/core';
 import { OutdoorSite } from 'components';
 import state, { onChange } from 'store/store';
 import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel, Scrollbar } from 'swiper';
@@ -9,6 +9,19 @@ import EventIcon from '../../assets/event.svg';
 import WarningIcon from '../../assets/warning.svg';
 import AirIcon from '../../assets/air.svg';
 import ExploreIcon from '../../assets/explore.svg';
+import DownloadForOfflineIcon from '../../assets/download_for_offline.svg';
+import DeleteIcon from '../../assets/delete.svg';
+import { getAllDataInStore, getDataInStore, writeOrUpdateDataInStore, writeOrUpdateFilesInStore, writeOrUpdateTilesInStore } from 'services/grw-db.service';
+import { imagesRegExp } from 'utils/utils';
+import { getOutdoorSite, getOutdoorSites, getPoisNearSite } from 'services/outdoor-sites.service';
+import { tileLayerOffline } from 'leaflet.offline';
+import L from 'leaflet';
+import bbox from '@turf/bbox';
+import pointOnFeature from '@turf/point-on-feature';
+import { OutdoorSites } from 'types/types';
+import { getTouristicContentsNearOutdoorCourse, getTouristicContentsNearOutdoorSite } from 'services/touristic-contents.service';
+import { getTouristicEventsNearOutdoorCourse, getTouristicEventsNearOutdoorSite } from 'services/touristic-events.service';
+import { getOutdoorCourse, getPoisNearCourse } from 'services/outdoor-courses.service';
 
 const threshold = 1;
 
@@ -29,7 +42,15 @@ export class GrwOutdoorSiteDetail {
   @Prop() colorBackground = '#fef7ff';
   @Prop() isLargeView = false;
   @Prop() weather = false;
+  @Prop() enableOffline = false;
+  @Prop() defaultBackgroundLayerUrl;
+  @Prop() defaultBackgroundLayerAttribution;
+  @Prop() globalTilesMinZoomOffline = 0;
+  @Prop() globalTilesMaxZoomOffline = 11;
+  @Prop() tilesMinZoomOffline = 12;
+  @Prop() tilesMaxZoomOffline = 16;
 
+  @State() offline = false;
   @State() displayFullscreen = false;
   @State() currentOutdoorSite: OutdoorSite;
 
@@ -89,6 +110,22 @@ export class GrwOutdoorSiteDetail {
   touristicEventObserver: IntersectionObserver;
   siteObserver: IntersectionObserver;
   courseObserver: IntersectionObserver;
+
+  @Event() downloadConfirm: EventEmitter<number>;
+  @Event() downloadedSuccessConfirm: EventEmitter<number>;
+
+  @Event() deleteConfirm: EventEmitter<number>;
+  @Event() deleteSuccessConfirm: EventEmitter<number>;
+
+  @Listen('downloadPress', { target: 'window' })
+  onDownloadPress() {
+    this.downloadRootOutdoorSite();
+  }
+
+  @Listen('deletePress', { target: 'window' })
+  onDeletePress() {
+    this.deleteOutdoorSite();
+  }
 
   componentDidLoad() {
     this.swiperImages = new Swiper(this.swiperImagesRef, {
@@ -298,11 +335,13 @@ export class GrwOutdoorSiteDetail {
   async connectedCallback() {
     if (state.currentOutdoorSite) {
       this.currentOutdoorSite = state.currentOutdoorSite;
+      this.offline = this.currentOutdoorSite.offline;
     }
 
     onChange('currentOutdoorSite', async () => {
       if (state.currentOutdoorSite) {
         this.currentOutdoorSite = state.currentOutdoorSite;
+        this.offline = this.currentOutdoorSite.offline;
       }
     });
   }
@@ -317,6 +356,253 @@ export class GrwOutdoorSiteDetail {
     }
   }
 
+  displayDownloadModal() {
+    this.downloadConfirm.emit();
+  }
+
+  displayDeleteModal() {
+    this.deleteConfirm.emit();
+  }
+
+  async downloadRootOutdoorSite() {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+
+    if (!state.outdoorSites) {
+      const outdoorSitesList = await getOutdoorSites(
+        state.api,
+        state.language,
+        state.inBboxFromProviders,
+        state.citiesFromProviders,
+        state.districtsFromProviders,
+        state.structuresFromProviders,
+        state.themesFromProviders,
+        state.portalsFromProviders,
+        init,
+      );
+      state.outdoorSites = (await outdoorSitesList.json()).results;
+      state.currentOutdoorSites = state.outdoorSites;
+    }
+
+    const offlineOutdoorSites = (await getAllDataInStore('outdoorSites')).filter(outdoorSite => outdoorSite.offline === true);
+    let outdoorSites;
+    outdoorSites = state.outdoorSites;
+    outdoorSites = outdoorSites.filter(outdoorSite => offlineOutdoorSites.findIndex(offlineOutdoorSites => offlineOutdoorSites.id === outdoorSite.id) === -1);
+    await writeOrUpdateDataInStore('outdoorSites', outdoorSites);
+
+    await this.downloadGlobalTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
+    await this.downloadOutdoorSiteTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution, this.currentOutdoorSite.geometry);
+
+    await writeOrUpdateFilesInStore(state.themes, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.outdoorSiteTypes, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.outdoorPractices, imagesRegExp);
+
+    await writeOrUpdateFilesInStore(this.currentOutdoorSite, imagesRegExp, true, ['url']);
+
+    await writeOrUpdateDataInStore('cities', state.cities);
+    await writeOrUpdateDataInStore('districts', state.districts);
+    await writeOrUpdateDataInStore('themes', state.themes);
+    await writeOrUpdateDataInStore('outdoorSiteTypes', state.outdoorSiteTypes);
+    await writeOrUpdateDataInStore('outdoorPractices', state.outdoorPractices);
+    await writeOrUpdateDataInStore('outdoorRatings', state.outdoorRatings);
+    await writeOrUpdateDataInStore('outdoorRatingsScale', state.outdoorRatingsScale);
+    await writeOrUpdateDataInStore('pois', state.currentPois);
+    await writeOrUpdateDataInStore('poiTypes', state.poiTypes);
+    await writeOrUpdateDataInStore('informationDesks', state.currentInformationDesks);
+    await writeOrUpdateDataInStore('outdoorCourseTypes', state.outdoorCourseTypes);
+    await writeOrUpdateDataInStore('touristicEventTypes', state.touristicEventTypes);
+    await writeOrUpdateDataInStore('touristicContentCategories', state.touristicContentCategories);
+
+    await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true, ['url']);
+    await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp, true);
+    await writeOrUpdateFilesInStore(state.outdoorCourseTypes, imagesRegExp, true);
+    await writeOrUpdateFilesInStore(state.touristicContentCategories, imagesRegExp, true);
+
+    await writeOrUpdateFilesInStore(state.trekTouristicContents, imagesRegExp, true, ['url']);
+    state.trekTouristicContents.forEach(trekTouristicContent => {
+      trekTouristicContent.offline = true;
+    });
+    await writeOrUpdateDataInStore('touristicContents', state.trekTouristicContents);
+
+    await writeOrUpdateFilesInStore(state.trekTouristicEvents, imagesRegExp, true, ['url']);
+    state.trekTouristicEvents.forEach(trekTouristicEvent => {
+      trekTouristicEvent.offline = true;
+    });
+    await writeOrUpdateDataInStore('touristicEvents', state.trekTouristicEvents);
+
+    if (state.currentOutdoorSite.courses && state.currentOutdoorSite.courses.length > 0) {
+      for (let index = 0; index < state.currentOutdoorSite.courses.length; index++) {
+        const outdoorCourseId = state.currentOutdoorSite.courses[index];
+        await this.downloadOutdoorCourse(outdoorCourseId);
+      }
+    }
+
+    if (this.currentOutdoorSite.children && this.currentOutdoorSite.children.length > 0) {
+      for (let index = 0; index < this.currentOutdoorSite.children.length; index++) {
+        const outdoorSiteId = this.currentOutdoorSite.children[index];
+        await this.downloadOutdoorSite(outdoorSiteId);
+      }
+    }
+
+    await writeOrUpdateDataInStore('outdoorSites', [
+      {
+        ...this.currentOutdoorSite,
+        offline: true,
+        pois: state.currentPois.map(poi => poi.id),
+        touristicContents: state.trekTouristicContents.map(trekTouristicContent => trekTouristicContent.id),
+        touristicEvents: state.trekTouristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
+      },
+    ]);
+
+    state.outdoorSites.find(outdoorSite => outdoorSite.id === this.currentOutdoorSite.id).offline = true;
+    state.currentOutdoorSites.find(currentOutdoorSite => currentOutdoorSite.id === this.currentOutdoorSite.id).offline = true;
+    if (this.swiperImages) {
+      this.swiperImages.slideTo(0);
+    }
+    this.offline = true;
+    this.downloadedSuccessConfirm.emit();
+  }
+
+  async downloadOutdoorSite(outdoorSiteId) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+
+    const outdoorSite: OutdoorSite = await getOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json());
+    await this.downloadOutdoorSiteTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution, outdoorSite.geometry);
+    await writeOrUpdateFilesInStore(outdoorSite, imagesRegExp, true, ['url']);
+
+    const pois = (await getPoisNearSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
+    await writeOrUpdateDataInStore('pois', pois);
+    await writeOrUpdateFilesInStore(pois, imagesRegExp, true, ['url']);
+
+    const touristicContents = (await getTouristicContentsNearOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
+    await writeOrUpdateFilesInStore(touristicContents, imagesRegExp, true, ['url']);
+    touristicContents.forEach(touristicContent => {
+      touristicContent.offline = true;
+    });
+    await writeOrUpdateDataInStore('touristicContents', touristicContents);
+    const touristicEvents = (await getTouristicEventsNearOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
+    await writeOrUpdateFilesInStore(touristicEvents, imagesRegExp, true, ['url']);
+    touristicEvents.forEach(touristicEvent => {
+      touristicEvent.offline = true;
+    });
+    await writeOrUpdateDataInStore('touristicEvents', touristicEvents);
+
+    await writeOrUpdateDataInStore('outdoorSites', [
+      {
+        ...outdoorSite,
+        offline: true,
+        pois: pois.map(poi => poi.id),
+        touristicContents: touristicContents.map(trekTouristicContent => trekTouristicContent.id),
+        touristicEvents: touristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
+      },
+    ]);
+
+    if (outdoorSite.courses && outdoorSite.courses.length > 0) {
+      for (let index = 0; index < outdoorSite.courses.length; index++) {
+        const outdoorCourseId = outdoorSite.courses[index];
+        await this.downloadOutdoorCourse(outdoorCourseId);
+      }
+    }
+
+    if (outdoorSite.children && outdoorSite.children.length > 0) {
+      for (let index = 0; index < outdoorSite.children.length; index++) {
+        const outdoorSiteId = outdoorSite.children[index];
+        await this.downloadOutdoorSite(outdoorSiteId);
+      }
+    }
+  }
+
+  async downloadOutdoorCourse(outdoorCourseId) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+    const outdoorCourse = await getOutdoorCourse(state.api, state.language, outdoorCourseId, init).then(response => response.json());
+    await this.downloadOutdoorSiteTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution, outdoorCourse.geometry);
+    await writeOrUpdateFilesInStore(outdoorCourse, imagesRegExp, true, ['url']);
+
+    const pois = (await getPoisNearCourse(state.api, state.language, outdoorCourseId, init).then(response => response.json())).results;
+    await writeOrUpdateDataInStore('pois', pois);
+    await writeOrUpdateFilesInStore(pois, imagesRegExp, true, ['url']);
+
+    const touristicContents = (await getTouristicContentsNearOutdoorCourse(state.api, state.language, outdoorCourseId, init).then(response => response.json())).results;
+    await writeOrUpdateFilesInStore(touristicContents, imagesRegExp, true, ['url']);
+    touristicContents.forEach(touristicContent => {
+      touristicContent.offline = true;
+    });
+    await writeOrUpdateDataInStore('touristicContents', touristicContents);
+    const touristicEvents = (await getTouristicEventsNearOutdoorCourse(state.api, state.language, outdoorCourseId, init).then(response => response.json())).results;
+    await writeOrUpdateFilesInStore(touristicEvents, imagesRegExp, true, ['url']);
+    touristicEvents.forEach(touristicEvent => {
+      touristicEvent.offline = true;
+    });
+    await writeOrUpdateDataInStore('touristicEvents', touristicEvents);
+
+    await writeOrUpdateDataInStore('outdoorCourses', [
+      {
+        ...outdoorCourse,
+        offline: true,
+        pois: pois.map(poi => poi.id),
+        touristicContents: touristicContents.map(trekTouristicContent => trekTouristicContent.id),
+        touristicEvents: touristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
+      },
+    ]);
+  }
+
+  async deleteOutdoorSite() {
+    const outdoorSitesInStore: OutdoorSites = [];
+    const outdoorSiteInStore = await getDataInStore('outdoorSites', this.currentOutdoorSite.id);
+    this.deleteOfflineOutdoorSiteProperties(outdoorSiteInStore);
+    outdoorSitesInStore.push(outdoorSiteInStore);
+
+    await writeOrUpdateDataInStore('outdoorSites', outdoorSitesInStore);
+
+    if (state.outdoorSites) {
+      delete state.outdoorSites.find(outdoorSite => outdoorSite.id === this.currentOutdoorSite.id).offline;
+
+      if (!state.currentOutdoorSites) {
+        state.currentOutdoorSites = state.outdoorSites;
+      }
+      delete state.currentOutdoorSites.find(trek => trek.id === this.currentOutdoorSite.id).offline;
+    }
+
+    this.offline = false;
+    this.deleteSuccessConfirm.emit();
+  }
+
+  async downloadGlobalTiles(url, attribution) {
+    const offlineLayer = tileLayerOffline(url, { attribution });
+
+    const coordinates = [];
+
+    if (state.outdoorSites) {
+      for (const outdoorSite of state.outdoorSites) {
+        coordinates.push(pointOnFeature(outdoorSite.geometry as any).geometry.coordinates);
+      }
+    }
+
+    const bounds = L.latLngBounds(coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+
+    await writeOrUpdateTilesInStore(offlineLayer, bounds, this.globalTilesMinZoomOffline, this.globalTilesMaxZoomOffline);
+  }
+
+  async downloadOutdoorSiteTiles(url, attribution, geometry) {
+    const offlineLayer = tileLayerOffline(url, { attribution });
+    const outdoorSiteBbox = bbox(geometry);
+    const bounds = L.latLngBounds([outdoorSiteBbox[1], outdoorSiteBbox[0]], [outdoorSiteBbox[3], outdoorSiteBbox[2]]);
+
+    await writeOrUpdateTilesInStore(offlineLayer, bounds, this.tilesMinZoomOffline, this.tilesMaxZoomOffline);
+  }
+
+  deleteOfflineOutdoorSiteProperties(outdoorSiteInStore) {
+    delete outdoorSiteInStore.offline;
+    delete outdoorSiteInStore.pois;
+    delete outdoorSiteInStore.touristicContents;
+    delete outdoorSiteInStore.touristicEvents;
+  }
+
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     const practice = state.outdoorPractices && this.currentOutdoorSite && state.outdoorPractices.find(practice => practice.id === this.currentOutdoorSite.practice);
@@ -326,7 +612,6 @@ export class GrwOutdoorSiteDetail {
     const currentOutdoorSitesRatingsScales = outdoorRatings && [...new Set(outdoorRatings.map(outdoorRating => outdoorRating.scale))];
     const outdoorRatingsScales =
       currentOutdoorSitesRatingsScales && state.outdoorRatingsScale.filter(outdoorRatingsScale => currentOutdoorSitesRatingsScales.includes(outdoorRatingsScale.id));
-
     return (
       <Host
         style={{
@@ -370,7 +655,7 @@ export class GrwOutdoorSiteDetail {
                             <img
                               part="outdoor-site-img"
                               class="outdoor-site-img"
-                              src={attachment.url}
+                              src={this.offline ? attachment.thumbnail : attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
                               /* @ts-ignore */
@@ -459,6 +744,22 @@ export class GrwOutdoorSiteDetail {
               <div part="download-title" class="download-title">
                 {translate[state.language].downloads}
               </div>
+              {this.enableOffline && !this.offline && (
+                <button part="offline-button" class="offline-button" onClick={() => this.displayDownloadModal()}>
+                  <span part="icon" class="icon" innerHTML={DownloadForOfflineIcon}></span>
+                  <span part="label" class="label">
+                    RENDRE DISPONIBLE HORS LIGNE
+                  </span>
+                </button>
+              )}
+              {this.enableOffline && this.offline && (!this.currentOutdoorSite.parents || this.currentOutdoorSite.parents.length === 0) && (
+                <button part="offline-button" class="offline-button" onClick={() => this.displayDeleteModal()}>
+                  <span part="icon" class="icon" innerHTML={DeleteIcon}></span>
+                  <span part="label" class="label">
+                    SUPPRIMER DU HORS LIGNE
+                  </span>
+                </button>
+              )}
               <div part="links-container" class="links-container">
                 <a
                   href={`${this.currentOutdoorSite.pdf}${state.portalsFromProviders && state.portalsFromProviders.length === 1 ? '?portal=' + state.portalsFromProviders[0] : ''}`}
