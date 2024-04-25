@@ -68,61 +68,63 @@ export class GrwInformationDeskDetail {
           </div>
         )}
         <div part="information-desk-sub-container" class="information-desk-sub-container">
-          {this.informationDesk.name && (
-            <div part="information-desk-name" class="information-desk-name">
-              {this.informationDesk.name}
-            </div>
-          )}
-          {this.informationDesk.latitude && this.informationDesk.longitude && (
-            <button part="center-on-map-button" class="center-on-map-button" onClick={() => this.handleCenterOnMap()}>
-              <span part="icon" class="icon" innerHTML={LocationSearchingIcon}></span>
-              <span part="label">{translate[state.language].centerOnMap}</span>
-            </button>
-          )}
-          {(this.informationDesk.postal_code || this.informationDesk.municipality || this.informationDesk.street) && (
-            <div part="information-desk-informations" class="information-desk-informations">
-              {this.informationDesk.postal_code && this.informationDesk.postal_code}
-              {this.informationDesk.municipality && ` ${this.informationDesk.municipality}`}
-              {this.informationDesk.street && ` ${this.informationDesk.street}`}
-            </div>
-          )}
-          {this.informationDesk.phone && (
-            <div class="phone-container">
-              <span part="icon" class="icon" innerHTML={CallIcon}></span>
-              <a part="label" class="label" href={`tel:${this.informationDesk.phone}`}>
-                {this.informationDesk.phone}
-              </a>
-            </div>
-          )}
-          {this.informationDesk.email && (
-            <div part="mail-container" class="mail-container">
-              <span part="icon" class="icon" innerHTML={MailIcon}></span>
-              <a part="label" class="label" href={`mailto:${this.informationDesk.email}`}>
-                {this.informationDesk.email}
-              </a>
-            </div>
-          )}
-          {this.informationDesk.website && (
-            <div part="link-container" class="link-container">
-              <span part="icon" class="icon" innerHTML={LinkIcon}></span>
-              <a part="label" class="label" href={`${this.informationDesk.website}`}>
-                {this.informationDesk.website}
-              </a>
-            </div>
-          )}
+          <div class={this.displayShortDescription ? "information-desk-sub-container-short" : ""}>
+            {this.informationDesk.name && (
+              <div part="information-desk-name" class="information-desk-name">
+                {this.informationDesk.name}
+              </div>
+            )}
+            {this.informationDesk.latitude && this.informationDesk.longitude && (
+              <button part="center-on-map-button" class="center-on-map-button" onClick={() => this.handleCenterOnMap()}>
+                <span part="icon" class="icon" innerHTML={LocationSearchingIcon}></span>
+                <span part="label">{translate[state.language].centerOnMap}</span>
+              </button>
+            )}
+            {(this.informationDesk.postal_code || this.informationDesk.municipality || this.informationDesk.street) && (
+              <div part="information-desk-informations" class="information-desk-informations">
+                {this.informationDesk.postal_code && this.informationDesk.postal_code}
+                {this.informationDesk.municipality && ` ${this.informationDesk.municipality}`}
+                {this.informationDesk.street && ` ${this.informationDesk.street}`}
+              </div>
+            )}
+            {this.informationDesk.phone && (
+              <div class="phone-container">
+                <span part="icon" class="icon" innerHTML={CallIcon}></span>
+                <a part="label" class="label" href={`tel:${this.informationDesk.phone}`}>
+                  {this.informationDesk.phone}
+                </a>
+              </div>
+            )}
+            {this.informationDesk.email && (
+              <div part="mail-container" class="mail-container">
+                <span part="icon" class="icon" innerHTML={MailIcon}></span>
+                <a part="label" class="label" href={`mailto:${this.informationDesk.email}`}>
+                  {this.informationDesk.email}
+                </a>
+              </div>
+            )}
+            {this.informationDesk.website && (
+              <div part="link-container" class="link-container">
+                <span part="icon" class="icon" innerHTML={LinkIcon}></span>
+                <a part="label" class="label" href={`${this.informationDesk.website}`}>
+                  {this.informationDesk.website}
+                </a>
+              </div>
+            )}
+            {this.informationDesk.description && (
+              <div part="information-desk-description-container" class="information-desk-description-container">
+                <div
+                  part="information-desk-description"
+                  class='information-desk-description'
+                  innerHTML={this.informationDesk.description}
+                  ref={el => (this.descriptionRef = el)}
+                ></div>
+              </div>
+            )}
+          </div>
           {this.informationDesk.description && (
-            <div part="information-desk-description-container" class="information-desk-description-container">
-              <div
-                part="information-desk-description"
-                class={this.displayShortDescription ? 'information-desk-description information-desk-description-short' : 'information-desk-description'}
-                innerHTML={this.informationDesk.description}
-                ref={el => (this.descriptionRef = el)}
-              ></div>
-              {false && (
-                <div part="handle-information-desk-description" class="handle-information-desk-description" onClick={() => this.handleInformationDeskDescription()}>
-                  {this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess}
-                </div>
-              )}
+            <div part="handle-information-desk-description" class="handle-information-desk-description" onClick={() => this.handleInformationDeskDescription()}>
+              {this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess}
             </div>
           )}
         </div>
