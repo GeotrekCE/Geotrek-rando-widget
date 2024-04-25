@@ -13,7 +13,7 @@ La vue détaillée est composée de trois parties :
 - Profil altimétrique « dynamique » pouvant être survolé à la souris pour mettre en évidence le point de localisation correspondant sur la carte
 - Affichage de l’ensemble des communes traversées par l’itinéraire
 - Description détaillée de l'itinérance pour permettre l’affichage d’un fil de suivi avec les étapes sous forme de ronds colorés
-- Liens vers les contenus touristiques associés (services)
+- Liens vers les contenus touristiques associés (services et évènements)
 
 ## Fiche détaillée d'une randonnée
 

@@ -80,6 +80,9 @@ function sidebar(): DefaultTheme.SidebarItem[] {
           { text: 'Liste de randonnées', link: '/documentation/components/grw-treks-list' },
           { text: "Vignette d'une randonnée", link: '/documentation/components/grw-trek-card' },
           { text: "Détail d'une randonnée", link: '/documentation/components/grw-trek-detail' },
+          { text: "Liste d'outdoors", link: '/documentation/components/grw-outdoor-list' },
+          { text: "Vignette d'un outdoor", link: '/documentation/components/grw-outdoor-card' },
+          { text: "Détail d'un outdoor", link: '/documentation/components/grw-outdoor-detail' },
           { text: 'Liste des contenus touristiques', link: '/documentation/components/grw-touristic-contents-list' },
           { text: "Vignette d'un contenu touristique", link: '/documentation/components/grw-touristic-content-card' },
           { text: "Détail d'un contenu touristique", link: '/documentation/components/grw-touristic-content-detail' },
@@ -115,10 +118,12 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         items: [
           { text: 'Application', link: '/documentation/examples/application' },
           { text: 'Application itinéraires', link: '/documentation/examples/app-treks' },
+          { text: 'Application outdoors', link: '/documentation/examples/app-outdoors' },
           { text: 'Application contenus touristiques', link: '/documentation/examples/app-touristic-contents' },
           { text: 'Application événements touristiques', link: '/documentation/examples/app-touristic-events' },
           { text: 'Liste de randonnées', link: '/documentation/examples/treks-list' },
-          { text: "Détail d'une randonnée et carte", link: '/documentation/examples/trek-detail-and-map' },
+          { text: "Détail d'une randonnée", link: '/documentation/examples/trek-detail' },
+          { text: "Détail d'une randonnée avec carte", link: '/documentation/examples/trek-detail-and-map' },
         ],
       },
       {

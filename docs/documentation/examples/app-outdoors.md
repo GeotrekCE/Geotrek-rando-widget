@@ -15,12 +15,12 @@ head:
 
 ## Code
 
-Pour afficher uniquement les **évènements touristiques** dans le widget, il faut que la balise `grw-app` embarque le paramètre suivant à `true` : 
+Pour afficher uniquement les **activités outdoors** dans le widget, il faut que la balise `grw-app` embarque le paramètre suivant à `true` : 
 
 ```html
 <grw-app
     ...
-    touristic-events="true"
+    outdoor="true"
 ></grw-app>
 ```
 
@@ -38,7 +38,7 @@ Pour afficher uniquement les **évènements touristiques** dans le widget, il fa
         attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>,OpenStreetMap"
         weather="true"
         treks="false"
-        touristic-events="true"
+        outdoor="true"
         rounded="true"
         color-departure-icon="#006b3b"
         color-arrival-icon="#85003b"
@@ -64,7 +64,7 @@ Pour afficher uniquement les **évènements touristiques** dans le widget, il fa
 </div>
 ```
 
-## Exemple de widget avec uniquement les évènements touristiques
+## Exemple de widget avec uniquement les activités outdoors 
 
 <div>
     <grw-app
@@ -77,7 +77,7 @@ Pour afficher uniquement les **évènements touristiques** dans le widget, il fa
         attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>,OpenStreetMap"
         weather="true"
         treks="false"
-        touristic-events="true"
+        outdoor="true"
         rounded="true"
         color-departure-icon="#006b3b"
         color-arrival-icon="#85003b"
