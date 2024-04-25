@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.14.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.13.0...0.14.0) (2024-04-25)
+
+
+### Features
+
+* add accessiblities field to outdoor detail page ([bcd0e04](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/bcd0e0442992ef38811cbbe492c9ea78f396b2b4))
+* handle offline outdoor ([8765356](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/8765356c9cd8f0b82dbc3b7b08a027454c4ed2b8))
+
+
+### Bug Fixes
+
+* change order of sections ([a4efdda](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/a4efddaef80c9d6be461e5d8fe678df53ff9f32c))
+
 ## [0.13.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.12.1...0.13.0) (2024-04-11)
 
 
