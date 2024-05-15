@@ -179,6 +179,7 @@ export class GrwFilters {
                             filterType="difficulties"
                             filterNameProperty="label"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderDifficulties}
                           ></grw-filter>
                         </div>
                       )}
@@ -191,6 +192,7 @@ export class GrwFilters {
                             filterType="durations"
                             filterNameProperty="name"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderDurations}
                           ></grw-filter>
                         </div>
                       )}
@@ -203,6 +205,7 @@ export class GrwFilters {
                             filterType="lengths"
                             filterNameProperty="name"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderLengths}
                           ></grw-filter>
                         </div>
                       )}
@@ -215,6 +218,7 @@ export class GrwFilters {
                             filterType="elevations"
                             filterNameProperty="name"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderElevations}
                           ></grw-filter>
                         </div>
                       )}
@@ -227,6 +231,7 @@ export class GrwFilters {
                             filterType="routes"
                             filterNameProperty="route"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderRoutes}
                           ></grw-filter>
                         </div>
                       )}
@@ -239,6 +244,7 @@ export class GrwFilters {
                             filterType="accessibilities"
                             filterNameProperty="name"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderAccessibilities}
                           ></grw-filter>
                         </div>
                       )}
@@ -251,6 +257,7 @@ export class GrwFilters {
                             filterType="labels"
                             filterNameProperty="name"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderActivities}
                           ></grw-filter>
                         </div>
                       )}
@@ -284,6 +291,7 @@ export class GrwFilters {
                             filterType="districts"
                             filterNameProperty="name"
                             segment="selectedLocationFilters"
+                            filterPlaceholder={translate[state.language].placeholderDistricts}
                           ></grw-filter>
                         </div>
                       )}
@@ -354,6 +362,7 @@ export class GrwFilters {
                             filterType="touristicContentCategories"
                             filterNameProperty="label"
                             segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderCategories}
                           ></grw-filter>
                         </div>
                       )}
@@ -370,6 +379,7 @@ export class GrwFilters {
                             filterType="districts"
                             filterNameProperty="name"
                             segment="selectedLocationFilters"
+                            filterPlaceholder={translate[state.language].placeholderDistricts}
                           ></grw-filter>
                         </div>
                       )}
@@ -457,6 +467,7 @@ export class GrwFilters {
                             filterType="districts"
                             filterNameProperty="name"
                             segment="selectedLocationFilters"
+                            filterPlaceholder={translate[state.language].placeholderDistricts}
                           ></grw-filter>
                         </div>
                       )}
@@ -570,6 +581,7 @@ export class GrwFilters {
                             filterType="districts"
                             filterNameProperty="name"
                             segment="selectedLocationFilters"
+                            filterPlaceholder={translate[state.language].placeholderDistricts}
                           ></grw-filter>
                         </div>
                       )}

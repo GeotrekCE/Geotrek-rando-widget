@@ -108,6 +108,15 @@ interface Translation {
   relatedOutdoorSites: Function;
   relatedOutdoorCourses: Function;
   cardinalPoints: { n: string; ne: string; e: string; se: string; s?: string; sw: string; w: string; nw: string };
+  placeholderDifficulties: string;
+  placeholderDurations: string;
+  placeholderLengths: string;
+  placeholderElevations: string;
+  placeholderRoutes: string;
+  placeholderAccessibilities: string;
+  placeholderActivities: string;
+  placeholderDistricts: string;
+  placeholderCategories: string;
 }
 
 interface AvailableTranslations {
@@ -227,6 +236,15 @@ export const translate: AvailableTranslations = {
     relatedOutdoorSites: (relatedOutdoorSitesLength: number) => `Sites (${relatedOutdoorSitesLength})`,
     relatedOutdoorCourses: (relatedOutdoorCoursesLength: number) => `Parcours (${relatedOutdoorCoursesLength})`,
     cardinalPoints: { n: 'Nord', ne: 'Nord-est', e: 'Est', se: 'Sud-est', s: 'Sud', sw: 'Sud-ouest', w: 'Ouest', nw: 'Nord-ouest' },
+    placeholderDifficulties: 'Sélectionner une ou plusieurs difficultés',
+    placeholderDurations: 'Sélectionner une ou plusieurs durées',
+    placeholderLengths: 'Sélectionner une ou plusieurs longueurs',
+    placeholderElevations: 'Sélectionner une ou plusieurs dénivelés',
+    placeholderRoutes: 'Sélectionner un ou plusieurs type de parcours',
+    placeholderAccessibilities: 'Sélectionner une ou plusieurs accessibilités',
+    placeholderActivities: 'Sélectionner une ou plusieurs activités',
+    placeholderDistricts: 'Sélectionner un ou plusieurs secteurs',
+    placeholderCategories: 'Sélectionner une ou plusieurs catégories',
   },
   en: {
     filter: 'Filter',
@@ -339,5 +357,14 @@ export const translate: AvailableTranslations = {
     relatedOutdoorSites: (relatedOutdoorSitesLength: number) => `Sites (${relatedOutdoorSitesLength})`,
     relatedOutdoorCourses: (relatedOutdoorCoursesLength: number) => `Courses (${relatedOutdoorCoursesLength})`,
     cardinalPoints: { n: 'North', ne: 'North-east', e: 'East', se: 'South-east', s: 'South', sw: 'South-west', w: 'West', nw: 'North-west' },
+    placeholderDifficulties: 'Select one or more difficulties',
+    placeholderDurations: 'Select one or more durations',
+    placeholderLengths: 'Select one or more lengths',
+    placeholderElevations: 'Select one or more elevations',
+    placeholderRoutes: 'Select one or more courses',
+    placeholderAccessibilities: 'Select one or more accssibilities',
+    placeholderActivities: 'Select one or more activities',
+    placeholderDistricts: 'Select one or more districts',
+    placeholderCategories: 'Select one or more categories',
   },
 };
