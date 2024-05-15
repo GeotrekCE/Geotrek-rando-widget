@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build } from '@stencil/core';
 import state from 'store/store';
 import { translate } from 'i18n/i18n';
-import { InformationDesk, Trek } from 'types/types';
+import { InformationDesk, OutdoorSite, Trek } from 'types/types';
 import { getDataInStore } from 'services/grw-db.service';
 import LocationSearchingIcon from '../../assets/location_searching.svg';
 import CallIcon from '../../assets/call.svg';
@@ -39,10 +39,18 @@ export class GrwInformationDeskDetail {
   }
 
   async handleOffline() {
-    if (this.informationDesk && state.currentTrek) {
+    if (state.currentTrek) {
       const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
-      const informationDeskInStore: InformationDesk = await getDataInStore('informationDesks', this.informationDesk.id);
-      this.offline = trekInStore && trekInStore.offline && Boolean(informationDeskInStore);
+      if (trekInStore && trekInStore.offline) {
+        const informationDeskInStore: InformationDesk = await getDataInStore('informationDesks', this.informationDesk.id);
+        this.offline = Boolean(informationDeskInStore);
+      }
+    } else if (state.currentOutdoorSite) {
+      const outdoorSiteInStore: OutdoorSite = await getDataInStore('outdoorSites', state.currentOutdoorSite.id);
+      if (outdoorSiteInStore && outdoorSiteInStore.offline) {
+        const informationDeskInStore: InformationDesk = await getDataInStore('informationDesks', this.informationDesk.id);
+        this.offline = Boolean(informationDeskInStore);
+      }
     }
   }
 

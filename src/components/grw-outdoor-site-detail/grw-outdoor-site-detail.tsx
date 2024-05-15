@@ -903,30 +903,30 @@ export class GrwOutdoorSiteDetail {
             )}
             {state.currentInformationDesks &&
               state.currentInformationDesks.filter(currentInformationDesks => this.currentOutdoorSite.information_desks.includes(currentInformationDesks.id)).length > 0 && (
-              <div>
-                <div part="divider" class="divider"></div>
-                <div part="information-desks-container" class="information-desks-container">
-                  <div part="information-desks-title" class="information-desks-title" ref={el => (this.informationPlacesRef = el)}>
-                    {translate[state.language].informationPlaces}
-                  </div>
-                  <div part="swiper-information-desks" class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
-                    <div part="swiper-wrapper" class="swiper-wrapper">
-                      {state.currentInformationDesks
-                        .filter(currentInformationDesks => this.currentOutdoorSite.information_desks.includes(currentInformationDesks.id))
-                        .map(informationDesk => (
-                          <div part="swiper-slide" class="swiper-slide">
-                            <grw-information-desk
-                              exportparts="information-desk-img-container,information-desk-img,information-desk-sub-container,information-desk-name,center-on-map-button,icon,label,information-desk-informations,phone-container,mail-container,link-container,information-desk-description-container,information-desk-description,handle-information-desk-description"
-                              informationDesk={informationDesk}
-                            ></grw-information-desk>
-                          </div>
-                        ))}
+                <div>
+                  <div part="divider" class="divider"></div>
+                  <div part="information-desks-container" class="information-desks-container">
+                    <div part="information-desks-title" class="information-desks-title" ref={el => (this.informationPlacesRef = el)}>
+                      {translate[state.language].informationPlaces}
                     </div>
-                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.informationDesksContentsSwiperScrollbar = el)}></div>
+                    <div part="swiper-information-desks" class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
+                      <div part="swiper-wrapper" class="swiper-wrapper">
+                        {state.currentInformationDesks
+                          .filter(currentInformationDesks => this.currentOutdoorSite.information_desks.includes(currentInformationDesks.id))
+                          .map(informationDesk => (
+                            <div part="swiper-slide" class="swiper-slide">
+                              <grw-information-desk
+                                exportparts="information-desk-img-container,information-desk-img,information-desk-sub-container,information-desk-name,center-on-map-button,icon,label,information-desk-informations,phone-container,mail-container,link-container,information-desk-description-container,information-desk-description,handle-information-desk-description"
+                                informationDesk={informationDesk}
+                              ></grw-information-desk>
+                            </div>
+                          ))}
+                      </div>
+                      <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.informationDesksContentsSwiperScrollbar = el)}></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
             {/* TODO: insert access */}
             {this.weather && city && (
               <div>
@@ -985,6 +985,37 @@ export class GrwOutdoorSiteDetail {
                     </div>
                     <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.touristicEventsSwiperScrollbar = el)}></div>
                   </div>
+                </div>
+              </div>
+            )}
+            {state.currentPois && state.currentPois.length > 0 && (
+              <div>
+                <div part="divider" class="divider"></div>
+                <div part="pois-container" class="pois-container">
+                  <div part="pois-title" class="pois-title" ref={el => (this.poiRef = el)}>
+                    {translate[state.language].pois(state.currentPois.length)}
+                  </div>
+                  <div part="swiper-pois" class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
+                    <div part="swiper-wrapper" class="swiper-wrapper">
+                      {state.currentPois.map(poi => (
+                        <div part="swiper-slide" class="swiper-slide">
+                          <grw-poi
+                            exportparts="poi-type-img-container,poi-type,swiper-poi,swiper-wrapper,swiper-slide,poi-img,default-poi-img,swiper-pagination,swiper-button-prev,swiper-button-next,poi-sub-container,poi-name,poi-description,handle-poi-description"
+                            poi={poi}
+                          ></grw-poi>
+                        </div>
+                      ))}
+                    </div>
+                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.poisSwiperScrollbar = el)}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {this.weather && city && !this.offline && (
+              <div>
+                <div part="divider" class="divider"></div>
+                <div part="weather-container" class="weather-container">
+                  <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${city.id}0#${this.colorPrimaryApp}`}></iframe>
                 </div>
               </div>
             )}

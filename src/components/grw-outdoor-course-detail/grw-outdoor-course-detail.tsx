@@ -33,6 +33,7 @@ export class GrwOutdoorCourseDetail {
 
   @State() displayFullscreen = false;
   @State() currentOutdoorCourse: OutdoorCourse;
+  @State() offline = false;
 
   @Event() poiIsInViewport: EventEmitter<boolean>;
   @Event() touristicContentsIsInViewport: EventEmitter<boolean>;
@@ -181,11 +182,13 @@ export class GrwOutdoorCourseDetail {
   async connectedCallback() {
     if (state.currentOutdoorCourse) {
       this.currentOutdoorCourse = state.currentOutdoorCourse;
+      this.offline = this.currentOutdoorCourse.offline;
     }
 
     onChange('currentOutdoorCourse', async () => {
       if (state.currentOutdoorCourse) {
         this.currentOutdoorCourse = state.currentOutdoorCourse;
+        this.offline = this.currentOutdoorCourse.offline;
       }
     });
   }
@@ -253,7 +256,7 @@ export class GrwOutdoorCourseDetail {
                             <img
                               part="outdoor-course-img"
                               class="outdoor-course-img"
-                              src={attachment.url}
+                              src={this.offline ? attachment.thumbnail : attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
                               /* @ts-ignore */
@@ -467,7 +470,7 @@ export class GrwOutdoorCourseDetail {
                 </div>
               </div>
             )}
-            {this.weather && city && (
+            {this.weather && city && !this.offline && (
               <div>
                 <div part="divider" class="divider"></div>
                 <div part="weather-container" class="weather-container">

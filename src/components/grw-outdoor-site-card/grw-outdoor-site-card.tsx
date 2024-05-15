@@ -1,4 +1,5 @@
-import { Component, Host, Prop, h, Event, EventEmitter, Listen, getAssetPath, Build } from '@stencil/core';
+import { Component, Host, Prop, h, Event, EventEmitter, Listen, getAssetPath, Build, State } from '@stencil/core';
+import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import { OutdoorSite } from 'types/types';
 
@@ -24,6 +25,8 @@ export class GrwOutdoorSiteCard {
   @Event() cardOutdoorSiteMouseOver: EventEmitter<number>;
   @Event() cardOutdoorSiteMouseLeave: EventEmitter;
 
+  @State() offline = false;
+
   @Listen('mouseover')
   handleMouseOver() {
     this.cardOutdoorSiteMouseOver.emit(this.outdoorSite.id);
@@ -32,6 +35,13 @@ export class GrwOutdoorSiteCard {
   @Listen('mouseleave')
   handleMouseLeave() {
     this.cardOutdoorSiteMouseLeave.emit();
+  }
+
+  async handleOffline() {
+    if (state.currentOutdoorSite) {
+      const outdoorSiteInStore: OutdoorSite = await getDataInStore('outdoorSites', state.currentOutdoorSite.id);
+      this.offline = outdoorSiteInStore && outdoorSiteInStore.offline;
+    }
   }
 
   render() {
@@ -67,7 +77,6 @@ export class GrwOutdoorSiteCard {
                 part="outdoor-site-img"
                 class="outdoor-site-img"
                 /* @ts-ignore */
-
                 src={`${this.outdoorSite.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 alt={`${this.outdoorSite.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"

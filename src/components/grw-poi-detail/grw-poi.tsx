@@ -1,7 +1,7 @@
 import { Component, Host, h, Prop, State, Build, getAssetPath, Listen } from '@stencil/core';
 import Swiper, { Navigation, Pagination, Keyboard } from 'swiper';
 import state from 'store/store';
-import { Poi, Trek } from 'types/types';
+import { OutdoorSite, Poi, Trek } from 'types/types';
 import { translate } from 'i18n/i18n';
 import { getDataInStore } from 'services/grw-db.service';
 
@@ -76,7 +76,15 @@ export class GrwPoiDetail {
     if (state.currentTrek) {
       const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
       const poiInStore: Poi = await getDataInStore('pois', this.poi.id);
-      this.offline = trekInStore && trekInStore.offline && Boolean(poiInStore);
+      if (trekInStore && trekInStore.offline) {
+        this.offline = Boolean(poiInStore);
+      }
+    } else if (state.currentOutdoorSite) {
+      const outdoorSiteInStore: OutdoorSite = await getDataInStore('outdoorSites', state.currentOutdoorSite.id);
+      if (outdoorSiteInStore && outdoorSiteInStore.offline) {
+        const poiInStore: Poi = await getDataInStore('pois', this.poi.id);
+        this.offline = Boolean(poiInStore);
+      }
     }
   }
 

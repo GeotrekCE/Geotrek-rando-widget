@@ -3,7 +3,7 @@ import { translate } from 'i18n/i18n';
 import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
-import { TouristicEvent, Trek } from 'types/types';
+import { OutdoorSite, TouristicEvent, Trek } from 'types/types';
 
 @Component({
   tag: 'grw-touristic-event-card',
@@ -71,8 +71,16 @@ export class GrwTouristicEvent {
   async handleOffline() {
     if (state.currentTrek) {
       const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
-      const touristicEventInStore: TouristicEvent = await getDataInStore('touristicEvents', this.touristicEvent.id);
-      this.offline = trekInStore && trekInStore.offline && touristicEventInStore && touristicEventInStore.offline;
+      if (trekInStore && trekInStore.offline) {
+        const touristicEventInStore: TouristicEvent = await getDataInStore('touristicEvents', this.touristicEvent.id);
+        this.offline = trekInStore && trekInStore.offline && touristicEventInStore && touristicEventInStore.offline;
+      }
+    } else if (state.currentOutdoorSite) {
+      const outdoorSiteInStore: OutdoorSite = await getDataInStore('outdoorSites', state.currentOutdoorSite.id);
+      if (outdoorSiteInStore && outdoorSiteInStore.offline) {
+        const touristicEventInStore: TouristicEvent = await getDataInStore('touristicEvents', this.touristicEvent.id);
+        this.offline = touristicEventInStore && touristicEventInStore.offline;
+      }
     }
   }
 

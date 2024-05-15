@@ -2,7 +2,7 @@ import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitt
 import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
-import { TouristicContent, Trek } from 'types/types';
+import { OutdoorSite, TouristicContent, Trek } from 'types/types';
 
 @Component({
   tag: 'grw-touristic-content-card',
@@ -70,8 +70,16 @@ export class GrwTouristicContentCard {
   async handleOffline() {
     if (state.currentTrek) {
       const trekInStore: Trek = await getDataInStore('treks', state.currentTrek.id);
-      const touristicContentInStore: TouristicContent = await getDataInStore('touristicContents', this.touristicContent.id);
-      this.offline = trekInStore && trekInStore.offline && touristicContentInStore && touristicContentInStore.offline;
+      if (trekInStore && trekInStore.offline) {
+        const touristicContentInStore: TouristicContent = await getDataInStore('touristicContents', this.touristicContent.id);
+        this.offline = touristicContentInStore && touristicContentInStore.offline;
+      }
+    } else if (state.currentOutdoorSite) {
+      const outdoorSiteInStore: OutdoorSite = await getDataInStore('outdoorSites', state.currentOutdoorSite.id);
+      if (outdoorSiteInStore && outdoorSiteInStore.offline) {
+        const touristicContentInStore: TouristicContent = await getDataInStore('touristicContents', this.touristicContent.id);
+        this.offline = touristicContentInStore && touristicContentInStore.offline;
+      }
     }
   }
 

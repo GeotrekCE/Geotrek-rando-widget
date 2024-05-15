@@ -1288,7 +1288,7 @@ export class GrwTrekDetail {
                 </div>
               </div>
             )}
-            {this.weather && this.currentTrek.departure_city && (
+            {this.weather && this.currentTrek.departure_city && !this.offline && (
               <div>
                 <div part="divider" class="divider"></div>
                 <div part="weather-container" class="weather-container">

@@ -1,6 +1,7 @@
-import { Component, Host, Prop, h, Event, EventEmitter, Listen, getAssetPath, Build } from '@stencil/core';
+import { Component, Host, Prop, h, Event, EventEmitter, Listen, getAssetPath, Build, State } from '@stencil/core';
+import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
-import { OutdoorCourse } from 'types/types';
+import { OutdoorCourse, OutdoorSite } from 'types/types';
 
 @Component({
   tag: 'grw-outdoor-course-card',
@@ -24,6 +25,8 @@ export class GrwOutdoorCourseCard {
   @Event() cardOutdoorCourseMouseOver: EventEmitter<number>;
   @Event() cardOutdoorCourseMouseLeave: EventEmitter;
 
+  @State() offline = false;
+
   @Listen('mouseover')
   handleMouseOver() {
     this.cardOutdoorCourseMouseOver.emit(this.outdoorCourse.id);
@@ -34,9 +37,18 @@ export class GrwOutdoorCourseCard {
     this.cardOutdoorCourseMouseLeave.emit();
   }
 
+  async handleOffline() {
+    if (state.currentOutdoorSite) {
+      const outdoorSiteInStore: OutdoorSite = await getDataInStore('outdoorSites', state.currentOutdoorSite.id);
+      if (outdoorSiteInStore && outdoorSiteInStore.offline) {
+        const outdoorCourseInStore: OutdoorCourse = await getDataInStore('outdoorCourses', this.outdoorCourse.id);
+        this.offline = Boolean(outdoorCourseInStore);
+      }
+    }
+  }
+
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
-    // const outdoorPractice = state.outdoorPractices.find(outdoorPractice => outdoorPractice.id === this.outdoorCourse.type);
     const outdoorPractice = null;
     return (
       <Host
@@ -68,7 +80,6 @@ export class GrwOutdoorCourseCard {
                 part="outdoor-course-img"
                 class="outdoor-course-img"
                 /* @ts-ignore */
-
                 src={`${this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 alt={`${this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
