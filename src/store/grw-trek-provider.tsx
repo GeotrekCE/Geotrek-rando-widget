@@ -178,7 +178,7 @@ export class GrwTrekProvider {
           .catch(() => {
             return new Response('null');
           }),
-        fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram`, this.init),
+        fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram,filter`, this.init),
         fetch(`${state.api}source/?language=${state.language}&fields=id,name,website,pictogram`, this.init),
         fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
         getPoisNearTrek(state.api, state.language, this.trekId, this.init),

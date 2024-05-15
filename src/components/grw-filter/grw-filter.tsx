@@ -92,9 +92,11 @@ export class GrwFilter {
       // @ts-ignore
       this.choices = new Choices(this.choicesRef, {
         removeItemButton: true,
-        choices: state[this.filterType].map(currentFilter => {
-          return { value: currentFilter.id, label: currentFilter[this.filterNameProperty], selected: currentFilter.selected };
-        }),
+        choices: state[this.filterType]
+          .filter(currentFilter => !currentFilter.hasOwnProperty('filter') || (currentFilter.hasOwnProperty('filter') && currentFilter.filter))
+          .map(currentFilter => {
+            return { value: currentFilter.id, label: currentFilter[this.filterNameProperty], selected: currentFilter.selected };
+          }),
         placeholder: true,
         placeholderValue: this.filterPlaceholder,
         noResultsText: '',
