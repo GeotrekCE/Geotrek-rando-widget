@@ -942,9 +942,10 @@ export class GrwMap {
     this.handleLayersControl();
 
     this.bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
-    this.bounds && this.map.fitBounds(this.bounds);
-
-    !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+    this.map.on('eledata_loaded', () => {
+      this.bounds && this.map.fitBounds(this.bounds);
+      !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
+    });
   }
 
   async getIcons(featuresCollection, property) {
