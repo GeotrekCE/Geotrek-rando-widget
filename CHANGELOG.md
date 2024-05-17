@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.15.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.14.0...0.15.0) (2024-05-15)
+
+
+### Features
+
+* improve offline outdoor ([96df975](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/96df975c7527b9342abb6c8d990b024f72e1c227))
+
+
+### Bug Fixes
+
+* check values on select filter ([6e50a6b](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/6e50a6bb0845057daef9e34ce4c40076dc68baf5))
+* trek fit bounds ([4e56120](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/4e56120fb27c65c90d8ef1410d3a9d5b9690a203))
+
 ## [0.14.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.13.0...0.14.0) (2024-04-25)
 
 
