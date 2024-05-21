@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.16.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.15.0...0.16.0) (2024-05-21)
+
+
+### Features
+
+* custom translation ([8b106a0](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/8b106a051f901fde43ecd3ec6bb0d676ffaf7a83))
+* display more outdoor data ([429ae8e](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/429ae8e5df2f678c8bacf6895b1a212ce06b6108))
+
 ## [0.15.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.14.0...0.15.0) (2024-05-15)
 
 
