@@ -112,7 +112,14 @@ export class GrwTouristicEventDetail {
                             <div part="legend-container" class="legend-container">
                               {legend}
                             </div>
-                            <img part="image" class="image" src={this.offline ? attachment.thumbnail : attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} alt={attachment.legend} />
+                            <img
+                              part="image"
+                              class="image"
+                              src={this.offline ? attachment.thumbnail : attachment.url}
+                              loading="lazy"
+                              onClick={() => this.handleFullscreen()}
+                              alt={attachment.legend}
+                            />
                           </div>
                         );
                       })
@@ -129,20 +136,14 @@ export class GrwTouristicEventDetail {
                     </div>
                   )}
                 </div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'block' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
                 <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
                 <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
               </div>
             </div>
             <div part="touristic-event-category-container" class="touristic-event-category-container">
               {touristicEventType && touristicEventType.pictogram && (
-                <img
-                  part="touristic-event-category-img"
-                  class="touristic-event-category-img"
-                  /* @ts-ignore */
-
-                  src={touristicEventType.pictogram}
-                />
+                <img part="touristic-event-category-img" class="touristic-event-category-img" src={touristicEventType.pictogram} />
               )}
               {touristicEventType && touristicEventType.type && (
                 <div part="touristic-event-category-name" class="touristic-event-category-name">

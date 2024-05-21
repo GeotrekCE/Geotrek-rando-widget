@@ -743,3 +743,21 @@ grw-outdoor-site-detail {
     margin-right: 8px;
   }
 }
+
+.source-container {
+  .source-sub-container {
+    display: flex;
+    align-items: center;
+    img {
+      width: 100px;
+      margin-right: 16px;
+    }
+    .source-name {
+      color: var(--color-on-surface);
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+      padding: 12px 0px;
+    }
+  }
+}

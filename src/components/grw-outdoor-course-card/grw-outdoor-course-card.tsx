@@ -79,7 +79,6 @@ export class GrwOutdoorCourseCard {
               <img
                 part="outdoor-course-img"
                 class="outdoor-course-img"
-                /* @ts-ignore */
                 src={`${this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 alt={`${this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"

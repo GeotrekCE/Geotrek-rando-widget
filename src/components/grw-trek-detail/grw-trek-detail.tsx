@@ -1423,12 +1423,7 @@ export class GrwTrekDetail {
                     <div part="accessibilities-content-container" class="accessibilities-content-container">
                       {this.accessibilities.map(accessibility => (
                         <div part="accessibility-content-container" class="accessibility-content-container">
-                          <img
-                            /* @ts-ignore */
-
-                            src={accessibility.pictogram}
-                            alt=""
-                          ></img>
+                          <img src={accessibility.pictogram} alt=""></img>
                           <div part="accessibility-name" innerHTML={accessibility.name}></div>
                         </div>
                       ))}

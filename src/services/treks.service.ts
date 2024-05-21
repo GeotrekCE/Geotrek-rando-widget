@@ -64,3 +64,7 @@ export function getInformationsDesks(api, language, init) {
     init,
   );
 }
+
+export function getSources(api, language, init) {
+  return fetch(`${api}source/?language=${language}&fields=id,name,website,pictogram`, init);
+}

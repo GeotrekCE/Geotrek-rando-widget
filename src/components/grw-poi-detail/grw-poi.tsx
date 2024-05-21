@@ -93,22 +93,16 @@ export class GrwPoiDetail {
     return (
       <Host>
         <div part="poi-type-img-container" class="poi-type-img-container">
-          <img
-            part="poi-type"
-            class="poi-type"
-            /* @ts-ignore */
-            src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`}
-            alt=""
-          />
+          <img part="poi-type" class="poi-type" src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`} alt="" />
           <div part="swiper-poi" class="swiper swiper-poi" ref={el => (this.swiperPoiRef = el)}>
             <div part="swiper-wrapper" class="swiper-wrapper">
-              {this.poi.attachments.length > 0 ? (
+              {this.poi.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
                 this.poi.attachments
                   .filter(attachment => attachment.type === 'image')
                   .map(attachment => (
                     <div part="swiper-slide" class="swiper-slide">
                       <img
-                        part="poi-img"
+                        part="poi-iamg"
                         class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                         src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
                         alt={attachment.legend}
@@ -125,31 +119,24 @@ export class GrwPoiDetail {
                   ))
               ) : (
                 <div part="swiper-slide" class="swiper-slide">
-                  <img
-                    part="default-poi-img"
-                    class="default-poi-img"
-                    /* @ts-ignore */
-                    src={defaultImageSrc}
-                    alt=""
-                    loading="lazy"
-                  />
+                  <img part="default-poi-img" class="default-poi-img" src={defaultImageSrc} alt="" loading="lazy" />
                 </div>
               )}
             </div>
             <div
-              style={{ display: this.offline || this.poi.attachments.length <= 1 ? 'none' : 'flex' }}
+              style={{ display: this.offline || this.poi.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
               part="swiper-pagination"
               class="swiper-pagination"
               ref={el => (this.paginationElPoiRef = el)}
             ></div>
             <div
-              style={{ display: this.offline || this.poi.attachments.length <= 1 ? 'none' : 'flex' }}
+              style={{ display: this.offline || this.poi.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'flex' }}
               part="swiper-button-prev"
               class="swiper-button-prev"
               ref={el => (this.prevElPoiRef = el)}
             ></div>
             <div
-              style={{ display: this.offline || this.poi.attachments.length <= 1 ? 'none' : 'flex' }}
+              style={{ display: this.offline || this.poi.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'flex' }}
               part="swiper-button-next"
               class="swiper-button-next"
               ref={el => (this.nextElPoiRef = el)}

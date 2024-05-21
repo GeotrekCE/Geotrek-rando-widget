@@ -18,7 +18,7 @@ import { tileLayerOffline } from 'leaflet.offline';
 import L from 'leaflet';
 import bbox from '@turf/bbox';
 import pointOnFeature from '@turf/point-on-feature';
-import { OutdoorSites } from 'types/types';
+import { OutdoorSites, Sources } from 'types/types';
 import { getTouristicContentsNearOutdoorCourse, getTouristicContentsNearOutdoorSite } from 'services/touristic-contents.service';
 import { getTouristicEventsNearOutdoorCourse, getTouristicEventsNearOutdoorSite } from 'services/touristic-events.service';
 import { getOutdoorCourse, getPoisNearCourse } from 'services/outdoor-courses.service';
@@ -53,6 +53,7 @@ export class GrwOutdoorSiteDetail {
   @State() offline = false;
   @State() displayFullscreen = false;
   @State() currentOutdoorSite: OutdoorSite;
+  @State() sources: Sources;
 
   @Event() informationPlacesIsInViewport: EventEmitter<boolean>;
   @Event() poiIsInViewport: EventEmitter<boolean>;
@@ -334,12 +335,14 @@ export class GrwOutdoorSiteDetail {
 
   async connectedCallback() {
     if (state.currentOutdoorSite) {
+      this.sources = state.sources.filter(source => state.currentOutdoorSite.source.includes(source.id));
       this.currentOutdoorSite = state.currentOutdoorSite;
       this.offline = this.currentOutdoorSite.offline;
     }
 
     onChange('currentOutdoorSite', async () => {
       if (state.currentOutdoorSite) {
+        this.sources = state.sources.filter(source => state.currentOutdoorSite.source.includes(source.id));
         this.currentOutdoorSite = state.currentOutdoorSite;
         this.offline = this.currentOutdoorSite.offline;
       }
@@ -397,6 +400,7 @@ export class GrwOutdoorSiteDetail {
     await writeOrUpdateFilesInStore(state.themes, imagesRegExp);
     await writeOrUpdateFilesInStore(state.outdoorSiteTypes, imagesRegExp);
     await writeOrUpdateFilesInStore(state.outdoorPractices, imagesRegExp);
+    await writeOrUpdateFilesInStore(state.sources, imagesRegExp);
 
     await writeOrUpdateFilesInStore(this.currentOutdoorSite, imagesRegExp, true, ['url']);
 
@@ -413,6 +417,7 @@ export class GrwOutdoorSiteDetail {
     await writeOrUpdateDataInStore('outdoorCourseTypes', state.outdoorCourseTypes);
     await writeOrUpdateDataInStore('touristicEventTypes', state.touristicEventTypes);
     await writeOrUpdateDataInStore('touristicContentCategories', state.touristicContentCategories);
+    await writeOrUpdateDataInStore('sources', state.sources);
 
     await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true, ['url']);
     await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp, true);
@@ -840,7 +845,7 @@ export class GrwOutdoorSiteDetail {
                 </div>
               </div>
             )}
-            {this.currentOutdoorSite.accessibility && (
+            {this.currentOutdoorSite.accessibility && this.currentOutdoorSite.accessibility !== '' && (
               <div>
                 <div part="divider" class="divider"></div>
                 <div part="accessibilities-container" class="accessibilities-container">
@@ -927,17 +932,6 @@ export class GrwOutdoorSiteDetail {
                   </div>
                 </div>
               )}
-            {/* TODO: insert access */}
-            {this.weather && city && (
-              <div>
-                <div part="divider" class="divider"></div>
-                <div part="weather-container" class="weather-container">
-                  <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${city.id}0#${this.colorPrimaryApp}`}></iframe>
-                </div>
-              </div>
-            )}
-            {/* TODO: insert Sources */}
-            {/* TODO: insert weblinks */}
             {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
@@ -988,34 +982,46 @@ export class GrwOutdoorSiteDetail {
                 </div>
               </div>
             )}
-            {state.currentPois && state.currentPois.length > 0 && (
-              <div>
-                <div part="divider" class="divider"></div>
-                <div part="pois-container" class="pois-container">
-                  <div part="pois-title" class="pois-title" ref={el => (this.poiRef = el)}>
-                    {translate[state.language].pois(state.currentPois.length)}
-                  </div>
-                  <div part="swiper-pois" class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
-                    <div part="swiper-wrapper" class="swiper-wrapper">
-                      {state.currentPois.map(poi => (
-                        <div part="swiper-slide" class="swiper-slide">
-                          <grw-poi
-                            exportparts="poi-type-img-container,poi-type,swiper-poi,swiper-wrapper,swiper-slide,poi-img,default-poi-img,swiper-pagination,swiper-button-prev,swiper-button-next,poi-sub-container,poi-name,poi-description,handle-poi-description"
-                            poi={poi}
-                          ></grw-poi>
-                        </div>
-                      ))}
-                    </div>
-                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.poisSwiperScrollbar = el)}></div>
-                  </div>
-                </div>
-              </div>
-            )}
             {this.weather && city && !this.offline && (
               <div>
                 <div part="divider" class="divider"></div>
                 <div part="weather-container" class="weather-container">
                   <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${city.id}0#${this.colorPrimaryApp}`}></iframe>
+                </div>
+              </div>
+            )}
+            {this.currentOutdoorSite.web_links && this.currentOutdoorSite.web_links.length > 0 && (
+              <div>
+                <div part="divider" class="divider"></div>
+                <div part="weblinks-container" class="weblinks-container">
+                  <div part="weblinks-title" class="weblinks-title">
+                    {translate[state.language].learnMore}
+                  </div>
+                  {this.currentOutdoorSite.web_links.map(weblink => (
+                    <a part="weblink-container" class="weblink-container" href={weblink.url} target="_blank" rel="noopener noreferrer">
+                      {weblink.category && weblink.category.pictogram && <img src={weblink.category.pictogram} alt={weblink.category.label} />}
+                      {weblink.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+            {this.currentOutdoorSite.source && this.currentOutdoorSite.source.length > 0 && (
+              <div>
+                <div part="divider" class="divider"></div>
+                <div part="source-container" class="source-container">
+                  <div part="source-title" class="source-title">
+                    {translate[state.language].sources}
+                  </div>
+                  {this.sources.map(source => (
+                    <div part="source-sub-container" class="source-sub-container">
+                      {source.pictogram && <img src={source.pictogram} alt="" />}
+                      <div>
+                        <div part="source-name" class="source-name" innerHTML={source.name}></div>
+                        <a part="source-advice" class="source-advice" href={source.website} innerHTML={source.website}></a>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

@@ -131,7 +131,7 @@ export class GrwTouristicEvent {
             {this.isInsideHorizontalList ? (
               <div part="swiper-touristic-event" class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventRef = el)}>
                 <div part="swiper-wrapper" class="swiper-wrapper">
-                  {this.touristicEvent.attachments.length > 0 ? (
+                  {this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
                     this.touristicEvent.attachments
                       .filter(attachment => attachment.type === 'image')
                       .map(attachment => (
@@ -154,32 +154,33 @@ export class GrwTouristicEvent {
                       ))
                   ) : (
                     <div part="swiper-slide" class="swiper-slide">
-                      <img
-                        part="default-touristic-event-img"
-                        class="default-touristic-event-img"
-                        /* @ts-ignore */
-                        src={defaultImageSrc}
-                        alt=""
-                        loading="lazy"
-                      />
+                      <img part="default-touristic-event-img" class="default-touristic-event-img" src={defaultImageSrc} alt="" loading="lazy" />
                     </div>
                   )}
                 </div>
                 <div
-                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  style={{ display: this.offline || this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
                   part="swiper-pagination"
                   class="swiper-pagination"
                   ref={el => (this.paginationElTouristicEventRef = el)}
                 ></div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
+                <div
+                  style={{ display: this.offline || this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
+                  part="swiper-button-prev"
+                  class="swiper-button-prev"
+                  ref={el => (this.prevElTouristicEventRef = el)}
+                ></div>
+                <div
+                  style={{ display: this.offline || this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
+                  part="swiper-button-next"
+                  class="swiper-button-next"
+                  ref={el => (this.nextElTouristicEventRef = el)}
+                ></div>
               </div>
             ) : this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img
                 part="touristic-event-img"
                 class="touristic-event-img"
-                /* @ts-ignore */
-
                 src={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 alt={`${this.touristicEvent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
@@ -191,14 +192,7 @@ export class GrwTouristicEvent {
           <div part="touristic-event-sub-container" class="touristic-event-sub-container">
             <div part="touristic-event-type-container" class="touristic-event-type-container">
               {touristicEventType && touristicEventType.pictogram && (
-                <img
-                  part="touristic-event-type-img"
-                  class="touristic-event-type-img"
-                  /* @ts-ignore */
-
-                  src={touristicEventType.pictogram}
-                  alt=""
-                />
+                <img part="touristic-event-type-img" class="touristic-event-type-img" src={touristicEventType.pictogram} alt="" />
               )}
               {touristicEventType && touristicEventType.type && (
                 <div part="touristic-event-type-name" class="touristic-event-type-name">

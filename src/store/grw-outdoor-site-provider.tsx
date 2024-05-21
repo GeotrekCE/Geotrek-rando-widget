@@ -5,7 +5,7 @@ import { getOutdoorCourse, getOutdoorCourseTypes } from 'services/outdoor-course
 import { getOutdoorPractices, getOutdoorSite, getOutdoorSiteTypes, getPoisNearSite } from 'services/outdoor-sites.service';
 import { getTouristicContentsNearOutdoorSite } from 'services/touristic-contents.service';
 import { getTouristicEventsNearOutdoorSite } from 'services/touristic-events.service';
-import { getCities, getDistricts, getInformationsDesks, getThemes } from 'services/treks.service';
+import { getCities, getDistricts, getInformationsDesks, getSources, getThemes } from 'services/treks.service';
 import state from 'store/store';
 import { imagesRegExp, setFilesFromStore } from 'utils/utils';
 
@@ -46,6 +46,7 @@ export class GrwOutdoorSiteProvider {
 
   async handleOfflineOutdoorSite(outdoorSite: OutdoorSite) {
     state.cities = await handleOfflineProperty('cities');
+    state.sources = await handleOfflineProperty('sources');
     state.districts = await handleOfflineProperty('districts');
     state.themes = await handleOfflineProperty('themes');
     state.outdoorSiteTypes = await handleOfflineProperty('outdoorSiteTypes');
@@ -98,6 +99,7 @@ export class GrwOutdoorSiteProvider {
   handleOnlineOutdoorSite() {
     const requests = [];
     requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
+    requests.push(!state.sources ? getSources(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.themes ? getThemes(state.api, state.language, this.portals, this.init) : new Response('null'));
     requests.push(!state.outdoorSiteTypes ? getOutdoorSiteTypes(state.api, state.language, this.init) : new Response('null'));
@@ -123,6 +125,7 @@ export class GrwOutdoorSiteProvider {
         .then(
           async ([
             cities,
+            sources,
             districts,
             themes,
             outdoorSiteTypes,
@@ -163,6 +166,9 @@ export class GrwOutdoorSiteProvider {
 
             if (cities) {
               state.cities = cities.results;
+            }
+            if (sources) {
+              state.sources = sources.results;
             }
             if (districts) {
               state.districts = districts.results;

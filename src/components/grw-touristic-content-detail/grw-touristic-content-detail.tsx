@@ -111,25 +111,24 @@ export class GrwTouristicContentDetail {
                             <div part="legend-container" class="legend-container">
                               {legend}
                             </div>
-                            <img part="image" class="image" src={this.offline ? attachment.thumbnail : attachment.url} loading="lazy" onClick={() => this.handleFullscreen()} alt={attachment.legend} />
+                            <img
+                              part="image"
+                              class="image"
+                              src={this.offline ? attachment.thumbnail : attachment.url}
+                              loading="lazy"
+                              onClick={() => this.handleFullscreen()}
+                              alt={attachment.legend}
+                            />
                           </div>
                         );
                       })
                   ) : (
                     <div part="swiper-slide" class="swiper-slide">
-                      <img
-                        part="default-poi-img"
-                        class="default-poi-img"
-                        /* @ts-ignore */
-
-                        src={defaultImageSrc}
-                        alt=""
-                        loading="lazy"
-                      />
+                      <img part="default-poi-img" class="default-poi-img" src={defaultImageSrc} alt="" loading="lazy" />
                     </div>
                   )}
                 </div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'block' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
                 <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
                 <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
               </div>

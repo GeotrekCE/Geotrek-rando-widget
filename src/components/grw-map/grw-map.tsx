@@ -2116,21 +2116,18 @@ export class GrwMap {
 
     if (state.currentOutdoorSites) {
       const outdoorSite = state.currentOutdoorSites.find(currentOutdoorSite => currentOutdoorSite.id === id);
-      outdoorSiteFeatureCollection.features.push({
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: pointOnFeature(outdoorSite.geometry as any).geometry.coordinates },
-        properties: {
-          id: outdoorSite.id,
-          name: outdoorSite.name,
-          practice: state.outdoorPractices.find(practice => practice.id === outdoorSite.practice)?.pictogram,
-          imgSrc: outdoorSite.attachments && outdoorSite.attachments.length > 0 && outdoorSite.attachments[0].thumbnail,
-        },
-      });
-      outdoorSiteFeatureCollection.features.push({
-        type: 'Feature',
-        geometry: outdoorSite.geometry,
-        properties: {},
-      });
+      if (outdoorSite && outdoorSite.geometry) {
+        outdoorSiteFeatureCollection.features.push({
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: pointOnFeature(outdoorSite.geometry as any).geometry.coordinates },
+          properties: {
+            id: outdoorSite.id,
+            name: outdoorSite.name,
+            practice: state.outdoorPractices.find(practice => practice.id === outdoorSite.practice)?.pictogram,
+            imgSrc: outdoorSite.attachments && outdoorSite.attachments.length > 0 && outdoorSite.attachments[0].thumbnail,
+          },
+        });
+      }
     }
 
     this.removeSelectedOutdoorSite();

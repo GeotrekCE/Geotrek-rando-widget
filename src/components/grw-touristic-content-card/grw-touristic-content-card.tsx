@@ -143,7 +143,7 @@ export class GrwTouristicContentCard {
                             /* @ts-ignore */
                             onerror={event => {
                               event.target.onerror = null;
-                              event.target.className = 'default-touristic-event-img';
+                              event.target.className = 'default-touristic-content-img';
                               event.target.src = defaultImageSrc;
                             }}
                             onClick={() => this.handleFullscreen()}
@@ -153,31 +153,24 @@ export class GrwTouristicContentCard {
                       ))
                   ) : (
                     <div part="swiper-slide" class="swiper-slide">
-                      <img
-                        part="default-touristic-event-img"
-                        class="default-touristic-content-img"
-                        /* @ts-ignore */
-                        src={defaultImageSrc}
-                        alt=""
-                        loading="lazy"
-                      />
+                      <img part="default-touristic-content-img" src={defaultImageSrc} class="default-touristic-content-img" alt="" loading="lazy" />
                     </div>
                   )}
                 </div>
                 <div
-                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  style={{ display: this.offline || this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
                   part="swiper-pagination"
                   class="swiper-pagination"
                   ref={el => (this.paginationElTouristicContentRef = el)}
                 ></div>
                 <div
-                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  style={{ display: this.offline || this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
                   part="swiper-button-prev"
                   class="swiper-button-prev"
                   ref={el => (this.prevElTouristicContentRef = el)}
                 ></div>
                 <div
-                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  style={{ display: this.offline || this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
                   part="swiper-button-next"
                   class="swiper-button-next"
                   ref={el => (this.nextElTouristicContentRef = el)}
@@ -187,7 +180,6 @@ export class GrwTouristicContentCard {
               <img
                 part="touristic-content-img"
                 class="touristic-content-img"
-                /* @ts-ignore */
                 src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                 alt={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
@@ -199,14 +191,7 @@ export class GrwTouristicContentCard {
           <div part="touristic-content-sub-container" class="touristic-content-sub-container">
             <div part="touristic-content-category-container" class="touristic-content-category-container">
               {touristicContentCategory && touristicContentCategory.pictogram && (
-                <img
-                  part="touristic-content-category-img"
-                  class="touristic-content-category-img"
-                  /* @ts-ignore */
-
-                  src={touristicContentCategory.pictogram}
-                  alt=""
-                />
+                <img part="touristic-content-category-img" class="touristic-content-category-img" src={touristicContentCategory.pictogram} alt="" />
               )}
               <div part="touristic-content-category-name" class="touristic-content-category-name">
                 {touristicContentCategory.label}

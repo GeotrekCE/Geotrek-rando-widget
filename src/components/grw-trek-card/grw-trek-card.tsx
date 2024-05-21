@@ -106,7 +106,7 @@ export class GrwTrekCard {
             class={
               this.isStep
                 ? `trek-card trek-card-container trek-step-card${state.selectedStepId === this.currentTrek.id ? ' selected-trek-card' : ''} ${
-                    state.currentTrek.id === this.currentTrek.id ? 'is-current-step' : ''
+                    state.currentTrek && state.currentTrek.id === this.currentTrek.id ? 'is-current-step' : ''
                   }`
                 : this.isLargeView
                 ? `trek-card trek-card-large-view-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
@@ -124,8 +124,6 @@ export class GrwTrekCard {
                 <img
                   part="trek-img"
                   class="trek-img"
-                  /* @ts-ignore */
-
                   src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
                   alt={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                   loading="lazy"

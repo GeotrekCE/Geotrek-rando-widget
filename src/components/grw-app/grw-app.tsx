@@ -746,7 +746,7 @@ export class GrwApp {
                 <div
                   class={this.isLargeView ? 'grw-large-view-app-list-container' : 'grw-app-list-container'}
                   style={{
-                    display: this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse ? 'none' : 'flex',
+                    display: this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse ? 'none' : 'block',
                     position: this.showTrek ? 'absolute' : 'relative',
                   }}
                 >
@@ -1085,7 +1085,7 @@ export class GrwApp {
                   action={() => this.handleShowMap()}
                   icon={() => this.getMapVisibilityIconButton()}
                   name={() => this.getMapVisibilityLabelButton()}
-                  display={this.isLargeView ? 'none' : 'flex'}
+                  display={this.isLargeView ? 'none' : 'block'}
                 ></grw-extended-fab>
               </div>
             )}

@@ -2,7 +2,7 @@ import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { handleOfflineProperty, getDataInStore } from 'services/grw-db.service';
 import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
 import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
-import { getInformationsDesks, getPoisNearTrek, getSensitiveAreasNearTrek, getTrek } from 'services/treks.service';
+import { getInformationsDesks, getPoisNearTrek, getSensitiveAreasNearTrek, getSources, getTrek } from 'services/treks.service';
 import state from 'store/store';
 import { Trek } from 'types/types';
 import { imagesRegExp, setFilesFromStore } from 'utils/utils';
@@ -179,7 +179,7 @@ export class GrwTrekProvider {
             return new Response('null');
           }),
         fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram,filter`, this.init),
-        fetch(`${state.api}source/?language=${state.language}&fields=id,name,website,pictogram`, this.init),
+        getSources(state.api, state.language, this.init),
         fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
         getPoisNearTrek(state.api, state.language, this.trekId, this.init),
         fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
