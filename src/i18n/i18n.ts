@@ -124,7 +124,7 @@ interface AvailableTranslations {
   en: Translation;
 }
 
-export const translate: AvailableTranslations = {
+const defaultTranslate: AvailableTranslations = {
   fr: {
     filter: 'Filtrer',
     practice: 'Pratique',
@@ -368,3 +368,31 @@ export const translate: AvailableTranslations = {
     placeholderCategories: 'Select one or more categories',
   },
 };
+
+let translate: AvailableTranslations = { ...defaultTranslate };
+
+if ((window as any).grwTranslate) {
+  if ((window as any).grwTranslate.fr) {
+    translate.fr = { ...defaultTranslate.fr, ...(window as any).grwTranslate.fr };
+    translate.fr.home = { ...defaultTranslate.fr.home, ...((window as any).grwTranslate.fr.home ? (window as any).grwTranslate.fr.home : {}) };
+    translate.fr.home.segment = {
+      ...defaultTranslate.fr.home.segment,
+      ...((window as any).grwTranslate.fr.home && (window as any).grwTranslate.fr.home.segment ? (window as any).grwTranslate.fr.home.segment : {}),
+    };
+    translate.fr.options = { ...defaultTranslate.fr.options, ...((window as any).grwTranslate.fr.options ? (window as any).grwTranslate.fr.options : {}) };
+    translate.fr.layers = { ...defaultTranslate.fr.layers, ...((window as any).grwTranslate.fr.layers ? (window as any).grwTranslate.fr.layers : {}) };
+  }
+
+  if ((window as any).grwTranslate.en) {
+    translate.en = { ...defaultTranslate.en, ...(window as any).grwTranslate.en };
+    translate.en.home = { ...defaultTranslate.en.home, ...((window as any).grwTranslate.en.home ? (window as any).grwTranslate.en.home : {}) };
+    translate.en.home.segment = {
+      ...defaultTranslate.en.home.segment,
+      ...((window as any).grwTranslate.en.home && (window as any).grwTranslate.en.home.segment ? (window as any).grwTranslate.en.home.segment : {}),
+    };
+    translate.en.options = { ...defaultTranslate.en.options, ...((window as any).grwTranslate.en.options ? (window as any).grwTranslate.en.options : {}) };
+    translate.en.layers = { ...defaultTranslate.en.layers, ...((window as any).grwTranslate.en.layers ? (window as any).grwTranslate.en.layers : {}) };
+  }
+}
+
+export { translate };
