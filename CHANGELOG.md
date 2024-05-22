@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.17.0...0.18.0) (2024-05-22)
+
+
+### Features
+
+* improve component usage independently ([453cbae](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/453cbae93a2f437fe7529a0775e16d6fab5b7596))
+
 ## [0.17.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.16.0...0.17.0) (2024-05-22)
 
 
