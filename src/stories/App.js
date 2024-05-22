@@ -35,6 +35,7 @@ export const createApp = ({
   treks,
   touristicContents,
   touristicEvents,
+  outdoor,
 }) => {
   const app = document.createElement('grw-app');
   app.setAttribute('app-width', appWidth);
@@ -74,5 +75,6 @@ export const createApp = ({
   app.setAttribute('treks', treks);
   app.setAttribute('touristic-contents', touristicContents);
   app.setAttribute('touristic-events', touristicEvents);
+  app.setAttribute('outdoor', outdoor);
   return app;
 };

@@ -60,5 +60,6 @@ App.args = {
   treks: true,
   touristicContents: false,
   touristicEvents: false,
+  outdoor: false,
 };
 App.storyName = 'App';
