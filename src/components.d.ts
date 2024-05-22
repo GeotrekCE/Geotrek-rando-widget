@@ -106,6 +106,7 @@ export namespace Components {
         "colorSensitiveArea": string;
         "colorTrekLine": string;
         "fontFamily": string;
+        "grwApp": boolean;
         "isLargeView": boolean;
         "nameLayer": string;
         "tilesMaxZoomOffline": number;
@@ -344,6 +345,7 @@ export namespace Components {
         "fontFamily": string;
         "globalTilesMaxZoomOffline": number;
         "globalTilesMinZoomOffline": number;
+        "grwApp": boolean;
         "isLargeView": boolean;
         "tilesMaxZoomOffline": number;
         "tilesMinZoomOffline": number;
@@ -978,6 +980,7 @@ declare namespace LocalJSX {
         "colorSensitiveArea"?: string;
         "colorTrekLine"?: string;
         "fontFamily"?: string;
+        "grwApp"?: boolean;
         "isLargeView"?: boolean;
         "nameLayer"?: string;
         "onOutdoorCourseCardPress"?: (event: GrwMapCustomEvent<number>) => void;
@@ -1249,6 +1252,7 @@ declare namespace LocalJSX {
         "fontFamily"?: string;
         "globalTilesMaxZoomOffline"?: number;
         "globalTilesMinZoomOffline"?: number;
+        "grwApp"?: boolean;
         "isLargeView"?: boolean;
         "onDeleteConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDeleteSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;

@@ -31,8 +31,11 @@ grw-trek-detail {
 }
 
 .trek-options {
+  z-index: 9;
   display: flex;
-  position: relative;
+  position: sticky;
+  top: 0px;
+  left: 0px;
   width: 100%;
   min-height: 32px;
   padding: 8px 0px;

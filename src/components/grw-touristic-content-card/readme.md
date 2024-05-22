@@ -26,7 +26,7 @@
 
 | Part                                        | Description |
 | ------------------------------------------- | ----------- |
-| `"default-touristic-event-img"`             |             |
+| `"default-touristic-content-img"`           |             |
 | `"more-details-button"`                     |             |
 | `"swiper-button-next"`                      |             |
 | `"swiper-button-prev"`                      |             |

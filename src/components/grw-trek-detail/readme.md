@@ -22,6 +22,7 @@
 | `fontFamily`                        | `font-family`                          |             | `string`  | `'Roboto'`  |
 | `globalTilesMaxZoomOffline`         | `global-tiles-max-zoom-offline`        |             | `number`  | `11`        |
 | `globalTilesMinZoomOffline`         | `global-tiles-min-zoom-offline`        |             | `number`  | `0`         |
+| `grwApp`                            | `grw-app`                              |             | `boolean` | `false`     |
 | `isLargeView`                       | `is-large-view`                        |             | `boolean` | `false`     |
 | `tilesMaxZoomOffline`               | `tiles-max-zoom-offline`               |             | `number`  | `16`        |
 | `tilesMinZoomOffline`               | `tiles-min-zoom-offline`               |             | `number`  | `12`        |

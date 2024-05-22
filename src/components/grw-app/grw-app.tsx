@@ -528,7 +528,6 @@ export class GrwApp {
               : this.enableOffline
               ? '116px'
               : '64px',
-          '--header-with-segment': Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) + Number(this.outdoor) > 1 ? '16px' : '0px',
           '--header-with-languages': this.languages.split(',').length > 1 ? '38px' : '0px',
           '--border-radius': this.rounded ? '' : '0px',
         }}
@@ -835,6 +834,7 @@ export class GrwApp {
                     global-tiles-max-zoom-offline={this.globalTilesMaxZoomOffline}
                     tiles-min-zoom-offline={this.tilesMinZoomOffline}
                     tiles-max-zoom-offline={this.tilesMaxZoomOffline}
+                    grw-app={true}
                   ></grw-trek-detail>
                   {this.showOfflineModal && (
                     <div class="modal-container">
@@ -1070,6 +1070,7 @@ export class GrwApp {
                   is-large-view={this.isLargeView}
                   use-gradient={this.useGradient}
                   tiles-max-zoom-offline={this.tilesMaxZoomOffline}
+                  grw-app={true}
                 ></grw-map>
               )}
             </div>

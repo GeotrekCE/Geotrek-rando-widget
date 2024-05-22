@@ -19,6 +19,7 @@
 | `colorSensitiveArea`      | `color-sensitive-area`       |             | `string`  | `'#4974a5'` |
 | `colorTrekLine`           | `color-trek-line`            |             | `string`  | `'#6b0030'` |
 | `fontFamily`              | `font-family`                |             | `string`  | `'Roboto'`  |
+| `grwApp`                  | `grw-app`                    |             | `boolean` | `false`     |
 | `isLargeView`             | `is-large-view`              |             | `boolean` | `false`     |
 | `nameLayer`               | `name-layer`                 |             | `string`  | `undefined` |
 | `tilesMaxZoomOffline`     | `tiles-max-zoom-offline`     |             | `number`  | `16`        |
@@ -41,10 +42,8 @@
 
 | Part                     | Description |
 | ------------------------ | ----------- |
-| `"elevation"`            |             |
 | `"loader"`               |             |
 | `"map"`                  |             |
-| `"map-bottom-space"`     |             |
 | `"map-loader-container"` |             |
 
 

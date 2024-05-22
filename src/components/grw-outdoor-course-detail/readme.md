@@ -35,6 +35,9 @@
 
 | Part                                       | Description |
 | ------------------------------------------ | ----------- |
+| `"accessibilites-title"`                   |             |
+| `"accessibilities"`                        |             |
+| `"accessibilities-container"`              |             |
 | `"advice"`                                 |             |
 | `"advice-container"`                       |             |
 | `"advice-title"`                           |             |

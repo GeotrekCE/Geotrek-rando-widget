@@ -56,6 +56,9 @@ export class GrwMap {
   @Prop() tilesMaxZoomOffline = 16;
 
   @Prop() isLargeView = false;
+
+  @Prop() grwApp = false;
+
   map: L.Map;
   bounds;
   treksLayer: L.GeoJSON<any>;
@@ -2656,7 +2659,7 @@ export class GrwMap {
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
           '--contract-image-src': `url(${contractImageSrc})`,
-          '--map-bottom-space-height': this.isLargeView ? '0px' : '80px',
+          '--map-bottom-space-height': this.isLargeView || !this.grwApp ? '0px' : '144px',
         }}
       >
         <div
@@ -2671,12 +2674,6 @@ export class GrwMap {
           }
           ref={el => (this.mapRef = el)}
         ></div>
-        {state.currentTrek && (
-          <div>
-            <div id="elevation" part="elevation" ref={el => (this.elevationRef = el)}></div>
-            <div part="map-bottom-space" class="map-bottom-space"></div>
-          </div>
-        )}
 
         {!this.mapIsReady && (
           <div part="map-loader-container" class="map-loader-container">

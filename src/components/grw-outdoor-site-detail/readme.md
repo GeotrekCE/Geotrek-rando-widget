@@ -49,6 +49,9 @@
 
 | Part                                     | Description |
 | ---------------------------------------- | ----------- |
+| `"accessibilites-title"`                 |             |
+| `"accessibilities"`                      |             |
+| `"accessibilities-container"`            |             |
 | `"advice"`                               |             |
 | `"advice-container"`                     |             |
 | `"advice-title"`                         |             |
@@ -90,6 +93,11 @@
 | `"related-outdoor-sites-container"`      |             |
 | `"related-outdoor-sites-title"`          |             |
 | `"row"`                                  |             |
+| `"source-advice"`                        |             |
+| `"source-container"`                     |             |
+| `"source-name"`                          |             |
+| `"source-sub-container"`                 |             |
+| `"source-title"`                         |             |
 | `"sub-container"`                        |             |
 | `"swiper-button-next"`                   |             |
 | `"swiper-button-prev"`                   |             |
@@ -111,6 +119,9 @@
 | `"touristic-event-container"`            |             |
 | `"touristic-event-title"`                |             |
 | `"weather-container"`                    |             |
+| `"weblink-container"`                    |             |
+| `"weblinks-container"`                   |             |
+| `"weblinks-title"`                       |             |
 
 
 ## Dependencies
@@ -121,22 +132,22 @@
 
 ### Depends on
 
-- [grw-information-desk](../grw-information-desk)
+- [grw-poi](../grw-poi-detail)
 - [grw-outdoor-site-card](../grw-outdoor-site-card)
 - [grw-outdoor-course-card](../grw-outdoor-course-card)
+- [grw-information-desk](../grw-information-desk)
 - [grw-touristic-content-card](../grw-touristic-content-card)
 - [grw-touristic-event-card](../grw-touristic-event-card)
-- [grw-poi](../grw-poi-detail)
 
 ### Graph
 ```mermaid
 graph TD;
-  grw-outdoor-site-detail --> grw-information-desk
+  grw-outdoor-site-detail --> grw-poi
   grw-outdoor-site-detail --> grw-outdoor-site-card
   grw-outdoor-site-detail --> grw-outdoor-course-card
+  grw-outdoor-site-detail --> grw-information-desk
   grw-outdoor-site-detail --> grw-touristic-content-card
   grw-outdoor-site-detail --> grw-touristic-event-card
-  grw-outdoor-site-detail --> grw-poi
   grw-app --> grw-outdoor-site-detail
   style grw-outdoor-site-detail fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -197,6 +197,8 @@ export class GrwTrekDetail {
   @Prop() tilesMinZoomOffline = 12;
   @Prop() tilesMaxZoomOffline = 16;
 
+  @Prop() grwApp = false;
+
   @Event() downloadConfirm: EventEmitter<number>;
   @Event() downloadedSuccessConfirm: EventEmitter<number>;
 
@@ -1574,14 +1576,7 @@ export class GrwTrekDetail {
                   </div>
                   {this.currentTrek.web_links.map(weblink => (
                     <a part="weblink-container" class="weblink-container" href={weblink.url} target="_blank" rel="noopener noreferrer">
-                      {weblink.category && weblink.category.pictogram && (
-                        <img
-                          /* @ts-ignore */
-
-                          src={weblink.category.pictogram}
-                          alt={weblink.category.label}
-                        />
-                      )}
+                      {weblink.category && weblink.category.pictogram && <img src={weblink.category.pictogram} alt={weblink.category.label} />}
                       {weblink.name}
                     </a>
                   ))}
@@ -1597,14 +1592,7 @@ export class GrwTrekDetail {
                   </div>
                   {this.sources.map(source => (
                     <div part="source-sub-container" class="source-sub-container">
-                      {source.pictogram && (
-                        <img
-                          /* @ts-ignore */
-
-                          src={source.pictogram}
-                          alt=""
-                        />
-                      )}
+                      {source.pictogram && <img src={source.pictogram} alt="" />}
                       <div>
                         <div part="source-name" class="source-name" innerHTML={source.name}></div>
                         <a part="source-advice" class="source-advice" href={source.website} innerHTML={source.website}></a>
@@ -1614,7 +1602,7 @@ export class GrwTrekDetail {
                 </div>
               </div>
             )}
-            <div part="detail-bottom-space" class="detail-bottom-space"></div>
+            {this.grwApp && <div part="detail-bottom-space" class="detail-bottom-space"></div>}
           </div>
         )}
       </Host>
