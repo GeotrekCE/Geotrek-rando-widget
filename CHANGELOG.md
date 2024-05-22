@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.16.0...0.16.1) (2024-05-22)
+
+
+### Bug Fixes
+
+* trek detail observers ([9154f3d](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/9154f3dc12ed761d247585f3acbc4b936f4da56f))
+
 ## [0.16.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.15.0...0.16.0) (2024-05-21)
 
 
