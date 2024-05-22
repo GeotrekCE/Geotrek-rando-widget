@@ -205,6 +205,145 @@ export class GrwTrekDetail {
 
   indicatorSelectedTrekOption = { translateX: null, width: null, backgroundSize: null, ref: null };
 
+  componentDidUpdate() {
+    this.handleObservers();
+  }
+
+  handleObservers() {
+    if (this.presentationRef && !this.presentationObserver) {
+      this.presentationObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.options = { ...this.options, presentation: { ...this.defaultOptions.presentation, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.presentationObserver.observe(this.presentationRef);
+    }
+    if (this.stepsRef && !this.stepsObserver) {
+      this.stepsObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.stepsIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, steps: { ...this.defaultOptions.steps, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.stepsObserver.observe(this.stepsRef);
+    }
+    if (this.descriptionRef && !this.descriptionObserver) {
+      this.descriptionObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.descriptionIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, description: { ...this.defaultOptions.description, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.descriptionObserver.observe(this.descriptionRef);
+    }
+    if (this.recommendationRef && !this.recommendationsObserver) {
+      this.recommendationsObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.options = { ...this.options, recommendations: { ...this.defaultOptions.recommendations, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.recommendationsObserver.observe(this.recommendationRef);
+    }
+    if (this.parkingRef && !this.parkingObserver) {
+      this.parkingObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.parkingIsInViewport.emit(isIntersecting);
+        },
+        { threshold },
+      );
+      this.parkingObserver.observe(this.parkingRef);
+    }
+
+    if (this.sensitiveAreaRef && !this.sensitiveAreaObserver) {
+      this.sensitiveAreaObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.sensitiveAreaIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, sensitiveArea: { ...this.defaultOptions.sensitiveArea, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.sensitiveAreaObserver.observe(this.sensitiveAreaRef);
+    }
+
+    if (this.informationPlacesRef && !this.informationPlacesObserver) {
+      this.informationPlacesObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.informationPlacesIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, informationPlaces: { ...this.defaultOptions.informationPlaces, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.informationPlacesObserver.observe(this.informationPlacesRef);
+    }
+
+    if (this.accessibilityRef && !this.accessibilityObserver) {
+      this.accessibilityObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.options = { ...this.options, accessibility: { ...this.defaultOptions.accessibility, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.accessibilityObserver.observe(this.accessibilityRef);
+    }
+
+    if (this.poiRef && !this.poiObserver) {
+      this.poiObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.poiIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, pois: { ...this.defaultOptions.pois, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.poiObserver.observe(this.poiRef);
+    }
+
+    if (this.touristicContentsRef && !this.touristicContentObserver) {
+      this.touristicContentObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.touristicContentsIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, touristicContents: { ...this.defaultOptions.touristicContents, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.touristicContentObserver.observe(this.touristicContentsRef);
+    }
+    if (this.touristicEventsRef && !this.touristicEventObserver) {
+      this.touristicEventObserver = new IntersectionObserver(
+        entries => {
+          const isIntersecting = entries[0].isIntersecting;
+          this.touristicEventsIsInViewport.emit(isIntersecting);
+          this.options = { ...this.options, touristicEvents: { ...this.defaultOptions.touristicEvents, indicator: isIntersecting } };
+          this.handleIndicatorSelectedTrekOption();
+        },
+        { threshold },
+      );
+      this.touristicEventObserver.observe(this.touristicEventsRef);
+    }
+  }
+
   componentDidLoad() {
     this.swiperImages = new Swiper(this.swiperImagesRef, {
       modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
@@ -217,10 +356,12 @@ export class GrwTrekDetail {
       keyboard: false,
       loop: true,
     });
-    this.swiperImagesRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen;
-      this.displayFullscreen && !this.offline ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
-    };
+    if (this.swiperImagesRef) {
+      this.swiperImagesRef.onfullscreenchange = () => {
+        this.displayFullscreen = !this.displayFullscreen;
+        this.displayFullscreen && !this.offline ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
+      };
+    }
     this.swiperStep = new Swiper(this.swiperStepRef, {
       modules: [FreeMode, Mousewheel, Scrollbar],
       initialSlide: this.getCurrentStepIndex(),
@@ -322,138 +463,7 @@ export class GrwTrekDetail {
       },
       loop: false,
     });
-    if (this.presentationRef) {
-      this.presentationObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.options = { ...this.options, presentation: { ...this.defaultOptions.presentation, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.presentationObserver.observe(this.presentationRef);
-    }
-    if (this.stepsRef) {
-      this.stepsObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.stepsIsInViewport.emit(isIntersecting);
-          this.options = { ...this.options, steps: { ...this.defaultOptions.steps, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.stepsObserver.observe(this.stepsRef);
-    }
-    if (this.descriptionRef) {
-      this.descriptionObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.descriptionIsInViewport.emit(isIntersecting);
-          this.options = { ...this.options, description: { ...this.defaultOptions.description, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.descriptionObserver.observe(this.descriptionRef);
-    }
-    if (this.recommendationRef) {
-      this.recommendationsObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.options = { ...this.options, recommendations: { ...this.defaultOptions.recommendations, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.recommendationsObserver.observe(this.recommendationRef);
-    }
-    if (this.parkingRef) {
-      this.parkingObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.parkingIsInViewport.emit(isIntersecting);
-        },
-        { threshold },
-      );
-      this.parkingObserver.observe(this.parkingRef);
-    }
-
-    if (this.sensitiveAreaRef) {
-      this.sensitiveAreaObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.sensitiveAreaIsInViewport.emit(isIntersecting);
-          this.options = { ...this.options, sensitiveArea: { ...this.defaultOptions.sensitiveArea, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.sensitiveAreaObserver.observe(this.sensitiveAreaRef);
-    }
-
-    if (this.informationPlacesRef) {
-      this.informationPlacesObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.informationPlacesIsInViewport.emit(isIntersecting);
-          this.options = { ...this.options, informationPlaces: { ...this.defaultOptions.informationPlaces, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.informationPlacesObserver.observe(this.informationPlacesRef);
-    }
-
-    if (this.accessibilityRef) {
-      this.accessibilityObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.options = { ...this.options, accessibility: { ...this.defaultOptions.accessibility, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.accessibilityObserver.observe(this.accessibilityRef);
-    }
-
-    if (this.poiRef) {
-      this.poiObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.poiIsInViewport.emit(isIntersecting);
-          this.options = { ...this.options, pois: { ...this.defaultOptions.pois, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.poiObserver.observe(this.poiRef);
-    }
-
-    if (this.touristicContentsRef) {
-      this.touristicContentObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.touristicContentsIsInViewport.emit(isIntersecting);
-          this.options = { ...this.options, touristicContents: { ...this.defaultOptions.touristicContents, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.touristicContentObserver.observe(this.touristicContentsRef);
-    }
-    if (this.touristicEventsRef) {
-      this.touristicEventObserver = new IntersectionObserver(
-        entries => {
-          const isIntersecting = entries[0].isIntersecting;
-          this.touristicEventsIsInViewport.emit(isIntersecting);
-          this.options = { ...this.options, touristicEvents: { ...this.defaultOptions.touristicEvents, indicator: isIntersecting } };
-          this.handleIndicatorSelectedTrekOption();
-        },
-        { threshold },
-      );
-      this.touristicEventObserver.observe(this.touristicEventsRef);
-    }
+    this.handleObservers();
   }
 
   async connectedCallback() {
