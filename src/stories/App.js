@@ -70,7 +70,6 @@ export const createApp = ({
   app.setAttribute('fab-color', fabColor);
   app.setAttribute('color-trek-line', colorTrekLine);
   app.setAttribute('color-sensitive-area', colorSensitiveArea);
-  app.setAttribute('color-poi-icon', colorPoi);
   app.setAttribute('use-gradient', useGradient);
   app.setAttribute('treks', treks);
   app.setAttribute('touristic-contents', touristicContents);
