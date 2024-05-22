@@ -551,6 +551,19 @@ export class GrwFilters {
                           ></grw-filter>
                         </div>
                       )}
+                      {state['outdoorSiteTypes'].length > 0 && (
+                        <div part="filter-container" class="filter-container">
+                          <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
+                            fontFamily={this.fontFamily}
+                            filterName={translate[state.language].activities}
+                            filterType="outdoorSiteTypes"
+                            filterNameProperty="name"
+                            segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderActivities}
+                          ></grw-filter>
+                        </div>
+                      )}
                     </div>
                   )}
                   {this.selectedSegment === 'selectedThemesFilters' && (

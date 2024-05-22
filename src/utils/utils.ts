@@ -58,6 +58,7 @@ export const touristicEventsFilters: TouristicEventsFilters = [
 
 export const outdoorSitesFilters: OutdoorSitesFilters = [
   { property: 'outdoorPractices', outdoorSiteProperty: 'practice', outdoorSitePropertyIsArray: false, type: 'include', segment: 'selectedActivitiesFilters' },
+  { property: 'outdoorSiteTypes', outdoorSiteProperty: 'type', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedActivitiesFilters' },
   { property: 'cities', outdoorSiteProperty: 'cities', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
   { property: 'districts', outdoorSiteProperty: 'districts', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
   { property: 'themes', outdoorSiteProperty: 'themes', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedThemesFilters' },
