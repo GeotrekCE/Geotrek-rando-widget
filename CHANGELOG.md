@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.18.1...0.18.2) (2024-05-23)
+
+
+### Bug Fixes
+
+* prev next button display ([03a6acf](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/03a6acf8f67fab0a0e399b3145cd1378172d555e))
+
 ## [0.18.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.18.0...0.18.1) (2024-05-23)
 
 
