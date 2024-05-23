@@ -1,3 +1,18 @@
+---
+head:
+  - - script
+    - defer: true
+      nomodule: true
+      src: https://rando-widget.geotrek.fr/latest/dist/geotrek-rando-widget/geotrek-rando-widget.js
+  - - script
+    - defer: true
+      type: module
+      src: https://rando-widget.geotrek.fr/latest/dist/geotrek-rando-widget/geotrek-rando-widget.esm.js
+  - - link
+    - href: https://rando-widget.geotrek.fr/latest/dist/geotrek-rando-widget/geotrek-rando-widget.css
+      rel: stylesheet
+---
+
 # Traduire le widget
 
 Actuellement le widget n'est traduit qu'en anglais, mais il peut supporter d'autre langues.
@@ -120,3 +135,72 @@ Voici un exemple avec l'anglais :
     cardinalPoints: { n: 'North', ne: 'North-east', e: 'East', se: 'South-east', s: 'South', sw: 'South-west', w: 'West', nw: 'North-west' },
   },
 ```
+
+## Surcharger des traductions
+
+Depuis la version `0.16.0` de Geotrek-widget, il est possible de surcharger les traductions par défaut.
+
+Pour cela, il faut ajouter une balise `<script></script>` sur la page où est intégrée le composant `grw`.
+
+**Exemple de modifications du titre de la section "Recommandation" dans une fiche détail d'itinéraire :**
+
+```js
+<script>
+  window.grwTranslate = {
+    fr: {
+      options: {
+        recommendations: "Matériel"
+        },
+      recommendations: "Matériel"
+    },
+  };
+</script>
+```
+
+**Voici un exemple de code complet :**
+<ClientOnly>
+  <script>
+  window.grwTranslate = {
+    fr: {
+      options: {
+        recommendations: "Matériel"
+        },
+      recommendations: "Matériel"
+    },
+  };
+  </script>
+  <div>
+    <grw-app
+      app-width="100%"
+      app-height="100vh"
+      api="https://geotrek-admin.portcros-parcnational.fr/api/v2/"
+      languages="fr"
+      name-layer="IGN,OpenStreetMap"
+      url-layer="https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x},https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>,OpenStreetMap"
+      weather="true"
+      treks="true"
+      rounded="true"
+      color-departure-icon="#006b3b"
+      color-arrival-icon="#85003b"
+      color-sensitive-area="#4974a5"
+      color-trek-line="#003e42"
+      color-poi-icon="#974c6e"
+      color-primary-app="#008eaa"
+      color-on-primary="#ffffff"
+      color-surface="#1c1b1f"
+      color-on-surface="#49454e"
+      color-surface-variant="#fff"
+      color-on-surface-variant="#1c1b1f"
+      color-primary-container="#94CCD8"
+      color-on-primary-container="#005767"
+      color-secondary-container="#94CCD8"
+      color-on-secondary-container="#1d192b"
+      color-background="#fff"
+      color-surface-container-high="#fff"
+      color-surface-container-low="#fff"
+      fab-background-color="#94CCD8"
+      fab-color="#003e42"
+    ></grw-app>
+  </div>
+</ClientOnly>
