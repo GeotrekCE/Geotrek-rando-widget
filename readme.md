@@ -30,7 +30,7 @@ Then you have to configure the widget to generate the widget code to include in 
 You can explore Geotrek-rando widget and create your own component [here](https://geotrekce.github.io/Geotrek-rando-widget/).\
 Once you made your component, you can get the code to copy-paste by clicking on _Docs_ then _Show code_.
 
-[![](https://geotrek.fr/assets/img/logo_makina.svg)](https://territoires.makina-corpus.com/)
+<a href="https://territoires.makina-corpus.com/"><img src="https://geotrek.fr/assets/img/logo_makina.svg" alt="Logo MCT" width="115"></a>
 [![](https://geotrek.fr/assets/img/logo_autonomens-h120m.png)](https://datatheca.com/)
 
 ## Documentation
