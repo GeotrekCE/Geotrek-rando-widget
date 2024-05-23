@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.18.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.18.0...0.18.1) (2024-05-23)
+
+
+### Bug Fixes
+
+* edit translation ([0c0d4b8](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/0c0d4b8c2af51073190235ec84d3d4a10664ee59))
+* improve swiper display ([98150db](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/98150dbc3e4fe4533f47f53f54338b02bfc0ac49))
+* storybook ([f696ecb](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/f696ecb7d35e1faea1f6b04d55151626c4c519b5))
+
 ## [0.18.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.17.0...0.18.0) (2024-05-22)
 
 
