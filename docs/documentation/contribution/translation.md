@@ -148,16 +148,11 @@ Pour cela, il faut ajouter une balise `<script></script>` sur la page où est in
 <script>
   window.grwTranslate = {
     fr: {
-      treks: 'randonnées',
-      trek: 'randonnée',
-      showRoute: "Voir la randonnée",
-      home: {
-        segment: {
-          treks: 'Randonnées'
-        }
-      },
-      sensitiveAreasDescription: 'Le long de votre randonnée, vous allez traverser des zones de sensibilité liées à la présence d’une espèce ou d’un milieu particulier. Dans ces zones, un comportement adapté permet de contribuer à leur préservation. Pour plus d’informations détaillées, des fiches spécifiques sont accessibles pour chaque zone.',
-    }
+      options: {
+        recommendations: "Matériel"
+        },
+      recommendations: "Matériel"
+    },
   };
 </script>
 ```
@@ -165,19 +160,14 @@ Pour cela, il faut ajouter une balise `<script></script>` sur la page où est in
 **Voici un exemple de code complet :**
 <ClientOnly>
   <script>
-    window.grwTranslate = {
-      fr: {
-        treks: 'randonnées',
-        trek: 'randonnée',
-        showRoute: "Voir la randonnée",
-        home: {
-          segment: {
-            treks: 'Randonnées'
-          }
+  window.grwTranslate = {
+    fr: {
+      options: {
+        recommendations: "Matériel"
         },
-        sensitiveAreasDescription: 'Le long de votre randonnée, vous allez traverser des zones de sensibilité liées à la présence d’une espèce ou d’un milieu particulier. Dans ces zones, un comportement adapté permet de contribuer à leur préservation. Pour plus d’informations détaillées, des fiches spécifiques sont accessibles pour chaque zone.',
-      }
-    };
+      recommendations: "Matériel"
+    },
+  };
   </script>
   <div>
     <grw-app
