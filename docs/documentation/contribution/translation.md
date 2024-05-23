@@ -138,7 +138,7 @@ Voici un exemple avec l'anglais :
 
 ## Surcharger des traductions
 
-Depuis la version `0.16.0.` de Geotrek-widget, il est possible de surcharger les traductions par défaut.
+Depuis la version `0.16.0` de Geotrek-widget, il est possible de surcharger les traductions par défaut.
 
 Pour cela, il faut ajouter une balise `<script></script>` sur la page où est intégrée le composant `grw`.
 
@@ -148,58 +148,69 @@ Pour cela, il faut ajouter une balise `<script></script>` sur la page où est in
 <script>
   window.grwTranslate = {
     fr: {
-      options: {
-        recommendations: "Matériel"
-        },
-      recommendations: "Matériel"
-    },
+      treks: 'randonnées',
+      trek: 'randonnée',
+      showRoute: "Voir la randonnée",
+      home: {
+        segment: {
+          treks: 'Randonnées'
+        }
+      },
+      sensitiveAreasDescription: 'Le long de votre randonnée, vous allez traverser des zones de sensibilité liées à la présence d’une espèce ou d’un milieu particulier. Dans ces zones, un comportement adapté permet de contribuer à leur préservation. Pour plus d’informations détaillées, des fiches spécifiques sont accessibles pour chaque zone.',
+    }
   };
 </script>
 ```
 
 **Voici un exemple de code complet :**
-
-<script>
-  window.grwTranslate = {
-    fr: {
-      options: {
-        recommendations: "Matériel"
+<ClientOnly>
+  <script>
+    window.grwTranslate = {
+      fr: {
+        treks: 'randonnées',
+        trek: 'randonnée',
+        showRoute: "Voir la randonnée",
+        home: {
+          segment: {
+            treks: 'Randonnées'
+          }
         },
-      recommendations: "Matériel"
-    },
-  };
-</script>
-<div>
+        sensitiveAreasDescription: 'Le long de votre randonnée, vous allez traverser des zones de sensibilité liées à la présence d’une espèce ou d’un milieu particulier. Dans ces zones, un comportement adapté permet de contribuer à leur préservation. Pour plus d’informations détaillées, des fiches spécifiques sont accessibles pour chaque zone.',
+      }
+    };
+  </script>
+  <div>
     <grw-app
-        app-width="100%"
-        app-height="100vh"
-        api="https://geotrek-admin.portcros-parcnational.fr/api/v2/"
-        languages="fr"
-        name-layer="IGN,OpenStreetMap"
-        url-layer="https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x},https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>,OpenStreetMap"
-        weather="true"
-        treks="true"
-        rounded="true"
-        color-departure-icon="#006b3b"
-        color-arrival-icon="#85003b"
-        color-sensitive-area="#4974a5"
-        color-trek-line="#003e42"
-        color-poi-icon="#974c6e"
-        color-primary-app="#008eaa"
-        color-on-primary="#ffffff"
-        color-surface="#1c1b1f"
-        color-on-surface="#49454e"
-        color-surface-variant="#fff"
-        color-on-surface-variant="#1c1b1f"
-        color-primary-container="#94CCD8"
-        color-on-primary-container="#005767"
-        color-secondary-container="#94CCD8"
-        color-on-secondary-container="#1d192b"
-        color-background="#fff"
-        color-surface-container-high="#fff"
-        color-surface-container-low="#fff"
-        fab-background-color="#94CCD8"
-        fab-color="#003e42"
+      app-width="100%"
+      app-height="100vh"
+      api="https://geotrek-admin.portcros-parcnational.fr/api/v2/"
+      languages="fr"
+      name-layer="IGN,OpenStreetMap"
+      url-layer="https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x},https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>,OpenStreetMap"
+      weather="true"
+      treks="true"
+      rounded="true"
+      color-departure-icon="#006b3b"
+      color-arrival-icon="#85003b"
+      color-sensitive-area="#4974a5"
+      color-trek-line="#003e42"
+      color-poi-icon="#974c6e"
+      color-primary-app="#008eaa"
+      color-on-primary="#ffffff"
+      color-surface="#1c1b1f"
+      color-on-surface="#49454e"
+      color-surface-variant="#fff"
+      color-on-surface-variant="#1c1b1f"
+      color-primary-container="#94CCD8"
+      color-on-primary-container="#005767"
+      color-secondary-container="#94CCD8"
+      color-on-secondary-container="#1d192b"
+      color-background="#fff"
+      color-surface-container-high="#fff"
+      color-surface-container-low="#fff"
+      fab-background-color="#94CCD8"
+      fab-color="#003e42"
     ></grw-app>
-</div>
+  </div>
+</ClientOnly>
