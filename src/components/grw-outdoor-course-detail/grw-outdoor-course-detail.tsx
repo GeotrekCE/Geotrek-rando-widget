@@ -68,85 +68,104 @@ export class GrwOutdoorCourseDetail {
   touristicContentObserver: IntersectionObserver;
   touristicEventObserver: IntersectionObserver;
 
-  componentDidLoad() {
-    this.swiperImages = new Swiper(this.swiperImagesRef, {
-      modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
-      navigation: {
-        prevEl: this.prevElImagesRef,
-        nextEl: this.nextElImagesRef,
-      },
-      pagination: { el: this.paginationElImagesRef },
-      allowTouchMove: false,
-      keyboard: false,
-      loop: true,
-    });
-    this.swiperImagesRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen;
-      this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
-    };
+  handleSwipers() {
+    if (this.swiperImagesRef && !this.swiperImages) {
+      this.swiperImages = new Swiper(this.swiperImagesRef, {
+        modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
+        navigation: {
+          prevEl: this.prevElImagesRef,
+          nextEl: this.nextElImagesRef,
+        },
+        pagination: { el: this.paginationElImagesRef },
+        allowTouchMove: false,
+        keyboard: false,
+        loop: true,
+      });
+      this.swiperImagesRef.onfullscreenchange = () => {
+        this.displayFullscreen = !this.displayFullscreen;
+        this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
+      };
+    }
 
-    this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.touristicContentsSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
+    if (this.swiperTouristicContentsRef && !this.swiperTouristicContents) {
+      this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.touristicContentsSwiperScrollbar,
         },
-      },
-      loop: false,
-    });
-    this.swiperTouristicEvents = new Swiper(this.swiperTouristicEventsRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.touristicEventsSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
         },
-      },
-      loop: false,
-    });
-    this.swiperPois = new Swiper(this.swiperPoisRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.poisSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
+        loop: false,
+      });
+    }
+    if (this.swiperTouristicEventsRef && !this.swiperTouristicEvents) {
+      this.swiperTouristicEvents = new Swiper(this.swiperTouristicEventsRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.touristicEventsSwiperScrollbar,
         },
-      },
-      loop: false,
-    });
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
+        },
+        loop: false,
+      });
+    }
+    if (this.swiperPoisRef && !this.swiperPois) {
+      this.swiperPois = new Swiper(this.swiperPoisRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.poisSwiperScrollbar,
+        },
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
+        },
+        loop: false,
+      });
+    }
+  }
 
-    if (this.poiRef) {
+  handleObservers() {
+    if (this.poiRef && !this.poiObserver) {
       this.poiObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -157,7 +176,7 @@ export class GrwOutdoorCourseDetail {
       this.poiObserver.observe(this.poiRef);
     }
 
-    if (this.touristicContentsRef) {
+    if (this.touristicContentsRef && !this.touristicContentObserver) {
       this.touristicContentObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -167,7 +186,7 @@ export class GrwOutdoorCourseDetail {
       );
       this.touristicContentObserver.observe(this.touristicContentsRef);
     }
-    if (this.touristicEventsRef) {
+    if (this.touristicEventsRef && !this.touristicEventObserver) {
       this.touristicEventObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -177,6 +196,16 @@ export class GrwOutdoorCourseDetail {
       );
       this.touristicEventObserver.observe(this.touristicEventsRef);
     }
+  }
+
+  componentDidUpdate() {
+    this.handleObservers();
+    this.handleSwipers();
+  }
+
+  componentDidLoad() {
+    this.handleObservers();
+    this.handleSwipers();
   }
 
   async connectedCallback() {

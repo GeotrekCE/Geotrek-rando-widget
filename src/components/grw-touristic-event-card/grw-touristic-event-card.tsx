@@ -43,9 +43,8 @@ export class GrwTouristicEvent {
     this.offline = false;
   }
 
-  componentDidLoad() {
-    this.handleOffline();
-    if (this.swiperTouristicEventRef) {
+  handleSwipers() {
+    if (this.swiperTouristicEventRef && !this.swiperTouristicEvent) {
       this.swiperTouristicEvent = new Swiper(this.swiperTouristicEventRef, {
         modules: [Navigation, Pagination, Keyboard],
         navigation: {
@@ -66,6 +65,15 @@ export class GrwTouristicEvent {
         }
       };
     }
+  }
+
+  componentDidUpdate() {
+    this.handleSwipers();
+  }
+
+  componentDidLoad() {
+    this.handleOffline();
+    this.handleSwipers();
   }
 
   async handleOffline() {

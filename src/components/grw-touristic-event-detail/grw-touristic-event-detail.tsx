@@ -35,23 +35,33 @@ export class GrwTouristicEventDetail {
   descriptionRef?: HTMLDivElement;
   touristicEventDetailContainerRef?: HTMLElement;
 
+  handleSwipers() {
+    if (this.swiperImagesRef && !this.swiperImages) {
+      this.swiperImages = new Swiper(this.swiperImagesRef, {
+        modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
+        navigation: {
+          prevEl: this.prevElImagesRef,
+          nextEl: this.nextElImagesRef,
+        },
+        pagination: { el: this.paginationElImagesRef },
+        allowTouchMove: false,
+        keyboard: false,
+        loop: true,
+      });
+      this.swiperImagesRef.onfullscreenchange = () => {
+        this.displayFullscreen = !this.displayFullscreen;
+        this.displayFullscreen && !this.offline ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
+      };
+    }
+  }
+
+  componentDidUpdate() {
+    this.handleSwipers();
+  }
+
   componentDidLoad() {
-    this.swiperImages = new Swiper(this.swiperImagesRef, {
-      modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
-      navigation: {
-        prevEl: this.prevElImagesRef,
-        nextEl: this.nextElImagesRef,
-      },
-      pagination: { el: this.paginationElImagesRef },
-      allowTouchMove: false,
-      keyboard: false,
-      loop: true,
-    });
-    this.swiperImagesRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen;
-      this.displayFullscreen && !this.offline ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
-    };
     this.offline = state.currentTouristicEvent.offline;
+    this.handleSwipers();
   }
 
   handleFullscreen(close: boolean = false) {

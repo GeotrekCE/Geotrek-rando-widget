@@ -42,9 +42,8 @@ export class GrwTouristicContentCard {
     this.offline = false;
   }
 
-  componentDidLoad() {
-    this.handleOffline();
-    if (this.swiperTouristicContentRef) {
+  handleSwipers() {
+    if (this.swiperTouristicContentRef && !this.swiperTouristicContent) {
       this.swiperTouristicContent = new Swiper(this.swiperTouristicContentRef, {
         modules: [Navigation, Pagination, Keyboard],
         navigation: {
@@ -65,6 +64,15 @@ export class GrwTouristicContentCard {
         }
       };
     }
+  }
+
+  componentDidUpdate() {
+    this.handleSwipers();
+  }
+
+  componentDidLoad() {
+    this.handleOffline();
+    this.handleSwipers();
   }
 
   async handleOffline() {

@@ -699,7 +699,7 @@ export class GrwApp {
                       ></grw-common-button>
                     </div>
                   </div>
-                  {this.enableOffline && (
+                  {this.enableOffline && (state.mode === 'treks' || state.mode === 'outdoor') && (
                     <div part="grw-offline-container" class="grw-offline-container">
                       <div class="grw-offline-label">
                         {state.mode === 'treks' ? 'Afficher uniquement les itinéraires hors ligne' : 'Afficher uniquement les outdoor hors ligne'}
@@ -738,10 +738,10 @@ export class GrwApp {
                   ></grw-common-button>
                 </div>
               )}
-              {((state.mode === 'treks' && this.treks) ||
-                (state.mode === 'touristicContents' && this.touristicContents) ||
-                (state.mode === 'touristicEvents' && this.touristicEvents) ||
-                (state.mode === 'outdoor' && this.outdoor)) && (
+              {((state.mode === 'treks' && this.treks && state.treks) ||
+                (state.mode === 'touristicContents' && this.touristicContents && state.touristicContents) ||
+                (state.mode === 'touristicEvents' && this.touristicEvents && state.touristicEvents) ||
+                (state.mode === 'outdoor' && this.outdoor && state.outdoorSites)) && (
                 <div
                   class={this.isLargeView ? 'grw-large-view-app-list-container' : 'grw-app-list-container'}
                   style={{

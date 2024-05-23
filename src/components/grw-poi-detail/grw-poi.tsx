@@ -38,28 +38,38 @@ export class GrwPoiDetail {
     this.offline = false;
   }
 
+  handleSwipers() {
+    if (this.swiperPoiRef && !this.swiperPoi) {
+      this.swiperPoi = new Swiper(this.swiperPoiRef, {
+        modules: [Navigation, Pagination, Keyboard],
+        navigation: {
+          prevEl: this.prevElPoiRef,
+          nextEl: this.nextElPoiRef,
+        },
+        pagination: { el: this.paginationElPoiRef },
+        allowTouchMove: false,
+        keyboard: false,
+        loop: true,
+      });
+      this.swiperPoiRef.onfullscreenchange = () => {
+        this.displayFullscreen = !this.displayFullscreen && !this.offline;
+        if (this.displayFullscreen) {
+          this.swiperPoi.keyboard.enable();
+        } else {
+          this.swiperPoi.keyboard.disable();
+        }
+      };
+      this.showPoiDescriptionButton = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
+    }
+  }
+
+  componentDidUpdate() {
+    this.handleSwipers();
+  }
+
   componentDidLoad() {
     this.handleOffline();
-    this.swiperPoi = new Swiper(this.swiperPoiRef, {
-      modules: [Navigation, Pagination, Keyboard],
-      navigation: {
-        prevEl: this.prevElPoiRef,
-        nextEl: this.nextElPoiRef,
-      },
-      pagination: { el: this.paginationElPoiRef },
-      allowTouchMove: false,
-      keyboard: false,
-      loop: true,
-    });
-    this.swiperPoiRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen && !this.offline;
-      if (this.displayFullscreen) {
-        this.swiperPoi.keyboard.enable();
-      } else {
-        this.swiperPoi.keyboard.disable();
-      }
-    };
-    this.showPoiDescriptionButton = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
+    this.handleSwipers();
   }
 
   handlePoiDescription() {

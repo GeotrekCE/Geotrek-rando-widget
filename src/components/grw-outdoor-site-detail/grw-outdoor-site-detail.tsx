@@ -128,148 +128,8 @@ export class GrwOutdoorSiteDetail {
     this.deleteOutdoorSite();
   }
 
-  componentDidLoad() {
-    this.swiperImages = new Swiper(this.swiperImagesRef, {
-      modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
-      navigation: {
-        prevEl: this.prevElImagesRef,
-        nextEl: this.nextElImagesRef,
-      },
-      pagination: { el: this.paginationElImagesRef },
-      allowTouchMove: false,
-      keyboard: false,
-      loop: true,
-    });
-    this.swiperImagesRef.onfullscreenchange = () => {
-      this.displayFullscreen = !this.displayFullscreen;
-      this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
-    };
-
-    this.swiperRelatedOutdoorSites = new Swiper(this.swiperRelatedOutdoorSitesRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.relatedOutdoorSitesSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
-        },
-      },
-      loop: false,
-    });
-
-    this.swiperInformationDesks = new Swiper(this.swiperInformationDesksRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.informationDesksContentsSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
-        },
-      },
-      loop: false,
-    });
-
-    this.swiperRelatedOutdoorCourses = new Swiper(this.swiperRelatedOutdoorCoursesRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.relatedOutdoorCoursesSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
-        },
-      },
-      loop: false,
-    });
-
-    this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.touristicContentsSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
-        },
-      },
-      loop: false,
-    });
-    this.swiperTouristicEvents = new Swiper(this.swiperTouristicEventsRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.touristicEventsSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
-        },
-      },
-      loop: false,
-    });
-    this.swiperPois = new Swiper(this.swiperPoisRef, {
-      modules: [FreeMode, Mousewheel, Scrollbar],
-      slidesPerView: 1.5,
-      spaceBetween: 20,
-      grabCursor: true,
-      freeMode: true,
-      mousewheel: { forceToAxis: true },
-      scrollbar: {
-        draggable: true,
-        hide: false,
-        el: this.poisSwiperScrollbar,
-      },
-      breakpointsBase: 'container',
-      breakpoints: {
-        '540': {
-          slidesPerView: 2.5,
-        },
-      },
-      loop: false,
-    });
-
-    if (this.informationPlacesRef) {
+  handleObservers() {
+    if (this.informationPlacesRef && !this.informationPlacesObserver) {
       this.informationPlacesObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -280,7 +140,7 @@ export class GrwOutdoorSiteDetail {
       this.informationPlacesObserver.observe(this.informationPlacesRef);
     }
 
-    if (this.poiRef) {
+    if (this.poiRef && !this.poiObserver) {
       this.poiObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -291,7 +151,7 @@ export class GrwOutdoorSiteDetail {
       this.poiObserver.observe(this.poiRef);
     }
 
-    if (this.touristicContentsRef) {
+    if (this.touristicContentsRef && !this.touristicContentObserver) {
       this.touristicContentObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -301,7 +161,7 @@ export class GrwOutdoorSiteDetail {
       );
       this.touristicContentObserver.observe(this.touristicContentsRef);
     }
-    if (this.touristicEventsRef) {
+    if (this.touristicEventsRef && !this.touristicEventObserver) {
       this.touristicEventObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -311,7 +171,7 @@ export class GrwOutdoorSiteDetail {
       );
       this.touristicEventObserver.observe(this.touristicEventsRef);
     }
-    if (this.sitesRef) {
+    if (this.sitesRef && !this.siteObserver) {
       this.siteObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -321,7 +181,7 @@ export class GrwOutdoorSiteDetail {
       );
       this.siteObserver.observe(this.sitesRef);
     }
-    if (this.coursesRef) {
+    if (this.coursesRef && !this.courseObserver) {
       this.courseObserver = new IntersectionObserver(
         entries => {
           const isIntersecting = entries[0].isIntersecting;
@@ -331,6 +191,186 @@ export class GrwOutdoorSiteDetail {
       );
       this.courseObserver.observe(this.coursesRef);
     }
+  }
+
+  handleSwipers() {
+    if (this.swiperImagesRef && !this.swiperImages) {
+      this.swiperImages = new Swiper(this.swiperImagesRef, {
+        modules: [Navigation, Pagination, Keyboard, FreeMode, Mousewheel],
+        navigation: {
+          prevEl: this.prevElImagesRef,
+          nextEl: this.nextElImagesRef,
+        },
+        pagination: { el: this.paginationElImagesRef },
+        allowTouchMove: false,
+        keyboard: false,
+        loop: true,
+      });
+      this.swiperImagesRef.onfullscreenchange = () => {
+        this.displayFullscreen = !this.displayFullscreen;
+        this.displayFullscreen ? this.swiperImages.keyboard.enable() : this.swiperImages.keyboard.disable();
+      };
+    }
+    if (this.swiperRelatedOutdoorSitesRef && !this.swiperRelatedOutdoorSites) {
+      this.swiperRelatedOutdoorSites = new Swiper(this.swiperRelatedOutdoorSitesRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.relatedOutdoorSitesSwiperScrollbar,
+        },
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
+        },
+        loop: false,
+      });
+    }
+    if (this.swiperInformationDesksRef && !this.swiperInformationDesks) {
+      this.swiperInformationDesks = new Swiper(this.swiperInformationDesksRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.informationDesksContentsSwiperScrollbar,
+        },
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
+        },
+        loop: false,
+      });
+    }
+    if (this.swiperRelatedOutdoorCoursesRef && !this.swiperRelatedOutdoorCourses) {
+      this.swiperRelatedOutdoorCourses = new Swiper(this.swiperRelatedOutdoorCoursesRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.relatedOutdoorCoursesSwiperScrollbar,
+        },
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
+        },
+        loop: false,
+      });
+    }
+    if (this.swiperTouristicContentsRef && !this.swiperTouristicContents) {
+      this.swiperTouristicContents = new Swiper(this.swiperTouristicContentsRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.touristicContentsSwiperScrollbar,
+        },
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
+        },
+        loop: false,
+      });
+    }
+    if (this.swiperTouristicEventsRef && !this.swiperTouristicEvents) {
+      this.swiperTouristicEvents = new Swiper(this.swiperTouristicEventsRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.touristicEventsSwiperScrollbar,
+        },
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
+        },
+        loop: false,
+      });
+    }
+    if (this.swiperPoisRef && !this.swiperPois) {
+      this.swiperPois = new Swiper(this.swiperPoisRef, {
+        modules: [FreeMode, Mousewheel, Scrollbar],
+        slidesPerView: 1.5,
+        spaceBetween: 20,
+        grabCursor: true,
+        freeMode: true,
+        mousewheel: { forceToAxis: true },
+        scrollbar: {
+          draggable: true,
+          hide: false,
+          el: this.poisSwiperScrollbar,
+        },
+        breakpointsBase: 'container',
+        breakpoints: {
+          '540': {
+            slidesPerView: 2.5,
+          },
+          '1024': {
+            slidesPerView: 4,
+          },
+        },
+        loop: false,
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    this.handleObservers();
+    this.handleSwipers();
+  }
+
+  componentDidLoad() {
+    this.handleObservers();
+    this.handleSwipers();
   }
 
   async connectedCallback() {
