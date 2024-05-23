@@ -701,9 +701,7 @@ export class GrwApp {
                   </div>
                   {this.enableOffline && (state.mode === 'treks' || state.mode === 'outdoor') && (
                     <div part="grw-offline-container" class="grw-offline-container">
-                      <div class="grw-offline-label">
-                        {state.mode === 'treks' ? 'Afficher uniquement les itinéraires hors ligne' : 'Afficher uniquement les outdoor hors ligne'}
-                      </div>
+                      <div class="grw-offline-label">{state.mode === 'treks' ? translate[state.language].onlyOfflineTreks : translate[state.language].onlyOfflineOutdoor}</div>
                       <grw-switch
                         exportparts="common-button,common-button-icon,common-button-label"
                         font-family={this.fontFamily}

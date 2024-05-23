@@ -117,6 +117,8 @@ interface Translation {
   placeholderActivities: string;
   placeholderDistricts: string;
   placeholderCategories: string;
+  onlyOfflineTreks: string;
+  onlyOfflineOutdoor: string;
 }
 
 interface AvailableTranslations {
@@ -245,6 +247,8 @@ const defaultTranslate: AvailableTranslations = {
     placeholderActivities: 'Sélectionner une ou plusieurs activités',
     placeholderDistricts: 'Sélectionner un ou plusieurs secteurs',
     placeholderCategories: 'Sélectionner une ou plusieurs catégories',
+    onlyOfflineTreks: 'Afficher uniquement les itinéraires hors ligne',
+    onlyOfflineOutdoor: 'Afficher uniquement les outdoor hors ligne',
   },
   en: {
     filter: 'Filter',
@@ -366,6 +370,8 @@ const defaultTranslate: AvailableTranslations = {
     placeholderActivities: 'Select one or more activities',
     placeholderDistricts: 'Select one or more districts',
     placeholderCategories: 'Select one or more categories',
+    onlyOfflineTreks: 'Only display offline treks',
+    onlyOfflineOutdoor: 'Only display offline outdoor',
   },
 };
 
