@@ -133,24 +133,9 @@ export class GrwPoiDetail {
                 </div>
               )}
             </div>
-            <div
-              style={{ display: this.offline || this.poi.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
-              part="swiper-pagination"
-              class="swiper-pagination"
-              ref={el => (this.paginationElPoiRef = el)}
-            ></div>
-            <div
-              style={{ display: this.offline || this.poi.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'flex' }}
-              part="swiper-button-prev"
-              class="swiper-button-prev"
-              ref={el => (this.prevElPoiRef = el)}
-            ></div>
-            <div
-              style={{ display: this.offline || this.poi.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'flex' }}
-              part="swiper-button-next"
-              class="swiper-button-next"
-              ref={el => (this.nextElPoiRef = el)}
-            ></div>
+            <div style={{ display: this.offline ? 'none' : 'block' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
+            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
+            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
           </div>
         </div>
         <div part="poi-sub-container" class="poi-sub-container">

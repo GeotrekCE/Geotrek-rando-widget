@@ -167,23 +167,13 @@ export class GrwTouristicEvent {
                   )}
                 </div>
                 <div
-                  style={{ display: this.offline || this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
+                  style={{ display: this.offline ? 'none' : 'block' }}
                   part="swiper-pagination"
                   class="swiper-pagination"
                   ref={el => (this.paginationElTouristicEventRef = el)}
                 ></div>
-                <div
-                  style={{ display: this.offline || this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
-                  part="swiper-button-prev"
-                  class="swiper-button-prev"
-                  ref={el => (this.prevElTouristicEventRef = el)}
-                ></div>
-                <div
-                  style={{ display: this.offline || this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length <= 1 ? 'none' : 'block' }}
-                  part="swiper-button-next"
-                  class="swiper-button-next"
-                  ref={el => (this.nextElTouristicEventRef = el)}
-                ></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
+                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
               </div>
             ) : this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img
