@@ -140,7 +140,7 @@ Voici un exemple avec l'anglais :
 
 Depuis la version `0.16.0.` de Geotrek-widget, il est possible de surcharger les traductions par défaut.
 
-Pour cela, il faut ajouter une balise `<script></script>` sur la page où est intégré le composant `grw`.
+Pour cela, il faut ajouter une balise `<script></script>` sur la page où est intégrée le composant `grw`.
 
 **Exemple de modifications du titre de la section "Recommandation" dans une fiche détail d'itinéraire :**
 
