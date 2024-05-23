@@ -138,7 +138,7 @@ Voici un exemple avec l'anglais :
 
 ## Surcharger des traductions
 
-Depuis la version `0.16.0.` de geotrek-widget, il est possible de surcharger les traductions par défaut.
+Depuis la version `0.16.0.` de Geotrek-widget, il est possible de surcharger les traductions par défaut.
 
 Pour cela, il faut ajouter une balise `<script></script>` sur la page où est intégré le composant `grw`.
 
