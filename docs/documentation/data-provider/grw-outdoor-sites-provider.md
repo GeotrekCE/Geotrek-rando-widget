@@ -1,6 +1,6 @@
-# Récupérer les données liées aux contenus touristiques
+# Récupérer les données liées aux sites outdoor
 
-Ce composant permet de récupérer les données liées aux contenus touristiques. Il convient de renseigner les paramètres nécessaires.
+Ce composant permet de récupérer les données liées aux sites outdoor. Il convient de renseigner les paramètres nécessaires.
 
 ## Paramètres obligatoires
 
@@ -18,12 +18,11 @@ Ce composant permet de récupérer les données liées aux contenus touristiques
 
 ## Composants graphiques liés
 
-- grw-touristic-contents-list
+- grw-outdoor-sites-list
 - grw-map
 
-## Exemple d'affichage d'une liste de contenus touristiques
+## Exemple d'affichage d'une liste de sites outdoor
 
 ```html
-<grw-touristic-contents-provider api="https://geotrek-admin.portcros-parcnational.fr/api/v2/" themes="1,2"></grw-touristic-contents-provider>
-<grw-touristic-contents-list></grw-touristic-event-list>
+<grw-outdoor-sites-provider api="https://admin.escapade62.fr/api/v2/" themes="1,2"></grw-outdoor-sites-provider><grw-outdoor-sites-list></grw-outdoor-sites-list>
 ```
