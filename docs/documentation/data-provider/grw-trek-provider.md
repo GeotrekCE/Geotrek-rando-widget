@@ -5,7 +5,7 @@ Ce composant permet de récupérer les données liées à un itinéraire. Il con
 ## Paramètres obligatoires
 
 - api: url de l'api du geotrek admin cible
-- trek-id: Identifiant de l'itinéraire
+- trek-id: identifiant de l'itinéraire
 
 ## Paramètres optionnels
 
