@@ -8,7 +8,7 @@
 git clone git@github.com:GeotrekCE/Geotrek-rando-widget.git
 ```
 
-**2. Installer npm**
+**2. Installer les modules npm**
 
 ```bash
 npm install
@@ -16,11 +16,12 @@ npm install
 
 ## Démarrer l'application
 
-Une fois npm installé, démarrer le serveur en mode développement en lançant cette commande :
+Démarrer le serveur en mode développement en lançant cette commande :
 
 ```bash
 npm run docs:dev
 ```
+
 Rendez vous ensuite sur cette URL :
 
 ```bash
@@ -65,9 +66,8 @@ Exemple de création de nouvelle section :
 Traduire une documentation utilisateur dans une autre langue que le français offre plusieurs avantages :
 
 - **Améliorer l'accessibilité** : en traduisant la documentation de Geotrek-rando-widget, vous contribuez à rendre le produit accessible à un public plus large à travers le monde
-- **Améliorer l'expérience utilisateur** : la traduction de la documentation dans la langue des utilisateurs permet de faciliter la compréhension et l'utilisation  et donc d'améliorer leur expérience globale du produit
+- **Améliorer l'expérience utilisateur** : la traduction de la documentation dans la langue des utilisateurs permet de faciliter la compréhension et l'utilisation et donc d'améliorer leur expérience globale du produit
 - **Faciliter la collaboration** : si Geotrek-rando-widget est utilisé par une équipe internationale, avoir une documentation en anglais facilite la collaboration, le support et la communication
-
 
 ## Ajouter du contenu en anglais
 
@@ -89,7 +89,7 @@ L'ensemble des fichiers markdown de documentation se trouvent dans le dossier /d
 
 **2. Mettre à jour l'index**
 
-Dans cet exemple, on met à jour le fichier `/docs/.vitepress/config/en.ts` en ajoutant la ligne           mise en évidence :
+Dans cet exemple, on met à jour le fichier `/docs/.vitepress/config/en.ts` en ajoutant la ligne mise en évidence :
 
 ```js
       {
@@ -110,7 +110,7 @@ Dans cet exemple, on met à jour le fichier `/docs/.vitepress/config/en.ts` en a
 
 ## Ajouter une nouvelle langue
 
-Pour ajouter le support d'une nouvelle langue (prenons ici l'exemple de l'*italien*), il faut :
+Pour ajouter le support d'une nouvelle langue (prenons ici l'exemple de l'_italien_), il faut :
 
 **1. Créer un dossier `/docs/it/documentation/`**
 
@@ -126,10 +126,10 @@ Pour des raisons de simplicité, les noms des sous-dossiers et fichiers markdown
 
 **3. Créer le fichier `it.ts` dans le dossier `/docs/.vitepress/config/`**
 
-Il s'agit du fichier où l'arborescence des menus dans la langue sera effectuée. Les menus ont également besoin d'être traduits. 
+Il s'agit du fichier où l'arborescence des menus dans la langue sera effectuée. Les menus ont également besoin d'être traduits.
 
 ::: tip
-Pour plus de facilité, il peut être intéressant de reprendre le contenu du fichier `en.ts` et de l'adapter au contenu de la nouvelle langue. 
+Pour plus de facilité, il peut être intéressant de reprendre le contenu du fichier `en.ts` et de l'adapter au contenu de la nouvelle langue.
 :::
 
 **4. Inclure la langue dans le fichier /docs/.vitepress/config/index.ts**
@@ -148,7 +148,7 @@ export default defineConfig({
       label: 'English',
       ...en,
     },
-    it: { 
+    it: {
       label: 'Italiano', // [!code focus]
       ...it,
     },
