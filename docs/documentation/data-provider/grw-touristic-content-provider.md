@@ -5,7 +5,7 @@ Ce composant permet de récupérer les données liées à un contenu touristique
 ## Paramètres obligatoires
 
 - api: url de l'api du geotrek admin cible
-- touristic-content-id: Identifiant de l'événement touristique
+- touristic-content-id: identifiant de l'événement touristique
 
 ## Paramètres optionnels
 
