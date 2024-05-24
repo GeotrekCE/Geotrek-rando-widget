@@ -5,7 +5,7 @@ Ce composant permet de récupérer les données liées à un parcours outdoor. I
 ## Paramètres obligatoires
 
 - api: url de l'api du geotrek admin cible
-- outdoor-course-id: Identifiant du parcours outdoor
+- outdoor-course-id: identifiant du parcours outdoor
 
 ## Paramètres optionnels
 
