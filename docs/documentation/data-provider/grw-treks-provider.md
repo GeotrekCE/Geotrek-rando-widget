@@ -14,7 +14,7 @@ Ce composant permet de récupérer les données liées aux itinéraires. Il conv
 - districts : liste d'identifiants des secteurs séparés par une virgule
 - structures : liste d'identifiants des structures séparés par une virgule
 - themes : Liste d'identifiants des thèmes séparés par une virgule
-- portals : Liste d'identifiants des portails séparés par une virgule
+- portals : liste d'identifiants des portails séparés par une virgule
 - routes : Liste d'identifiants des types de parcours séparés par une virgule
 - practices : liste d'identifiants des pratiques séparés par une virgule
 - labels : liste d'identifiants des étiquettes séparés par une virgule
