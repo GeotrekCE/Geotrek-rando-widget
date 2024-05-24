@@ -9,7 +9,7 @@ Ce composant permet de récupérer les données liées aux événements touristi
 ## Paramètres optionnels
 
 - languages : identifiant de la langue, fr par défaut
-- in-bbox : Bounding box
+- in-bbox : bounding box
 - cities : Liste d'identifiants des villes séparés par une virgule
 - districts : Liste d'identifiants des secteurs séparés par une virgule
 - structures : Liste d'identifiants des structures séparés par une virgule
