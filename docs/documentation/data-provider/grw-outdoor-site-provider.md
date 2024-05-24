@@ -5,7 +5,7 @@ Ce composant permet de récupérer les données liées à un site outdoor. Il co
 ## Paramètres obligatoires
 
 - api: url de l'api du geotrek admin cible
-- outdoor-site-id: Identifiant du site outdoor
+- outdoor-site-id: identifiant du site outdoor
 
 ## Paramètres optionnels
 
