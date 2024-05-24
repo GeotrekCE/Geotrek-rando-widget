@@ -2,4 +2,4 @@
 
 Geotrek-rando-widget propose une multitude de composants qui permettent de récupérer des données.
 
-Ces composants stockent les données reçus dans un entrepôt de données qui est utilisé par les composants graphiques.
+Ces composants stockent les données reçues dans un entrepôt de données qui est utilisé par les composants graphiques.
