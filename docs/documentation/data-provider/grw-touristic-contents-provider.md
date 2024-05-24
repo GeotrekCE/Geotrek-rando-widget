@@ -11,7 +11,7 @@ Ce composant permet de récupérer les données liées aux contenus touristiques
 - languages : identifiant de la langue, fr par défaut
 - in-bbox : Bounding box
 - cities : liste d'identifiants des villes séparés par une virgule
-- districts : Liste d'identifiants des secteurs séparés par une virgule
+- districts : liste d'identifiants des secteurs séparés par une virgule
 - structures : Liste d'identifiants des structures séparés par une virgule
 - themes : Liste d'identifiants des thèmes séparés par une virgule
 - portals : Liste d'identifiants des portails séparés par une virgule
