@@ -13,7 +13,7 @@ Ce composant permet de récupérer les données liées aux sites outdoor. Il con
 - cities : liste d'identifiants des villes séparés par une virgule
 - districts : liste d'identifiants des secteurs séparés par une virgule
 - structures : liste d'identifiants des structures séparés par une virgule
-- themes : Liste d'identifiants des thèmes séparés par une virgule
+- themes : liste d'identifiants des thèmes séparés par une virgule
 - portals : Liste d'identifiants des portails séparés par une virgule
 
 ## Composants graphiques liés
