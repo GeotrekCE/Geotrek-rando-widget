@@ -86,7 +86,7 @@ Ce qui donne ce résultat :
 
 <div id="advanced-customization-result-container">
 <grw-app
-      api="https://prod-geotrek-pnrlat-admin.makina-corpus.net/api/v2/"
+      api="https://admin.rando-loireanjoutouraine.fr/api/v2/"
       portals="4"
       name-layer="IGN"
       url-layer="https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}"

@@ -6,7 +6,7 @@ Le widget se présente sous la forme d'un tag HTML embarquant toutes les configu
 <grw-app
   app-width="100%"
   app-height="100%"
-  api="https://prod-geotrek-pnrlat-admin.makina-corpus.net/api/v2/"
+  api="https://admin.rando-loireanjoutouraine.fr/api/v2/"
   languages="fr,en"
   name-layer="IGN,OpenStreetMap"
   url-layer="https://wxs.ign.fr/cartes/geoportail/wmts?&amp;REQUEST=GetTile&amp;SERVICE=WMTS&amp;VERSION=1.0.0&amp;STYLE=normal&amp;TILEMATRIXSET=PM&amp;FORMAT=image/png&amp;LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&amp;TILEMATRIX={z}&amp;TILEROW={y}&amp;TILECOL={x},https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
