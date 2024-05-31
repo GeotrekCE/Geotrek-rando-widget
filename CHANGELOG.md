@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.19.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.18.2...0.19.0) (2024-05-31)
+
+
+### Features
+
+* add offline confirm modal component ([b4c50f2](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/b4c50f2639ca972495f0beaac9940380e1c5dd70))
+
+
+### Bug Fixes
+
+* use url if thumbnail is empty ([9850b1f](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/9850b1f1fbc216f3a95df6ca3e4514b544e72bc5))
+
 ## [0.18.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.18.1...0.18.2) (2024-05-23)
 
 
