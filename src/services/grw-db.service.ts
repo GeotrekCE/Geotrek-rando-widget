@@ -433,7 +433,6 @@ export async function writeOrUpdateFilesInStore(value, imagesRegExp, onlyFirstAr
 
 export async function writeOrUpdateTilesInStore(offlineLayer: TileLayerOffline, bounds, minZoom, MaxZoom) {
   const tilesToStore: TileInfo[] = [];
-
   for (let index = minZoom; index <= MaxZoom; index++) {
     tilesToStore.push(
       ...offlineLayer.getTileUrls(L.bounds(L.CRS.EPSG3857.latLngToPoint(bounds.getNorthWest(), index), L.CRS.EPSG3857.latLngToPoint(bounds.getSouthEast(), index)), index),

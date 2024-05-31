@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { InformationDesk, OutdoorCourse, OutdoorSite, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
-export { InformationDesk, OutdoorCourse, OutdoorSite, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
+import { InformationDesk, Mode, OutdoorCourse, OutdoorSite, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
+export { InformationDesk, Mode, OutdoorCourse, OutdoorSite, Poi, SensitiveArea, TouristicContent, TouristicEvent, Trek } from "./types/types";
 export namespace Components {
     interface GrwApp {
         "api": string;
@@ -112,6 +112,9 @@ export namespace Components {
         "tilesMaxZoomOffline": number;
         "urlLayer": string;
         "useGradient": boolean;
+    }
+    interface GrwOfflineConfirmModal {
+        "mode": Mode;
     }
     interface GrwOutdoorCourseCard {
         "colorOnSecondaryContainer": string;
@@ -389,10 +392,6 @@ export namespace Components {
         "themes": string;
     }
 }
-export interface GrwAppCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLGrwAppElement;
-}
 export interface GrwFiltersCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwFiltersElement;
@@ -404,6 +403,10 @@ export interface GrwInformationDeskCustomEvent<T> extends CustomEvent<T> {
 export interface GrwMapCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwMapElement;
+}
+export interface GrwOfflineConfirmModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwOfflineConfirmModalElement;
 }
 export interface GrwOutdoorCourseCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -438,19 +441,7 @@ export interface GrwTrekDetailCustomEvent<T> extends CustomEvent<T> {
     target: HTMLGrwTrekDetailElement;
 }
 declare global {
-    interface HTMLGrwAppElementEventMap {
-        "downloadPress": number;
-        "deletePress": number;
-    }
     interface HTMLGrwAppElement extends Components.GrwApp, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLGrwAppElementEventMap>(type: K, listener: (this: HTMLGrwAppElement, ev: GrwAppCustomEvent<HTMLGrwAppElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLGrwAppElementEventMap>(type: K, listener: (this: HTMLGrwAppElement, ev: GrwAppCustomEvent<HTMLGrwAppElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLGrwAppElement: {
         prototype: HTMLGrwAppElement;
@@ -534,6 +525,24 @@ declare global {
     var HTMLGrwMapElement: {
         prototype: HTMLGrwMapElement;
         new (): HTMLGrwMapElement;
+    };
+    interface HTMLGrwOfflineConfirmModalElementEventMap {
+        "downloadPress": number;
+        "deletePress": number;
+    }
+    interface HTMLGrwOfflineConfirmModalElement extends Components.GrwOfflineConfirmModal, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwOfflineConfirmModalElementEventMap>(type: K, listener: (this: HTMLGrwOfflineConfirmModalElement, ev: GrwOfflineConfirmModalCustomEvent<HTMLGrwOfflineConfirmModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwOfflineConfirmModalElementEventMap>(type: K, listener: (this: HTMLGrwOfflineConfirmModalElement, ev: GrwOfflineConfirmModalCustomEvent<HTMLGrwOfflineConfirmModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGrwOfflineConfirmModalElement: {
+        prototype: HTMLGrwOfflineConfirmModalElement;
+        new (): HTMLGrwOfflineConfirmModalElement;
     };
     interface HTMLGrwOutdoorCourseCardElementEventMap {
         "outdoorCourseCardPress": number;
@@ -845,6 +854,7 @@ declare global {
         "grw-information-desk": HTMLGrwInformationDeskElement;
         "grw-loader": HTMLGrwLoaderElement;
         "grw-map": HTMLGrwMapElement;
+        "grw-offline-confirm-modal": HTMLGrwOfflineConfirmModalElement;
         "grw-outdoor-course-card": HTMLGrwOutdoorCourseCardElement;
         "grw-outdoor-course-detail": HTMLGrwOutdoorCourseDetailElement;
         "grw-outdoor-course-provider": HTMLGrwOutdoorCourseProviderElement;
@@ -915,8 +925,6 @@ declare namespace LocalJSX {
         "labels"?: string;
         "languages"?: string;
         "nameLayer"?: string;
-        "onDeletePress"?: (event: GrwAppCustomEvent<number>) => void;
-        "onDownloadPress"?: (event: GrwAppCustomEvent<number>) => void;
         "outdoor"?: boolean;
         "portals"?: string;
         "practices"?: string;
@@ -991,6 +999,11 @@ declare namespace LocalJSX {
         "tilesMaxZoomOffline"?: number;
         "urlLayer"?: string;
         "useGradient"?: boolean;
+    }
+    interface GrwOfflineConfirmModal {
+        "mode"?: Mode;
+        "onDeletePress"?: (event: GrwOfflineConfirmModalCustomEvent<number>) => void;
+        "onDownloadPress"?: (event: GrwOfflineConfirmModalCustomEvent<number>) => void;
     }
     interface GrwOutdoorCourseCard {
         "colorOnSecondaryContainer"?: string;
@@ -1317,6 +1330,7 @@ declare namespace LocalJSX {
         "grw-information-desk": GrwInformationDesk;
         "grw-loader": GrwLoader;
         "grw-map": GrwMap;
+        "grw-offline-confirm-modal": GrwOfflineConfirmModal;
         "grw-outdoor-course-card": GrwOutdoorCourseCard;
         "grw-outdoor-course-detail": GrwOutdoorCourseDetail;
         "grw-outdoor-course-provider": GrwOutdoorCourseProvider;
@@ -1361,6 +1375,7 @@ declare module "@stencil/core" {
             "grw-information-desk": LocalJSX.GrwInformationDesk & JSXBase.HTMLAttributes<HTMLGrwInformationDeskElement>;
             "grw-loader": LocalJSX.GrwLoader & JSXBase.HTMLAttributes<HTMLGrwLoaderElement>;
             "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
+            "grw-offline-confirm-modal": LocalJSX.GrwOfflineConfirmModal & JSXBase.HTMLAttributes<HTMLGrwOfflineConfirmModalElement>;
             "grw-outdoor-course-card": LocalJSX.GrwOutdoorCourseCard & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseCardElement>;
             "grw-outdoor-course-detail": LocalJSX.GrwOutdoorCourseDetail & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseDetailElement>;
             "grw-outdoor-course-provider": LocalJSX.GrwOutdoorCourseProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseProviderElement>;
