@@ -491,7 +491,12 @@ export class GrwMap {
             id: trek.id,
             name: trek.name,
             practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram,
-            imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].thumbnail,
+            imgSrc:
+              trek.attachments && trek.attachments.filter(attachment => attachment.type === 'image').length > 0
+                ? trek.attachments[0].thumbnail !== ''
+                  ? trek.attachments[0].thumbnail
+                  : trek.attachments[0].url
+                : null,
           },
         });
       }
@@ -792,7 +797,12 @@ export class GrwMap {
               id: trek.id,
               name: trek.name,
               practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram,
-              imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].thumbnail,
+              imgSrc:
+                trek.attachments && trek.attachments.filter(attachment => attachment.type === 'image').length > 0
+                  ? trek.attachments[0].thumbnail !== ''
+                    ? trek.attachments[0].thumbnail
+                    : trek.attachments[0].url
+                  : null,
             },
           });
         }
@@ -994,7 +1004,12 @@ export class GrwMap {
           id: trek.id,
           name: trek.name,
           practice: state.practices.find(practice => practice.id === trek.practice)?.pictogram,
-          imgSrc: trek.attachments && trek.attachments.length > 0 && trek.attachments[0].thumbnail,
+          imgSrc:
+            trek.attachments && trek.attachments.filter(attachment => attachment.type === 'image').length > 0
+              ? trek.attachments[0].thumbnail !== ''
+                ? trek.attachments[0].thumbnail
+                : trek.attachments[0].url
+              : null,
         },
       });
     }
@@ -1095,7 +1110,11 @@ export class GrwMap {
           name: state.currentTrekSteps[stepIndex].name,
           practice: state.practices.find(practice => practice.id === state.currentTrekSteps[stepIndex].practice)?.pictogram,
           imgSrc:
-            state.currentTrekSteps[stepIndex].attachments && state.currentTrekSteps[stepIndex].attachments.length > 0 && state.currentTrekSteps[stepIndex].attachments[0].thumbnail,
+            state.currentTrekSteps[stepIndex].attachments && state.currentTrekSteps[stepIndex].attachments.filter(attachment => attachment.type === 'image').length > 0
+              ? state.currentTrekSteps[stepIndex].attachments[0].thumbnail !== ''
+                ? state.currentTrekSteps[stepIndex].attachments[0].thumbnail
+                : state.currentTrekSteps[stepIndex].attachments[0].url
+              : null,
           index: stepIndex + 1,
         },
       });
@@ -1291,7 +1310,12 @@ export class GrwMap {
             id: currentTouristicContent.id,
             name: currentTouristicContent.name,
             practice: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === currentTouristicContent.category).pictogram,
-            imgSrc: currentTouristicContent.attachments && currentTouristicContent.attachments.length > 0 && currentTouristicContent.attachments[0].thumbnail,
+            imgSrc:
+              currentTouristicContent.attachments && currentTouristicContent.attachments.filter(attachment => attachment.type === 'image').length > 0
+                ? currentTouristicContent.attachments[0].thumbnail !== ''
+                  ? currentTouristicContent.attachments[0].thumbnail
+                  : currentTouristicContent.attachments[0].url
+                : null,
           },
         });
       }
@@ -1465,7 +1489,12 @@ export class GrwMap {
           id: touristicContent.id,
           name: touristicContent.name,
           category: state.touristicContentCategories.find(practice => practice.id === touristicContent.category)?.pictogram,
-          imgSrc: touristicContent.attachments && touristicContent.attachments.length > 0 && touristicContent.attachments[0].thumbnail,
+          imgSrc:
+            touristicContent.attachments && touristicContent.attachments.filter(attachment => attachment.type === 'image').length > 0
+              ? touristicContent.attachments[0].thumbnail !== ''
+                ? touristicContent.attachments[0].thumbnail
+                : touristicContent.attachments[0].url
+              : null,
         },
       });
     }
@@ -1568,7 +1597,12 @@ export class GrwMap {
             id: currentTouristicEvent.id,
             name: currentTouristicEvent.name,
             type: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === currentTouristicEvent.type)?.pictogram,
-            imgSrc: currentTouristicEvent.attachments && currentTouristicEvent.attachments.length > 0 && currentTouristicEvent.attachments[0].thumbnail,
+            imgSrc:
+              currentTouristicEvent.attachments && currentTouristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0
+                ? currentTouristicEvent.attachments[0].thumbnail !== ''
+                  ? currentTouristicEvent.attachments[0].thumbnail
+                  : currentTouristicEvent.attachments[0].url
+                : null,
           },
         });
       }
@@ -1696,7 +1730,12 @@ export class GrwMap {
             id: currentOutdoorSite.id,
             name: currentOutdoorSite.name,
             practice: state.outdoorPractices.find(practice => practice.id === currentOutdoorSite.practice)?.pictogram,
-            imgSrc: currentOutdoorSite.attachments && currentOutdoorSite.attachments.length > 0 && currentOutdoorSite.attachments[0].thumbnail,
+            imgSrc:
+              currentOutdoorSite.attachments && currentOutdoorSite.attachments.filter(attachment => attachment.type === 'image').length > 0
+                ? currentOutdoorSite.attachments[0].thumbnail !== ''
+                  ? currentOutdoorSite.attachments[0].thumbnail
+                  : currentOutdoorSite.attachments[0].url
+                : null,
           },
         });
       }
@@ -1881,7 +1920,12 @@ export class GrwMap {
             id: currentRelatedOutdoorSite.id,
             name: currentRelatedOutdoorSite.name,
             practice: state.outdoorPractices.find(practice => practice.id === currentRelatedOutdoorSite.practice)?.pictogram,
-            imgSrc: currentRelatedOutdoorSite.attachments && currentRelatedOutdoorSite.attachments.length > 0 && currentRelatedOutdoorSite.attachments[0].thumbnail,
+            imgSrc:
+              currentRelatedOutdoorSite.attachments && currentRelatedOutdoorSite.attachments.filter(attachment => attachment.type === 'image').length > 0
+                ? currentRelatedOutdoorSite.attachments[0].thumbnail !== ''
+                  ? currentRelatedOutdoorSite.attachments[0].thumbnail
+                  : currentRelatedOutdoorSite.attachments[0].url
+                : null,
           },
         });
       }
@@ -1924,7 +1968,12 @@ export class GrwMap {
             id: currentRelatedOutdoorCourse.id,
             name: currentRelatedOutdoorCourse.name,
             type: state.outdoorCourseTypes.find(type => type.id === currentRelatedOutdoorCourse.type)?.pictogram,
-            imgSrc: currentRelatedOutdoorCourse.attachments && currentRelatedOutdoorCourse.attachments.length > 0 && currentRelatedOutdoorCourse.attachments[0].thumbnail,
+            imgSrc:
+              currentRelatedOutdoorCourse.attachments && currentRelatedOutdoorCourse.attachments.filter(attachment => attachment.type === 'image').length > 0
+                ? currentRelatedOutdoorCourse.attachments[0].thumbnail !== ''
+                  ? currentRelatedOutdoorCourse.attachments[0].thumbnail
+                  : currentRelatedOutdoorCourse.attachments[0].url
+                : null,
           },
         });
       }
@@ -1972,7 +2021,12 @@ export class GrwMap {
           id: touristicEvent.id,
           name: touristicEvent.name,
           category: state.touristicEventTypes.find(type => type.id === touristicEvent.type)?.pictogram,
-          imgSrc: touristicEvent.attachments && touristicEvent.attachments.length > 0 && touristicEvent.attachments[0].thumbnail,
+          imgSrc:
+            touristicEvent.attachments && touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0
+              ? touristicEvent.attachments[0].thumbnail !== ''
+                ? touristicEvent.attachments[0].thumbnail
+                : touristicEvent.attachments[0].url
+              : null,
         },
       });
     }
@@ -2127,7 +2181,12 @@ export class GrwMap {
             id: outdoorSite.id,
             name: outdoorSite.name,
             practice: state.outdoorPractices.find(practice => practice.id === outdoorSite.practice)?.pictogram,
-            imgSrc: outdoorSite.attachments && outdoorSite.attachments.length > 0 && outdoorSite.attachments[0].thumbnail,
+            imgSrc:
+              outdoorSite.attachments && outdoorSite.attachments.filter(attachment => attachment.type === 'image').length > 0
+                ? outdoorSite.attachments[0].thumbnail !== ''
+                  ? outdoorSite.attachments[0].thumbnail
+                  : outdoorSite.attachments[0].url
+                : null,
           },
         });
       }
@@ -2226,7 +2285,12 @@ export class GrwMap {
           id: outdoorCourse.id,
           name: outdoorCourse.name,
           type: state.outdoorCourseTypes.find(type => type.id === outdoorCourse.type)?.pictogram,
-          imgSrc: outdoorCourse.attachments && outdoorCourse.attachments.length > 0 && outdoorCourse.attachments[0].thumbnail,
+          imgSrc:
+            outdoorCourse.attachments && outdoorCourse.attachments.filter(attachment => attachment.type === 'image').length > 0
+              ? outdoorCourse.attachments[0].thumbnail !== ''
+                ? outdoorCourse.attachments[0].thumbnail
+                : outdoorCourse.attachments[0].url
+              : null,
         },
       });
     }

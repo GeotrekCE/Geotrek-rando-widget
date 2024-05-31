@@ -124,7 +124,11 @@ export class GrwTrekCard {
                 <img
                   part="trek-img"
                   class="trek-img"
-                  src={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                  src={`${
+                    this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail !== ''
+                      ? this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail
+                      : this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].url
+                  }`}
                   alt={`${this.currentTrek.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                   loading="lazy"
                   /* @ts-ignore */

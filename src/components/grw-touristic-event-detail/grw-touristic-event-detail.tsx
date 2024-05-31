@@ -125,7 +125,7 @@ export class GrwTouristicEventDetail {
                             <img
                               part="image"
                               class="image"
-                              src={this.offline ? attachment.thumbnail : attachment.url}
+                              src={this.offline && attachment.thumbnail !== '' ? attachment.thumbnail : attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
                               alt={attachment.legend}

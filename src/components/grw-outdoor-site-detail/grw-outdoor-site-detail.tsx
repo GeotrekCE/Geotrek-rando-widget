@@ -700,7 +700,7 @@ export class GrwOutdoorSiteDetail {
                             <img
                               part="outdoor-site-img"
                               class="outdoor-site-img"
-                              src={this.offline ? attachment.thumbnail : attachment.url}
+                              src={this.offline && attachment.thumbnail !== '' ? attachment.thumbnail : attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
                               /* @ts-ignore */

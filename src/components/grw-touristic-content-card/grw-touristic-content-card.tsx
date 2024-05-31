@@ -146,7 +146,7 @@ export class GrwTouristicContentCard {
                           <img
                             part="touristic-content-img"
                             class={`touristic-content-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
-                            src={this.displayFullscreen ? (this.offline ? attachment.thumbnail : attachment.url) : attachment.thumbnail}
+                            src={this.displayFullscreen ? (this.offline && attachment.thumbnail !== '' ? attachment.thumbnail : attachment.url) : attachment.thumbnail}
                             loading="lazy"
                             /* @ts-ignore */
                             onerror={event => {
@@ -188,7 +188,11 @@ export class GrwTouristicContentCard {
               <img
                 part="touristic-content-img"
                 class="touristic-content-img"
-                src={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                src={`${
+                  this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail !== ''
+                    ? this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail
+                    : this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].url
+                }`}
                 alt={`${this.touristicContent.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
               />

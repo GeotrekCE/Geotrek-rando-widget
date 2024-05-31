@@ -114,7 +114,7 @@ export class GrwPoiDetail {
                       <img
                         part="poi-iamg"
                         class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
-                        src={this.displayFullscreen ? attachment.url : attachment.thumbnail}
+                        src={this.displayFullscreen ? attachment.url : attachment.thumbnail !== '' ? attachment.thumbnail : attachment.url}
                         alt={attachment.legend}
                         loading="lazy"
                         /* @ts-ignore */

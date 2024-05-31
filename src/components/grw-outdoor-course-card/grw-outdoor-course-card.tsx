@@ -79,7 +79,11 @@ export class GrwOutdoorCourseCard {
               <img
                 part="outdoor-course-img"
                 class="outdoor-course-img"
-                src={`${this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                src={`${
+                  this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail !== ''
+                    ? this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail
+                    : this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].url
+                }`}
                 alt={`${this.outdoorCourse.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
               />

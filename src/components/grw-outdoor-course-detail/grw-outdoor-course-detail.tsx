@@ -285,7 +285,7 @@ export class GrwOutdoorCourseDetail {
                             <img
                               part="outdoor-course-img"
                               class="outdoor-course-img"
-                              src={this.offline ? attachment.thumbnail : attachment.url}
+                              src={this.offline && attachment.thumbnail !== '' ? attachment.thumbnail : attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
                               /* @ts-ignore */

@@ -76,8 +76,11 @@ export class GrwOutdoorSiteCard {
               <img
                 part="outdoor-site-img"
                 class="outdoor-site-img"
-                /* @ts-ignore */
-                src={`${this.outdoorSite.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail}`}
+                src={`${
+                  this.outdoorSite.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail !== ''
+                    ? this.outdoorSite.attachments.filter(attachment => attachment.type === 'image')[0].thumbnail
+                    : this.outdoorSite.attachments.filter(attachment => attachment.type === 'image')[0].url
+                }`}
                 alt={`${this.outdoorSite.attachments.filter(attachment => attachment.type === 'image')[0].legend}`}
                 loading="lazy"
               />

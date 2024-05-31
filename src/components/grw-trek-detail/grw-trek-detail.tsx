@@ -1079,7 +1079,7 @@ export class GrwTrekDetail {
                             <img
                               part="trek-img"
                               class="trek-img"
-                              src={this.offline ? attachment.thumbnail : attachment.url}
+                              src={this.offline && attachment.thumbnail !== '' ? attachment.thumbnail : attachment.url}
                               loading="lazy"
                               onClick={() => this.handleFullscreen()}
                               /* @ts-ignore */
