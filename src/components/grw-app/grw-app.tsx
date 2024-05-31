@@ -1,5 +1,5 @@
 import { Capacitor } from '@capacitor/core';
-import { Component, Host, h, Listen, State, Prop, Element, Watch, Event, EventEmitter, Fragment } from '@stencil/core';
+import { Component, Host, h, Listen, State, Prop, Element, Watch, Fragment } from '@stencil/core';
 import { translate } from 'i18n/i18n';
 import state, { reset } from 'store/store';
 import { handleOutdoorSitesFiltersAndSearch, handleTreksFiltersAndSearch, imagesRegExp, revokeObjectURL } from 'utils/utils';
@@ -88,17 +88,6 @@ export class GrwApp {
   @Prop() globalTilesMaxZoomOffline = 11;
   @Prop() tilesMinZoomOffline = 12;
   @Prop() tilesMaxZoomOffline = 16;
-
-  @State() showOfflineModal = false;
-  @State() showConfirmModal = false;
-  @State() showLoaderModal = false;
-  @State() showSuccessModal = false;
-  @State() showConfirmDeleteModal = false;
-  @State() showDeletingMessage = false;
-  @State() showDeleteSuccessMessage = false;
-
-  @Event() downloadPress: EventEmitter<number>;
-  @Event() deletePress: EventEmitter<number>;
 
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
@@ -220,40 +209,6 @@ export class GrwApp {
     if (!this.isLargeView) {
       this.showTrekMap = true;
     }
-  }
-
-  @Listen('downloadConfirm', { target: 'window' })
-  onDownloadConfirm() {
-    this.showLoaderModal = false;
-    this.showSuccessModal = false;
-    this.showDeleteSuccessMessage = false;
-    this.showDeletingMessage = false;
-    this.showConfirmDeleteModal = false;
-    this.showOfflineModal = true;
-    this.showConfirmModal = true;
-  }
-
-  @Listen('downloadedSuccessConfirm', { target: 'window' })
-  onDownloadedSuccessConfirm() {
-    this.showLoaderModal = false;
-    this.showSuccessModal = true;
-  }
-
-  @Listen('deleteConfirm', { target: 'window' })
-  onDeleteConfirm() {
-    this.showLoaderModal = false;
-    this.showSuccessModal = false;
-    this.showDeleteSuccessMessage = false;
-    this.showOfflineModal = true;
-    this.showConfirmModal = true;
-    this.showConfirmDeleteModal = true;
-  }
-
-  @Listen('deleteSuccessConfirm', { target: 'window' })
-  onDeleteSuccessConfirm() {
-    this.showLoaderModal = false;
-    this.showSuccessModal = true;
-    this.showDeleteSuccessMessage = true;
   }
 
   @Watch('isLargeView')
@@ -461,24 +416,6 @@ export class GrwApp {
   disconnectedCallback() {
     reset();
     window.removeEventListener('popstate', this.handlePopStateBind);
-  }
-
-  handleOkDeleteModal() {
-    this.showDeletingMessage = true;
-    this.showConfirmDeleteModal = false;
-    this.showConfirmModal = false;
-    this.showLoaderModal = true;
-    this.deletePress.emit();
-  }
-
-  handleOkDownloadModal() {
-    this.showConfirmModal = false;
-    this.showLoaderModal = true;
-    this.downloadPress.emit();
-  }
-
-  handleCancelModal() {
-    this.showOfflineModal = false;
   }
 
   handleOffline() {
@@ -834,64 +771,7 @@ export class GrwApp {
                     tiles-max-zoom-offline={this.tilesMaxZoomOffline}
                     grw-app={true}
                   ></grw-trek-detail>
-                  {this.showOfflineModal && (
-                    <div class="modal-container">
-                      <div class="modal-content-container">
-                        {this.showConfirmModal && !this.showConfirmDeleteModal && (
-                          <Fragment>
-                            <div class="modal-message-container">{`${
-                              this.showTrek
-                                ? 'Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?'
-                                : this.showOutdoorSite
-                                ? 'Êtes-vous sûr de vouloir rendre cet outdoor disponible hors ligne ?'
-                                : ''
-                            }`}</div>
-                            <div class="modal-buttons-container">
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                                ANNULER
-                              </button>
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleOkDownloadModal()}>
-                                OK
-                              </button>
-                            </div>
-                          </Fragment>
-                        )}
-                        {this.showConfirmDeleteModal && (
-                          <Fragment>
-                            <div class="modal-message-container">Êtes-vous sûr de vouloir supprimer cet itinéraire du hors ligne ?</div>
-                            <div class="modal-buttons-container">
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                                ANNULER
-                              </button>
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleOkDeleteModal()}>
-                                OK
-                              </button>
-                            </div>
-                          </Fragment>
-                        )}
-                        {this.showLoaderModal && (
-                          <Fragment>
-                            <div class="modal-message-container">
-                              <div class="modal-loader"></div>
-                              {this.showDeletingMessage ? 'Suppression en cours' : 'Téléchargement en cours'}
-                            </div>
-                          </Fragment>
-                        )}
-                        {this.showSuccessModal && (
-                          <Fragment>
-                            <div class="modal-message-container">
-                              {this.showDeleteSuccessMessage ? "L'itinéraire est supprimé du hors ligne" : "L'itinéraire est disponible hors ligne"}
-                            </div>
-                            <div class="modal-button-container">
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                                OK
-                              </button>
-                            </div>
-                          </Fragment>
-                        )}
-                      </div>
-                    </div>
-                  )}
+                  <grw-offline-confirm-modal mode="treks"></grw-offline-confirm-modal>
                 </div>
               )}
               {this.showTouristicContent && state.currentTouristicContent && (
@@ -956,64 +836,7 @@ export class GrwApp {
                     default-background-layer-attribution={this.attributionLayer ? this.attributionLayer.split(',')[0] : []}
                     enable-offline={this.enableOffline}
                   ></grw-outdoor-site-detail>
-                  {this.showOfflineModal && (
-                    <div class="modal-container">
-                      <div class="modal-content-container">
-                        {this.showConfirmModal && !this.showConfirmDeleteModal && (
-                          <Fragment>
-                            <div class="modal-message-container">{`${
-                              this.showTrek
-                                ? 'Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?'
-                                : this.showOutdoorSite
-                                ? 'Êtes-vous sûr de vouloir rendre cet outdoor disponible hors ligne ?'
-                                : ''
-                            }`}</div>
-                            <div class="modal-buttons-container">
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                                ANNULER
-                              </button>
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleOkDownloadModal()}>
-                                OK
-                              </button>
-                            </div>
-                          </Fragment>
-                        )}
-                        {this.showConfirmDeleteModal && (
-                          <Fragment>
-                            <div class="modal-message-container">Êtes-vous sûr de vouloir supprimer cet itinéraire du hors ligne ?</div>
-                            <div class="modal-buttons-container">
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                                ANNULER
-                              </button>
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleOkDeleteModal()}>
-                                OK
-                              </button>
-                            </div>
-                          </Fragment>
-                        )}
-                        {this.showLoaderModal && (
-                          <Fragment>
-                            <div class="modal-message-container">
-                              <div class="modal-loader"></div>
-                              {this.showDeletingMessage ? 'Suppression en cours' : 'Téléchargement en cours'}
-                            </div>
-                          </Fragment>
-                        )}
-                        {this.showSuccessModal && (
-                          <Fragment>
-                            <div class="modal-message-container">
-                              {this.showDeleteSuccessMessage ? "L'itinéraire est supprimé du hors ligne" : "L'itinéraire est disponible hors ligne"}
-                            </div>
-                            <div class="modal-button-container">
-                              <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                                OK
-                              </button>
-                            </div>
-                          </Fragment>
-                        )}
-                      </div>
-                    </div>
-                  )}
+                  <grw-offline-confirm-modal mode="treks"></grw-offline-confirm-modal>
                 </div>
               )}
               {this.showOutdoorCourse && state.currentOutdoorCourse && (

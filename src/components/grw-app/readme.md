@@ -60,21 +60,12 @@
 | `weather`                   | `weather`                       |             | `boolean` | `false`     |
 
 
-## Events
-
-| Event           | Description | Type                  |
-| --------------- | ----------- | --------------------- |
-| `deletePress`   |             | `CustomEvent<number>` |
-| `downloadPress` |             | `CustomEvent<number>` |
-
-
 ## Shadow Parts
 
 | Part                      | Description |
 | ------------------------- | ----------- |
 | `"grw-offline-container"` |             |
 | `"icon"`                  |             |
-| `"modal-button"`          |             |
 
 
 ## Dependencies
@@ -101,6 +92,7 @@
 - [grw-touristic-events-list](../grw-touristic-events-list)
 - [grw-outdoor-sites-list](../grw-outdoor-sites-list)
 - [grw-trek-detail](../grw-trek-detail)
+- [grw-offline-confirm-modal](../grw-offline-confirm-modal)
 - [grw-touristic-content-detail](../grw-touristic-content-detail)
 - [grw-touristic-event-detail](../grw-touristic-event-detail)
 - [grw-outdoor-site-detail](../grw-outdoor-site-detail)
@@ -132,6 +124,7 @@ graph TD;
   grw-app --> grw-touristic-events-list
   grw-app --> grw-outdoor-sites-list
   grw-app --> grw-trek-detail
+  grw-app --> grw-offline-confirm-modal
   grw-app --> grw-touristic-content-detail
   grw-app --> grw-touristic-event-detail
   grw-app --> grw-outdoor-site-detail
