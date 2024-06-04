@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.19.0...0.19.1) (2024-06-04)
+
+
+### Bug Fixes
+
+* fit bounds ([46b8e46](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/46b8e4618c78f553db53d7ba42f0656f25494574))
+
 ## [0.19.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.18.2...0.19.0) (2024-05-31)
 
 
