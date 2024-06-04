@@ -956,6 +956,7 @@ export class GrwMap {
 
     this.bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
     this.map.on('eledata_loaded', () => {
+      this.map.invalidateSize();
       this.bounds && this.map.fitBounds(this.bounds);
       !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
     });
@@ -1407,6 +1408,7 @@ export class GrwMap {
       this.touristicContentsMarkerClusterGroup.addLayer(this.toutisticContentsLayer);
     }
 
+    this.map.invalidateSize();
     this.bounds && this.map.fitBounds(this.bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
@@ -1694,6 +1696,7 @@ export class GrwMap {
       this.touristicEventsMarkerClusterGroup.addLayer(this.touristicEventsLayer);
     }
 
+    this.map.invalidateSize();
     this.bounds && this.map.fitBounds(this.bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
@@ -1828,6 +1831,7 @@ export class GrwMap {
       this.outdoorSitesMarkerClusterGroup.addLayer(this.outdoorSitesLayer);
     }
 
+    this.map.invalidateSize();
     this.bounds && this.map.fitBounds(this.bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
@@ -2723,7 +2727,6 @@ export class GrwMap {
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
           '--contract-image-src': `url(${contractImageSrc})`,
-          '--map-bottom-space-height': this.isLargeView || !this.grwApp ? '0px' : '144px',
         }}
       >
         <div
