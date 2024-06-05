@@ -7,19 +7,20 @@
 
 ## Properties
 
-| Property     | Attribute    | Description | Type     | Default     |
-| ------------ | ------------ | ----------- | -------- | ----------- |
-| `api`        | `api`        |             | `string` | `undefined` |
-| `cities`     | `cities`     |             | `string` | `undefined` |
-| `districts`  | `districts`  |             | `string` | `undefined` |
-| `inBbox`     | `in-bbox`    |             | `string` | `undefined` |
-| `labels`     | `labels`     |             | `string` | `undefined` |
-| `languages`  | `languages`  |             | `string` | `'fr'`      |
-| `portals`    | `portals`    |             | `string` | `undefined` |
-| `practices`  | `practices`  |             | `string` | `undefined` |
-| `routes`     | `routes`     |             | `string` | `undefined` |
-| `structures` | `structures` |             | `string` | `undefined` |
-| `themes`     | `themes`     |             | `string` | `undefined` |
+| Property     | Attribute    | Description | Type      | Default     |
+| ------------ | ------------ | ----------- | --------- | ----------- |
+| `api`        | `api`        |             | `string`  | `undefined` |
+| `cities`     | `cities`     |             | `string`  | `undefined` |
+| `districts`  | `districts`  |             | `string`  | `undefined` |
+| `inBbox`     | `in-bbox`    |             | `string`  | `undefined` |
+| `labels`     | `labels`     |             | `string`  | `undefined` |
+| `languages`  | `languages`  |             | `string`  | `'fr'`      |
+| `offline`    | `offline`    |             | `boolean` | `false`     |
+| `portals`    | `portals`    |             | `string`  | `undefined` |
+| `practices`  | `practices`  |             | `string`  | `undefined` |
+| `routes`     | `routes`     |             | `string`  | `undefined` |
+| `structures` | `structures` |             | `string`  | `undefined` |
+| `themes`     | `themes`     |             | `string`  | `undefined` |
 
 
 ## Dependencies

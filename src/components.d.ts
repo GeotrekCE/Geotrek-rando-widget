@@ -208,6 +208,7 @@ export namespace Components {
         "districts": string;
         "inBbox": string;
         "languages": string;
+        "offline": boolean;
         "portals": string;
         "structures": string;
         "themes": string;
@@ -385,6 +386,7 @@ export namespace Components {
         "inBbox": string;
         "labels": string;
         "languages": string;
+        "offline": boolean;
         "portals": string;
         "practices": string;
         "routes": string;
@@ -1116,6 +1118,7 @@ declare namespace LocalJSX {
         "districts"?: string;
         "inBbox"?: string;
         "languages"?: string;
+        "offline"?: boolean;
         "portals"?: string;
         "structures"?: string;
         "themes"?: string;
@@ -1315,6 +1318,7 @@ declare namespace LocalJSX {
         "inBbox"?: string;
         "labels"?: string;
         "languages"?: string;
+        "offline"?: boolean;
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;

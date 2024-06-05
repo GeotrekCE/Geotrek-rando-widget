@@ -18,6 +18,7 @@ export class GrwOutdoorSitesProvider {
   @Prop() structures: string;
   @Prop() themes: string;
   @Prop() portals: string;
+  @Prop() offline = false;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -41,18 +42,28 @@ export class GrwOutdoorSitesProvider {
   }
 
   async handleOutdoorSites() {
-    this.handleOnlineOutdoorSites();
+    if (this.offline) {
+      this.handleOfflineOutdoorSites();
+    } else {
+      this.handleOnlineOutdoorSites();
+    }
   }
 
-  async handleOfflineOutdoorSites(outdoorSites: OutdoorSites) {
-    state.cities = await handleOfflineProperty('cities');
-    state.districts = await handleOfflineProperty('districts');
-    state.themes = await handleOfflineProperty('themes');
-    state.outdoorSiteTypes = await handleOfflineProperty('outdoorSiteTypes');
-    state.outdoorPractices = await handleOfflineProperty('outdoorPractices');
-    outdoorSites = await handleOfflineProperty('outdoorSites');
-    state.outdoorSites = outdoorSites;
-    state.currentOutdoorSites = outdoorSites;
+  async handleOfflineOutdoorSites() {
+    let outdoorSitesInStore: OutdoorSites = await getAllDataInStore('outdoorSites');
+    outdoorSitesInStore.filter(outdoorSite => outdoorSite.parents && outdoorSite.parents.length === 0);
+    if (outdoorSitesInStore && outdoorSitesInStore.length > 0) {
+      state.cities = await handleOfflineProperty('cities');
+      state.districts = await handleOfflineProperty('districts');
+      state.themes = await handleOfflineProperty('themes');
+      state.outdoorSiteTypes = await handleOfflineProperty('outdoorSiteTypes');
+      state.outdoorPractices = await handleOfflineProperty('outdoorPractices');
+      outdoorSitesInStore = await handleOfflineProperty('outdoorSites');
+      state.outdoorSites = outdoorSitesInStore;
+      state.currentOutdoorSites = outdoorSitesInStore;
+    } else {
+      state.networkError = true;
+    }
   }
 
   handleOnlineOutdoorSites() {
@@ -93,13 +104,7 @@ export class GrwOutdoorSitesProvider {
         state.currentOutdoorSites = outdoorSitesWithOfflineValue;
       })
       .catch(async () => {
-        const outdoorSitesInStore: OutdoorSites = await getAllDataInStore('outdoorSites');
-        outdoorSitesInStore.filter(outdoorSite => outdoorSite.parents && outdoorSite.parents.length === 0);
-        if (outdoorSitesInStore && outdoorSitesInStore.length > 0) {
-          this.handleOfflineOutdoorSites(outdoorSitesInStore);
-        } else {
-          state.networkError = true;
-        }
+        await this.handleOfflineOutdoorSites();
       });
   }
 

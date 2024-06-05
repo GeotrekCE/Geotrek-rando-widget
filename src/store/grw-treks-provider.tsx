@@ -21,6 +21,7 @@ export class GrwTreksProvider {
   @Prop() routes: string;
   @Prop() practices: string;
   @Prop() labels: string;
+  @Prop() offline = false;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -52,25 +53,37 @@ export class GrwTreksProvider {
   }
 
   async handleTreks() {
-    this.handleOnlineTreks();
+    if (this.offline) {
+      this.handleOfflineTreks();
+    } else {
+      this.handleOnlineTreks();
+    }
   }
 
-  async handleOfflineTreks(treks: Treks) {
-    state.difficulties = await this.handleOfflineProperty('difficulties');
-    state.routes = await this.handleOfflineProperty('routes');
-    state.practices = await this.handleOfflineProperty('practices');
-    state.themes = await this.handleOfflineProperty('themes');
-    state.cities = await this.handleOfflineProperty('cities');
-    state.accessibilities = await this.handleOfflineProperty('accessibilities');
-    state.labels = await this.handleOfflineProperty('labels');
-    state.districts = await this.handleOfflineProperty('districts');
-    state.durations = durations;
-    state.lengths = lengths;
-    state.elevations = elevations;
-    treks = await this.handleOfflineProperty('treks');
-    this.sortTreks(treks);
-    state.treks = treks;
-    state.currentTreks = treks;
+  async handleOfflineTreks() {
+    let treksInStore: Treks = await getAllDataInStore('treks');
+    if (treksInStore && treksInStore.length > 0) {
+      state.difficulties = await this.handleOfflineProperty('difficulties');
+      state.routes = await this.handleOfflineProperty('routes');
+      state.practices = await this.handleOfflineProperty('practices');
+      state.themes = await this.handleOfflineProperty('themes');
+      state.cities = await this.handleOfflineProperty('cities');
+      state.accessibilities = await this.handleOfflineProperty('accessibilities');
+      state.labels = await this.handleOfflineProperty('labels');
+      state.districts = await this.handleOfflineProperty('districts');
+      state.durations = durations;
+      state.lengths = lengths;
+      state.elevations = elevations;
+      treksInStore = await this.handleOfflineProperty('treks');
+      this.sortTreks(treksInStore);
+      if (this.offline) {
+        treksInStore = treksInStore.filter(trek => trek.offline);
+      }
+      state.treks = treksInStore;
+      state.currentTreks = treksInStore;
+    } else {
+      state.networkError = true;
+    }
   }
 
   sortTreks(treks) {
@@ -150,12 +163,7 @@ export class GrwTreksProvider {
         state.currentTreks = treksWithOfflineValue;
       })
       .catch(async () => {
-        const treksInStore: Treks = await getAllDataInStore('treks');
-        if (treksInStore && treksInStore.length > 0) {
-          this.handleOfflineTreks(treksInStore);
-        } else {
-          state.networkError = true;
-        }
+        await this.handleOfflineTreks();
       });
   }
 
