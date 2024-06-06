@@ -693,6 +693,7 @@ export class GrwApp {
                       color-secondary-container={this.colorSecondaryContainer}
                       color-on-secondary-container={this.colorOnSecondaryContainer}
                       color-surface-container-low={this.colorSurfaceContainerLow}
+                      grw-app={true}
                     ></grw-treks-list>
                   )}
                   {state.mode === 'touristicContents' && this.touristicContents && state.touristicContents && (

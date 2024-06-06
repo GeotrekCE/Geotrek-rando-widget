@@ -14,6 +14,7 @@
 | `colorSurfaceContainerLow`  | `color-surface-container-low`  |             | `string`  | `'#f7f2fa'` |
 | `displayOnlyOfflineTreks`   | `display-only-offline-treks`   |             | `boolean` | `false`     |
 | `fontFamily`                | `font-family`                  |             | `string`  | `'Roboto'`  |
+| `grwApp`                    | `grw-app`                      |             | `boolean` | `false`     |
 | `isLargeView`               | `is-large-view`                |             | `boolean` | `false`     |
 
 

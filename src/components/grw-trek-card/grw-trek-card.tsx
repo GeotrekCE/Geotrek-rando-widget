@@ -7,6 +7,7 @@ import OfflinePinIcon from '../../assets/offline_pin.svg';
 import TimelapseIcon from '../../assets/timelapse.svg';
 import OpenInFullIcon from '../../assets/open_in_full.svg';
 import MovingIcon from '../../assets/moving.svg';
+import slugify from 'slugify';
 
 @Component({
   tag: 'grw-trek-card',
@@ -37,6 +38,8 @@ export class GrwTrekCard {
 
   @State() isAvailableOffline = false;
   @State() showDefaultImage = false;
+
+  @Prop() grwApp = false;
 
   @Listen('trekDownloadedSuccessConfirm', { target: 'window' })
   onTrekDownloadedSuccessConfirm() {
@@ -112,7 +115,13 @@ export class GrwTrekCard {
                 ? `trek-card trek-card-large-view-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
                 : `trek-card trek-card-container${state.selectedTrekId === this.currentTrek.id ? ' selected-trek-card' : ''}`
             }
-            onClick={() => this.trekCardPress.emit(this.currentTrek.id)}
+            onClick={() => {
+              if (this.grwApp) {
+                this.trekCardPress.emit(this.currentTrek.id);
+              } else {
+                window.location.href = slugify(`${this.currentTrek.name}`);
+              }
+            }}
           >
             <div part="trek-img-container" class="trek-img-container">
               {this.isAvailableOffline && (
@@ -139,15 +148,7 @@ export class GrwTrekCard {
                   }}
                 />
               ) : (
-                <img
-                  part="trek-img"
-                  class="trek-img default-trek-img"
-                  /* @ts-ignore */
-
-                  src={defaultImageSrc}
-                  alt=""
-                  loading="lazy"
-                />
+                <img part="trek-img" class="trek-img default-trek-img" src={defaultImageSrc} alt="" loading="lazy" />
               )}
             </div>
             <div part="trek-sub-container" class="trek-sub-container">

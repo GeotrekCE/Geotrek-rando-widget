@@ -329,6 +329,7 @@ export namespace Components {
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
         "fontFamily": string;
+        "grwApp": boolean;
         "isLargeView": boolean;
         "isStep": false;
         "trek": Trek;
@@ -377,6 +378,7 @@ export namespace Components {
         "colorSurfaceContainerLow": string;
         "displayOnlyOfflineTreks": boolean;
         "fontFamily": string;
+        "grwApp": boolean;
         "isLargeView": boolean;
     }
     interface GrwTreksProvider {
@@ -1245,6 +1247,7 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
+        "grwApp"?: boolean;
         "isLargeView"?: boolean;
         "isStep"?: false;
         "onCardTrekMouseLeave"?: (event: GrwTrekCardCustomEvent<any>) => void;
@@ -1309,6 +1312,7 @@ declare namespace LocalJSX {
         "colorSurfaceContainerLow"?: string;
         "displayOnlyOfflineTreks"?: boolean;
         "fontFamily"?: string;
+        "grwApp"?: boolean;
         "isLargeView"?: boolean;
     }
     interface GrwTreksProvider {

@@ -20,6 +20,7 @@ export class GrwTreksList {
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() displayOnlyOfflineTreks = false;
   @Prop() isLargeView = false;
+  @Prop() grwApp = false;
 
   step = 10;
   shouldAddInfiniteScrollEvent = true;
@@ -97,6 +98,7 @@ export class GrwTreksList {
               color-secondary-container={this.colorSecondaryContainer}
               color-on-secondary-container={this.colorOnSecondaryContainer}
               color-surface-container-low={this.colorSurfaceContainerLow}
+              grw-app={this.grwApp}
             ></grw-trek-card>
           ))}
         </div>
