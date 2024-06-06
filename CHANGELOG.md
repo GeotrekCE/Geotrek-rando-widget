@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.20.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.19.1...0.20.0) (2024-06-06)
+
+
+### Features
+
+* add offline parameter to treks and outdoor sites providers ([5239ac0](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/5239ac0912e505aee07a1ef6ed8ca915a6bfc1ea))
+* handle independant trek card click ([10a4048](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/10a4048919755e3543e6a0b0cbe033d24dc458c2))
+
 ## [0.19.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.19.0...0.19.1) (2024-06-04)
 
 
