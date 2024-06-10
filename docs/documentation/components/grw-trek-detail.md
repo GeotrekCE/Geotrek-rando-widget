@@ -51,7 +51,7 @@ Sur la vue détaillée d’un itinéraire, l'affichage des POIs a été optimis�
 Les pictogrammes des POIs s'affichent sur la carte lorsque l'utilisateur arrive sur cette section.
 :::
 
-En plus d'afficher les vignettes des éléments de patrimoines (POIs) situés à proximités de la randonnée (rayon de 500m par défaut), La section "Patrimoine", peut présenter des informations complémentaires comme :
+En plus d'afficher les vignettes des éléments de patrimoines (POIs) situés à proximités de la randonnée (rayon de 500m par défaut), la section "Patrimoine", peut présenter des informations complémentaires comme :
 
 - le widget Météo France
 - Les accès routiers et parkings
