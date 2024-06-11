@@ -1,4 +1,6 @@
-# grw-touristic-content-card-detail
+# grw-touristic-content-detail
+
+
 
 <!-- Auto Generated Below -->
 

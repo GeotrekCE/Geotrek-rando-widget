@@ -1,4 +1,4 @@
-# grw-sensitive-area
+# grw-sensitive-area-detail
 
 
 

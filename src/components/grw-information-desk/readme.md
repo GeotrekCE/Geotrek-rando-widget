@@ -1,4 +1,4 @@
-# grw-information-desk-detail
+# grw-information-desk
 
 
 
