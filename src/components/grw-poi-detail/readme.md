@@ -1,4 +1,4 @@
-# grw-poi-detail
+# grw-poi
 
 
 
