@@ -19,6 +19,8 @@ Actuellement le widget n'est traduit qu'en anglais, mais il peut supporter d'aut
 
 Pour cela, il suffit de rajouter un nouvel objet dans le fichier `/src/i18n/i18n.ts`.
 
+Pour faire bénéficer Geotrek-widget des nouvelles traductions, il est possible de faire une proposition de traduction avec une pull request pour ce fichier.
+
 Voici un exemple avec l'anglais :
 
 ```js

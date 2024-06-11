@@ -1,3 +1,28 @@
+---
+head:
+  - - script
+    - defer: true
+      nomodule: true
+      src: https://rando-widget.geotrek.fr/latest/dist/geotrek-rando-widget/geotrek-rando-widget.js
+  - - script
+    - defer: true
+      type: module
+      src: https://rando-widget.geotrek.fr/latest/dist/geotrek-rando-widget/geotrek-rando-widget.esm.js
+  - - link
+    - href: https://rando-widget.geotrek.fr/latest/dist/geotrek-rando-widget/geotrek-rando-widget.css
+      rel: stylesheet
+  - - link
+    - href: https://fonts.googleapis.com
+      rel: preconnect
+  - - link
+    - href: https://fonts.gstatic.com
+      rel: preconnect
+      crossorigin
+  - - link
+    - href: https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap
+      rel: stylesheet
+---
+
 # Paramètres supplémentaires
 
 Les paramètres `rounded` et `font-family` sont les deux seuls paramètres associés au thème mais qui ne concernent pas les couleurs.
@@ -31,24 +56,6 @@ Pour afficher une bordure arrondie dans le widget, il faut que la balise `grw-ap
 </div>
 ```
 
-### Exemple de widget avec les bordures arrondies
-
-<ClientOnly>
-  <div>
-    <grw-app
-      app-width="100%"
-      app-height="100vh"
-      api="https://geotrek-admin.portcros-parcnational.fr/api/v2/"
-      languages="fr"
-      name-layer="IGN,OpenStreetMap"
-      url-layer="https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x},https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>,OpenStreetMap"
-      weather="true"
-      treks="false"
-      rounded="true"
-    ></grw-app>
-  </div>
-</ClientOnly>
 
 ## La police de caractère
 
