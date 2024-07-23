@@ -1213,19 +1213,20 @@ export class GrwTrekDetail {
                 </button>
               )}
               <div part="links-container" class="links-container">
-                <a href={`${this.currentTrek.gpx}`} target="_blank" rel="noopener noreferrer">
+                <a part="download-gpx-button" href={`${this.currentTrek.gpx}`} target="_blank" rel="noopener noreferrer">
                   <span part="icon" class=" icon" innerHTML={DownloadIcon}></span>
                   <span part="label" class="label">
                     GPX
                   </span>
                 </a>
-                <a href={`${this.currentTrek.kml}`} target="_blank" rel="noopener noreferrer">
+                <a part="download-kml-button" href={`${this.currentTrek.kml}`} target="_blank" rel="noopener noreferrer">
                   <span part="icon" class="icon" innerHTML={DownloadIcon}></span>
                   <span part="label" class="label">
                     KML
                   </span>
                 </a>
                 <a
+                  part="download-pdf-button"
                   href={`${this.currentTrek.pdf}${state.portalsFromProviders && state.portalsFromProviders.length === 1 ? '?portal=' + state.portalsFromProviders[0] : ''}`}
                   target="_blank"
                   rel="noopener noreferrer"
