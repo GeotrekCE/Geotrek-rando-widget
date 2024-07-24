@@ -96,7 +96,8 @@ export class GrwApp {
   @Prop() departureArrivalMarkerSize = 14;
   @Prop() pointReferenceMarkerSize = 24;
 
-  largeViewSize = 1024;
+  @Prop() largeViewSize = 1024;
+
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
   @Listen('trekCardPress', { target: 'window' })
