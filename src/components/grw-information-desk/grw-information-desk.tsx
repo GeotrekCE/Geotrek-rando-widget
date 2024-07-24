@@ -76,7 +76,7 @@ export class GrwInformationDeskDetail {
           </div>
         )}
         <div part="information-desk-sub-container" class="information-desk-sub-container">
-          <div class={this.displayShortDescription ? "information-desk-sub-container-short" : ""}>
+          <div class={this.displayShortDescription ? 'information-desk-sub-container-short' : ''}>
             {this.informationDesk.name && (
               <div part="information-desk-name" class="information-desk-name">
                 {this.informationDesk.name}
@@ -123,7 +123,7 @@ export class GrwInformationDeskDetail {
               <div part="information-desk-description-container" class="information-desk-description-container">
                 <div
                   part="information-desk-description"
-                  class='information-desk-description'
+                  class="information-desk-description"
                   innerHTML={this.informationDesk.description}
                   ref={el => (this.descriptionRef = el)}
                 ></div>

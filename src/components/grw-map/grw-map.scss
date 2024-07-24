@@ -141,7 +141,7 @@
       transform: rotate(45deg);
       position: absolute;
       z-index: 20;
-      width: 24px !important;
+      width: var(--main-marker-icon-width) !important;
     }
   }
   .trek-marker-container,
@@ -166,8 +166,8 @@
 .arrival-marker {
   background-color: #ff0000;
   border-radius: 14px;
-  width: 14px;
-  height: 14px;
+  width: 100%;
+  height: 100%;
   border: 4px #ffffff solid;
 }
 
@@ -187,7 +187,7 @@
     height: 100%;
     .trek-marker,
     .step-number {
-      width: 32px !important;
+      width: 100% !important;
     }
   }
 }
@@ -333,12 +333,18 @@
   height: 100%;
   width: 100%;
   img {
-    width: 36px !important;
+    width: var(--common-marker-icon-width) !important;
+    height: auto;
   }
 }
 
 .parking-marker {
-  width: 48px !important;
+  width: 100%;
+  height: 100%;
+  img {
+    width: 100% !important;
+    height: auto;
+  }
 }
 
 .point-reference-icon {

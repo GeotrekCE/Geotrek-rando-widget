@@ -89,6 +89,13 @@ export class GrwApp {
   @Prop() tilesMinZoomOffline = 12;
   @Prop() tilesMaxZoomOffline = 16;
 
+  @Prop() mainMarkerSize = 32;
+  @Prop() selectedMainMarkerSize = 48;
+  @Prop() mainClusterSize = 48;
+  @Prop() commonMarkerSize = 48;
+  @Prop() departureArrivalMarkerSize = 14;
+  @Prop() pointReferenceMarkerSize = 24;
+
   largeViewSize = 1024;
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
@@ -893,6 +900,12 @@ export class GrwApp {
                   use-gradient={this.useGradient}
                   tiles-max-zoom-offline={this.tilesMaxZoomOffline}
                   grw-app={true}
+                  mainMarkerSize={this.mainMarkerSize}
+                  selectedMainMarkerSize={this.selectedMainMarkerSize}
+                  mainClusterSize={this.mainClusterSize}
+                  commonMarkerSize={this.commonMarkerSize}
+                  departureArrivalMarkerSize={this.departureArrivalMarkerSize}
+                  pointReferenceMarkerSize={this.pointReferenceMarkerSize}
                 ></grw-map>
               )}
             </div>

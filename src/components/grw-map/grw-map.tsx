@@ -59,6 +59,13 @@ export class GrwMap {
 
   @Prop() grwApp = false;
 
+  @Prop() mainMarkerSize = 32;
+  @Prop() selectedMainMarkerSize = 48;
+  @Prop() mainClusterSize = 48;
+  @Prop() commonMarkerSize = 48;
+  @Prop() departureArrivalMarkerSize = 14;
+  @Prop() pointReferenceMarkerSize = 24;
+
   map: L.Map;
   bounds;
   treksLayer: L.GeoJSON<any>;
@@ -521,8 +528,8 @@ export class GrwMap {
                 ? `<div part="trek-marker-container" class="trek-marker-container"><img part="trek-marker-icon" src=${treksIcons[geoJsonPoint.properties.practice]} /></div>`
                 : `<div part="trek-marker-container" class="trek-marker-container"></div>`,
               className: 'trek-marker',
-              iconSize: 32,
-              iconAnchor: [16, 32],
+              iconSize: this.mainMarkerSize,
+              iconAnchor: [this.mainMarkerSize / 2, this.mainMarkerSize],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -573,7 +580,7 @@ export class GrwMap {
           return L.divIcon({
             html: '<div part="treks-marker-cluster-group-icon" class="treks-marker-cluster-group-icon">' + cluster.getChildCount() + '</div>',
             className: '',
-            iconSize: 48,
+            iconSize: this.mainClusterSize,
           } as any);
         },
       });
@@ -688,8 +695,7 @@ export class GrwMap {
             icon: L.divIcon({
               html: `<img part="parking-marker" src=${parkingImageSrc} />`,
               className: '',
-              iconSize: 48,
-              iconAnchor: [24, 48],
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -773,7 +779,7 @@ export class GrwMap {
             icon: L.divIcon({
               html: `<div part="point-reference-icon" class="point-reference-icon">${index}</div>`,
               className: '',
-              iconSize: 24,
+              iconSize: this.pointReferenceMarkerSize,
             } as any),
             autoPanOnFocus: false,
             interactive: false,
@@ -817,8 +823,8 @@ export class GrwMap {
             icon: L.divIcon({
               html: `<div part="step-marker" class="step-marker"><div part="step-marker-container" class="step-marker-container"><div part="step-number" class="step-number">${stepIndex}</div></div></div>`,
               className: '',
-              iconSize: 32,
-              iconAnchor: [16, 32],
+              iconSize: this.mainMarkerSize,
+              iconAnchor: [this.mainMarkerSize / 2, this.mainMarkerSize],
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -944,7 +950,7 @@ export class GrwMap {
           icon: L.divIcon({
             html: `<div part="${index === 1 ? 'departure-marker' : 'arrival-marker'}" class="${index === 1 ? 'departure-marker' : 'arrival-marker'}"></div>`,
             className: '',
-            iconSize: 14,
+            iconSize: this.departureArrivalMarkerSize,
           } as any),
           autoPanOnFocus: false,
         } as any);
@@ -1030,8 +1036,8 @@ export class GrwMap {
                 } /></div></div>`
               : `<div part="selected-trek-marker" class="selected-trek-marker"><div part="trek-marker-container" class="trek-marker-container"></div></div>`,
             className: '',
-            iconSize: 48,
-            iconAnchor: [24, 48],
+            iconSize: this.selectedMainMarkerSize,
+            iconAnchor: [this.selectedMainMarkerSize / 2, this.selectedMainMarkerSize],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1131,8 +1137,8 @@ export class GrwMap {
           icon: L.divIcon({
             html: `<div part="selected-step-marker" class="selected-step-marker" ><div part="step-marker-container" class="step-marker-container"><div  part="step-number" class="step-number">${geoJsonPoint.properties.index}</div></div></div>`,
             className: '',
-            iconSize: 48,
-            iconAnchor: [24, 48],
+            iconSize: this.selectedMainMarkerSize,
+            iconAnchor: [this.selectedMainMarkerSize / 2, this.selectedMainMarkerSize],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1271,7 +1277,7 @@ export class GrwMap {
                   } /></div></div>`
                 : `<div part="touristic-content-marker" class="touristic-content-marker" ><div part="touristic-content-marker-container" class="touristic-content-marker-container"></div></div>`,
               className: '',
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1341,8 +1347,8 @@ export class GrwMap {
                   } /></div></div>`
                 : `<div part="touristic-content-marker" class="touristic-content-marker"><div part="touristic-content-marker-container" class="touristic-content-marker-container"></div></div>`,
               className: '',
-              iconSize: 32,
-              iconAnchor: [16, 32],
+              iconSize: this.mainMarkerSize,
+              iconAnchor: [this.mainMarkerSize / 2, this.mainMarkerSize],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1389,7 +1395,7 @@ export class GrwMap {
           return L.divIcon({
             html: '<div part="touristic-content-marker-cluster-group-icon" class="touristic-content-marker-cluster-group-icon"><div>' + cluster.getChildCount() + '</div></div>',
             className: '',
-            iconSize: 48,
+            iconSize: this.mainClusterSize,
           } as any);
         },
       });
@@ -1457,7 +1463,7 @@ export class GrwMap {
                   } /></div></div>`
                 : `<div part="touristic-event-marker" class="touristic-event-marker"><div part="touristic-event-marker-container" class="touristic-event-marker-container"></div></div>`,
               className: '',
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1516,8 +1522,8 @@ export class GrwMap {
                 } /></div></div>`
               : `<div part="selected-touristic-content-marker" class="selected-touristic-content-marker"><div part="touristic-content-marker-container" class="touristic-content-marker-container"></div></div>`,
             className: '',
-            iconSize: 48,
-            iconAnchor: [24, 48],
+            iconSize: this.selectedMainMarkerSize,
+            iconAnchor: [this.selectedMainMarkerSize / 2, this.selectedMainMarkerSize],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -1629,8 +1635,8 @@ export class GrwMap {
                   } /></div></div>`
                 : `<div part="touristic-event-marker" class="touristic-event-marker"><div part="touristic-event-marker-container" class="touristic-event-marker-container"></div></div>`,
               className: '',
-              iconSize: 32,
-              iconAnchor: [16, 32],
+              iconSize: this.mainMarkerSize,
+              iconAnchor: [this.mainMarkerSize / 2, this.mainMarkerSize],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1677,7 +1683,7 @@ export class GrwMap {
           return L.divIcon({
             html: '<div part="touristic-event-marker-cluster-group-icon" class="touristic-event-marker-cluster-group-icon"><div>' + cluster.getChildCount() + '</div></div>',
             className: '',
-            iconSize: 48,
+            iconSize: this.mainClusterSize,
           } as any);
         },
       });
@@ -1764,8 +1770,8 @@ export class GrwMap {
                   } /></div></div>`
                 : `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
               className: '',
-              iconSize: 32,
-              iconAnchor: [16, 32],
+              iconSize: this.mainMarkerSize,
+              iconAnchor: [this.mainMarkerSize / 2, this.mainMarkerSize],
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -1812,7 +1818,7 @@ export class GrwMap {
           return L.divIcon({
             html: '<div part="outdoor-site-marker-cluster-group-icon" class="outdoor-site-marker-cluster-group-icon"><div>' + cluster.getChildCount() + '</div></div>',
             className: '',
-            iconSize: 48,
+            iconSize: this.mainClusterSize,
           } as any);
         },
       });
@@ -1880,7 +1886,7 @@ export class GrwMap {
                     outdoorSitesIcons[geoJsonPoint.properties.practice]
                   } /></div></div>`
                 : `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -1947,7 +1953,7 @@ export class GrwMap {
                     outdoorSitesIcons[geoJsonPoint.properties.practice]
                   } /></div></div>`
                 : `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -1995,7 +2001,7 @@ export class GrwMap {
                     outdoorCoursesIcons[geoJsonPoint.properties.practice]
                   } /></div></div>`
                 : `<div part="outdoor-courses-marker" class="outdoor-courses-marker"><div part="outdoor-courses-marker-container" class="outdoor-courses-marker-container"></div></div>`,
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -2050,8 +2056,8 @@ export class GrwMap {
                 } /></div></div>`
               : `<div part="selected-touristic-event-marker" class="selected-touristic-event-marker"><div part="touristic-event-marker-container" class="touristic-event-marker-container"></div></div>`,
             className: '',
-            iconSize: 48,
-            iconAnchor: [24, 48],
+            iconSize: this.selectedMainMarkerSize,
+            iconAnchor: [this.selectedMainMarkerSize / 2, this.selectedMainMarkerSize],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -2142,7 +2148,7 @@ export class GrwMap {
                     outdoorCoursesIcons[geoJsonPoint.properties.practice]
                   } /></div></div>`
                 : `<div part="outdoor-course-marker" class="outdoor-course-marker"><div part="outdoor-course-marker-container" class="outdoor-course-marker-container"></div></div>`,
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -2211,8 +2217,8 @@ export class GrwMap {
                 } /></div></div>`
               : `<div part="selected-outdoor-site-marker" class="selected-outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
             className: '',
-            iconSize: 48,
-            iconAnchor: [24, 48],
+            iconSize: this.selectedMainMarkerSize,
+            iconAnchor: [this.selectedMainMarkerSize / 2, this.selectedMainMarkerSize],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -2314,8 +2320,8 @@ export class GrwMap {
                 } /></div></div>`
               : `<div part="selected-outdoor-course-marker" class="selected-outdoor-course-marker"><div part="outdoor-course-marker-container" class="outdoor-course-marker-container"></div></div>`,
             className: '',
-            iconSize: 48,
-            iconAnchor: [24, 48],
+            iconSize: this.selectedMainMarkerSize,
+            iconAnchor: [this.selectedMainMarkerSize / 2, this.selectedMainMarkerSize],
           } as any),
           autoPanOnFocus: false,
         } as any),
@@ -2401,7 +2407,7 @@ export class GrwMap {
                 ? `<div part="poi-marker" class="poi-marker"><img  src=${poiIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
                 : `<div part="poi-marker" class="poi-marker"><img /></div>`,
               className: '',
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -2452,7 +2458,7 @@ export class GrwMap {
                 ? `<div part="touristic-content-marker" class="touristic-content-marker"><img src=${toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]} /></div>`
                 : `<div part="touristic-content-marker" class="touristic-content-marker"><img /></div>`,
               className: '',
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any);
@@ -2504,7 +2510,7 @@ export class GrwMap {
                 <div part="touristic-event-marker" class="touristic-event-marker"><img src=${toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
                 : `<div part="touristic-event-marker" class="touristic-event-marker"><img /></div>`,
               className: '',
-              iconSize: 48,
+              iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
           } as any),
@@ -2554,7 +2560,7 @@ export class GrwMap {
                   ? `<div part="information-desks-marker" class="information-desks-marker"><img src=${informationDesksIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
                   : `<div part="information-desks-marker" class="information-desks-marker"><img /></div>`,
                 className: '',
-                iconSize: 48,
+                iconSize: this.commonMarkerSize,
               } as any),
               autoPanOnFocus: false,
             } as any),
