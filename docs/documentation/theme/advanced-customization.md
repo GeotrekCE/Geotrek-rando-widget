@@ -93,3 +93,24 @@ Ce qui donne ce résultat :
       attribution-layer="<a target='_blank' href='https://ign.fr/'>IGN</a>"
     ></grw-app>
 </div>
+
+## Modifier la taille des marqueurs sur la carte
+
+Il est possible de gérer la taille des marqueurs avec les paramètres suivants :
+- `main-marker-size`
+- `selected-main-marker-size`
+- `main-cluster-size`
+- `common-marker-size`
+- `common-marker-size`
+- `departure-arrival-marker-size`
+- `point-reference-marker-size`
+
+
+De plus, il est possible d'influer sur la taille des icônes avec les variables CSS globales suivantes : 
+- `--main-marker-icon-width` 
+- `--common-marker-icon-width`
+
+Ces variables CSS prennent par défaut 80% de la largeur et la hauteur s'adapte automatiquement.
+
+> [!INFO]
+> Certaines `parts` existent aussi afin de changer d'autres options, comme le radius.

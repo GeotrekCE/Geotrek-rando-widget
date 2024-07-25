@@ -46,6 +46,7 @@ export namespace Components {
         "inBbox": string;
         "labels": string;
         "languages": string;
+        "largeViewSize": number;
         "mainClusterSize": number;
         "mainMarkerSize": number;
         "nameLayer": string;
@@ -942,6 +943,7 @@ declare namespace LocalJSX {
         "inBbox"?: string;
         "labels"?: string;
         "languages"?: string;
+        "largeViewSize"?: number;
         "mainClusterSize"?: number;
         "mainMarkerSize"?: number;
         "nameLayer"?: string;

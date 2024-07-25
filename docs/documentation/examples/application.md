@@ -22,7 +22,7 @@ Pour afficher les **itinéraires**, les **activités outdoors**, les **contenus 
 ```
 
 > [!CAUTION]
-> Pour des raisons de lisibilité, il est déconseiller d'afficher plus de quatre segments dans le widget.
+> Pour des raisons de lisibilité, il est déconseillé d'afficher plus de quatre segments dans le widget.
 
 **Voici un exemple de code complet :**
 

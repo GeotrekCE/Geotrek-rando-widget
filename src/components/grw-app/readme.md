@@ -46,6 +46,7 @@
 | `inBbox`                     | `in-bbox`                       |             | `string`  | `undefined` |
 | `labels`                     | `labels`                        |             | `string`  | `undefined` |
 | `languages`                  | `languages`                     |             | `string`  | `'fr'`      |
+| `largeViewSize`              | `large-view-size`               |             | `number`  | `1024`      |
 | `mainClusterSize`            | `main-cluster-size`             |             | `number`  | `48`        |
 | `mainMarkerSize`             | `main-marker-size`              |             | `number`  | `32`        |
 | `nameLayer`                  | `name-layer`                    |             | `string`  | `undefined` |
