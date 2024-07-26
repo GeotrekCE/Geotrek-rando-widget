@@ -98,8 +98,8 @@ export class GrwTouristicEventDetail {
               ? '44px'
               : '12px'
             : state.languages && state.languages.length > 1
-            ? '204px'
-            : '164px',
+            ? '164px'
+            : '124px',
         }}
       >
         {state.currentTouristicEvent && (

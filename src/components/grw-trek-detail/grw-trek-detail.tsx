@@ -939,8 +939,8 @@ export class GrwTrekDetail {
               ? '44px'
               : '12px'
             : state.languages && state.languages.length > 1
-            ? '244px'
-            : '204px',
+            ? '164px'
+            : '124px',
         }}
       >
         {this.currentTrek && (
