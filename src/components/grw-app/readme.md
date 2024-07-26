@@ -36,6 +36,7 @@
 | `commonMarkerSize`           | `common-marker-size`            |             | `number`  | `48`        |
 | `departureArrivalMarkerSize` | `departure-arrival-marker-size` |             | `number`  | `14`        |
 | `districts`                  | `districts`                     |             | `string`  | `undefined` |
+| `elevationHeight`            | `elevation-height`              |             | `number`  | `280`       |
 | `emergencyNumber`            | `emergency-number`              |             | `number`  | `undefined` |
 | `enableOffline`              | `enable-offline`                |             | `boolean` | `false`     |
 | `fabBackgroundColor`         | `fab-background-color`          |             | `string`  | `'#eaddff'` |
@@ -49,6 +50,7 @@
 | `largeViewSize`              | `large-view-size`               |             | `number`  | `1024`      |
 | `mainClusterSize`            | `main-cluster-size`             |             | `number`  | `48`        |
 | `mainMarkerSize`             | `main-marker-size`              |             | `number`  | `32`        |
+| `mobileElevationHeight`      | `mobile-elevation-height`       |             | `number`  | `280`       |
 | `nameLayer`                  | `name-layer`                    |             | `string`  | `undefined` |
 | `outdoor`                    | `outdoor`                       |             | `boolean` | `false`     |
 | `pointReferenceMarkerSize`   | `point-reference-marker-size`   |             | `number`  | `24`        |

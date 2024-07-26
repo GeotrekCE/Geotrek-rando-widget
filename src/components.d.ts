@@ -36,6 +36,7 @@ export namespace Components {
         "commonMarkerSize": number;
         "departureArrivalMarkerSize": number;
         "districts": string;
+        "elevationHeight": number;
         "emergencyNumber": number;
         "enableOffline": boolean;
         "fabBackgroundColor": string;
@@ -49,6 +50,7 @@ export namespace Components {
         "largeViewSize": number;
         "mainClusterSize": number;
         "mainMarkerSize": number;
+        "mobileElevationHeight": number;
         "nameLayer": string;
         "outdoor": boolean;
         "pointReferenceMarkerSize": number;
@@ -114,11 +116,13 @@ export namespace Components {
         "colorTrekLine": string;
         "commonMarkerSize": number;
         "departureArrivalMarkerSize": number;
+        "elevationHeight": number;
         "fontFamily": string;
         "grwApp": boolean;
-        "isLargeView": boolean;
+        "largeViewSize": number;
         "mainClusterSize": number;
         "mainMarkerSize": number;
+        "mobileElevationHeight": number;
         "nameLayer": string;
         "pointReferenceMarkerSize": number;
         "selectedMainMarkerSize": number;
@@ -933,6 +937,7 @@ declare namespace LocalJSX {
         "commonMarkerSize"?: number;
         "departureArrivalMarkerSize"?: number;
         "districts"?: string;
+        "elevationHeight"?: number;
         "emergencyNumber"?: number;
         "enableOffline"?: boolean;
         "fabBackgroundColor"?: string;
@@ -946,6 +951,7 @@ declare namespace LocalJSX {
         "largeViewSize"?: number;
         "mainClusterSize"?: number;
         "mainMarkerSize"?: number;
+        "mobileElevationHeight"?: number;
         "nameLayer"?: string;
         "outdoor"?: boolean;
         "pointReferenceMarkerSize"?: number;
@@ -1013,11 +1019,13 @@ declare namespace LocalJSX {
         "colorTrekLine"?: string;
         "commonMarkerSize"?: number;
         "departureArrivalMarkerSize"?: number;
+        "elevationHeight"?: number;
         "fontFamily"?: string;
         "grwApp"?: boolean;
-        "isLargeView"?: boolean;
+        "largeViewSize"?: number;
         "mainClusterSize"?: number;
         "mainMarkerSize"?: number;
+        "mobileElevationHeight"?: number;
         "nameLayer"?: string;
         "onOutdoorCourseCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onOutdoorSiteCardPress"?: (event: GrwMapCustomEvent<number>) => void;

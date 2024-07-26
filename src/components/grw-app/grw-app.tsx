@@ -97,6 +97,8 @@ export class GrwApp {
   @Prop() pointReferenceMarkerSize = 24;
 
   @Prop() largeViewSize = 1024;
+  @Prop() elevationHeight = 280;
+  @Prop() mobileElevationHeight = 280;
 
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
@@ -897,16 +899,18 @@ export class GrwApp {
                   color-sensitive-area={this.colorSensitiveArea}
                   color-markers={this.colorMarkers ? this.colorMarkers : this.colorPrimaryApp}
                   color-clusters={this.colorClusters ? this.colorClusters : this.colorPrimaryApp}
-                  is-large-view={this.isLargeView}
                   use-gradient={this.useGradient}
                   tiles-max-zoom-offline={this.tilesMaxZoomOffline}
                   grw-app={true}
-                  mainMarkerSize={this.mainMarkerSize}
-                  selectedMainMarkerSize={this.selectedMainMarkerSize}
-                  mainClusterSize={this.mainClusterSize}
-                  commonMarkerSize={this.commonMarkerSize}
-                  departureArrivalMarkerSize={this.departureArrivalMarkerSize}
-                  pointReferenceMarkerSize={this.pointReferenceMarkerSize}
+                  main-marker-size={this.mainMarkerSize}
+                  selected-main-markerSize={this.selectedMainMarkerSize}
+                  main-cluster-size={this.mainClusterSize}
+                  common-marker-size={this.commonMarkerSize}
+                  departure-arrival-marker-size={this.departureArrivalMarkerSize}
+                  point-reference-marker-size={this.pointReferenceMarkerSize}
+                  elevation-height={this.elevationHeight}
+                  mobile-elevation-height={this.mobileElevationHeight}
+                  large-view-size={this.largeViewSize}
                 ></grw-map>
               )}
             </div>

@@ -22,11 +22,13 @@
 | `colorTrekLine`              | `color-trek-line`               |             | `string`  | `'#6b0030'` |
 | `commonMarkerSize`           | `common-marker-size`            |             | `number`  | `48`        |
 | `departureArrivalMarkerSize` | `departure-arrival-marker-size` |             | `number`  | `14`        |
+| `elevationHeight`            | `elevation-height`              |             | `number`  | `280`       |
 | `fontFamily`                 | `font-family`                   |             | `string`  | `'Roboto'`  |
 | `grwApp`                     | `grw-app`                       |             | `boolean` | `false`     |
-| `isLargeView`                | `is-large-view`                 |             | `boolean` | `false`     |
+| `largeViewSize`              | `large-view-size`               |             | `number`  | `1024`      |
 | `mainClusterSize`            | `main-cluster-size`             |             | `number`  | `48`        |
 | `mainMarkerSize`             | `main-marker-size`              |             | `number`  | `32`        |
+| `mobileElevationHeight`      | `mobile-elevation-height`       |             | `number`  | `280`       |
 | `nameLayer`                  | `name-layer`                    |             | `string`  | `undefined` |
 | `pointReferenceMarkerSize`   | `point-reference-marker-size`   |             | `number`  | `24`        |
 | `selectedMainMarkerSize`     | `selected-main-marker-size`     |             | `number`  | `48`        |

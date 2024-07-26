@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen, Element, forceUpdate } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L, { MarkerClusterGroup, TileLayer } from 'leaflet';
 import 'leaflet-rotate';
@@ -24,8 +24,9 @@ import bbox from '@turf/bbox';
   shadow: true,
 })
 export class GrwMap {
+  @Element() mapElement: HTMLElement;
   mapRef: HTMLElement;
-  elevationRef: HTMLElement;
+  hostElement: HTMLElement;
   maxZoom = 19;
 
   @Event() trekCardPress: EventEmitter<number>;
@@ -55,8 +56,6 @@ export class GrwMap {
   @Prop() useGradient = false;
   @Prop() tilesMaxZoomOffline = 16;
 
-  @Prop() isLargeView = false;
-
   @Prop() grwApp = false;
 
   @Prop() mainMarkerSize = 32;
@@ -65,6 +64,10 @@ export class GrwMap {
   @Prop() commonMarkerSize = 48;
   @Prop() departureArrivalMarkerSize = 14;
   @Prop() pointReferenceMarkerSize = 24;
+
+  @Prop() elevationHeight = 280;
+  @Prop() mobileElevationHeight = 280;
+  @Prop() largeViewSize = 1024;
 
   map: L.Map;
   bounds;
@@ -879,12 +882,13 @@ export class GrwMap {
     /* @ts-ignore */
     L.setLocale('fr');
 
+    console.log();
     const elevationOptions = {
       srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',
       elevationDiv: `#elevation`,
       theme: `custom-theme${!this.useGradient ? ' use-theme-color' : ''}`,
       detached: true,
-      height: 280,
+      height: this.mapElement.getBoundingClientRect().width >= this.largeViewSize / 2 ? this.elevationHeight : this.mobileElevationHeight,
       wptIcons: true,
       wptLabels: true,
       collapsed: false,
@@ -2716,11 +2720,24 @@ export class GrwMap {
     }
   }
 
+  @Listen('resize', { target: 'window' })
+  onWindowResize() {
+    this.handleView();
+  }
+
+  handleView() {
+    const elevationHeight = this.mapElement.getBoundingClientRect().width >= this.largeViewSize / 2 ? this.elevationHeight : this.mobileElevationHeight;
+    (this.elevationControl.options as any).height = elevationHeight;
+    (this.elevationControl as any).redraw();
+    forceUpdate(this.hostElement);
+  }
+
   render() {
     const layersImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/layers.svg`);
     const contractImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/contract.svg`);
     return (
       <Host
+        ref={el => (this.hostElement = el)}
         style={{
           '--font-family': this.fontFamily,
           '--color-primary-app': this.colorPrimaryApp,
@@ -2733,6 +2750,9 @@ export class GrwMap {
           '--color-trek-line': this.colorTrekLine,
           '--layers-image-src': `url(${layersImageSrc})`,
           '--contract-image-src': `url(${contractImageSrc})`,
+          '--elevation-height': (this.mapElement.getBoundingClientRect().width >= this.largeViewSize / 2 ? this.elevationHeight : this.mobileElevationHeight)
+            .toString()
+            .concat('px'),
         }}
       >
         <div
