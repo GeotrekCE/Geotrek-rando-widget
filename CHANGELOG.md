@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.21.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.20.0...0.21.0) (2024-07-31)
+
+
+### Features
+
+* add elevation customization option ([00ac56c](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/00ac56c49e5d25b4f9035786c3dda2a3db29896a))
+* add marker customization option ([2a3955b](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/2a3955b7f33b5b5d4097aac5a38790c650efe63e))
+* add signages layer ([6f46c00](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/6f46c0036dbd776ab8965caa6695dc1035514337))
+* add ui customization option ([e71578e](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/e71578ec97bec705bebf0acb13c62eb0956f1075))
+
+
+### Bug Fixes
+
+* detail container height ([7781a86](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/7781a8684e7f8863d2fadbe10cccd4c566c69c15))
+
 ## [0.20.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.19.1...0.20.0) (2024-06-06)
 
 
