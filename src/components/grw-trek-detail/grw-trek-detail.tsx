@@ -729,7 +729,7 @@ export class GrwTrekDetail {
     // download trek images
     await writeOrUpdateFilesInStore(this.currentTrek, imagesRegExp, true, ['url']);
 
-    // // download trek data
+    // download trek data
     await writeOrUpdateDataInStore('difficulties', state.difficulties);
     await writeOrUpdateDataInStore('routes', state.routes);
     await writeOrUpdateDataInStore(
@@ -750,12 +750,14 @@ export class GrwTrekDetail {
     await writeOrUpdateDataInStore('networks', state.networks);
     await writeOrUpdateDataInStore('pois', state.currentPois);
     await writeOrUpdateDataInStore('poiTypes', state.poiTypes);
+    await writeOrUpdateDataInStore('signages', state.currentSignages);
     await writeOrUpdateDataInStore('informationDesks', state.currentInformationDesks);
     await writeOrUpdateDataInStore('treks', [
       {
         ...this.currentTrek,
         offline: true,
         pois: state.currentPois.map(poi => poi.id),
+        signages: state.currentSignages.map(signage => signage.id),
         touristicContents: state.trekTouristicContents.map(trekTouristicContent => trekTouristicContent.id),
         touristicEvents: state.trekTouristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
         sensitiveAreas: state.currentSensitiveAreas ? state.currentSensitiveAreas.map(currentSensitiveArea => currentSensitiveArea.id) : [],

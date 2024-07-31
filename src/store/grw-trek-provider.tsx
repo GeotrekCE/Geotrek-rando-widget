@@ -2,7 +2,7 @@ import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { handleOfflineProperty, getDataInStore } from 'services/grw-db.service';
 import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
 import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
-import { getInformationsDesks, getPoisNearTrek, getSensitiveAreasNearTrek, getSources, getTrek } from 'services/treks.service';
+import { getInformationsDesks, getPoisNearTrek, getSensitiveAreasNearTrek, getSignages, getSources, getTrek } from 'services/treks.service';
 import state from 'store/store';
 import { Trek } from 'types/types';
 import { imagesRegExp, setFilesFromStore } from 'utils/utils';
@@ -25,6 +25,8 @@ export class GrwTrekProvider {
   @Prop() routes: string;
   @Prop() practices: string;
   @Prop() labels: string;
+
+  @Prop() signages = false;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -125,6 +127,10 @@ export class GrwTrekProvider {
     const sensitiveAreas = sensitiveAreasInStore.filter(sensitiveAreaInStore => trek.sensitiveAreas.some(trekSensitiveArea => trekSensitiveArea === sensitiveAreaInStore.id));
     state.currentSensitiveAreas = sensitiveAreas;
 
+    const signagesInStore = await handleOfflineProperty('signages');
+    const signages = signagesInStore.filter(signageInStore => trek.signages.some(trekSignage => trekSignage === signageInStore.id));
+    state.currentSignages = signages;
+
     await setFilesFromStore(trek, imagesRegExp, ['url']);
     state.currentTrek = trek;
   }
@@ -164,6 +170,8 @@ export class GrwTrekProvider {
     );
     requests.push(!state.ratingsScale ? fetch(`${state.api}trek_ratingscale/?language=${state.language}&fields=id,name`, this.init) : new Response('null'));
 
+    requests.push(this.signages ? getSignages(state.api, state.language, this.trekId, this.init) : new Response('null'));
+
     try {
       Promise.all([
         ...requests,
@@ -202,6 +210,7 @@ export class GrwTrekProvider {
             accessibilities,
             ratings,
             ratingsScale,
+            signages,
             sensitiveAreas,
             labels,
             sources,
@@ -266,6 +275,9 @@ export class GrwTrekProvider {
             }
             if (labels) {
               state.labels = labels.results;
+            }
+            if (signages) {
+              state.currentSignages = signages.results;
             }
             if (sources) {
               state.sources = sources.results;

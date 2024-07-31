@@ -120,6 +120,8 @@
 .selected-outdoor-site-marker,
 .departure-marker,
 .arrival-marker {
+  width: 100%;
+  height: 100%;
   .trek-marker-container,
   .step-marker-container,
   .touristic-content-marker-container,
@@ -286,13 +288,15 @@
 .sensitive-area-tooltip,
 .touristic-content-tooltip,
 .touristic-event-tooltip,
-.parking-tooltip {
+.parking-tooltip,
+.signage-tootltip {
   .poi-name,
   .information-desks-name,
   .sensitive-area-name,
   .touristic-content-name,
   .touristic-event-name,
-  .parking-name {
+  .parking-name,
+  .signage-name {
     color: var(--color-primary-app);
     font-weight: 400;
     font-size: 16px;
@@ -324,7 +328,8 @@
 .information-desks-marker,
 .touristic-content-marker,
 .touristic-event-marker,
-.outdoor-site-marker {
+.outdoor-site-marker,
+.signage-marker {
   background-color: var(--color-markers);
   border-radius: 50%;
   display: flex;

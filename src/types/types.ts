@@ -54,6 +54,7 @@ export type Trek = {
   offline?: boolean;
   information_desks?: number[];
   pois?: number[];
+  signages?: number[];
   touristicContents?: number[];
   touristicEvents?: number[];
   sensitiveAreas?: number[];
@@ -474,4 +475,12 @@ export type OutdoorCourseType = {
   id: number;
   name: string;
   pictogram: string;
+};
+
+export type Signages = Signage[];
+
+export type Signage = {
+  id: number;
+  geometry: Geometry;
+  name: string;
 };

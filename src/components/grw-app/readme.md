@@ -59,6 +59,7 @@
 | `rounded`                    | `rounded`                       |             | `boolean` | `true`      |
 | `routes`                     | `routes`                        |             | `string`  | `undefined` |
 | `selectedMainMarkerSize`     | `selected-main-marker-size`     |             | `number`  | `48`        |
+| `signages`                   | `signages`                      |             | `boolean` | `false`     |
 | `structures`                 | `structures`                    |             | `string`  | `undefined` |
 | `themes`                     | `themes`                        |             | `string`  | `undefined` |
 | `tilesMaxZoomOffline`        | `tiles-max-zoom-offline`        |             | `number`  | `16`        |

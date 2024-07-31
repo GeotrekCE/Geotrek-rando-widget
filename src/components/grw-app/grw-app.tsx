@@ -100,6 +100,8 @@ export class GrwApp {
   @Prop() elevationHeight = 280;
   @Prop() mobileElevationHeight = 280;
 
+  @Prop() signages = false;
+
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
   @Listen('trekCardPress', { target: 'window' })
@@ -522,6 +524,7 @@ export class GrwApp {
             routes={this.routes}
             practices={this.practices}
             labels={this.labels}
+            signages={this.signages}
           ></grw-trek-provider>
         )}
         {this.showTouristicContent && this.currentTouristicContentId && (

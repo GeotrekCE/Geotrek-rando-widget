@@ -56,6 +56,8 @@ import {
   OutdoorCourse,
   OutdoorCourses,
   OutdoorCourseTypes,
+  Signage,
+  Signages,
 } from 'types/types';
 import { checkFileInStore, getFilesToStore, imagesRegExp, setFilesFromStore } from 'utils/utils';
 import { Directory } from '@capacitor/filesystem';
@@ -94,7 +96,8 @@ type ObjectStoresName =
   | 'outdoorCourses'
   | 'outdoorCourseTypes'
   | 'outdoorRatings'
-  | 'outdoorRatingsScale';
+  | 'outdoorRatingsScale'
+  | 'signages';
 
 type KeyPath = 'id' | 'url';
 
@@ -156,6 +159,8 @@ type ObjectStoresType<T> = T extends 'districts'
   ? Ratings
   : T extends 'outdoorRatingsScale'
   ? RatingsScale
+  : T extends 'signages'
+  ? Signage
   : never;
 
 type ObjectStoresData =
@@ -188,7 +193,8 @@ type ObjectStoresData =
   | OutdoorCourses
   | OutdoorCourseTypes
   | Ratings
-  | RatingsScale;
+  | RatingsScale
+  | Signages;
 
 interface GrwDB extends DBSchema {
   districts: {
@@ -307,6 +313,10 @@ interface GrwDB extends DBSchema {
     value: RatingsScale;
     key: number;
   };
+  signages: {
+    value: Signage;
+    key: number;
+  };
 }
 
 const grwDbVersion = 2;
@@ -357,6 +367,14 @@ export async function getGrwDB() {
             { name: 'outdoorRatings', keyPath: 'id' },
             { name: 'outdoorRatingsScale', keyPath: 'id' },
           ];
+          objectStoresNames.forEach(objectStoresName => {
+            if (!db.objectStoreNames.contains(objectStoresName.name)) {
+              db.createObjectStore(objectStoresName.name, { keyPath: objectStoresName.keyPath });
+            }
+          });
+        }
+        case 2: {
+          const objectStoresNames: ObjectStores = [{ name: 'signages', keyPath: 'id' }];
           objectStoresNames.forEach(objectStoresName => {
             if (!db.objectStoreNames.contains(objectStoresName.name)) {
               db.createObjectStore(objectStoresName.name, { keyPath: objectStoresName.keyPath });

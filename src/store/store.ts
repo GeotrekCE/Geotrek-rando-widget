@@ -36,6 +36,7 @@ import {
   OutdoorSite,
   OutdoorCourse,
   OutdoorCourseTypes,
+  Signages,
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -119,6 +120,7 @@ const { state, onChange, reset } = createStore<{
   outdoorCourseTypes: OutdoorCourseTypes;
   currentOutdoorCourse: OutdoorCourse;
   offlineOutdoorSites: boolean;
+  currentSignages: Signages;
 }>({
   mode: null,
   api: null,
@@ -200,6 +202,7 @@ const { state, onChange, reset } = createStore<{
   outdoorRatings: null,
   outdoorRatingsScale: null,
   offlineOutdoorSites: false,
+  currentSignages: null,
 });
 
 export { onChange, reset };

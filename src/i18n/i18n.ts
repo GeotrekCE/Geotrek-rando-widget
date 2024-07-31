@@ -74,6 +74,7 @@ interface Translation {
     touristicEvents: string;
     sites: string;
     courses: string;
+    signages: string;
   };
   themes: string;
   placeholderThemes: string;
@@ -203,6 +204,7 @@ const defaultTranslate: AvailableTranslations = {
       touristicEvents: 'Événements',
       sites: 'Sites',
       courses: 'Parcours',
+      signages: 'Signalétiques',
     },
     themes: 'Thèmes',
     placeholderThemes: 'Sélectionner un ou plusieurs thèmes',
@@ -326,6 +328,7 @@ const defaultTranslate: AvailableTranslations = {
       touristicEvents: 'Events',
       sites: 'sites',
       courses: 'Courses',
+      signages: 'Signages',
     },
     themes: 'Themes',
     placeholderThemes: 'Select one or more themes',

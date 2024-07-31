@@ -59,6 +59,7 @@ export namespace Components {
         "rounded": boolean;
         "routes": string;
         "selectedMainMarkerSize": number;
+        "signages": boolean;
         "structures": string;
         "themes": string;
         "tilesMaxZoomOffline": number;
@@ -383,6 +384,7 @@ export namespace Components {
         "portals": string;
         "practices": string;
         "routes": string;
+        "signages": boolean;
         "structures": string;
         "themes": string;
         "trekId": number;
@@ -960,6 +962,7 @@ declare namespace LocalJSX {
         "rounded"?: boolean;
         "routes"?: string;
         "selectedMainMarkerSize"?: number;
+        "signages"?: boolean;
         "structures"?: string;
         "themes"?: string;
         "tilesMaxZoomOffline"?: number;
@@ -1334,6 +1337,7 @@ declare namespace LocalJSX {
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
+        "signages"?: boolean;
         "structures"?: string;
         "themes"?: string;
         "trekId"?: number;

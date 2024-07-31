@@ -92,6 +92,7 @@ export class GrwMap {
   currentParkingLayer: L.GeoJSON<any>;
   currentSensitiveAreasLayer: L.GeoJSON<any>;
   currentPoisLayer: L.GeoJSON<any>;
+  currentSignagesLayer: L.GeoJSON<any>;
   currentInformationDesksLayer: L.GeoJSON<any>;
   currentToutisticContentsLayer: L.GeoJSON<any>;
   currentTouristicEventsLayer: L.GeoJSON<any>;
@@ -758,6 +759,8 @@ export class GrwMap {
 
     await this.addCurrentPois();
 
+    await this.addCurrentSignages();
+
     await this.addCurrentTouristicContents();
 
     await this.addCurrentTouristicEvents();
@@ -882,7 +885,6 @@ export class GrwMap {
     /* @ts-ignore */
     L.setLocale('fr');
 
-    console.log();
     const elevationOptions = {
       srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',
       elevationDiv: `#elevation`,
@@ -2434,6 +2436,51 @@ export class GrwMap {
     }
   }
 
+  async addCurrentSignages() {
+    if (state.currentSignages && state.currentSignages.length > 0) {
+      const signageImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/signage.svg`);
+      const currentSignagesFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const currentSignage of state.currentSignages) {
+        currentSignagesFeatureCollection.features.push({
+          type: 'Feature',
+          properties: { name: currentSignage.name },
+          geometry: currentSignage.geometry,
+        });
+      }
+
+      this.currentSignagesLayer = L.geoJSON(currentSignagesFeatureCollection, {
+        pointToLayer: (_geoJsonPoint, latlng) =>
+          L.marker(latlng, {
+            icon: L.divIcon({
+              html: `<div part="signage-marker" class="signage-marker"><img  src=${signageImageSrc} /></div>`,
+              className: '',
+              iconSize: this.commonMarkerSize,
+            } as any),
+            autoPanOnFocus: false,
+          } as any),
+        onEachFeature: (geoJsonPoint, layer) => {
+          layer.once('mouseover', () => {
+            const signageTooltip = L.DomUtil.create('div');
+            /* @ts-ignore */
+            signageTooltip.part = 'signage-tooltip';
+            signageTooltip.className = 'signage-tooltip';
+            const signageName = L.DomUtil.create('div');
+            signageName.innerHTML = geoJsonPoint.properties.name;
+            /* @ts-ignore */
+            signageName.part = 'signage-name';
+            signageName.className = 'signage-name';
+            signageTooltip.appendChild(signageName);
+            layer.bindTooltip(signageTooltip).openTooltip();
+          });
+        },
+      });
+    }
+  }
+
   async addCurrentTouristicContents() {
     if (state.trekTouristicContents && state.trekTouristicContents.length > 0) {
       const currentTouristicContentsFeatureCollection: FeatureCollection = {
@@ -2608,6 +2655,10 @@ export class GrwMap {
     if (this.currentPoisLayer) {
       overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
     }
+    if (this.currentSignagesLayer) {
+      overlays[translate[state.language].layers.signages] = this.currentSignagesLayer;
+      this.currentSignagesLayer.addTo(this.map);
+    }
     if (this.currentToutisticContentsLayer) {
       overlays[translate[state.language].layers.touristicContents] = this.currentToutisticContentsLayer;
     }
@@ -2677,6 +2728,11 @@ export class GrwMap {
     if (this.currentPoisLayer) {
       this.map.removeLayer(this.currentPoisLayer);
       this.currentPoisLayer = null;
+    }
+
+    if (this.currentSignagesLayer) {
+      this.map.removeLayer(this.currentSignagesLayer);
+      this.currentSignagesLayer = null;
     }
 
     if (this.currentInformationDesksLayer) {
