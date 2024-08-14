@@ -28,7 +28,7 @@ Pour afficher uniquement les **itinéraires de pratique VTT** dans le widget, il
 <grw-app ... practices="1"></grw-app>
 ```
 > [!INFO]
-> * Si l'on souhaite afficher des itiénraires pour plusieurs pratiques, il faut lister les identifiants des pratiques comme ceci : 
+> * Si l'on souhaite afficher des itinéraires pour plusieurs pratiques, il faut lister les identifiants des pratiques comme ceci : 
 >```html
 ><grw-app ... practices="1,2"></grw-app>
 >```

@@ -118,7 +118,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         items: [
           { text: 'Application', link: '/documentation/examples/application' },
           { text: 'Application itinéraires', link: '/documentation/examples/app-treks' },
-          { text: 'Application itinéraires VTT', link: '/documentation/examples/app-treks_vtt' },
+          { text: 'Application itinéraires VTT', link: '/documentation/examples/app-treks-vtt' },
           { text: 'Application outdoors', link: '/documentation/examples/app-outdoors' },
           { text: 'Application contenus touristiques', link: '/documentation/examples/app-touristic-contents' },
           { text: 'Application événements touristiques', link: '/documentation/examples/app-touristic-events' },

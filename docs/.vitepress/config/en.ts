@@ -82,7 +82,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         items: [
           { text: 'Application', link: '/en/documentation/examples/application' },
           { text: 'Treks app', link: '/en/documentation/examples/app-treks' },
-          { text: 'Treks app', link: '/en/documentation/examples/app-treks_bike' },
+          { text: 'Treks app', link: '/en/documentation/examples/app-treks-bike' },
           { text: 'Outdoors app', link: '/en/documentation/examples/app-outdoors' },
           { text: 'Touristic contents app', link: '/en/documentation/examples/app-touristic-contents' },
           { text: 'Touristic events app', link: '/en/documentation/examples/app-touristic-events' },

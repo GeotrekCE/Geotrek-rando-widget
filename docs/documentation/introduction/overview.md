@@ -85,6 +85,7 @@ Ce widget, développé dans le cadre du projet communautaire Geotrek, est **libr
 - Le contenu de la vue *liste* est synchronisé avec les éléments affichés sur la carte
 - L'utilisateur peut copier l'URL d'une fiche *détaillée* pour la partager auprès d'autres internautes
 
+**Lien vers le démonstrateur de Geotrek-widget 🠖 https://demo-rando-widget.geotrek.fr/** 
 
 ## Exemples d'intégration sur des sites tiers
 
