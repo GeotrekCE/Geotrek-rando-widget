@@ -461,12 +461,16 @@ export async function writeOrUpdateTilesInStore(offlineLayer: TileLayerOffline, 
   for (let index = 0; index < tilesToStore.length; index++) {
     if (!(await getBlobByKey(tilesToStore[index].key))) {
       tilesToDownload.push(downloadTile(tilesToStore[index].url).catch(() => null));
+    } else {
+      tilesToDownload.push(new Promise(resolve => resolve(null)));
     }
   }
 
-  const tilesBlob = await Promise.all(tilesToDownload.filter(tileToDownload => tileToDownload)).then(blob => blob);
+  const tilesBlob = await Promise.all(tilesToDownload).then(blob => blob);
   for (let index = 0; index < tilesBlob.length; index++) {
-    await saveTile(tilesToStore[index], tilesBlob[index]);
+    if (tilesBlob[index]) {
+      await saveTile(tilesToStore[index], tilesBlob[index]);
+    }
   }
 }
 
