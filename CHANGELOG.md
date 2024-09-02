@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.21.0...0.21.1) (2024-09-02)
+
+
+### Bug Fixes
+
+* write tiles in store ([4c4085d](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/4c4085dc556e4614669cc6aebf5770a4b3c780c9))
+
 ## [0.21.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.20.0...0.21.0) (2024-07-31)
 
 
