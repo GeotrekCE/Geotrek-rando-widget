@@ -16,6 +16,7 @@
   font-family: var(--font-family);
   font-size: 16px;
   width: unset;
+  pointer-events: all;
   &:hover {
     box-shadow: var(--elevation-4);
   }

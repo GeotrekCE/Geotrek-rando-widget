@@ -471,10 +471,10 @@ export class GrwApp {
           '--app-height': this.appHeight,
           '--header-height':
             Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) + Number(this.outdoor) > 1
-              ? this.enableOffline
+              ? this.enableOffline && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent
                 ? '188px'
-                : '136px'
-              : this.enableOffline
+                : '64px'
+              : this.enableOffline && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent
               ? '116px'
               : '64px',
           '--header-with-languages': this.languages.split(',').length > 1 ? '38px' : '0px',
@@ -805,6 +805,7 @@ export class GrwApp {
                     color-surface-container-low={this.colorSurfaceContainerLow}
                     color-background={this.colorBackground}
                     is-large-view={this.isLargeView}
+                    grw-app={true}
                   ></grw-touristic-content-detail>
                 </div>
               )}
@@ -825,6 +826,7 @@ export class GrwApp {
                     color-surface-container-low={this.colorSurfaceContainerLow}
                     color-background={this.colorBackground}
                     is-large-view={this.isLargeView}
+                    grw-app={true}
                   ></grw-touristic-event-detail>
                 </div>
               )}
@@ -849,6 +851,7 @@ export class GrwApp {
                     default-background-layer-url={this.urlLayer.split(',http').map((url, index) => (index === 0 ? url : 'http' + url))[0]}
                     default-background-layer-attribution={this.attributionLayer ? this.attributionLayer.split(',')[0] : []}
                     enable-offline={this.enableOffline}
+                    grw-app={true}
                   ></grw-outdoor-site-detail>
                   <grw-offline-confirm-modal mode="treks"></grw-offline-confirm-modal>
                 </div>
@@ -870,6 +873,7 @@ export class GrwApp {
                     color-surface-container-low={this.colorSurfaceContainerLow}
                     color-background={this.colorBackground}
                     is-large-view={this.isLargeView}
+                    grw-app={true}
                   ></grw-outdoor-course-detail>
                 </div>
               )}

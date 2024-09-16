@@ -2,6 +2,7 @@ import { Component, Host, Prop, h, Event, EventEmitter, Listen, getAssetPath, Bu
 import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import { OutdoorSite } from 'types/types';
+import { translate } from 'i18n/i18n';
 
 @Component({
   tag: 'grw-outdoor-site-card',
@@ -123,7 +124,7 @@ export class GrwOutdoorSiteCard {
           {this.isInsideHorizontalList && (
             <div part="outdoor-site-more-detail-container" class="outdoor-site-more-detail-container">
               <button part="more-details-button" class="more-details-button" onClick={() => this.outdoorSiteCardPress.emit(this.outdoorSite.id)}>
-                Plus de détails
+                {translate[state.language].moreDetails}
               </button>
             </div>
           )}

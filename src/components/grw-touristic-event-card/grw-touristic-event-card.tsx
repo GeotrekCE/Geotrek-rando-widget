@@ -11,7 +11,6 @@ import { OutdoorSite, TouristicEvent, Trek } from 'types/types';
   shadow: true,
 })
 export class GrwTouristicEvent {
-  @Event() touristicEventCardPress: EventEmitter<number>;
   swiperTouristicEvent?: Swiper;
   swiperTouristicEventRef?: HTMLDivElement;
   prevElTouristicEventRef?: HTMLDivElement;
@@ -27,6 +26,7 @@ export class GrwTouristicEvent {
 
   @Event() cardTouristicEventMouseOver: EventEmitter<number>;
   @Event() cardTouristicEventMouseLeave: EventEmitter;
+  @Event() touristicEventCardPress: EventEmitter<number>;
 
   @State() offline = false;
 
@@ -108,6 +108,10 @@ export class GrwTouristicEvent {
     this.cardTouristicEventMouseLeave.emit();
   }
 
+  onMoreDetailsClick() {
+    this.touristicEventCardPress.emit(this.touristicEvent.id);
+  }
+
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     const touristicEventType = state.touristicEventTypes.find(touristicEventType => touristicEventType.id === this.touristicEvent.type);
@@ -131,7 +135,7 @@ export class GrwTouristicEvent {
           }
           onClick={() => {
             if (!this.isInsideHorizontalList) {
-              this.touristicEventCardPress.emit(this.touristicEvent.id);
+              this.onMoreDetailsClick();
             }
           }}
         >
@@ -228,8 +232,8 @@ export class GrwTouristicEvent {
 
           {this.isInsideHorizontalList && (
             <div part="touristic-event-more-detail-container" class="touristic-event-more-detail-container">
-              <button part="more-details-button" class="more-details-button" onClick={() => this.touristicEventCardPress.emit(this.touristicEvent.id)}>
-                Plus de détails
+              <button part="more-details-button" class="more-details-button" onClick={() => this.onMoreDetailsClick()}>
+                {translate[state.language].moreDetails}
               </button>
             </div>
           )}

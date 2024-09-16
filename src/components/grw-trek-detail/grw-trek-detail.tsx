@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Event, EventEmitter, Build, Listen, getAssetPath } from '@stencil/core';
+import { Component, Host, h, Prop, State, Event, EventEmitter, Build, Listen, getAssetPath, Fragment } from '@stencil/core';
 import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel, Scrollbar } from 'swiper';
 import { translate } from 'i18n/i18n';
 import state, { onChange } from 'store/store';
@@ -206,6 +206,47 @@ export class GrwTrekDetail {
   @Event() deleteSuccessConfirm: EventEmitter<number>;
 
   indicatorSelectedTrekOption = { translateX: null, width: null, backgroundSize: null, ref: null };
+
+  @State() showTouristicContentDetailsModal = false;
+  @State() showTouristicEventDetailsModal = false;
+  @State() modalDetailsId = null;
+
+  @Listen('closeDetailsModal', { target: 'window' })
+  onCloseDetailsModal() {
+    document.body.style.overflow = `visible`;
+    state.currentTouristicContent = null;
+    this.modalDetailsId = null;
+    if (this.showTouristicContentDetailsModal) {
+      this.showTouristicContentDetailsModal = false;
+    } else {
+      this.showTouristicEventDetailsModal = false;
+    }
+  }
+
+  @Listen('touristicEventCardPress', { target: 'window' })
+  onTouristiceEventCardPress(touristicEventId) {
+    if (!this.grwApp) {
+      this.modalDetailsId = touristicEventId.detail;
+      this.onOpenDetailsModal('TouristicContent');
+    }
+  }
+
+  @Listen('touristicContentCardPress', { target: 'window' })
+  onTouristicContentCardPress(touristicContentId) {
+    if (!this.grwApp) {
+      this.modalDetailsId = touristicContentId.detail;
+      this.onOpenDetailsModal('touristicContent');
+    }
+  }
+
+  onOpenDetailsModal(modalDetails: 'touristicContent' | 'TouristicContent') {
+    document.body.style.overflow = `hidden`;
+    if (modalDetails === 'touristicContent') {
+      this.showTouristicContentDetailsModal = true;
+    } else {
+      this.showTouristicEventDetailsModal = true;
+    }
+  }
 
   componentDidUpdate() {
     this.handleObservers();
@@ -1645,6 +1686,46 @@ export class GrwTrekDetail {
             )}
             {this.grwApp && <div part="detail-bottom-space" class="detail-bottom-space"></div>}
           </div>
+        )}
+        {(this.showTouristicContentDetailsModal || this.showTouristicEventDetailsModal) && (
+          <grw-details-modal>
+            {this.showTouristicContentDetailsModal && this.modalDetailsId && (
+              <Fragment>
+                {state.currentTouristicContent && (
+                  <grw-touristic-content-detail
+                    font-family={this.fontFamily}
+                    color-primary-app={this.colorPrimaryApp}
+                    color-on-surface={this.colorOnSurface}
+                    color-primary-container={this.colorPrimaryContainer}
+                    color-on-primary-container={this.colorOnPrimaryContainer}
+                    color-secondary-container={this.colorSecondaryContainer}
+                    color-on-secondary-container={this.colorOnSecondaryContainer}
+                    color-surface-container-low={this.colorSurfaceContainerLow}
+                    color-background={this.colorBackground}
+                  ></grw-touristic-content-detail>
+                )}
+                <grw-touristic-content-provider api={state.api} touristic-content-id={this.modalDetailsId}></grw-touristic-content-provider>
+              </Fragment>
+            )}
+            {this.showTouristicEventDetailsModal && this.modalDetailsId && (
+              <Fragment>
+                {state.currentTouristicEvent && (
+                  <grw-touristic-event-detail
+                    font-family={this.fontFamily}
+                    color-primary-app={this.colorPrimaryApp}
+                    color-on-surface={this.colorOnSurface}
+                    color-primary-container={this.colorPrimaryContainer}
+                    color-on-primary-container={this.colorOnPrimaryContainer}
+                    color-secondary-container={this.colorSecondaryContainer}
+                    color-on-secondary-container={this.colorOnSecondaryContainer}
+                    color-surface-container-low={this.colorSurfaceContainerLow}
+                    color-background={this.colorBackground}
+                  ></grw-touristic-event-detail>
+                )}
+                <grw-touristic-event-provider api={state.api} touristic-event-id={this.modalDetailsId}></grw-touristic-event-provider>
+              </Fragment>
+            )}
+          </grw-details-modal>
         )}
       </Host>
     );

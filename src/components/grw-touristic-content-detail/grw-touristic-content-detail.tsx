@@ -31,6 +31,7 @@ export class GrwTouristicContentDetail {
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() colorBackground = '#fef7ff';
   @Prop() isLargeView = false;
+  @Prop() grwApp = false;
 
   descriptionRef?: HTMLDivElement;
   touristicContentDetailContainerRef?: HTMLElement;
@@ -234,7 +235,7 @@ export class GrwTouristicContentDetail {
                 </div>
               </div>
             )}
-            <div part="detail-bottom-space" class="detail-bottom-space"></div>
+            {this.grwApp && <div part="detail-bottom-space" class="detail-bottom-space"></div>}
           </div>
         )}
       </Host>

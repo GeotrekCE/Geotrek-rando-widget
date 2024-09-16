@@ -154,6 +154,11 @@ graph TD;
   grw-trek-detail --> grw-information-desk
   grw-trek-detail --> grw-touristic-content-card
   grw-trek-detail --> grw-touristic-event-card
+  grw-trek-detail --> grw-details-modal
+  grw-trek-detail --> grw-touristic-content-detail
+  grw-trek-detail --> grw-touristic-content-provider
+  grw-trek-detail --> grw-touristic-event-detail
+  grw-trek-detail --> grw-touristic-event-provider
   grw-outdoor-site-detail --> grw-poi
   grw-outdoor-site-detail --> grw-outdoor-site-card
   grw-outdoor-site-detail --> grw-outdoor-course-card

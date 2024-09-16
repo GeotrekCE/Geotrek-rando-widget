@@ -49,6 +49,7 @@ export class GrwOutdoorSiteDetail {
   @Prop() globalTilesMaxZoomOffline = 11;
   @Prop() tilesMinZoomOffline = 12;
   @Prop() tilesMaxZoomOffline = 16;
+  @Prop() grwApp = false;
 
   @State() offline = false;
   @State() displayFullscreen = false;
@@ -1065,7 +1066,7 @@ export class GrwOutdoorSiteDetail {
                 </div>
               </div>
             )}
-            <div part="detail-bottom-space" class="detail-bottom-space"></div>
+            {this.grwApp && <div part="detail-bottom-space" class="detail-bottom-space"></div>}
           </div>
         )}
       </Host>
