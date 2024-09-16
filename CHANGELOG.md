@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.21.1...0.22.0) (2024-09-16)
+
+
+### Features
+
+* add grw details modal ([f3c946a](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/f3c946af0236abb40d406aee3656692592017903))
+
 ## [0.21.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.21.0...0.21.1) (2024-09-02)
 
 
