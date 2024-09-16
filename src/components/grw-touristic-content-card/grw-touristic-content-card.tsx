@@ -1,4 +1,5 @@
 import { Build, Component, Host, getAssetPath, h, State, Prop, Event, EventEmitter, Listen } from '@stencil/core';
+import { translate } from 'i18n/i18n';
 import { getDataInStore } from 'services/grw-db.service';
 import state from 'store/store';
 import Swiper, { Keyboard, Navigation, Pagination } from 'swiper';
@@ -107,6 +108,10 @@ export class GrwTouristicContentCard {
     this.cardTouristicContentMouseLeave.emit();
   }
 
+  onMoreDetailsClick() {
+    this.touristicContentCardPress.emit(this.touristicContent.id);
+  }
+
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     const touristicContentCategory = state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === this.touristicContent.category);
@@ -130,7 +135,7 @@ export class GrwTouristicContentCard {
           }
           onClick={() => {
             if (!this.isInsideHorizontalList) {
-              this.touristicContentCardPress.emit(this.touristicContent.id);
+              this.onMoreDetailsClick();
             }
           }}
         >
@@ -215,8 +220,8 @@ export class GrwTouristicContentCard {
           </div>
           {this.isInsideHorizontalList && (
             <div part="touristic-content-more-detail-container" class="touristic-content-more-detail-container">
-              <button part="more-details-button" class="more-details-button" onClick={() => this.touristicContentCardPress.emit(this.touristicContent.id)}>
-                Plus de détails
+              <button part="more-details-button" class="more-details-button" onClick={() => this.onMoreDetailsClick()}>
+                {translate[state.language].moreDetails}
               </button>
             </div>
           )}

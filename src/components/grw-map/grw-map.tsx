@@ -1,7 +1,6 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen, Element, forceUpdate } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L, { MarkerClusterGroup, TileLayer } from 'leaflet';
-import 'leaflet-rotate';
 import 'leaflet.locatecontrol';
 import 'leaflet-i18n';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
@@ -409,33 +408,37 @@ export class GrwMap {
     });
 
     onChange('currentTouristicContent', () => {
-      if (state.currentTouristicContent) {
-        this.removeTrek();
-        this.removeTouristicContents();
-        this.addTouristicContent();
-      } else if (state.touristicContents) {
-        this.removeTouristicContent();
-        this.addTouristicContents();
-      } else if (state.currentTrek) {
-        this.removeTouristicContent();
-        this.addTrek();
-      } else if (state.currentTreks) {
-        this.removeTouristicContent();
-        this.addTreks();
+      if (this.grwApp) {
+        if (state.currentTouristicContent) {
+          this.removeTrek();
+          this.removeTouristicContents();
+          this.addTouristicContent();
+        } else if (state.touristicContents) {
+          this.removeTouristicContent();
+          this.addTouristicContents();
+        } else if (state.currentTrek) {
+          this.removeTouristicContent();
+          this.addTrek();
+        } else if (state.currentTreks) {
+          this.removeTouristicContent();
+          this.addTreks();
+        }
       }
     });
 
     onChange('currentTouristicEvent', () => {
-      if (state.currentTouristicEvent) {
-        this.removeTrek();
-        this.removeTouristicEvents();
-        this.addTouristicEvent();
-      } else if (state.currentTrek) {
-        this.removeTouristicEvent();
-        this.addTrek();
-      } else if (state.currentTreks) {
-        this.removeTouristicEvent();
-        this.addTreks();
+      if (this.grwApp) {
+        if (state.currentTouristicEvent) {
+          this.removeTrek();
+          this.removeTouristicEvents();
+          this.addTouristicEvent();
+        } else if (state.currentTrek) {
+          this.removeTouristicEvent();
+          this.addTrek();
+        } else if (state.currentTreks) {
+          this.removeTouristicEvent();
+          this.addTreks();
+        }
       }
     });
 
@@ -2492,6 +2495,7 @@ export class GrwMap {
         currentTouristicContentsFeatureCollection.features.push({
           type: 'Feature',
           properties: {
+            id: touristicContent.id,
             name: touristicContent.name,
             category_pictogram: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category)?.pictogram,
           },
@@ -2515,7 +2519,12 @@ export class GrwMap {
           } as any);
         },
         onEachFeature: (geoJsonPoint, layer) => {
-          layer.once('mouseover', () => {
+          layer.on('click', () => {
+            if (!this.grwApp) {
+              this.touristicContentCardPress.emit(geoJsonPoint.properties.id);
+            }
+          });
+          layer.on('mouseover', () => {
             const touristicContentTooltip = L.DomUtil.create('div');
             /* @ts-ignore */
             touristicContentTooltip.part = 'touristic-content-tooltip';
@@ -2544,6 +2553,7 @@ export class GrwMap {
         currentTouristicEventsFeatureCollection.features.push({
           type: 'Feature',
           properties: {
+            id: touristicEvent.id,
             name: touristicEvent.name,
             type_pictogram: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === touristicEvent.type)?.pictogram,
           },
@@ -2566,6 +2576,11 @@ export class GrwMap {
             autoPanOnFocus: false,
           } as any),
         onEachFeature: (geoJsonPoint, layer) => {
+          layer.on('click', () => {
+            if (!this.grwApp) {
+              this.touristicEventCardPress.emit(geoJsonPoint.properties.id);
+            }
+          });
           layer.once('mouseover', () => {
             const touristicEventTooltip = L.DomUtil.create('div');
             /* @ts-ignore */
@@ -2815,7 +2830,7 @@ export class GrwMap {
           id="map"
           part="map"
           class={
-            state.currentTouristicContent || state.currentTouristicEvent || state.currentOutdoorSite || state.currentOutdoorCourse
+            (state.currentTouristicContent || state.currentTouristicEvent || state.currentOutdoorSite || state.currentOutdoorCourse) && this.grwApp
               ? 'common-map'
               : state.currentTrek
               ? 'trek-map'

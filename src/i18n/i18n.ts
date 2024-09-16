@@ -120,6 +120,7 @@ interface Translation {
   placeholderCategories: string;
   onlyOfflineTreks: string;
   onlyOfflineOutdoor: string;
+  moreDetails: string;
 }
 
 interface AvailableTranslations {
@@ -251,6 +252,7 @@ const defaultTranslate: AvailableTranslations = {
     placeholderCategories: 'Sélectionner une ou plusieurs catégories',
     onlyOfflineTreks: 'Afficher uniquement les itinéraires hors ligne',
     onlyOfflineOutdoor: 'Afficher uniquement les outdoor hors ligne',
+    moreDetails: 'Plus de détails',
   },
   en: {
     filter: 'Filter',
@@ -375,6 +377,7 @@ const defaultTranslate: AvailableTranslations = {
     placeholderCategories: 'Select one or more categories',
     onlyOfflineTreks: 'Only display offline treks',
     onlyOfflineOutdoor: 'Only display offline outdoor',
+    moreDetails: 'More details',
   },
 };
 

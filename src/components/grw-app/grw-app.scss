@@ -127,6 +127,7 @@ grw-app {
   position: absolute;
   bottom: 24px;
   z-index: 4;
+  pointer-events: none;
 }
 
 .grw-init-loader-container,
@@ -152,14 +153,14 @@ grw-outdoor-sites-list {
 
 grw-trek-detail {
   position: relative;
-  max-height: calc(100% - 64px);
+  max-height: calc(100% - 48px);
 }
 
 grw-touristic-content-detail,
 grw-touristic-event-detail,
 grw-outdoor-site-detail {
   position: relative;
-  max-height: calc(100% - 64px);
+  max-height: 100%;
 }
 
 .grw-app-map-container {

@@ -18,6 +18,7 @@
 | `colorSecondaryContainer`   | `color-secondary-container`    |             | `string`  | `'#e8def8'` |
 | `colorSurfaceContainerLow`  | `color-surface-container-low`  |             | `string`  | `'#f7f2fa'` |
 | `fontFamily`                | `font-family`                  |             | `string`  | `'Roboto'`  |
+| `grwApp`                    | `grw-app`                      |             | `boolean` | `false`     |
 | `isLargeView`               | `is-large-view`                |             | `boolean` | `false`     |
 
 
@@ -75,11 +76,13 @@
 ### Used by
 
  - [grw-app](../grw-app)
+ - [grw-trek-detail](../grw-trek-detail)
 
 ### Graph
 ```mermaid
 graph TD;
   grw-app --> grw-touristic-content-detail
+  grw-trek-detail --> grw-touristic-content-detail
   style grw-touristic-content-detail fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

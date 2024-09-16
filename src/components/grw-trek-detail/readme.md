@@ -197,6 +197,11 @@
 - [grw-information-desk](../grw-information-desk)
 - [grw-touristic-content-card](../grw-touristic-content-card)
 - [grw-touristic-event-card](../grw-touristic-event-card)
+- [grw-details-modal](../grw-details-modal)
+- [grw-touristic-content-detail](../grw-touristic-content-detail)
+- [grw-touristic-content-provider](../../store)
+- [grw-touristic-event-detail](../grw-touristic-event-detail)
+- [grw-touristic-event-provider](../../store)
 
 ### Graph
 ```mermaid
@@ -207,6 +212,11 @@ graph TD;
   grw-trek-detail --> grw-information-desk
   grw-trek-detail --> grw-touristic-content-card
   grw-trek-detail --> grw-touristic-event-card
+  grw-trek-detail --> grw-details-modal
+  grw-trek-detail --> grw-touristic-content-detail
+  grw-trek-detail --> grw-touristic-content-provider
+  grw-trek-detail --> grw-touristic-event-detail
+  grw-trek-detail --> grw-touristic-event-provider
   grw-app --> grw-trek-detail
   style grw-trek-detail fill:#f9f,stroke:#333,stroke-width:4px
 ```

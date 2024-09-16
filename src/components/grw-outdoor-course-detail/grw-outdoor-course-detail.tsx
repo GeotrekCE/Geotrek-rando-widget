@@ -30,6 +30,7 @@ export class GrwOutdoorCourseDetail {
   @Prop() colorBackground = '#fef7ff';
   @Prop() isLargeView = false;
   @Prop() weather = false;
+  @Prop() grwApp = false;
 
   @State() displayFullscreen = false;
   @State() currentOutdoorCourse: OutdoorCourse;
@@ -507,7 +508,7 @@ export class GrwOutdoorCourseDetail {
                 </div>
               </div>
             )}
-            <div part="detail-bottom-space" class="detail-bottom-space"></div>
+            {this.grwApp && <div part="detail-bottom-space" class="detail-bottom-space"></div>}
           </div>
         )}
       </Host>

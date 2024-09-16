@@ -77,6 +77,8 @@ export namespace Components {
         "icon": string;
         "name": string;
     }
+    interface GrwDetailsModal {
+    }
     interface GrwExtendedFab {
         "action": Function;
         "display": string;
@@ -155,6 +157,7 @@ export namespace Components {
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
         "fontFamily": string;
+        "grwApp": boolean;
         "isLargeView": boolean;
         "weather": boolean;
     }
@@ -200,6 +203,7 @@ export namespace Components {
         "fontFamily": string;
         "globalTilesMaxZoomOffline": number;
         "globalTilesMinZoomOffline": number;
+        "grwApp": boolean;
         "isLargeView": boolean;
         "tilesMaxZoomOffline": number;
         "tilesMinZoomOffline": number;
@@ -270,6 +274,7 @@ export namespace Components {
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
         "fontFamily": string;
+        "grwApp": boolean;
         "isLargeView": boolean;
     }
     interface GrwTouristicContentProvider {
@@ -313,6 +318,7 @@ export namespace Components {
         "colorSecondaryContainer": string;
         "colorSurfaceContainerLow": string;
         "fontFamily": string;
+        "grwApp": boolean;
         "isLargeView": boolean;
     }
     interface GrwTouristicEventProvider {
@@ -415,6 +421,10 @@ export namespace Components {
         "themes": string;
     }
 }
+export interface GrwDetailsModalCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwDetailsModalElement;
+}
 export interface GrwFiltersCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwFiltersElement;
@@ -475,6 +485,23 @@ declare global {
     var HTMLGrwCommonButtonElement: {
         prototype: HTMLGrwCommonButtonElement;
         new (): HTMLGrwCommonButtonElement;
+    };
+    interface HTMLGrwDetailsModalElementEventMap {
+        "closeDetailsModal": number;
+    }
+    interface HTMLGrwDetailsModalElement extends Components.GrwDetailsModal, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwDetailsModalElementEventMap>(type: K, listener: (this: HTMLGrwDetailsModalElement, ev: GrwDetailsModalCustomEvent<HTMLGrwDetailsModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwDetailsModalElementEventMap>(type: K, listener: (this: HTMLGrwDetailsModalElement, ev: GrwDetailsModalCustomEvent<HTMLGrwDetailsModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGrwDetailsModalElement: {
+        prototype: HTMLGrwDetailsModalElement;
+        new (): HTMLGrwDetailsModalElement;
     };
     interface HTMLGrwExtendedFabElement extends Components.GrwExtendedFab, HTMLStencilElement {
     }
@@ -760,9 +787,9 @@ declare global {
         new (): HTMLGrwTouristicContentsProviderElement;
     };
     interface HTMLGrwTouristicEventCardElementEventMap {
-        "touristicEventCardPress": number;
         "cardTouristicEventMouseOver": number;
         "cardTouristicEventMouseLeave": any;
+        "touristicEventCardPress": number;
     }
     interface HTMLGrwTouristicEventCardElement extends Components.GrwTouristicEventCard, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGrwTouristicEventCardElementEventMap>(type: K, listener: (this: HTMLGrwTouristicEventCardElement, ev: GrwTouristicEventCardCustomEvent<HTMLGrwTouristicEventCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -871,6 +898,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "grw-app": HTMLGrwAppElement;
         "grw-common-button": HTMLGrwCommonButtonElement;
+        "grw-details-modal": HTMLGrwDetailsModalElement;
         "grw-extended-fab": HTMLGrwExtendedFabElement;
         "grw-filter": HTMLGrwFilterElement;
         "grw-filters": HTMLGrwFiltersElement;
@@ -980,6 +1008,9 @@ declare namespace LocalJSX {
         "icon"?: string;
         "name"?: string;
     }
+    interface GrwDetailsModal {
+        "onCloseDetailsModal"?: (event: GrwDetailsModalCustomEvent<number>) => void;
+    }
     interface GrwExtendedFab {
         "action"?: Function;
         "display"?: string;
@@ -1070,6 +1101,7 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
+        "grwApp"?: boolean;
         "isLargeView"?: boolean;
         "onPoiIsInViewport"?: (event: GrwOutdoorCourseDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwOutdoorCourseDetailCustomEvent<boolean>) => void;
@@ -1121,6 +1153,7 @@ declare namespace LocalJSX {
         "fontFamily"?: string;
         "globalTilesMaxZoomOffline"?: number;
         "globalTilesMinZoomOffline"?: number;
+        "grwApp"?: boolean;
         "isLargeView"?: boolean;
         "onCoursesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onDeleteConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
@@ -1204,6 +1237,7 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
+        "grwApp"?: boolean;
         "isLargeView"?: boolean;
     }
     interface GrwTouristicContentProvider {
@@ -1250,6 +1284,7 @@ declare namespace LocalJSX {
         "colorSecondaryContainer"?: string;
         "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
+        "grwApp"?: boolean;
         "isLargeView"?: boolean;
     }
     interface GrwTouristicEventProvider {
@@ -1370,6 +1405,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "grw-app": GrwApp;
         "grw-common-button": GrwCommonButton;
+        "grw-details-modal": GrwDetailsModal;
         "grw-extended-fab": GrwExtendedFab;
         "grw-filter": GrwFilter;
         "grw-filters": GrwFilters;
@@ -1415,6 +1451,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
             "grw-common-button": LocalJSX.GrwCommonButton & JSXBase.HTMLAttributes<HTMLGrwCommonButtonElement>;
+            "grw-details-modal": LocalJSX.GrwDetailsModal & JSXBase.HTMLAttributes<HTMLGrwDetailsModalElement>;
             "grw-extended-fab": LocalJSX.GrwExtendedFab & JSXBase.HTMLAttributes<HTMLGrwExtendedFabElement>;
             "grw-filter": LocalJSX.GrwFilter & JSXBase.HTMLAttributes<HTMLGrwFilterElement>;
             "grw-filters": LocalJSX.GrwFilters & JSXBase.HTMLAttributes<HTMLGrwFiltersElement>;
