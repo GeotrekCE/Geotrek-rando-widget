@@ -1,10 +1,10 @@
 import { Component, Host, h, Prop, State, Event, EventEmitter, getAssetPath, Build, Listen, Element, forceUpdate } from '@stencil/core';
 import { Feature, FeatureCollection } from 'geojson';
 import L, { MarkerClusterGroup, TileLayer } from 'leaflet';
-import 'leaflet.locatecontrol';
 import 'leaflet-i18n';
 import '@raruto/leaflet-elevation/dist/leaflet-elevation.min.js';
 import 'leaflet.markercluster/dist/leaflet.markercluster.js';
+import '../../utils/leaflet-simple-locate.min.js';
 import state, { onChange } from 'store/store';
 import { translate } from 'i18n/i18n';
 import { getTrekGeometry } from 'services/treks.service';
@@ -274,7 +274,6 @@ export class GrwMap {
     this.map = L.map(this.mapRef, { zoom: 4, center: [47, 2] });
 
     L.control.scale({ metric: true, imperial: false }).addTo(this.map);
-    (L.control as any).locate({ showPopup: false }).addTo(this.map);
 
     const nameLayers = this.nameLayer ? this.nameLayer.split(',') : [];
 
@@ -326,6 +325,11 @@ export class GrwMap {
     };
 
     (L.control as any).contract({ position: 'topleft' }).addTo(this.map);
+
+    new (L.Control as any).SimpleLocate({
+      position: 'topleft',
+      className: 'button-locate',
+    }).addTo(this.map);
 
     if (state.currentTrek) {
       this.addTrek();
