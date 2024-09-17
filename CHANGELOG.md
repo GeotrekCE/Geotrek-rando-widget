@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.22.0...0.23.0) (2024-09-17)
+
+
+### Features
+
+* show user heading ([536a39e](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/536a39e0e8059ffe710d87e2bdacb7bfae75d851))
+
 ## [0.22.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.21.1...0.22.0) (2024-09-16)
 
 
