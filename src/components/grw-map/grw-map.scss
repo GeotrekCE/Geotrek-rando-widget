@@ -1,5 +1,5 @@
 @use '~leaflet/dist/leaflet.css';
-@use '~leaflet.locatecontrol/dist/L.Control.Locate.min.css';
+@use '../../utils/leaflet-simple-locate.css';
 @use '~@raruto/leaflet-elevation/dist/leaflet-elevation.min.css';
 @use '~leaflet.markercluster/dist/MarkerCluster.css';
 
@@ -380,4 +380,30 @@
 .leaflet-popup-content {
   width: 221px;
   margin: 0;
+}
+
+.leaflet-simple-locate svg {
+  --primary-rgb: 00, 00, 00;
+}
+
+.leaflet-simple-locate-icon {
+  --primary-rgb: 25, 135, 84;
+}
+
+.leaflet-simple-locate-orientation {
+  --primary-rgb: 25, 135, 84 !important;
+}
+
+.leaflet-simple-locate.button-locate {
+  --primary-rgb: 25, 135, 84;
+  margin: 10px 0px 0px 10px !important;
+  position: relative;
+  transform: none;
+  top: auto;
+  left: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  border: 2px solid rgba(0, 0, 0, 0.2) !important;
+  box-shadow: none;
 }
