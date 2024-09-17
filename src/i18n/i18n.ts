@@ -356,7 +356,7 @@ const defaultTranslate: AvailableTranslations = {
     readMore: 'Read more',
     readLess: 'Read less',
     sensitiveAreasDescription:
-      'Along your trek, you will go through sensitive areas related to the presence of a specific species or environment. In these areas, an appropriate behaviour allows to contribute to their preservation. For detailed information, specific forms are accessible for each area.',
+      "Along your trek, you will go through sensitive areas related to the presence of a specific species or environment. In these areas, an appropriate behaviour allows to contribute to their preservation. For detailed information, specific forms are accessible for each area.",
     emergencyNumber: 'Emergency number',
     learnMore: 'Learn more',
     date: 'Date',
@@ -456,6 +456,7 @@ const defaultTranslate: AvailableTranslations = {
       touristicEvents: 'Eventos',
       sites: 'zonas',
       courses: 'Recorrido',
+      signages: 'Señalizaciones',
     },
     themes: 'Categorías',
     placeholderThemes: 'Seleccione una o varias categorías',
@@ -480,7 +481,7 @@ const defaultTranslate: AvailableTranslations = {
     readMore: 'Leer más',
     readLess: 'Leer menos',
     sensitiveAreasDescription:
-      'A lo largo de su ruta, pasará por zonas sensibles vinculadas a la presencia de una especie o un entorno determinados.En estas zonas, un comportamiento adecuado puede contribuir a preservarlas.Para obtener información más detallada, dispone de fichas específicas para cada zona.',
+      "A lo largo de su ruta, pasará por zonas sensibles vinculadas a la presencia de una especie o un entorno determinados.En estas zonas, un comportamiento adecuado puede contribuir a preservarlas.Para obtener información más detallada, dispone de fichas específicas para cada zona.",
     emergencyNumber: 'Número de emergencia',
     learnMore: 'Más información',
     date: 'Fecha',
