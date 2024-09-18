@@ -121,6 +121,10 @@ interface Translation {
   onlyOfflineTreks: string;
   onlyOfflineOutdoor: string;
   moreDetails: string;
+  zoomIn: string;
+  zoomOut: string;
+  contract: string;
+  locate: string;
 }
 
 interface AvailableTranslations {
@@ -254,6 +258,10 @@ const defaultTranslate: AvailableTranslations = {
     onlyOfflineTreks: 'Afficher uniquement les itinéraires hors ligne',
     onlyOfflineOutdoor: 'Afficher uniquement les outdoor hors ligne',
     moreDetails: 'Plus de détails',
+    zoomIn: 'Zoomer',
+    zoomOut: 'Dézoomer',
+    contract: 'Réinitialiser la position de la carte',
+    locate: 'Géolocaliser',
   },
   en: {
     filter: 'Filter',
@@ -329,7 +337,7 @@ const defaultTranslate: AvailableTranslations = {
       steps: 'Steps',
       touristicContents: 'Near',
       touristicEvents: 'Events',
-      sites: 'sites',
+      sites: 'Sites',
       courses: 'Courses',
       signages: 'Signages',
     },
@@ -356,7 +364,7 @@ const defaultTranslate: AvailableTranslations = {
     readMore: 'Read more',
     readLess: 'Read less',
     sensitiveAreasDescription:
-      "Along your trek, you will go through sensitive areas related to the presence of a specific species or environment. In these areas, an appropriate behaviour allows to contribute to their preservation. For detailed information, specific forms are accessible for each area.",
+      'Along your trek, you will go through sensitive areas related to the presence of a specific species or environment. In these areas, an appropriate behaviour allows to contribute to their preservation. For detailed information, specific forms are accessible for each area.',
     emergencyNumber: 'Emergency number',
     learnMore: 'Learn more',
     date: 'Date',
@@ -379,6 +387,10 @@ const defaultTranslate: AvailableTranslations = {
     onlyOfflineTreks: 'Only display offline treks',
     onlyOfflineOutdoor: 'Only display offline outdoor',
     moreDetails: 'More details',
+    zoomIn: 'Zoom in',
+    zoomOut: 'Zoom out',
+    contract: 'Reset map position',
+    locate: 'Geolocate',
   },
   es: {
     filter: 'Filtrar',
@@ -424,7 +436,7 @@ const defaultTranslate: AvailableTranslations = {
         treks: 'Itinerarios',
         touristicContents: 'Servicios',
         touristicEvents: 'Eventos',
-        outdoorSites: 'Outdoor'
+        outdoorSites: 'Outdoor',
       },
       touristicContents: 'Servicios',
       touristicContent: 'Servicio',
@@ -454,7 +466,7 @@ const defaultTranslate: AvailableTranslations = {
       steps: 'Etapas',
       touristicContents: 'En las cercanías',
       touristicEvents: 'Eventos',
-      sites: 'sitios',
+      sites: 'Sitios',
       courses: 'Recorrido',
       signages: 'Señalizaciones',
     },
@@ -481,7 +493,7 @@ const defaultTranslate: AvailableTranslations = {
     readMore: 'Leer más',
     readLess: 'Leer menos',
     sensitiveAreasDescription:
-      "A lo largo de su ruta, pasará por zonas sensibles vinculadas a la presencia de una especie o un entorno determinados.En estas zonas, un comportamiento adecuado puede contribuir a preservarlas.Para obtener informaciónes más detalladas, fichas específicas para cada zona estan disponibles.",
+      'A lo largo de su ruta, pasará por zonas sensibles vinculadas a la presencia de una especie o un entorno determinados.En estas zonas, un comportamiento adecuado puede contribuir a preservarlas.Para obtener informaciónes más detalladas, fichas específicas para cada zona estan disponibles.',
     emergencyNumber: 'Número de emergencia',
     learnMore: 'Más información',
     date: 'Fecha',
@@ -504,6 +516,10 @@ const defaultTranslate: AvailableTranslations = {
     onlyOfflineTreks: 'Mostrar sólo itinerarios en modo sin conexión',
     onlyOfflineOutdoor: 'Mostrar sólo los outdoor disponible sin conexión',
     moreDetails: 'Más detalles',
+    zoomIn: 'Zoom',
+    zoomOut: 'Zoom',
+    contract: 'Restablecer la posición del mapa',
+    locate: 'Geolocalizar',
   },
 };
 

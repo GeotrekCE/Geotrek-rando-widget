@@ -271,9 +271,7 @@ export class GrwMap {
   }
 
   componentDidLoad() {
-    this.map = L.map(this.mapRef, { zoom: 4, center: [47, 2] });
-
-    L.control.scale({ metric: true, imperial: false }).addTo(this.map);
+    this.map = L.map(this.mapRef, { zoom: 4, center: [47, 2], zoomControl: false });
 
     const nameLayers = this.nameLayer ? this.nameLayer.split(',') : [];
 
@@ -305,6 +303,10 @@ export class GrwMap {
         .addTo(this.map);
     }
 
+    L.control.zoom({ zoomInTitle: translate[state.language].zoomIn, zoomOutTitle: translate[state.language].zoomOut }).addTo(this.map);
+
+    L.control.scale({ metric: true, imperial: false }).addTo(this.map);
+
     (L.Control as any).Contract = L.Control.extend({
       onAdd: () => {
         const contractContainer = L.DomUtil.create('div');
@@ -316,6 +318,8 @@ export class GrwMap {
           this.bounds && this.map.fitBounds(this.bounds);
           e.preventDefault();
         };
+        contract.title = translate[state.language].contract;
+
         return contractContainer;
       },
     });
@@ -329,6 +333,7 @@ export class GrwMap {
     new (L.Control as any).SimpleLocate({
       position: 'topleft',
       className: 'button-locate',
+      title: translate[state.language].locate,
     }).addTo(this.map);
 
     if (state.currentTrek) {
