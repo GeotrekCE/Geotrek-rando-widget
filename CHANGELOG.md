@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.23.0...0.23.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* add translations ([0c8e28e](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/0c8e28efc027914c7cd609df2f4f0ffa296366e3))
+
 ## [0.23.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.22.0...0.23.0) (2024-09-17)
 
 
