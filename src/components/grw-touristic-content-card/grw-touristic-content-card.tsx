@@ -115,6 +115,8 @@ export class GrwTouristicContentCard {
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     const touristicContentCategory = state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === this.touristicContent.category);
+    const displayPaginationAndNavigation =
+      (this.touristicContent && this.touristicContent.attachments.filter(attachment => attachment.type === 'image').length > 1) || this.offline;
     return (
       <Host
         style={{
@@ -171,19 +173,19 @@ export class GrwTouristicContentCard {
                   )}
                 </div>
                 <div
-                  style={{ display: this.offline ? 'none' : 'block' }}
+                  style={{ display: 'block', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
                   part="swiper-pagination"
                   class="swiper-pagination"
                   ref={el => (this.paginationElTouristicContentRef = el)}
                 ></div>
                 <div
-                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
                   part="swiper-button-prev"
                   class="swiper-button-prev"
                   ref={el => (this.prevElTouristicContentRef = el)}
                 ></div>
                 <div
-                  style={{ display: this.offline ? 'none' : 'flex' }}
+                  style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
                   part="swiper-button-next"
                   class="swiper-button-next"
                   ref={el => (this.nextElTouristicContentRef = el)}

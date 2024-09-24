@@ -965,7 +965,7 @@ export class GrwTrekDetail {
 
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
-
+    const displayPaginationAndNavigation = (this.currentTrek && this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 1) || this.offline;
     return (
       <Host
         style={{
@@ -1140,11 +1140,24 @@ export class GrwTrekDetail {
                     <img part="trek-img" class="trek-img default-trek-img" src={defaultImageSrc} loading="lazy" alt="" />
                   )}
                 </div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }}>
-                  <div part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
-                  <div part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
-                  <div part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
-                </div>
+                <div
+                  style={{ display: 'block', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+                  part="swiper-pagination"
+                  class="swiper-pagination"
+                  ref={el => (this.paginationElImagesRef = el)}
+                ></div>
+                <div
+                  style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+                  part="swiper-button-prev"
+                  class="swiper-button-prev"
+                  ref={el => (this.prevElImagesRef = el)}
+                ></div>
+                <div
+                  style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+                  part="swiper-button-next"
+                  class="swiper-button-next"
+                  ref={el => (this.nextElImagesRef = el)}
+                ></div>
               </div>
             </div>
             <div part="trek-name" class="trek-name">

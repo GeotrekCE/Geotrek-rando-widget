@@ -7,7 +7,6 @@
   left: 0px;
   width: 100vw;
   height: 100vh;
-  background-color: #ffffff;
   z-index: 40000;
   font-family: var(--font-family);
   background-color: rgba(0, 0, 0, 0.6);
@@ -19,24 +18,32 @@
     background-color: var(--color-background);
   }
   .grw-content-modal {
-    overflow-y: scroll;
+    overflow-y: hidden;
+    padding-bottom: 24px;
   }
   .grw-arrow-back-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    margin: 16px 16px;
+    justify-content: flex-start;
+    background-color: var(--color-primary-container);
     .grw-arrow-back-icon {
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       color: var(--color-on-surface);
       border: none;
-      background-color: var(--color-primary-container);
       border-radius: var(--border-radius, 50%);
       height: 48px;
       width: 48px;
+      background-color: transparent;
+      margin-left: 4px;
       padding: 0px;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .icon {
+        height: 24px;
+        width: 24px;
+      }
     }
   }
 }
@@ -44,7 +51,7 @@
 @media (min-width: 1024px) {
   .modal-container {
     .grw-details-modal {
-      width: 80%;
+      width: 60%;
       height: 80%;
       border-radius: var(--border-radius, 8px);
     }

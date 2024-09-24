@@ -82,6 +82,7 @@ export class GrwTouristicContentDetail {
       state.currentTouristicContent &&
       state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === state.currentTouristicContent.category);
     const cities = state.currentTouristicContent && state.currentTouristicContent.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+    const displayPaginationAndNavigation = state.currentTouristicContent.attachments.filter(attachment => attachment.type === 'image').length > 1 || this.offline;
     return (
       <Host
         style={{
@@ -139,9 +140,24 @@ export class GrwTouristicContentDetail {
                     </div>
                   )}
                 </div>
-                <div style={{ display: this.offline ? 'none' : 'block' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElImagesRef = el)}></div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElImagesRef = el)}></div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElImagesRef = el)}></div>
+                <div
+                  style={{ display: 'block', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+                  part="swiper-pagination"
+                  class="swiper-pagination"
+                  ref={el => (this.paginationElImagesRef = el)}
+                ></div>
+                <div
+                  style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+                  part="swiper-button-prev"
+                  class="swiper-button-prev"
+                  ref={el => (this.prevElImagesRef = el)}
+                ></div>
+                <div
+                  style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+                  part="swiper-button-next"
+                  class="swiper-button-next"
+                  ref={el => (this.nextElImagesRef = el)}
+                ></div>
               </div>
             </div>
             <div part="touristic-content-category-container" class="touristic-content-category-container">

@@ -100,6 +100,7 @@ export class GrwPoiDetail {
 
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
+    const displayPaginationAndNavigation = (this.poi && this.poi.attachments.filter(attachment => attachment.type === 'image').length > 1) || this.offline;
     return (
       <Host>
         <div part="poi-type-img-container" class="poi-type-img-container">
@@ -133,9 +134,24 @@ export class GrwPoiDetail {
                 </div>
               )}
             </div>
-            <div style={{ display: this.offline ? 'none' : 'block' }} part="swiper-pagination" class="swiper-pagination" ref={el => (this.paginationElPoiRef = el)}></div>
-            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElPoiRef = el)}></div>
-            <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElPoiRef = el)}></div>
+            <div
+              style={{ display: 'block', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+              part="swiper-pagination"
+              class="swiper-pagination"
+              ref={el => (this.paginationElPoiRef = el)}
+            ></div>
+            <div
+              style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+              part="swiper-button-prev"
+              class="swiper-button-prev"
+              ref={el => (this.prevElPoiRef = el)}
+            ></div>
+            <div
+              style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+              part="swiper-button-next"
+              class="swiper-button-next"
+              ref={el => (this.nextElPoiRef = el)}
+            ></div>
           </div>
         </div>
         <div part="poi-sub-container" class="poi-sub-container">

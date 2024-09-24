@@ -115,6 +115,7 @@ export class GrwTouristicEvent {
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     const touristicEventType = state.touristicEventTypes.find(touristicEventType => touristicEventType.id === this.touristicEvent.type);
+    const displayPaginationAndNavigation = (this.touristicEvent && this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 1) || this.offline;
     return (
       <Host
         style={{
@@ -171,13 +172,23 @@ export class GrwTouristicEvent {
                   )}
                 </div>
                 <div
-                  style={{ display: this.offline ? 'none' : 'block' }}
+                  style={{ display: 'block', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
                   part="swiper-pagination"
                   class="swiper-pagination"
                   ref={el => (this.paginationElTouristicEventRef = el)}
                 ></div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-prev" class="swiper-button-prev" ref={el => (this.prevElTouristicEventRef = el)}></div>
-                <div style={{ display: this.offline ? 'none' : 'flex' }} part="swiper-button-next" class="swiper-button-next" ref={el => (this.nextElTouristicEventRef = el)}></div>
+                <div
+                  style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+                  part="swiper-button-prev"
+                  class="swiper-button-prev"
+                  ref={el => (this.prevElTouristicEventRef = el)}
+                ></div>
+                <div
+                  style={{ display: 'flex', visibility: displayPaginationAndNavigation ? 'visible' : 'hidden' }}
+                  part="swiper-button-next"
+                  class="swiper-button-next"
+                  ref={el => (this.nextElTouristicEventRef = el)}
+                ></div>
               </div>
             ) : this.touristicEvent.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img

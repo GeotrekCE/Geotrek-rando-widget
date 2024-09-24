@@ -2521,7 +2521,7 @@ export class GrwMap {
               html: toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]
                 ? `<div part="touristic-content-marker" class="touristic-content-marker"><img src=${toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]} /></div>`
                 : `<div part="touristic-content-marker" class="touristic-content-marker"><img /></div>`,
-              className: '',
+              className: this.grwApp ? '' : 'cursor-pointer',
               iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
@@ -2579,7 +2579,7 @@ export class GrwMap {
                 ? `
                 <div part="touristic-event-marker" class="touristic-event-marker"><img src=${toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
                 : `<div part="touristic-event-marker" class="touristic-event-marker"><img /></div>`,
-              className: '',
+              className: this.grwApp ? '' : 'cursor-pointer',
               iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
