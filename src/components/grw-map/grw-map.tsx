@@ -52,7 +52,6 @@ export class GrwMap {
   @Prop() colorClusters = null;
   @Prop() colorOutdoorArea = '#ffb700';
 
-  @Prop() useGradient = false;
   @Prop() tilesMaxZoomOffline = 16;
 
   @Prop() grwApp = false;
@@ -67,6 +66,8 @@ export class GrwMap {
   @Prop() elevationHeight = 280;
   @Prop() mobileElevationHeight = 280;
   @Prop() largeViewSize = 1024;
+  @Prop() elevationDefaultState = 'visible';
+  @Prop() isLargeView = false;
 
   map: L.Map;
   bounds;
@@ -898,51 +899,28 @@ export class GrwMap {
     L.setLocale('fr');
 
     const elevationOptions = {
-      srcFolder: 'https://unpkg.com/@raruto/leaflet-elevation/src/',
-      elevationDiv: `#elevation`,
-      theme: `custom-theme${!this.useGradient ? ' use-theme-color' : ''}`,
-      detached: true,
+      elevationDiv: `#elevation-container`,
+      theme: `custom-theme use-theme-color`,
       height: this.mapElement.getBoundingClientRect().width >= this.largeViewSize / 2 ? this.elevationHeight : this.mobileElevationHeight,
-      wptIcons: true,
-      wptLabels: true,
-      collapsed: false,
-      autohide: false,
       distanceMarkers: { distance: false, direction: true },
-      hotline: this.useGradient,
-      closeBtn: false,
       summary: 'inline',
-      time: false,
-      timestamps: false,
       legend: false,
       downloadLink: false,
       autofitBounds: false,
       ruler: false,
-      edgeScale: false,
       waypoints: false,
       almostOver: false,
-      speed: false,
-      slope: false,
-      acceleration: false,
-      reverseCoords: false,
-      imperial: false,
       dragging: false,
-      zooming: false,
-      handlers: ['Altitude', 'Distance', 'Slope', 'LinearGradient'],
-      linearGradient: {
-        attr: 'z',
-        path: 'altitude',
-        range: { 0.0: '#008800', 0.5: '#ffff00', 1.0: '#ff0000' },
-        min: 'elevation_min',
-        max: 'elevation_max',
-      },
     };
-    this.elevationControl = (L.control as any).elevation({ ...elevationOptions }).addTo(this.map);
+    this.elevationControl = (L.control as any).elevation(elevationOptions).addTo(this.map);
     const elevation = JSON.stringify({
       name: `${state.currentTrek.name}`,
       type: 'FeatureCollection',
       features: [{ type: 'Feature', geometry: { type: 'LineString', coordinates: state.currentTrek.geometry.coordinates }, properties: null }],
     });
     (this.elevationControl as any).load(elevation);
+    (this.elevationControl as any).eleDiv.style.display = this.elevationDefaultState === 'visible' ? 'block' : 'none';
+    forceUpdate(this.hostElement);
 
     const departureArrival: FeatureCollection = {
       type: 'FeatureCollection',
@@ -2806,8 +2784,17 @@ export class GrwMap {
   }
 
   handleView() {
-    const elevationHeight = this.mapElement.getBoundingClientRect().width >= this.largeViewSize / 2 ? this.elevationHeight : this.mobileElevationHeight;
-    (this.elevationControl.options as any).height = elevationHeight;
+    const elevationHeight = this.mapElement.getBoundingClientRect().width >= this.largeViewSize ? this.elevationHeight : this.mobileElevationHeight;
+    if (this.elevationControl) {
+      (this.elevationControl.options as any).height = elevationHeight;
+      (this.elevationControl as any).redraw();
+    }
+    this.map.invalidateSize();
+    forceUpdate(this.hostElement);
+  }
+
+  handleElevation() {
+    (this.elevationControl as any).eleDiv.style.display = (this.elevationControl as any).eleDiv.style.display === 'block' ? 'none' : 'block';
     (this.elevationControl as any).redraw();
     forceUpdate(this.hostElement);
   }
@@ -2815,6 +2802,7 @@ export class GrwMap {
   render() {
     const layersImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/layers.svg`);
     const contractImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/contract.svg`);
+
     return (
       <Host
         ref={el => (this.hostElement = el)}
@@ -2841,12 +2829,27 @@ export class GrwMap {
           class={
             (state.currentTouristicContent || state.currentTouristicEvent || state.currentOutdoorSite || state.currentOutdoorCourse) && this.grwApp
               ? 'common-map'
+              : state.currentTrek && this.elevationControl && (this.elevationControl as any).eleDiv.style.display === 'block'
+              ? 'trek-map-and-elevation'
               : state.currentTrek
               ? 'trek-map'
               : 'treks-map'
           }
           ref={el => (this.mapRef = el)}
-        ></div>
+        >
+          {state.currentTrek && (
+            <div class="grw-elevation-visibility-button-container">
+              <grw-fab
+                exportparts="fab-visibility-button,fab-visibility-button-icon,fab-visibility-button-label"
+                font-family={this.fontFamily}
+                action={() => this.handleElevation()}
+                icon={() => (this.elevationControl && (this.elevationControl as any).eleDiv.style.display === 'block' ? 'show-elevation' : 'hide-elevation')}
+                showTitle={translate[state.language].showElevation}
+                hideTitle={translate[state.language].hideElevation}
+              ></grw-fab>
+            </div>
+          )}
+        </div>
 
         {!this.mapIsReady && (
           <div part="map-loader-container" class="map-loader-container">

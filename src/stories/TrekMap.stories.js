@@ -38,6 +38,5 @@ TrekMap.args = {
   colorBackground: '#fef7ff',
   colorTrekLine: '#6b0030',
   colorSensitiveArea: '#4974a5',
-  useGradient: false,
 };
 TrekMap.storyName = 'Trek map';

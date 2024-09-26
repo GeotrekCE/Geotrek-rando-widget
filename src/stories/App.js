@@ -31,7 +31,6 @@ export const createApp = ({
   fabColor,
   colorTrekLine,
   colorSensitiveArea,
-  useGradient,
   treks,
   touristicContents,
   touristicEvents,
@@ -70,7 +69,6 @@ export const createApp = ({
   app.setAttribute('fab-color', fabColor);
   app.setAttribute('color-trek-line', colorTrekLine);
   app.setAttribute('color-sensitive-area', colorSensitiveArea);
-  app.setAttribute('use-gradient', useGradient);
   app.setAttribute('treks', treks);
   app.setAttribute('touristic-contents', touristicContents);
   app.setAttribute('touristic-events', touristicEvents);

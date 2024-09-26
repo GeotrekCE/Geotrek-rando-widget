@@ -19,6 +19,10 @@
 }
 
 .trek-map {
+  height: calc(100%);
+}
+
+.trek-map-and-elevation {
   height: calc(100% - var(--elevation-height));
 }
 
@@ -414,4 +418,11 @@
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.grw-elevation-visibility-button-container {
+  z-index: 4000;
+  position: absolute;
+  left: 10px;
+  bottom: 36px;
 }

@@ -76,8 +76,6 @@ export class GrwApp {
   @Prop() colorClusters = null;
   @Prop() colorOutdoorArea = '#ffb700';
 
-  @Prop() useGradient = false;
-
   @Prop() treks = true;
   @Prop() touristicContents = false;
   @Prop() touristicEvents = false;
@@ -906,7 +904,6 @@ export class GrwApp {
                   color-sensitive-area={this.colorSensitiveArea}
                   color-markers={this.colorMarkers ? this.colorMarkers : this.colorPrimaryApp}
                   color-clusters={this.colorClusters ? this.colorClusters : this.colorPrimaryApp}
-                  use-gradient={this.useGradient}
                   tiles-max-zoom-offline={this.tilesMaxZoomOffline}
                   grw-app={true}
                   main-marker-size={this.mainMarkerSize}
@@ -918,6 +915,7 @@ export class GrwApp {
                   elevation-height={this.elevationHeight}
                   mobile-elevation-height={this.mobileElevationHeight}
                   large-view-size={this.largeViewSize}
+                  is-large-view={this.isLargeView}
                 ></grw-map>
               )}
             </div>

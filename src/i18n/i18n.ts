@@ -125,6 +125,8 @@ interface Translation {
   zoomOut: string;
   contract: string;
   locate: string;
+  showElevation: string;
+  hideElevation: string;
 }
 
 interface AvailableTranslations {
@@ -262,6 +264,8 @@ const defaultTranslate: AvailableTranslations = {
     zoomOut: 'Dézoomer',
     contract: 'Réinitialiser la position de la carte',
     locate: 'Géolocaliser',
+    showElevation: 'Voir le dénivelé',
+    hideElevation: 'Cacher le dénivelé',
   },
   en: {
     filter: 'Filter',
@@ -391,6 +395,8 @@ const defaultTranslate: AvailableTranslations = {
     zoomOut: 'Zoom out',
     contract: 'Reset map position',
     locate: 'Geolocate',
+    showElevation: 'Show elevation',
+    hideElevation: 'Hide elevation',
   },
   es: {
     filter: 'Filtrar',
@@ -520,6 +526,8 @@ const defaultTranslate: AvailableTranslations = {
     zoomOut: 'Zoom',
     contract: 'Restablecer la posición del mapa',
     locate: 'Geolocalizar',
+    showElevation: 'Ver la elevación',
+    hideElevation: 'Ocultar la elevación',
   },
 };
 

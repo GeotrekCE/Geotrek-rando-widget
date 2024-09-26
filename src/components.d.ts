@@ -68,7 +68,6 @@ export namespace Components {
         "touristicEvents": boolean;
         "treks": boolean;
         "urlLayer": string;
-        "useGradient": boolean;
         "weather": boolean;
     }
     interface GrwCommonButton {
@@ -85,6 +84,13 @@ export namespace Components {
         "fontFamily": string;
         "icon": Function;
         "name": Function;
+    }
+    interface GrwFab {
+        "action": Function;
+        "fontFamily": string;
+        "hideTitle": string;
+        "icon": Function;
+        "showTitle": string;
     }
     interface GrwFilter {
         "filterName": string;
@@ -119,9 +125,11 @@ export namespace Components {
         "colorTrekLine": string;
         "commonMarkerSize": number;
         "departureArrivalMarkerSize": number;
+        "elevationDefaultState": string;
         "elevationHeight": number;
         "fontFamily": string;
         "grwApp": boolean;
+        "isLargeView": boolean;
         "largeViewSize": number;
         "mainClusterSize": number;
         "mainMarkerSize": number;
@@ -131,7 +139,6 @@ export namespace Components {
         "selectedMainMarkerSize": number;
         "tilesMaxZoomOffline": number;
         "urlLayer": string;
-        "useGradient": boolean;
     }
     interface GrwOfflineConfirmModal {
         "mode": Mode;
@@ -508,6 +515,12 @@ declare global {
     var HTMLGrwExtendedFabElement: {
         prototype: HTMLGrwExtendedFabElement;
         new (): HTMLGrwExtendedFabElement;
+    };
+    interface HTMLGrwFabElement extends Components.GrwFab, HTMLStencilElement {
+    }
+    var HTMLGrwFabElement: {
+        prototype: HTMLGrwFabElement;
+        new (): HTMLGrwFabElement;
     };
     interface HTMLGrwFilterElement extends Components.GrwFilter, HTMLStencilElement {
     }
@@ -900,6 +913,7 @@ declare global {
         "grw-common-button": HTMLGrwCommonButtonElement;
         "grw-details-modal": HTMLGrwDetailsModalElement;
         "grw-extended-fab": HTMLGrwExtendedFabElement;
+        "grw-fab": HTMLGrwFabElement;
         "grw-filter": HTMLGrwFilterElement;
         "grw-filters": HTMLGrwFiltersElement;
         "grw-information-desk": HTMLGrwInformationDeskElement;
@@ -999,7 +1013,6 @@ declare namespace LocalJSX {
         "touristicEvents"?: boolean;
         "treks"?: boolean;
         "urlLayer"?: string;
-        "useGradient"?: boolean;
         "weather"?: boolean;
     }
     interface GrwCommonButton {
@@ -1017,6 +1030,13 @@ declare namespace LocalJSX {
         "fontFamily"?: string;
         "icon"?: Function;
         "name"?: Function;
+    }
+    interface GrwFab {
+        "action"?: Function;
+        "fontFamily"?: string;
+        "hideTitle"?: string;
+        "icon"?: Function;
+        "showTitle"?: string;
     }
     interface GrwFilter {
         "filterName"?: string;
@@ -1053,9 +1073,11 @@ declare namespace LocalJSX {
         "colorTrekLine"?: string;
         "commonMarkerSize"?: number;
         "departureArrivalMarkerSize"?: number;
+        "elevationDefaultState"?: string;
         "elevationHeight"?: number;
         "fontFamily"?: string;
         "grwApp"?: boolean;
+        "isLargeView"?: boolean;
         "largeViewSize"?: number;
         "mainClusterSize"?: number;
         "mainMarkerSize"?: number;
@@ -1070,7 +1092,6 @@ declare namespace LocalJSX {
         "selectedMainMarkerSize"?: number;
         "tilesMaxZoomOffline"?: number;
         "urlLayer"?: string;
-        "useGradient"?: boolean;
     }
     interface GrwOfflineConfirmModal {
         "mode"?: Mode;
@@ -1407,6 +1428,7 @@ declare namespace LocalJSX {
         "grw-common-button": GrwCommonButton;
         "grw-details-modal": GrwDetailsModal;
         "grw-extended-fab": GrwExtendedFab;
+        "grw-fab": GrwFab;
         "grw-filter": GrwFilter;
         "grw-filters": GrwFilters;
         "grw-information-desk": GrwInformationDesk;
@@ -1453,6 +1475,7 @@ declare module "@stencil/core" {
             "grw-common-button": LocalJSX.GrwCommonButton & JSXBase.HTMLAttributes<HTMLGrwCommonButtonElement>;
             "grw-details-modal": LocalJSX.GrwDetailsModal & JSXBase.HTMLAttributes<HTMLGrwDetailsModalElement>;
             "grw-extended-fab": LocalJSX.GrwExtendedFab & JSXBase.HTMLAttributes<HTMLGrwExtendedFabElement>;
+            "grw-fab": LocalJSX.GrwFab & JSXBase.HTMLAttributes<HTMLGrwFabElement>;
             "grw-filter": LocalJSX.GrwFilter & JSXBase.HTMLAttributes<HTMLGrwFilterElement>;
             "grw-filters": LocalJSX.GrwFilters & JSXBase.HTMLAttributes<HTMLGrwFiltersElement>;
             "grw-information-desk": LocalJSX.GrwInformationDesk & JSXBase.HTMLAttributes<HTMLGrwInformationDeskElement>;
