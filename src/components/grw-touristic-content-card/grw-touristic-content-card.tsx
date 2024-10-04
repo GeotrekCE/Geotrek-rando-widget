@@ -23,6 +23,7 @@ export class GrwTouristicContentCard {
   @Prop() touristicContent: TouristicContent;
   @Prop() isLargeView = false;
   @Prop() isInsideHorizontalList = false;
+  @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @State() displayFullscreen = false;
 
   @Event() cardTouristicContentMouseOver: EventEmitter<number>;
@@ -122,6 +123,7 @@ export class GrwTouristicContentCard {
         style={{
           '--font-family': this.fontFamily,
           'width': this.isLargeView ? '100%' : 'auto',
+          '--color-surface-container-low': this.colorSurfaceContainerLow,
         }}
       >
         <div

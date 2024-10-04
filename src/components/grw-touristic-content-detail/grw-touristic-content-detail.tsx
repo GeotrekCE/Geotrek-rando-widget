@@ -61,7 +61,7 @@ export class GrwTouristicContentDetail {
   }
 
   componentDidLoad() {
-    this.offline = state.currentTouristicContent.offline;
+    this.offline = state.currentTouristicContent && state.currentTouristicContent.offline;
     this.handleSwipers();
   }
 
@@ -82,7 +82,8 @@ export class GrwTouristicContentDetail {
       state.currentTouristicContent &&
       state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === state.currentTouristicContent.category);
     const cities = state.currentTouristicContent && state.currentTouristicContent.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
-    const displayPaginationAndNavigation = state.currentTouristicContent.attachments.filter(attachment => attachment.type === 'image').length > 1 || this.offline;
+    const displayPaginationAndNavigation =
+      (state.currentTouristicContent && state.currentTouristicContent.attachments.filter(attachment => attachment.type === 'image').length > 1) || this.offline;
     return (
       <Host
         style={{

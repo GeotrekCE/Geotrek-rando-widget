@@ -221,6 +221,7 @@ export class GrwTrekDetail {
     } else {
       this.showTouristicEventDetailsModal = false;
     }
+    document.body.getElementsByTagName('grw-details-modal')[0].remove();
   }
 
   @Listen('touristicEventCardPress', { target: 'window' })
@@ -228,6 +229,19 @@ export class GrwTrekDetail {
     if (!this.grwApp) {
       this.modalDetailsId = touristicEventId.detail;
       this.onOpenDetailsModal('TouristicContent');
+      const modal = document.createElement('grw-details-modal');
+      const modalContent = document.createElement('grw-touristic-event-detail');
+      modalContent.setAttribute('font-family', this.fontFamily);
+      modalContent.setAttribute('color-primary-app', this.colorPrimaryApp);
+      modalContent.setAttribute('color-on-surface', this.colorOnSurface);
+      modalContent.setAttribute('color-primary-container', this.colorPrimaryContainer);
+      modalContent.setAttribute('color-on-primary-container', this.colorOnPrimaryContainer);
+      modalContent.setAttribute('color-secondary-container', this.colorSecondaryContainer);
+      modalContent.setAttribute('color-on-secondary-container', this.colorOnSecondaryContainer);
+      modalContent.setAttribute('color-surface-container-low', this.colorSurfaceContainerLow);
+      modalContent.setAttribute('color-background', this.colorBackground);
+      modal.append(modalContent);
+      document.body.append(modal);
     }
   }
 
@@ -236,6 +250,19 @@ export class GrwTrekDetail {
     if (!this.grwApp) {
       this.modalDetailsId = touristicContentId.detail;
       this.onOpenDetailsModal('touristicContent');
+      const modal = document.createElement('grw-details-modal');
+      const modalContent = document.createElement('grw-touristic-content-detail');
+      modalContent.setAttribute('font-family', this.fontFamily);
+      modalContent.setAttribute('color-primary-app', this.colorPrimaryApp);
+      modalContent.setAttribute('color-on-surface', this.colorOnSurface);
+      modalContent.setAttribute('color-primary-container', this.colorPrimaryContainer);
+      modalContent.setAttribute('color-on-primary-container', this.colorOnPrimaryContainer);
+      modalContent.setAttribute('color-secondary-container', this.colorSecondaryContainer);
+      modalContent.setAttribute('color-on-secondary-container', this.colorOnSecondaryContainer);
+      modalContent.setAttribute('color-surface-container-low', this.colorSurfaceContainerLow);
+      modalContent.setAttribute('color-background', this.colorBackground);
+      modal.append(modalContent);
+      document.body.append(modal);
     }
   }
 
@@ -1386,6 +1413,7 @@ export class GrwTrekDetail {
                           <grw-poi
                             exportparts="poi-type-img-container,poi-type,swiper-poi,swiper-wrapper,swiper-slide,poi-img,default-poi-img,swiper-pagination,swiper-button-prev,swiper-button-next,poi-sub-container,poi-name,poi-description,handle-poi-description"
                             poi={poi}
+                            colorSurfaceContainerLow={this.colorSurfaceContainerLow}
                           ></grw-poi>
                         </div>
                       ))}
@@ -1500,6 +1528,7 @@ export class GrwTrekDetail {
                               <grw-information-desk
                                 exportparts="information-desk-img-container,information-desk-img,information-desk-sub-container,information-desk-name,center-on-map-button,icon,label,information-desk-informations,phone-container,mail-container,link-container,information-desk-description-container,information-desk-description,handle-information-desk-description"
                                 informationDesk={informationDesk}
+                                colorSurfaceContainerLow={this.colorSurfaceContainerLow}
                               ></grw-information-desk>
                             </div>
                           ))}
@@ -1628,6 +1657,7 @@ export class GrwTrekDetail {
                             fontFamily={this.fontFamily}
                             touristicContent={touristicContent}
                             isInsideHorizontalList={true}
+                            color-surface-container-low={this.colorSurfaceContainerLow}
                           ></grw-touristic-content-card>
                         </div>
                       ))}
@@ -1653,6 +1683,7 @@ export class GrwTrekDetail {
                             fontFamily={this.fontFamily}
                             touristicEvent={touristicEvent}
                             isInsideHorizontalList={true}
+                            colorSurfaceContainerLow={this.colorSurfaceContainerLow}
                           ></grw-touristic-event-card>
                         </div>
                       ))}
@@ -1700,45 +1731,11 @@ export class GrwTrekDetail {
             {this.grwApp && <div part="detail-bottom-space" class="detail-bottom-space"></div>}
           </div>
         )}
-        {(this.showTouristicContentDetailsModal || this.showTouristicEventDetailsModal) && (
-          <grw-details-modal>
-            {this.showTouristicContentDetailsModal && this.modalDetailsId && (
-              <Fragment>
-                {state.currentTouristicContent && (
-                  <grw-touristic-content-detail
-                    font-family={this.fontFamily}
-                    color-primary-app={this.colorPrimaryApp}
-                    color-on-surface={this.colorOnSurface}
-                    color-primary-container={this.colorPrimaryContainer}
-                    color-on-primary-container={this.colorOnPrimaryContainer}
-                    color-secondary-container={this.colorSecondaryContainer}
-                    color-on-secondary-container={this.colorOnSecondaryContainer}
-                    color-surface-container-low={this.colorSurfaceContainerLow}
-                    color-background={this.colorBackground}
-                  ></grw-touristic-content-detail>
-                )}
-                <grw-touristic-content-provider api={state.api} touristic-content-id={this.modalDetailsId}></grw-touristic-content-provider>
-              </Fragment>
-            )}
-            {this.showTouristicEventDetailsModal && this.modalDetailsId && (
-              <Fragment>
-                {state.currentTouristicEvent && (
-                  <grw-touristic-event-detail
-                    font-family={this.fontFamily}
-                    color-primary-app={this.colorPrimaryApp}
-                    color-on-surface={this.colorOnSurface}
-                    color-primary-container={this.colorPrimaryContainer}
-                    color-on-primary-container={this.colorOnPrimaryContainer}
-                    color-secondary-container={this.colorSecondaryContainer}
-                    color-on-secondary-container={this.colorOnSecondaryContainer}
-                    color-surface-container-low={this.colorSurfaceContainerLow}
-                    color-background={this.colorBackground}
-                  ></grw-touristic-event-detail>
-                )}
-                <grw-touristic-event-provider api={state.api} touristic-event-id={this.modalDetailsId}></grw-touristic-event-provider>
-              </Fragment>
-            )}
-          </grw-details-modal>
+        {this.modalDetailsId && (
+          <Fragment>
+            {this.showTouristicContentDetailsModal && <grw-touristic-content-provider api={state.api} touristic-content-id={this.modalDetailsId}></grw-touristic-content-provider>}
+            {this.showTouristicEventDetailsModal && <grw-touristic-event-provider api={state.api} touristic-event-id={this.modalDetailsId}></grw-touristic-event-provider>}
+          </Fragment>
         )}
       </Host>
     );

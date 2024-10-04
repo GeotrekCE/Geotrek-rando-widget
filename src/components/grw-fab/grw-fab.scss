@@ -18,7 +18,7 @@
   font-family: var(--font-family);
   font-size: 16px;
   pointer-events: all;
-  filter: hue-rotate(90deg);
+  filter: contrast(170%);
   &:hover {
     box-shadow: var(--elevation-4);
   }

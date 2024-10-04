@@ -907,7 +907,7 @@ export class GrwApp {
                   tiles-max-zoom-offline={this.tilesMaxZoomOffline}
                   grw-app={true}
                   main-marker-size={this.mainMarkerSize}
-                  selected-main-markerSize={this.selectedMainMarkerSize}
+                  selected-main-marker-size={this.selectedMainMarkerSize}
                   main-cluster-size={this.mainClusterSize}
                   common-marker-size={this.commonMarkerSize}
                   departure-arrival-marker-size={this.departureArrivalMarkerSize}

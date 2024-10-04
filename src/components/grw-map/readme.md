@@ -22,9 +22,13 @@
 | `colorTrekLine`              | `color-trek-line`               |             | `string`  | `'#6b0030'` |
 | `commonMarkerSize`           | `common-marker-size`            |             | `number`  | `48`        |
 | `departureArrivalMarkerSize` | `departure-arrival-marker-size` |             | `number`  | `14`        |
+| `elevationDefaultState`      | `elevation-default-state`       |             | `string`  | `'visible'` |
 | `elevationHeight`            | `elevation-height`              |             | `number`  | `280`       |
+| `fabBackgroundColor`         | `fab-background-color`          |             | `string`  | `'#eaddff'` |
+| `fabColor`                   | `fab-color`                     |             | `string`  | `'#21005d'` |
 | `fontFamily`                 | `font-family`                   |             | `string`  | `'Roboto'`  |
 | `grwApp`                     | `grw-app`                       |             | `boolean` | `false`     |
+| `isLargeView`                | `is-large-view`                 |             | `boolean` | `false`     |
 | `largeViewSize`              | `large-view-size`               |             | `number`  | `1024`      |
 | `mainClusterSize`            | `main-cluster-size`             |             | `number`  | `48`        |
 | `mainMarkerSize`             | `main-marker-size`              |             | `number`  | `32`        |
@@ -34,7 +38,6 @@
 | `selectedMainMarkerSize`     | `selected-main-marker-size`     |             | `number`  | `48`        |
 | `tilesMaxZoomOffline`        | `tiles-max-zoom-offline`        |             | `number`  | `16`        |
 | `urlLayer`                   | `url-layer`                     |             | `string`  | `undefined` |
-| `useGradient`                | `use-gradient`                  |             | `boolean` | `false`     |
 
 
 ## Events
@@ -63,9 +66,14 @@
 
  - [grw-app](../grw-app)
 
+### Depends on
+
+- [grw-fab](../grw-fab)
+
 ### Graph
 ```mermaid
 graph TD;
+  grw-map --> grw-fab
   grw-app --> grw-map
   style grw-map fill:#f9f,stroke:#333,stroke-width:4px
 ```

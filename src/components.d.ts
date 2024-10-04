@@ -81,12 +81,16 @@ export namespace Components {
     interface GrwExtendedFab {
         "action": Function;
         "display": string;
+        "fabBackgroundColor": string;
+        "fabColor": string;
         "fontFamily": string;
         "icon": Function;
         "name": Function;
     }
     interface GrwFab {
         "action": Function;
+        "fabBackgroundColor": string;
+        "fabColor": string;
         "fontFamily": string;
         "hideTitle": string;
         "icon": Function;
@@ -105,6 +109,7 @@ export namespace Components {
         "handleFilters": Function;
     }
     interface GrwInformationDesk {
+        "colorSurfaceContainerLow": string;
         "informationDesk": InformationDesk;
     }
     interface GrwLoader {
@@ -127,6 +132,8 @@ export namespace Components {
         "departureArrivalMarkerSize": number;
         "elevationDefaultState": string;
         "elevationHeight": number;
+        "fabBackgroundColor": string;
+        "fabColor": string;
         "fontFamily": string;
         "grwApp": boolean;
         "isLargeView": boolean;
@@ -243,6 +250,7 @@ export namespace Components {
         "themes": string;
     }
     interface GrwPoi {
+        "colorSurfaceContainerLow": string;
         "poi": Poi;
     }
     interface GrwSearch {
@@ -265,7 +273,15 @@ export namespace Components {
         "checked": boolean;
         "fontFamily": string;
     }
+    interface GrwToggleSlotVisibility {
+        "fabBackgroundColor": string;
+        "fabColor": string;
+        "fontFamily": string;
+        "largeViewSize": number;
+        "slotEndHeight": string;
+    }
     interface GrwTouristicContentCard {
+        "colorSurfaceContainerLow": string;
         "fontFamily": string;
         "isInsideHorizontalList": boolean;
         "isLargeView": boolean;
@@ -310,6 +326,7 @@ export namespace Components {
         "themes": string;
     }
     interface GrwTouristicEventCard {
+        "colorSurfaceContainerLow": string;
         "fontFamily": string;
         "isInsideHorizontalList": boolean;
         "isLargeView": boolean;
@@ -756,6 +773,12 @@ declare global {
         prototype: HTMLGrwSwitchElement;
         new (): HTMLGrwSwitchElement;
     };
+    interface HTMLGrwToggleSlotVisibilityElement extends Components.GrwToggleSlotVisibility, HTMLStencilElement {
+    }
+    var HTMLGrwToggleSlotVisibilityElement: {
+        prototype: HTMLGrwToggleSlotVisibilityElement;
+        new (): HTMLGrwToggleSlotVisibilityElement;
+    };
     interface HTMLGrwTouristicContentCardElementEventMap {
         "touristicContentCardPress": number;
         "cardTouristicContentMouseOver": number;
@@ -935,6 +958,7 @@ declare global {
         "grw-select-language": HTMLGrwSelectLanguageElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
         "grw-switch": HTMLGrwSwitchElement;
+        "grw-toggle-slot-visibility": HTMLGrwToggleSlotVisibilityElement;
         "grw-touristic-content-card": HTMLGrwTouristicContentCardElement;
         "grw-touristic-content-detail": HTMLGrwTouristicContentDetailElement;
         "grw-touristic-content-provider": HTMLGrwTouristicContentProviderElement;
@@ -1027,12 +1051,16 @@ declare namespace LocalJSX {
     interface GrwExtendedFab {
         "action"?: Function;
         "display"?: string;
+        "fabBackgroundColor"?: string;
+        "fabColor"?: string;
         "fontFamily"?: string;
         "icon"?: Function;
         "name"?: Function;
     }
     interface GrwFab {
         "action"?: Function;
+        "fabBackgroundColor"?: string;
+        "fabColor"?: string;
         "fontFamily"?: string;
         "hideTitle"?: string;
         "icon"?: Function;
@@ -1052,6 +1080,7 @@ declare namespace LocalJSX {
         "onResetFilter"?: (event: GrwFiltersCustomEvent<any>) => void;
     }
     interface GrwInformationDesk {
+        "colorSurfaceContainerLow"?: string;
         "informationDesk"?: InformationDesk;
         "onCenterOnMap"?: (event: GrwInformationDeskCustomEvent<{ latitude: number; longitude: number }>) => void;
     }
@@ -1075,6 +1104,8 @@ declare namespace LocalJSX {
         "departureArrivalMarkerSize"?: number;
         "elevationDefaultState"?: string;
         "elevationHeight"?: number;
+        "fabBackgroundColor"?: string;
+        "fabColor"?: string;
         "fontFamily"?: string;
         "grwApp"?: boolean;
         "isLargeView"?: boolean;
@@ -1217,6 +1248,7 @@ declare namespace LocalJSX {
         "themes"?: string;
     }
     interface GrwPoi {
+        "colorSurfaceContainerLow"?: string;
         "poi"?: Poi;
     }
     interface GrwSearch {
@@ -1239,7 +1271,15 @@ declare namespace LocalJSX {
         "checked"?: boolean;
         "fontFamily"?: string;
     }
+    interface GrwToggleSlotVisibility {
+        "fabBackgroundColor"?: string;
+        "fabColor"?: string;
+        "fontFamily"?: string;
+        "largeViewSize"?: number;
+        "slotEndHeight"?: string;
+    }
     interface GrwTouristicContentCard {
+        "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
         "isInsideHorizontalList"?: boolean;
         "isLargeView"?: boolean;
@@ -1287,6 +1327,7 @@ declare namespace LocalJSX {
         "themes"?: string;
     }
     interface GrwTouristicEventCard {
+        "colorSurfaceContainerLow"?: string;
         "fontFamily"?: string;
         "isInsideHorizontalList"?: boolean;
         "isLargeView"?: boolean;
@@ -1450,6 +1491,7 @@ declare namespace LocalJSX {
         "grw-select-language": GrwSelectLanguage;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
         "grw-switch": GrwSwitch;
+        "grw-toggle-slot-visibility": GrwToggleSlotVisibility;
         "grw-touristic-content-card": GrwTouristicContentCard;
         "grw-touristic-content-detail": GrwTouristicContentDetail;
         "grw-touristic-content-provider": GrwTouristicContentProvider;
@@ -1497,6 +1539,7 @@ declare module "@stencil/core" {
             "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
             "grw-switch": LocalJSX.GrwSwitch & JSXBase.HTMLAttributes<HTMLGrwSwitchElement>;
+            "grw-toggle-slot-visibility": LocalJSX.GrwToggleSlotVisibility & JSXBase.HTMLAttributes<HTMLGrwToggleSlotVisibilityElement>;
             "grw-touristic-content-card": LocalJSX.GrwTouristicContentCard & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardElement>;
             "grw-touristic-content-detail": LocalJSX.GrwTouristicContentDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicContentDetailElement>;
             "grw-touristic-content-provider": LocalJSX.GrwTouristicContentProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentProviderElement>;

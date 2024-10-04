@@ -1,0 +1,18 @@
+grw-toggle-slot-visibility {
+  display: block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  max-width: 100dvw;
+}
+
+.grw-map-visibility-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  bottom: 24px;
+  z-index: 4001;
+  pointer-events: none;
+}

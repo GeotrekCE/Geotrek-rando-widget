@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                                                                             | Default     |
-| -------- | --------- | ----------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
-| `poi`    | --        |             | `{ id: number; name: string; description: string; attachments: Attachments; type: number; geometry: Geometry; }` | `undefined` |
+| Property                   | Attribute                     | Description | Type                                                                                                             | Default     |
+| -------------------------- | ----------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------- | ----------- |
+| `colorSurfaceContainerLow` | `color-surface-container-low` |             | `string`                                                                                                         | `'#f7f2fa'` |
+| `poi`                      | --                            |             | `{ id: number; name: string; description: string; attachments: Attachments; type: number; geometry: Geometry; }` | `undefined` |
 
 
 ## Shadow Parts

@@ -19,6 +19,7 @@ export class GrwPoiDetail {
   descriptionRef?: HTMLDivElement;
 
   @Prop() poi: Poi;
+  @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @State() displayShortDescription = true;
   @State() showPoiDescriptionButton = false;
   @State() displayFullscreen = false;
@@ -102,7 +103,7 @@ export class GrwPoiDetail {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     const displayPaginationAndNavigation = (this.poi && this.poi.attachments.filter(attachment => attachment.type === 'image').length > 1) || this.offline;
     return (
-      <Host>
+      <Host style={{ '--color-surface-container-low': this.colorSurfaceContainerLow }}>
         <div part="poi-type-img-container" class="poi-type-img-container">
           <img part="poi-type" class="poi-type" src={`${state.poiTypes.find(poiType => poiType.id === this.poi.type)?.pictogram}`} alt="" />
           <div part="swiper-poi" class="swiper swiper-poi" ref={el => (this.swiperPoiRef = el)}>

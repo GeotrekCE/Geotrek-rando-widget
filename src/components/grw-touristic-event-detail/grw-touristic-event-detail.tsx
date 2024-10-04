@@ -61,7 +61,7 @@ export class GrwTouristicEventDetail {
   }
 
   componentDidLoad() {
-    this.offline = state.currentTouristicEvent.offline;
+    this.offline = state.currentTouristicEvent && state.currentTouristicEvent.offline;
     this.handleSwipers();
   }
 

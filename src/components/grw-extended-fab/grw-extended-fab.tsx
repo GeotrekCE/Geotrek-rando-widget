@@ -15,6 +15,8 @@ export class GrwExtendedFab {
   @Prop() display: string;
 
   @Prop() fontFamily = 'Roboto';
+  @Prop() fabBackgroundColor = '#eaddff';
+  @Prop() fabColor = '#21005d';
 
   render() {
     const icon = this.icon();
@@ -22,6 +24,8 @@ export class GrwExtendedFab {
       <Host
         style={{
           '--font-family': this.fontFamily,
+          '--fab-background-color': this.fabBackgroundColor,
+          '--fab-color': this.fabColor,
         }}
       >
         <button part="map-visibility-button" class="map-visibility-button" onClick={() => this.action()} style={{ display: this.display }}>

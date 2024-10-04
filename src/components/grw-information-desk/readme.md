@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property          | Attribute | Description | Type                                                                                                                                                                                                                                              | Default     |
-| ----------------- | --------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `informationDesk` | --        |             | `{ id: number; name: string; description: string; type: InformationDeskType; phone: string; email: string; website: string; municipality: string; postal_code: string; street: string; photo_url: string; latitude: number; longitude: number; }` | `undefined` |
+| Property                   | Attribute                     | Description | Type                                                                                                                                                                                                                                              | Default     |
+| -------------------------- | ----------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `colorSurfaceContainerLow` | `color-surface-container-low` |             | `string`                                                                                                                                                                                                                                          | `'#f7f2fa'` |
+| `informationDesk`          | --                            |             | `{ id: number; name: string; description: string; type: InformationDeskType; phone: string; email: string; website: string; municipality: string; postal_code: string; street: string; photo_url: string; latitude: number; longitude: number; }` | `undefined` |
 
 
 ## Events

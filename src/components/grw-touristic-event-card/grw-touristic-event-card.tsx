@@ -18,6 +18,7 @@ export class GrwTouristicEvent {
   paginationElTouristicEventRef?: HTMLDivElement;
 
   @Prop() fontFamily = 'Roboto';
+  @Prop() colorSurfaceContainerLow = '#f7f2fa';
 
   @Prop() touristicEvent: TouristicEvent;
   @Prop() isLargeView = false;
@@ -121,6 +122,7 @@ export class GrwTouristicEvent {
         style={{
           '--font-family': this.fontFamily,
           'width': this.isLargeView ? '100%' : 'auto',
+          '--color-surface-container-low': this.colorSurfaceContainerLow,
         }}
       >
         <div

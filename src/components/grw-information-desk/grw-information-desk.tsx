@@ -19,6 +19,7 @@ export class GrwInformationDeskDetail {
   @State() displayShortDescription = true;
   @State() showInformationDeskDescriptionButton = false;
   @Prop() informationDesk: InformationDesk;
+  @Prop() colorSurfaceContainerLow = '#f7f2fa';
 
   @State() offline = false;
   @State() showDefaultImage = false;
@@ -58,7 +59,7 @@ export class GrwInformationDeskDetail {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
 
     return (
-      <Host>
+      <Host style={{ '--color-surface-container-low': this.colorSurfaceContainerLow }}>
         {this.informationDesk.photo_url && (
           <div part="information-desk-img-container" class="information-desk-img-container">
             <img

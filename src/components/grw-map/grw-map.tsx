@@ -68,6 +68,8 @@ export class GrwMap {
   @Prop() largeViewSize = 1024;
   @Prop() elevationDefaultState = 'visible';
   @Prop() isLargeView = false;
+  @Prop() fabBackgroundColor = '#eaddff';
+  @Prop() fabColor = '#21005d';
 
   map: L.Map;
   bounds;
@@ -2789,7 +2791,9 @@ export class GrwMap {
       (this.elevationControl.options as any).height = elevationHeight;
       (this.elevationControl as any).redraw();
     }
-    this.map.invalidateSize();
+    if (this.map) {
+      this.map.invalidateSize();
+    }
     forceUpdate(this.hostElement);
   }
 
@@ -2846,6 +2850,8 @@ export class GrwMap {
                 icon={() => (this.elevationControl && (this.elevationControl as any).eleDiv.style.display === 'block' ? 'show-elevation' : 'hide-elevation')}
                 showTitle={translate[state.language].showElevation}
                 hideTitle={translate[state.language].hideElevation}
+                fab-background-color={this.fabBackgroundColor}
+                fab-color={this.fabColor}
               ></grw-fab>
             </div>
           )}

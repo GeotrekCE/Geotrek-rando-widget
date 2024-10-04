@@ -4,7 +4,7 @@ import CloseIcon from '../../assets/close.svg';
 @Component({
   tag: 'grw-details-modal',
   styleUrl: 'grw-details-modal.scss',
-  shadow: true,
+  shadow: false,
 })
 export class GrwDetailsModal {
   @Event() closeDetailsModal: EventEmitter<number>;

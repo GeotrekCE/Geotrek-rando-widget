@@ -68,7 +68,6 @@
 | `touristicEvents`            | `touristic-events`              |             | `boolean` | `false`     |
 | `treks`                      | `treks`                         |             | `boolean` | `true`      |
 | `urlLayer`                   | `url-layer`                     |             | `string`  | `undefined` |
-| `useGradient`                | `use-gradient`                  |             | `boolean` | `false`     |
 | `weather`                    | `weather`                       |             | `boolean` | `false`     |
 
 
@@ -148,16 +147,16 @@ graph TD;
   grw-touristic-contents-list --> grw-touristic-content-card
   grw-touristic-events-list --> grw-touristic-event-card
   grw-outdoor-sites-list --> grw-outdoor-site-card
+  grw-trek-detail --> grw-details-modal
+  grw-trek-detail --> grw-touristic-event-detail
+  grw-trek-detail --> grw-touristic-content-detail
   grw-trek-detail --> grw-trek-card
   grw-trek-detail --> grw-poi
   grw-trek-detail --> grw-sensitive-area-detail
   grw-trek-detail --> grw-information-desk
   grw-trek-detail --> grw-touristic-content-card
   grw-trek-detail --> grw-touristic-event-card
-  grw-trek-detail --> grw-details-modal
-  grw-trek-detail --> grw-touristic-content-detail
   grw-trek-detail --> grw-touristic-content-provider
-  grw-trek-detail --> grw-touristic-event-detail
   grw-trek-detail --> grw-touristic-event-provider
   grw-outdoor-site-detail --> grw-poi
   grw-outdoor-site-detail --> grw-outdoor-site-card
@@ -168,6 +167,7 @@ graph TD;
   grw-outdoor-course-detail --> grw-touristic-content-card
   grw-outdoor-course-detail --> grw-touristic-event-card
   grw-outdoor-course-detail --> grw-poi
+  grw-map --> grw-fab
   grw-filters --> grw-filter
   style grw-app fill:#f9f,stroke:#333,stroke-width:4px
 ```
