@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.24.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.23.1...0.24.0) (2024-10-08)
+
+
+### Features
+
+* add toggle elevation visibility button ([9e2ff25](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/9e2ff25940f89f01554e5ebe5303104736014864))
+* add toggle slot visibility component ([4bdb506](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/4bdb506b88f06d2586ff484d38d0b5fe6318b548))
+
+
+### Bug Fixes
+
+* improve ui ([a71b44d](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/a71b44d4063ac36b0234ac327cfb51fc307319ea))
+* improve ui ([b3c5b2d](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/b3c5b2d38b615c045baf7bf09592a1bbd571fc80))
+
 ## [0.23.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.23.0...0.23.1) (2024-09-18)
 
 
