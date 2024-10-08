@@ -782,6 +782,7 @@ export class GrwApp {
                     tiles-min-zoom-offline={this.tilesMinZoomOffline}
                     tiles-max-zoom-offline={this.tilesMaxZoomOffline}
                     grw-app={true}
+                    rounded={this.rounded}
                   ></grw-trek-detail>
                   <grw-offline-confirm-modal mode="treks"></grw-offline-confirm-modal>
                 </div>

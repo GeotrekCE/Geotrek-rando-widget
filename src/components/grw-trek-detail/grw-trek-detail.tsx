@@ -184,6 +184,7 @@ export class GrwTrekDetail {
   @Prop() colorOnSecondaryContainer = '#1d192b';
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
   @Prop() colorBackground = '#fef7ff';
+  @Prop() rounded = true;
 
   @Prop() weather = false;
   @Prop() isLargeView = false;
@@ -230,6 +231,11 @@ export class GrwTrekDetail {
       this.modalDetailsId = touristicEventId.detail;
       this.onOpenDetailsModal('TouristicContent');
       const modal = document.createElement('grw-details-modal');
+      modal.setAttribute('font-family', this.fontFamily);
+      modal.setAttribute('color-background', this.colorBackground);
+      modal.setAttribute('color-primary-container', this.colorPrimaryContainer);
+      modal.setAttribute('color-on-primary-container', this.colorOnPrimaryContainer);
+      modal.setAttribute('rounded', this.rounded.toString());
       const modalContent = document.createElement('grw-touristic-event-detail');
       modalContent.setAttribute('font-family', this.fontFamily);
       modalContent.setAttribute('color-primary-app', this.colorPrimaryApp);
@@ -251,6 +257,11 @@ export class GrwTrekDetail {
       this.modalDetailsId = touristicContentId.detail;
       this.onOpenDetailsModal('touristicContent');
       const modal = document.createElement('grw-details-modal');
+      modal.setAttribute('font-family', this.fontFamily);
+      modal.setAttribute('color-background', this.colorBackground);
+      modal.setAttribute('color-primary-container', this.colorPrimaryContainer);
+      modal.setAttribute('color-on-primary-container', this.colorOnPrimaryContainer);
+      modal.setAttribute('rounded', this.rounded.toString());
       const modalContent = document.createElement('grw-touristic-content-detail');
       modalContent.setAttribute('font-family', this.fontFamily);
       modalContent.setAttribute('color-primary-app', this.colorPrimaryApp);

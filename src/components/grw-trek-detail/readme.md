@@ -26,6 +26,7 @@
 | `globalTilesMinZoomOffline`         | `global-tiles-min-zoom-offline`        |             | `number`  | `0`         |
 | `grwApp`                            | `grw-app`                              |             | `boolean` | `false`     |
 | `isLargeView`                       | `is-large-view`                        |             | `boolean` | `false`     |
+| `rounded`                           | `rounded`                              |             | `boolean` | `true`      |
 | `tilesMaxZoomOffline`               | `tiles-max-zoom-offline`               |             | `number`  | `16`        |
 | `tilesMinZoomOffline`               | `tiles-min-zoom-offline`               |             | `number`  | `12`        |
 | `weather`                           | `weather`                              |             | `boolean` | `false`     |

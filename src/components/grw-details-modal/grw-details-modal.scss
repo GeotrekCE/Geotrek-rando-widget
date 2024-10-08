@@ -20,6 +20,7 @@
   .grw-content-modal {
     overflow-y: hidden;
     padding-bottom: 24px;
+    background-color: var(--color-background);
   }
   .grw-arrow-back-container {
     display: flex;
@@ -29,7 +30,7 @@
     .grw-arrow-back-icon {
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
-      color: var(--color-on-surface);
+      color: var(--color-on-primary);
       border: none;
       border-radius: var(--border-radius, 50%);
       height: 48px;

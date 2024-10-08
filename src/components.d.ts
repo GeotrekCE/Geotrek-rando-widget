@@ -77,6 +77,11 @@ export namespace Components {
         "name": string;
     }
     interface GrwDetailsModal {
+        "colorBackground": string;
+        "colorOnPrimaryContainer": string;
+        "colorPrimaryContainer": string;
+        "fontFamily": string;
+        "rounded": boolean;
     }
     interface GrwExtendedFab {
         "action": Function;
@@ -400,6 +405,7 @@ export namespace Components {
         "globalTilesMinZoomOffline": number;
         "grwApp": boolean;
         "isLargeView": boolean;
+        "rounded": boolean;
         "tilesMaxZoomOffline": number;
         "tilesMinZoomOffline": number;
         "weather": boolean;
@@ -1046,7 +1052,12 @@ declare namespace LocalJSX {
         "name"?: string;
     }
     interface GrwDetailsModal {
+        "colorBackground"?: string;
+        "colorOnPrimaryContainer"?: string;
+        "colorPrimaryContainer"?: string;
+        "fontFamily"?: string;
         "onCloseDetailsModal"?: (event: GrwDetailsModalCustomEvent<number>) => void;
+        "rounded"?: boolean;
     }
     interface GrwExtendedFab {
         "action"?: Function;
@@ -1420,6 +1431,7 @@ declare namespace LocalJSX {
         "onStepsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "rounded"?: boolean;
         "tilesMaxZoomOffline"?: number;
         "tilesMinZoomOffline"?: number;
         "weather"?: boolean;
