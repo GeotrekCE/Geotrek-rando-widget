@@ -1,4 +1,4 @@
-import { Build, Component, Host, Prop, State, getAssetPath, h, Event, EventEmitter, Listen } from '@stencil/core';
+import { Build, Component, Host, Prop, State, getAssetPath, h, Event, EventEmitter, Listen, Fragment } from '@stencil/core';
 import { OutdoorSite } from 'components';
 import state, { onChange } from 'store/store';
 import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel, Scrollbar } from 'swiper';
@@ -50,6 +50,7 @@ export class GrwOutdoorSiteDetail {
   @Prop() tilesMinZoomOffline = 12;
   @Prop() tilesMaxZoomOffline = 16;
   @Prop() grwApp = false;
+  @Prop() rounded = true;
 
   @State() offline = false;
   @State() displayFullscreen = false;
@@ -118,6 +119,85 @@ export class GrwOutdoorSiteDetail {
 
   @Event() deleteConfirm: EventEmitter<number>;
   @Event() deleteSuccessConfirm: EventEmitter<number>;
+
+  @State() showTouristicContentDetailsModal = false;
+  @State() showTouristicEventDetailsModal = false;
+  @State() modalDetailsId = null;
+
+  @Listen('closeDetailsModal', { target: 'window' })
+  onCloseDetailsModal() {
+    document.body.style.overflow = `visible`;
+    state.currentTouristicContent = null;
+    state.currentTouristicEvent = null;
+    this.modalDetailsId = null;
+    if (this.showTouristicContentDetailsModal) {
+      this.showTouristicContentDetailsModal = false;
+    } else {
+      this.showTouristicEventDetailsModal = false;
+    }
+    document.body.getElementsByTagName('grw-details-modal')[0].remove();
+  }
+
+  @Listen('touristicEventCardPress', { target: 'window' })
+  onTouristiceEventCardPress(touristicEventId) {
+    if (!this.grwApp) {
+      this.modalDetailsId = touristicEventId.detail;
+      this.onOpenDetailsModal('TouristicContent');
+      const modal = document.createElement('grw-details-modal');
+      modal.setAttribute('font-family', this.fontFamily);
+      modal.setAttribute('color-background', this.colorBackground);
+      modal.setAttribute('color-primary-container', this.colorPrimaryContainer);
+      modal.setAttribute('color-on-primary-container', this.colorOnPrimaryContainer);
+      modal.setAttribute('rounded', this.rounded.toString());
+      const modalContent = document.createElement('grw-touristic-event-detail');
+      modalContent.setAttribute('font-family', this.fontFamily);
+      modalContent.setAttribute('color-primary-app', this.colorPrimaryApp);
+      modalContent.setAttribute('color-on-surface', this.colorOnSurface);
+      modalContent.setAttribute('color-primary-container', this.colorPrimaryContainer);
+      modalContent.setAttribute('color-on-primary-container', this.colorOnPrimaryContainer);
+      modalContent.setAttribute('color-secondary-container', this.colorSecondaryContainer);
+      modalContent.setAttribute('color-on-secondary-container', this.colorOnSecondaryContainer);
+      modalContent.setAttribute('color-surface-container-low', this.colorSurfaceContainerLow);
+      modalContent.setAttribute('color-background', this.colorBackground);
+      modal.append(modalContent);
+      document.body.append(modal);
+    }
+  }
+
+  @Listen('touristicContentCardPress', { target: 'window' })
+  onTouristicContentCardPress(touristicContentId) {
+    if (!this.grwApp) {
+      this.modalDetailsId = touristicContentId.detail;
+      this.onOpenDetailsModal('touristicContent');
+      const modal = document.createElement('grw-details-modal');
+      modal.setAttribute('font-family', this.fontFamily);
+      modal.setAttribute('color-background', this.colorBackground);
+      modal.setAttribute('color-primary-container', this.colorPrimaryContainer);
+      modal.setAttribute('color-on-primary-container', this.colorOnPrimaryContainer);
+      modal.setAttribute('rounded', this.rounded.toString());
+      const modalContent = document.createElement('grw-touristic-content-detail');
+      modalContent.setAttribute('font-family', this.fontFamily);
+      modalContent.setAttribute('color-primary-app', this.colorPrimaryApp);
+      modalContent.setAttribute('color-on-surface', this.colorOnSurface);
+      modalContent.setAttribute('color-primary-container', this.colorPrimaryContainer);
+      modalContent.setAttribute('color-on-primary-container', this.colorOnPrimaryContainer);
+      modalContent.setAttribute('color-secondary-container', this.colorSecondaryContainer);
+      modalContent.setAttribute('color-on-secondary-container', this.colorOnSecondaryContainer);
+      modalContent.setAttribute('color-surface-container-low', this.colorSurfaceContainerLow);
+      modalContent.setAttribute('color-background', this.colorBackground);
+      modal.append(modalContent);
+      document.body.append(modal);
+    }
+  }
+
+  onOpenDetailsModal(modalDetails: 'touristicContent' | 'TouristicContent') {
+    document.body.style.overflow = `hidden`;
+    if (modalDetails === 'touristicContent') {
+      this.showTouristicContentDetailsModal = true;
+    } else {
+      this.showTouristicEventDetailsModal = true;
+    }
+  }
 
   @Listen('downloadPress', { target: 'window' })
   onDownloadPress() {
@@ -1068,6 +1148,12 @@ export class GrwOutdoorSiteDetail {
             )}
             {this.grwApp && <div part="detail-bottom-space" class="detail-bottom-space"></div>}
           </div>
+        )}
+        {this.modalDetailsId && (
+          <Fragment>
+            {this.showTouristicContentDetailsModal && <grw-touristic-content-provider api={state.api} touristic-content-id={this.modalDetailsId}></grw-touristic-content-provider>}
+            {this.showTouristicEventDetailsModal && <grw-touristic-event-provider api={state.api} touristic-event-id={this.modalDetailsId}></grw-touristic-event-provider>}
+          </Fragment>
         )}
       </Host>
     );

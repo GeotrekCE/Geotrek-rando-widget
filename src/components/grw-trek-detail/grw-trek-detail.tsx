@@ -216,6 +216,7 @@ export class GrwTrekDetail {
   onCloseDetailsModal() {
     document.body.style.overflow = `visible`;
     state.currentTouristicContent = null;
+    state.currentTouristicEvent = null;
     this.modalDetailsId = null;
     if (this.showTouristicContentDetailsModal) {
       this.showTouristicContentDetailsModal = false;

@@ -224,6 +224,7 @@ export namespace Components {
         "globalTilesMinZoomOffline": number;
         "grwApp": boolean;
         "isLargeView": boolean;
+        "rounded": boolean;
         "tilesMaxZoomOffline": number;
         "tilesMinZoomOffline": number;
         "weather": boolean;
@@ -1228,6 +1229,7 @@ declare namespace LocalJSX {
         "onSitesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        "rounded"?: boolean;
         "tilesMaxZoomOffline"?: number;
         "tilesMinZoomOffline"?: number;
         "weather"?: boolean;

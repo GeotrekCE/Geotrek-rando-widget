@@ -78,12 +78,14 @@
 ### Used by
 
  - [grw-app](../grw-app)
+ - [grw-outdoor-site-detail](../grw-outdoor-site-detail)
  - [grw-trek-detail](../grw-trek-detail)
 
 ### Graph
 ```mermaid
 graph TD;
   grw-app --> grw-touristic-event-detail
+  grw-outdoor-site-detail --> grw-touristic-event-detail
   grw-trek-detail --> grw-touristic-event-detail
   style grw-touristic-event-detail fill:#f9f,stroke:#333,stroke-width:4px
 ```

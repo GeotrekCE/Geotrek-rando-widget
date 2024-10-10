@@ -144,12 +144,19 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      transform: rotate(45deg);
+      transform: rotate(44deg);
       position: absolute;
       z-index: 20;
       width: var(--main-marker-icon-width) !important;
     }
   }
+
+  .touristic-content-marker-container,
+  .touristic-event-marker-container,
+  .outdoor-site-marker-container {
+    transform: rotate(-42deg);
+  }
+
   .trek-marker-container,
   .touristic-content-marker-container,
   .touristic-event-marker-container,

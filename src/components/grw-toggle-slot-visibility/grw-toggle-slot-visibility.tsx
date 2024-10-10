@@ -25,7 +25,10 @@ export class GrwToggleSlotVisibility {
   }
 
   handleView() {
-    if (state.currentTrek && (typeof this.isLargeView === undefined || this.isLargeView !== this.toggleSlotElement.getBoundingClientRect().width >= this.largeViewSize)) {
+    if (
+      (state.currentTrek || state.currentOutdoorSite) &&
+      (typeof this.isLargeView === undefined || this.isLargeView !== this.toggleSlotElement.getBoundingClientRect().width >= this.largeViewSize)
+    ) {
       this.isLargeView = this.toggleSlotElement.getBoundingClientRect().width >= this.largeViewSize;
       this.showStartSlot = true;
       this.showEndSlot = this.isLargeView;
@@ -107,7 +110,7 @@ export class GrwToggleSlotVisibility {
   render() {
     return (
       <Host>
-        {state.currentTrek && (
+        {(state.currentTrek || state.currentOutdoorSite) && (
           <div class="grw-toggle-slot-visibility-container">
             <div
               class="grw-slot-start-container"

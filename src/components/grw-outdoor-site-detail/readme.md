@@ -25,6 +25,7 @@
 | `globalTilesMinZoomOffline`         | `global-tiles-min-zoom-offline`        |             | `number`  | `0`         |
 | `grwApp`                            | `grw-app`                              |             | `boolean` | `false`     |
 | `isLargeView`                       | `is-large-view`                        |             | `boolean` | `false`     |
+| `rounded`                           | `rounded`                              |             | `boolean` | `true`      |
 | `tilesMaxZoomOffline`               | `tiles-max-zoom-offline`               |             | `number`  | `16`        |
 | `tilesMinZoomOffline`               | `tiles-min-zoom-offline`               |             | `number`  | `12`        |
 | `weather`                           | `weather`                              |             | `boolean` | `false`     |
@@ -133,22 +134,32 @@
 
 ### Depends on
 
+- [grw-details-modal](../grw-details-modal)
+- [grw-touristic-event-detail](../grw-touristic-event-detail)
+- [grw-touristic-content-detail](../grw-touristic-content-detail)
 - [grw-poi](../grw-poi-detail)
 - [grw-outdoor-site-card](../grw-outdoor-site-card)
 - [grw-outdoor-course-card](../grw-outdoor-course-card)
 - [grw-information-desk](../grw-information-desk)
 - [grw-touristic-content-card](../grw-touristic-content-card)
 - [grw-touristic-event-card](../grw-touristic-event-card)
+- [grw-touristic-content-provider](../../store)
+- [grw-touristic-event-provider](../../store)
 
 ### Graph
 ```mermaid
 graph TD;
+  grw-outdoor-site-detail --> grw-details-modal
+  grw-outdoor-site-detail --> grw-touristic-event-detail
+  grw-outdoor-site-detail --> grw-touristic-content-detail
   grw-outdoor-site-detail --> grw-poi
   grw-outdoor-site-detail --> grw-outdoor-site-card
   grw-outdoor-site-detail --> grw-outdoor-course-card
   grw-outdoor-site-detail --> grw-information-desk
   grw-outdoor-site-detail --> grw-touristic-content-card
   grw-outdoor-site-detail --> grw-touristic-event-card
+  grw-outdoor-site-detail --> grw-touristic-content-provider
+  grw-outdoor-site-detail --> grw-touristic-event-provider
   grw-app --> grw-outdoor-site-detail
   style grw-outdoor-site-detail fill:#f9f,stroke:#333,stroke-width:4px
 ```

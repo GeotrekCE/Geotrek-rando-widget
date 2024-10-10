@@ -1884,6 +1884,7 @@ export class GrwMap {
                     outdoorSitesIcons[geoJsonPoint.properties.practice]
                   } /></div></div>`
                 : `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
+              className: '',
               iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
@@ -1951,6 +1952,7 @@ export class GrwMap {
                     outdoorSitesIcons[geoJsonPoint.properties.practice]
                   } /></div></div>`
                 : `<div part="outdoor-site-marker" class="outdoor-site-marker"><div part="outdoor-site-marker-container" class="outdoor-site-marker-container"></div></div>`,
+              className: '',
               iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
@@ -1999,6 +2001,7 @@ export class GrwMap {
                     outdoorCoursesIcons[geoJsonPoint.properties.practice]
                   } /></div></div>`
                 : `<div part="outdoor-courses-marker" class="outdoor-courses-marker"><div part="outdoor-courses-marker-container" class="outdoor-courses-marker-container"></div></div>`,
+              className: '',
               iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,
@@ -2146,6 +2149,7 @@ export class GrwMap {
                     outdoorCoursesIcons[geoJsonPoint.properties.practice]
                   } /></div></div>`
                 : `<div part="outdoor-course-marker" class="outdoor-course-marker"><div part="outdoor-course-marker-container" class="outdoor-course-marker-container"></div></div>`,
+              className: '',
               iconSize: this.commonMarkerSize,
             } as any),
             autoPanOnFocus: false,

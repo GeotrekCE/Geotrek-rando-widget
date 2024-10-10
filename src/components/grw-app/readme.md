@@ -158,12 +158,17 @@ graph TD;
   grw-trek-detail --> grw-touristic-event-card
   grw-trek-detail --> grw-touristic-content-provider
   grw-trek-detail --> grw-touristic-event-provider
+  grw-outdoor-site-detail --> grw-details-modal
+  grw-outdoor-site-detail --> grw-touristic-event-detail
+  grw-outdoor-site-detail --> grw-touristic-content-detail
   grw-outdoor-site-detail --> grw-poi
   grw-outdoor-site-detail --> grw-outdoor-site-card
   grw-outdoor-site-detail --> grw-outdoor-course-card
   grw-outdoor-site-detail --> grw-information-desk
   grw-outdoor-site-detail --> grw-touristic-content-card
   grw-outdoor-site-detail --> grw-touristic-event-card
+  grw-outdoor-site-detail --> grw-touristic-content-provider
+  grw-outdoor-site-detail --> grw-touristic-event-provider
   grw-outdoor-course-detail --> grw-touristic-content-card
   grw-outdoor-course-detail --> grw-touristic-event-card
   grw-outdoor-course-detail --> grw-poi
