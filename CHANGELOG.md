@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.24.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.24.0...0.24.1) (2024-10-10)
+
+
+### Bug Fixes
+
+* handle modal details with outdoor site ([8e706a5](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/8e706a544c710c9e18511bdb1f4afb90b4b25781))
+* outdoor site fit bounds ([cb626ad](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/cb626adac7b9308ffccd92eed971cea79f918865))
+
 ## [0.24.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.23.1...0.24.0) (2024-10-08)
 
 
