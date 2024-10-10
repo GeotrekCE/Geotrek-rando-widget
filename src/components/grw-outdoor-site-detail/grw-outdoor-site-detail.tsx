@@ -1069,6 +1069,7 @@ export class GrwOutdoorSiteDetail {
                             fontFamily={this.fontFamily}
                             touristicContent={touristicContent}
                             isInsideHorizontalList={true}
+                            colorSurfaceContainerLow={this.colorSurfaceContainerLow}
                           ></grw-touristic-content-card>
                         </div>
                       ))}
@@ -1094,6 +1095,7 @@ export class GrwOutdoorSiteDetail {
                             fontFamily={this.fontFamily}
                             touristicEvent={touristicEvent}
                             isInsideHorizontalList={true}
+                            colorSurfaceContainerLow={this.colorSurfaceContainerLow}
                           ></grw-touristic-event-card>
                         </div>
                       ))}

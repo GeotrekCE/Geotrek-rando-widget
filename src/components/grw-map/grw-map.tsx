@@ -1910,7 +1910,8 @@ export class GrwMap {
 
     this.handleLayersControl();
 
-    this.map.fitBounds(this.currentOutdoorSiteLayer.getBounds());
+    this.map.invalidateSize();
+    this.map.fitBounds(this.currentOutdoorSiteLayer.getBounds(), { maxZoom: this.maxZoom });
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
   }
 
