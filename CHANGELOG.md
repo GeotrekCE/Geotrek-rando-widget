@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.24.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.24.1...0.24.2) (2024-10-15)
+
+
+### Bug Fixes
+
+* header height on grw app ([5e4f0be](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/5e4f0be2ea8eee2236ca073a8ceffc73d91a795f))
+
 ## [0.24.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.24.0...0.24.1) (2024-10-10)
 
 
