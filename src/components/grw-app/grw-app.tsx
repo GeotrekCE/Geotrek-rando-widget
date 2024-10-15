@@ -468,14 +468,13 @@ export class GrwApp {
           '--app-width': this.appWidth,
           '--app-height': this.appHeight,
           '--header-height':
-            Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) + Number(this.outdoor) > 1
-              ? this.enableOffline && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent
-                ? '188px'
-                : '64px'
-              : this.enableOffline && !this.showTrek && !this.showTouristicContent && !this.showTouristicEvent
+            this.showTrek && this.showTouristicContent && this.showTouristicEvent
               ? '116px'
+              : Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) + Number(this.outdoor) > 1
+              ? '148px'
               : '64px',
           '--header-with-languages': this.languages.split(',').length > 1 ? '38px' : '0px',
+          '--header-with-offline': this.enableOffline ? '48px' : '0px',
           '--border-radius': this.rounded ? '' : '0px',
         }}
       >
