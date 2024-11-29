@@ -1,7 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import state from 'store/store';
-import { OutdoorSitesFilters, TouristicContents, TouristicContentsFilters, TouristicEvents, TouristicEventsFilters, TrekFilters, Treks } from 'types/types';
+import { OutdoorSitesFilters, SensitiveAreas, TouristicContents, TouristicContentsFilters, TouristicEvents, TouristicEventsFilters, TrekFilters, Treks, SensitiveAreasFilters, SearchParams } from 'types/types';
 
 export function formatDuration(duration: number) {
   let formattedDuration = '';
@@ -62,6 +62,11 @@ export const outdoorSitesFilters: OutdoorSitesFilters = [
   { property: 'cities', outdoorSiteProperty: 'cities', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
   { property: 'districts', outdoorSiteProperty: 'districts', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedLocationFilters' },
   { property: 'themes', outdoorSiteProperty: 'themes', outdoorSitePropertyIsArray: true, type: 'include', segment: 'selectedThemesFilters' },
+];
+
+export const sensitiveAreasFilters: SensitiveAreasFilters = [
+  { property: 'sentitivePeriod', sensitiveAreaProperty: 'period', sensitiveAreaPropertyIsArray: true, type: 'include', segment: 'selectedActivitiesFilters' },
+  { property: 'sensitivePractices', sensitiveAreaProperty: 'practices', sensitiveAreaPropertyIsArray: true, type: 'include', segment: 'selectedActivitiesFilters' },
 ];
 
 export function handleTreksFiltersAndSearch(): Treks {
@@ -338,6 +343,77 @@ export function handleOutdoorSitesFiltersAndSearch() {
     : searchOutdoorSites;
 }
 
+
+export function handleSensitiveAreasFiltersAndSearch(): SensitiveAreas {
+  let isUsingFilter = false;
+  let filtersSensitiveAreas = [];
+  for (const filter of sensitiveAreasFilters) {
+    const currentFiltersId: number[] = state[filter.property].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
+
+    if (currentFiltersId.length > 0) {
+      if (filtersSensitiveAreas.length > 0) {
+        if (filter.type === 'include') {
+          if (filter.sensitiveAreaPropertyIsArray) {
+            filtersSensitiveAreas = [
+              ...filtersSensitiveAreas.filter(sensitiveArea => sensitiveArea[filter.sensitiveAreaProperty].some(sensitiveAreaProperty => currentFiltersId.includes(sensitiveAreaProperty))),
+            ];
+          } else {
+            filtersSensitiveAreas = [...filtersSensitiveAreas.filter(sensitiveArea => currentFiltersId.includes(sensitiveArea[filter.sensitiveAreaProperty]))];
+          }
+        } else if (filter.type === 'interval') {
+          filtersSensitiveAreas = [
+            ...filtersSensitiveAreas.filter(sensitiveArea => {
+              for (const currentFilterId of currentFiltersId) {
+                const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
+                if (sensitiveArea[filter.sensitiveAreaProperty] >= currentFilter.minValue && sensitiveArea[filter.sensitiveAreaProperty] <= currentFilter.maxValue) {
+                  return true;
+                }
+              }
+              return false;
+            }),
+          ];
+        }
+      } else {
+        if (!isUsingFilter) {
+          isUsingFilter = true;
+        }
+        if (filter.type === 'include') {
+          if (filter.sensitiveAreaPropertyIsArray) {
+            filtersSensitiveAreas = [
+              ...state.sensitiveAreas.filter(sensitiveArea => sensitiveArea[filter.sensitiveAreaProperty].some(sensitiveAreaProperty => currentFiltersId.includes(sensitiveAreaProperty))),
+            ];
+          } else {
+            filtersSensitiveAreas = [...state.sensitiveAreas.filter(sensitiveArea => currentFiltersId.includes(sensitiveArea[filter.sensitiveAreaProperty]))];
+          }
+        } else if (filter.type === 'interval') {
+          let minValue: number;
+          let maxValue: number;
+          for (const currentFilterId of currentFiltersId) {
+            const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
+            if (isNaN(minValue) || currentFilter.minValue < minValue) {
+              minValue = currentFilter.minValue;
+            }
+            if (isNaN(maxValue) || currentFilter.maxValue > maxValue) {
+              maxValue = currentFilter.maxValue;
+            }
+          }
+          filtersSensitiveAreas = [
+            ...state.sensitiveAreas.filter(sensitiveArea => sensitiveArea[filter.sensitiveAreaProperty] >= minValue && sensitiveArea[filter.sensitiveAreaProperty] <= maxValue),
+          ];
+        }
+      }
+    }
+  }
+
+  let searchSensitiveAreas = isUsingFilter ? filtersSensitiveAreas : state.outdoorSites;
+  searchSensitiveAreas = searchSensitiveAreas.filter(outdoorSite => !state.offlineOutdoorSites || (state.offlineOutdoorSites && outdoorSite.offline));
+
+  return Boolean(state.searchValue)
+    ? searchSensitiveAreas.filter(currentOutdoorSite => currentOutdoorSite.name.toLowerCase().includes(state.searchValue.toLowerCase()))
+    : searchSensitiveAreas;
+}
+
+
 export const durations = [
   { id: 1, name: '0 - 1h', minValue: 0, maxValue: 1, selected: false },
   { id: 2, name: '1 - 2h', minValue: 1, maxValue: 2, selected: false },
@@ -436,4 +512,25 @@ export async function checkFileInStore(value) {
     directory: Directory.Data,
   }).catch(() => null);
   return image;
+}
+
+export function toUrlSearchParams(params: SearchParams): URLSearchParams {
+  const searchParams = new URLSearchParams();
+
+  // Add each property to the URLSearchParams
+  for (const key in params) {
+    const value = params[key as keyof SearchParams];
+
+    if (Array.isArray(value)) {
+      // If the value is an array, append each item
+      value.forEach(item => {
+        searchParams.append(key, item.toString());
+      });
+    } else if (value !== undefined) {
+      // If the value is not undefined, append it
+      searchParams.append(key, value.toString());
+    }
+  }
+
+  return searchParams;
 }

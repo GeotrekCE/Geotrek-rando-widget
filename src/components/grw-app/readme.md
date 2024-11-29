@@ -59,6 +59,7 @@
 | `rounded`                    | `rounded`                       |             | `boolean` | `true`      |
 | `routes`                     | `routes`                        |             | `string`  | `undefined` |
 | `selectedMainMarkerSize`     | `selected-main-marker-size`     |             | `number`  | `48`        |
+| `sensitiveArea`              | `sensitive-area`                |             | `boolean` | `false`     |
 | `signages`                   | `signages`                      |             | `boolean` | `false`     |
 | `structures`                 | `structures`                    |             | `string`  | `undefined` |
 | `themes`                     | `themes`                        |             | `string`  | `undefined` |

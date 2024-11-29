@@ -43,6 +43,7 @@ interface Translation {
       touristicContents: string;
       touristicEvents: string;
       outdoorSites: string;
+      sensitiveAreas: string;
     };
     touristicContents: string;
     touristicContent: string;
@@ -50,6 +51,8 @@ interface Translation {
     touristicEvent: string;
     outdoorSites: string;
     outdoorSite: string;
+    sensitiveAreas: string;
+    sensitiveArea: string;
   };
   options: {
     presentation: string;
@@ -181,6 +184,7 @@ const defaultTranslate: AvailableTranslations = {
         touristicContents: 'Services',
         touristicEvents: 'Événements',
         outdoorSites: 'Outdoor',
+        sensitiveAreas: 'Zones sensibles',
       },
       touristicContents: 'Services',
       touristicContent: 'Service',
@@ -188,6 +192,8 @@ const defaultTranslate: AvailableTranslations = {
       touristicEvent: 'Événement',
       outdoorSites: 'Outdoor',
       outdoorSite: 'Outdoor',
+      sensitiveArea: 'Zone sensible',
+      sensitiveAreas: 'Zones sensibles',
     },
     options: {
       presentation: 'Présentation',
@@ -312,6 +318,7 @@ const defaultTranslate: AvailableTranslations = {
         touristicContents: 'Services',
         touristicEvents: 'Events',
         outdoorSites: 'Outdoor',
+        sensitiveAreas: 'Sensitive areas',
       },
       touristicContents: 'Services',
       touristicContent: 'Service',
@@ -319,6 +326,8 @@ const defaultTranslate: AvailableTranslations = {
       touristicEvent: 'Event',
       outdoorSites: 'Outdoor',
       outdoorSite: 'Outdoor',
+      sensitiveAreas: 'Sensitive areas',
+      sensitiveArea: 'Sensitive area',
     },
     options: {
       presentation: 'Presentation',
@@ -443,6 +452,7 @@ const defaultTranslate: AvailableTranslations = {
         touristicContents: 'Servicios',
         touristicEvents: 'Eventos',
         outdoorSites: 'Outdoor',
+        sensitiveAreas: 'Zonas sensibles',
       },
       touristicContents: 'Servicios',
       touristicContent: 'Servicio',
@@ -450,6 +460,8 @@ const defaultTranslate: AvailableTranslations = {
       touristicEvent: 'Evento',
       outdoorSites: 'Outdoor',
       outdoorSite: 'Outdoor',
+      sensitiveAreas: 'Zonas sensibles',
+      sensitiveArea: 'Zona sensible',
     },
     options: {
       presentation: 'Presentación',

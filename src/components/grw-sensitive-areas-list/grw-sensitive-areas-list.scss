@@ -1,0 +1,38 @@
+:host {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+grw-outdoor-site-card {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+  margin: 0px 8px 16px 8px;
+}
+
+.list-bottom-space {
+  height: 104px;
+}
+
+.list-large-view-bottom-space {
+  height: 52px;
+}
+
+.current-outdoor-sites-within-bounds-length {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px;
+  color: var(--color-on-surface-variant);
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 400;
+  font-family: var(--font-family);
+}
+
+.outdoor-sites-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

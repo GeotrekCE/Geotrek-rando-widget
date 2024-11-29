@@ -1,0 +1,178 @@
+:host {
+  a {
+    color: var(--color-primary-app);
+  }
+}
+
+.sensitive-area-img-container {
+  position: relative;
+  height: 200px;
+  .sensitive-area-img,
+  .default-sensitive-area-img {
+    width: 100%;
+    height: 100%;
+    max-height: 200px;
+    object-fit: cover;
+  }
+  .sensitive-area-img {
+    cursor: pointer;
+    object-fit: cover;
+  }
+  .default-sensitive-area-img {
+    background-color: var(--color-primary-container);
+    object-fit: contain;
+  }
+  .img-fullscreen {
+    max-height: none;
+    object-fit: contain;
+  }
+  .sensitive-area-practice {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    border: 2px solid #ffffff;
+    border-radius: var(--border-radius, 50%);
+    background-color: var(--color-on-surface);
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 200;
+  }
+}
+
+.sensitive-area-sub-container {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  .sensitive-area-practice-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    .sensitive-area-practice-name {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+    }
+    img {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+      background-color: var(--color-primary-app);
+    }
+  }
+  .sensitive-area-name {
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    height: 48px;
+  }
+}
+
+.sensitive-area-more-detail-container {
+  padding: 0px 12px 12px 12px;
+  .more-details-button {
+    cursor: pointer;
+    background-color: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    border-radius: var(--border-radius, 8px);
+    padding: 8px 16px;
+    box-shadow: var(--elevation-1);
+    width: 100%;
+    height: 32px;
+    gap: 8px;
+    box-sizing: border-box;
+    text-align: start;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: none;
+    font-size: 14px;
+    font-family: var(--font-family);
+    &:hover {
+      box-shadow: var(--elevation-2);
+    }
+    span {
+      font-size: 18px;
+    }
+  }
+}
+
+.sensitive-area-card-container,
+.sensitive-area-card-large-view-container {
+  font-family: var(--font-family);
+  border-radius: var(--border-radius, 12px);
+  box-shadow: var(--elevation-1);
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+  .sensitive-area-img {
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: var(--border-radius, 12px);
+    border-top-right-radius: var(--border-radius, 12px);
+  }
+}
+
+.sensitive-area-card-container {
+  width: 100%;
+  max-width: 350px;
+  .sensitive-area-img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.sensitive-area-card-large-view-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  .sensitive-area-img {
+    width: 250px;
+    height: 100%;
+    border-bottom-left-radius: var(--border-radius, 12px);
+    border-top-right-radius: var(--border-radius, 0px);
+  }
+}
+
+.is-inside-vertical-list {
+  cursor: pointer;
+  border: none;
+  .touristic-content-img,
+  .default-touristic-content-img {
+    height: 100%;
+  }
+}
+
+.selected-sensitive-area-card {
+  box-shadow: var(--elevation-2);
+}
+
+.themes-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  .theme {
+    background-color: var(--color-secondary-container);
+    color: var(--color-on-secondary-container);
+    border-radius: var(--border-radius, 40px);
+    padding: 8px 16px;
+    margin: 0px 8px 8px 0px;
+    box-shadow: var(--elevation-0);
+    gap: 8px;
+    box-sizing: border-box;
+    text-align: start;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+}

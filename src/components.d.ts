@@ -59,6 +59,7 @@ export namespace Components {
         "rounded": boolean;
         "routes": string;
         "selectedMainMarkerSize": number;
+        "sensitiveAreas": boolean;
         "signages": boolean;
         "structures": string;
         "themes": string;
@@ -265,14 +266,45 @@ export namespace Components {
     interface GrwSegmentedSegment {
         "fontFamily": string;
         "outdoor": boolean;
+        "sensitiveAreas": boolean;
         "touristicContents": boolean;
         "touristicEvents": boolean;
         "treks": boolean;
     }
     interface GrwSelectLanguage {
     }
+    interface GrwSensitiveAreaCard {
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "fontFamily": string;
+        "isInsideHorizontalList": boolean;
+        "isLargeView": boolean;
+        "sensitiveArea": SensitiveArea;
+    }
     interface GrwSensitiveAreaDetail {
         "sensitiveArea": SensitiveArea;
+    }
+    interface GrwSensitiveAreasList {
+        "colorOnSecondaryContainer": string;
+        "colorOnSurface": string;
+        "colorPrimaryApp": string;
+        "colorSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "fontFamily": string;
+        "isLargeView": boolean;
+    }
+    interface GrwSensitiveAreasProvider {
+        "api": string;
+        "inBbox": string;
+        "languages": string;
+        "offline": boolean;
+        "period": string;
+        "practices": string;
+        "species": string;
+        "structures": string;
     }
     interface GrwSwitch {
         "action": Function;
@@ -487,6 +519,10 @@ export interface GrwOutdoorSiteCardCustomEvent<T> extends CustomEvent<T> {
 export interface GrwOutdoorSiteDetailCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLGrwOutdoorSiteDetailElement;
+}
+export interface GrwSensitiveAreaCardCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLGrwSensitiveAreaCardElement;
 }
 export interface GrwTouristicContentCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -768,11 +804,42 @@ declare global {
         prototype: HTMLGrwSelectLanguageElement;
         new (): HTMLGrwSelectLanguageElement;
     };
+    interface HTMLGrwSensitiveAreaCardElementEventMap {
+        "sensitiveAreaCardPress": number;
+        "cardSensitiveAreaMouseOver": number;
+        "cardSensitiveAreaMouseLeave": any;
+    }
+    interface HTMLGrwSensitiveAreaCardElement extends Components.GrwSensitiveAreaCard, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLGrwSensitiveAreaCardElementEventMap>(type: K, listener: (this: HTMLGrwSensitiveAreaCardElement, ev: GrwSensitiveAreaCardCustomEvent<HTMLGrwSensitiveAreaCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLGrwSensitiveAreaCardElementEventMap>(type: K, listener: (this: HTMLGrwSensitiveAreaCardElement, ev: GrwSensitiveAreaCardCustomEvent<HTMLGrwSensitiveAreaCardElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLGrwSensitiveAreaCardElement: {
+        prototype: HTMLGrwSensitiveAreaCardElement;
+        new (): HTMLGrwSensitiveAreaCardElement;
+    };
     interface HTMLGrwSensitiveAreaDetailElement extends Components.GrwSensitiveAreaDetail, HTMLStencilElement {
     }
     var HTMLGrwSensitiveAreaDetailElement: {
         prototype: HTMLGrwSensitiveAreaDetailElement;
         new (): HTMLGrwSensitiveAreaDetailElement;
+    };
+    interface HTMLGrwSensitiveAreasListElement extends Components.GrwSensitiveAreasList, HTMLStencilElement {
+    }
+    var HTMLGrwSensitiveAreasListElement: {
+        prototype: HTMLGrwSensitiveAreasListElement;
+        new (): HTMLGrwSensitiveAreasListElement;
+    };
+    interface HTMLGrwSensitiveAreasProviderElement extends Components.GrwSensitiveAreasProvider, HTMLStencilElement {
+    }
+    var HTMLGrwSensitiveAreasProviderElement: {
+        prototype: HTMLGrwSensitiveAreasProviderElement;
+        new (): HTMLGrwSensitiveAreasProviderElement;
     };
     interface HTMLGrwSwitchElement extends Components.GrwSwitch, HTMLStencilElement {
     }
@@ -963,7 +1030,10 @@ declare global {
         "grw-search": HTMLGrwSearchElement;
         "grw-segmented-segment": HTMLGrwSegmentedSegmentElement;
         "grw-select-language": HTMLGrwSelectLanguageElement;
+        "grw-sensitive-area-card": HTMLGrwSensitiveAreaCardElement;
         "grw-sensitive-area-detail": HTMLGrwSensitiveAreaDetailElement;
+        "grw-sensitive-areas-list": HTMLGrwSensitiveAreasListElement;
+        "grw-sensitive-areas-provider": HTMLGrwSensitiveAreasProviderElement;
         "grw-switch": HTMLGrwSwitchElement;
         "grw-toggle-slot-visibility": HTMLGrwToggleSlotVisibilityElement;
         "grw-touristic-content-card": HTMLGrwTouristicContentCardElement;
@@ -1035,6 +1105,7 @@ declare namespace LocalJSX {
         "rounded"?: boolean;
         "routes"?: string;
         "selectedMainMarkerSize"?: number;
+        "sensitiveAreas"?: boolean;
         "signages"?: boolean;
         "structures"?: string;
         "themes"?: string;
@@ -1270,14 +1341,48 @@ declare namespace LocalJSX {
     interface GrwSegmentedSegment {
         "fontFamily"?: string;
         "outdoor"?: boolean;
+        "sensitiveAreas"?: boolean;
         "touristicContents"?: boolean;
         "touristicEvents"?: boolean;
         "treks"?: boolean;
     }
     interface GrwSelectLanguage {
     }
+    interface GrwSensitiveAreaCard {
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
+        "isInsideHorizontalList"?: boolean;
+        "isLargeView"?: boolean;
+        "onCardSensitiveAreaMouseLeave"?: (event: GrwSensitiveAreaCardCustomEvent<any>) => void;
+        "onCardSensitiveAreaMouseOver"?: (event: GrwSensitiveAreaCardCustomEvent<number>) => void;
+        "onSensitiveAreaCardPress"?: (event: GrwSensitiveAreaCardCustomEvent<number>) => void;
+        "sensitiveArea"?: SensitiveArea;
+    }
     interface GrwSensitiveAreaDetail {
         "sensitiveArea"?: SensitiveArea;
+    }
+    interface GrwSensitiveAreasList {
+        "colorOnSecondaryContainer"?: string;
+        "colorOnSurface"?: string;
+        "colorPrimaryApp"?: string;
+        "colorSecondaryContainer"?: string;
+        "colorSurfaceContainerLow"?: string;
+        "fontFamily"?: string;
+        "isLargeView"?: boolean;
+    }
+    interface GrwSensitiveAreasProvider {
+        "api"?: string;
+        "inBbox"?: string;
+        "languages"?: string;
+        "offline"?: boolean;
+        "period"?: string;
+        "practices"?: string;
+        "species"?: string;
+        "structures"?: string;
     }
     interface GrwSwitch {
         "action"?: Function;
@@ -1503,7 +1608,10 @@ declare namespace LocalJSX {
         "grw-search": GrwSearch;
         "grw-segmented-segment": GrwSegmentedSegment;
         "grw-select-language": GrwSelectLanguage;
+        "grw-sensitive-area-card": GrwSensitiveAreaCard;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
+        "grw-sensitive-areas-list": GrwSensitiveAreasList;
+        "grw-sensitive-areas-provider": GrwSensitiveAreasProvider;
         "grw-switch": GrwSwitch;
         "grw-toggle-slot-visibility": GrwToggleSlotVisibility;
         "grw-touristic-content-card": GrwTouristicContentCard;
@@ -1551,7 +1659,10 @@ declare module "@stencil/core" {
             "grw-search": LocalJSX.GrwSearch & JSXBase.HTMLAttributes<HTMLGrwSearchElement>;
             "grw-segmented-segment": LocalJSX.GrwSegmentedSegment & JSXBase.HTMLAttributes<HTMLGrwSegmentedSegmentElement>;
             "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
+            "grw-sensitive-area-card": LocalJSX.GrwSensitiveAreaCard & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaCardElement>;
             "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
+            "grw-sensitive-areas-list": LocalJSX.GrwSensitiveAreasList & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreasListElement>;
+            "grw-sensitive-areas-provider": LocalJSX.GrwSensitiveAreasProvider & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreasProviderElement>;
             "grw-switch": LocalJSX.GrwSwitch & JSXBase.HTMLAttributes<HTMLGrwSwitchElement>;
             "grw-toggle-slot-visibility": LocalJSX.GrwToggleSlotVisibility & JSXBase.HTMLAttributes<HTMLGrwToggleSlotVisibilityElement>;
             "grw-touristic-content-card": LocalJSX.GrwTouristicContentCard & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardElement>;
