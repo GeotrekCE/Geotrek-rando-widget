@@ -8,8 +8,8 @@ export function getSensitiveAreas(api: string, language: string, inBbox : string
   let requestUrl = `${api}sensitivearea/`;
   const params: SearchParams = {
     language: language,
-    no_page: 1,
-    // page_size: '10',
+    // no_page: 1,
+    page_size: '10',
     fields: fields.toString()
   }
   inBbox && (params.in_bbox = inBbox);
