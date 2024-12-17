@@ -5,10 +5,12 @@ import { Mode } from 'types/types';
 
 import {
   handleOutdoorSitesFiltersAndSearch,
+  handleSensitiveAreasFiltersAndSearch,
   handleTouristicContentsFiltersAndSearch,
   handleTouristicEventsFiltersAndSearch,
   handleTreksFiltersAndSearch,
   outdoorSitesFilters,
+  sensitiveAreasFilters,
   touristicContentsFilters,
   touristicEventsFilters,
   treksFilters,
@@ -24,6 +26,7 @@ export class GrwSegmentedSegment {
   @Prop() touristicContents = false;
   @Prop() touristicEvents = false;
   @Prop() outdoor = false;
+  @Prop() sensitiveAreas = false;
 
   @Prop() fontFamily = 'Roboto';
 
@@ -69,6 +72,16 @@ export class GrwSegmentedSegment {
       if (state.outdoorSites) {
         state.currentOutdoorSites = [...handleOutdoorSitesFiltersAndSearch()];
       }
+    } else if (mode === 'sensitiveAreas') {
+      sensitiveAreasFilters.forEach(filter => {
+        state[filter.property] && state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+      });
+      state.selectedActivitiesFilters = 0;
+      state.selectedThemesFilters = 0;
+      state.selectedLocationFilters = 0;
+      if (state.sensitiveAreas) {
+        state.currentSensitiveAreas = [...handleSensitiveAreasFiltersAndSearch()];
+      }
     }
     state.mode = mode;
   }
@@ -101,7 +114,12 @@ export class GrwSegmentedSegment {
               {translate[state.language].home.segment.touristicEvents}
             </label>
           )}
-        </div>
+          {this.sensitiveAreas && (
+            <label part="segment" class={`segment${state.mode === 'sensitiveAreas' ? ' selected-segment' : ''}`} onClick={() => this.changeMode('sensitiveAreas')}>
+              {translate[state.language].home.segment.sensitiveAreas}
+            </label>
+          )}
+          </div>
       </Host>
     );
   }

@@ -19,6 +19,8 @@ export class GrwApp {
   @State() showOutdoorCourse = false;
   @State() showOutdoorSiteMap = false;
   @State() showOutdoorCourseMap = false;
+  @State() showSensitiveArea = false;
+  @State() showSensitiveAreaMap = false;
 
   @State() showHomeMap = false;
   @State() showTrekMap = false;
@@ -31,6 +33,7 @@ export class GrwApp {
   @State() currentTouristicEventId: number;
   @State() currentOutdoorSiteId: number;
   @State() currentOutdoorCourseId: number;
+  @State() currentSensitiveAreaId: number;
 
   @Prop() appWidth: string = '100%';
   @Prop() appHeight: string = '100vh';
@@ -66,6 +69,8 @@ export class GrwApp {
   @Prop() colorBackground = '#fef7ff';
   @Prop() colorSurfaceContainerHigh = '#ece6f0';
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
+  @Prop() colorSensitiveAreaSensitivePeriod = '#ffe08a';
+  @Prop() colorSensitiveAreaNotSensitivePeriod = '#48c78e';
   @Prop() fabBackgroundColor = '#eaddff';
   @Prop() fabColor = '#21005d';
   @Prop() rounded = true;
@@ -80,6 +85,7 @@ export class GrwApp {
   @Prop() touristicContents = false;
   @Prop() touristicEvents = false;
   @Prop() outdoor = false;
+  @Prop() sensitiveAreas = false;
 
   @Prop() enableOffline = false;
   @Prop() globalTilesMinZoomOffline = 0;
@@ -235,7 +241,10 @@ export class GrwApp {
       state.mode = 'touristicEvents';
     } else if (this.outdoor) {
       state.mode = 'outdoor';
+    } else if (this.sensitiveAreas) {
+      state.mode = 'sensitiveAreas';
     }
+
     const url = new URL(window.location.toString());
     const trekParam = url.searchParams.get('trek');
     const parentTrekId = url.searchParams.get('parenttrek');
@@ -243,6 +252,7 @@ export class GrwApp {
     const touristicEventParam = url.searchParams.get('touristicevent');
     const outdoorSiteParam = url.searchParams.get('outdoorsite');
     const outdoorCourseParam = url.searchParams.get('outdoorcourse');
+    const sensitiveAreaParam = url.searchParams.get('sensitivearea');
 
     if (trekParam) {
       window.history.replaceState({ isInitialHistoryWithDetails: true }, '', url);
@@ -270,6 +280,11 @@ export class GrwApp {
       this.currentOutdoorCourseId = Number(outdoorCourseParam);
       state.mode = 'outdoor';
       this.showOutdoorCourse = true;
+    } else if (sensitiveAreaParam) {
+      window.history.replaceState({ isInitialHistoryWithDetails: true }, '', url);
+      this.currentSensitiveAreaId = Number(sensitiveAreaParam);
+      state.mode = 'sensitiveArea';
+      this.showSensitiveArea = true;
     }
   }
 
@@ -305,6 +320,11 @@ export class GrwApp {
       this.currentOutdoorCourseId = null;
       this.showOutdoorCourse = false;
       this.showOutdoorCourseMap = false;
+    } else if (state.mode === 'sensitiveAreas') {
+      state.currentSensitiveArea = null;
+      this.currentSensitiveAreaId = null;
+      this.showSensitiveArea = false;
+      this.showSensitiveAreaMap = false;
     }
   }
 
@@ -334,6 +354,7 @@ export class GrwApp {
       url.searchParams.delete('touristicevent');
       url.searchParams.delete('outdoorsite');
       url.searchParams.delete('outdoorcourse');
+      url.searchParams.delete('sensitivearea');
 
       window.history.pushState({}, '', url);
     } else {
@@ -462,6 +483,8 @@ export class GrwApp {
           '--color-background': this.colorBackground,
           '--color-surface-container-high': this.colorSurfaceContainerHigh,
           '--color-surface-container-low': this.colorSurfaceContainerLow,
+          '--color-sensitive-area-sensitive-period': this.colorSensitiveAreaSensitivePeriod,
+          '--color-sensitive-area-not-sensitive-period': this.colorSensitiveAreaNotSensitivePeriod,
           '--fab-background-color': this.fabBackgroundColor,
           '--fab-color': this.fabColor,
           '--color-sensitive-area': this.colorSensitiveArea,
@@ -487,7 +510,9 @@ export class GrwApp {
           !state.currentOutdoorSites &&
           !state.currentOutdoorSite &&
           !state.currentOutdoorCourses &&
-          !state.currentOutdoorCourse && (
+          !state.currentOutdoorCourse &&
+          !state.currentSensitiveAreas &&
+          !state.currentSensitiveArea && (
             <div class="grw-init-loader-container">
               <grw-loader exportparts="loader" color-primary-container={this.colorPrimaryContainer} color-on-primary-container={this.colorOnPrimaryContainer}></grw-loader>
             </div>
@@ -593,7 +618,17 @@ export class GrwApp {
               themes={this.themes}
             ></grw-outdoor-sites-provider>
           )}
-
+          {this.sensitiveAreas && state.mode === 'sensitiveAreas' && !state.currentSensitiveAreas && !this.showSensitiveArea && (
+          <grw-sensitive-areas-provider
+            api={this.api}
+            languages={this.languages}
+            in-bbox={this.inBbox}
+            // period={this.period}
+            // practices={this.practices}
+            // species={this.species}
+            // structures={this.structures}
+          ></grw-sensitive-areas-provider>
+        )}
         {(state.currentTreks ||
           state.currentTrek ||
           state.touristicContents ||
@@ -604,6 +639,8 @@ export class GrwApp {
           state.currentOutdoorSite ||
           state.currentOutdoorCourses ||
           state.currentOutdoorCourse ||
+          state.currentSensitiveAreas ||
+          state.currentSensitiveArea ||
           state.networkError) && (
           <div class="grw-app-container">
             {state.languages && state.languages.length > 1 && (
@@ -613,7 +650,7 @@ export class GrwApp {
             )}
             <div
               class={`${this.isLargeView ? 'grw-large-view-header-container' : 'grw-header-container'}${
-                this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse ? ' grw-header-detail' : ''
+                this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse || this.showSensitiveArea ? ' grw-header-detail' : ''
               }`}
             >
               {Number(this.treks) + Number(this.touristicContents) + Number(this.touristicEvents) + Number(this.outdoor) > 1 &&
@@ -628,6 +665,7 @@ export class GrwApp {
                     touristicContents={this.touristicContents}
                     touristicEvents={this.touristicEvents}
                     outdoor={this.outdoor}
+                    sensitiveAreas={this.sensitiveAreas}
                   ></grw-segmented-segment>
                 )}
               {!this.showTrek && !this.showTouristicContent && !this.showTouristicEvent && !this.showOutdoorSite && !this.showOutdoorCourse ? (
@@ -669,7 +707,7 @@ export class GrwApp {
 
             <div
               class={`grw-content-container ${
-                this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse ? 'grw-content-trek' : 'grw-content-treks'
+                this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse || this.showSensitiveArea ? 'grw-content-trek' : 'grw-content-treks'
               }`}
             >
               {state.networkError && (
@@ -686,11 +724,12 @@ export class GrwApp {
               {((state.mode === 'treks' && this.treks && state.treks) ||
                 (state.mode === 'touristicContents' && this.touristicContents && state.touristicContents) ||
                 (state.mode === 'touristicEvents' && this.touristicEvents && state.touristicEvents) ||
-                (state.mode === 'outdoor' && this.outdoor && state.outdoorSites)) && (
+                (state.mode === 'outdoor' && this.outdoor && state.outdoorSites) ||
+                (state.mode === 'sensitiveAreas' && this.sensitiveAreas && state.sensitiveAreas)) && (
                 <div
                   class={this.isLargeView ? 'grw-large-view-app-list-container' : 'grw-app-list-container'}
                   style={{
-                    display: this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse ? 'none' : 'flex',
+                    display: this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse || this.showSensitiveArea ? 'none' : 'flex',
                     position: this.showTrek ? 'absolute' : 'relative',
                   }}
                 >
@@ -738,6 +777,17 @@ export class GrwApp {
                       color-on-secondary-container={this.colorOnSecondaryContainer}
                       color-surface-container-low={this.colorSurfaceContainerLow}
                     ></grw-outdoor-sites-list>
+                  )}
+                  {state.mode === 'sensitiveAreas' && this.sensitiveAreas && state.sensitiveAreas && (
+                    <grw-sensitive-areas-list
+                      is-large-view={this.isLargeView}
+                      font-family={this.fontFamily}
+                      color-primary-app={this.colorPrimaryApp}
+                      color-on-surface={this.colorOnSurface}
+                      color-secondary-container={this.colorSecondaryContainer}
+                      color-on-secondary-container={this.colorOnSecondaryContainer}
+                      color-surface-container-low={this.colorSurfaceContainerLow}
+                    ></grw-sensitive-areas-list>
                   )}
                 </div>
               )}
@@ -886,10 +936,11 @@ export class GrwApp {
                       (this.showTouristicContentMap && this.showTouristicContent) ||
                       (this.showTouristicEventMap && this.showTouristicEvent) ||
                       (this.showOutdoorSiteMap && this.showOutdoorSite) ||
+                      (this.showSensitiveAreaMap && this.showSensitiveArea) ||
                       this.isLargeView
                         ? 'visible'
                         : 'hidden',
-                    zIndex: this.showHomeMap || this.showTrekMap || this.showTouristicContentMap || this.showTouristicEventMap || this.showOutdoorSiteMap ? '1' : '0',
+                    zIndex: this.showHomeMap || this.showTrekMap || this.showTouristicContentMap || this.showTouristicEventMap || this.showOutdoorSiteMap || this.showSensitiveAreaMap ? '1' : '0',
                   }}
                   name-layer={this.nameLayer}
                   url-layer={this.urlLayer}
@@ -923,7 +974,8 @@ export class GrwApp {
               (this.showTrek && state.currentTrek) ||
               (this.showTouristicContent && state.currentTouristicContent) ||
               (this.showTouristicEvent && state.currentTouristicEvent) ||
-              (this.showOutdoorSite && state.currentOutdoorSite)) && (
+              (this.showOutdoorSite && state.currentOutdoorSite) ||
+              (this.showSensitiveArea && state.currentSensitiveArea)) && (
               <div class="grw-map-visibility-button-container">
                 <grw-extended-fab
                   exportparts="map-visibility-button,map-visibility-button-icon,map-visibility-button-label"

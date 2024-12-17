@@ -193,10 +193,13 @@ export type SensitiveArea = {
   geometry: Geometry;
   name: string;
   description: string;
+  species_id: number;
   contact: string;
   info_url: string;
   period: boolean[];
   practices: number[];
+  offline?: boolean;
+  attachments?: Attachments;
 };
 
 export type Pois = Poi[];
@@ -315,6 +318,11 @@ export type OutdoorSitesFilters = OutdoorSitesFilter[];
 
 export type OutdoorSitesFilter = { property: string; outdoorSiteProperty: string; outdoorSitePropertyIsArray: boolean; type: string; segment: string };
 
+export type SensitiveAreasFilters = SensitiveAreasFilter[];
+
+export type SensitiveAreasFilter = { property: string; sensitiveAreaProperty: string; sensitiveAreaPropertyIsArray: boolean; type: string; segment: string };
+
+
 export type Option = {
   visible: boolean;
   indicator: boolean;
@@ -334,7 +342,7 @@ export type Options = {
   touristicEvents: Option;
 };
 
-export type Mode = 'treks' | 'touristicContents' | 'touristicEvents' | 'outdoor';
+export type Mode = 'treks' | 'touristicContents' | 'touristicEvents' | 'outdoor' | 'sensitiveAreas';
 
 export type Ratings = Rating[];
 
@@ -484,3 +492,47 @@ export type Signage = {
   geometry: Geometry;
   name: string;
 };
+
+export type SensitiveAreaPractices = SensitiveAreaPractice[];
+
+export type SensitiveAreaPractice = {
+  id: number;
+  name: string;
+};
+
+export type SensitiveAreaSpecies = SensitiveAreaSpecie[];
+
+export type SensitiveAreaSpecie = {
+  id: number;
+  name: string;
+  period01: boolean;
+  period02: boolean;
+  period03: boolean;
+  period04: boolean;
+  period05: boolean;
+  period06: boolean;
+  period07: boolean;
+  period08: boolean;
+  period09: boolean;
+  period10: boolean;
+  period11: boolean;
+  period12: boolean;
+  practices: number[];
+  radius: number;
+  url: string;
+};
+
+
+// export type BBox = [number, number, number, number];
+
+export type SearchParams = {
+  language: string;
+  no_page?: number;
+  period?: string;
+  practices?: string;
+  structures?: string;
+  in_bbox?: string;
+  page_size?: string;
+  fields?: string;
+  published?: boolean;
+}

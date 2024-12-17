@@ -37,6 +37,9 @@ import {
   OutdoorCourse,
   OutdoorCourseTypes,
   Signages,
+  SensitiveArea,
+  SensitiveAreaPractices,
+  SensitiveAreaSpecies
 } from 'types/types';
 
 const { state, onChange, reset } = createStore<{
@@ -68,6 +71,7 @@ const { state, onChange, reset } = createStore<{
   poiTypes: PoiTypes;
   currentTrek: Trek;
   currentSensitiveAreas: SensitiveAreas;
+  currentSensitiveArea: SensitiveArea;
   currentPois: Pois;
   currentInformationDesks: InformationDesks;
   networkError: boolean;
@@ -121,6 +125,13 @@ const { state, onChange, reset } = createStore<{
   currentOutdoorCourse: OutdoorCourse;
   offlineOutdoorSites: boolean;
   currentSignages: Signages;
+  sensitiveAreas: SensitiveAreas;
+  sensitiveArea: SensitiveArea;
+  sensitiveAreasWithinBounds: SensitiveAreas;
+  selectedSensitiveAreaId: number;
+  sensitiveAreaPractices: SensitiveAreaPractices;
+  sensitiveAreaSpecies: SensitiveAreaSpecies;
+  currentRelatedSensitiveAreas: SensitiveAreas;
 }>({
   mode: null,
   api: null,
@@ -139,6 +150,7 @@ const { state, onChange, reset } = createStore<{
   lengths: null,
   elevations: null,
   currentSensitiveAreas: null,
+  currentSensitiveArea:  null,
   labels: null,
   districts: null,
   sources: null,
@@ -203,6 +215,13 @@ const { state, onChange, reset } = createStore<{
   outdoorRatingsScale: null,
   offlineOutdoorSites: false,
   currentSignages: null,
+  sensitiveArea: null,
+  sensitiveAreas: null,
+  sensitiveAreasWithinBounds: null,
+  selectedSensitiveAreaId: null,
+  sensitiveAreaPractices: null,
+  sensitiveAreaSpecies: null,
+  currentRelatedSensitiveAreas: null,
 });
 
 export { onChange, reset };

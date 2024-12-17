@@ -116,7 +116,7 @@ grw-app {
 .grw-app-map-container,
 .grw-large-view-app-map-container {
   width: 100%;
-  height: 100%;
+  height: 500px;
 }
 
 .grw-map-visibility-button-container {
@@ -147,7 +147,8 @@ grw-app {
 grw-treks-list,
 grw-touristic-contents-list,
 grw-touristic-events-list,
-grw-outdoor-sites-list {
+grw-outdoor-sites-list,
+grw-sensitive-areas-list {
   max-height: calc(100vh - var(--header-height));
 }
 

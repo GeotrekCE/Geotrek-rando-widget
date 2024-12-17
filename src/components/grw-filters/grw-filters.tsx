@@ -99,6 +99,21 @@ export class GrwFilters {
     this.handleFilters();
   }
 
+  handleEraseSensitiveAreasFilters() {
+    outdoorSitesFilters.forEach(filter => {
+      state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
+    });
+    state.selectedActivitiesFilters = 0;
+    state.selectedLocationFilters = 0;
+    state.currentOutdoorSites = handleOutdoorSitesFiltersAndSearch();
+    this.resetFilter.emit();
+  }
+
+  handleOkSensitiveAreasFilters() {
+    this.handleFilters();
+  }
+
+
   render() {
     return (
       <Host
@@ -546,6 +561,134 @@ export class GrwFilters {
                             filterName={translate[state.language].practice}
                             filterPlaceholder={translate[state.language].placeholderPractices}
                             filterType="outdoorPractices"
+                            filterNameProperty="name"
+                            segment="selectedActivitiesFilters"
+                          ></grw-filter>
+                        </div>
+                      )}
+                      {state['outdoorSiteTypes'].length > 0 && (
+                        <div part="filter-container" class="filter-container">
+                          <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
+                            fontFamily={this.fontFamily}
+                            filterName={translate[state.language].activities}
+                            filterType="outdoorSiteTypes"
+                            filterNameProperty="name"
+                            segment="selectedActivitiesFilters"
+                            filterPlaceholder={translate[state.language].placeholderActivities}
+                          ></grw-filter>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {this.selectedSegment === 'selectedThemesFilters' && (
+                    <div part="filter-container" class="segment-container" key="treks-themes-segment-container">
+                      {state['themes'].length > 0 && (
+                        <div part="" class="filter-container">
+                          <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
+                            fontFamily={this.fontFamily}
+                            filterName={translate[state.language].themes}
+                            filterPlaceholder={translate[state.language].placeholderThemes}
+                            filterType="themes"
+                            filterNameProperty="label"
+                            segment="selectedThemesFilters"
+                          ></grw-filter>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {this.selectedSegment === 'selectedLocationFilters' && (
+                    <div part="segment-container" class="segment-container" key="outdoor-sites-location-segment-container">
+                      {state['districts'].length > 0 && (
+                        <div part="filter-container" class="filter-container">
+                          <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
+                            fontFamily={this.fontFamily}
+                            filterName={translate[state.language].districts}
+                            filterType="districts"
+                            filterNameProperty="name"
+                            segment="selectedLocationFilters"
+                            filterPlaceholder={translate[state.language].placeholderDistricts}
+                          ></grw-filter>
+                        </div>
+                      )}
+                      {state['cities'].length > 0 && (
+                        <div part="filter-container" class="filter-container">
+                          <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
+                            fontFamily={this.fontFamily}
+                            filterName={translate[state.language].crossedCities}
+                            filterPlaceholder={translate[state.language].placeholderCrossedCities}
+                            filterType="cities"
+                            filterNameProperty="name"
+                            segment="selectedLocationFilters"
+                          ></grw-filter>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            {state.mode === 'sensitiveAreas' && (
+              <div part="filters-sensitive-areas-container" class="filters-sensitive-areas-container">
+                'REMOVE'
+                <div part="filters-options-container" class="filters-options-container">
+                  {state.outdoorSitesWithinBounds && (
+                    <div part="current-sensitive-areas-within-bounds-length" class="current-sensitive-areas-within-bounds-length">{`${state.sensitiveAreasWithinBounds.length} ${
+                      state.sensitiveAreasWithinBounds.length > 1 ? translate[state.language].home.sensitiveAreas : translate[state.language].home.sensitiveArea
+                    }`}</div>
+                  )}
+                  <div part="filters-options-buttons-container" class="filters-options-buttons-container">
+                    <button part="filter-option-button" class="filter-option-button" onClick={() => this.handleEraseSensitiveAreasFilters()}>
+                      {translate[state.language].erase}
+                    </button>
+                    <button part="filter-option-button" class="filter-option-button" onClick={() => this.handleOkSensitiveAreasFilters()}>
+                      {translate[state.language].ok}
+                    </button>
+                  </div>
+                </div>
+                <div part="segmented-buttons-container" class="segmented-buttons-container">
+                  {this.handleSegment('selectedActivitiesFilters') && (
+                    <label
+                      part="segment"
+                      class={`segment${this.selectedSegment === 'selectedActivitiesFilters' ? ' selected-segment' : ''}`}
+                      onClick={() => this.handleSelectedSegment('selectedActivitiesFilters')}
+                    >
+                      {translate[state.language].home.segment.sensitiveAreas} {state.selectedActivitiesFilters !== 0 && `(${state.selectedActivitiesFilters})`}
+                    </label>
+                  )}
+                  {this.handleSegment('selectedThemesFilters') && (
+                    <label
+                      part="segment"
+                      class={`segment${this.selectedSegment === 'selectedThemesFilters' ? ' selected-segment' : ''}`}
+                      onClick={() => this.handleSelectedSegment('selectedThemesFilters')}
+                    >
+                      {translate[state.language].themes} {state.selectedThemesFilters !== 0 && `(${state.selectedThemesFilters})`}
+                    </label>
+                  )}
+                  {this.handleSegment('selectedLocationFilters') && (
+                    <label
+                      part="segment"
+                      class={`segment${this.selectedSegment === 'selectedLocationFilters' ? ' selected-segment' : ''}`}
+                      onClick={() => this.handleSelectedSegment('selectedLocationFilters')}
+                    >
+                      {translate[state.language].location} {state.selectedLocationFilters !== 0 && `(${state.selectedLocationFilters})`}
+                    </label>
+                  )}
+                </div>
+                <div part="filters-segment-container" class="filters-segment-container">
+                  {this.selectedSegment === 'selectedActivitiesFilters' && (
+                    <div part="segment-container" class="segment-container" key="touristic-contents-activities-segment-container">
+                      {state.sensitiveAreaPractices.length > 0 && (
+                        <div part="filter-container" class="filter-container">
+                          <grw-filter
+                            exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
+                            fontFamily={this.fontFamily}
+                            filterName={translate[state.language].practice}
+                            filterPlaceholder={translate[state.language].placeholderPractices}
+                            filterType="sensitiveAreaPractices"
                             filterNameProperty="name"
                             segment="selectedActivitiesFilters"
                           ></grw-filter>
