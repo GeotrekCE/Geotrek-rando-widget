@@ -84,7 +84,7 @@ export class GrwSensitiveAreasList {
             state.sensitiveAreasWithinBounds.length > 1 ? translate[state.language].sensitiveAreas : translate[state.language].sensitiveArea
           }`}</div>
         )}
-        {/* <div part="sensitive-areas-list-container" class="sensitive-areas-list-container">
+        {<div part="sensitive-areas-list-container" class="sensitive-areas-list-container">
           {this.sensitiveAreasToDisplay.map(sensitiveArea => (
             <grw-sensitive-area-card
               sensitiveArea={sensitiveArea}
@@ -99,8 +99,7 @@ export class GrwSensitiveAreasList {
               color-surface-container-low={this.colorSurfaceContainerLow}
             ></grw-sensitive-area-card>
           ))}
-        </div> */}
-        sdfds
+        </div>}
         <div part="list-bottom-space" class={!this.isLargeView ? 'list-bottom-space' : 'list-large-view-bottom-space'}></div>
       </Host>
     );

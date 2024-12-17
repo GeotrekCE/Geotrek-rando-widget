@@ -131,6 +131,7 @@ const { state, onChange, reset } = createStore<{
   selectedSensitiveAreaId: number;
   sensitiveAreaPractices: SensitiveAreaPractices;
   sensitiveAreaSpecies: SensitiveAreaSpecies;
+  currentRelatedSensitiveAreas: SensitiveAreas;
 }>({
   mode: null,
   api: null,
@@ -220,6 +221,7 @@ const { state, onChange, reset } = createStore<{
   selectedSensitiveAreaId: null,
   sensitiveAreaPractices: null,
   sensitiveAreaSpecies: null,
+  currentRelatedSensitiveAreas: null,
 });
 
 export { onChange, reset };

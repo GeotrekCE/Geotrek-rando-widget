@@ -4,7 +4,7 @@
   overflow-y: auto;
 }
 
-grw-outdoor-site-card {
+grw-sensitive-area-card {
   width: 100% !important;
   display: flex;
   justify-content: center;
@@ -19,7 +19,7 @@ grw-outdoor-site-card {
   height: 52px;
 }
 
-.current-outdoor-sites-within-bounds-length {
+.current-sensitive-areas-within-bounds-length {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,7 +31,7 @@ grw-outdoor-site-card {
   font-family: var(--font-family);
 }
 
-.outdoor-sites-list-container {
+.sensitive-areas-list-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;

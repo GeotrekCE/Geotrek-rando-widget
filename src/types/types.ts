@@ -193,6 +193,7 @@ export type SensitiveArea = {
   geometry: Geometry;
   name: string;
   description: string;
+  species_id: number;
   contact: string;
   info_url: string;
   period: boolean[];

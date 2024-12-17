@@ -69,6 +69,8 @@ export class GrwApp {
   @Prop() colorBackground = '#fef7ff';
   @Prop() colorSurfaceContainerHigh = '#ece6f0';
   @Prop() colorSurfaceContainerLow = '#f7f2fa';
+  @Prop() colorSensitiveAreaSensitivePeriod = '#ffe08a';
+  @Prop() colorSensitiveAreaNotSensitivePeriod = '#48c78e';
   @Prop() fabBackgroundColor = '#eaddff';
   @Prop() fabColor = '#21005d';
   @Prop() rounded = true;
@@ -463,10 +465,6 @@ export class GrwApp {
   }
 
   render() {
-    console.log(state.mode,this.sensitiveAreas,state.sensitiveAreas)
-    console.log('check',state.mode === 'sensitiveAreas' && this.sensitiveAreas && state.sensitiveAreas)
-    // console.log('check',state.mode === 'touristicEvents' && this.touristicEvents && state.touristicEvents )
-    // console.log(state.mode ,this.touristicEvents ,state.touristicEvents )
     return (
       <Host
         style={{
@@ -485,6 +483,8 @@ export class GrwApp {
           '--color-background': this.colorBackground,
           '--color-surface-container-high': this.colorSurfaceContainerHigh,
           '--color-surface-container-low': this.colorSurfaceContainerLow,
+          '--color-sensitive-area-sensitive-period': this.colorSensitiveAreaSensitivePeriod,
+          '--color-sensitive-area-not-sensitive-period': this.colorSensitiveAreaNotSensitivePeriod,
           '--fab-background-color': this.fabBackgroundColor,
           '--fab-color': this.fabColor,
           '--color-sensitive-area': this.colorSensitiveArea,
@@ -779,16 +779,15 @@ export class GrwApp {
                     ></grw-outdoor-sites-list>
                   )}
                   {state.mode === 'sensitiveAreas' && this.sensitiveAreas && state.sensitiveAreas && (
-                    // <grw-sensitive-areas-list
-                    //   is-large-view={this.isLargeView}
-                    //   font-family={this.fontFamily}
-                    //   color-primary-app={this.colorPrimaryApp}
-                    //   color-on-surface={this.colorOnSurface}
-                    //   color-secondary-container={this.colorSecondaryContainer}
-                    //   color-on-secondary-container={this.colorOnSecondaryContainer}
-                    //   color-surface-container-low={this.colorSurfaceContainerLow}
-                    // ></grw-sensitive-areas-list>
-                    <div>tedfg</div>
+                    <grw-sensitive-areas-list
+                      is-large-view={this.isLargeView}
+                      font-family={this.fontFamily}
+                      color-primary-app={this.colorPrimaryApp}
+                      color-on-surface={this.colorOnSurface}
+                      color-secondary-container={this.colorSecondaryContainer}
+                      color-on-secondary-container={this.colorOnSecondaryContainer}
+                      color-surface-container-low={this.colorSurfaceContainerLow}
+                    ></grw-sensitive-areas-list>
                   )}
                 </div>
               )}

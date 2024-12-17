@@ -45,7 +45,6 @@ export class GrwSensitiveAreasProvider {
 
   async handleOfflineSensitiveAreas() {
     let sensitiveAreasInStore: SensitiveAreas = await getAllDataInStore('sensitiveAreas');
-    console.log('sensitiveAreasInStore',sensitiveAreasInStore)
     if (sensitiveAreasInStore && sensitiveAreasInStore.length > 0) {
       state.sensitiveAreaPractices = await handleOfflineProperty('sensitiveAreaPractices');
       sensitiveAreasInStore = await handleOfflineProperty('sensitiveAreas');

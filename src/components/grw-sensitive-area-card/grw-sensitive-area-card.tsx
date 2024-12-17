@@ -46,8 +46,10 @@ export class GrwSensitiveAreaCard {
   }
 
   render() {
+    const currentMonth = new Date().getMonth();
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
-    const outdoorPractice = state.outdoorPractices.find(outdoorPractice => this.sensitiveArea.practices.includes(outdoorPractice.id));
+    const sensitiveAreaPractices = state.sensitiveAreaPractices.filter(sensitiveAreaPractice => this.sensitiveArea.practices.includes(sensitiveAreaPractice.id));
+    const sensitiveAreaPeriods = translate[state.language].sensitiveMonthes;
     return (
       <Host
         style={{
@@ -73,7 +75,7 @@ export class GrwSensitiveAreaCard {
           }}
         >
           <div part="sensitive-area-img-container" class="sensitive-area-img-container">
-            {this.sensitiveArea.attachments.filter(attachment => attachment.type === 'image').length > 0 ? (
+            {this.sensitiveArea.attachments && this.sensitiveArea.attachments?.filter(attachment => attachment.type === 'image').length > 0 ? (
               <img
                 part="sensitive-area-img"
                 class="sensitive-area-img"
@@ -90,24 +92,35 @@ export class GrwSensitiveAreaCard {
             )}
           </div>
           <div part="sensitive-area-sub-container" class="sensitive-area-sub-container">
-            <div part="sensitive-area-practice-container" class="sensitive-area-practice-container">
-              {outdoorPractice && outdoorPractice.pictogram && (
-                <img
-                  part="sensitive-area-type-img"
-                  class="sensitive-area-type-img"
-                  /* @ts-ignore */
-                  src={outdoorPractice.pictogram}
-                  alt=""
-                />
-              )}
-              {outdoorPractice && outdoorPractice.name && (
-                <div part="sensitive-area-practice-name" class="sensitive-area-practice-name">
-                  {outdoorPractice.name}
-                </div>
-              )}
+            <div part="sensitive-area-category" class="sensitive-area-category">
+              {translate[state.language][this.sensitiveArea.species_id ? 'specieSensitiveArea' : 'regulatorySensitiveArea']}
             </div>
             <div part="sensitive-area-name" class="sensitive-area-name">
               {this.sensitiveArea.name}
+            </div>
+            <div part="sensitive-area-practice-container" class="sensitive-area-practice-container">
+              {sensitiveAreaPractices.map(sensitiveAreaPractice => (
+                <div part="sensitive-area-practice-name" class="sensitive-area-practice-name">
+                  {sensitiveAreaPractice.name}
+                </div>
+              ))}
+            </div>
+            <div part="sensitive-area-period-container" class="sensitive-area-period-container">
+              {sensitiveAreaPeriods.map((period, index) => {
+                return (
+                  <div
+                    part="sensitive-area-period-name"
+                    class={{
+                      'sensitive-area-period-name': true,
+                      'sensitive-area-current-period': currentMonth === index,
+                      'sensitive-area-period-sensitive-period': this.sensitiveArea.period[index],
+                      'sensitive-area-period-not-sensitive-period': !this.sensitiveArea.period[index],
+                    }}
+                  >
+                    {period}
+                  </div>
+                );
+              })}
             </div>
           </div>
           {this.isInsideHorizontalList && (

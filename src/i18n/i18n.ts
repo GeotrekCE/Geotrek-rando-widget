@@ -37,6 +37,8 @@ interface Translation {
   city: string;
   crossedCities: string;
   placeholderCrossedCities: string;
+  sensitiveArea: string;
+  sensitiveAreas: string;
   home: {
     segment: {
       treks: string;
@@ -130,6 +132,12 @@ interface Translation {
   locate: string;
   showElevation: string;
   hideElevation: string;
+  sensitiveMonthes: [
+    string, string, string, string, string, string,
+    string, string, string, string, string, string
+  ],
+  specieSensitiveArea: string,
+  regulatorySensitiveArea: string,
 }
 
 interface AvailableTranslations {
@@ -178,6 +186,8 @@ const defaultTranslate: AvailableTranslations = {
     city: 'Commune',
     crossedCities: 'Communes',
     placeholderCrossedCities: 'Sélectionner une ou plusieurs communes',
+    sensitiveArea: 'Zone sensible',
+    sensitiveAreas: 'Zones sensibles',
     home: {
       segment: {
         treks: 'Itinéraires',
@@ -272,6 +282,9 @@ const defaultTranslate: AvailableTranslations = {
     locate: 'Géolocaliser',
     showElevation: 'Voir le dénivelé',
     hideElevation: 'Cacher le dénivelé',
+    sensitiveMonthes: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+    specieSensitiveArea: "Zone espèce",
+    regulatorySensitiveArea: "Zone réglementaire"
   },
   en: {
     filter: 'Filter',
@@ -312,6 +325,8 @@ const defaultTranslate: AvailableTranslations = {
     city: 'City',
     crossedCities: 'Cities',
     placeholderCrossedCities: 'Select one or more municipalities',
+    sensitiveArea: 'Sensitive area',
+    sensitiveAreas: 'Sensitive areas',
     home: {
       segment: {
         treks: 'Routes',
@@ -406,6 +421,9 @@ const defaultTranslate: AvailableTranslations = {
     locate: 'Geolocate',
     showElevation: 'Show elevation',
     hideElevation: 'Hide elevation',
+    sensitiveMonthes: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    specieSensitiveArea: "Species Area",
+    regulatorySensitiveArea: "Regulatory Area"
   },
   es: {
     filter: 'Filtrar',
@@ -446,6 +464,8 @@ const defaultTranslate: AvailableTranslations = {
     city: 'Municipio',
     crossedCities: 'Municipios',
     placeholderCrossedCities: 'Selecciona uno o varios municipios',
+    sensitiveArea: 'Zona sensible',
+    sensitiveAreas: 'Zonas sensibles',
     home: {
       segment: {
         treks: 'Itinerarios',
@@ -540,6 +560,9 @@ const defaultTranslate: AvailableTranslations = {
     locate: 'Geolocalizar',
     showElevation: 'Ver la elevación',
     hideElevation: 'Ocultar la elevación',
+    sensitiveMonthes: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+    specieSensitiveArea: "Zona de especie",
+    regulatorySensitiveArea: "Zona regulatoria"
   },
 };
 

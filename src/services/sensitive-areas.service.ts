@@ -2,13 +2,14 @@ import { getDataInStore } from './grw-db.service';
 import { SearchParams } from 'types/types';
 import { toUrlSearchParams } from 'utils/utils';
 
-const fields : string[] = ['id', 'name', 'geometry', 'period', 'contact', 'practices', 'info_url', 'structure', 'elevation', 'geometry', 'species_id', 'kml_url', 'openair_url', 'attachment', 'rules']
+const fields : string[] = ['id', 'name', 'geometry', 'period', 'contact', 'practices', 'info_url', 'structure', 'elevation', 'geometry', 'species_id', 'kml_url', 'openair_url', 'attachments', 'rules']
 
 export function getSensitiveAreas(api: string, language: string, inBbox : string, period : string, practices: string, structures: string, init) {
   let requestUrl = `${api}sensitivearea/`;
   const params: SearchParams = {
     language: language,
     no_page: 1,
+    // page_size: '10',
     fields: fields.toString()
   }
   inBbox && (params.in_bbox = inBbox);
@@ -23,7 +24,6 @@ export function getSensitiveArea(api: string, language: string, itemId: number, 
   let requestUrl = `${api}sensitivearea/${itemId}/`;
   const params: SearchParams = {
     language: language,
-    no_page: 1,
     published: true,
     fields: fields.toString(),
   }

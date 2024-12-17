@@ -53,7 +53,6 @@ export class GrwSegmentedSegment {
         state.currentTouristicContents = [...handleTouristicContentsFiltersAndSearch()];
       }
     } else if (mode === 'touristicEvents') {
-      console.log('TOUR EVENTS MODE')
       touristicEventsFilters.forEach(filter => {
         state[filter.property] && state[filter.property].forEach(currentFilter => (currentFilter.selected = false));
       });

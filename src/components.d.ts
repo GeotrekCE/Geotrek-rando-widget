@@ -28,6 +28,8 @@ export namespace Components {
         "colorPrimaryContainer": string;
         "colorSecondaryContainer": string;
         "colorSensitiveArea": string;
+        "colorSensitiveAreaNotSensitivePeriod": string;
+        "colorSensitiveAreaSensitivePeriod": string;
         "colorSurface": string;
         "colorSurfaceContainerHigh": string;
         "colorSurfaceContainerLow": string;
@@ -634,6 +636,7 @@ declare global {
         "touristicEventCardPress": number;
         "outdoorSiteCardPress": number;
         "outdoorCourseCardPress": number;
+        "sensitiveAreaCardPress": number;
     }
     interface HTMLGrwMapElement extends Components.GrwMap, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGrwMapElementEventMap>(type: K, listener: (this: HTMLGrwMapElement, ev: GrwMapCustomEvent<HTMLGrwMapElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1074,6 +1077,8 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
         "colorSecondaryContainer"?: string;
         "colorSensitiveArea"?: string;
+        "colorSensitiveAreaNotSensitivePeriod"?: string;
+        "colorSensitiveAreaSensitivePeriod"?: string;
         "colorSurface"?: string;
         "colorSurfaceContainerHigh"?: string;
         "colorSurfaceContainerLow"?: string;
@@ -1199,6 +1204,7 @@ declare namespace LocalJSX {
         "nameLayer"?: string;
         "onOutdoorCourseCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onOutdoorSiteCardPress"?: (event: GrwMapCustomEvent<number>) => void;
+        "onSensitiveAreaCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTouristicContentCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTouristicEventCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
