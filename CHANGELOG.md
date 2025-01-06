@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.24.2...0.25.0) (2025-01-06)
+
+
+### Features
+
+* improve display of signage on map ([5681fca](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/5681fca6dc5e731780c7697ccb3cb52a65221a5a))
+
 ## [0.24.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.24.1...0.24.2) (2024-10-15)
 
 
