@@ -70,5 +70,5 @@ export function getSources(api, language, init) {
 }
 
 export function getSignages(api, language, trekId, init) {
-  return fetch(`${api}signage/?language=${language}&near_trek=${trekId}&fields=id,geometry,name`, init);
+  return fetch(`${api}signage/?language=${language}&near_trek=${trekId}&fields=id,geometry,name&published=true&page_size=999`, init);
 }

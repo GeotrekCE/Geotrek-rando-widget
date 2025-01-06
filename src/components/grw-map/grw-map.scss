@@ -354,6 +354,20 @@
   }
 }
 
+.signage-marker {
+  overflow: hidden;
+  border-radius: 0%;
+  img {
+    width: 30% !important;
+  }
+  .signage-name {
+    margin-left: 8px;
+    color: white;
+    white-space: nowrap;
+    max-width: 50%;
+  }
+}
+
 .parking-marker {
   width: 100%;
   height: 100%;

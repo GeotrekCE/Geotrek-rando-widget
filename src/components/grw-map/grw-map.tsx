@@ -2450,12 +2450,12 @@ export class GrwMap {
       }
 
       this.currentSignagesLayer = L.geoJSON(currentSignagesFeatureCollection, {
-        pointToLayer: (_geoJsonPoint, latlng) =>
+        pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: `<div part="signage-marker" class="signage-marker"><img  src=${signageImageSrc} /></div>`,
+              html: `<div part="signage-marker" class="signage-marker"><img  src=${signageImageSrc} /><div part="signage-name" class="signage-name">${geoJsonPoint.properties.name}</div></div>`,
               className: '',
-              iconSize: this.commonMarkerSize,
+              iconSize: [this.commonMarkerSize * 1.2, this.commonMarkerSize * 0.8],
             } as any),
             autoPanOnFocus: false,
           } as any),
