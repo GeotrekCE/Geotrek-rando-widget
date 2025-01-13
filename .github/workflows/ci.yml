@@ -28,6 +28,20 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test --reporter=html
+      - name: Get the failure count
+        id: tests
+        run: |
+          export count=$(cat ./playwright-report/result.txt | grep Failed | cut -d ':' -f 2 | tr -d ' ')
+          echo "fail_count=$count" >> "$GITHUB_OUTPUT"
+          echo $count
+
+      - uses: mshick/add-pr-comment@v2
+        if: always()
+        with:
+          message-path: |
+            ./playwright-report/result.txt
+          message-failure: |
+            Workflow failed
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
