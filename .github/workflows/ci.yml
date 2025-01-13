@@ -26,11 +26,8 @@ jobs:
       - name: Test doc build
         run: npm run docs:build
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --reporter=html
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
