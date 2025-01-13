@@ -27,7 +27,9 @@ jobs:
         run: npm run docs:build
 
       - name: Run Playwright tests
-        run: npx playwright test --reporter=playwright-ctrf-json-reporter --trace=retain-on-failure
+        run: |
+          npx playwright test --reporter=playwright-ctrf-json-reporter --trace=retain-on-failure
+          ls -als test-results
 
       - name: Publish Test Summary Results
         run: npx github-actions-ctrf ctrf/ctrf-report.json
