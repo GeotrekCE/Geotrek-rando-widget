@@ -3,7 +3,7 @@ description: 'Get node_modules from cache else generate it'
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Cache node_modules
       id: cache-node-modules
       uses: actions/cache@v3
