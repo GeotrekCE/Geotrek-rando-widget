@@ -276,9 +276,9 @@ export class GrwTrekProvider {
             if (labels) {
               state.labels = labels.results;
             }
-            if (signages) {
-              state.currentSignages = signages.results;
-            }
+
+            state.currentSignages = signages ? signages.results : [];
+
             if (sources) {
               state.sources = sources.results;
             }
