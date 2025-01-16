@@ -127,6 +127,26 @@ interface Translation {
   locate: string;
   showElevation: string;
   hideElevation: string;
+  offline: {
+    downloadOffline: string;
+    deleteOffline: string;
+    downloadRouteQuestion: string;
+    downloadOutdoorQuestion: string;
+    deleteRouteQuestion: string;
+    deleteOutdoorQuestion: string;
+    deleting: string;
+    downloading: string;
+    offlineRouteDeleted: string;
+    offlineOutdoorDeleted: string;
+    routeAvailableOffline: string;
+    outdoorAvailableOffline: string;
+    deleteRouteError: string;
+    deleteOutdoorError: string;
+    downloadRouteError: string;
+    downloadOutdoorError: string;
+    cancel: string;
+    ok: string;
+  };
 }
 
 interface AvailableTranslations {
@@ -266,6 +286,26 @@ const defaultTranslate: AvailableTranslations = {
     locate: 'Géolocaliser',
     showElevation: 'Voir le dénivelé',
     hideElevation: 'Cacher le dénivelé',
+    offline: {
+      downloadOffline: 'RENDRE DISPONIBLE HORS LIGNE',
+      deleteOffline: 'SUPPRIMER DU HORS LIGNE',
+      downloadRouteQuestion: 'Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?',
+      downloadOutdoorQuestion: 'Êtes-vous sûr de vouloir rendre cet outdoor disponible hors ligne ?',
+      deleteRouteQuestion: 'Êtes-vous sûr de vouloir supprimer cet itinéraire du hors ligne ?',
+      deleteOutdoorQuestion: 'Êtes-vous sûr de vouloir supprimer cet outdoor du hors ligne ?',
+      deleting: 'Suppression en cours',
+      downloading: 'Téléchargement en cours',
+      offlineRouteDeleted: "L'itinéraire est supprimé du hors ligne",
+      offlineOutdoorDeleted: "L'outdoor est supprimé du hors ligne",
+      routeAvailableOffline: "L'itinéraire est disponible hors ligne",
+      outdoorAvailableOffline: "L'outdoor est disponible hors ligne",
+      deleteRouteError: "Une erreur est survenue lors de la supression de l'itinéraire",
+      deleteOutdoorError: "Une erreur est survenue lors de la supression de l'outdoor",
+      downloadRouteError: "Une erreur est survenue lors du téléchargement de l'itinéraire",
+      downloadOutdoorError: "Une erreur est survenue lors du téléchargement de l'outdoor",
+      cancel: 'ANNULER',
+      ok: 'OK',
+    },
   },
   en: {
     filter: 'Filter',
@@ -397,6 +437,26 @@ const defaultTranslate: AvailableTranslations = {
     locate: 'Geolocate',
     showElevation: 'Show elevation',
     hideElevation: 'Hide elevation',
+    offline: {
+      downloadOffline: 'MAKE IT AVAILABLE OFFLINE',
+      deleteOffline: 'DELETE FROM OFFLINE',
+      downloadRouteQuestion: 'Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?',
+      downloadOutdoorQuestion: 'Êtes-vous sûr de vouloir rendre cet outdoor disponible hors ligne ?',
+      deleteRouteQuestion: 'Êtes-vous sûr de vouloir supprimer cet itinéraire du hors ligne ?',
+      deleteOutdoorQuestion: 'Êtes-vous sûr de vouloir supprimer cet outdoor du hors ligne ?',
+      deleting: 'Deletion in progress',
+      downloading: 'Download in progress',
+      offlineRouteDeleted: 'The route is deleted from offline',
+      offlineOutdoorDeleted: 'Outdoor is removed from offline',
+      routeAvailableOffline: 'The route is available offline',
+      outdoorAvailableOffline: 'Outdoor is available offline',
+      deleteRouteError: 'An error occurred while deleting the route',
+      deleteOutdoorError: 'An error occurred while deleting the outdoor',
+      downloadRouteError: 'An error occurred while downloading the route',
+      downloadOutdoorError: 'An error occurred while downloading the outdoor',
+      cancel: 'CANCEL',
+      ok: 'OK',
+    },
   },
   es: {
     filter: 'Filtrar',
@@ -528,6 +588,26 @@ const defaultTranslate: AvailableTranslations = {
     locate: 'Geolocalizar',
     showElevation: 'Ver la elevación',
     hideElevation: 'Ocultar la elevación',
+    offline: {
+      downloadOffline: 'HAZLO DISPONIBLE SIN CONEXIÓN',
+      deleteOffline: 'ELIMINAR DESCONECTADO',
+      downloadRouteQuestion: 'Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?',
+      downloadOutdoorQuestion: 'Êtes-vous sûr de vouloir rendre cet outdoor disponible hors ligne ?',
+      deleteRouteQuestion: 'Êtes-vous sûr de vouloir supprimer cet itinéraire du hors ligne ?',
+      deleteOutdoorQuestion: 'Êtes-vous sûr de vouloir supprimer cet outdoor du hors ligne ?',
+      deleting: 'Eliminación en curso',
+      downloading: 'Descarga en progreso',
+      offlineRouteDeleted: 'La ruta se elimina sin conexión',
+      offlineOutdoorDeleted: 'Outdoor se elimina de la conexión sin conexión',
+      routeAvailableOffline: 'La ruta está disponible sin conexión',
+      outdoorAvailableOffline: 'Outdoor está disponible sin conexión',
+      deleteRouteError: 'Se produjo un error al eliminar la ruta',
+      deleteOutdoorError: 'Se produjo un error al eliminar Outdoor',
+      downloadRouteError: 'Se produjo un error al descargar la ruta',
+      downloadOutdoorError: 'Se produjo un error al descargar outdoor',
+      cancel: 'CANCELAR',
+      ok: 'OK',
+    },
   },
 };
 

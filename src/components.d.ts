@@ -709,8 +709,10 @@ declare global {
         "coursesIsInViewport": boolean;
         "downloadConfirm": number;
         "downloadedSuccessConfirm": number;
+        "downloadedErrorConfirm": number;
         "deleteConfirm": number;
         "deleteSuccessConfirm": number;
+        "deleteErrorConfirm": number;
     }
     interface HTMLGrwOutdoorSiteDetailElement extends Components.GrwOutdoorSiteDetail, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGrwOutdoorSiteDetailElementEventMap>(type: K, listener: (this: HTMLGrwOutdoorSiteDetailElement, ev: GrwOutdoorSiteDetailCustomEvent<HTMLGrwOutdoorSiteDetailElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -903,8 +905,10 @@ declare global {
         "parentTrekPress": number;
         "downloadConfirm": number;
         "downloadedSuccessConfirm": number;
+        "downloadedErrorConfirm": number;
         "deleteConfirm": number;
         "deleteSuccessConfirm": number;
+        "deleteErrorConfirm": number;
     }
     interface HTMLGrwTrekDetailElement extends Components.GrwTrekDetail, HTMLStencilElement {
         addEventListener<K extends keyof HTMLGrwTrekDetailElementEventMap>(type: K, listener: (this: HTMLGrwTrekDetailElement, ev: GrwTrekDetailCustomEvent<HTMLGrwTrekDetailElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1221,8 +1225,10 @@ declare namespace LocalJSX {
         "isLargeView"?: boolean;
         "onCoursesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onDeleteConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
+        "onDeleteErrorConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
         "onDeleteSuccessConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
         "onDownloadConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
+        "onDownloadedErrorConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
         "onDownloadedSuccessConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
         "onInformationPlacesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onPoiIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
@@ -1421,9 +1427,11 @@ declare namespace LocalJSX {
         "grwApp"?: boolean;
         "isLargeView"?: boolean;
         "onDeleteConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
+        "onDeleteErrorConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDeleteSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDescriptionIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onDownloadConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
+        "onDownloadedErrorConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDownloadedSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onInformationPlacesIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onParentTrekPress"?: (event: GrwTrekDetailCustomEvent<number>) => void;

@@ -202,9 +202,11 @@ export class GrwTrekDetail {
 
   @Event() downloadConfirm: EventEmitter<number>;
   @Event() downloadedSuccessConfirm: EventEmitter<number>;
+  @Event() downloadedErrorConfirm: EventEmitter<number>;
 
   @Event() deleteConfirm: EventEmitter<number>;
   @Event() deleteSuccessConfirm: EventEmitter<number>;
+  @Event() deleteErrorConfirm: EventEmitter<number>;
 
   indicatorSelectedTrekOption = { translateX: null, width: null, backgroundSize: null, ref: null };
 
@@ -751,199 +753,209 @@ export class GrwTrekDetail {
   }
 
   async downloadTrek() {
-    // download treks list data
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
-    const offlineTreks = (await getAllDataInStore('treks')).filter(trek => trek.offline === true);
-    let treks;
-    if (!state.treks) {
-      const treksList = await getTreksList(
-        state.api,
-        state.language,
-        state.inBboxFromProviders,
-        state.citiesFromProviders,
-        state.districts,
-        state.structuresFromProviders,
-        state.themesFromProviders,
-        state.portalsFromProviders,
-        state.routesFromProviders,
-        state.practicesFromProviders,
-        state.labelsFromProviders,
-        init,
+    try {
+      // download treks list data
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+      const offlineTreks = (await getAllDataInStore('treks')).filter(trek => trek.offline === true);
+      let treks;
+      if (!state.treks) {
+        const treksList = await getTreksList(
+          state.api,
+          state.language,
+          state.inBboxFromProviders,
+          state.citiesFromProviders,
+          state.districts,
+          state.structuresFromProviders,
+          state.themesFromProviders,
+          state.portalsFromProviders,
+          state.routesFromProviders,
+          state.practicesFromProviders,
+          state.labelsFromProviders,
+          init,
+        );
+        state.treks = (await treksList.json()).results;
+      }
+      treks = state.treks;
+      treks = treks.filter(trek => offlineTreks.findIndex(offlineTrek => offlineTrek.id === trek.id) === -1);
+
+      if (!state.districts) {
+        const districtsList = await getDistricts(state.api, state.language, init);
+        state.districts = (await districtsList.json()).results;
+      }
+
+      await writeOrUpdateDataInStore('treks', treks);
+      await writeOrUpdateDataInStore('districts', state.districts);
+
+      // download global tiles
+      await this.downloadGlobalTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
+
+      // download trek tiles
+      await this.downloadTrekTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
+
+      // download global medias
+      await writeOrUpdateFilesInStore(state.difficulties, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.routes, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.practices, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.themes, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.labels, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.districts, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.sources, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.accessibilities, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.poiTypes, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.touristicContentCategories, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.touristicEventTypes, imagesRegExp);
+      await writeOrUpdateFilesInStore(state.networks, imagesRegExp);
+
+      // download trek images
+      await writeOrUpdateFilesInStore(this.currentTrek, imagesRegExp, true, ['url']);
+
+      // download trek data
+      await writeOrUpdateDataInStore('difficulties', state.difficulties);
+      await writeOrUpdateDataInStore('routes', state.routes);
+      await writeOrUpdateDataInStore(
+        'practices',
+        state.practices.map(practice => ({ ...practice, selected: false })),
       );
-      state.treks = (await treksList.json()).results;
-    }
-    treks = state.treks;
-    treks = treks.filter(trek => offlineTreks.findIndex(offlineTrek => offlineTrek.id === trek.id) === -1);
+      await writeOrUpdateDataInStore('themes', state.themes);
+      await writeOrUpdateDataInStore('cities', state.cities);
+      await writeOrUpdateDataInStore('accessibilities', state.accessibilities);
+      await writeOrUpdateDataInStore('ratings', state.ratings);
+      await writeOrUpdateDataInStore('ratingsScale', state.ratingsScale);
+      await writeOrUpdateDataInStore('sensitiveAreas', state.currentSensitiveAreas);
+      await writeOrUpdateDataInStore('labels', state.labels);
+      await writeOrUpdateDataInStore('sources', state.sources);
+      await writeOrUpdateDataInStore('accessibilitiesLevel', state.accessibilitiesLevel);
+      await writeOrUpdateDataInStore('touristicContentCategories', state.touristicContentCategories);
+      await writeOrUpdateDataInStore('touristicEventTypes', state.touristicEventTypes);
+      await writeOrUpdateDataInStore('networks', state.networks);
+      await writeOrUpdateDataInStore('pois', state.currentPois);
+      await writeOrUpdateDataInStore('poiTypes', state.poiTypes);
+      await writeOrUpdateDataInStore('signages', state.currentSignages);
+      await writeOrUpdateDataInStore('informationDesks', state.currentInformationDesks);
 
-    if (!state.districts) {
-      const districtsList = await getDistricts(state.api, state.language, init);
-      state.districts = (await districtsList.json()).results;
-    }
+      await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true, ['url']);
+      await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp, true);
 
-    await writeOrUpdateDataInStore('treks', treks);
-    await writeOrUpdateDataInStore('districts', state.districts);
-
-    // download global tiles
-    await this.downloadGlobalTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
-
-    // download trek tiles
-    await this.downloadTrekTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution);
-
-    // download global medias
-    await writeOrUpdateFilesInStore(state.difficulties, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.routes, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.practices, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.themes, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.labels, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.districts, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.sources, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.accessibilities, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.poiTypes, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.touristicContentCategories, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.touristicEventTypes, imagesRegExp);
-    await writeOrUpdateFilesInStore(state.networks, imagesRegExp);
-
-    // download trek images
-    await writeOrUpdateFilesInStore(this.currentTrek, imagesRegExp, true, ['url']);
-
-    // download trek data
-    await writeOrUpdateDataInStore('difficulties', state.difficulties);
-    await writeOrUpdateDataInStore('routes', state.routes);
-    await writeOrUpdateDataInStore(
-      'practices',
-      state.practices.map(practice => ({ ...practice, selected: false })),
-    );
-    await writeOrUpdateDataInStore('themes', state.themes);
-    await writeOrUpdateDataInStore('cities', state.cities);
-    await writeOrUpdateDataInStore('accessibilities', state.accessibilities);
-    await writeOrUpdateDataInStore('ratings', state.ratings);
-    await writeOrUpdateDataInStore('ratingsScale', state.ratingsScale);
-    await writeOrUpdateDataInStore('sensitiveAreas', state.currentSensitiveAreas);
-    await writeOrUpdateDataInStore('labels', state.labels);
-    await writeOrUpdateDataInStore('sources', state.sources);
-    await writeOrUpdateDataInStore('accessibilitiesLevel', state.accessibilitiesLevel);
-    await writeOrUpdateDataInStore('touristicContentCategories', state.touristicContentCategories);
-    await writeOrUpdateDataInStore('touristicEventTypes', state.touristicEventTypes);
-    await writeOrUpdateDataInStore('networks', state.networks);
-    await writeOrUpdateDataInStore('pois', state.currentPois);
-    await writeOrUpdateDataInStore('poiTypes', state.poiTypes);
-    await writeOrUpdateDataInStore('signages', state.currentSignages);
-    await writeOrUpdateDataInStore('informationDesks', state.currentInformationDesks);
-    await writeOrUpdateDataInStore('treks', [
-      {
-        ...this.currentTrek,
-        offline: true,
-        pois: state.currentPois.map(poi => poi.id),
-        signages: state.currentSignages.map(signage => signage.id),
-        touristicContents: state.trekTouristicContents.map(trekTouristicContent => trekTouristicContent.id),
-        touristicEvents: state.trekTouristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
-        sensitiveAreas: state.currentSensitiveAreas ? state.currentSensitiveAreas.map(currentSensitiveArea => currentSensitiveArea.id) : [],
-      },
-    ]);
-
-    await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true, ['url']);
-    await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp, true);
-
-    // download items data
-    await writeOrUpdateFilesInStore(state.trekTouristicContents, imagesRegExp, true, ['url']);
-    state.trekTouristicContents.forEach(trekTouristicContent => {
-      trekTouristicContent.offline = true;
-    });
-    await writeOrUpdateDataInStore('touristicContents', state.trekTouristicContents);
-
-    await writeOrUpdateFilesInStore(state.trekTouristicEvents, imagesRegExp, true, ['url']);
-    state.trekTouristicEvents.forEach(trekTouristicEvent => {
-      trekTouristicEvent.offline = true;
-    });
-    await writeOrUpdateDataInStore('touristicEvents', state.trekTouristicEvents);
-
-    // download itinerancy
-    if (this.currentTrek.children && this.currentTrek.children.length > 0) {
-      // fetch and store children treks
-      const steps: number[] = [];
-      steps.push(...this.currentTrek.children);
-      const stepRequests = [];
-      const stepsTouristicContentsRequests = [];
-      const stepsTouristicEventsRequests = [];
-      const stepsPoisRequests = [];
-      const stepsSensitiveAreasRequests = [];
-
-      steps.forEach(stepId => {
-        stepRequests.push(getTrek(state.api, state.language, stepId, init));
-        stepsTouristicContentsRequests.push(getTouristicContentsNearTrek(state.api, state.language, stepId, init));
-        stepsTouristicEventsRequests.push(getTouristicEventsNearTrek(state.api, state.language, stepId, init));
-        stepsPoisRequests.push(getPoisNearTrek(state.api, state.language, stepId, init));
-        stepsSensitiveAreasRequests.push(getSensitiveAreasNearTrek(state.api, state.language, stepId, init));
+      // download items data
+      await writeOrUpdateFilesInStore(state.trekTouristicContents, imagesRegExp, true, ['url']);
+      state.trekTouristicContents.forEach(trekTouristicContent => {
+        trekTouristicContent.offline = true;
       });
+      await writeOrUpdateDataInStore('touristicContents', state.trekTouristicContents);
 
-      const trekSteps: Treks = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+      await writeOrUpdateFilesInStore(state.trekTouristicEvents, imagesRegExp, true, ['url']);
+      state.trekTouristicEvents.forEach(trekTouristicEvent => {
+        trekTouristicEvent.offline = true;
+      });
+      await writeOrUpdateDataInStore('touristicEvents', state.trekTouristicEvents);
 
-      const stepsTouristicContentsResponses = await Promise.all([...stepsTouristicContentsRequests]).then(responses => Promise.all(responses.map(response => response.json())));
-      const stepsTouristicEventsResponses = await Promise.all([...stepsTouristicEventsRequests]).then(responses => Promise.all(responses.map(response => response.json())));
-      const stepsPoisResponses = await Promise.all([...stepsPoisRequests]).then(responses => Promise.all(responses.map(response => response.json())));
-      const stepsSensitiveAreasResponses = await Promise.all([...stepsSensitiveAreasRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+      // download itinerancy
+      if (this.currentTrek.children && this.currentTrek.children.length > 0) {
+        // fetch and store children treks
+        const steps: number[] = [];
+        steps.push(...this.currentTrek.children);
+        const stepRequests = [];
+        const stepsTouristicContentsRequests = [];
+        const stepsTouristicEventsRequests = [];
+        const stepsPoisRequests = [];
+        const stepsSensitiveAreasRequests = [];
 
-      for (let index = 0; index < trekSteps.length; index++) {
-        trekSteps[index].offline = true;
-        trekSteps[index].pois = stepsPoisResponses[index].results.map(poi => poi.id);
-        trekSteps[index].touristicContents = stepsTouristicContentsResponses[index].results.map(trekTouristicContent => trekTouristicContent.id);
-        trekSteps[index].touristicEvents = stepsTouristicEventsResponses[index].results.map(trekTouristicEvent => trekTouristicEvent.id);
-        trekSteps[index].sensitiveAreas = stepsSensitiveAreasResponses[index].results.map(currentSensitiveArea => currentSensitiveArea.id);
-        await writeOrUpdateDataInStore('treks', [trekSteps[index]]);
-        await writeOrUpdateFilesInStore(trekSteps[index], imagesRegExp, true, ['url']);
+        steps.forEach(stepId => {
+          stepRequests.push(getTrek(state.api, state.language, stepId, init));
+          stepsTouristicContentsRequests.push(getTouristicContentsNearTrek(state.api, state.language, stepId, init));
+          stepsTouristicEventsRequests.push(getTouristicEventsNearTrek(state.api, state.language, stepId, init));
+          stepsPoisRequests.push(getPoisNearTrek(state.api, state.language, stepId, init));
+          stepsSensitiveAreasRequests.push(getSensitiveAreasNearTrek(state.api, state.language, stepId, init));
+        });
+
+        const trekSteps: Treks = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+
+        const stepsTouristicContentsResponses = await Promise.all([...stepsTouristicContentsRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+        const stepsTouristicEventsResponses = await Promise.all([...stepsTouristicEventsRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+        const stepsPoisResponses = await Promise.all([...stepsPoisRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+        const stepsSensitiveAreasResponses = await Promise.all([...stepsSensitiveAreasRequests]).then(responses => Promise.all(responses.map(response => response.json())));
+
+        for (let index = 0; index < trekSteps.length; index++) {
+          trekSteps[index].offline = true;
+          trekSteps[index].pois = stepsPoisResponses[index].results.map(poi => poi.id);
+          trekSteps[index].touristicContents = stepsTouristicContentsResponses[index].results.map(trekTouristicContent => trekTouristicContent.id);
+          trekSteps[index].touristicEvents = stepsTouristicEventsResponses[index].results.map(trekTouristicEvent => trekTouristicEvent.id);
+          trekSteps[index].sensitiveAreas = stepsSensitiveAreasResponses[index].results.map(currentSensitiveArea => currentSensitiveArea.id);
+          await writeOrUpdateDataInStore('treks', [trekSteps[index]]);
+          await writeOrUpdateFilesInStore(trekSteps[index], imagesRegExp, true, ['url']);
+        }
       }
-    }
 
-    state.treks.find(trek => trek.id === this.currentTrek.id).offline = true;
-    if (!state.currentTreks) {
-      state.currentTreks = state.treks;
-    }
-    state.currentTreks.find(trek => trek.id === this.currentTrek.id).offline = true;
-    if (this.swiperImages) {
-      this.swiperImages.slideTo(0);
-    }
-    this.offline = true;
-    this.downloadedSuccessConfirm.emit();
-  }
+      await writeOrUpdateDataInStore('treks', [
+        {
+          ...this.currentTrek,
+          offline: true,
+          pois: state.currentPois.map(poi => poi.id),
+          signages: state.currentSignages.map(signage => signage.id),
+          touristicContents: state.trekTouristicContents.map(trekTouristicContent => trekTouristicContent.id),
+          touristicEvents: state.trekTouristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
+          sensitiveAreas: state.currentSensitiveAreas ? state.currentSensitiveAreas.map(currentSensitiveArea => currentSensitiveArea.id) : [],
+        },
+      ]);
 
-  async deleteTrek() {
-    const treksInStore: Treks = [];
-    const trekInStore = await getDataInStore('treks', this.currentTrek.id);
-    this.deleteOfflineTrekProperties(trekInStore);
-    treksInStore.push(trekInStore);
-    if (this.currentTrek.children.length > 0) {
-      for (let index = 0; index < this.currentTrek.children.length; index++) {
-        const trekInStore = await getDataInStore('treks', this.currentTrek.children[index]);
-        this.deleteOfflineTrekProperties(trekInStore);
-        treksInStore.push(trekInStore);
-      }
-    }
-    await writeOrUpdateDataInStore('treks', treksInStore);
-
-    if (state.treks) {
-      delete state.treks.find(trek => trek.id === this.currentTrek.id).offline;
-
+      state.treks.find(trek => trek.id === this.currentTrek.id).offline = true;
       if (!state.currentTreks) {
         state.currentTreks = state.treks;
       }
-      delete state.currentTreks.find(trek => trek.id === this.currentTrek.id).offline;
-    }
+      state.currentTreks.find(trek => trek.id === this.currentTrek.id).offline = true;
+      if (this.swiperImages) {
+        this.swiperImages.slideTo(0);
+      }
 
-    if (state.parentTrek) {
-      delete state.parentTrek.offline;
+      this.offline = true;
+      this.downloadedSuccessConfirm.emit(this.currentTrek.id);
+    } catch (error) {
+      this.downloadedErrorConfirm.emit(this.currentTrek.id);
     }
+  }
 
-    if (state.currentTrekSteps) {
-      state.currentTrekSteps.forEach(currentTrekStep => {
-        delete currentTrekStep.offline;
-      });
+  async deleteTrek() {
+    try {
+      const treksInStore: Treks = [];
+      const trekInStore = await getDataInStore('treks', this.currentTrek.id);
+      this.deleteOfflineTrekProperties(trekInStore);
+      treksInStore.push(trekInStore);
+      if (this.currentTrek.children.length > 0) {
+        for (let index = 0; index < this.currentTrek.children.length; index++) {
+          const trekInStore = await getDataInStore('treks', this.currentTrek.children[index]);
+          this.deleteOfflineTrekProperties(trekInStore);
+          treksInStore.push(trekInStore);
+        }
+      }
+      await writeOrUpdateDataInStore('treks', treksInStore);
+
+      if (state.treks) {
+        delete state.treks.find(trek => trek.id === this.currentTrek.id).offline;
+
+        if (!state.currentTreks) {
+          state.currentTreks = state.treks;
+        }
+        delete state.currentTreks.find(trek => trek.id === this.currentTrek.id).offline;
+      }
+
+      if (state.parentTrek) {
+        delete state.parentTrek.offline;
+      }
+
+      if (state.currentTrekSteps) {
+        state.currentTrekSteps.forEach(currentTrekStep => {
+          delete currentTrekStep.offline;
+        });
+      }
+
+      this.offline = false;
+      this.deleteSuccessConfirm.emit(this.currentTrek.id);
+    } catch (error) {
+      this.deleteErrorConfirm.emit(this.currentTrek.id);
     }
-
-    this.offline = false;
-    this.deleteSuccessConfirm.emit();
   }
 
   displayDownloadModal() {
@@ -1295,7 +1307,7 @@ export class GrwTrekDetail {
                 <button part="offline-button" class="offline-button" onClick={() => this.displayDownloadModal()}>
                   <span part="icon" class="icon" innerHTML={DownloadForOfflineIcon}></span>
                   <span part="label" class="label">
-                    RENDRE DISPONIBLE HORS LIGNE
+                    {translate[state.language].offline.downloadOffline}
                   </span>
                 </button>
               )}
@@ -1303,7 +1315,7 @@ export class GrwTrekDetail {
                 <button part="offline-button" class="offline-button" onClick={() => this.displayDeleteModal()}>
                   <span part="icon" class="icon" innerHTML={DeleteIcon}></span>
                   <span part="label" class="label">
-                    SUPPRIMER DU HORS LIGNE
+                    {translate[state.language].offline.deleteOffline}
                   </span>
                 </button>
               )}

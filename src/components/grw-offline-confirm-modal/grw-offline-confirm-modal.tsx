@@ -1,4 +1,6 @@
 import { Component, Event, EventEmitter, Fragment, Host, Listen, Prop, State, h } from '@stencil/core';
+import { translate } from 'i18n/i18n';
+import state from 'store/store';
 import { Mode } from 'types/types';
 
 @Component({
@@ -11,6 +13,7 @@ export class GrwOfflineConfirmModal {
   @State() showConfirmModal = false;
   @State() showLoaderModal = false;
   @State() showSuccessModal = false;
+  @State() showErrorModal = false;
   @State() showConfirmDeleteModal = false;
   @State() showDeletingMessage = false;
   @State() showDeleteSuccessMessage = false;
@@ -38,6 +41,12 @@ export class GrwOfflineConfirmModal {
     this.showSuccessModal = true;
   }
 
+  @Listen('downloadedErrorConfirm', { target: 'window' })
+  downloadedErrorConfirm() {
+    this.showLoaderModal = false;
+    this.showErrorModal = true;
+  }
+
   @Listen('deleteConfirm', { target: 'window' })
   onDeleteConfirm() {
     this.showLoaderModal = false;
@@ -51,6 +60,13 @@ export class GrwOfflineConfirmModal {
 
   @Listen('deleteSuccessConfirm', { target: 'window' })
   onDeleteSuccessConfirm() {
+    this.showLoaderModal = false;
+    this.showSuccessModal = true;
+    this.showDeleteSuccessMessage = true;
+  }
+
+  @Listen('deleteErrorConfirm', { target: 'window' })
+  deleteErrorConfirm() {
     this.showLoaderModal = false;
     this.showSuccessModal = true;
     this.showDeleteSuccessMessage = true;
@@ -84,16 +100,14 @@ export class GrwOfflineConfirmModal {
               {this.showConfirmModal && !this.showConfirmDeleteModal && (
                 <Fragment>
                   <div class="modal-message-container">{`${
-                    this.mode === 'treks'
-                      ? 'Êtes-vous sûr de vouloir rendre cet itinéraire disponible hors ligne ?'
-                      : 'Êtes-vous sûr de vouloir rendre cet outdoor disponible hors ligne ?'
+                    this.mode === 'treks' ? translate[state.language].offline.downloadRouteQuestion : translate[state.language].offline.downloadOutdoorQuestion
                   }`}</div>
                   <div class="modal-buttons-container">
                     <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                      ANNULER
+                      {translate[state.language].offline.cancel}
                     </button>
                     <button part="modal-button" class="modal-button" onClick={() => this.handleOkDownloadModal()}>
-                      OK
+                      {translate[state.language].offline.ok}
                     </button>
                   </div>
                 </Fragment>
@@ -101,14 +115,14 @@ export class GrwOfflineConfirmModal {
               {this.showConfirmDeleteModal && (
                 <Fragment>
                   <div class="modal-message-container">{`${
-                    this.mode === 'treks' ? 'Êtes-vous sûr de vouloir supprimer cet itinéraire du hors ligne ?' : 'Êtes-vous sûr de vouloir supprimer cet outdoor du hors ligne ?'
+                    this.mode === 'treks' ? translate[state.language].offline.deleteRouteQuestion : translate[state.language].offline.deleteRouteQuestion
                   }`}</div>
                   <div class="modal-buttons-container">
                     <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                      ANNULER
+                      {translate[state.language].offline.cancel}
                     </button>
                     <button part="modal-button" class="modal-button" onClick={() => this.handleOkDeleteModal()}>
-                      OK
+                      {translate[state.language].offline.ok}
                     </button>
                   </div>
                 </Fragment>
@@ -117,7 +131,7 @@ export class GrwOfflineConfirmModal {
                 <Fragment>
                   <div class="modal-message-container">
                     <div class="modal-loader"></div>
-                    {this.showDeletingMessage ? 'Suppression en cours' : 'Téléchargement en cours'}
+                    {this.showDeletingMessage ? translate[state.language].offline.deleting : translate[state.language].offline.downloading}
                   </div>
                 </Fragment>
               )}
@@ -126,15 +140,34 @@ export class GrwOfflineConfirmModal {
                   <div class="modal-message-container">
                     {this.showDeleteSuccessMessage
                       ? this.mode === 'treks'
-                        ? "L'itinéraire est supprimé du hors ligne"
-                        : "L'outdoor est supprimé du hors ligne"
+                        ? translate[state.language].offline.offlineRouteDeleted
+                        : translate[state.language].offline.offlineOutdoorDeleted
                       : this.mode === 'treks'
-                      ? "L'itinéraire est disponible hors ligne"
-                      : "L'outdoor est disponible hors ligne"}
+                      ? translate[state.language].offline.routeAvailableOffline
+                      : translate[state.language].offline.outdoorAvailableOffline}
                   </div>
                   <div class="modal-button-container">
                     <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
-                      OK
+                      {translate[state.language].offline.ok}
+                    </button>
+                  </div>
+                </Fragment>
+              )}
+
+              {this.showErrorModal && (
+                <Fragment>
+                  <div class="modal-message-container">
+                    {this.showDeleteSuccessMessage
+                      ? this.mode === 'treks'
+                        ? translate[state.language].offline.deleteRouteError
+                        : translate[state.language].offline.deleteOutdoorError
+                      : this.mode === 'treks'
+                      ? translate[state.language].offline.downloadRouteError
+                      : translate[state.language].offline.downloadOutdoorError}
+                  </div>
+                  <div class="modal-button-container">
+                    <button part="modal-button" class="modal-button" onClick={() => this.handleCancelModal()}>
+                      {translate[state.language].offline.ok}
                     </button>
                   </div>
                 </Fragment>

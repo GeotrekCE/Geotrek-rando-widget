@@ -116,9 +116,11 @@ export class GrwOutdoorSiteDetail {
 
   @Event() downloadConfirm: EventEmitter<number>;
   @Event() downloadedSuccessConfirm: EventEmitter<number>;
+  @Event() downloadedErrorConfirm: EventEmitter<number>;
 
   @Event() deleteConfirm: EventEmitter<number>;
   @Event() deleteSuccessConfirm: EventEmitter<number>;
+  @Event() deleteErrorConfirm: EventEmitter<number>;
 
   @State() showTouristicContentDetailsModal = false;
   @State() showTouristicEventDetailsModal = false;
@@ -591,53 +593,57 @@ export class GrwOutdoorSiteDetail {
   }
 
   async downloadOutdoorSite(outdoorSiteId) {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+    try {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
 
-    const outdoorSite: OutdoorSite = await getOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json());
-    await this.downloadOutdoorSiteTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution, outdoorSite.geometry);
-    await writeOrUpdateFilesInStore(outdoorSite, imagesRegExp, true, ['url']);
+      const outdoorSite: OutdoorSite = await getOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json());
+      await this.downloadOutdoorSiteTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution, outdoorSite.geometry);
+      await writeOrUpdateFilesInStore(outdoorSite, imagesRegExp, true, ['url']);
 
-    const pois = (await getPoisNearSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
-    await writeOrUpdateDataInStore('pois', pois);
-    await writeOrUpdateFilesInStore(pois, imagesRegExp, true, ['url']);
+      const pois = (await getPoisNearSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
+      await writeOrUpdateDataInStore('pois', pois);
+      await writeOrUpdateFilesInStore(pois, imagesRegExp, true, ['url']);
 
-    const touristicContents = (await getTouristicContentsNearOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
-    await writeOrUpdateFilesInStore(touristicContents, imagesRegExp, true, ['url']);
-    touristicContents.forEach(touristicContent => {
-      touristicContent.offline = true;
-    });
-    await writeOrUpdateDataInStore('touristicContents', touristicContents);
-    const touristicEvents = (await getTouristicEventsNearOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
-    await writeOrUpdateFilesInStore(touristicEvents, imagesRegExp, true, ['url']);
-    touristicEvents.forEach(touristicEvent => {
-      touristicEvent.offline = true;
-    });
-    await writeOrUpdateDataInStore('touristicEvents', touristicEvents);
+      const touristicContents = (await getTouristicContentsNearOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
+      await writeOrUpdateFilesInStore(touristicContents, imagesRegExp, true, ['url']);
+      touristicContents.forEach(touristicContent => {
+        touristicContent.offline = true;
+      });
+      await writeOrUpdateDataInStore('touristicContents', touristicContents);
+      const touristicEvents = (await getTouristicEventsNearOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json())).results;
+      await writeOrUpdateFilesInStore(touristicEvents, imagesRegExp, true, ['url']);
+      touristicEvents.forEach(touristicEvent => {
+        touristicEvent.offline = true;
+      });
+      await writeOrUpdateDataInStore('touristicEvents', touristicEvents);
 
-    await writeOrUpdateDataInStore('outdoorSites', [
-      {
-        ...outdoorSite,
-        offline: true,
-        pois: pois.map(poi => poi.id),
-        touristicContents: touristicContents.map(trekTouristicContent => trekTouristicContent.id),
-        touristicEvents: touristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
-      },
-    ]);
+      await writeOrUpdateDataInStore('outdoorSites', [
+        {
+          ...outdoorSite,
+          offline: true,
+          pois: pois.map(poi => poi.id),
+          touristicContents: touristicContents.map(trekTouristicContent => trekTouristicContent.id),
+          touristicEvents: touristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
+        },
+      ]);
 
-    if (outdoorSite.courses && outdoorSite.courses.length > 0) {
-      for (let index = 0; index < outdoorSite.courses.length; index++) {
-        const outdoorCourseId = outdoorSite.courses[index];
-        await this.downloadOutdoorCourse(outdoorCourseId);
+      if (outdoorSite.courses && outdoorSite.courses.length > 0) {
+        for (let index = 0; index < outdoorSite.courses.length; index++) {
+          const outdoorCourseId = outdoorSite.courses[index];
+          await this.downloadOutdoorCourse(outdoorCourseId);
+        }
       }
-    }
 
-    if (outdoorSite.children && outdoorSite.children.length > 0) {
-      for (let index = 0; index < outdoorSite.children.length; index++) {
-        const outdoorSiteId = outdoorSite.children[index];
-        await this.downloadOutdoorSite(outdoorSiteId);
+      if (outdoorSite.children && outdoorSite.children.length > 0) {
+        for (let index = 0; index < outdoorSite.children.length; index++) {
+          const outdoorSiteId = outdoorSite.children[index];
+          await this.downloadOutdoorSite(outdoorSiteId);
+        }
       }
+    } catch (error) {
+      this.downloadedSuccessConfirm.emit(this.currentOutdoorSite.id);
     }
   }
 
@@ -678,24 +684,28 @@ export class GrwOutdoorSiteDetail {
   }
 
   async deleteOutdoorSite() {
-    const outdoorSitesInStore: OutdoorSites = [];
-    const outdoorSiteInStore = await getDataInStore('outdoorSites', this.currentOutdoorSite.id);
-    this.deleteOfflineOutdoorSiteProperties(outdoorSiteInStore);
-    outdoorSitesInStore.push(outdoorSiteInStore);
+    try {
+      const outdoorSitesInStore: OutdoorSites = [];
+      const outdoorSiteInStore = await getDataInStore('outdoorSites', this.currentOutdoorSite.id);
+      this.deleteOfflineOutdoorSiteProperties(outdoorSiteInStore);
+      outdoorSitesInStore.push(outdoorSiteInStore);
 
-    await writeOrUpdateDataInStore('outdoorSites', outdoorSitesInStore);
+      await writeOrUpdateDataInStore('outdoorSites', outdoorSitesInStore);
 
-    if (state.outdoorSites) {
-      delete state.outdoorSites.find(outdoorSite => outdoorSite.id === this.currentOutdoorSite.id).offline;
+      if (state.outdoorSites) {
+        delete state.outdoorSites.find(outdoorSite => outdoorSite.id === this.currentOutdoorSite.id).offline;
 
-      if (!state.currentOutdoorSites) {
-        state.currentOutdoorSites = state.outdoorSites;
+        if (!state.currentOutdoorSites) {
+          state.currentOutdoorSites = state.outdoorSites;
+        }
+        delete state.currentOutdoorSites.find(trek => trek.id === this.currentOutdoorSite.id).offline;
       }
-      delete state.currentOutdoorSites.find(trek => trek.id === this.currentOutdoorSite.id).offline;
-    }
 
-    this.offline = false;
-    this.deleteSuccessConfirm.emit();
+      this.offline = false;
+      this.deleteSuccessConfirm.emit();
+    } catch (error) {
+      this.deleteErrorConfirm.emit(this.currentOutdoorSite.id);
+    }
   }
 
   async downloadGlobalTiles(url, attribution) {
@@ -874,7 +884,7 @@ export class GrwOutdoorSiteDetail {
                 <button part="offline-button" class="offline-button" onClick={() => this.displayDownloadModal()}>
                   <span part="icon" class="icon" innerHTML={DownloadForOfflineIcon}></span>
                   <span part="label" class="label">
-                    RENDRE DISPONIBLE HORS LIGNE
+                    {translate[state.language].offline.downloadOffline}
                   </span>
                 </button>
               )}
@@ -882,7 +892,7 @@ export class GrwOutdoorSiteDetail {
                 <button part="offline-button" class="offline-button" onClick={() => this.displayDeleteModal()}>
                   <span part="icon" class="icon" innerHTML={DeleteIcon}></span>
                   <span part="label" class="label">
-                    SUPPRIMER DU HORS LIGNE
+                    {translate[state.language].offline.deleteOffline}
                   </span>
                 </button>
               )}
