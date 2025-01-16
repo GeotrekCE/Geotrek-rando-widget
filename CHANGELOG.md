@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.26.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.25.0...0.26.0) (2025-01-16)
+
+
+### Features
+
+* improve offline trek and outdoor ([a031397](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/a0313973d9b9f7a6d0380ce919008067643d576b))
+
+
+### Bug Fixes
+
+* download trek ([7b816de](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/7b816de111dfc56bd084f67707716e41f7a844d3))
+
 ## [0.25.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.24.2...0.25.0) (2025-01-06)
 
 
