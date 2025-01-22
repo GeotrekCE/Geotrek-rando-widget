@@ -16,3 +16,5 @@ jobs:
       - uses: google-github-actions/release-please-action@v4
         with:
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+          release-type: node
+          versioning-strategy: no-v-prefix
