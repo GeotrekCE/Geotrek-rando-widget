@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.26.0...0.27.0) (2025-01-22)
+
+
+### Features
+
+* handle pagination ([cb2080a](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/cb2080a1cd0d688e40203d9076cc3df122701a98))
+
 ## [0.26.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.25.0...0.26.0) (2025-01-16)
 
 
