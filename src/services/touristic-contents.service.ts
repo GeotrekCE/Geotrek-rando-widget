@@ -45,12 +45,12 @@ export function getTouristicContentCategory(api, language, portals, init) {
 export function getTouristicContentsList(api, language, inBbox, cities, districts, structures, themes, portals, init) {
   let touristicContentsRequest = `${api}touristiccontent/?language=${language}&published=true`;
 
-  this.inBbox && (touristicContentsRequest += `&in_bbox=${inBbox}`);
-  this.cities && (touristicContentsRequest += `&cities=${cities}`);
-  this.districts && (touristicContentsRequest += `&districts=${districts}`);
-  this.structures && (touristicContentsRequest += `&structures=${structures}`);
-  this.themes && (touristicContentsRequest += `&themes=${themes}`);
-  this.portals && (touristicContentsRequest += `&portals=${portals}`);
+  inBbox && (touristicContentsRequest += `&in_bbox=${inBbox}`);
+  cities && (touristicContentsRequest += `&cities=${cities}`);
+  districts && (touristicContentsRequest += `&districts=${districts}`);
+  structures && (touristicContentsRequest += `&structures=${structures}`);
+  themes && (touristicContentsRequest += `&themes=${themes}`);
+  portals && (touristicContentsRequest += `&portals=${portals}`);
 
   touristicContentsRequest += `&fields=id,name,attachments,category,geometry,cities,districts`;
 

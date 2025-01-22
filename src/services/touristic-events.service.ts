@@ -26,12 +26,12 @@ export function getTouristicEventType(api, language, portals, init) {
 export function getTouristicEventsList(api, language, inBbox, cities, districts, structures, themes, portals, init) {
   let touristicEventsRequest = `${api}touristicevent/?language=${language}&published=true`;
 
-  this.inBbox && (touristicEventsRequest += `&in_bbox=${inBbox}`);
-  this.cities && (touristicEventsRequest += `&cities=${cities}`);
-  this.districts && (touristicEventsRequest += `&districts=${districts}`);
-  this.structures && (touristicEventsRequest += `&structures=${structures}`);
-  this.themes && (touristicEventsRequest += `&themes=${themes}`);
-  this.portals && (touristicEventsRequest += `&portals=${portals}`);
+  inBbox && (touristicEventsRequest += `&in_bbox=${inBbox}`);
+  cities && (touristicEventsRequest += `&cities=${cities}`);
+  districts && (touristicEventsRequest += `&districts=${districts}`);
+  structures && (touristicEventsRequest += `&structures=${structures}`);
+  themes && (touristicEventsRequest += `&themes=${themes}`);
+  portals && (touristicEventsRequest += `&portals=${portals}`);
 
   touristicEventsRequest += `&fields=id,name,attachments,category,geometry,cities,districts,type,begin_date,end_date`;
 

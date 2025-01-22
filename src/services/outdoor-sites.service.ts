@@ -17,7 +17,7 @@ export function getOutdoorSites(api, language, inBbox, cities, districts, struct
 export function getOutdoorSite(api, language, outdoorSiteId, init) {
   let outdoorSitesRequest = `${api}outdoor_site/${outdoorSiteId}/?language=${language}&published=true`;
   outdoorSitesRequest += `&fields=id,name,geometry,accessibility,advice,ambiance,attachments,cities,children,description,description_teaser,districts,information_desks,labels,managers,orientation,pdf,period,parent,portal,practice,provider,ratings,sector,source,structure,themes,view_points,type,courses,web_links,wind,parents`;
-  return getAllPaginatedResults(outdoorSitesRequest, init);
+  return fetch(outdoorSitesRequest, init);
 }
 
 export function getOutdoorSiteTypes(api, language, init) {
