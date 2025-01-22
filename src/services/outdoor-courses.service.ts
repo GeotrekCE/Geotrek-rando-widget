@@ -1,3 +1,5 @@
+import { getAllPaginatedResults } from '../utils/utils';
+
 export function getOutdoorCourses(api, language, inBbox, cities, districts, structures, themes, portals, init) {
   let outdoorCoursesRequest = `${api}outdoor_course/?language=${language}&published=true`;
   inBbox && (outdoorCoursesRequest += `&in_bbox=${inBbox}`);
@@ -7,8 +9,8 @@ export function getOutdoorCourses(api, language, inBbox, cities, districts, stru
   themes && (outdoorCoursesRequest += `&themes=${themes}`);
   portals && (outdoorCoursesRequest += `&portals=${portals}`);
 
-  outdoorCoursesRequest += `&fields=id,name,geometry,accessibility,advice,attachments,children,cities,description,districts,duration,equipment,gear,height,length,max_elevation,min_elevation,parents,pdf,points_reference,provider,ratings,ratings_description,sites,structure,type&page_size=999`;
-  return fetch(outdoorCoursesRequest, init);
+  outdoorCoursesRequest += `&fields=id,name,geometry,accessibility,advice,attachments,children,cities,description,districts,duration,equipment,gear,height,length,max_elevation,min_elevation,parents,pdf,points_reference,provider,ratings,ratings_description,sites,structure,type`;
+  return getAllPaginatedResults(outdoorCoursesRequest, init);
 }
 
 export function getOutdoorCourse(api, language, outdoorCourseId, init) {
@@ -23,5 +25,5 @@ export function getOutdoorCourseTypes(api, language, init) {
 }
 
 export function getPoisNearCourse(api, language, courseId, init) {
-  return fetch(`${api}poi/?language=${language}&courses=${courseId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, init);
+  return getAllPaginatedResults(`${api}poi/?language=${language}&courses=${courseId}&published=true&fields=id,name,description,attachments,type,geometry`, init);
 }

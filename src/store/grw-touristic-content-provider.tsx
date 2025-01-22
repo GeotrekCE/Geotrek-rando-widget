@@ -1,6 +1,7 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
-import { getTouristicContent } from 'services/touristic-contents.service';
+import { getTouristicContent, getTouristicContentCategory } from 'services/touristic-contents.service';
+import { getCities } from 'services/treks.service';
 import state from 'store/store';
 import { TouristicContent } from 'types/types';
 
@@ -48,17 +49,8 @@ export class GrwTouristicContentProvider {
 
   handleOnlineTouristicContent() {
     const requests = [];
-    requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
-    requests.push(
-      !state.touristicContentCategories
-        ? fetch(
-            `${state.api}touristiccontent_category/?language=${state.language}${
-              this.portals ? '&portals='.concat(this.portals) : ''
-            }&published=true&fields=id,label,pictogram&page_size=999`,
-            this.init,
-          )
-        : new Response('null'),
-    );
+    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
+    requests.push(!state.touristicContentCategories ? getTouristicContentCategory(state.api, state.language, this.portals, this.init) : new Response('null'));
     try {
       Promise.all([...requests, getTouristicContent(state.api, state.language, this.touristicContentId, this.init)])
         .then(responses => Promise.all(responses.map(response => response.json())))

@@ -1,4 +1,5 @@
 import { getDataInStore } from './grw-db.service';
+import { getAllPaginatedResults } from '../utils/utils';
 
 export function getOutdoorSites(api, language, inBbox, cities, districts, structures, themes, portals, init) {
   let outdoorSitesRequest = `${api}outdoor_site/?language=${language}&root_sites_only=true&published=true`;
@@ -9,14 +10,14 @@ export function getOutdoorSites(api, language, inBbox, cities, districts, struct
   themes && (outdoorSitesRequest += `&themes=${themes}`);
   portals && (outdoorSitesRequest += `&portals=${portals}`);
 
-  outdoorSitesRequest += `&fields=id,name,geometry,accessibility,advice,ambiance,attachments,cities,children,description,description_teaser,districts,information_desks,labels,managers,orientation,pdf,period,parent,portal,practice,provider,ratings,sector,source,structure,themes,view_points,type,courses,web_links,wind&page_size=999`;
-  return fetch(outdoorSitesRequest, init);
+  outdoorSitesRequest += `&fields=id,name,geometry,accessibility,advice,ambiance,attachments,cities,children,description,description_teaser,districts,information_desks,labels,managers,orientation,pdf,period,parent,portal,practice,provider,ratings,sector,source,structure,themes,view_points,type,courses,web_links,wind`;
+  return getAllPaginatedResults(outdoorSitesRequest, init);
 }
 
 export function getOutdoorSite(api, language, outdoorSiteId, init) {
   let outdoorSitesRequest = `${api}outdoor_site/${outdoorSiteId}/?language=${language}&published=true`;
-  outdoorSitesRequest += `&fields=id,name,geometry,accessibility,advice,ambiance,attachments,cities,children,description,description_teaser,districts,information_desks,labels,managers,orientation,pdf,period,parent,portal,practice,provider,ratings,sector,source,structure,themes,view_points,type,courses,web_links,wind,parents&page_size=999`;
-  return fetch(outdoorSitesRequest, init);
+  outdoorSitesRequest += `&fields=id,name,geometry,accessibility,advice,ambiance,attachments,cities,children,description,description_teaser,districts,information_desks,labels,managers,orientation,pdf,period,parent,portal,practice,provider,ratings,sector,source,structure,themes,view_points,type,courses,web_links,wind,parents`;
+  return getAllPaginatedResults(outdoorSitesRequest, init);
 }
 
 export function getOutdoorSiteTypes(api, language, init) {
@@ -30,7 +31,7 @@ export function getOutdoorPractices(api, language, init) {
 }
 
 export function getPoisNearSite(api, language, siteId, init) {
-  return fetch(`${api}poi/?language=${language}&sites=${siteId}&published=true&fields=id,name,description,attachments,type,geometry&page_size=999`, init);
+  return getAllPaginatedResults(`${api}poi/?language=${language}&sites=${siteId}&published=true&fields=id,name,description,attachments,type,geometry`, init);
 }
 
 export async function outdoorSiteIsAvailableOffline(outdoorSiteId) {

@@ -1,6 +1,6 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { getAllDataInStore } from 'services/grw-db.service';
-import { getDistricts, getTreksList, trekIsAvailableOffline } from 'services/treks.service';
+import { getCities, getDistricts, getLabel, getTrekAccessibility, getTreksList, trekIsAvailableOffline } from 'services/treks.service';
 import state from 'store/store';
 import { Treks } from 'types/types';
 import { durations, elevations, imagesRegExp, lengths, setFilesFromStore } from 'utils/utils';
@@ -107,18 +107,12 @@ export class GrwTreksProvider {
       fetch(`${state.api}trek_route/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,route,pictogram`, this.init),
       fetch(`${state.api}trek_practice/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init),
       fetch(`${state.api}theme/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init),
-      fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init),
-      fetch(
-        `${state.api}trek_accessibility/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram&published=true&page_size=999`,
-        this.init,
-      ),
-      fetch(
-        `${state.api}label/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,advice,pictogram,filter&published=true&page_size=999`,
-        this.init,
-      ),
+      getCities(state.api, state.language, this.init),
+      getTrekAccessibility(state.api, state.language, this.portals, this.init),
+      getLabel(state.api, state.language, this.portals, this.init),
       getDistricts(state.api, state.language, this.init),
       getTreksList(
-        this.api,
+        state.api,
         state.language,
         this.inBbox,
         this.cities,

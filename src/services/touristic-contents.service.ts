@@ -1,3 +1,12 @@
+import { getAllPaginatedResults } from '../utils/utils';
+
+export function getTouristicContents(api, language, init) {
+  return fetch(
+    `${api}touristiccontent/?language=${language}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website,districts`,
+    init,
+  );
+}
+
 export function getTouristicContent(api, language, touristicContentId, init) {
   return fetch(
     `${api}touristiccontent/${touristicContentId}/?language=${language}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website,districts`,
@@ -6,22 +15,44 @@ export function getTouristicContent(api, language, touristicContentId, init) {
 }
 
 export function getTouristicContentsNearTrek(api, language, trekId, init) {
-  return fetch(
-    `${api}touristiccontent/?language=${language}&near_trek=${trekId}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website,districts&page_size=999`,
+  return getAllPaginatedResults(
+    `${api}touristiccontent/?language=${language}&near_trek=${trekId}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website,districts`,
     init,
   );
 }
 
 export function getTouristicContentsNearOutdoorSite(api, language, outdoorSiteId, init) {
-  return fetch(
-    `${api}touristiccontent/?language=${language}&near_outdoorsite=${outdoorSiteId}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website,districts&page_size=999`,
+  return getAllPaginatedResults(
+    `${api}touristiccontent/?language=${language}&near_outdoorsite=${outdoorSiteId}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website,districts`,
     init,
   );
 }
 
 export function getTouristicContentsNearOutdoorCourse(api, language, outdoorCourseId, init) {
-  return fetch(
-    `${api}touristiccontent/?language=${language}&near_outdoorcourse=${outdoorCourseId}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website,districts&page_size=999`,
+  return getAllPaginatedResults(
+    `${api}touristiccontent/?language=${language}&near_outdoorcourse=${outdoorCourseId}&published=true&fields=id,name,attachments,description,description_teaser,category,geometry,cities,pdf,practical_info,contact,email,website,districts`,
     init,
   );
+}
+
+export function getTouristicContentCategory(api, language, portals, init) {
+  return getAllPaginatedResults(
+    `${api}touristiccontent_category/?language=${language}${portals ? '&portals='.concat(portals) : ''}&published=true&fields=id,label,pictogram`,
+    init,
+  );
+}
+
+export function getTouristicContentsList(api, language, inBbox, cities, districts, structures, themes, portals, init) {
+  let touristicContentsRequest = `${api}touristiccontent/?language=${language}&published=true`;
+
+  this.inBbox && (touristicContentsRequest += `&in_bbox=${inBbox}`);
+  this.cities && (touristicContentsRequest += `&cities=${cities}`);
+  this.districts && (touristicContentsRequest += `&districts=${districts}`);
+  this.structures && (touristicContentsRequest += `&structures=${structures}`);
+  this.themes && (touristicContentsRequest += `&themes=${themes}`);
+  this.portals && (touristicContentsRequest += `&portals=${portals}`);
+
+  touristicContentsRequest += `&fields=id,name,attachments,category,geometry,cities,districts`;
+
+  return getAllPaginatedResults(touristicContentsRequest, init);
 }
