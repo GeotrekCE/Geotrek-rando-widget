@@ -437,3 +437,28 @@ export async function checkFileInStore(value) {
   }).catch(() => null);
   return image;
 }
+
+export async function getAllPaginatedResults(url: string, init?: RequestInit): Promise<Response> {
+  const response = await fetch(url, init);
+  const firstData = await response.json();
+  let results = firstData.results;
+  let nextPage = firstData.next;
+
+  while (nextPage) {
+    const nextResponse = await fetch(nextPage, init);
+    const data = await nextResponse.json();
+    results = results.concat(data.results);
+    nextPage = data.next;
+  }
+
+  const modifiedResponse = new Response(
+    JSON.stringify({
+      ...firstData,
+      results,
+      next: null,
+      count: results.length,
+    }),
+  );
+
+  return modifiedResponse;
+}

@@ -1,6 +1,7 @@
 import { Build } from '@stencil/core';
 import state from 'store/store';
 import { getDataInStore } from './grw-db.service';
+import { getAllPaginatedResults } from '../utils/utils';
 
 export function getTrekGeometry(id: number) {
   return fetch(`${state.api}trek/${id}/?language=${state.language}&published=true&fields=geometry`, { cache: Build.isDev ? 'force-cache' : 'default' }).then(response =>
@@ -21,9 +22,9 @@ export function getTreksList(api, language, inBbox, cities, districts, structure
   practices && (treksRequest += `&practices=${practices}`);
   labels && (treksRequest += `&labels=${labels}`);
 
-  treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts&page_size=999`;
+  treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts`;
 
-  return fetch(treksRequest, init);
+  return getAllPaginatedResults(treksRequest, init);
 }
 
 export function getTrek(api, language, trekId, init) {
@@ -34,7 +35,7 @@ export function getTrek(api, language, trekId, init) {
 }
 
 export function getDistricts(api, language, init) {
-  return fetch(`${api}district/?language=${language}&fields=id,name&published=true&page_size=999`, init);
+  return getAllPaginatedResults(`${api}district/?language=${language}&fields=id,name&published=true`, init);
 }
 
 export async function trekIsAvailableOffline(trekId) {
@@ -51,7 +52,7 @@ export function getSensitiveAreasNearTrek(api, language, trekId, init) {
 }
 
 export function getCities(api, language, init) {
-  return fetch(`${api}city/?language=${language}&fields=id,name&published=true&page_size=999`, init);
+  return getAllPaginatedResults(`${api}city/?language=${language}&fields=id,name&published=true`, init);
 }
 
 export function getThemes(api, language, portals, init) {
@@ -71,4 +72,16 @@ export function getSources(api, language, init) {
 
 export function getSignages(api, language, trekId, init) {
   return fetch(`${api}signage/?language=${language}&near_trek=${trekId}&fields=id,geometry,name&published=true&page_size=999`, init);
+}
+
+export function getTrekNetwork(api, language, init) {
+  return fetch(`${api}trek_network/?language=${language}&published=true&fields=id,label,pictogram&page_size=999`, init);
+}
+
+export function getTrekAccessibility(api: string, language: string, portals: string, init: RequestInit): any {
+  return fetch(`${api}trek_accessibility/?language=${language}${portals ? '&portals='.concat(portals) : ''}&fields=id,name,pictogram&published=true&page_size=999`, init);
+}
+
+export function getLabel(api: string, language: string, portals: string, init: RequestInit) {
+  return fetch(`${api}label/?language=${language}${portals ? '&portals='.concat(portals) : ''}&fields=id,name,advice,pictogram,filter&published=true&page_size=999`, init);
 }

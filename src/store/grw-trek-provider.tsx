@@ -1,8 +1,8 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { handleOfflineProperty, getDataInStore } from 'services/grw-db.service';
-import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
-import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
-import { getInformationsDesks, getPoisNearTrek, getSensitiveAreasNearTrek, getSignages, getSources, getTrek } from 'services/treks.service';
+import { getTouristicContentCategory, getTouristicContentsNearTrek } from 'services/touristic-contents.service';
+import { getTouristicEventsNearTrek, getTouristicEventType } from 'services/touristic-events.service';
+import { getCities, getInformationsDesks, getPoisNearTrek, getSensitiveAreasNearTrek, getSignages, getSources, getTrek } from 'services/treks.service';
 import state from 'store/store';
 import { Trek } from 'types/types';
 import { imagesRegExp, setFilesFromStore } from 'utils/utils';
@@ -157,7 +157,7 @@ export class GrwTrekProvider {
         ? fetch(`${state.api}theme/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init)
         : new Response('null'),
     );
-    requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
+    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(
       !state.accessibilities
         ? fetch(`${state.api}trek_accessibility/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init)
@@ -193,9 +193,9 @@ export class GrwTrekProvider {
         fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
         getInformationsDesks(state.api, state.language, this.init),
         getTouristicContentsNearTrek(state.api, state.language, this.trekId, this.init),
-        fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
+        getTouristicContentCategory(state.api, state.language, null, this.init),
         getTouristicEventsNearTrek(state.api, state.language, this.trekId, this.init),
-        fetch(`${state.api}touristicevent_type/?language=${state.language}&published=true&fields=id,type,pictogram&page_size=999`, this.init),
+        getTouristicEventType(state.api, state.language, null, this.init),
         fetch(`${state.api}trek_network/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init),
         getTrek(state.api, state.language, this.trekId, this.init),
       ])

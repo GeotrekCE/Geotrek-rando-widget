@@ -1,8 +1,8 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { getDataInStore, handleOfflineProperty } from 'services/grw-db.service';
 import { getOutdoorCourse, getOutdoorCourseTypes, getPoisNearCourse } from 'services/outdoor-courses.service';
-import { getTouristicContentsNearOutdoorCourse } from 'services/touristic-contents.service';
-import { getTouristicEventsNearOutdoorCourse } from 'services/touristic-events.service';
+import { getTouristicContentCategory, getTouristicContentsNearOutdoorCourse } from 'services/touristic-contents.service';
+import { getTouristicEventsNearOutdoorCourse, getTouristicEventType } from 'services/touristic-events.service';
 import { getCities, getDistricts, getThemes } from 'services/treks.service';
 import state from 'store/store';
 import { OutdoorCourse } from 'types/types';
@@ -76,9 +76,9 @@ export class GrwOutdoorCourseProvider {
     requests.push(!state.themes ? getThemes(state.api, state.language, this.portals, this.init) : new Response('null'));
     requests.push(!state.outdoorCourseTypes ? getOutdoorCourseTypes(state.api, state.language, this.init) : new Response('null'));
     requests.push(getTouristicContentsNearOutdoorCourse(state.api, state.language, this.outdoorCourseId, this.init));
-    requests.push(fetch(`${state.api}touristiccontent_category/?language=${state.language}&published=true&fields=id,label,pictogram&page_size=999`, this.init));
+    requests.push(getTouristicContentCategory(state.api, state.language, null, this.init));
     requests.push(getTouristicEventsNearOutdoorCourse(state.api, state.language, this.outdoorCourseId, this.init));
-    requests.push(fetch(`${state.api}touristicevent_type/?language=${state.language}&published=true&fields=id,type,pictogram&page_size=999`, this.init));
+    requests.push(getTouristicEventType(state.api, state.language, null, this.init));
     requests.push(getPoisNearCourse(state.api, state.language, this.outdoorCourseId, this.init));
     requests.push(fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init));
     requests.push(getOutdoorCourse(state.api, state.language, this.outdoorCourseId, this.init));
