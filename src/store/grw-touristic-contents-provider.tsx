@@ -1,4 +1,6 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { getTouristicContentCategory, getTouristicContentsList } from 'services/touristic-contents.service';
+import { getCities, getDistricts } from 'services/treks.service';
 import state from 'store/store';
 
 @Component({
@@ -29,31 +31,24 @@ export class GrwTouristicContentsProvider {
   }
 
   handleTouristicContents() {
-    let touristicContentsRequest = `${state.api}touristiccontent/?language=${state.language}&published=true`;
-    this.inBbox && (touristicContentsRequest += `&in_bbox=${this.inBbox}`);
-    this.cities && (touristicContentsRequest += `&cities=${this.cities}`);
-    this.districts && (touristicContentsRequest += `&districts=${this.districts}`);
-    this.structures && (touristicContentsRequest += `&structures=${this.structures}`);
-    this.themes && (touristicContentsRequest += `&themes=${this.themes}`);
-    this.portals && (touristicContentsRequest += `&portals=${this.portals}`);
-
-    touristicContentsRequest += `&fields=id,name,attachments,category,geometry,cities,districts&page_size=999`;
+    let touristicContentsRequest = getTouristicContentsList(
+      state.api,
+      state.language,
+      this.inBbox,
+      this.cities,
+      this.districts,
+      this.structures,
+      this.themes,
+      this.portals,
+      this.init,
+    );
 
     const requests = [];
-    requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
-    requests.push(!state.districts ? fetch(`${state.api}district/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
-    requests.push(
-      !state.touristicContentCategories
-        ? fetch(
-            `${state.api}touristiccontent_category/?language=${state.language}${
-              this.portals ? '&portals='.concat(this.portals) : ''
-            }&published=true&fields=id,label,pictogram&page_size=999`,
-            this.init,
-          )
-        : new Response('null'),
-    );
+    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
+    requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));
+    requests.push(!state.touristicContentCategories ? getTouristicContentCategory(state.api, state.language, this.portals, this.init) : new Response('null'));
     try {
-      Promise.all([...requests, fetch(touristicContentsRequest, this.init)])
+      Promise.all([...requests, touristicContentsRequest])
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(([cities, districts, touristicContentCategory, touristicContents]) => {
           state.networkError = false;

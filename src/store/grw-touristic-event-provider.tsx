@@ -1,7 +1,8 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { TouristicEvent } from 'components';
 import { getAllDataInStore, getDataInStore } from 'services/grw-db.service';
-import { getTouristicEvent } from 'services/touristic-events.service';
+import { getTouristicEvent, getTouristicEventType } from 'services/touristic-events.service';
+import { getCities } from 'services/treks.service';
 import state from 'store/store';
 
 @Component({
@@ -48,17 +49,8 @@ export class GrwTouristicEventProvider {
 
   handleOnlineTouristicEvent() {
     const requests = [];
-    requests.push(!state.cities ? fetch(`${state.api}city/?language=${state.language}&fields=id,name&published=true&page_size=999`, this.init) : new Response('null'));
-    requests.push(
-      !state.touristicEventTypes
-        ? fetch(
-            `${state.api}touristicevent_type/?language=${state.language}${
-              this.portals ? '&portals='.concat(this.portals) : ''
-            }&published=true&fields=id,type,pictogram&page_size=999`,
-            this.init,
-          )
-        : new Response('null'),
-    );
+    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
+    requests.push(!state.touristicEventTypes ? getTouristicEventType(state.api, state.language, this.portals, this.init) : new Response('null'));
 
     try {
       Promise.all([...requests, getTouristicEvent(state.api, state.language, this.touristicEventId, this.init)])
