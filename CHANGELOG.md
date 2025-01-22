@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.0...0.27.1) (2025-01-22)
+
+
+### Bug Fixes
+
+* requests ([52832e5](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/52832e5bba46a14d3a4e6166746b0b9d342a0ce4))
+
 ## [0.27.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.26.0...0.27.0) (2025-01-22)
 
 
