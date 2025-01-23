@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.1...v0.27.2) (2025-01-23)
+
+
+### Bug Fixes
+
+* maxZoom as prop ([24c2076](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/24c207695a419d3f1193896f6407ef40f5ba17df))
+
 ## [0.27.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.0...0.27.1) (2025-01-22)
 
 
