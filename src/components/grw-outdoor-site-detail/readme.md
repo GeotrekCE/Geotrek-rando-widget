@@ -37,8 +37,10 @@
 | ------------------------------- | ----------- | ---------------------- |
 | `coursesIsInViewport`           |             | `CustomEvent<boolean>` |
 | `deleteConfirm`                 |             | `CustomEvent<number>`  |
+| `deleteErrorConfirm`            |             | `CustomEvent<number>`  |
 | `deleteSuccessConfirm`          |             | `CustomEvent<number>`  |
 | `downloadConfirm`               |             | `CustomEvent<number>`  |
+| `downloadedErrorConfirm`        |             | `CustomEvent<number>`  |
 | `downloadedSuccessConfirm`      |             | `CustomEvent<number>`  |
 | `informationPlacesIsInViewport` |             | `CustomEvent<boolean>` |
 | `poiIsInViewport`               |             | `CustomEvent<boolean>` |

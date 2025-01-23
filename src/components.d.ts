@@ -145,6 +145,7 @@ export namespace Components {
         "largeViewSize": number;
         "mainClusterSize": number;
         "mainMarkerSize": number;
+        "maxZoom": number;
         "mobileElevationHeight": number;
         "nameLayer": string;
         "pointReferenceMarkerSize": number;
@@ -1128,6 +1129,7 @@ declare namespace LocalJSX {
         "largeViewSize"?: number;
         "mainClusterSize"?: number;
         "mainMarkerSize"?: number;
+        "maxZoom"?: number;
         "mobileElevationHeight"?: number;
         "nameLayer"?: string;
         "onOutdoorCourseCardPress"?: (event: GrwMapCustomEvent<number>) => void;

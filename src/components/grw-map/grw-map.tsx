@@ -26,7 +26,7 @@ export class GrwMap {
   @Element() mapElement: HTMLElement;
   mapRef: HTMLElement;
   hostElement: HTMLElement;
-  maxZoom = 19;
+  @Prop() maxZoom = 19;
 
   @Event() trekCardPress: EventEmitter<number>;
   @Event() touristicContentCardPress: EventEmitter<number>;

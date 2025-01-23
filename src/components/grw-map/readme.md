@@ -32,6 +32,7 @@
 | `largeViewSize`              | `large-view-size`               |             | `number`  | `1024`      |
 | `mainClusterSize`            | `main-cluster-size`             |             | `number`  | `48`        |
 | `mainMarkerSize`             | `main-marker-size`              |             | `number`  | `32`        |
+| `maxZoom`                    | `max-zoom`                      |             | `number`  | `19`        |
 | `mobileElevationHeight`      | `mobile-elevation-height`       |             | `number`  | `280`       |
 | `nameLayer`                  | `name-layer`                    |             | `string`  | `undefined` |
 | `pointReferenceMarkerSize`   | `point-reference-marker-size`   |             | `number`  | `24`        |
