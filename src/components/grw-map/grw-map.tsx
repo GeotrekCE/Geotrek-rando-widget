@@ -128,7 +128,7 @@ export class GrwMap {
   handleTouristicContentsWithinBoundsBind: (event: any) => void = this.handleTouristicContentsWithinBounds.bind(this);
   handleTouristicEventsWithinBoundsBind: (event: any) => void = this.handleTouristicEventsWithinBounds.bind(this);
   handleOutdoorSitesWithinBoundsBind: (event: any) => void = this.handleOutdoorSitesWithinBounds.bind(this);
-  handleSensitiveAreasWithinBoundsBind: (event: any) => void = this.handleOutdoorSitesWithinBounds.bind(this);
+  handleSensitiveAreasWithinBoundsBind: (event: any) => void = this.handleSensitiveAreasWithinBounds.bind(this);
 
   @Listen('centerOnMap', { target: 'window' })
   onCenterOnMap(event: CustomEvent<{ latitude: number; longitude: number }>) {
@@ -377,6 +377,8 @@ export class GrwMap {
       this.addTouristicEvents();
     } else if (state.outdoorSites) {
       this.addOutdoorSites();
+    } else if (state.sensitiveAreas) {
+      this.addSensitiveAreas();
     }
 
     onChange('currentTreks', () => {
@@ -409,6 +411,15 @@ export class GrwMap {
       }
     });
 
+    onChange('currentSensitiveAreas', () => {
+      if (state.currentSensitiveAreas) {
+        this.removeTreks();
+        this.removeTouristicContents();
+        this.removeTouristicEvents();
+        this.removeOutdoorSites();
+        this.addSensitiveAreas(true);
+      }
+    });
     onChange('currentTrek', () => {
       if (state.currentTrek) {
         this.removeTreks();
@@ -697,14 +708,18 @@ export class GrwMap {
   }
 
   handleSensitiveAreasWithinBounds() {
+    console.log('<handleSensitiveAreasWithinBounds> state.currentSensitiveAreas', state.currentSensitiveAreas)
+    console.log('<handleSensitiveAreasWithinBounds> state.currentMapBounds', state.currentMapBounds)
     if (
       (state.currentSensitiveAreas && !state.currentMapBounds) ||
       (state.currentSensitiveAreas && state.currentMapBounds && state.currentMapBounds.toBBoxString() !== this.map.getBounds().toBBoxString())
     ) {
+      console.log('<handleSensitiveAreasWithinBounds> set state.sensitiveAreasWithinBounds')
       state.sensitiveAreasWithinBounds = state.currentSensitiveAreas.filter(sensitiveArea => {
         const coordinates = pointOnFeature(sensitiveArea.geometry as any).geometry.coordinates;
         return this.map.getBounds().contains(L.latLng(coordinates[1], coordinates[0]));
       });
+      console.log('<handleSensitiveAreasWithinBounds> set state.sensitiveAreasWithinBounds', state.sensitiveAreasWithinBounds)
     }
   }
 
@@ -2419,6 +2434,7 @@ export class GrwMap {
 
 
   async addSensitiveAreas(resetBounds = false) {
+    console.log('<addSensitiveAreas>')
     state.sensitiveAreasWithinBounds = state.currentSensitiveAreas;
 
     const SensitiveAreasCurrentCoordinates = [];

@@ -47,6 +47,7 @@ export class GrwSensitiveAreasList {
 
   handleInfiniteScroll(event: any) {
     if (event.composedPath()[0].scrollTop + event.composedPath()[0].scrollHeight / 2 >= event.composedPath()[0].scrollHeight) {
+      console.log('state.sensitiveAreasWithinBounds', state.sensitiveAreasWithinBounds)
       if (this.sensitiveAreasToDisplay.length < state.sensitiveAreasWithinBounds.length) {
         this.sensitiveAreasToDisplay = state.sensitiveAreasWithinBounds.slice(
           0,
@@ -77,6 +78,7 @@ export class GrwSensitiveAreasList {
   }
 
   render() {
+    console.debug('state.sensitiveAreasWithinBounds',state.sensitiveAreasWithinBounds)
     return (
       <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.sensitiveAreasWithinBounds && (

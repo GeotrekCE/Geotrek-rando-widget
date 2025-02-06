@@ -133,6 +133,7 @@ export function handleTouristicContentsFiltersAndSearch(): TouristicContents {
   let isUsingFilter = false;
   let filtersTouristicContents = [];
   for (const filter of touristicContentsFilters) {
+    console.log('handleTouristicContentsFiltersAndSearch filter', filter, filter.property,  state[filter.property])
     const currentFiltersId: number[] = state[filter.property].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
 
     if (currentFiltersId.length > 0) {
@@ -278,6 +279,7 @@ export function handleOutdoorSitesFiltersAndSearch() {
   let isUsingFilter = false;
   let filtersOutdoorSites = [];
   for (const filter of outdoorSitesFilters) {
+    console.log('filter', filter, filter.property,  state[filter.property])
     const currentFiltersId: number[] = state[filter.property].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
 
     if (currentFiltersId.length > 0) {
@@ -348,6 +350,7 @@ export function handleSensitiveAreasFiltersAndSearch(): SensitiveAreas {
   let isUsingFilter = false;
   let filtersSensitiveAreas = [];
   for (const filter of sensitiveAreasFilters) {
+    console.log('<handleSensitiveAreasFiltersAndSearch> filter.property, state keys',filter.property, Object.keys(state))
     const currentFiltersId: number[] = state[filter.property].filter(currentFilter => currentFilter.selected).map(currentFilter => currentFilter.id);
 
     if (currentFiltersId.length > 0) {
@@ -355,17 +358,19 @@ export function handleSensitiveAreasFiltersAndSearch(): SensitiveAreas {
         if (filter.type === 'include') {
           if (filter.sensitiveAreaPropertyIsArray) {
             filtersSensitiveAreas = [
-              ...filtersSensitiveAreas.filter(sensitiveArea => sensitiveArea[filter.sensitiveAreaProperty].some(sensitiveAreaProperty => currentFiltersId.includes(sensitiveAreaProperty))),
+              ...filtersSensitiveAreas.filter(sensitiveArea =>
+                sensitiveArea[filter.sensitiveAreaProperty].some(sensitiveAreaProperty => currentFiltersId.includes(sensitiveAreaProperty)),
+              ),
             ];
           } else {
             filtersSensitiveAreas = [...filtersSensitiveAreas.filter(sensitiveArea => currentFiltersId.includes(sensitiveArea[filter.sensitiveAreaProperty]))];
           }
         } else if (filter.type === 'interval') {
           filtersSensitiveAreas = [
-            ...filtersSensitiveAreas.filter(sensitiveArea => {
+            ...filtersSensitiveAreas.filter(touristicEvent => {
               for (const currentFilterId of currentFiltersId) {
                 const currentFilter = state[filter.property].find(property => property.id === currentFilterId);
-                if (sensitiveArea[filter.sensitiveAreaProperty] >= currentFilter.minValue && sensitiveArea[filter.sensitiveAreaProperty] <= currentFilter.maxValue) {
+                if (touristicEvent[filter.sensitiveAreaProperty] >= currentFilter.minValue && touristicEvent[filter.sensitiveAreaProperty] <= currentFilter.maxValue) {
                   return true;
                 }
               }
@@ -380,7 +385,9 @@ export function handleSensitiveAreasFiltersAndSearch(): SensitiveAreas {
         if (filter.type === 'include') {
           if (filter.sensitiveAreaPropertyIsArray) {
             filtersSensitiveAreas = [
-              ...state.sensitiveAreas.filter(sensitiveArea => sensitiveArea[filter.sensitiveAreaProperty].some(sensitiveAreaProperty => currentFiltersId.includes(sensitiveAreaProperty))),
+              ...state.touristicEvents.filter(sensitiveArea =>
+                sensitiveArea[filter.sensitiveAreaProperty].some(sensitiveAreaProperty => currentFiltersId.includes(sensitiveAreaProperty)),
+              ),
             ];
           } else {
             filtersSensitiveAreas = [...state.sensitiveAreas.filter(sensitiveArea => currentFiltersId.includes(sensitiveArea[filter.sensitiveAreaProperty]))];
@@ -398,20 +405,21 @@ export function handleSensitiveAreasFiltersAndSearch(): SensitiveAreas {
             }
           }
           filtersSensitiveAreas = [
-            ...state.sensitiveAreas.filter(sensitiveArea => sensitiveArea[filter.sensitiveAreaProperty] >= minValue && sensitiveArea[filter.sensitiveAreaProperty] <= maxValue),
+            ...state.touristicEvents.filter(
+              touristicEvent => touristicEvent[filter.sensitiveAreaProperty] >= minValue && touristicEvent[filter.sensitiveAreaProperty] <= maxValue,
+            ),
           ];
         }
       }
     }
   }
 
-  let searchSensitiveAreas = isUsingFilter ? filtersSensitiveAreas : state.outdoorSites;
-  searchSensitiveAreas = searchSensitiveAreas.filter(outdoorSite => !state.offlineOutdoorSites || (state.offlineOutdoorSites && outdoorSite.offline));
-
+  const searchSensitiveAreas = isUsingFilter ? filtersSensitiveAreas : state.sensitiveAreas;
   return Boolean(state.searchValue)
-    ? searchSensitiveAreas.filter(currentOutdoorSite => currentOutdoorSite.name.toLowerCase().includes(state.searchValue.toLowerCase()))
+    ? searchSensitiveAreas.filter(currentSensitiveArea => currentSensitiveArea.name.toLowerCase().includes(state.searchValue.toLowerCase()))
     : searchSensitiveAreas;
 }
+
 
 
 export const durations = [

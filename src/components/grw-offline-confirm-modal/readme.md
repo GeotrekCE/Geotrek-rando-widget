@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                                                               | Default     |
-| -------- | --------- | ----------- | ------------------------------------------------------------------ | ----------- |
-| `mode`   | `mode`    |             | `"outdoor" \| "touristicContents" \| "touristicEvents" \| "treks"` | `undefined` |
+| Property | Attribute | Description | Type                                                                                   | Default     |
+| -------- | --------- | ----------- | -------------------------------------------------------------------------------------- | ----------- |
+| `mode`   | `mode`    |             | `"outdoor" \| "sensitiveAreas" \| "touristicContents" \| "touristicEvents" \| "treks"` | `undefined` |
 
 
 ## Events

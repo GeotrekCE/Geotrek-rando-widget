@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property        | Attribute | Description | Type                                                                                                                                                | Default     |
-| --------------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `sensitiveArea` | --        |             | `{ id: number; geometry: Geometry; name: string; description: string; contact: string; info_url: string; period: boolean[]; practices: number[]; }` | `undefined` |
+| Property        | Attribute | Description | Type                                                                                                                                                                                                                  | Default     |
+| --------------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `sensitiveArea` | --        |             | `{ id: number; geometry: Geometry; name: string; description: string; species_id: number; contact: string; info_url: string; period: boolean[]; practices: number[]; offline?: boolean; attachments?: Attachments; }` | `undefined` |
 
 
 ## Shadow Parts

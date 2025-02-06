@@ -10,6 +10,7 @@ import {
   touristicEventsFilters,
   outdoorSitesFilters,
   handleOutdoorSitesFiltersAndSearch,
+  sensitiveAreasFilters,
 } from 'utils/utils';
 
 @Component({
@@ -54,6 +55,8 @@ export class GrwFilters {
       return touristicEventsFilters.filter(filter => filter.segment === segment).some(filter => state[filter.property] && state[filter.property].length > 0);
     } else if (state.mode === 'outdoor') {
       return outdoorSitesFilters.filter(filter => filter.segment === segment).some(filter => state[filter.property] && state[filter.property].length > 0);
+    } else if (state.mode === 'sensitiveAreas') {
+      return sensitiveAreasFilters.filter(filter => filter.segment === segment).some(filter => state[filter.property] && state[filter.property].length > 0);
     }
   }
 
@@ -113,8 +116,8 @@ export class GrwFilters {
     this.handleFilters();
   }
 
-
   render() {
+    console.log('state.mode', state.mode);
     return (
       <Host
         style={{
@@ -633,9 +636,8 @@ export class GrwFilters {
             )}
             {state.mode === 'sensitiveAreas' && (
               <div part="filters-sensitive-areas-container" class="filters-sensitive-areas-container">
-                'REMOVE'
                 <div part="filters-options-container" class="filters-options-container">
-                  {state.outdoorSitesWithinBounds && (
+                  {state.sensitiveAreasWithinBounds && (
                     <div part="current-sensitive-areas-within-bounds-length" class="current-sensitive-areas-within-bounds-length">{`${state.sensitiveAreasWithinBounds.length} ${
                       state.sensitiveAreasWithinBounds.length > 1 ? translate[state.language].home.sensitiveAreas : translate[state.language].home.sensitiveArea
                     }`}</div>
@@ -694,7 +696,7 @@ export class GrwFilters {
                           ></grw-filter>
                         </div>
                       )}
-                      {state['outdoorSiteTypes'].length > 0 && (
+                      {/* {state['outdoorSiteTypes'].length > 0 && (
                         <div part="filter-container" class="filter-container">
                           <grw-filter
                             exportparts="filter-name,filter-button-container,filter-select,filter-button,elected-filter-icon,filter-label"
@@ -706,7 +708,7 @@ export class GrwFilters {
                             filterPlaceholder={translate[state.language].placeholderActivities}
                           ></grw-filter>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   )}
                   {this.selectedSegment === 'selectedThemesFilters' && (

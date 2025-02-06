@@ -47,6 +47,7 @@ export class GrwSensitiveAreasProvider {
     let sensitiveAreasInStore: SensitiveAreas = await getAllDataInStore('sensitiveAreas');
     if (sensitiveAreasInStore && sensitiveAreasInStore.length > 0) {
       state.sensitiveAreaPractices = await handleOfflineProperty('sensitiveAreaPractices');
+      state.sensitivePeriod =  Array.from({ length: 12 }, (_, index) => index + 1);
       sensitiveAreasInStore = await handleOfflineProperty('sensitiveAreas');
       state.sensitiveAreas = sensitiveAreasInStore;
       state.currentSensitiveAreas = sensitiveAreasInStore;
@@ -68,6 +69,7 @@ export class GrwSensitiveAreasProvider {
         if (sensitiveAreaPractices) {
           state.sensitiveAreaPractices = sensitiveAreaPractices.results;
         }
+        state.sensitivePeriod =  Array.from({ length: 12 }, (_, index) => index + 1);
         if (sensitiveAreaSpecies) {
           state.sensitiveAreaSpecies = sensitiveAreaSpecies.results;
         }

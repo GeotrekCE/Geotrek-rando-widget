@@ -7,69 +7,71 @@
 
 ## Properties
 
-| Property                     | Attribute                       | Description | Type      | Default     |
-| ---------------------------- | ------------------------------- | ----------- | --------- | ----------- |
-| `api`                        | `api`                           |             | `string`  | `undefined` |
-| `appHeight`                  | `app-height`                    |             | `string`  | `'100vh'`   |
-| `appWidth`                   | `app-width`                     |             | `string`  | `'100%'`    |
-| `attributionLayer`           | `attribution-layer`             |             | `string`  | `undefined` |
-| `cities`                     | `cities`                        |             | `string`  | `undefined` |
-| `colorBackground`            | `color-background`              |             | `string`  | `'#fef7ff'` |
-| `colorClusters`              | `color-clusters`                |             | `any`     | `null`      |
-| `colorMarkers`               | `color-markers`                 |             | `any`     | `null`      |
-| `colorOnPrimary`             | `color-on-primary`              |             | `string`  | `'#ffffff'` |
-| `colorOnPrimaryContainer`    | `color-on-primary-container`    |             | `string`  | `'#21005e'` |
-| `colorOnSecondaryContainer`  | `color-on-secondary-container`  |             | `string`  | `'#1d192b'` |
-| `colorOnSurface`             | `color-on-surface`              |             | `string`  | `'#49454e'` |
-| `colorOnSurfaceVariant`      | `color-on-surface-variant`      |             | `string`  | `'#1c1b1f'` |
-| `colorOutdoorArea`           | `color-outdoor-area`            |             | `string`  | `'#ffb700'` |
-| `colorPrimary`               | `color-primary`                 |             | `string`  | `'#6750a4'` |
-| `colorPrimaryApp`            | `color-primary-app`             |             | `string`  | `'#6750a4'` |
-| `colorPrimaryContainer`      | `color-primary-container`       |             | `string`  | `'#eaddff'` |
-| `colorSecondaryContainer`    | `color-secondary-container`     |             | `string`  | `'#e8def8'` |
-| `colorSensitiveArea`         | `color-sensitive-area`          |             | `string`  | `'#4974a5'` |
-| `colorSurface`               | `color-surface`                 |             | `string`  | `'#1c1b1f'` |
-| `colorSurfaceContainerHigh`  | `color-surface-container-high`  |             | `string`  | `'#ece6f0'` |
-| `colorSurfaceContainerLow`   | `color-surface-container-low`   |             | `string`  | `'#f7f2fa'` |
-| `colorSurfaceVariant`        | `color-surface-variant`         |             | `string`  | `'#fef7ff'` |
-| `colorTrekLine`              | `color-trek-line`               |             | `string`  | `'#6b0030'` |
-| `commonMarkerSize`           | `common-marker-size`            |             | `number`  | `48`        |
-| `departureArrivalMarkerSize` | `departure-arrival-marker-size` |             | `number`  | `14`        |
-| `districts`                  | `districts`                     |             | `string`  | `undefined` |
-| `elevationHeight`            | `elevation-height`              |             | `number`  | `280`       |
-| `emergencyNumber`            | `emergency-number`              |             | `number`  | `undefined` |
-| `enableOffline`              | `enable-offline`                |             | `boolean` | `false`     |
-| `fabBackgroundColor`         | `fab-background-color`          |             | `string`  | `'#eaddff'` |
-| `fabColor`                   | `fab-color`                     |             | `string`  | `'#21005d'` |
-| `fontFamily`                 | `font-family`                   |             | `string`  | `'Roboto'`  |
-| `globalTilesMaxZoomOffline`  | `global-tiles-max-zoom-offline` |             | `number`  | `11`        |
-| `globalTilesMinZoomOffline`  | `global-tiles-min-zoom-offline` |             | `number`  | `0`         |
-| `inBbox`                     | `in-bbox`                       |             | `string`  | `undefined` |
-| `labels`                     | `labels`                        |             | `string`  | `undefined` |
-| `languages`                  | `languages`                     |             | `string`  | `'fr'`      |
-| `largeViewSize`              | `large-view-size`               |             | `number`  | `1024`      |
-| `mainClusterSize`            | `main-cluster-size`             |             | `number`  | `48`        |
-| `mainMarkerSize`             | `main-marker-size`              |             | `number`  | `32`        |
-| `mobileElevationHeight`      | `mobile-elevation-height`       |             | `number`  | `280`       |
-| `nameLayer`                  | `name-layer`                    |             | `string`  | `undefined` |
-| `outdoor`                    | `outdoor`                       |             | `boolean` | `false`     |
-| `pointReferenceMarkerSize`   | `point-reference-marker-size`   |             | `number`  | `24`        |
-| `portals`                    | `portals`                       |             | `string`  | `undefined` |
-| `practices`                  | `practices`                     |             | `string`  | `undefined` |
-| `rounded`                    | `rounded`                       |             | `boolean` | `true`      |
-| `routes`                     | `routes`                        |             | `string`  | `undefined` |
-| `selectedMainMarkerSize`     | `selected-main-marker-size`     |             | `number`  | `48`        |
-| `sensitiveArea`              | `sensitive-area`                |             | `boolean` | `false`     |
-| `signages`                   | `signages`                      |             | `boolean` | `false`     |
-| `structures`                 | `structures`                    |             | `string`  | `undefined` |
-| `themes`                     | `themes`                        |             | `string`  | `undefined` |
-| `tilesMaxZoomOffline`        | `tiles-max-zoom-offline`        |             | `number`  | `16`        |
-| `tilesMinZoomOffline`        | `tiles-min-zoom-offline`        |             | `number`  | `12`        |
-| `touristicContents`          | `touristic-contents`            |             | `boolean` | `false`     |
-| `touristicEvents`            | `touristic-events`              |             | `boolean` | `false`     |
-| `treks`                      | `treks`                         |             | `boolean` | `true`      |
-| `urlLayer`                   | `url-layer`                     |             | `string`  | `undefined` |
-| `weather`                    | `weather`                       |             | `boolean` | `false`     |
+| Property                               | Attribute                                   | Description | Type      | Default     |
+| -------------------------------------- | ------------------------------------------- | ----------- | --------- | ----------- |
+| `api`                                  | `api`                                       |             | `string`  | `undefined` |
+| `appHeight`                            | `app-height`                                |             | `string`  | `'100vh'`   |
+| `appWidth`                             | `app-width`                                 |             | `string`  | `'100%'`    |
+| `attributionLayer`                     | `attribution-layer`                         |             | `string`  | `undefined` |
+| `cities`                               | `cities`                                    |             | `string`  | `undefined` |
+| `colorBackground`                      | `color-background`                          |             | `string`  | `'#fef7ff'` |
+| `colorClusters`                        | `color-clusters`                            |             | `any`     | `null`      |
+| `colorMarkers`                         | `color-markers`                             |             | `any`     | `null`      |
+| `colorOnPrimary`                       | `color-on-primary`                          |             | `string`  | `'#ffffff'` |
+| `colorOnPrimaryContainer`              | `color-on-primary-container`                |             | `string`  | `'#21005e'` |
+| `colorOnSecondaryContainer`            | `color-on-secondary-container`              |             | `string`  | `'#1d192b'` |
+| `colorOnSurface`                       | `color-on-surface`                          |             | `string`  | `'#49454e'` |
+| `colorOnSurfaceVariant`                | `color-on-surface-variant`                  |             | `string`  | `'#1c1b1f'` |
+| `colorOutdoorArea`                     | `color-outdoor-area`                        |             | `string`  | `'#ffb700'` |
+| `colorPrimary`                         | `color-primary`                             |             | `string`  | `'#6750a4'` |
+| `colorPrimaryApp`                      | `color-primary-app`                         |             | `string`  | `'#6750a4'` |
+| `colorPrimaryContainer`                | `color-primary-container`                   |             | `string`  | `'#eaddff'` |
+| `colorSecondaryContainer`              | `color-secondary-container`                 |             | `string`  | `'#e8def8'` |
+| `colorSensitiveArea`                   | `color-sensitive-area`                      |             | `string`  | `'#4974a5'` |
+| `colorSensitiveAreaNotSensitivePeriod` | `color-sensitive-area-not-sensitive-period` |             | `string`  | `'#48c78e'` |
+| `colorSensitiveAreaSensitivePeriod`    | `color-sensitive-area-sensitive-period`     |             | `string`  | `'#ffe08a'` |
+| `colorSurface`                         | `color-surface`                             |             | `string`  | `'#1c1b1f'` |
+| `colorSurfaceContainerHigh`            | `color-surface-container-high`              |             | `string`  | `'#ece6f0'` |
+| `colorSurfaceContainerLow`             | `color-surface-container-low`               |             | `string`  | `'#f7f2fa'` |
+| `colorSurfaceVariant`                  | `color-surface-variant`                     |             | `string`  | `'#fef7ff'` |
+| `colorTrekLine`                        | `color-trek-line`                           |             | `string`  | `'#6b0030'` |
+| `commonMarkerSize`                     | `common-marker-size`                        |             | `number`  | `48`        |
+| `departureArrivalMarkerSize`           | `departure-arrival-marker-size`             |             | `number`  | `14`        |
+| `districts`                            | `districts`                                 |             | `string`  | `undefined` |
+| `elevationHeight`                      | `elevation-height`                          |             | `number`  | `280`       |
+| `emergencyNumber`                      | `emergency-number`                          |             | `number`  | `undefined` |
+| `enableOffline`                        | `enable-offline`                            |             | `boolean` | `false`     |
+| `fabBackgroundColor`                   | `fab-background-color`                      |             | `string`  | `'#eaddff'` |
+| `fabColor`                             | `fab-color`                                 |             | `string`  | `'#21005d'` |
+| `fontFamily`                           | `font-family`                               |             | `string`  | `'Roboto'`  |
+| `globalTilesMaxZoomOffline`            | `global-tiles-max-zoom-offline`             |             | `number`  | `11`        |
+| `globalTilesMinZoomOffline`            | `global-tiles-min-zoom-offline`             |             | `number`  | `0`         |
+| `inBbox`                               | `in-bbox`                                   |             | `string`  | `undefined` |
+| `labels`                               | `labels`                                    |             | `string`  | `undefined` |
+| `languages`                            | `languages`                                 |             | `string`  | `'fr'`      |
+| `largeViewSize`                        | `large-view-size`                           |             | `number`  | `1024`      |
+| `mainClusterSize`                      | `main-cluster-size`                         |             | `number`  | `48`        |
+| `mainMarkerSize`                       | `main-marker-size`                          |             | `number`  | `32`        |
+| `mobileElevationHeight`                | `mobile-elevation-height`                   |             | `number`  | `280`       |
+| `nameLayer`                            | `name-layer`                                |             | `string`  | `undefined` |
+| `outdoor`                              | `outdoor`                                   |             | `boolean` | `false`     |
+| `pointReferenceMarkerSize`             | `point-reference-marker-size`               |             | `number`  | `24`        |
+| `portals`                              | `portals`                                   |             | `string`  | `undefined` |
+| `practices`                            | `practices`                                 |             | `string`  | `undefined` |
+| `rounded`                              | `rounded`                                   |             | `boolean` | `true`      |
+| `routes`                               | `routes`                                    |             | `string`  | `undefined` |
+| `selectedMainMarkerSize`               | `selected-main-marker-size`                 |             | `number`  | `48`        |
+| `sensitiveAreas`                       | `sensitive-areas`                           |             | `boolean` | `false`     |
+| `signages`                             | `signages`                                  |             | `boolean` | `false`     |
+| `structures`                           | `structures`                                |             | `string`  | `undefined` |
+| `themes`                               | `themes`                                    |             | `string`  | `undefined` |
+| `tilesMaxZoomOffline`                  | `tiles-max-zoom-offline`                    |             | `number`  | `16`        |
+| `tilesMinZoomOffline`                  | `tiles-min-zoom-offline`                    |             | `number`  | `12`        |
+| `touristicContents`                    | `touristic-contents`                        |             | `boolean` | `false`     |
+| `touristicEvents`                      | `touristic-events`                          |             | `boolean` | `false`     |
+| `treks`                                | `treks`                                     |             | `boolean` | `true`      |
+| `urlLayer`                             | `url-layer`                                 |             | `string`  | `undefined` |
+| `weather`                              | `weather`                                   |             | `boolean` | `false`     |
 
 
 ## Shadow Parts
@@ -94,6 +96,7 @@
 - [grw-touristic-contents-provider](../../store)
 - [grw-touristic-events-provider](../../store)
 - [grw-outdoor-sites-provider](../../store)
+- [grw-sensitive-areas-provider](../../store)
 - [grw-select-language](../grw-select-language)
 - [grw-segmented-segment](../grw-segmented-segment)
 - [grw-search](../grw-search)
@@ -103,6 +106,7 @@
 - [grw-touristic-contents-list](../grw-touristic-contents-list)
 - [grw-touristic-events-list](../grw-touristic-events-list)
 - [grw-outdoor-sites-list](../grw-outdoor-sites-list)
+- [grw-sensitive-areas-list](../grw-sensitive-areas-list)
 - [grw-trek-detail](../grw-trek-detail)
 - [grw-offline-confirm-modal](../grw-offline-confirm-modal)
 - [grw-touristic-content-detail](../grw-touristic-content-detail)
@@ -126,6 +130,7 @@ graph TD;
   grw-app --> grw-touristic-contents-provider
   grw-app --> grw-touristic-events-provider
   grw-app --> grw-outdoor-sites-provider
+  grw-app --> grw-sensitive-areas-provider
   grw-app --> grw-select-language
   grw-app --> grw-segmented-segment
   grw-app --> grw-search
@@ -135,6 +140,7 @@ graph TD;
   grw-app --> grw-touristic-contents-list
   grw-app --> grw-touristic-events-list
   grw-app --> grw-outdoor-sites-list
+  grw-app --> grw-sensitive-areas-list
   grw-app --> grw-trek-detail
   grw-app --> grw-offline-confirm-modal
   grw-app --> grw-touristic-content-detail
@@ -148,6 +154,7 @@ graph TD;
   grw-touristic-contents-list --> grw-touristic-content-card
   grw-touristic-events-list --> grw-touristic-event-card
   grw-outdoor-sites-list --> grw-outdoor-site-card
+  grw-sensitive-areas-list --> grw-sensitive-area-card
   grw-trek-detail --> grw-details-modal
   grw-trek-detail --> grw-touristic-event-detail
   grw-trek-detail --> grw-touristic-content-detail

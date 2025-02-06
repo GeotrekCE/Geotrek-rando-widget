@@ -127,6 +127,7 @@ const { state, onChange, reset } = createStore<{
   currentSignages: Signages;
   sensitiveAreas: SensitiveAreas;
   sensitiveArea: SensitiveArea;
+  sensitivePeriod: number[];
   sensitiveAreasWithinBounds: SensitiveAreas;
   selectedSensitiveAreaId: number;
   sensitiveAreaPractices: SensitiveAreaPractices;
@@ -222,6 +223,7 @@ const { state, onChange, reset } = createStore<{
   sensitiveAreaPractices: null,
   sensitiveAreaSpecies: null,
   currentRelatedSensitiveAreas: null,
+  sensitivePeriod: null,
 });
 
 export { onChange, reset };

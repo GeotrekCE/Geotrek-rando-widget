@@ -20,11 +20,11 @@
 
 ## Shadow Parts
 
-| Part                                           | Description |
-| ---------------------------------------------- | ----------- |
-| `"current-outdoor-sites-within-bounds-length"` |             |
-| `"list-bottom-space"`                          |             |
-| `"outdoor-sites-list-container"`               |             |
+| Part                                             | Description |
+| ------------------------------------------------ | ----------- |
+| `"current-sensitive-areas-within-bounds-length"` |             |
+| `"list-bottom-space"`                            |             |
+| `"sensitive-areas-list-container"`               |             |
 
 
 ## Dependencies
@@ -35,14 +35,14 @@
 
 ### Depends on
 
-- [grw-outdoor-site-card](../grw-outdoor-site-card)
+- [grw-sensitive-area-card](../grw-sensitive-area-card)
 
 ### Graph
 ```mermaid
 graph TD;
-  grw-outdoor-sites-list --> grw-outdoor-site-card
-  grw-app --> grw-outdoor-sites-list
-  style grw-outdoor-sites-list fill:#f9f,stroke:#333,stroke-width:4px
+  grw-sensitive-areas-list --> grw-sensitive-area-card
+  grw-app --> grw-sensitive-areas-list
+  style grw-sensitive-areas-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

@@ -46,6 +46,7 @@
 | --------------------------- | ----------- | --------------------- |
 | `outdoorCourseCardPress`    |             | `CustomEvent<number>` |
 | `outdoorSiteCardPress`      |             | `CustomEvent<number>` |
+| `sensitiveAreaCardPress`    |             | `CustomEvent<number>` |
 | `touristicContentCardPress` |             | `CustomEvent<number>` |
 | `touristicEventCardPress`   |             | `CustomEvent<number>` |
 | `trekCardPress`             |             | `CustomEvent<number>` |
