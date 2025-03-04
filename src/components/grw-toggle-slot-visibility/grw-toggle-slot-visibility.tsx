@@ -25,10 +25,7 @@ export class GrwToggleSlotVisibility {
   }
 
   handleView() {
-    if (
-      (state.currentTrek || state.currentOutdoorSite) &&
-      (typeof this.isLargeView === undefined || this.isLargeView !== this.toggleSlotElement.getBoundingClientRect().width >= this.largeViewSize)
-    ) {
+    if (typeof this.isLargeView === undefined || this.isLargeView !== this.toggleSlotElement.getBoundingClientRect().width >= this.largeViewSize) {
       this.isLargeView = this.toggleSlotElement.getBoundingClientRect().width >= this.largeViewSize;
       this.showStartSlot = true;
       this.showEndSlot = this.isLargeView;
@@ -110,31 +107,29 @@ export class GrwToggleSlotVisibility {
   render() {
     return (
       <Host>
-        {(state.currentTrek || state.currentOutdoorSite) && (
-          <div class="grw-toggle-slot-visibility-container">
-            <div
-              class="grw-slot-start-container"
-              style={{ height: this.showStartSlot ? '100%' : '100vh', visibility: this.showStartSlot ? 'visible' : 'hidden', zIndex: this.showStartSlot ? '1' : '0' }}
-            >
-              <slot name="start"> </slot>
-            </div>
-
-            <div
-              id="grw-slot-end-container"
-              style={{
-                width: '100%',
-                height: this.slotEndHeight,
-                visibility: !this.isLargeView ? 'hidden' : 'visible',
-                position: !this.isLargeView ? 'absolute' : 'relative',
-                top: !this.isLargeView ? '0px' : 'none',
-                left: !this.isLargeView ? '0px' : 'none',
-                zIndex: !this.isLargeView ? '0' : '1',
-              }}
-            >
-              <slot name="end"> </slot>
-            </div>
+        <div class="grw-toggle-slot-visibility-container">
+          <div
+            class="grw-slot-start-container"
+            style={{ height: this.showStartSlot ? '100%' : '100vh', visibility: this.showStartSlot ? 'visible' : 'hidden', zIndex: this.showStartSlot ? '1' : '0' }}
+          >
+            <slot name="start"> </slot>
           </div>
-        )}
+
+          <div
+            id="grw-slot-end-container"
+            style={{
+              width: '100%',
+              height: this.slotEndHeight,
+              visibility: !this.isLargeView ? 'hidden' : 'visible',
+              position: !this.isLargeView ? 'absolute' : 'relative',
+              top: !this.isLargeView ? '0px' : 'none',
+              left: !this.isLargeView ? '0px' : 'none',
+              zIndex: !this.isLargeView ? '0' : '1',
+            }}
+          >
+            <slot name="end"> </slot>
+          </div>
+        </div>
       </Host>
     );
   }
