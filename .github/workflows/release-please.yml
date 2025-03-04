@@ -18,4 +18,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
           tag-prefix: ''
-          release-name-template: '${{version}}'
+          release-name-template: '${{tag_name}}'
