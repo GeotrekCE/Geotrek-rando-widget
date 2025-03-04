@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.3](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.2...0.27.3) (2025-03-04)
+
+
+### Bug Fixes
+
+* toggle slot visibility ([45ff9f2](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/45ff9f2f4b9f9759a47bf845a0fd5ea98b142e32))
+
 ## [0.27.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.1...v0.27.2) (2025-01-23)
 
 
