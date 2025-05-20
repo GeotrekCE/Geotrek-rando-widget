@@ -1424,7 +1424,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentPois && state.currentPois.length > 0 && (
-              <div>
+              <div part="divider-and-pois-container" class="divider-and-pois-container">
                 <div part="divider" class="divider"></div>
                 <div part="pois-container" class="pois-container">
                   <div part="pois-title" class="pois-title" ref={el => (this.poiRef = el)}>
@@ -1448,7 +1448,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {this.weather && this.currentTrek.departure_city && !this.offline && (
-              <div>
+              <div part="divider-and-weather-container" class="divider-and-weather-container">
                 <div part="divider" class="divider"></div>
                 <div part="weather-container" class="weather-container">
                   <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${this.currentTrek.departure_city}0#${this.colorPrimaryApp}`}></iframe>
@@ -1456,7 +1456,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {this.currentTrek.access && (
-              <div>
+              <div part="divider-and-access-container" class="divider-and-access-container">
                 <div part="divider" class="divider"></div>
                 <div part="access-container" class="access-container">
                   <div part="access-title" class="access-title">
@@ -1475,7 +1475,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {this.currentTrek.public_transport && (
-              <div>
+              <div part="divider-and-public-transport-container" class="divider-and-public-transport-container">
                 <div part="divider" class="divider"></div>
                 <div part="public-transport-container" class="public-transport-container">
                   <div part="public-transport-title" class="public-transport-title">
@@ -1486,7 +1486,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {(this.currentTrek.advice || this.currentTrek.gear || this.labels.length > 0) && (
-              <div>
+              <div part="divider-and-advice-container" class="divider-and-advice-container">
                 <div part="divider" class="divider"></div>
                 <div part="advice-container" class="advice-container">
                   <div part="advice-title" class="advice-title" ref={el => (this.recommendationRef = el)}>
@@ -1517,7 +1517,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
-              <div>
+              <div part="divider-and-sensitive-areas-container" class="divider-and-sensitive-areas-container">
                 <div part="divider" class="divider"></div>
                 <div part="sensitive-areas-container" class="sensitive-areas-container">
                   <div part="ensitive-areas-title" class="sensitive-areas-title" ref={el => (this.sensitiveAreaRef = el)}>
@@ -1537,7 +1537,7 @@ export class GrwTrekDetail {
             )}
             {state.currentInformationDesks &&
               state.currentInformationDesks.filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0 && (
-                <div>
+                <div part="divider-and-information-desks-container" class="divider-and-information-desks-container">
                   <div part="divider" class="divider"></div>
                   <div part="information-desks-container" class="information-desks-container">
                     <div part="information-desks-title" class="information-desks-title" ref={el => (this.informationPlacesRef = el)}>
@@ -1572,7 +1572,7 @@ export class GrwTrekDetail {
               this.currentTrek.accessibility_exposure ||
               this.currentTrek.accessibility_advice ||
               this.emergencyNumber) && (
-              <div>
+              <div part="divider-and-accessibilities-container" class="divider-and-accessibilities-container">
                 <div part="divider" class="divider"></div>
                 <div part="accessibilities-container" class="accessibilities-container">
                   <div part="accessibilities-title" class="accessibilities-title" ref={el => (this.accessibilityRef = el)}>
@@ -1666,7 +1666,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
-              <div>
+              <div part="divider-and-touristic-content-container" class="divider-and-touristic-content-container">
                 <div part="divider" class="divider"></div>
                 <div part="touristic-content-container" class="touristic-content-container">
                   <div part="touristic-content-title" class="touristic-content-title" ref={el => (this.touristicContentsRef = el)}>
@@ -1692,7 +1692,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.trekTouristicEvents && state.trekTouristicEvents.length > 0 && (
-              <div>
+              <div part="divider-and-touristic-event-container" class="divider-and-touristic-event-container">
                 <div part="divider" class="divider"></div>
                 <div part="touristic-event-container" class="touristic-event-container">
                   <div part="touristic-event-title" class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
@@ -1718,7 +1718,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {this.currentTrek.web_links && this.currentTrek.web_links.length > 0 && (
-              <div>
+              <div part="divider-and-weblinks-container" class="divider-and-weblinks-container">
                 <div part="divider" class="divider"></div>
                 <div part="weblinks-container" class="weblinks-container">
                   <div part="weblinks-title" class="weblinks-title">
@@ -1734,7 +1734,7 @@ export class GrwTrekDetail {
               </div>
             )}
             {this.currentTrek.source && this.currentTrek.source.length > 0 && (
-              <div>
+              <div part="divider-and-source-container" class="divider-and-source-container">
                 <div part="divider" class="divider"></div>
                 <div part="source-container" class="source-container">
                   <div part="source-title" class="source-title">
