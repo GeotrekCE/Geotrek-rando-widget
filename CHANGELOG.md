@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.27.4](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.3...0.27.4) (2025-05-20)
+
+
+### Bug Fixes
+
+* add missing part and class ([9db65c1](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/9db65c18e1d2e4b72aa8053d2aa1c09c8f7524b5))
+
 ## [0.27.3](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.2...0.27.3) (2025-03-04)
 
 
