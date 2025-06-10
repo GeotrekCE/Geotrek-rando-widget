@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.28.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.4...0.28.0) (2025-06-10)
+
+
+### Features
+
+* use dynamic y axis min and max for elevation chart ([aac126f](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/aac126f78467d1d54b9fbc341717afe6131d9a54))
+
+
+### Bug Fixes
+
+* use city code for weather if exist else id ([03701e1](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/03701e126c97546a3479d835d101aca2038b00ad))
+
 ## [0.27.4](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.3...0.27.4) (2025-05-20)
 
 
