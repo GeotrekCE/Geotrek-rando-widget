@@ -111,6 +111,7 @@ export type Cities = City[];
 
 export type City = {
   id: string;
+  code?: string;
   name: string;
 };
 

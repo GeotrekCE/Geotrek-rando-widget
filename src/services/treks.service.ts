@@ -52,7 +52,7 @@ export function getSensitiveAreasNearTrek(api, language, trekId, init) {
 }
 
 export function getCities(api, language, init) {
-  return getAllPaginatedResults(`${api}city/?language=${language}&fields=id,name&published=true`, init);
+  return getAllPaginatedResults(`${api}city/?language=${language}&fields=id,code,name&published=true`, init);
 }
 
 export function getThemes(api, language, portals, init) {

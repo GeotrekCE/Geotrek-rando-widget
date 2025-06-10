@@ -1014,9 +1014,15 @@ export class GrwTrekDetail {
     delete trekInStore.offline;
   }
 
+  getDepartureCityCode() {
+    const departureCity = state.cities.find(currentCity => currentCity.id === state.currentTrek.departure_city);
+    return departureCity.code ?? departureCity.id;
+  }
+
   render() {
     const defaultImageSrc = getAssetPath(`${Build.isDev ? '/' : ''}assets/default-image.svg`);
     const displayPaginationAndNavigation = (this.currentTrek && this.currentTrek.attachments.filter(attachment => attachment.type === 'image').length > 1) || this.offline;
+
     return (
       <Host
         style={{
@@ -1451,7 +1457,7 @@ export class GrwTrekDetail {
               <div part="divider-and-weather-container" class="divider-and-weather-container">
                 <div part="divider" class="divider"></div>
                 <div part="weather-container" class="weather-container">
-                  <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${this.currentTrek.departure_city}0#${this.colorPrimaryApp}`}></iframe>
+                  <iframe height="150" frameborder="0" src={`https://meteofrance.com/widget/prevision/${this.getDepartureCityCode()}0#${this.colorPrimaryApp}`}></iframe>
                 </div>
               </div>
             )}
