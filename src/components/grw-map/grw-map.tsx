@@ -900,6 +900,12 @@ export class GrwMap {
     /* @ts-ignore */
     L.setLocale('fr');
 
+    const elevations = state.currentTrek.geometry.coordinates.map(coord => coord[2]).filter(el => el !== undefined && el !== null);
+    const minMaxElevation = {
+      yAxisMin: elevations.length > 0 ? Math.min(...elevations) * 0.75 : 0,
+      yAxisMax: elevations.length > 0 ? Math.max(...elevations) * 1.25 : 0,
+    };
+
     const elevationOptions = {
       elevationDiv: `#elevation-container`,
       theme: `custom-theme use-theme-color`,
@@ -913,6 +919,7 @@ export class GrwMap {
       waypoints: false,
       almostOver: false,
       dragging: false,
+      ...minMaxElevation,
     };
     this.elevationControl = (L.control as any).elevation(elevationOptions).addTo(this.map);
     const elevation = JSON.stringify({
