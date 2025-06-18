@@ -2460,7 +2460,7 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: `<div part="signage-marker" class="signage-marker"><img  src=${signageImageSrc} /><div part="signage-name" class="signage-name">${geoJsonPoint.properties.name}</div></div>`,
+              html: `<div part="signage-marker" class="signage-marker"><img part="signage-img" src=${signageImageSrc} /><div part="signage-name" class="signage-name">${geoJsonPoint.properties.name}</div></div>`,
               className: '',
               iconSize: [this.commonMarkerSize * 1.2, this.commonMarkerSize * 0.8],
             } as any),
