@@ -16,6 +16,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Trek } from 'components';
 import pointOnFeature from '@turf/point-on-feature';
 import bbox from '@turf/bbox';
+import 'leaflet-textpath';
 
 @Component({
   tag: 'grw-map',
@@ -698,6 +699,13 @@ export class GrwMap {
       style: () => ({
         color: 'transparent',
       }),
+      onEachFeature: (_feature, layer) => {
+        (layer as any).setText('>    ', {
+          repeat: true,
+          center: true,
+          attributes: { 'fill': '#000000', 'font-weight': 'bold', 'font-size': '16px' },
+        });
+      },
       interactive: false,
     }).addTo(this.map);
 
@@ -910,7 +918,7 @@ export class GrwMap {
       elevationDiv: `#elevation-container`,
       theme: `custom-theme use-theme-color`,
       height: this.mapElement.getBoundingClientRect().width >= this.largeViewSize / 2 ? this.elevationHeight : this.mobileElevationHeight,
-      distanceMarkers: { distance: false, direction: true },
+      distanceMarkers: { distance: false, direction: false },
       summary: 'inline',
       legend: false,
       downloadLink: false,
