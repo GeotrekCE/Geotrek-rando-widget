@@ -30,13 +30,14 @@ export class GrwToggleSlotVisibility {
       this.showStartSlot = true;
       this.showEndSlot = this.isLargeView;
       if (!this.isLargeView) {
+        const mapVisibilityIcon = this.getMapVisibilityIconButton();
         const mapVisibilityButtonContainer = document.createElement('div');
-        mapVisibilityButtonContainer.className = 'grw-map-visibility-button-container';
+        mapVisibilityButtonContainer.className = `grw-map-visibility-button-container ${mapVisibilityIcon === 'map' ? 'extended-fab-map' : 'extended-fab-detail'}`;
         const mapVisibilityButton = document.createElement('grw-extended-fab');
         mapVisibilityButton.setAttribute('exportparts', 'map-visibility-button,map-visibility-button-icon,map-visibility-button-label');
         mapVisibilityButton.setAttribute('font-family', this.fontFamily);
         mapVisibilityButton.action = () => this.toggleShowSlot();
-        mapVisibilityButton.icon = () => this.getMapVisibilityIconButton();
+        mapVisibilityButton.icon = () => mapVisibilityIcon;
         mapVisibilityButton.name = () => this.getMapVisibilityLabelButton();
         mapVisibilityButton.setAttribute('fab-background-color', this.fabBackgroundColor);
         mapVisibilityButton.setAttribute('fab-color', this.fabColor);
@@ -83,8 +84,12 @@ export class GrwToggleSlotVisibility {
       document.body.style.overflow = `visible`;
       grwSlotEndContainerClone.style['z-index'] = '0';
     }
+
+    const mapVisibilityButtonContainer = document.body.getElementsByClassName('grw-map-visibility-button-container')[0];
     const grwExtendedFab: any = document.getElementsByTagName('grw-extended-fab')[0];
-    grwExtendedFab.icon = () => this.getMapVisibilityIconButton();
+    const mapVisibilityIcon = this.getMapVisibilityIconButton();
+    mapVisibilityButtonContainer.className = `grw-map-visibility-button-container ${mapVisibilityIcon === 'map' ? 'extended-fab-map' : 'extended-fab-detail'}`;
+    grwExtendedFab.icon = () => mapVisibilityIcon;
     grwExtendedFab.name = () => this.getMapVisibilityLabelButton();
   }
 
