@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.29.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.28.0...0.29.0) (2025-06-19)
+
+
+### Features
+
+* add state class to grw-map-visibility-button-container ([125f5b1](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/125f5b17826ab687b8d0267cdcaafc774650ef4d))
+
+
+### Bug Fixes
+
+* add signage img part ([163f360](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/163f3607a6df6f6bb4fc5a2f7af41dbeadc7728e))
+* arrow along the trek line ([771aeb8](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/771aeb8b02fe1e637dd9d8c0bad8c35cf16f8a35))
+* locate icon to blue ([b7ebd21](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/b7ebd21d6035e3e93c6abb49fcd09fccfa582a65))
+
 ## [0.28.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.27.4...0.28.0) (2025-06-10)
 
 
