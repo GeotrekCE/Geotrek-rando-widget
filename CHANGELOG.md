@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.29.0...0.29.1) (2025-06-23)
+
+
+### Bug Fixes
+
+* add arrow repeat option ([d553e63](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/d553e63781d56fc2658effb4726406bb794f7e95))
+
 ## [0.29.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.28.0...0.29.0) (2025-06-19)
 
 
