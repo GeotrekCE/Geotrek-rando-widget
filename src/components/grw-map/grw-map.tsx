@@ -702,7 +702,7 @@ export class GrwMap {
         color: 'transparent',
       }),
       onEachFeature: (_feature, layer) => {
-        (layer as any).setText('>    ', {
+        (layer as any).setText('>', {
           repeat: this.arrowRepeat,
           center: true,
           attributes: { 'fill': '#000000', 'font-weight': 'bold', 'font-size': '16px' },
