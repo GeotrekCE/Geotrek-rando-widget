@@ -12,6 +12,7 @@ export namespace Components {
         "api": string;
         "appHeight": string;
         "appWidth": string;
+        "arrowRepeat": number;
         "attributionLayer": string;
         "cities": string;
         "colorBackground": string;
@@ -122,6 +123,7 @@ export namespace Components {
         "colorPrimaryContainer": string;
     }
     interface GrwMap {
+        "arrowRepeat": number;
         "attributionLayer": string;
         "colorBackground": string;
         "colorClusters": any;
@@ -993,6 +995,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "appHeight"?: string;
         "appWidth"?: string;
+        "arrowRepeat"?: number;
         "attributionLayer"?: string;
         "cities"?: string;
         "colorBackground"?: string;
@@ -1106,6 +1109,7 @@ declare namespace LocalJSX {
         "colorPrimaryContainer"?: string;
     }
     interface GrwMap {
+        "arrowRepeat"?: number;
         "attributionLayer"?: string;
         "colorBackground"?: string;
         "colorClusters"?: any;

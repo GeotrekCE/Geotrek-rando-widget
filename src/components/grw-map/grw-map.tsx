@@ -72,6 +72,8 @@ export class GrwMap {
   @Prop() fabBackgroundColor = '#eaddff';
   @Prop() fabColor = '#21005d';
 
+  @Prop() arrowRepeat = 20;
+
   map: L.Map;
   bounds;
   treksLayer: L.GeoJSON<any>;
@@ -701,7 +703,7 @@ export class GrwMap {
       }),
       onEachFeature: (_feature, layer) => {
         (layer as any).setText('>    ', {
-          repeat: true,
+          repeat: this.arrowRepeat,
           center: true,
           attributes: { 'fill': '#000000', 'font-weight': 'bold', 'font-size': '16px' },
         });

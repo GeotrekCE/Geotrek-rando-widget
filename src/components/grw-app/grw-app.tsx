@@ -99,6 +99,7 @@ export class GrwApp {
   @Prop() mobileElevationHeight = 280;
 
   @Prop() signages = false;
+  @Prop() arrowRepeat = 20;
 
   handlePopStateBind: (event: any) => void = this.handlePopState.bind(this);
 
@@ -916,6 +917,7 @@ export class GrwApp {
                   mobile-elevation-height={this.mobileElevationHeight}
                   large-view-size={this.largeViewSize}
                   is-large-view={this.isLargeView}
+                  arrow-repeat={this.arrowRepeat}
                 ></grw-map>
               )}
             </div>
