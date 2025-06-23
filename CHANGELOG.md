@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.29.1...0.29.2) (2025-06-23)
+
+
+### Bug Fixes
+
+* edit arrow text ([48d6c87](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/48d6c8726ea519bf7ac8a574d89081a3ceb9ec1a))
+
 ## [0.29.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.29.0...0.29.1) (2025-06-23)
 
 
