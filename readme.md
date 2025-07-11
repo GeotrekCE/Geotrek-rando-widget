@@ -44,7 +44,7 @@ Explore the widget and its configuration options here: [Geotrek-rando-widget Sto
 - [Walks and Hikes in Sidobre & Valleys, Tarn](https://sidobre-vallees-tourisme.com/type_activite/balades-et-randonnees-sidobre-vallees/)
 - [Hiking in Haut Jura Saint-Claude](https://www.haut-jura-saint-claude.com/pause-aventure/randonnee-haut-jura/)
 - [Cycling Trails in Coeur du Jura](https://www.coeurdujura-tourisme.com/parcours-randonnees-velo/)
-- [Walks and Hikes in Occitanie](https://www.la-toscane-occitane.com/a-voir-a-faire/balades-randonnees)
+- [Walks and Hikes in Occitanie](https://www.la-toscane-occitane.com/activites/balades-randonnees/)
 
 ![Examples](/docs/public/assets/examples.jpg)
 
