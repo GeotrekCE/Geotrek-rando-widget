@@ -97,4 +97,4 @@ Voici des exemples d'intégration du de Geotrek-rando-widget en conditions réel
 - [Haut Jura Saint-Claude](https://www.haut-jura-saint-claude.com/pause-aventure/randonnee-haut-jura/)
 - [Coeur du Jura - randonnées vélo](https://www.coeurdujura-tourisme.com/parcours-randonnees-velo/)
 - [Coeur du Jura - randonnées pédestre](https://www.coeurdujura-tourisme.com/widget-geotrek/)
-- [La Toscane Occitane](https://www.la-toscane-occitane.com/a-voir-a-faire/balades-randonnees)
+- [La Toscane Occitane](https://www.la-toscane-occitane.com/activites/balades-randonnees/)
