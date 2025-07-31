@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.29.2...0.30.0) (2025-07-31)
+
+
+### Features
+
+* improve trek detail loading ([bd64c2c](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/bd64c2cb95c4f8ca7e097c2af24f02fd708e0aad))
+
 ## [0.29.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.29.1...0.29.2) (2025-06-23)
 
 
