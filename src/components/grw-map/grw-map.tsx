@@ -121,6 +121,8 @@ export class GrwMap {
   outdoorSitePopupIsOpen: boolean;
   outdoorCoursePopupIsOpen: boolean;
 
+  layerDataIsLoading: boolean;
+
   handleTreksWithinBoundsBind: (event: any) => void = this.handleTreksWithinBounds.bind(this);
   handleTouristicContentsWithinBoundsBind: (event: any) => void = this.handleTouristicContentsWithinBounds.bind(this);
   handleTouristicEventsWithinBoundsBind: (event: any) => void = this.handleTouristicEventsWithinBounds.bind(this);
@@ -169,21 +171,21 @@ export class GrwMap {
   @Listen('poiIsInViewport', { target: 'window' })
   poiIsInViewport(event: CustomEvent<boolean>) {
     if (this.currentPoisLayer && this.layersControl) {
-      this.handleLayerVisibility(event.detail, this.currentPoisLayer);
+      this.handleLayerVisibility(event.detail, this.currentPoisLayer, !state.currentPois || state.currentPois.length === 0);
     }
   }
 
   @Listen('touristicContentsIsInViewport', { target: 'window' })
   touristicContentsIsInViewport(event: CustomEvent<boolean>) {
     if (this.currentToutisticContentsLayer && this.layersControl) {
-      this.handleLayerVisibility(event.detail, this.currentToutisticContentsLayer);
+      this.handleLayerVisibility(event.detail, this.currentToutisticContentsLayer, !state.trekTouristicContents || state.trekTouristicContents.length === 0);
     }
   }
 
   @Listen('touristicEventsIsInViewport', { target: 'window' })
   touristicEventsIsInViewport(event: CustomEvent<boolean>) {
     if (this.currentTouristicEventsLayer && this.layersControl) {
-      this.handleLayerVisibility(event.detail, this.currentTouristicEventsLayer);
+      this.handleLayerVisibility(event.detail, this.currentTouristicEventsLayer, !state.trekTouristicEvents || state.trekTouristicEvents.length === 0);
     }
   }
 
@@ -382,6 +384,18 @@ export class GrwMap {
       }
     });
 
+    onChange('currentPois', async () => {
+      this.setCurrentPois();
+    });
+
+    onChange('trekTouristicContents', async () => {
+      this.setCurrentTouristicContents();
+    });
+
+    onChange('trekTouristicEvents', async () => {
+      this.setCurrentTouristicEvents();
+    });
+
     onChange('currentOutdoorSites', () => {
       if (state.currentOutdoorSites) {
         this.removeTreks();
@@ -492,9 +506,11 @@ export class GrwMap {
     });
   }
 
-  handleLayerVisibility(visible: boolean, layer: L.GeoJSON) {
+  handleLayerVisibility(visible: boolean, layer: L.GeoJSON, loading = false) {
     if (visible && !this.map.hasLayer(layer)) {
       layer.addTo(this.map);
+      this.layerDataIsLoading = loading;
+      forceUpdate(this.hostElement);
     } else if (this.map.hasLayer(layer) && !this.userLayersState[(layer as any)._leaflet_id]) {
       this.map.removeLayer(layer);
     }
@@ -1224,6 +1240,11 @@ export class GrwMap {
         if ((this.layersControl as any)._layers.find(layer => layer.layer._leaflet_id === userLayerState.layerId).overlay) {
           userLayerState.onchange = event => {
             this.userLayersState[userLayerState.layerId] = (event.target as any).checked;
+            const overlay = (this.layersControl as any)._layers.find(layer => layer.layer._leaflet_id === userLayerState.layerId);
+            if (this.userLayersState[userLayerState.layerId] && Object.keys(overlay.layer._layers).length === 0) {
+              this.layerDataIsLoading = true;
+              forceUpdate(this.hostElement);
+            }
           };
         }
       });
@@ -2403,28 +2424,18 @@ export class GrwMap {
   }
 
   async addCurrentPois() {
-    if (state.currentPois && state.currentPois.length > 0) {
+    if (state.poisData > 0) {
       const currentPoisFeatureCollection: FeatureCollection = {
         type: 'FeatureCollection',
         features: [],
       };
 
-      for (const currentPoi of state.currentPois) {
-        currentPoisFeatureCollection.features.push({
-          type: 'Feature',
-          properties: { name: currentPoi.name, type_pictogram: state.poiTypes.find(poiType => poiType.id === currentPoi.type)?.pictogram },
-          geometry: currentPoi.geometry,
-        });
-      }
-
-      const poiIcons = await this.getIcons(currentPoisFeatureCollection, 'type_pictogram');
-
       this.currentPoisLayer = L.geoJSON(currentPoisFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: poiIcons[geoJsonPoint.properties.type_pictogram]
-                ? `<div part="poi-marker" class="poi-marker"><img  src=${poiIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
+              html: geoJsonPoint.properties.type_pictogram
+                ? `<div part="poi-marker" class="poi-marker"><img src=${geoJsonPoint.properties.type_pictogram} /></div>`
                 : `<div part="poi-marker" class="poi-marker"><img /></div>`,
               className: '',
               iconSize: this.commonMarkerSize,
@@ -2447,6 +2458,33 @@ export class GrwMap {
           });
         },
       });
+      if (state.currentPois) {
+        this.setCurrentPois();
+      }
+    }
+  }
+
+  setCurrentPois() {
+    if (state.currentPois) {
+      const currentPoisFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const currentPoi of state.currentPois) {
+        currentPoisFeatureCollection.features.push({
+          type: 'Feature',
+          properties: { name: currentPoi.name, type_pictogram: state.poiTypes.find(poiType => poiType.id === currentPoi.type)?.pictogram },
+          geometry: currentPoi.geometry,
+        });
+      }
+
+      this.currentPoisLayer.clearLayers();
+
+      this.currentPoisLayer.addData(currentPoisFeatureCollection);
+
+      this.layerDataIsLoading = false;
+      forceUpdate(this.hostElement);
     }
   }
 
@@ -2496,32 +2534,18 @@ export class GrwMap {
   }
 
   async addCurrentTouristicContents() {
-    if (state.trekTouristicContents && state.trekTouristicContents.length > 0) {
+    if (state.touristicContentsData > 0) {
       const currentTouristicContentsFeatureCollection: FeatureCollection = {
         type: 'FeatureCollection',
         features: [],
       };
 
-      for (const touristicContent of state.trekTouristicContents) {
-        currentTouristicContentsFeatureCollection.features.push({
-          type: 'Feature',
-          properties: {
-            id: touristicContent.id,
-            name: touristicContent.name,
-            category_pictogram: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category)?.pictogram,
-          },
-          geometry: touristicContent.geometry,
-        });
-      }
-
-      const toutisticContentsIcons = await this.getIcons(currentTouristicContentsFeatureCollection, 'category_pictogram');
-
       this.currentToutisticContentsLayer = L.geoJSON(currentTouristicContentsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) => {
           return L.marker(latlng, {
             icon: L.divIcon({
-              html: toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]
-                ? `<div part="touristic-content-marker" class="touristic-content-marker"><img src=${toutisticContentsIcons[geoJsonPoint.properties.category_pictogram]} /></div>`
+              html: geoJsonPoint.properties.category_pictogram
+                ? `<div part="touristic-content-marker" class="touristic-content-marker"><img src=${geoJsonPoint.properties.category_pictogram} /></div>`
                 : `<div part="touristic-content-marker" class="touristic-content-marker"><img /></div>`,
               className: this.grwApp ? '' : 'cursor-pointer',
               iconSize: this.commonMarkerSize,
@@ -2550,36 +2574,54 @@ export class GrwMap {
           });
         },
       });
+
+      if (state.trekTouristicContents) {
+        this.setCurrentTouristicContents();
+      }
+    }
+  }
+
+  setCurrentTouristicContents() {
+    if (state.trekTouristicContents) {
+      const currentTouristicContentsFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const touristicContent of state.trekTouristicContents) {
+        currentTouristicContentsFeatureCollection.features.push({
+          type: 'Feature',
+          properties: {
+            id: touristicContent.id,
+            name: touristicContent.name,
+            category_pictogram: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category)?.pictogram,
+          },
+          geometry: touristicContent.geometry,
+        });
+      }
+
+      this.currentToutisticContentsLayer.clearLayers();
+
+      this.currentToutisticContentsLayer.addData(currentTouristicContentsFeatureCollection);
+
+      this.layerDataIsLoading = false;
+      forceUpdate(this.hostElement);
     }
   }
 
   async addCurrentTouristicEvents() {
-    if (state.trekTouristicEvents && state.trekTouristicEvents.length > 0) {
+    if (state.touristicEventsData > 0) {
       const currentTouristicEventsFeatureCollection: FeatureCollection = {
         type: 'FeatureCollection',
         features: [],
       };
 
-      for (const touristicEvent of state.trekTouristicEvents) {
-        currentTouristicEventsFeatureCollection.features.push({
-          type: 'Feature',
-          properties: {
-            id: touristicEvent.id,
-            name: touristicEvent.name,
-            type_pictogram: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === touristicEvent.type)?.pictogram,
-          },
-          geometry: touristicEvent.geometry,
-        });
-      }
-
-      const toutisticEventsIcons = await this.getIcons(currentTouristicEventsFeatureCollection, 'type_pictogram');
       this.currentTouristicEventsLayer = L.geoJSON(currentTouristicEventsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]
-                ? `
-                <div part="touristic-event-marker" class="touristic-event-marker"><img src=${toutisticEventsIcons[geoJsonPoint.properties.type_pictogram]} /></div>`
+              html: geoJsonPoint.properties.type_pictogram
+                ? `<div part="touristic-event-marker" class="touristic-event-marker"><img src=${geoJsonPoint.properties.type_pictogram} /></div>`
                 : `<div part="touristic-event-marker" class="touristic-event-marker"><img /></div>`,
               className: this.grwApp ? '' : 'cursor-pointer',
               iconSize: this.commonMarkerSize,
@@ -2607,6 +2649,38 @@ export class GrwMap {
           });
         },
       });
+
+      if (state.trekTouristicEvents) {
+        this.setCurrentTouristicEvents();
+      }
+    }
+  }
+
+  setCurrentTouristicEvents() {
+    if (state.trekTouristicEvents) {
+      const currentTouristicEventsFeatureCollection: FeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
+      };
+
+      for (const touristicEvent of state.trekTouristicEvents) {
+        currentTouristicEventsFeatureCollection.features.push({
+          type: 'Feature',
+          properties: {
+            id: touristicEvent.id,
+            name: touristicEvent.name,
+            type_pictogram: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === touristicEvent.type)?.pictogram,
+          },
+          geometry: touristicEvent.geometry,
+        });
+      }
+
+      this.currentTouristicEventsLayer.clearLayers();
+
+      this.currentTouristicEventsLayer.addData(currentTouristicEventsFeatureCollection);
+
+      this.layerDataIsLoading = false;
+      forceUpdate(this.hostElement);
     }
   }
 
@@ -2678,17 +2752,18 @@ export class GrwMap {
     if (this.currentInformationDesksLayer) {
       overlays[translate[state.language].layers.informationPlaces] = this.currentInformationDesksLayer;
     }
-    if (this.currentPoisLayer) {
+    if (state.poisData > 0) {
       overlays[translate[state.language].layers.pois] = this.currentPoisLayer;
     }
     if (this.currentSignagesLayer) {
       overlays[translate[state.language].layers.signages] = this.currentSignagesLayer;
       this.currentSignagesLayer.addTo(this.map);
     }
-    if (this.currentToutisticContentsLayer) {
+
+    if (state.touristicContentsData > 0) {
       overlays[translate[state.language].layers.touristicContents] = this.currentToutisticContentsLayer;
     }
-    if (this.currentTouristicEventsLayer) {
+    if (state.touristicEventsData > 0) {
       overlays[translate[state.language].layers.touristicEvents] = this.currentTouristicEventsLayer;
     }
 
@@ -2863,6 +2938,11 @@ export class GrwMap {
           }
           ref={el => (this.mapRef = el)}
         >
+          {this.layerDataIsLoading && (
+            <div class="layer-loader-container">
+              <div class="layer-loader"></div>
+            </div>
+          )}
           {state.currentTrek && (
             <div class="grw-elevation-visibility-button-container">
               <grw-fab

@@ -43,6 +43,10 @@ export async function trekIsAvailableOffline(trekId) {
   return trek && trek.offline;
 }
 
+export function getPoisNearTrekCount(api, language, trekId, init) {
+  return fetch(`${api}poi/?language=${language}&trek=${trekId}&published=true&fields=id&page_size=1`, init);
+}
+
 export function getPoisNearTrek(api, language, trekId, init) {
   return getAllPaginatedResults(`${api}poi/?language=${language}&trek=${trekId}&published=true&fields=id,name,description,attachments,type,geometry`, init);
 }
@@ -51,8 +55,12 @@ export function getSensitiveAreasNearTrek(api, language, trekId, init) {
   return fetch(`${api}sensitivearea/?language=${language}&published=true&trek=${trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices`, init);
 }
 
-export function getCities(api, language, init) {
-  return getAllPaginatedResults(`${api}city/?language=${language}&fields=id,code,name&published=true`, init);
+export function getCities(api, language, init, cities?) {
+  let url = `${api}city/?language=${language}&fields=id,code,name&published=true`;
+  if (cities) {
+    url += `&ids=${cities.join(',')}`;
+  }
+  return getAllPaginatedResults(url, init);
 }
 
 export function getThemes(api, language, portals, init) {

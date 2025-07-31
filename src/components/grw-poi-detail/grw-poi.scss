@@ -54,7 +54,7 @@
   }
   .img-fullscreen {
     max-height: none;
-    object-fit: contain;
+    object-fit: contain !important;
   }
   .poi-type {
     width: 24px;
@@ -74,6 +74,7 @@
   display: flex;
   flex-direction: column;
   padding: 12px;
+  min-height: 202px;
 }
 
 .poi-name {
@@ -85,6 +86,9 @@
 .poi-description {
   font-size: 14px;
   line-height: 20px;
+  max-height: 80px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
 }
 
 .poi-description-short {

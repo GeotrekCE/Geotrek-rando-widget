@@ -39,6 +39,15 @@ export class GrwPoiDetail {
     this.offline = false;
   }
 
+  checkDescriptionOverflow() {
+    if (this.descriptionRef) {
+      const hasOverflow = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
+      if (this.showPoiDescriptionButton !== hasOverflow) {
+        this.showPoiDescriptionButton = hasOverflow;
+      }
+    }
+  }
+
   handleSwipers() {
     if (this.swiperPoiRef && !this.swiperPoi) {
       this.swiperPoi = new Swiper(this.swiperPoiRef, {
@@ -60,7 +69,6 @@ export class GrwPoiDetail {
           this.swiperPoi.keyboard.disable();
         }
       };
-      this.showPoiDescriptionButton = this.descriptionRef.clientHeight < this.descriptionRef.scrollHeight;
     }
   }
 
@@ -71,10 +79,19 @@ export class GrwPoiDetail {
   componentDidLoad() {
     this.handleOffline();
     this.handleSwipers();
+    setTimeout(() => {
+      this.checkDescriptionOverflow();
+    }, 0);
   }
 
   handlePoiDescription() {
     this.displayShortDescription = !this.displayShortDescription;
+
+    if (this.displayShortDescription) {
+      this.descriptionRef.style.maxHeight = '80px';
+    } else {
+      this.descriptionRef.style.maxHeight = this.descriptionRef.scrollHeight + 'px';
+    }
   }
 
   handleFullscreen() {
@@ -114,7 +131,7 @@ export class GrwPoiDetail {
                   .map(attachment => (
                     <div part="swiper-slide" class="swiper-slide">
                       <img
-                        part="poi-iamg"
+                        part="poi-img"
                         class={`poi-img${this.displayFullscreen ? ' img-fullscreen' : ''}`}
                         src={this.displayFullscreen ? attachment.url : attachment.thumbnail !== '' ? attachment.thumbnail : attachment.url}
                         alt={attachment.legend}
@@ -165,9 +182,11 @@ export class GrwPoiDetail {
             innerHTML={this.poi.description}
             ref={el => (this.descriptionRef = el)}
           ></div>
-          <div part="handle-poi-description" class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
-            {this.showPoiDescriptionButton && (this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess)}
-          </div>
+          {this.showPoiDescriptionButton && (
+            <div part="handle-poi-description" class="handle-poi-description" onClick={() => this.handlePoiDescription()}>
+              {this.displayShortDescription ? translate[state.language].readMore : translate[state.language].readLess}
+            </div>
+          )}
         </div>
       </Host>
     );

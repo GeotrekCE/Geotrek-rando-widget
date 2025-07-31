@@ -49,17 +49,29 @@ export class GrwTouristicEventProvider {
 
   handleOnlineTouristicEvent() {
     const requests = [];
-    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.touristicEventTypes ? getTouristicEventType(state.api, state.language, this.portals, this.init) : new Response('null'));
 
     try {
       Promise.all([...requests, getTouristicEvent(state.api, state.language, this.touristicEventId, this.init)])
         .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(([cities, touristicEventTypes, touristicEvent]) => {
+        .then(async ([touristicEventTypes, touristicEvent]) => {
           state.networkError = false;
-          if (cities) {
-            state.cities = cities.results;
+
+          let citiesToLoad = [...touristicEvent.cities];
+
+          if (state.cities) {
+            const cityIds = state.cities.map(city => city.id);
+            citiesToLoad = citiesToLoad.filter(city => city);
+            citiesToLoad = citiesToLoad.filter(city => !cityIds.includes(city));
           }
+
+          if (citiesToLoad.length > 0) {
+            const cities = (await getCities(state.api, state.language, this.init, citiesToLoad).then(response => response.json())).results;
+            if (cities) {
+              state.cities = [...state.cities, ...cities];
+            }
+          }
+
           if (touristicEventTypes) {
             state.touristicEventTypes = touristicEventTypes.results;
           }

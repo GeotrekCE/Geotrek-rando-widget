@@ -50,7 +50,7 @@
   }
   .img-fullscreen {
     max-height: none;
-    object-fit: contain;
+    object-fit: contain !important;
   }
   .touristic-content-type {
     width: 24px;

@@ -7,9 +7,9 @@ import { formatDuration, formatLength, formatAscent, formatDescent, imagesRegExp
 import { getAllDataInStore, getDataInStore, writeOrUpdateDataInStore, writeOrUpdateFilesInStore, writeOrUpdateTilesInStore } from 'services/grw-db.service';
 import { tileLayerOffline } from 'leaflet.offline';
 import L from 'leaflet';
-import { getDistricts, getPoisNearTrek, getSensitiveAreasNearTrek, getTrek, getTreksList } from 'services/treks.service';
-import { getTouristicContentsNearTrek } from 'services/touristic-contents.service';
-import { getTouristicEventsNearTrek } from 'services/touristic-events.service';
+import { getCities, getDistricts, getPoisNearTrek, getSensitiveAreasNearTrek, getTrek, getTreksList } from 'services/treks.service';
+import { getTouristicContentCategory, getTouristicContentsNearTrek } from 'services/touristic-contents.service';
+import { getTouristicEventsNearTrek, getTouristicEventType } from 'services/touristic-events.service';
 import CloseIcon from '../../assets/close.svg';
 import TimelapseIcon from '../../assets/timelapse.svg';
 import OpenInFullIcon from '../../assets/open_in_full.svg';
@@ -597,7 +597,9 @@ export class GrwTrekDetail {
       if (state.accessibilitiesLevel) {
         this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => state.currentTrek.accessibility_level === accessibilityLevel.id);
       }
-      this.cities = state.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+      if (state.cities) {
+        this.cities = state.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+      }
       this.hasStep = state.currentTrek.children.length > 0;
       this.currentTrek = state.currentTrek;
     }
@@ -617,7 +619,9 @@ export class GrwTrekDetail {
         if (state.accessibilitiesLevel) {
           this.accessibilityLevel = state.accessibilitiesLevel.find(accessibilityLevel => state.currentTrek.accessibility_level === accessibilityLevel.id);
         }
-        this.cities = state.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+        if (state.cities) {
+          this.cities = state.currentTrek.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name);
+        }
         this.hasStep = state.currentTrek.children.length > 0;
         this.currentTrek = state.currentTrek;
       }
@@ -645,7 +649,7 @@ export class GrwTrekDetail {
       presentation: { ...presentation },
       steps: { ...steps, visible: Boolean(state.parentTrek) },
       description: { ...description, visible: Boolean(state.currentTrek.description) },
-      pois: { ...pois, visible: Boolean(state.currentPois && state.currentPois.length > 0) },
+      pois: { ...pois, visible: state.poisData > 0 },
       recommendations: { ...recommendations, visible: Boolean(state.currentTrek.advice || (this.labels && this.labels.length > 0)) },
       sensitiveArea: { ...sensitiveArea, visible: Boolean(state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0) },
       informationPlaces: {
@@ -670,8 +674,8 @@ export class GrwTrekDetail {
             this.emergencyNumber,
         ),
       },
-      touristicContents: { ...touristicContents, visible: Boolean(state.trekTouristicContents && state.trekTouristicContents.length > 0) },
-      touristicEvents: { ...touristicEvents, visible: Boolean(state.trekTouristicEvents && state.trekTouristicEvents.length > 0) },
+      touristicContents: { ...touristicContents, visible: state.touristicContentsData > 0 },
+      touristicEvents: { ...touristicEvents, visible: state.touristicEventsData > 0 },
     };
   }
 
@@ -803,10 +807,8 @@ export class GrwTrekDetail {
       await writeOrUpdateFilesInStore(state.districts, imagesRegExp);
       await writeOrUpdateFilesInStore(state.sources, imagesRegExp);
       await writeOrUpdateFilesInStore(state.accessibilities, imagesRegExp);
-      await writeOrUpdateFilesInStore(state.poiTypes, imagesRegExp);
+
       await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp);
-      await writeOrUpdateFilesInStore(state.touristicContentCategories, imagesRegExp);
-      await writeOrUpdateFilesInStore(state.touristicEventTypes, imagesRegExp);
       await writeOrUpdateFilesInStore(state.networks, imagesRegExp);
 
       // download trek images
@@ -820,7 +822,6 @@ export class GrwTrekDetail {
         state.practices.map(practice => ({ ...practice, selected: false })),
       );
       await writeOrUpdateDataInStore('themes', state.themes);
-      await writeOrUpdateDataInStore('cities', state.cities);
       await writeOrUpdateDataInStore('accessibilities', state.accessibilities);
       await writeOrUpdateDataInStore('ratings', state.ratings);
       await writeOrUpdateDataInStore('ratingsScale', state.ratingsScale);
@@ -828,29 +829,47 @@ export class GrwTrekDetail {
       await writeOrUpdateDataInStore('labels', state.labels);
       await writeOrUpdateDataInStore('sources', state.sources);
       await writeOrUpdateDataInStore('accessibilitiesLevel', state.accessibilitiesLevel);
-      await writeOrUpdateDataInStore('touristicContentCategories', state.touristicContentCategories);
-      await writeOrUpdateDataInStore('touristicEventTypes', state.touristicEventTypes);
       await writeOrUpdateDataInStore('networks', state.networks);
-      await writeOrUpdateDataInStore('pois', state.currentPois);
-      await writeOrUpdateDataInStore('poiTypes', state.poiTypes);
       await writeOrUpdateDataInStore('signages', state.currentSignages);
       await writeOrUpdateDataInStore('informationDesks', state.currentInformationDesks);
-
-      await writeOrUpdateFilesInStore(state.currentPois, imagesRegExp, true, ['url']);
       await writeOrUpdateFilesInStore(state.currentInformationDesks, imagesRegExp, true);
 
-      // download items data
-      await writeOrUpdateFilesInStore(state.trekTouristicContents, imagesRegExp, true, ['url']);
-      state.trekTouristicContents.forEach(trekTouristicContent => {
-        trekTouristicContent.offline = true;
-      });
-      await writeOrUpdateDataInStore('touristicContents', state.trekTouristicContents);
+      const cities = (await getCities(state.api, state.language, init).then(response => response.json())).results;
+      await writeOrUpdateDataInStore('cities', cities);
 
-      await writeOrUpdateFilesInStore(state.trekTouristicEvents, imagesRegExp, true, ['url']);
-      state.trekTouristicEvents.forEach(trekTouristicEvent => {
-        trekTouristicEvent.offline = true;
-      });
-      await writeOrUpdateDataInStore('touristicEvents', state.trekTouristicEvents);
+      let currentPois = [];
+      let trekTouristicContents = [];
+      let trekTouristicEvents = [];
+      if (state.poisData > 0) {
+        currentPois = (await getPoisNearTrek(state.api, state.language, this.currentTrek.id, init).then(response => response.json())).results;
+        const poiTypes = (await fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, init).then(response => response.json())).results;
+        await writeOrUpdateDataInStore('pois', currentPois);
+        await writeOrUpdateDataInStore('poiTypes', poiTypes);
+        await writeOrUpdateFilesInStore(currentPois, imagesRegExp, true, ['url']);
+        await writeOrUpdateFilesInStore(poiTypes, imagesRegExp);
+      }
+      if (state.touristicContentsData > 0) {
+        trekTouristicContents = (await getTouristicContentsNearTrek(state.api, state.language, this.currentTrek.id, init).then(response => response.json())).results;
+        const touristicContentCategories = (await getTouristicContentCategory(state.api, state.language, null, init).then(response => response.json())).results;
+        trekTouristicContents.forEach(trekTouristicContent => {
+          trekTouristicContent.offline = true;
+        });
+        await writeOrUpdateDataInStore('touristicContents', trekTouristicContents);
+        await writeOrUpdateDataInStore('touristicContentCategories', touristicContentCategories);
+        await writeOrUpdateFilesInStore(trekTouristicContents, imagesRegExp, true, ['url']);
+        await writeOrUpdateFilesInStore(touristicContentCategories, imagesRegExp);
+      }
+      if (state.touristicEventsData > 0) {
+        trekTouristicEvents = (await getTouristicEventsNearTrek(state.api, state.language, this.currentTrek.id, init).then(response => response.json())).results;
+        const touristicEventTypes = (await getTouristicEventType(state.api, state.language, null, init).then(response => response.json())).results;
+        trekTouristicEvents.forEach(trekTouristicEvent => {
+          trekTouristicEvent.offline = true;
+        });
+        await writeOrUpdateDataInStore('touristicEvents', trekTouristicEvents);
+        await writeOrUpdateDataInStore('touristicEventTypes', touristicEventTypes);
+        await writeOrUpdateFilesInStore(touristicEventTypes, imagesRegExp);
+        await writeOrUpdateFilesInStore(trekTouristicEvents, imagesRegExp, true, ['url']);
+      }
 
       // download itinerancy
       if (this.currentTrek.children && this.currentTrek.children.length > 0) {
@@ -893,14 +912,13 @@ export class GrwTrekDetail {
         {
           ...this.currentTrek,
           offline: true,
-          pois: state.currentPois.map(poi => poi.id),
+          pois: currentPois.map(poi => poi.id),
           signages: state.currentSignages.map(signage => signage.id),
-          touristicContents: state.trekTouristicContents.map(trekTouristicContent => trekTouristicContent.id),
-          touristicEvents: state.trekTouristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
+          touristicContents: trekTouristicContents.map(trekTouristicContent => trekTouristicContent.id),
+          touristicEvents: trekTouristicEvents.map(trekTouristicEvent => trekTouristicEvent.id),
           sensitiveAreas: state.currentSensitiveAreas ? state.currentSensitiveAreas.map(currentSensitiveArea => currentSensitiveArea.id) : [],
         },
       ]);
-
       state.treks.find(trek => trek.id === this.currentTrek.id).offline = true;
       if (!state.currentTreks) {
         state.currentTreks = state.treks;
@@ -1421,7 +1439,7 @@ export class GrwTrekDetail {
                 <div part="arrival" innerHTML={this.currentTrek.arrival}></div>
               </div>
             )}
-            {this.currentTrek.cities && this.currentTrek.cities.length > 0 && (
+            {this.cities && this.cities.length > 0 && (
               <div part="cities-container" class="cities-container">
                 <div part="cities-title" class="cities-title">
                   {translate[state.language].crossedCities} :&nbsp;
@@ -1429,27 +1447,35 @@ export class GrwTrekDetail {
                 <div part="cities" innerHTML={this.cities.join(', ')}></div>
               </div>
             )}
-            {state.currentPois && state.currentPois.length > 0 && (
+            {this.options.pois.visible && (
               <div part="divider-and-pois-container" class="divider-and-pois-container">
                 <div part="divider" class="divider"></div>
                 <div part="pois-container" class="pois-container">
                   <div part="pois-title" class="pois-title" ref={el => (this.poiRef = el)}>
-                    {translate[state.language].pois(state.currentPois.length)}
+                    {translate[state.language].pois(state.poisData)}
                   </div>
-                  <div part="swiper-pois" class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
-                    <div part="swiper-wrapper" class="swiper-wrapper">
-                      {state.currentPois.map(poi => (
-                        <div part="swiper-slide" class="swiper-slide">
-                          <grw-poi
-                            exportparts="poi-type-img-container,poi-type,swiper-poi,swiper-wrapper,swiper-slide,poi-img,default-poi-img,swiper-pagination,swiper-button-prev,swiper-button-next,poi-sub-container,poi-name,poi-description,handle-poi-description"
-                            poi={poi}
-                            colorSurfaceContainerLow={this.colorSurfaceContainerLow}
-                          ></grw-poi>
-                        </div>
-                      ))}
+                  {!state.currentPois ? (
+                    <div class="loader-container">
+                      <span part="loader" class="loader"></span>
                     </div>
-                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.poisSwiperScrollbar = el)}></div>
-                  </div>
+                  ) : (
+                    <Fragment>
+                      <div part="swiper-pois" class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
+                        <div part="swiper-wrapper" class="swiper-wrapper">
+                          {state.currentPois.map(poi => (
+                            <div part="swiper-slide" class="swiper-slide">
+                              <grw-poi
+                                exportparts="poi-type-img-container,poi-type,swiper-poi,swiper-wrapper,swiper-slide,poi-img,default-poi-img,swiper-pagination,swiper-button-prev,swiper-button-next,poi-sub-container,poi-name,poi-description,handle-poi-description"
+                                poi={poi}
+                                colorSurfaceContainerLow={this.colorSurfaceContainerLow}
+                              ></grw-poi>
+                            </div>
+                          ))}
+                        </div>
+                        <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.poisSwiperScrollbar = el)}></div>
+                      </div>
+                    </Fragment>
+                  )}
                 </div>
               </div>
             )}
@@ -1671,55 +1697,71 @@ export class GrwTrekDetail {
                 </div>
               </div>
             )}
-            {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
+            {this.options.touristicContents.visible && (
               <div part="divider-and-touristic-content-container" class="divider-and-touristic-content-container">
                 <div part="divider" class="divider"></div>
                 <div part="touristic-content-container" class="touristic-content-container">
                   <div part="touristic-content-title" class="touristic-content-title" ref={el => (this.touristicContentsRef = el)}>
-                    {translate[state.language].touristicContents(state.trekTouristicContents.length)}
+                    {translate[state.language].touristicContents(state.touristicContentsData)}
                   </div>
-                  <div part="swiper-touristic-content" class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
-                    <div part="swiper-wrapper" class="swiper-wrapper">
-                      {state.trekTouristicContents.map(touristicContent => (
-                        <div part="swiper-slide" class="swiper-slide">
-                          <grw-touristic-content-card
-                            exportparts="touristic-content-card,touristic-content-img-container,swiper-touristic-content,swiper-wrapper,swiper-slide,touristic-content-img,default-touristic-content-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-content-sub-container,touristic-content-category-container,touristic-content-category-img,touristic-content-category-name,touristic-content-name,touristic-content-more-detail-container,more-details-button"
-                            fontFamily={this.fontFamily}
-                            touristicContent={touristicContent}
-                            isInsideHorizontalList={true}
-                            color-surface-container-low={this.colorSurfaceContainerLow}
-                          ></grw-touristic-content-card>
-                        </div>
-                      ))}
+                  {!state.trekTouristicContents ? (
+                    <div class="loader-container">
+                      <span part="loader" class="loader"></span>
                     </div>
-                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.touristicContentsSwiperScrollbar = el)}></div>
-                  </div>
+                  ) : (
+                    <Fragment>
+                      <div part="swiper-touristic-content" class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
+                        <div part="swiper-wrapper" class="swiper-wrapper">
+                          {state.trekTouristicContents.map(touristicContent => (
+                            <div part="swiper-slide" class="swiper-slide">
+                              <grw-touristic-content-card
+                                exportparts="touristic-content-card,touristic-content-img-container,swiper-touristic-content,swiper-wrapper,swiper-slide,touristic-content-img,default-touristic-content-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-content-sub-container,touristic-content-category-container,touristic-content-category-img,touristic-content-category-name,touristic-content-name,touristic-content-more-detail-container,more-details-button"
+                                fontFamily={this.fontFamily}
+                                touristicContent={touristicContent}
+                                isInsideHorizontalList={true}
+                                color-surface-container-low={this.colorSurfaceContainerLow}
+                              ></grw-touristic-content-card>
+                            </div>
+                          ))}
+                        </div>
+                        <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.touristicContentsSwiperScrollbar = el)}></div>
+                      </div>
+                    </Fragment>
+                  )}
                 </div>
               </div>
             )}
-            {state.trekTouristicEvents && state.trekTouristicEvents.length > 0 && (
+            {this.options.touristicEvents.visible && (
               <div part="divider-and-touristic-event-container" class="divider-and-touristic-event-container">
                 <div part="divider" class="divider"></div>
                 <div part="touristic-event-container" class="touristic-event-container">
                   <div part="touristic-event-title" class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
-                    {translate[state.language].touristicEvents(state.trekTouristicEvents.length)}
+                    {translate[state.language].touristicEvents(state.touristicEventsData)}
                   </div>
-                  <div part="swiper-touristic-event" class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>
-                    <div part="swiper-wrapper" class="swiper-wrapper">
-                      {state.trekTouristicEvents.map(touristicEvent => (
-                        <div part="swiper-slide" class="swiper-slide">
-                          <grw-touristic-event-card
-                            exportparts="touristic-event-card,touristic-event-img-container,swiper-touristic-event,swiper-wrapper,swiper-slide,touristic-event-img,default-touristic-event-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-event-sub-container,touristic-event-sub-container,touristic-event-type-img,touristic-event-type-name,touristic-event-name,touristic-event-date-container,touristic-event-date,touristic-event-more-detail-container,more-details-button"
-                            fontFamily={this.fontFamily}
-                            touristicEvent={touristicEvent}
-                            isInsideHorizontalList={true}
-                            colorSurfaceContainerLow={this.colorSurfaceContainerLow}
-                          ></grw-touristic-event-card>
-                        </div>
-                      ))}
+                  {!state.trekTouristicEvents ? (
+                    <div class="loader-container">
+                      <span part="loader" class="loader"></span>
                     </div>
-                    <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.touristicEventsSwiperScrollbar = el)}></div>
-                  </div>
+                  ) : (
+                    <Fragment>
+                      <div part="swiper-touristic-event" class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>
+                        <div part="swiper-wrapper" class="swiper-wrapper">
+                          {state.trekTouristicEvents.map(touristicEvent => (
+                            <div part="swiper-slide" class="swiper-slide">
+                              <grw-touristic-event-card
+                                exportparts="touristic-event-card,touristic-event-img-container,swiper-touristic-event,swiper-wrapper,swiper-slide,touristic-event-img,default-touristic-event-img,swiper-pagination,swiper-button-prev,swiper-button-next,touristic-event-sub-container,touristic-event-sub-container,touristic-event-type-img,touristic-event-type-name,touristic-event-name,touristic-event-date-container,touristic-event-date,touristic-event-more-detail-container,more-details-button"
+                                fontFamily={this.fontFamily}
+                                touristicEvent={touristicEvent}
+                                isInsideHorizontalList={true}
+                                colorSurfaceContainerLow={this.colorSurfaceContainerLow}
+                              ></grw-touristic-event-card>
+                            </div>
+                          ))}
+                        </div>
+                        <div part="swiper-scrollbar" class="swiper-scrollbar" ref={el => (this.touristicEventsSwiperScrollbar = el)}></div>
+                      </div>
+                    </Fragment>
+                  )}
                 </div>
               </div>
             )}

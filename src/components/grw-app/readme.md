@@ -12,6 +12,7 @@
 | `api`                        | `api`                           |             | `string`  | `undefined` |
 | `appHeight`                  | `app-height`                    |             | `string`  | `'100vh'`   |
 | `appWidth`                   | `app-width`                     |             | `string`  | `'100%'`    |
+| `arrowRepeat`                | `arrow-repeat`                  |             | `number`  | `20`        |
 | `attributionLayer`           | `attribution-layer`             |             | `string`  | `undefined` |
 | `cities`                     | `cities`                        |             | `string`  | `undefined` |
 | `colorBackground`            | `color-background`              |             | `string`  | `'#fef7ff'` |

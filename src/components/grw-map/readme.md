@@ -9,6 +9,7 @@
 
 | Property                     | Attribute                       | Description | Type      | Default     |
 | ---------------------------- | ------------------------------- | ----------- | --------- | ----------- |
+| `arrowRepeat`                | `arrow-repeat`                  |             | `number`  | `20`        |
 | `attributionLayer`           | `attribution-layer`             |             | `string`  | `undefined` |
 | `colorBackground`            | `color-background`              |             | `string`  | `'#fef7ff'` |
 | `colorClusters`              | `color-clusters`                |             | `any`     | `null`      |

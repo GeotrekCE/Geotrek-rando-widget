@@ -121,6 +121,9 @@ const { state, onChange, reset } = createStore<{
   currentOutdoorCourse: OutdoorCourse;
   offlineOutdoorSites: boolean;
   currentSignages: Signages;
+  touristicContentsData: number;
+  touristicEventsData: number;
+  poisData: number;
 }>({
   mode: null,
   api: null,
@@ -134,7 +137,7 @@ const { state, onChange, reset } = createStore<{
   routes: null,
   practices: null,
   themes: null,
-  cities: null,
+  cities: [],
   durations: null,
   lengths: null,
   elevations: null,
@@ -203,6 +206,9 @@ const { state, onChange, reset } = createStore<{
   outdoorRatingsScale: null,
   offlineOutdoorSites: false,
   currentSignages: null,
+  touristicContentsData: 0,
+  touristicEventsData: 0,
+  poisData: 0,
 });
 
 export { onChange, reset };

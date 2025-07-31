@@ -51,7 +51,7 @@
   }
   .img-fullscreen {
     max-height: none;
-    object-fit: contain;
+    object-fit: contain !important;
   }
   .touristic-event-type {
     width: 24px;

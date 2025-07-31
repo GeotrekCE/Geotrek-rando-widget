@@ -49,17 +49,28 @@ export class GrwTouristicContentProvider {
 
   handleOnlineTouristicContent() {
     const requests = [];
-    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.touristicContentCategories ? getTouristicContentCategory(state.api, state.language, this.portals, this.init) : new Response('null'));
     try {
       Promise.all([...requests, getTouristicContent(state.api, state.language, this.touristicContentId, this.init)])
         .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(([cities, touristicContentCategory, touristicContent]) => {
+        .then(async ([touristicContentCategory, touristicContent]) => {
           state.networkError = false;
 
-          if (cities) {
-            state.cities = cities.results;
+          let citiesToLoad = [...touristicContent.cities];
+
+          if (state.cities) {
+            const cityIds = state.cities.map(city => city.id);
+            citiesToLoad = citiesToLoad.filter(city => city);
+            citiesToLoad = citiesToLoad.filter(city => !cityIds.includes(city));
           }
+
+          if (citiesToLoad.length > 0) {
+            const cities = (await getCities(state.api, state.language, this.init, citiesToLoad).then(response => response.json())).results;
+            if (cities) {
+              state.cities = [...state.cities, ...cities];
+            }
+          }
+
           if (touristicContentCategory) {
             state.touristicContentCategories = touristicContentCategory.results;
           }

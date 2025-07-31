@@ -11,6 +11,10 @@ export function getTouristicEventsNearTrek(api, language, trekId, init) {
   return getAllPaginatedResults(`${api}touristicevent/?language=${language}&near_trek=${trekId}&published=true&fields=id,name,attachments,type,geometry`, init);
 }
 
+export function getTouristicEventsNearTrekCount(api, language, trekId, init) {
+  return fetch(`${api}touristicevent/?language=${language}&near_trek=${trekId}&published=true&fields=id&page_size=1`, init);
+}
+
 export function getTouristicEventsNearOutdoorSite(api, language, outdoorSiteId, init) {
   return getAllPaginatedResults(`${api}touristicevent/?language=${language}&near_outdoorsite=${outdoorSiteId}&published=true&fields=id,name,attachments,type,geometry`, init);
 }

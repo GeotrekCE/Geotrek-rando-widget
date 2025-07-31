@@ -1,8 +1,18 @@
 import { Build, Component, h, Host, Prop } from '@stencil/core';
 import { handleOfflineProperty, getDataInStore } from 'services/grw-db.service';
-import { getTouristicContentCategory, getTouristicContentsNearTrek } from 'services/touristic-contents.service';
-import { getTouristicEventsNearTrek, getTouristicEventType } from 'services/touristic-events.service';
-import { getCities, getInformationsDesks, getPoisNearTrek, getSensitiveAreasNearTrek, getSignages, getSources, getTrek, getTrekNetwork } from 'services/treks.service';
+import { getTouristicContentCategory, getTouristicContentsNearTrek, getTouristicContentsNearTrekCount } from 'services/touristic-contents.service';
+import { getTouristicEventsNearTrek, getTouristicEventsNearTrekCount, getTouristicEventType } from 'services/touristic-events.service';
+import {
+  getCities,
+  getInformationsDesks,
+  getPoisNearTrek,
+  getPoisNearTrekCount,
+  getSensitiveAreasNearTrek,
+  getSignages,
+  getSources,
+  getTrek,
+  getTrekNetwork,
+} from 'services/treks.service';
 import state from 'store/store';
 import { Trek } from 'types/types';
 import { imagesRegExp, setFilesFromStore } from 'utils/utils';
@@ -33,6 +43,13 @@ export class GrwTrekProvider {
   init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
 
   connectedCallback() {
+    state.poisData = 0;
+    state.touristicContentsData = 0;
+    state.touristicEventsData = 0;
+    state.currentPois = null;
+    state.trekTouristicContents = null;
+    state.trekTouristicEvents = null;
+
     if (!state.api) {
       state.api = this.api;
       state.languages = this.languages.split(',');
@@ -53,7 +70,6 @@ export class GrwTrekProvider {
   }
 
   disconnectedCallback() {
-    this.controller.abort();
     state.networkError = false;
   }
 
@@ -110,18 +126,21 @@ export class GrwTrekProvider {
     const poisInStore = await handleOfflineProperty('pois', ['url']);
     const pois = poisInStore.filter(poiInStore => trek.pois.some(trekPoi => trekPoi === poiInStore.id));
     state.currentPois = pois;
+    state.poisData = pois.length;
 
     const touristicContentsInStore = await handleOfflineProperty('touristicContents', ['url']);
     const touristicContents = touristicContentsInStore.filter(touristicContentInStore =>
       trek.touristicContents.some(trekTouristicContent => trekTouristicContent === touristicContentInStore.id),
     );
     state.trekTouristicContents = touristicContents;
+    state.touristicContentsData = touristicContents.length;
 
     const touristicEventsInStore = await handleOfflineProperty('touristicEvents', ['url']);
     const touristicEvents = touristicEventsInStore.filter(touristicEventInStore =>
       trek.touristicEvents.some(trekTouristicEvent => trekTouristicEvent === touristicEventInStore.id),
     );
     state.trekTouristicEvents = touristicEvents;
+    state.touristicEventsData = touristicEvents.length;
 
     const sensitiveAreasInStore = await handleOfflineProperty('sensitiveAreas');
     const sensitiveAreas = sensitiveAreasInStore.filter(sensitiveAreaInStore => trek.sensitiveAreas.some(trekSensitiveArea => trekSensitiveArea === sensitiveAreaInStore.id));
@@ -157,7 +176,6 @@ export class GrwTrekProvider {
         ? fetch(`${state.api}theme/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init)
         : new Response('null'),
     );
-    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(
       !state.accessibilities
         ? fetch(`${state.api}trek_accessibility/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init)
@@ -189,15 +207,12 @@ export class GrwTrekProvider {
         fetch(`${state.api}label/?language=${state.language}&fields=id,name,advice,pictogram,filter`, this.init),
         getSources(state.api, state.language, this.init),
         fetch(`${state.api}trek_accessibility_level/?language=${state.language}&fields=id,name`, this.init).catch(() => new Response('null')),
-        getPoisNearTrek(state.api, state.language, this.trekId, this.init),
-        fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
+        getPoisNearTrekCount(state.api, state.language, this.trekId, this.init),
         getInformationsDesks(state.api, state.language, this.init),
-        getTouristicContentsNearTrek(state.api, state.language, this.trekId, this.init),
-        getTouristicContentCategory(state.api, state.language, null, this.init),
-        getTouristicEventsNearTrek(state.api, state.language, this.trekId, this.init),
-        getTouristicEventType(state.api, state.language, null, this.init),
         getTrekNetwork(state.api, state.language, this.init),
         getTrek(state.api, state.language, this.trekId, this.init),
+        getTouristicContentsNearTrekCount(state.api, state.language, this.trekId, this.init),
+        getTouristicEventsNearTrekCount(state.api, state.language, this.trekId, this.init),
       ])
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(
@@ -206,7 +221,6 @@ export class GrwTrekProvider {
             routes,
             practices,
             themes,
-            cities,
             accessibilities,
             ratings,
             ratingsScale,
@@ -216,14 +230,11 @@ export class GrwTrekProvider {
             sources,
             accessibilitiesLevel,
             pois,
-            poiTypes,
             informationDesks,
-            touristicContent,
-            touristicContentCategory,
-            touristicEvent,
-            touristicEventType,
             networks,
             trek,
+            touristicContents,
+            touristicEvents,
           ]) => {
             state.networkError = false;
             if ((trek && trek.children.length > 0) || state.parentTrekId) {
@@ -246,6 +257,27 @@ export class GrwTrekProvider {
               state.currentTrekSteps = await Promise.all([...stepRequests]).then(responses => Promise.all(responses.map(response => response.json())));
             }
 
+            let citiesToLoad = [trek.departure_city, ...trek.cities];
+
+            if (state.currentTrekSteps) {
+              state.currentTrekSteps.forEach(step => {
+                citiesToLoad = [...citiesToLoad, step.departure_city, ...step.cities];
+              });
+            }
+
+            if (state.cities) {
+              const cityIds = state.cities.map(city => city.id);
+              citiesToLoad = citiesToLoad.filter(city => city);
+              citiesToLoad = citiesToLoad.filter(city => !cityIds.includes(city));
+            }
+
+            if (citiesToLoad.length > 0) {
+              const cities = (await getCities(state.api, state.language, this.init, citiesToLoad).then(response => response.json())).results;
+              if (cities) {
+                state.cities = [...state.cities, ...cities];
+              }
+            }
+
             if (difficulties) {
               state.difficulties = difficulties.results;
             }
@@ -258,9 +290,7 @@ export class GrwTrekProvider {
             if (themes) {
               state.themes = themes.results;
             }
-            if (cities) {
-              state.cities = cities.results;
-            }
+
             if (accessibilities) {
               state.accessibilities = accessibilities.results;
             }
@@ -270,47 +300,97 @@ export class GrwTrekProvider {
             if (ratingsScale) {
               state.ratingsScale = ratingsScale.results;
             }
+            state.currentSignages = signages ? signages.results : [];
+            if (accessibilitiesLevel) {
+              state.accessibilitiesLevel = accessibilitiesLevel.results;
+            }
+
             if (sensitiveAreas) {
               state.currentSensitiveAreas = sensitiveAreas.results;
             }
+
             if (labels) {
               state.labels = labels.results;
             }
 
-            state.currentSignages = signages ? signages.results : [];
-
             if (sources) {
               state.sources = sources.results;
             }
-            if (accessibilitiesLevel) {
-              state.accessibilitiesLevel = accessibilitiesLevel.results;
-            }
-            if (touristicContent) {
-              state.trekTouristicContents = touristicContent.results;
-            }
-            if (touristicContentCategory) {
-              state.touristicContentCategories = touristicContentCategory.results;
-            }
-            if (touristicEvent) {
-              state.trekTouristicEvents = touristicEvent.results;
-            }
-            if (touristicEventType) {
-              state.touristicEventTypes = touristicEventType.results;
-            }
+
             if (networks) {
               state.networks = networks.results;
             }
-            if (pois) {
-              state.currentPois = pois.results;
-            }
-            if (poiTypes) {
-              state.poiTypes = poiTypes.results;
-            }
+
             if (informationDesks) {
               state.currentInformationDesks = informationDesks.results;
             }
+
+            if (pois.count) {
+              state.poisData = pois.count;
+            }
+
+            if (touristicContents.count) {
+              state.touristicContentsData = touristicContents.count;
+            }
+
+            if (touristicEvents.count) {
+              state.touristicEventsData = touristicEvents.count;
+            }
             if (trek) {
               state.currentTrek = trek;
+            }
+            if (state.poisData > 0) {
+              Promise.all([
+                getPoisNearTrek(state.api, state.language, this.trekId, this.init),
+                fetch(`${state.api}poi_type/?language=${state.language}&fields=id,pictogram`, this.init),
+              ])
+                .then(responses => Promise.all(responses.map(response => response.json())))
+                .then(([trekPois, poiTypes]) => {
+                  if (poiTypes) {
+                    state.poiTypes = poiTypes.results;
+                  }
+                  if (trekPois) {
+                    state.currentPois = trekPois.results;
+                  }
+                })
+                .catch(() => {
+                  state.poisData = 0;
+                });
+            }
+
+            if (state.touristicContentsData > 0) {
+              Promise.all([
+                getTouristicContentsNearTrek(state.api, state.language, this.trekId, this.init),
+                getTouristicContentCategory(state.api, state.language, null, this.init),
+              ])
+                .then(responses => Promise.all(responses.map(response => response.json())))
+                .then(([trekTouristicContents, touristicContentsCategory]) => {
+                  if (touristicContentsCategory) {
+                    state.touristicContentCategories = touristicContentsCategory.results;
+                  }
+                  if (trekTouristicContents) {
+                    state.trekTouristicContents = trekTouristicContents.results;
+                  }
+                })
+                .catch(() => {
+                  state.touristicContentsData = 0;
+                });
+            }
+
+            if (state.touristicEventsData > 0) {
+              Promise.all([getTouristicEventsNearTrek(state.api, state.language, this.trekId, this.init), getTouristicEventType(state.api, state.language, null, this.init)])
+                .then(responses => Promise.all(responses.map(response => response.json())))
+                .then(([trekTouristicEvents, touristicEventType]) => {
+                  if (touristicEventType) {
+                    state.touristicEventTypes = touristicEventType.results;
+                  }
+                  if (trekTouristicEvents) {
+                    state.trekTouristicEvents = trekTouristicEvents.results;
+                  }
+                })
+                .catch(() => {
+                  state.touristicEventsData = 0;
+                });
             }
           },
         );

@@ -444,6 +444,10 @@ export class GrwApp {
     return `${translate[state.language].filter}${activeFilters > 0 ? ' (' + activeFilters + ')' : ''}`;
   }
 
+  trekIsLoading() {
+    return this.showTrek && this.currentTrekId && !state.currentTrek;
+  }
+
   render() {
     return (
       <Host
@@ -508,7 +512,7 @@ export class GrwApp {
             labels={this.labels}
           ></grw-treks-provider>
         )}
-        {this.showTrek && this.currentTrekId && !state.currentTrek && (
+        {this.trekIsLoading() && (
           <grw-trek-provider
             api={this.api}
             languages={this.languages}
