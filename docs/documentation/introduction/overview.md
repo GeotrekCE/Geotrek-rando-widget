@@ -98,3 +98,4 @@ Voici des exemples d'intégration du de Geotrek-rando-widget en conditions réel
 - [Coeur du Jura - randonnées vélo](https://www.coeurdujura-tourisme.com/parcours-randonnees-velo/)
 - [Coeur du Jura - randonnées pédestre](https://www.coeurdujura-tourisme.com/widget-geotrek/)
 - [La Toscane Occitane](https://www.la-toscane-occitane.com/activites/balades-randonnees/)
+- [Randoxygène](https://randoxygene.departement06.fr/annuaire-des-randonnees)
