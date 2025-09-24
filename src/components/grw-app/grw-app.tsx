@@ -938,6 +938,8 @@ export class GrwApp {
                   icon={() => this.getMapVisibilityIconButton()}
                   name={() => this.getMapVisibilityLabelButton()}
                   display={this.isLargeView ? 'none' : 'flex'}
+                  fab-background-color={this.fabBackgroundColor}
+                  fab-color={this.fabColor}
                 ></grw-extended-fab>
               </div>
             )}
