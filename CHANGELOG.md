@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.30.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.0...0.30.1) (2025-09-24)
+
+
+### Bug Fixes
+
+* exclude treks without departure ([a560d38](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/a560d38adb7b9ac3213328de716a3e3d5b8e5d52))
+* extended fab style ([8a35907](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/8a359079a2e2c266741a12bbc721f05cad279421))
+
 ## [0.30.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.29.2...0.30.0) (2025-07-31)
 
 
