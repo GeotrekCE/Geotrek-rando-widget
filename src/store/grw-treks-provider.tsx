@@ -148,9 +148,11 @@ export class GrwTreksProvider {
         state.lengths = lengths;
         state.elevations = elevations;
         const treksWithOfflineValue = [];
-        for (let index = 0; index < treks.results.length; index++) {
-          const offline = await trekIsAvailableOffline(treks.results[index].id);
-          treksWithOfflineValue.push({ ...treks.results[index], offline });
+        const treksWithDeparture = treks.results.filter(trek => trek.departure_geom !== null);
+
+        for (let index = 0; index < treksWithDeparture.length; index++) {
+          const offline = await trekIsAvailableOffline(treksWithDeparture[index].id);
+          treksWithOfflineValue.push({ ...treksWithDeparture[index], offline });
         }
         this.sortTreks(treksWithOfflineValue);
         state.treks = treksWithOfflineValue;
