@@ -656,22 +656,22 @@ export class GrwTrekDetail {
         ...informationPlaces,
         visible: Boolean(
           state.currentInformationDesks &&
-            state.currentInformationDesks.filter(currentInformationDesks => state.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0,
+          state.currentInformationDesks.filter(currentInformationDesks => state.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0,
         ),
       },
       accessibility: {
         ...accessibility,
         visible: Boolean(
           state.currentTrek.disabled_infrastructure ||
-            (this.accessibilities && this.accessibilities.length > 0) ||
-            state.currentTrek.accessibility_level ||
-            state.currentTrek.accessibility_slope ||
-            state.currentTrek.accessibility_width ||
-            state.currentTrek.accessibility_signage ||
-            state.currentTrek.accessibility_covering ||
-            state.currentTrek.accessibility_exposure ||
-            state.currentTrek.accessibility_advice ||
-            this.emergencyNumber,
+          (this.accessibilities && this.accessibilities.length > 0) ||
+          state.currentTrek.accessibility_level ||
+          state.currentTrek.accessibility_slope ||
+          state.currentTrek.accessibility_width ||
+          state.currentTrek.accessibility_signage ||
+          state.currentTrek.accessibility_covering ||
+          state.currentTrek.accessibility_exposure ||
+          state.currentTrek.accessibility_advice ||
+          this.emergencyNumber,
         ),
       },
       touristicContents: { ...touristicContents, visible: state.touristicContentsData > 0 },
@@ -1057,8 +1057,8 @@ export class GrwTrekDetail {
               ? '44px'
               : '12px'
             : state.languages && state.languages.length > 1
-            ? '164px'
-            : '124px',
+              ? '164px'
+              : '124px',
         }}
       >
         {this.currentTrek && (
@@ -1312,9 +1312,8 @@ export class GrwTrekDetail {
                 </div>
                 {this.currentTrek.ratings.map(trekRating => (
                   <div part="row" class="row">
-                    {`${state.ratingsScale.find(ratingScale => ratingScale.id === state.ratings.find(rating => rating.id === trekRating).scale).name} : ${
-                      state.ratings.find(rating => rating.id === trekRating).name
-                    }`}
+                    {`${state.ratingsScale.find(ratingScale => ratingScale.id === state.ratings.find(rating => rating.id === trekRating).scale).name} : ${state.ratings.find(rating => rating.id === trekRating).name
+                      }`}
                   </div>
                 ))}
                 {this.currentTrek.ratings_description && this.currentTrek.ratings_description !== '' && (
@@ -1526,13 +1525,13 @@ export class GrwTrekDetail {
                   </div>
                   {this.currentTrek.advice && (
                     <div part="current-advice-container" class="current-advice-container">
-                      <span part="icon" class="icon" innerHTML={WarningIcon}></span>
+                      <span part="advice-icon" class="icon" innerHTML={WarningIcon}></span>
                       <div part="advice" class="advice" innerHTML={this.currentTrek.advice}></div>
                     </div>
                   )}
                   {this.currentTrek.gear && (
                     <div part="gear-container" class="gear-container">
-                      <span part="icon" class="icon" innerHTML={BackpackIcon}></span>
+                      <span part="gear-icon" class="icon" innerHTML={BackpackIcon}></span>
                       <div part="gear" class="gear" innerHTML={this.currentTrek.gear}></div>
                     </div>
                   )}
@@ -1604,99 +1603,99 @@ export class GrwTrekDetail {
               this.currentTrek.accessibility_exposure ||
               this.currentTrek.accessibility_advice ||
               this.emergencyNumber) && (
-              <div part="divider-and-accessibilities-container" class="divider-and-accessibilities-container">
-                <div part="divider" class="divider"></div>
-                <div part="accessibilities-container" class="accessibilities-container">
-                  <div part="accessibilities-title" class="accessibilities-title" ref={el => (this.accessibilityRef = el)}>
-                    {translate[state.language].accessibility}
-                  </div>
-                  {this.currentTrek.disabled_infrastructure && <div part="disabled-infrastructure" innerHTML={this.currentTrek.disabled_infrastructure}></div>}
-                  {this.accessibilities && this.accessibilities.length > 0 && (
-                    <div part="accessibilities-content-container" class="accessibilities-content-container">
-                      {this.accessibilities.map(accessibility => (
-                        <div part="accessibility-content-container" class="accessibility-content-container">
-                          <img src={accessibility.pictogram} alt=""></img>
-                          <div part="accessibility-name" innerHTML={accessibility.name}></div>
+                <div part="divider-and-accessibilities-container" class="divider-and-accessibilities-container">
+                  <div part="divider" class="divider"></div>
+                  <div part="accessibilities-container" class="accessibilities-container">
+                    <div part="accessibilities-title" class="accessibilities-title" ref={el => (this.accessibilityRef = el)}>
+                      {translate[state.language].accessibility}
+                    </div>
+                    {this.currentTrek.disabled_infrastructure && <div part="disabled-infrastructure" innerHTML={this.currentTrek.disabled_infrastructure}></div>}
+                    {this.accessibilities && this.accessibilities.length > 0 && (
+                      <div part="accessibilities-content-container" class="accessibilities-content-container">
+                        {this.accessibilities.map(accessibility => (
+                          <div part="accessibility-content-container" class="accessibility-content-container">
+                            <img src={accessibility.pictogram} alt=""></img>
+                            <div part="accessibility-name" innerHTML={accessibility.name}></div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {this.emergencyNumber && (
+                      <div part="accessibility-emergency-number-container" class="accessibility-emergency-number-container">
+                        <div part="accessibility-emergency-number-title" class="accessibility-emergency-number-title">
+                          {translate[state.language].emergencyNumber}
                         </div>
-                      ))}
-                    </div>
-                  )}
-                  {this.emergencyNumber && (
-                    <div part="accessibility-emergency-number-container" class="accessibility-emergency-number-container">
-                      <div part="accessibility-emergency-number-title" class="accessibility-emergency-number-title">
-                        {translate[state.language].emergencyNumber}
+                        <div part="accessibility-emergency-number-content" class="accessibility-emergency-number-content">
+                          {
+                            <a href={`tel:${this.emergencyNumber.toString()}`}>
+                              <span part="icon" class="icon" innerHTML={CallIcon}></span>
+                              <span part="emergency-number" class="emergency-number">
+                                {this.emergencyNumber.toString()}
+                              </span>
+                            </a>
+                          }
+                        </div>
                       </div>
-                      <div part="accessibility-emergency-number-content" class="accessibility-emergency-number-content">
-                        {
-                          <a href={`tel:${this.emergencyNumber.toString()}`}>
-                            <span part="icon" class="icon" innerHTML={CallIcon}></span>
-                            <span part="emergency-number" class="emergency-number">
-                              {this.emergencyNumber.toString()}
-                            </span>
-                          </a>
-                        }
+                    )}
+                    {this.currentTrek.accessibility_level && (
+                      <div part="accessibility-level-container" class="accessibility-level-container">
+                        <div part="accessibility-level-title" class="accessibility-level-title">
+                          {translate[state.language].accessibilityLevel}
+                        </div>
+                        <div part="accessibility-level-name" innerHTML={this.accessibilityLevel.name}></div>
                       </div>
-                    </div>
-                  )}
-                  {this.currentTrek.accessibility_level && (
-                    <div part="accessibility-level-container" class="accessibility-level-container">
-                      <div part="accessibility-level-title" class="accessibility-level-title">
-                        {translate[state.language].accessibilityLevel}
+                    )}
+                    {this.currentTrek.accessibility_slope && (
+                      <div part="accessibility-slope-container" class="accessibility-slope-container">
+                        <div part="accessibility-slope-title" class="accessibility-slope-title">
+                          {translate[state.language].accessibilitySlope}
+                        </div>
+                        <div part="accessibility-slope" innerHTML={this.currentTrek.accessibility_slope}></div>
                       </div>
-                      <div part="accessibility-level-name" innerHTML={this.accessibilityLevel.name}></div>
-                    </div>
-                  )}
-                  {this.currentTrek.accessibility_slope && (
-                    <div part="accessibility-slope-container" class="accessibility-slope-container">
-                      <div part="accessibility-slope-title" class="accessibility-slope-title">
-                        {translate[state.language].accessibilitySlope}
+                    )}
+                    {this.currentTrek.accessibility_width && (
+                      <div part="accessibility-width-container" class="accessibility-width-container">
+                        <div part="accessibility-width-title" class="accessibility-width-title">
+                          {translate[state.language].accessibilityWidth}
+                        </div>
+                        <div part="accessibility-width" innerHTML={this.currentTrek.accessibility_width}></div>
                       </div>
-                      <div part="accessibility-slope" innerHTML={this.currentTrek.accessibility_slope}></div>
-                    </div>
-                  )}
-                  {this.currentTrek.accessibility_width && (
-                    <div part="accessibility-width-container" class="accessibility-width-container">
-                      <div part="accessibility-width-title" class="accessibility-width-title">
-                        {translate[state.language].accessibilityWidth}
+                    )}
+                    {this.currentTrek.accessibility_signage && (
+                      <div part="accessibility-signage-container" class="accessibility-signage-container">
+                        <div part="accessibility-signage-title" class="accessibility-signage-title">
+                          {translate[state.language].accessibilitySignage}
+                        </div>
+                        <div part="accessibility-signage" innerHTML={this.currentTrek.accessibility_signage}></div>
                       </div>
-                      <div part="accessibility-width" innerHTML={this.currentTrek.accessibility_width}></div>
-                    </div>
-                  )}
-                  {this.currentTrek.accessibility_signage && (
-                    <div part="accessibility-signage-container" class="accessibility-signage-container">
-                      <div part="accessibility-signage-title" class="accessibility-signage-title">
-                        {translate[state.language].accessibilitySignage}
+                    )}
+                    {this.currentTrek.accessibility_covering && (
+                      <div part="accessibility-covering-container" class="accessibility-covering-container">
+                        <div part="accessibility-covering-title" class="accessibility-covering-title">
+                          {translate[state.language].accessibilityCovering}
+                        </div>
+                        <div part="accessibility-covering" innerHTML={this.currentTrek.accessibility_covering}></div>
                       </div>
-                      <div part="accessibility-signage" innerHTML={this.currentTrek.accessibility_signage}></div>
-                    </div>
-                  )}
-                  {this.currentTrek.accessibility_covering && (
-                    <div part="accessibility-covering-container" class="accessibility-covering-container">
-                      <div part="accessibility-covering-title" class="accessibility-covering-title">
-                        {translate[state.language].accessibilityCovering}
+                    )}
+                    {this.currentTrek.accessibility_exposure && (
+                      <div part="accessibility-exposure-container" class="accessibility-exposure-container">
+                        <div part="accessibility-exposure-title" class="accessibility-exposure-title">
+                          {translate[state.language].accessibilityExposure}
+                        </div>
+                        <div part="accessibility-exposure" innerHTML={this.currentTrek.accessibility_exposure}></div>
                       </div>
-                      <div part="accessibility-covering" innerHTML={this.currentTrek.accessibility_covering}></div>
-                    </div>
-                  )}
-                  {this.currentTrek.accessibility_exposure && (
-                    <div part="accessibility-exposure-container" class="accessibility-exposure-container">
-                      <div part="accessibility-exposure-title" class="accessibility-exposure-title">
-                        {translate[state.language].accessibilityExposure}
+                    )}
+                    {this.currentTrek.accessibility_advice && (
+                      <div part="accessibility-advice-container" class="accessibility-advice-container">
+                        <div part="accessibility-advice-title" class="accessibility-advice-title">
+                          {translate[state.language].accessibilityAdvices}
+                        </div>
+                        <div part="accessibility-advice" innerHTML={this.currentTrek.accessibility_advice}></div>
                       </div>
-                      <div part="accessibility-exposure" innerHTML={this.currentTrek.accessibility_exposure}></div>
-                    </div>
-                  )}
-                  {this.currentTrek.accessibility_advice && (
-                    <div part="accessibility-advice-container" class="accessibility-advice-container">
-                      <div part="accessibility-advice-title" class="accessibility-advice-title">
-                        {translate[state.language].accessibilityAdvices}
-                      </div>
-                      <div part="accessibility-advice" innerHTML={this.currentTrek.accessibility_advice}></div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             {this.options.touristicContents.visible && (
               <div part="divider-and-touristic-content-container" class="divider-and-touristic-content-container">
                 <div part="divider" class="divider"></div>
