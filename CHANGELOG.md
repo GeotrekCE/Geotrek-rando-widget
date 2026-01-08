@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.1...0.30.2) (2026-01-08)
+
+
+### Bug Fixes
+
+* rename parts ([7751b88](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/7751b8866ffdcffb70fe1dc6a99096f68f3ddc06))
+
 ## [0.30.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.0...0.30.1) (2025-09-24)
 
 
