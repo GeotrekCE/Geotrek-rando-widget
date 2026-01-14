@@ -21,14 +21,15 @@ jobs:
           echo "Tag name from github.ref_name: ${{  github.ref_name }}"
 
       - name: Build
-        run : npm run build
+        run: npm run build
 
       - name: Test doc build
         run: npm run docs:build
 
       - name: Run Playwright tests
         run: |
-          npx playwright test --reporter=playwright-ctrf-json-reporter --trace=retain-on-failure
+          ls -R hars
+          npx playwright test --reporter=list,playwright-ctrf-json-reporter --trace=retain-on-failure
           ls -als test-results
 
       - name: Publish Test Summary Results
