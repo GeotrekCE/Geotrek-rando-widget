@@ -163,7 +163,6 @@ export class GrwOutdoorSiteProvider {
               });
               state.currentRelatedOutdoorCourses = await Promise.all([...outdoorCoursesRequests]).then(responses => Promise.all(responses.map(response => response.json())));
             }
-
             if (cities) {
               state.cities = cities.results;
             }
@@ -191,11 +190,11 @@ export class GrwOutdoorSiteProvider {
             if (informationDesks) {
               state.currentInformationDesks = informationDesks.results;
             }
-            if (touristicContent) {
-              state.trekTouristicContents = touristicContent.results;
-            }
             if (touristicContentCategory) {
               state.touristicContentCategories = touristicContentCategory.results;
+            }
+            if (touristicContent) {
+              state.trekTouristicContents = touristicContent.results;
             }
             if (touristicEvent) {
               state.trekTouristicEvents = touristicEvent.results;

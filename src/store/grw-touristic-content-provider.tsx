@@ -67,8 +67,16 @@ export class GrwTouristicContentProvider {
           if (citiesToLoad.length > 0) {
             const cities = (await getCities(state.api, state.language, this.init, citiesToLoad).then(response => response.json())).results;
             if (cities) {
-              state.cities = [...state.cities, ...cities];
+              if (state.cities) {
+                state.cities = [...state.cities, ...cities];
+              } else {
+                state.cities = cities;
+              }
             }
+          }
+
+          if (!state.cities) {
+            state.cities = [];
           }
 
           if (touristicContentCategory) {

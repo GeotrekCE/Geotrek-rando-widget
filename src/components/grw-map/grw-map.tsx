@@ -2465,26 +2465,28 @@ export class GrwMap {
   }
 
   setCurrentPois() {
-    if (state.currentPois) {
-      const currentPoisFeatureCollection: FeatureCollection = {
-        type: 'FeatureCollection',
-        features: [],
-      };
+    if (this.currentPoisLayer) {
+      if (state.currentPois) {
+        const currentPoisFeatureCollection: FeatureCollection = {
+          type: 'FeatureCollection',
+          features: [],
+        };
 
-      for (const currentPoi of state.currentPois) {
-        currentPoisFeatureCollection.features.push({
-          type: 'Feature',
-          properties: { name: currentPoi.name, type_pictogram: state.poiTypes.find(poiType => poiType.id === currentPoi.type)?.pictogram },
-          geometry: currentPoi.geometry,
-        });
+        for (const currentPoi of state.currentPois) {
+          currentPoisFeatureCollection.features.push({
+            type: 'Feature',
+            properties: { name: currentPoi.name, type_pictogram: state.poiTypes.find(poiType => poiType.id === currentPoi.type)?.pictogram },
+            geometry: currentPoi.geometry,
+          });
+        }
+
+        this.currentPoisLayer.clearLayers();
+
+        this.currentPoisLayer.addData(currentPoisFeatureCollection);
+
+        this.layerDataIsLoading = false;
+        forceUpdate(this.hostElement);
       }
-
-      this.currentPoisLayer.clearLayers();
-
-      this.currentPoisLayer.addData(currentPoisFeatureCollection);
-
-      this.layerDataIsLoading = false;
-      forceUpdate(this.hostElement);
     }
   }
 
@@ -2582,30 +2584,32 @@ export class GrwMap {
   }
 
   setCurrentTouristicContents() {
-    if (state.trekTouristicContents) {
-      const currentTouristicContentsFeatureCollection: FeatureCollection = {
-        type: 'FeatureCollection',
-        features: [],
-      };
+    if (this.currentToutisticContentsLayer) {
+      if (state.trekTouristicContents) {
+        const currentTouristicContentsFeatureCollection: FeatureCollection = {
+          type: 'FeatureCollection',
+          features: [],
+        };
 
-      for (const touristicContent of state.trekTouristicContents) {
-        currentTouristicContentsFeatureCollection.features.push({
-          type: 'Feature',
-          properties: {
-            id: touristicContent.id,
-            name: touristicContent.name,
-            category_pictogram: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category)?.pictogram,
-          },
-          geometry: touristicContent.geometry,
-        });
+        for (const touristicContent of state.trekTouristicContents) {
+          currentTouristicContentsFeatureCollection.features.push({
+            type: 'Feature',
+            properties: {
+              id: touristicContent.id,
+              name: touristicContent.name,
+              category_pictogram: state.touristicContentCategories.find(touristicContentCategory => touristicContentCategory.id === touristicContent.category)?.pictogram,
+            },
+            geometry: touristicContent.geometry,
+          });
+        }
+
+        this.currentToutisticContentsLayer.clearLayers();
+
+        this.currentToutisticContentsLayer.addData(currentTouristicContentsFeatureCollection);
+
+        this.layerDataIsLoading = false;
+        forceUpdate(this.hostElement);
       }
-
-      this.currentToutisticContentsLayer.clearLayers();
-
-      this.currentToutisticContentsLayer.addData(currentTouristicContentsFeatureCollection);
-
-      this.layerDataIsLoading = false;
-      forceUpdate(this.hostElement);
     }
   }
 
@@ -2657,30 +2661,32 @@ export class GrwMap {
   }
 
   setCurrentTouristicEvents() {
-    if (state.trekTouristicEvents) {
-      const currentTouristicEventsFeatureCollection: FeatureCollection = {
-        type: 'FeatureCollection',
-        features: [],
-      };
+    if (this.currentTouristicEventsLayer) {
+      if (state.trekTouristicEvents) {
+        const currentTouristicEventsFeatureCollection: FeatureCollection = {
+          type: 'FeatureCollection',
+          features: [],
+        };
 
-      for (const touristicEvent of state.trekTouristicEvents) {
-        currentTouristicEventsFeatureCollection.features.push({
-          type: 'Feature',
-          properties: {
-            id: touristicEvent.id,
-            name: touristicEvent.name,
-            type_pictogram: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === touristicEvent.type)?.pictogram,
-          },
-          geometry: touristicEvent.geometry,
-        });
+        for (const touristicEvent of state.trekTouristicEvents) {
+          currentTouristicEventsFeatureCollection.features.push({
+            type: 'Feature',
+            properties: {
+              id: touristicEvent.id,
+              name: touristicEvent.name,
+              type_pictogram: state.touristicEventTypes.find(touristicEventType => touristicEventType.id === touristicEvent.type)?.pictogram,
+            },
+            geometry: touristicEvent.geometry,
+          });
+        }
+
+        this.currentTouristicEventsLayer.clearLayers();
+
+        this.currentTouristicEventsLayer.addData(currentTouristicEventsFeatureCollection);
+
+        this.layerDataIsLoading = false;
+        forceUpdate(this.hostElement);
       }
-
-      this.currentTouristicEventsLayer.clearLayers();
-
-      this.currentTouristicEventsLayer.addData(currentTouristicEventsFeatureCollection);
-
-      this.layerDataIsLoading = false;
-      forceUpdate(this.hostElement);
     }
   }
 
@@ -2759,7 +2765,6 @@ export class GrwMap {
       overlays[translate[state.language].layers.signages] = this.currentSignagesLayer;
       this.currentSignagesLayer.addTo(this.map);
     }
-
     if (state.touristicContentsData > 0) {
       overlays[translate[state.language].layers.touristicContents] = this.currentToutisticContentsLayer;
     }

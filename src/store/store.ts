@@ -137,7 +137,7 @@ const { state, onChange, reset } = createStore<{
   routes: null,
   practices: null,
   themes: null,
-  cities: [],
+  cities: null,
   durations: null,
   lengths: null,
   elevations: null,
