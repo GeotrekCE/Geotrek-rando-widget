@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.30.4](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.3...0.30.4) (2026-01-15)
+
+
+### Bug Fixes
+
+* handle unexpected data for cities to load ([490f4ea](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/490f4ea64412a1e492ce8c43271a3869d269c582))
+* tests ([2355bd5](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/2355bd535508aae7fdb1ab08ca1bd5237103ef92))
+
 ## [0.30.3](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.2...0.30.3) (2026-01-14)
 
 
