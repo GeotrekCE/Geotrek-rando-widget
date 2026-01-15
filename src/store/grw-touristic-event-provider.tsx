@@ -61,9 +61,10 @@ export class GrwTouristicEventProvider {
 
           if (state.cities) {
             const cityIds = state.cities.map(city => city.id);
-            citiesToLoad = citiesToLoad.filter(city => city);
             citiesToLoad = citiesToLoad.filter(city => !cityIds.includes(city));
           }
+
+          citiesToLoad = [...new Set(citiesToLoad.filter(Boolean))];
 
           if (citiesToLoad.length > 0) {
             const cities = (await getCities(state.api, state.language, this.init, citiesToLoad).then(response => response.json())).results;

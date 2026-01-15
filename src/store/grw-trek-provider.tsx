@@ -265,9 +265,10 @@ export class GrwTrekProvider {
               });
             }
 
+            citiesToLoad = [...new Set(citiesToLoad.filter(Boolean))];
+
             if (state.cities) {
               const cityIds = state.cities.map(city => city.id);
-              citiesToLoad = citiesToLoad.filter(city => city);
               citiesToLoad = citiesToLoad.filter(city => !cityIds.includes(city));
             }
 
