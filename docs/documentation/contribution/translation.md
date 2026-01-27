@@ -13,6 +13,21 @@ head:
       rel: stylesheet
 ---
 
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  window.grwTranslate = {
+    fr: {
+      options: {
+        recommendations: "Matériel"
+      },
+      recommendations: "Matériel"
+    },
+  };
+})
+</script>
+
 # Traduire le widget
 
 Actuellement le widget n'est traduit qu'en anglais, mais il peut supporter d'autre langues.
@@ -161,16 +176,7 @@ Pour cela, il faut ajouter une balise `<script></script>` sur la page où est in
 
 **Voici un exemple de code complet :**
 <ClientOnly>
-  <script>
-  window.grwTranslate = {
-    fr: {
-      options: {
-        recommendations: "Matériel"
-        },
-      recommendations: "Matériel"
-    },
-  };
-  </script>
+
   <div>
     <grw-app
       app-width="100%"

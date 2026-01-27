@@ -18,3 +18,18 @@
     color: #000000;
   }
 }
+
+@media print {
+  grw-app,
+  grw-treks-list,
+  grw-trek-detail,
+  grw-map,
+  grw-treks-provider,
+  grw-touristic-contents-list,
+  grw-touristic-events-list,
+  grw-outdoor-sites-list,
+  grw-outdoor-course-detail,
+  grw-outdoor-site-detail {
+    display: none !important;
+  }
+}
