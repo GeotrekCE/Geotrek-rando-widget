@@ -1,0 +1,114 @@
+{
+    "APP": {
+        "TITLE": "GRW Configurator"
+    },
+    "HEADER": {
+        "CONFIGURATION": "Configuration",
+        "RESET_TITLE": "Reset to defaults",
+        "RESET_LABEL": "Reset configuration",
+        "SHARE_TITLE": "Share configuration",
+        "SHARE_LABEL": "Copy configuration link"
+    },
+    "TABS": {
+        "GENERAL": "General",
+        "FILTERS": "Filters",
+        "APPEARANCE": "Appearance",
+        "MAP": "Map"
+    },
+    "FIELDS": {
+        "API_URL": "Geotrek API URL",
+        "LANGUAGE": "Languages",
+        "TREKS": "Show treks",
+        "TOURISTIC_CONTENTS": "Show touristic contents",
+        "TOURISTIC_EVENTS": "Show touristic events",
+        "OUTDOOR": "Show outdoor",
+        "DISTRICTS": "Districts",
+        "THEMES": "Themes",
+        "PRACTICES": "Practices",
+        "CITIES": "Cities",
+        "STRUCTURES": "Structures",
+        "PORTALS": "Portals",
+        "ROUTES": "Routes",
+        "LABELS": "Labels",
+        "IN_BBOX": "In Bbox",
+        "LAYER_NAME": "Layer Name",
+        "LAYER_NAME_TOOLTIP": "Display name for the base map layer (e.g. IGN, OpenStreetMap).\nFor multiple layers, separate the names with commas.",
+        "LAYER_URL": "Layer URL",
+        "LAYER_URL_TOOLTIP": "Tile service URL for the base map. Use {z}, {x}, {y} variables for tile coordinates.\nFor multiple layers, separate the URLs with commas and provide the corresponding names and attributions.",
+        "ATTRIBUTION": "Attribution",
+        "ATTRIBUTION_TOOLTIP": "HTML attribution text displayed at the bottom of the map, usually a link to the layer provider.\nFor multiple layers, separate the attributions with commas.",
+        "MAIN_MARKER": "Main Marker",
+        "SELECTED_MAIN_MARKER": "Selected Main Marker",
+        "MAIN_CLUSTER": "Main Cluster",
+        "COMMON_MARKER": "Map Landmark",
+        "COMMON_MARKER_TOOLTIP": "Size of map landmarks, such as points of interest (POI)",
+        "DEPARTURE_ARRIVAL": "Departure/Arrival",
+        "POINT_REFERENCE": "Point Reference",
+        "ROUNDED": "Rounded corners"
+    },
+    "COLORS": {
+        "THEME_TITLE": "Theme",
+        "THEME_SELECT": "Select a theme",
+        "THEME_LABELS": {
+            "PURPLE": "Purple (Default)",
+            "GREEN": "Green",
+            "ORANGE": "Orange",
+            "RED": "Red",
+            "BLUE": "Blue",
+            "PINK": "Pink",
+            "LIME": "Lime",
+            "CYAN": "Cyan",
+            "CUSTOM": "Custom"
+        },
+        "SHOW_ADVANCED": "Show advanced options",
+        "HIDE_ADVANCED": "Hide advanced options",
+        "MAP_COLORS_TITLE": "Map colors",
+        "COLORS_TITLE": "Interface colors",
+        "SIZES_TITLE": "Sizes",
+        "PRIMARY_APP": "Primary App",
+        "PRIMARY": "Primary",
+        "ON_PRIMARY": "On Primary",
+        "PRIMARY_CONTAINER": "Primary Container",
+        "ON_PRIMARY_CONTAINER": "On Primary Container",
+        "SECONDARY_CONTAINER": "Secondary Container",
+        "ON_SECONDARY_CONTAINER": "On Secondary Container",
+        "BACKGROUND": "Background",
+        "SURFACE": "Surface",
+        "ON_SURFACE": "On Surface",
+        "SURFACE_VARIANT": "Surface Variant",
+        "ON_SURFACE_VARIANT": "On Surface Variant",
+        "SURFACE_CONTAINER_HIGH": "Surface Container High",
+        "SURFACE_CONTAINER_LOW": "Surface Container Low",
+        "FAB_BACKGROUND": "FAB Background",
+        "FAB_COLOR": "FAB Color",
+        "TREK_LINE": "Trek Line",
+        "SENSITIVE_AREA": "Sensitive Area",
+        "OUTDOOR_AREA": "Outdoor Area",
+        "MARKERS": "Markers",
+        "CLUSTERS": "Clusters"
+    },
+    "ACTIONS": {
+        "GENERATE_CODE": "Generate Code",
+        "CLOSE": "Close",
+        "COPY_CLIPBOARD": "Copy to Clipboard"
+    },
+    "PREVIEW": {
+        "TITLE": "Preview",
+        "GENERATING": "Generating preview...",
+        "MOBILE": "Mobile",
+        "TABLET": "Tablet",
+        "DESKTOP": "Desktop"
+    },
+    "MODAL": {
+        "TITLE": "Integration Code",
+        "INSTRUCTION": "Copy and paste this code into your HTML:"
+    },
+    "ERRORS": {
+        "URL_REQUIRED": "URL is required",
+        "URL_PATTERN": "Must end with /api/v2/"
+    },
+    "MESSAGES": {
+        "LINK_COPIED": "Link copied to clipboard",
+        "SHARE_ERROR": "Error sharing"
+    }
+}

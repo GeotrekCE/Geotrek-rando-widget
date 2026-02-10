@@ -1,0 +1,114 @@
+{
+    "APP": {
+        "TITLE": "Configurateur GRW"
+    },
+    "HEADER": {
+        "CONFIGURATION": "Configuration",
+        "RESET_TITLE": "Réinitialiser les valeurs par défaut",
+        "RESET_LABEL": "Réinitialiser la configuration",
+        "SHARE_TITLE": "Partager la configuration",
+        "SHARE_LABEL": "Copier le lien de la configuration"
+    },
+    "TABS": {
+        "GENERAL": "Général",
+        "FILTERS": "Filtres",
+        "APPEARANCE": "Apparence",
+        "MAP": "Carte"
+    },
+    "FIELDS": {
+        "API_URL": "URL de l'API Geotrek",
+        "LANGUAGE": "Langues",
+        "TREKS": "Afficher les itinéraires",
+        "TOURISTIC_CONTENTS": "Afficher les contenus touristiques",
+        "TOURISTIC_EVENTS": "Afficher les événements touristiques",
+        "OUTDOOR": "Afficher l'outdoor",
+        "DISTRICTS": "Secteurs",
+        "THEMES": "Thèmes",
+        "PRACTICES": "Pratiques",
+        "CITIES": "Communes",
+        "STRUCTURES": "Structures",
+        "PORTALS": "Portails",
+        "ROUTES": "Parcours",
+        "LABELS": "Étiquettes",
+        "IN_BBOX": "Dans la Bbox",
+        "LAYER_NAME": "Nom de la layer",
+        "LAYER_NAME_TOOLTIP": "Nom affiché pour la couche de fond de carte (ex : IGN, OpenStreetMap).\nPour plusieurs couches, séparez les noms par des virgules.",
+        "LAYER_URL": "URL de la layer",
+        "LAYER_URL_TOOLTIP": "URL du service de tuiles pour le fond de carte. Utilisez les variables {z}, {x}, {y} pour les coordonnées des tuiles.\nPour plusieurs couches, séparez les URLs par des virgules et renseignez les noms et attributions correspondants.",
+        "ATTRIBUTION": "Attribution",
+        "ATTRIBUTION_TOOLTIP": "Texte HTML d'attribution affiché en bas de la carte, généralement un lien vers le fournisseur de la couche.\nPour plusieurs couches, séparez les attributions par des virgules.",
+        "MAIN_MARKER": "Marqueur",
+        "SELECTED_MAIN_MARKER": "Marqueur sélectionné",
+        "MAIN_CLUSTER": "Cluster",
+        "COMMON_MARKER": "Repère carto",
+        "COMMON_MARKER_TOOLTIP": "Taille des repères cartographiques sur la carte, comme les points d'intérêt (POI)",
+        "DEPARTURE_ARRIVAL": "Départ/Arrivée",
+        "POINT_REFERENCE": "Point de référence",
+        "ROUNDED": "Coins arrondis"
+    },
+    "COLORS": {
+        "THEME_TITLE": "Thème",
+        "THEME_SELECT": "Sélectionner un thème",
+        "THEME_LABELS": {
+            "PURPLE": "Violet (Défaut)",
+            "GREEN": "Vert",
+            "ORANGE": "Orange",
+            "RED": "Rouge",
+            "BLUE": "Bleu",
+            "PINK": "Rose",
+            "LIME": "Citron vert",
+            "CYAN": "Cyan",
+            "CUSTOM": "Personnalisé"
+        },
+        "SHOW_ADVANCED": "Afficher les options avancées",
+        "HIDE_ADVANCED": "Masquer les options avancées",
+        "MAP_COLORS_TITLE": "Couleurs liées à la carte",
+        "COLORS_TITLE": "Couleurs de l'interface",
+        "SIZES_TITLE": "Tailles",
+        "PRIMARY_APP": "Primary App",
+        "PRIMARY": "Primary",
+        "ON_PRIMARY": "On Primary",
+        "PRIMARY_CONTAINER": "Primary Container",
+        "ON_PRIMARY_CONTAINER": "On Primary Container",
+        "SECONDARY_CONTAINER": "Secondary Container",
+        "ON_SECONDARY_CONTAINER": "On Secondary Container",
+        "BACKGROUND": "Background",
+        "SURFACE": "Surface",
+        "ON_SURFACE": "On Surface",
+        "SURFACE_VARIANT": "Surface Variant",
+        "ON_SURFACE_VARIANT": "On Surface Variant",
+        "SURFACE_CONTAINER_HIGH": "Surface Container High",
+        "SURFACE_CONTAINER_LOW": "Surface Container Low",
+        "FAB_BACKGROUND": "FAB Background",
+        "FAB_COLOR": "FAB Color",
+        "TREK_LINE": "Ligne de l'itinéraire",
+        "SENSITIVE_AREA": "Zone sensible",
+        "OUTDOOR_AREA": "Zone Outdoor",
+        "MARKERS": "Marqueurs",
+        "CLUSTERS": "Clusters"
+    },
+    "ACTIONS": {
+        "GENERATE_CODE": "Générer le code",
+        "CLOSE": "Fermer",
+        "COPY_CLIPBOARD": "Copier dans le presse-papier"
+    },
+    "PREVIEW": {
+        "TITLE": "Aperçu",
+        "GENERATING": "Génération de l'aperçu...",
+        "MOBILE": "Mobile",
+        "TABLET": "Tablette",
+        "DESKTOP": "Bureau"
+    },
+    "MODAL": {
+        "TITLE": "Code d'intégration",
+        "INSTRUCTION": "Copiez et collez ce code dans votre HTML :"
+    },
+    "ERRORS": {
+        "URL_REQUIRED": "L'URL est requise",
+        "URL_PATTERN": "Doit se terminer par /api/v2/"
+    },
+    "MESSAGES": {
+        "LINK_COPIED": "Lien copié dans le presse-papier",
+        "SHARE_ERROR": "Erreur lors du partage"
+    }
+}
