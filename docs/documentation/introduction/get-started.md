@@ -1,12 +1,12 @@
 # Installation du widget
 
-Le widget se configure via un **constructeur de Widget** (anciennement testé/configuré via Storybook), puis s’intègre par simple copier-coller du code HTML généré.
+Le widget se configure via un **constructeur de Widget**, puis s’intègre par simple copier-coller du code HTML généré.
 
 ## Configuration 
 
-Vous pouvez tester et configurer le widget avec le [**constructeur de Widget**](https://geotrekce.github.io/Geotrek-rando-widget/?path=/story/geotrek-rando-widget--app) (qui remplace l’ancien Storybook). 
+Vous pouvez tester et configurer le widget avec le [**constructeur de Widget**](https://geotrekce.github.io/Geotrek-rando-widget/?path=/story/geotrek-rando-widget--app). 
 
-Cette nouvelle interface propose une configuration plus claire et plus intuitive, avec une **prévisualisation en direct du composant**. Elle permet également de **lier le widget à une instance Geotrek-admin**, afin de récupérer automatiquement les valeurs existantes pour chaque paramètre sous forme de listes déroulantes. 
+Cette interface propose une configuration plus claire et plus intuitive, avec une **prévisualisation en direct du composant**. Elle permet également de **lier le widget à une instance Geotrek-admin**, afin de récupérer automatiquement les valeurs existantes pour chaque paramètre sous forme de listes déroulantes. 
 
 Cette connexion facilite la configuration en proposant directement les termes disponibles dans l’API (filtres, catégories, pratiques, etc.) et permet de prévisualiser le rendu avec les données réelles de l’instance concernée. Une fois la configuration finalisée, le constructeur génère automatiquement le **code HTML prêt à intégrer** dans votre site.
 
