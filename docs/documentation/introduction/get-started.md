@@ -1,33 +1,42 @@
 # Installation du widget
 
-## Configuration dans Storybook
+Le widget se configure via un **constructeur de Widget** (anciennement testé/configuré via Storybook), puis s’intègre par simple copier-coller du code HTML généré.
 
-Vous pouvez tester et configurer le widget Geotrek-Rando dans un outil interactif appelé [**Storybook**](https://geotrekce.github.io/Geotrek-rando-widget/?path=/story/geotrek-rando-widget--app). 
+## Configuration 
 
-Dans Storybook, vous pouvez personnaliser l’apparence et le comportement du widget avant de l’intégrer à votre site web. Storybook se base sur les identifiants d'objets dans Geotrek-admin, permet d'appliquer des filtres potentiels et d'ajuster le style selon les besoins.
+Vous pouvez tester et configurer le widget avec le [**constructeur de Widget**](https://geotrekce.github.io/Geotrek-rando-widget/?path=/story/geotrek-rando-widget--app) (qui remplace l’ancien Storybook). 
+
+Cette nouvelle interface propose une configuration plus claire et plus intuitive, avec une **prévisualisation en direct du composant**. Elle permet également de **lier le widget à une instance Geotrek-admin**, afin de récupérer automatiquement les valeurs existantes pour chaque paramètre sous forme de listes déroulantes. 
+
+Cette connexion facilite la configuration en proposant directement les termes disponibles dans l’API (filtres, catégories, pratiques, etc.) et permet de prévisualiser le rendu avec les données réelles de l’instance concernée. Une fois la configuration finalisée, le constructeur génère automatiquement le **code HTML prêt à intégrer** dans votre site.
+
+Le constructeur est développé dans un dépôt dédié :
+[https://github.com/GeotrekCE/grw-config/](https://github.com/GeotrekCE/grw-config/)
+
+Il est désormais déployé à la place du Storybook à l’adresse suivante :
+[https://geotrekce.github.io/Geotrek-rando-widget/](https://geotrekce.github.io/Geotrek-rando-widget/)
 
 ### Étapes à suivre
 
 1. **Vérifiez l'accès à l'API**  
    Avant de commencer, assurez-vous que l’API de votre Geotrek-admin autorise les requêtes provenant de `geotrekce.github.io`.
 
-2. **Personnalisez le widget**  
-   Dans Storybook, utilisez les options de configuration (appelées "controls") pour :
-   - Modifier le fond de plan (carte de base)
-   - Changer les couleurs, la langue, et les informations d’attribution
-   - Configurer les paramètres d'API et les filtres (villes, secteurs, etc.)
+2. **Renseignez l’instance Geotrek-admin et configurez le composant**
+Dans le constructeur :
+- renseignez l’URL de l’API de votre Geotrek-admin
+- sélectionnez le composant à intégrer
+- configurez les paramètres (couleurs, langue, fond de carte, filtres, etc.)
+- utilisez la prévisualisation pour valider le rendu et les données affichées
 
-3. **Générez le code**  
-   Allez dans l'onglet "Docs" de Storybook et cliquez sur **Show code** pour obtenir le code HTML. Vous l'intégrerez ensuite dans votre site.
+3. **Générez le code HTML**
+Une fois la configuration finalisée, générez et copiez le **code HTML** fourni par le constructeur : c’est ce code que vous intégrerez dans votre site web.
 
 <center>
-  <a title="Storybook"><img src="/introduction/storybook.jpg" alt="Storybook"></a>
+  <a title="Storybook"><img src="/introduction/builder.png" alt="Constructeur de Widget"></a>
 </center>
  
 ::: tip Astuces
-- Pour les champs de filtre (villes, secteurs, structures, etc.), utilisez les identifiants des objets, pas leur nom.
-- Vous pouvez consulter l’API pour obtenir les identifiants (exemple pour les secteurs : https://randoadmin.parc-haut-jura.fr/api/v2/district/).
-- Assurez-vous que l'itinéraire est publié dans Geotrek-admin pour qu'il apparaisse dans le widget.
+- Assurez-vous que les objets (itinéraires, contenus, événements, etc.) sont **publiés** dans Geotrek-admin pour apparaître dans le widget.
 :::
 
 ## Intégration sur votre site web
@@ -49,5 +58,5 @@ Dans Storybook, vous pouvez personnaliser l’apparence et le comportement du wi
    - Si vous souhaitez figer une version spécifique (ex. : `https://rando-widget.geotrek.fr/0.13.0/...`), remplacez `latest` par le numéro de version pour conserver un comportement stable et éviter les breaking changes.
 :::
 
-3. **Insérez le code généré**  
-   Collez le code source du widget généré depuis Storybook dans la section de votre site où vous souhaitez afficher le widget.
+3. **Insérez le code généré**
+Collez dans la section de votre site où vous souhaitez afficher le widget le code HTML généré depuis le **constructeur de Widget**.
