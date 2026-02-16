@@ -37,7 +37,7 @@ Geotrek Rando Widget provides a flexible, lightweight solution for integrating [
 
 ### Test and configure the widget
 
-Explore the widget and its configuration options here: [Geotrek-rando-widget Storybook](https://geotrekce.github.io/Geotrek-rando-widget/)
+Explore the widget and its configuration options here: [Widget builder](https://geotrekce.github.io/Geotrek-rando-widget/)
 
 ### Examples of Geotrek-widget's integration
 
