@@ -1,7 +1,7 @@
 name: 'Node modules - get or set in cache'
 description: 'Get node_modules from cache else generate it'
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - uses: actions/checkout@v4
     - name: Cache node_modules
@@ -30,7 +30,7 @@ runs:
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       shell: bash
       run: |
-        npm ci --no-audit
+        npm install --no-audit
 
     - name: Install Playwright Browsers
       id: install-playwright-browsers
