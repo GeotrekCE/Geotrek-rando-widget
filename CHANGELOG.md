@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.5](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.4...0.30.5) (2026-02-23)
+
+
+### Bug Fixes
+
+* horizontal scrollbar visibility ([627489a](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/627489a7ea1743067aa5d38384d9e9f5729391fc))
+
 ## [0.30.4](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.3...0.30.4) (2026-01-15)
 
 
