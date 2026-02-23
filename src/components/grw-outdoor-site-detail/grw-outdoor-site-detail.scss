@@ -73,7 +73,11 @@ grw-outdoor-site-detail {
   overflow-x: auto;
   font-family: var(--font-family);
   &::-webkit-scrollbar {
-    display: none;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-primary-app);
+    border-radius: 8px;
   }
   .outdoor-site-option {
     cursor: pointer;
@@ -111,7 +115,9 @@ grw-outdoor-site-detail {
     height: 2px;
     background-image: linear-gradient(var(--color-primary-app), var(--color-primary-app));
     background-repeat: no-repeat;
-    transition: transform 0.5s ease, background-size 0.5s ease 0.5s;
+    transition:
+      transform 0.5s ease,
+      background-size 0.5s ease 0.5s;
     margin-left: 16px;
     background-position: center;
   }

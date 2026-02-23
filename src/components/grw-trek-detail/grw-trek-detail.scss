@@ -43,7 +43,11 @@ grw-trek-detail {
   overflow-x: auto;
   font-family: var(--font-family);
   &::-webkit-scrollbar {
-    display: none;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-primary-app);
+    border-radius: 8px;
   }
   .trek-option {
     cursor: pointer;
