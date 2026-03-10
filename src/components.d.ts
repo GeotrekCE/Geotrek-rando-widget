@@ -10,93 +10,270 @@ export { InformationDesk, Mode, OutdoorCourse, OutdoorSite, Poi, SensitiveArea, 
 export namespace Components {
     interface GrwApp {
         "api": string;
+        /**
+          * @default '100vh'
+         */
         "appHeight": string;
+        /**
+          * @default '100%'
+         */
         "appWidth": string;
+        /**
+          * @default 20
+         */
         "arrowRepeat": number;
         "attributionLayer": string;
         "cities": string;
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground": string;
+        /**
+          * @default null
+         */
         "colorClusters": any;
+        /**
+          * @default null
+         */
         "colorMarkers": any;
+        /**
+          * @default '#ffffff'
+         */
         "colorOnPrimary": string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#1c1b1f'
+         */
         "colorOnSurfaceVariant": string;
+        /**
+          * @default '#ffb700'
+         */
         "colorOutdoorArea": string;
+        /**
+          * @default '#6750a4'
+         */
         "colorPrimary": string;
+        /**
+          * @default '#6750a4'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#4974a5'
+         */
         "colorSensitiveArea": string;
+        /**
+          * @default '#1c1b1f'
+         */
         "colorSurface": string;
+        /**
+          * @default '#ece6f0'
+         */
         "colorSurfaceContainerHigh": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default '#fef7ff'
+         */
         "colorSurfaceVariant": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorTrekLine": string;
+        /**
+          * @default 48
+         */
         "commonMarkerSize": number;
+        /**
+          * @default 14
+         */
         "departureArrivalMarkerSize": number;
         "districts": string;
+        /**
+          * @default 280
+         */
         "elevationHeight": number;
         "emergencyNumber": number;
+        /**
+          * @default false
+         */
         "enableOffline": boolean;
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor": string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default 11
+         */
         "globalTilesMaxZoomOffline": number;
+        /**
+          * @default 0
+         */
         "globalTilesMinZoomOffline": number;
         "inBbox": string;
         "labels": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
+        /**
+          * @default 1024
+         */
         "largeViewSize": number;
+        /**
+          * @default 48
+         */
         "mainClusterSize": number;
+        /**
+          * @default 32
+         */
         "mainMarkerSize": number;
+        /**
+          * @default 280
+         */
         "mobileElevationHeight": number;
         "nameLayer": string;
+        /**
+          * @default false
+         */
         "outdoor": boolean;
+        /**
+          * @default 24
+         */
         "pointReferenceMarkerSize": number;
         "portals": string;
         "practices": string;
+        /**
+          * @default true
+         */
         "rounded": boolean;
         "routes": string;
+        /**
+          * @default 48
+         */
         "selectedMainMarkerSize": number;
+        /**
+          * @default false
+         */
         "signages": boolean;
         "structures": string;
         "themes": string;
+        /**
+          * @default 16
+         */
         "tilesMaxZoomOffline": number;
+        /**
+          * @default 12
+         */
         "tilesMinZoomOffline": number;
+        /**
+          * @default false
+         */
         "touristicContents": boolean;
+        /**
+          * @default false
+         */
         "touristicEvents": boolean;
+        /**
+          * @default true
+         */
         "treks": boolean;
         "urlLayer": string;
+        /**
+          * @default false
+         */
         "weather": boolean;
     }
     interface GrwCommonButton {
         "action": Function;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
         "icon": string;
         "name": string;
     }
     interface GrwDetailsModal {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default true
+         */
         "rounded": boolean;
     }
     interface GrwExtendedFab {
         "action": Function;
         "display": string;
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor": string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
         "icon": Function;
         "name": Function;
     }
     interface GrwFab {
         "action": Function;
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor": string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
         "hideTitle": string;
         "icon": Function;
@@ -105,53 +282,155 @@ export namespace Components {
     interface GrwFilter {
         "filterName": string;
         "filterNameProperty": string;
+        /**
+          * @default ''
+         */
         "filterPlaceholder": string;
         "filterType": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
         "segment": string;
     }
     interface GrwFilters {
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
         "handleFilters": Function;
     }
     interface GrwInformationDesk {
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
         "informationDesk": InformationDesk;
     }
     interface GrwLoader {
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
     }
     interface GrwMap {
+        /**
+          * @default 20
+         */
         "arrowRepeat": number;
         "attributionLayer": string;
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground": string;
+        /**
+          * @default null
+         */
         "colorClusters": any;
+        /**
+          * @default null
+         */
         "colorMarkers": any;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#ffb700'
+         */
         "colorOutdoorArea": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
+        /**
+          * @default '#4974a5'
+         */
         "colorSensitiveArea": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorTrekLine": string;
+        /**
+          * @default 48
+         */
         "commonMarkerSize": number;
+        /**
+          * @default 14
+         */
         "departureArrivalMarkerSize": number;
+        /**
+          * @default 'visible'
+         */
         "elevationDefaultState": string;
+        /**
+          * @default 280
+         */
         "elevationHeight": number;
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor": string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "grwApp": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
+        /**
+          * @default 1024
+         */
         "largeViewSize": number;
+        /**
+          * @default 48
+         */
         "mainClusterSize": number;
+        /**
+          * @default 32
+         */
         "mainMarkerSize": number;
+        /**
+          * @default 19
+         */
         "maxZoom": number;
+        /**
+          * @default 280
+         */
         "mobileElevationHeight": number;
         "nameLayer": string;
+        /**
+          * @default 24
+         */
         "pointReferenceMarkerSize": number;
+        /**
+          * @default 48
+         */
         "selectedMainMarkerSize": number;
+        /**
+          * @default 16
+         */
         "tilesMaxZoomOffline": number;
         "urlLayer": string;
     }
@@ -159,32 +438,95 @@ export namespace Components {
         "mode": Mode;
     }
     interface GrwOutdoorCourseCard {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "isInsideHorizontalList": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
         "outdoorCourse": OutdoorCourse;
     }
     interface GrwOutdoorCourseDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground": string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "grwApp": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
+        /**
+          * @default false
+         */
         "weather": boolean;
     }
     interface GrwOutdoorCourseProvider {
         "api": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
         "outdoorCourseId": number;
         "portals": string;
@@ -194,57 +536,162 @@ export namespace Components {
         "cities": string;
         "districts": string;
         "inBbox": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
         "portals": string;
         "structures": string;
         "themes": string;
     }
     interface GrwOutdoorSiteCard {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "isInsideHorizontalList": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
         "outdoorSite": OutdoorSite;
     }
     interface GrwOutdoorSiteDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground": string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
         "defaultBackgroundLayerAttribution": any;
         "defaultBackgroundLayerUrl": any;
+        /**
+          * @default false
+         */
         "enableOffline": boolean;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default 11
+         */
         "globalTilesMaxZoomOffline": number;
+        /**
+          * @default 0
+         */
         "globalTilesMinZoomOffline": number;
+        /**
+          * @default false
+         */
         "grwApp": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
+        /**
+          * @default true
+         */
         "rounded": boolean;
+        /**
+          * @default 16
+         */
         "tilesMaxZoomOffline": number;
+        /**
+          * @default 12
+         */
         "tilesMinZoomOffline": number;
+        /**
+          * @default false
+         */
         "weather": boolean;
     }
     interface GrwOutdoorSiteProvider {
         "api": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
         "outdoorSiteId": number;
         "portals": string;
     }
     interface GrwOutdoorSitesList {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
     }
     interface GrwOutdoorSitesProvider {
@@ -252,24 +699,51 @@ export namespace Components {
         "cities": string;
         "districts": string;
         "inBbox": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
+        /**
+          * @default false
+         */
         "offline": boolean;
         "portals": string;
         "structures": string;
         "themes": string;
     }
     interface GrwPoi {
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
         "poi": Poi;
     }
     interface GrwSearch {
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
     }
     interface GrwSegmentedSegment {
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "outdoor": boolean;
+        /**
+          * @default false
+         */
         "touristicContents": boolean;
+        /**
+          * @default false
+         */
         "touristicEvents": boolean;
+        /**
+          * @default true
+         */
         "treks": boolean;
     }
     interface GrwSelectLanguage {
@@ -280,48 +754,135 @@ export namespace Components {
     interface GrwSwitch {
         "action": Function;
         "checked": boolean;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
     }
     interface GrwToggleSlotVisibility {
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor": string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default 1024
+         */
         "largeViewSize": number;
+        /**
+          * @default '100vh'
+         */
         "slotEndHeight": string;
     }
     interface GrwTouristicContentCard {
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "isInsideHorizontalList": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
         "touristicContent": TouristicContent;
     }
     interface GrwTouristicContentDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground": string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "grwApp": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
     }
     interface GrwTouristicContentProvider {
         "api": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
         "portals": string;
         "touristicContentId": number;
     }
     interface GrwTouristicContentsList {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
     }
     interface GrwTouristicContentsProvider {
@@ -329,44 +890,116 @@ export namespace Components {
         "cities": string;
         "districts": string;
         "inBbox": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
         "portals": string;
         "structures": string;
         "themes": string;
     }
     interface GrwTouristicEventCard {
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "isInsideHorizontalList": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
         "touristicEvent": TouristicEvent;
     }
     interface GrwTouristicEventDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground": string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "grwApp": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
     }
     interface GrwTouristicEventProvider {
         "api": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
         "portals": string;
         "touristicEventId": number;
     }
     interface GrwTouristicEventsList {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
     }
     interface GrwTouristicEventsProvider {
@@ -374,44 +1007,125 @@ export namespace Components {
         "cities": string;
         "districts": string;
         "inBbox": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
         "portals": string;
         "structures": string;
         "themes": string;
     }
     interface GrwTrekCard {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "grwApp": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
         "isStep": false;
         "trek": Trek;
     }
     interface GrwTrekDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground": string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer": string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
         "defaultBackgroundLayerAttribution": any;
         "defaultBackgroundLayerUrl": any;
         "emergencyNumber": number;
+        /**
+          * @default false
+         */
         "enableOffline": boolean;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default 11
+         */
         "globalTilesMaxZoomOffline": number;
+        /**
+          * @default 0
+         */
         "globalTilesMinZoomOffline": number;
+        /**
+          * @default false
+         */
         "grwApp": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
+        /**
+          * @default true
+         */
         "rounded": boolean;
+        /**
+          * @default 16
+         */
         "tilesMaxZoomOffline": number;
+        /**
+          * @default 12
+         */
         "tilesMinZoomOffline": number;
+        /**
+          * @default false
+         */
         "weather": boolean;
     }
     interface GrwTrekProvider {
@@ -420,24 +1134,57 @@ export namespace Components {
         "districts": string;
         "inBbox": string;
         "labels": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
         "portals": string;
         "practices": string;
         "routes": string;
+        /**
+          * @default false
+         */
         "signages": boolean;
         "structures": string;
         "themes": string;
         "trekId": number;
     }
     interface GrwTreksList {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer": string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface": string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp": string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer": string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow": string;
+        /**
+          * @default false
+         */
         "displayOnlyOfflineTreks": boolean;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily": string;
+        /**
+          * @default false
+         */
         "grwApp": boolean;
+        /**
+          * @default false
+         */
         "isLargeView": boolean;
     }
     interface GrwTreksProvider {
@@ -446,7 +1193,13 @@ export namespace Components {
         "districts": string;
         "inBbox": string;
         "labels": string;
+        /**
+          * @default 'fr'
+         */
         "languages": string;
+        /**
+          * @default false
+         */
         "offline": boolean;
         "portals": string;
         "practices": string;
@@ -993,94 +1746,271 @@ declare global {
 declare namespace LocalJSX {
     interface GrwApp {
         "api"?: string;
+        /**
+          * @default '100vh'
+         */
         "appHeight"?: string;
+        /**
+          * @default '100%'
+         */
         "appWidth"?: string;
+        /**
+          * @default 20
+         */
         "arrowRepeat"?: number;
         "attributionLayer"?: string;
         "cities"?: string;
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground"?: string;
+        /**
+          * @default null
+         */
         "colorClusters"?: any;
+        /**
+          * @default null
+         */
         "colorMarkers"?: any;
+        /**
+          * @default '#ffffff'
+         */
         "colorOnPrimary"?: string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#1c1b1f'
+         */
         "colorOnSurfaceVariant"?: string;
+        /**
+          * @default '#ffb700'
+         */
         "colorOutdoorArea"?: string;
+        /**
+          * @default '#6750a4'
+         */
         "colorPrimary"?: string;
+        /**
+          * @default '#6750a4'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#4974a5'
+         */
         "colorSensitiveArea"?: string;
+        /**
+          * @default '#1c1b1f'
+         */
         "colorSurface"?: string;
+        /**
+          * @default '#ece6f0'
+         */
         "colorSurfaceContainerHigh"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default '#fef7ff'
+         */
         "colorSurfaceVariant"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorTrekLine"?: string;
+        /**
+          * @default 48
+         */
         "commonMarkerSize"?: number;
+        /**
+          * @default 14
+         */
         "departureArrivalMarkerSize"?: number;
         "districts"?: string;
+        /**
+          * @default 280
+         */
         "elevationHeight"?: number;
         "emergencyNumber"?: number;
+        /**
+          * @default false
+         */
         "enableOffline"?: boolean;
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor"?: string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default 11
+         */
         "globalTilesMaxZoomOffline"?: number;
+        /**
+          * @default 0
+         */
         "globalTilesMinZoomOffline"?: number;
         "inBbox"?: string;
         "labels"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
+        /**
+          * @default 1024
+         */
         "largeViewSize"?: number;
+        /**
+          * @default 48
+         */
         "mainClusterSize"?: number;
+        /**
+          * @default 32
+         */
         "mainMarkerSize"?: number;
+        /**
+          * @default 280
+         */
         "mobileElevationHeight"?: number;
         "nameLayer"?: string;
+        /**
+          * @default false
+         */
         "outdoor"?: boolean;
+        /**
+          * @default 24
+         */
         "pointReferenceMarkerSize"?: number;
         "portals"?: string;
         "practices"?: string;
+        /**
+          * @default true
+         */
         "rounded"?: boolean;
         "routes"?: string;
+        /**
+          * @default 48
+         */
         "selectedMainMarkerSize"?: number;
+        /**
+          * @default false
+         */
         "signages"?: boolean;
         "structures"?: string;
         "themes"?: string;
+        /**
+          * @default 16
+         */
         "tilesMaxZoomOffline"?: number;
+        /**
+          * @default 12
+         */
         "tilesMinZoomOffline"?: number;
+        /**
+          * @default false
+         */
         "touristicContents"?: boolean;
+        /**
+          * @default false
+         */
         "touristicEvents"?: boolean;
+        /**
+          * @default true
+         */
         "treks"?: boolean;
         "urlLayer"?: string;
+        /**
+          * @default false
+         */
         "weather"?: boolean;
     }
     interface GrwCommonButton {
         "action"?: Function;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
         "icon"?: string;
         "name"?: string;
     }
     interface GrwDetailsModal {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
         "onCloseDetailsModal"?: (event: GrwDetailsModalCustomEvent<number>) => void;
+        /**
+          * @default true
+         */
         "rounded"?: boolean;
     }
     interface GrwExtendedFab {
         "action"?: Function;
         "display"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor"?: string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
         "icon"?: Function;
         "name"?: Function;
     }
     interface GrwFab {
         "action"?: Function;
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor"?: string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
         "hideTitle"?: string;
         "icon"?: Function;
@@ -1089,51 +2019,144 @@ declare namespace LocalJSX {
     interface GrwFilter {
         "filterName"?: string;
         "filterNameProperty"?: string;
+        /**
+          * @default ''
+         */
         "filterPlaceholder"?: string;
         "filterType"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
         "segment"?: string;
     }
     interface GrwFilters {
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
         "handleFilters"?: Function;
         "onResetFilter"?: (event: GrwFiltersCustomEvent<any>) => void;
     }
     interface GrwInformationDesk {
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
         "informationDesk"?: InformationDesk;
         "onCenterOnMap"?: (event: GrwInformationDeskCustomEvent<{ latitude: number; longitude: number }>) => void;
     }
     interface GrwLoader {
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
     }
     interface GrwMap {
+        /**
+          * @default 20
+         */
         "arrowRepeat"?: number;
         "attributionLayer"?: string;
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground"?: string;
+        /**
+          * @default null
+         */
         "colorClusters"?: any;
+        /**
+          * @default null
+         */
         "colorMarkers"?: any;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#ffb700'
+         */
         "colorOutdoorArea"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
+        /**
+          * @default '#4974a5'
+         */
         "colorSensitiveArea"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorTrekLine"?: string;
+        /**
+          * @default 48
+         */
         "commonMarkerSize"?: number;
+        /**
+          * @default 14
+         */
         "departureArrivalMarkerSize"?: number;
+        /**
+          * @default 'visible'
+         */
         "elevationDefaultState"?: string;
+        /**
+          * @default 280
+         */
         "elevationHeight"?: number;
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor"?: string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "grwApp"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
+        /**
+          * @default 1024
+         */
         "largeViewSize"?: number;
+        /**
+          * @default 48
+         */
         "mainClusterSize"?: number;
+        /**
+          * @default 32
+         */
         "mainMarkerSize"?: number;
+        /**
+          * @default 19
+         */
         "maxZoom"?: number;
+        /**
+          * @default 280
+         */
         "mobileElevationHeight"?: number;
         "nameLayer"?: string;
         "onOutdoorCourseCardPress"?: (event: GrwMapCustomEvent<number>) => void;
@@ -1141,8 +2164,17 @@ declare namespace LocalJSX {
         "onTouristicContentCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTouristicEventCardPress"?: (event: GrwMapCustomEvent<number>) => void;
         "onTrekCardPress"?: (event: GrwMapCustomEvent<number>) => void;
+        /**
+          * @default 24
+         */
         "pointReferenceMarkerSize"?: number;
+        /**
+          * @default 48
+         */
         "selectedMainMarkerSize"?: number;
+        /**
+          * @default 16
+         */
         "tilesMaxZoomOffline"?: number;
         "urlLayer"?: string;
     }
@@ -1152,13 +2184,37 @@ declare namespace LocalJSX {
         "onDownloadPress"?: (event: GrwOfflineConfirmModalCustomEvent<number>) => void;
     }
     interface GrwOutdoorCourseCard {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "isInsideHorizontalList"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
         "onCardOutdoorCourseMouseLeave"?: (event: GrwOutdoorCourseCardCustomEvent<any>) => void;
         "onCardOutdoorCourseMouseOver"?: (event: GrwOutdoorCourseCardCustomEvent<number>) => void;
@@ -1166,24 +2222,63 @@ declare namespace LocalJSX {
         "outdoorCourse"?: OutdoorCourse;
     }
     interface GrwOutdoorCourseDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground"?: string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "grwApp"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
         "onPoiIsInViewport"?: (event: GrwOutdoorCourseDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwOutdoorCourseDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwOutdoorCourseDetailCustomEvent<boolean>) => void;
+        /**
+          * @default false
+         */
         "weather"?: boolean;
     }
     interface GrwOutdoorCourseProvider {
         "api"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
         "outdoorCourseId"?: number;
         "portals"?: string;
@@ -1193,19 +2288,46 @@ declare namespace LocalJSX {
         "cities"?: string;
         "districts"?: string;
         "inBbox"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
         "portals"?: string;
         "structures"?: string;
         "themes"?: string;
     }
     interface GrwOutdoorSiteCard {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "isInsideHorizontalList"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
         "onCardOutdoorSiteMouseLeave"?: (event: GrwOutdoorSiteCardCustomEvent<any>) => void;
         "onCardOutdoorSiteMouseOver"?: (event: GrwOutdoorSiteCardCustomEvent<number>) => void;
@@ -1213,21 +2335,63 @@ declare namespace LocalJSX {
         "outdoorSite"?: OutdoorSite;
     }
     interface GrwOutdoorSiteDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground"?: string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
         "defaultBackgroundLayerAttribution"?: any;
         "defaultBackgroundLayerUrl"?: any;
+        /**
+          * @default false
+         */
         "enableOffline"?: boolean;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default 11
+         */
         "globalTilesMaxZoomOffline"?: number;
+        /**
+          * @default 0
+         */
         "globalTilesMinZoomOffline"?: number;
+        /**
+          * @default false
+         */
         "grwApp"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
         "onCoursesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onDeleteConfirm"?: (event: GrwOutdoorSiteDetailCustomEvent<number>) => void;
@@ -1241,24 +2405,60 @@ declare namespace LocalJSX {
         "onSitesIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwOutdoorSiteDetailCustomEvent<boolean>) => void;
+        /**
+          * @default true
+         */
         "rounded"?: boolean;
+        /**
+          * @default 16
+         */
         "tilesMaxZoomOffline"?: number;
+        /**
+          * @default 12
+         */
         "tilesMinZoomOffline"?: number;
+        /**
+          * @default false
+         */
         "weather"?: boolean;
     }
     interface GrwOutdoorSiteProvider {
         "api"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
         "outdoorSiteId"?: number;
         "portals"?: string;
     }
     interface GrwOutdoorSitesList {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
     }
     interface GrwOutdoorSitesProvider {
@@ -1266,24 +2466,51 @@ declare namespace LocalJSX {
         "cities"?: string;
         "districts"?: string;
         "inBbox"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
+        /**
+          * @default false
+         */
         "offline"?: boolean;
         "portals"?: string;
         "structures"?: string;
         "themes"?: string;
     }
     interface GrwPoi {
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
         "poi"?: Poi;
     }
     interface GrwSearch {
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
     }
     interface GrwSegmentedSegment {
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "outdoor"?: boolean;
+        /**
+          * @default false
+         */
         "touristicContents"?: boolean;
+        /**
+          * @default false
+         */
         "touristicEvents"?: boolean;
+        /**
+          * @default true
+         */
         "treks"?: boolean;
     }
     interface GrwSelectLanguage {
@@ -1294,19 +2521,49 @@ declare namespace LocalJSX {
     interface GrwSwitch {
         "action"?: Function;
         "checked"?: boolean;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
     }
     interface GrwToggleSlotVisibility {
+        /**
+          * @default '#eaddff'
+         */
         "fabBackgroundColor"?: string;
+        /**
+          * @default '#21005d'
+         */
         "fabColor"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default 1024
+         */
         "largeViewSize"?: number;
+        /**
+          * @default '100vh'
+         */
         "slotEndHeight"?: string;
     }
     interface GrwTouristicContentCard {
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "isInsideHorizontalList"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
         "onCardTouristicContentMouseLeave"?: (event: GrwTouristicContentCardCustomEvent<any>) => void;
         "onCardTouristicContentMouseOver"?: (event: GrwTouristicContentCardCustomEvent<number>) => void;
@@ -1314,31 +2571,88 @@ declare namespace LocalJSX {
         "touristicContent"?: TouristicContent;
     }
     interface GrwTouristicContentDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground"?: string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "grwApp"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
     }
     interface GrwTouristicContentProvider {
         "api"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
         "portals"?: string;
         "touristicContentId"?: number;
     }
     interface GrwTouristicContentsList {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
     }
     interface GrwTouristicContentsProvider {
@@ -1346,15 +2660,30 @@ declare namespace LocalJSX {
         "cities"?: string;
         "districts"?: string;
         "inBbox"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
         "portals"?: string;
         "structures"?: string;
         "themes"?: string;
     }
     interface GrwTouristicEventCard {
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "isInsideHorizontalList"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
         "onCardTouristicEventMouseLeave"?: (event: GrwTouristicEventCardCustomEvent<any>) => void;
         "onCardTouristicEventMouseOver"?: (event: GrwTouristicEventCardCustomEvent<number>) => void;
@@ -1362,31 +2691,88 @@ declare namespace LocalJSX {
         "touristicEvent"?: TouristicEvent;
     }
     interface GrwTouristicEventDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground"?: string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "grwApp"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
     }
     interface GrwTouristicEventProvider {
         "api"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
         "portals"?: string;
         "touristicEventId"?: number;
     }
     interface GrwTouristicEventsList {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
     }
     interface GrwTouristicEventsProvider {
@@ -1394,19 +2780,46 @@ declare namespace LocalJSX {
         "cities"?: string;
         "districts"?: string;
         "inBbox"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
         "portals"?: string;
         "structures"?: string;
         "themes"?: string;
     }
     interface GrwTrekCard {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "grwApp"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
         "isStep"?: false;
         "onCardTrekMouseLeave"?: (event: GrwTrekCardCustomEvent<any>) => void;
@@ -1415,22 +2828,64 @@ declare namespace LocalJSX {
         "trek"?: Trek;
     }
     interface GrwTrekDetail {
+        /**
+          * @default '#fef7ff'
+         */
         "colorBackground"?: string;
+        /**
+          * @default '#21005e'
+         */
         "colorOnPrimaryContainer"?: string;
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#eaddff'
+         */
         "colorPrimaryContainer"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
         "defaultBackgroundLayerAttribution"?: any;
         "defaultBackgroundLayerUrl"?: any;
         "emergencyNumber"?: number;
+        /**
+          * @default false
+         */
         "enableOffline"?: boolean;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default 11
+         */
         "globalTilesMaxZoomOffline"?: number;
+        /**
+          * @default 0
+         */
         "globalTilesMinZoomOffline"?: number;
+        /**
+          * @default false
+         */
         "grwApp"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
         "onDeleteConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDeleteErrorConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
@@ -1447,9 +2902,21 @@ declare namespace LocalJSX {
         "onStepsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicContentsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
         "onTouristicEventsIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        /**
+          * @default true
+         */
         "rounded"?: boolean;
+        /**
+          * @default 16
+         */
         "tilesMaxZoomOffline"?: number;
+        /**
+          * @default 12
+         */
         "tilesMinZoomOffline"?: number;
+        /**
+          * @default false
+         */
         "weather"?: boolean;
     }
     interface GrwTrekProvider {
@@ -1458,24 +2925,57 @@ declare namespace LocalJSX {
         "districts"?: string;
         "inBbox"?: string;
         "labels"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
         "portals"?: string;
         "practices"?: string;
         "routes"?: string;
+        /**
+          * @default false
+         */
         "signages"?: boolean;
         "structures"?: string;
         "themes"?: string;
         "trekId"?: number;
     }
     interface GrwTreksList {
+        /**
+          * @default '#1d192b'
+         */
         "colorOnSecondaryContainer"?: string;
+        /**
+          * @default '#49454e'
+         */
         "colorOnSurface"?: string;
+        /**
+          * @default '#6b0030'
+         */
         "colorPrimaryApp"?: string;
+        /**
+          * @default '#e8def8'
+         */
         "colorSecondaryContainer"?: string;
+        /**
+          * @default '#f7f2fa'
+         */
         "colorSurfaceContainerLow"?: string;
+        /**
+          * @default false
+         */
         "displayOnlyOfflineTreks"?: boolean;
+        /**
+          * @default 'Roboto'
+         */
         "fontFamily"?: string;
+        /**
+          * @default false
+         */
         "grwApp"?: boolean;
+        /**
+          * @default false
+         */
         "isLargeView"?: boolean;
     }
     interface GrwTreksProvider {
@@ -1484,7 +2984,13 @@ declare namespace LocalJSX {
         "districts"?: string;
         "inBbox"?: string;
         "labels"?: string;
+        /**
+          * @default 'fr'
+         */
         "languages"?: string;
+        /**
+          * @default false
+         */
         "offline"?: boolean;
         "portals"?: string;
         "practices"?: string;
@@ -1492,97 +2998,525 @@ declare namespace LocalJSX {
         "structures"?: string;
         "themes"?: string;
     }
+
+    interface GrwAppAttributes {
+        "appWidth": string;
+        "appHeight": string;
+        "api": string;
+        "languages": string;
+        "inBbox": string;
+        "cities": string;
+        "districts": string;
+        "structures": string;
+        "themes": string;
+        "portals": string;
+        "routes": string;
+        "practices": string;
+        "labels": string;
+        "nameLayer": string;
+        "urlLayer": string;
+        "attributionLayer": string;
+        "weather": boolean;
+        "emergencyNumber": number;
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorPrimary": string;
+        "colorOnPrimary": string;
+        "colorSurface": string;
+        "colorOnSurface": string;
+        "colorSurfaceVariant": string;
+        "colorOnSurfaceVariant": string;
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorBackground": string;
+        "colorSurfaceContainerHigh": string;
+        "colorSurfaceContainerLow": string;
+        "fabBackgroundColor": string;
+        "fabColor": string;
+        "rounded": boolean;
+        "colorTrekLine": string;
+        "colorSensitiveArea": string;
+        "colorMarkers": string;
+        "colorClusters": string;
+        "colorOutdoorArea": string;
+        "treks": boolean;
+        "touristicContents": boolean;
+        "touristicEvents": boolean;
+        "outdoor": boolean;
+        "enableOffline": boolean;
+        "globalTilesMinZoomOffline": number;
+        "globalTilesMaxZoomOffline": number;
+        "tilesMinZoomOffline": number;
+        "tilesMaxZoomOffline": number;
+        "mainMarkerSize": number;
+        "selectedMainMarkerSize": number;
+        "mainClusterSize": number;
+        "commonMarkerSize": number;
+        "departureArrivalMarkerSize": number;
+        "pointReferenceMarkerSize": number;
+        "largeViewSize": number;
+        "elevationHeight": number;
+        "mobileElevationHeight": number;
+        "signages": boolean;
+        "arrowRepeat": number;
+    }
+    interface GrwCommonButtonAttributes {
+        "icon": string;
+        "name": string;
+        "fontFamily": string;
+    }
+    interface GrwDetailsModalAttributes {
+        "fontFamily": string;
+        "colorBackground": string;
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+        "rounded": boolean;
+    }
+    interface GrwExtendedFabAttributes {
+        "display": string;
+        "fontFamily": string;
+        "fabBackgroundColor": string;
+        "fabColor": string;
+    }
+    interface GrwFabAttributes {
+        "showTitle": string;
+        "hideTitle": string;
+        "fontFamily": string;
+        "fabBackgroundColor": string;
+        "fabColor": string;
+    }
+    interface GrwFilterAttributes {
+        "fontFamily": string;
+        "filterType": string;
+        "filterName": string;
+        "filterPlaceholder": string;
+        "filterNameProperty": string;
+        "segment": string;
+    }
+    interface GrwFiltersAttributes {
+        "fontFamily": string;
+    }
+    interface GrwInformationDeskAttributes {
+        "colorSurfaceContainerLow": string;
+    }
+    interface GrwLoaderAttributes {
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+    }
+    interface GrwMapAttributes {
+        "maxZoom": number;
+        "nameLayer": string;
+        "urlLayer": string;
+        "attributionLayer": string;
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+        "colorBackground": string;
+        "colorTrekLine": string;
+        "colorSensitiveArea": string;
+        "colorMarkers": string;
+        "colorClusters": string;
+        "colorOutdoorArea": string;
+        "tilesMaxZoomOffline": number;
+        "grwApp": boolean;
+        "mainMarkerSize": number;
+        "selectedMainMarkerSize": number;
+        "mainClusterSize": number;
+        "commonMarkerSize": number;
+        "departureArrivalMarkerSize": number;
+        "pointReferenceMarkerSize": number;
+        "elevationHeight": number;
+        "mobileElevationHeight": number;
+        "largeViewSize": number;
+        "elevationDefaultState": string;
+        "isLargeView": boolean;
+        "fabBackgroundColor": string;
+        "fabColor": string;
+        "arrowRepeat": number;
+    }
+    interface GrwOfflineConfirmModalAttributes {
+        "mode": Mode;
+    }
+    interface GrwOutdoorCourseCardAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+        "isInsideHorizontalList": boolean;
+    }
+    interface GrwOutdoorCourseDetailAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "colorBackground": string;
+        "isLargeView": boolean;
+        "weather": boolean;
+        "grwApp": boolean;
+    }
+    interface GrwOutdoorCourseProviderAttributes {
+        "languages": string;
+        "api": string;
+        "outdoorCourseId": number;
+        "portals": string;
+    }
+    interface GrwOutdoorCoursesProviderAttributes {
+        "languages": string;
+        "api": string;
+        "inBbox": string;
+        "cities": string;
+        "districts": string;
+        "structures": string;
+        "themes": string;
+        "portals": string;
+    }
+    interface GrwOutdoorSiteCardAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+        "isInsideHorizontalList": boolean;
+    }
+    interface GrwOutdoorSiteDetailAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "colorBackground": string;
+        "isLargeView": boolean;
+        "weather": boolean;
+        "enableOffline": boolean;
+        "defaultBackgroundLayerUrl": string;
+        "defaultBackgroundLayerAttribution": string;
+        "globalTilesMinZoomOffline": number;
+        "globalTilesMaxZoomOffline": number;
+        "tilesMinZoomOffline": number;
+        "tilesMaxZoomOffline": number;
+        "grwApp": boolean;
+        "rounded": boolean;
+    }
+    interface GrwOutdoorSiteProviderAttributes {
+        "languages": string;
+        "api": string;
+        "outdoorSiteId": number;
+        "portals": string;
+    }
+    interface GrwOutdoorSitesListAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+    }
+    interface GrwOutdoorSitesProviderAttributes {
+        "languages": string;
+        "api": string;
+        "inBbox": string;
+        "cities": string;
+        "districts": string;
+        "structures": string;
+        "themes": string;
+        "portals": string;
+        "offline": boolean;
+    }
+    interface GrwPoiAttributes {
+        "colorSurfaceContainerLow": string;
+    }
+    interface GrwSearchAttributes {
+        "fontFamily": string;
+    }
+    interface GrwSegmentedSegmentAttributes {
+        "treks": boolean;
+        "touristicContents": boolean;
+        "touristicEvents": boolean;
+        "outdoor": boolean;
+        "fontFamily": string;
+    }
+    interface GrwSwitchAttributes {
+        "fontFamily": string;
+        "checked": boolean;
+    }
+    interface GrwToggleSlotVisibilityAttributes {
+        "largeViewSize": number;
+        "fontFamily": string;
+        "fabBackgroundColor": string;
+        "fabColor": string;
+        "slotEndHeight": string;
+    }
+    interface GrwTouristicContentCardAttributes {
+        "fontFamily": string;
+        "isLargeView": boolean;
+        "isInsideHorizontalList": boolean;
+        "colorSurfaceContainerLow": string;
+    }
+    interface GrwTouristicContentDetailAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "colorBackground": string;
+        "isLargeView": boolean;
+        "grwApp": boolean;
+    }
+    interface GrwTouristicContentProviderAttributes {
+        "languages": string;
+        "api": string;
+        "touristicContentId": number;
+        "portals": string;
+    }
+    interface GrwTouristicContentsListAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+    }
+    interface GrwTouristicContentsProviderAttributes {
+        "languages": string;
+        "api": string;
+        "inBbox": string;
+        "cities": string;
+        "districts": string;
+        "structures": string;
+        "themes": string;
+        "portals": string;
+    }
+    interface GrwTouristicEventCardAttributes {
+        "fontFamily": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+        "isInsideHorizontalList": boolean;
+    }
+    interface GrwTouristicEventDetailAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "colorBackground": string;
+        "isLargeView": boolean;
+        "grwApp": boolean;
+    }
+    interface GrwTouristicEventProviderAttributes {
+        "languages": string;
+        "api": string;
+        "touristicEventId": number;
+        "portals": string;
+    }
+    interface GrwTouristicEventsListAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+    }
+    interface GrwTouristicEventsProviderAttributes {
+        "languages": string;
+        "api": string;
+        "inBbox": string;
+        "cities": string;
+        "districts": string;
+        "structures": string;
+        "themes": string;
+        "portals": string;
+    }
+    interface GrwTrekCardAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "isLargeView": boolean;
+        "isStep": false;
+        "grwApp": boolean;
+    }
+    interface GrwTrekDetailAttributes {
+        "emergencyNumber": number;
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorPrimaryContainer": string;
+        "colorOnPrimaryContainer": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "colorBackground": string;
+        "rounded": boolean;
+        "weather": boolean;
+        "isLargeView": boolean;
+        "defaultBackgroundLayerUrl": string;
+        "defaultBackgroundLayerAttribution": string;
+        "enableOffline": boolean;
+        "globalTilesMinZoomOffline": number;
+        "globalTilesMaxZoomOffline": number;
+        "tilesMinZoomOffline": number;
+        "tilesMaxZoomOffline": number;
+        "grwApp": boolean;
+    }
+    interface GrwTrekProviderAttributes {
+        "languages": string;
+        "api": string;
+        "trekId": number;
+        "portals": string;
+        "inBbox": string;
+        "cities": string;
+        "districts": string;
+        "structures": string;
+        "themes": string;
+        "routes": string;
+        "practices": string;
+        "labels": string;
+        "signages": boolean;
+    }
+    interface GrwTreksListAttributes {
+        "fontFamily": string;
+        "colorPrimaryApp": string;
+        "colorOnSurface": string;
+        "colorSecondaryContainer": string;
+        "colorOnSecondaryContainer": string;
+        "colorSurfaceContainerLow": string;
+        "displayOnlyOfflineTreks": boolean;
+        "isLargeView": boolean;
+        "grwApp": boolean;
+    }
+    interface GrwTreksProviderAttributes {
+        "languages": string;
+        "api": string;
+        "inBbox": string;
+        "cities": string;
+        "districts": string;
+        "structures": string;
+        "themes": string;
+        "portals": string;
+        "routes": string;
+        "practices": string;
+        "labels": string;
+        "offline": boolean;
+    }
+
     interface IntrinsicElements {
-        "grw-app": GrwApp;
-        "grw-common-button": GrwCommonButton;
-        "grw-details-modal": GrwDetailsModal;
-        "grw-extended-fab": GrwExtendedFab;
-        "grw-fab": GrwFab;
-        "grw-filter": GrwFilter;
-        "grw-filters": GrwFilters;
-        "grw-information-desk": GrwInformationDesk;
-        "grw-loader": GrwLoader;
-        "grw-map": GrwMap;
-        "grw-offline-confirm-modal": GrwOfflineConfirmModal;
-        "grw-outdoor-course-card": GrwOutdoorCourseCard;
-        "grw-outdoor-course-detail": GrwOutdoorCourseDetail;
-        "grw-outdoor-course-provider": GrwOutdoorCourseProvider;
-        "grw-outdoor-courses-provider": GrwOutdoorCoursesProvider;
-        "grw-outdoor-site-card": GrwOutdoorSiteCard;
-        "grw-outdoor-site-detail": GrwOutdoorSiteDetail;
-        "grw-outdoor-site-provider": GrwOutdoorSiteProvider;
-        "grw-outdoor-sites-list": GrwOutdoorSitesList;
-        "grw-outdoor-sites-provider": GrwOutdoorSitesProvider;
-        "grw-poi": GrwPoi;
-        "grw-search": GrwSearch;
-        "grw-segmented-segment": GrwSegmentedSegment;
+        "grw-app": Omit<GrwApp, keyof GrwAppAttributes> & { [K in keyof GrwApp & keyof GrwAppAttributes]?: GrwApp[K] } & { [K in keyof GrwApp & keyof GrwAppAttributes as `attr:${K}`]?: GrwAppAttributes[K] } & { [K in keyof GrwApp & keyof GrwAppAttributes as `prop:${K}`]?: GrwApp[K] };
+        "grw-common-button": Omit<GrwCommonButton, keyof GrwCommonButtonAttributes> & { [K in keyof GrwCommonButton & keyof GrwCommonButtonAttributes]?: GrwCommonButton[K] } & { [K in keyof GrwCommonButton & keyof GrwCommonButtonAttributes as `attr:${K}`]?: GrwCommonButtonAttributes[K] } & { [K in keyof GrwCommonButton & keyof GrwCommonButtonAttributes as `prop:${K}`]?: GrwCommonButton[K] };
+        "grw-details-modal": Omit<GrwDetailsModal, keyof GrwDetailsModalAttributes> & { [K in keyof GrwDetailsModal & keyof GrwDetailsModalAttributes]?: GrwDetailsModal[K] } & { [K in keyof GrwDetailsModal & keyof GrwDetailsModalAttributes as `attr:${K}`]?: GrwDetailsModalAttributes[K] } & { [K in keyof GrwDetailsModal & keyof GrwDetailsModalAttributes as `prop:${K}`]?: GrwDetailsModal[K] };
+        "grw-extended-fab": Omit<GrwExtendedFab, keyof GrwExtendedFabAttributes> & { [K in keyof GrwExtendedFab & keyof GrwExtendedFabAttributes]?: GrwExtendedFab[K] } & { [K in keyof GrwExtendedFab & keyof GrwExtendedFabAttributes as `attr:${K}`]?: GrwExtendedFabAttributes[K] } & { [K in keyof GrwExtendedFab & keyof GrwExtendedFabAttributes as `prop:${K}`]?: GrwExtendedFab[K] };
+        "grw-fab": Omit<GrwFab, keyof GrwFabAttributes> & { [K in keyof GrwFab & keyof GrwFabAttributes]?: GrwFab[K] } & { [K in keyof GrwFab & keyof GrwFabAttributes as `attr:${K}`]?: GrwFabAttributes[K] } & { [K in keyof GrwFab & keyof GrwFabAttributes as `prop:${K}`]?: GrwFab[K] };
+        "grw-filter": Omit<GrwFilter, keyof GrwFilterAttributes> & { [K in keyof GrwFilter & keyof GrwFilterAttributes]?: GrwFilter[K] } & { [K in keyof GrwFilter & keyof GrwFilterAttributes as `attr:${K}`]?: GrwFilterAttributes[K] } & { [K in keyof GrwFilter & keyof GrwFilterAttributes as `prop:${K}`]?: GrwFilter[K] };
+        "grw-filters": Omit<GrwFilters, keyof GrwFiltersAttributes> & { [K in keyof GrwFilters & keyof GrwFiltersAttributes]?: GrwFilters[K] } & { [K in keyof GrwFilters & keyof GrwFiltersAttributes as `attr:${K}`]?: GrwFiltersAttributes[K] } & { [K in keyof GrwFilters & keyof GrwFiltersAttributes as `prop:${K}`]?: GrwFilters[K] };
+        "grw-information-desk": Omit<GrwInformationDesk, keyof GrwInformationDeskAttributes> & { [K in keyof GrwInformationDesk & keyof GrwInformationDeskAttributes]?: GrwInformationDesk[K] } & { [K in keyof GrwInformationDesk & keyof GrwInformationDeskAttributes as `attr:${K}`]?: GrwInformationDeskAttributes[K] } & { [K in keyof GrwInformationDesk & keyof GrwInformationDeskAttributes as `prop:${K}`]?: GrwInformationDesk[K] };
+        "grw-loader": Omit<GrwLoader, keyof GrwLoaderAttributes> & { [K in keyof GrwLoader & keyof GrwLoaderAttributes]?: GrwLoader[K] } & { [K in keyof GrwLoader & keyof GrwLoaderAttributes as `attr:${K}`]?: GrwLoaderAttributes[K] } & { [K in keyof GrwLoader & keyof GrwLoaderAttributes as `prop:${K}`]?: GrwLoader[K] };
+        "grw-map": Omit<GrwMap, keyof GrwMapAttributes> & { [K in keyof GrwMap & keyof GrwMapAttributes]?: GrwMap[K] } & { [K in keyof GrwMap & keyof GrwMapAttributes as `attr:${K}`]?: GrwMapAttributes[K] } & { [K in keyof GrwMap & keyof GrwMapAttributes as `prop:${K}`]?: GrwMap[K] };
+        "grw-offline-confirm-modal": Omit<GrwOfflineConfirmModal, keyof GrwOfflineConfirmModalAttributes> & { [K in keyof GrwOfflineConfirmModal & keyof GrwOfflineConfirmModalAttributes]?: GrwOfflineConfirmModal[K] } & { [K in keyof GrwOfflineConfirmModal & keyof GrwOfflineConfirmModalAttributes as `attr:${K}`]?: GrwOfflineConfirmModalAttributes[K] } & { [K in keyof GrwOfflineConfirmModal & keyof GrwOfflineConfirmModalAttributes as `prop:${K}`]?: GrwOfflineConfirmModal[K] };
+        "grw-outdoor-course-card": Omit<GrwOutdoorCourseCard, keyof GrwOutdoorCourseCardAttributes> & { [K in keyof GrwOutdoorCourseCard & keyof GrwOutdoorCourseCardAttributes]?: GrwOutdoorCourseCard[K] } & { [K in keyof GrwOutdoorCourseCard & keyof GrwOutdoorCourseCardAttributes as `attr:${K}`]?: GrwOutdoorCourseCardAttributes[K] } & { [K in keyof GrwOutdoorCourseCard & keyof GrwOutdoorCourseCardAttributes as `prop:${K}`]?: GrwOutdoorCourseCard[K] };
+        "grw-outdoor-course-detail": Omit<GrwOutdoorCourseDetail, keyof GrwOutdoorCourseDetailAttributes> & { [K in keyof GrwOutdoorCourseDetail & keyof GrwOutdoorCourseDetailAttributes]?: GrwOutdoorCourseDetail[K] } & { [K in keyof GrwOutdoorCourseDetail & keyof GrwOutdoorCourseDetailAttributes as `attr:${K}`]?: GrwOutdoorCourseDetailAttributes[K] } & { [K in keyof GrwOutdoorCourseDetail & keyof GrwOutdoorCourseDetailAttributes as `prop:${K}`]?: GrwOutdoorCourseDetail[K] };
+        "grw-outdoor-course-provider": Omit<GrwOutdoorCourseProvider, keyof GrwOutdoorCourseProviderAttributes> & { [K in keyof GrwOutdoorCourseProvider & keyof GrwOutdoorCourseProviderAttributes]?: GrwOutdoorCourseProvider[K] } & { [K in keyof GrwOutdoorCourseProvider & keyof GrwOutdoorCourseProviderAttributes as `attr:${K}`]?: GrwOutdoorCourseProviderAttributes[K] } & { [K in keyof GrwOutdoorCourseProvider & keyof GrwOutdoorCourseProviderAttributes as `prop:${K}`]?: GrwOutdoorCourseProvider[K] };
+        "grw-outdoor-courses-provider": Omit<GrwOutdoorCoursesProvider, keyof GrwOutdoorCoursesProviderAttributes> & { [K in keyof GrwOutdoorCoursesProvider & keyof GrwOutdoorCoursesProviderAttributes]?: GrwOutdoorCoursesProvider[K] } & { [K in keyof GrwOutdoorCoursesProvider & keyof GrwOutdoorCoursesProviderAttributes as `attr:${K}`]?: GrwOutdoorCoursesProviderAttributes[K] } & { [K in keyof GrwOutdoorCoursesProvider & keyof GrwOutdoorCoursesProviderAttributes as `prop:${K}`]?: GrwOutdoorCoursesProvider[K] };
+        "grw-outdoor-site-card": Omit<GrwOutdoorSiteCard, keyof GrwOutdoorSiteCardAttributes> & { [K in keyof GrwOutdoorSiteCard & keyof GrwOutdoorSiteCardAttributes]?: GrwOutdoorSiteCard[K] } & { [K in keyof GrwOutdoorSiteCard & keyof GrwOutdoorSiteCardAttributes as `attr:${K}`]?: GrwOutdoorSiteCardAttributes[K] } & { [K in keyof GrwOutdoorSiteCard & keyof GrwOutdoorSiteCardAttributes as `prop:${K}`]?: GrwOutdoorSiteCard[K] };
+        "grw-outdoor-site-detail": Omit<GrwOutdoorSiteDetail, keyof GrwOutdoorSiteDetailAttributes> & { [K in keyof GrwOutdoorSiteDetail & keyof GrwOutdoorSiteDetailAttributes]?: GrwOutdoorSiteDetail[K] } & { [K in keyof GrwOutdoorSiteDetail & keyof GrwOutdoorSiteDetailAttributes as `attr:${K}`]?: GrwOutdoorSiteDetailAttributes[K] } & { [K in keyof GrwOutdoorSiteDetail & keyof GrwOutdoorSiteDetailAttributes as `prop:${K}`]?: GrwOutdoorSiteDetail[K] };
+        "grw-outdoor-site-provider": Omit<GrwOutdoorSiteProvider, keyof GrwOutdoorSiteProviderAttributes> & { [K in keyof GrwOutdoorSiteProvider & keyof GrwOutdoorSiteProviderAttributes]?: GrwOutdoorSiteProvider[K] } & { [K in keyof GrwOutdoorSiteProvider & keyof GrwOutdoorSiteProviderAttributes as `attr:${K}`]?: GrwOutdoorSiteProviderAttributes[K] } & { [K in keyof GrwOutdoorSiteProvider & keyof GrwOutdoorSiteProviderAttributes as `prop:${K}`]?: GrwOutdoorSiteProvider[K] };
+        "grw-outdoor-sites-list": Omit<GrwOutdoorSitesList, keyof GrwOutdoorSitesListAttributes> & { [K in keyof GrwOutdoorSitesList & keyof GrwOutdoorSitesListAttributes]?: GrwOutdoorSitesList[K] } & { [K in keyof GrwOutdoorSitesList & keyof GrwOutdoorSitesListAttributes as `attr:${K}`]?: GrwOutdoorSitesListAttributes[K] } & { [K in keyof GrwOutdoorSitesList & keyof GrwOutdoorSitesListAttributes as `prop:${K}`]?: GrwOutdoorSitesList[K] };
+        "grw-outdoor-sites-provider": Omit<GrwOutdoorSitesProvider, keyof GrwOutdoorSitesProviderAttributes> & { [K in keyof GrwOutdoorSitesProvider & keyof GrwOutdoorSitesProviderAttributes]?: GrwOutdoorSitesProvider[K] } & { [K in keyof GrwOutdoorSitesProvider & keyof GrwOutdoorSitesProviderAttributes as `attr:${K}`]?: GrwOutdoorSitesProviderAttributes[K] } & { [K in keyof GrwOutdoorSitesProvider & keyof GrwOutdoorSitesProviderAttributes as `prop:${K}`]?: GrwOutdoorSitesProvider[K] };
+        "grw-poi": Omit<GrwPoi, keyof GrwPoiAttributes> & { [K in keyof GrwPoi & keyof GrwPoiAttributes]?: GrwPoi[K] } & { [K in keyof GrwPoi & keyof GrwPoiAttributes as `attr:${K}`]?: GrwPoiAttributes[K] } & { [K in keyof GrwPoi & keyof GrwPoiAttributes as `prop:${K}`]?: GrwPoi[K] };
+        "grw-search": Omit<GrwSearch, keyof GrwSearchAttributes> & { [K in keyof GrwSearch & keyof GrwSearchAttributes]?: GrwSearch[K] } & { [K in keyof GrwSearch & keyof GrwSearchAttributes as `attr:${K}`]?: GrwSearchAttributes[K] } & { [K in keyof GrwSearch & keyof GrwSearchAttributes as `prop:${K}`]?: GrwSearch[K] };
+        "grw-segmented-segment": Omit<GrwSegmentedSegment, keyof GrwSegmentedSegmentAttributes> & { [K in keyof GrwSegmentedSegment & keyof GrwSegmentedSegmentAttributes]?: GrwSegmentedSegment[K] } & { [K in keyof GrwSegmentedSegment & keyof GrwSegmentedSegmentAttributes as `attr:${K}`]?: GrwSegmentedSegmentAttributes[K] } & { [K in keyof GrwSegmentedSegment & keyof GrwSegmentedSegmentAttributes as `prop:${K}`]?: GrwSegmentedSegment[K] };
         "grw-select-language": GrwSelectLanguage;
         "grw-sensitive-area-detail": GrwSensitiveAreaDetail;
-        "grw-switch": GrwSwitch;
-        "grw-toggle-slot-visibility": GrwToggleSlotVisibility;
-        "grw-touristic-content-card": GrwTouristicContentCard;
-        "grw-touristic-content-detail": GrwTouristicContentDetail;
-        "grw-touristic-content-provider": GrwTouristicContentProvider;
-        "grw-touristic-contents-list": GrwTouristicContentsList;
-        "grw-touristic-contents-provider": GrwTouristicContentsProvider;
-        "grw-touristic-event-card": GrwTouristicEventCard;
-        "grw-touristic-event-detail": GrwTouristicEventDetail;
-        "grw-touristic-event-provider": GrwTouristicEventProvider;
-        "grw-touristic-events-list": GrwTouristicEventsList;
-        "grw-touristic-events-provider": GrwTouristicEventsProvider;
-        "grw-trek-card": GrwTrekCard;
-        "grw-trek-detail": GrwTrekDetail;
-        "grw-trek-provider": GrwTrekProvider;
-        "grw-treks-list": GrwTreksList;
-        "grw-treks-provider": GrwTreksProvider;
+        "grw-switch": Omit<GrwSwitch, keyof GrwSwitchAttributes> & { [K in keyof GrwSwitch & keyof GrwSwitchAttributes]?: GrwSwitch[K] } & { [K in keyof GrwSwitch & keyof GrwSwitchAttributes as `attr:${K}`]?: GrwSwitchAttributes[K] } & { [K in keyof GrwSwitch & keyof GrwSwitchAttributes as `prop:${K}`]?: GrwSwitch[K] };
+        "grw-toggle-slot-visibility": Omit<GrwToggleSlotVisibility, keyof GrwToggleSlotVisibilityAttributes> & { [K in keyof GrwToggleSlotVisibility & keyof GrwToggleSlotVisibilityAttributes]?: GrwToggleSlotVisibility[K] } & { [K in keyof GrwToggleSlotVisibility & keyof GrwToggleSlotVisibilityAttributes as `attr:${K}`]?: GrwToggleSlotVisibilityAttributes[K] } & { [K in keyof GrwToggleSlotVisibility & keyof GrwToggleSlotVisibilityAttributes as `prop:${K}`]?: GrwToggleSlotVisibility[K] };
+        "grw-touristic-content-card": Omit<GrwTouristicContentCard, keyof GrwTouristicContentCardAttributes> & { [K in keyof GrwTouristicContentCard & keyof GrwTouristicContentCardAttributes]?: GrwTouristicContentCard[K] } & { [K in keyof GrwTouristicContentCard & keyof GrwTouristicContentCardAttributes as `attr:${K}`]?: GrwTouristicContentCardAttributes[K] } & { [K in keyof GrwTouristicContentCard & keyof GrwTouristicContentCardAttributes as `prop:${K}`]?: GrwTouristicContentCard[K] };
+        "grw-touristic-content-detail": Omit<GrwTouristicContentDetail, keyof GrwTouristicContentDetailAttributes> & { [K in keyof GrwTouristicContentDetail & keyof GrwTouristicContentDetailAttributes]?: GrwTouristicContentDetail[K] } & { [K in keyof GrwTouristicContentDetail & keyof GrwTouristicContentDetailAttributes as `attr:${K}`]?: GrwTouristicContentDetailAttributes[K] } & { [K in keyof GrwTouristicContentDetail & keyof GrwTouristicContentDetailAttributes as `prop:${K}`]?: GrwTouristicContentDetail[K] };
+        "grw-touristic-content-provider": Omit<GrwTouristicContentProvider, keyof GrwTouristicContentProviderAttributes> & { [K in keyof GrwTouristicContentProvider & keyof GrwTouristicContentProviderAttributes]?: GrwTouristicContentProvider[K] } & { [K in keyof GrwTouristicContentProvider & keyof GrwTouristicContentProviderAttributes as `attr:${K}`]?: GrwTouristicContentProviderAttributes[K] } & { [K in keyof GrwTouristicContentProvider & keyof GrwTouristicContentProviderAttributes as `prop:${K}`]?: GrwTouristicContentProvider[K] };
+        "grw-touristic-contents-list": Omit<GrwTouristicContentsList, keyof GrwTouristicContentsListAttributes> & { [K in keyof GrwTouristicContentsList & keyof GrwTouristicContentsListAttributes]?: GrwTouristicContentsList[K] } & { [K in keyof GrwTouristicContentsList & keyof GrwTouristicContentsListAttributes as `attr:${K}`]?: GrwTouristicContentsListAttributes[K] } & { [K in keyof GrwTouristicContentsList & keyof GrwTouristicContentsListAttributes as `prop:${K}`]?: GrwTouristicContentsList[K] };
+        "grw-touristic-contents-provider": Omit<GrwTouristicContentsProvider, keyof GrwTouristicContentsProviderAttributes> & { [K in keyof GrwTouristicContentsProvider & keyof GrwTouristicContentsProviderAttributes]?: GrwTouristicContentsProvider[K] } & { [K in keyof GrwTouristicContentsProvider & keyof GrwTouristicContentsProviderAttributes as `attr:${K}`]?: GrwTouristicContentsProviderAttributes[K] } & { [K in keyof GrwTouristicContentsProvider & keyof GrwTouristicContentsProviderAttributes as `prop:${K}`]?: GrwTouristicContentsProvider[K] };
+        "grw-touristic-event-card": Omit<GrwTouristicEventCard, keyof GrwTouristicEventCardAttributes> & { [K in keyof GrwTouristicEventCard & keyof GrwTouristicEventCardAttributes]?: GrwTouristicEventCard[K] } & { [K in keyof GrwTouristicEventCard & keyof GrwTouristicEventCardAttributes as `attr:${K}`]?: GrwTouristicEventCardAttributes[K] } & { [K in keyof GrwTouristicEventCard & keyof GrwTouristicEventCardAttributes as `prop:${K}`]?: GrwTouristicEventCard[K] };
+        "grw-touristic-event-detail": Omit<GrwTouristicEventDetail, keyof GrwTouristicEventDetailAttributes> & { [K in keyof GrwTouristicEventDetail & keyof GrwTouristicEventDetailAttributes]?: GrwTouristicEventDetail[K] } & { [K in keyof GrwTouristicEventDetail & keyof GrwTouristicEventDetailAttributes as `attr:${K}`]?: GrwTouristicEventDetailAttributes[K] } & { [K in keyof GrwTouristicEventDetail & keyof GrwTouristicEventDetailAttributes as `prop:${K}`]?: GrwTouristicEventDetail[K] };
+        "grw-touristic-event-provider": Omit<GrwTouristicEventProvider, keyof GrwTouristicEventProviderAttributes> & { [K in keyof GrwTouristicEventProvider & keyof GrwTouristicEventProviderAttributes]?: GrwTouristicEventProvider[K] } & { [K in keyof GrwTouristicEventProvider & keyof GrwTouristicEventProviderAttributes as `attr:${K}`]?: GrwTouristicEventProviderAttributes[K] } & { [K in keyof GrwTouristicEventProvider & keyof GrwTouristicEventProviderAttributes as `prop:${K}`]?: GrwTouristicEventProvider[K] };
+        "grw-touristic-events-list": Omit<GrwTouristicEventsList, keyof GrwTouristicEventsListAttributes> & { [K in keyof GrwTouristicEventsList & keyof GrwTouristicEventsListAttributes]?: GrwTouristicEventsList[K] } & { [K in keyof GrwTouristicEventsList & keyof GrwTouristicEventsListAttributes as `attr:${K}`]?: GrwTouristicEventsListAttributes[K] } & { [K in keyof GrwTouristicEventsList & keyof GrwTouristicEventsListAttributes as `prop:${K}`]?: GrwTouristicEventsList[K] };
+        "grw-touristic-events-provider": Omit<GrwTouristicEventsProvider, keyof GrwTouristicEventsProviderAttributes> & { [K in keyof GrwTouristicEventsProvider & keyof GrwTouristicEventsProviderAttributes]?: GrwTouristicEventsProvider[K] } & { [K in keyof GrwTouristicEventsProvider & keyof GrwTouristicEventsProviderAttributes as `attr:${K}`]?: GrwTouristicEventsProviderAttributes[K] } & { [K in keyof GrwTouristicEventsProvider & keyof GrwTouristicEventsProviderAttributes as `prop:${K}`]?: GrwTouristicEventsProvider[K] };
+        "grw-trek-card": Omit<GrwTrekCard, keyof GrwTrekCardAttributes> & { [K in keyof GrwTrekCard & keyof GrwTrekCardAttributes]?: GrwTrekCard[K] } & { [K in keyof GrwTrekCard & keyof GrwTrekCardAttributes as `attr:${K}`]?: GrwTrekCardAttributes[K] } & { [K in keyof GrwTrekCard & keyof GrwTrekCardAttributes as `prop:${K}`]?: GrwTrekCard[K] };
+        "grw-trek-detail": Omit<GrwTrekDetail, keyof GrwTrekDetailAttributes> & { [K in keyof GrwTrekDetail & keyof GrwTrekDetailAttributes]?: GrwTrekDetail[K] } & { [K in keyof GrwTrekDetail & keyof GrwTrekDetailAttributes as `attr:${K}`]?: GrwTrekDetailAttributes[K] } & { [K in keyof GrwTrekDetail & keyof GrwTrekDetailAttributes as `prop:${K}`]?: GrwTrekDetail[K] };
+        "grw-trek-provider": Omit<GrwTrekProvider, keyof GrwTrekProviderAttributes> & { [K in keyof GrwTrekProvider & keyof GrwTrekProviderAttributes]?: GrwTrekProvider[K] } & { [K in keyof GrwTrekProvider & keyof GrwTrekProviderAttributes as `attr:${K}`]?: GrwTrekProviderAttributes[K] } & { [K in keyof GrwTrekProvider & keyof GrwTrekProviderAttributes as `prop:${K}`]?: GrwTrekProvider[K] };
+        "grw-treks-list": Omit<GrwTreksList, keyof GrwTreksListAttributes> & { [K in keyof GrwTreksList & keyof GrwTreksListAttributes]?: GrwTreksList[K] } & { [K in keyof GrwTreksList & keyof GrwTreksListAttributes as `attr:${K}`]?: GrwTreksListAttributes[K] } & { [K in keyof GrwTreksList & keyof GrwTreksListAttributes as `prop:${K}`]?: GrwTreksList[K] };
+        "grw-treks-provider": Omit<GrwTreksProvider, keyof GrwTreksProviderAttributes> & { [K in keyof GrwTreksProvider & keyof GrwTreksProviderAttributes]?: GrwTreksProvider[K] } & { [K in keyof GrwTreksProvider & keyof GrwTreksProviderAttributes as `attr:${K}`]?: GrwTreksProviderAttributes[K] } & { [K in keyof GrwTreksProvider & keyof GrwTreksProviderAttributes as `prop:${K}`]?: GrwTreksProvider[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "grw-app": LocalJSX.GrwApp & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
-            "grw-common-button": LocalJSX.GrwCommonButton & JSXBase.HTMLAttributes<HTMLGrwCommonButtonElement>;
-            "grw-details-modal": LocalJSX.GrwDetailsModal & JSXBase.HTMLAttributes<HTMLGrwDetailsModalElement>;
-            "grw-extended-fab": LocalJSX.GrwExtendedFab & JSXBase.HTMLAttributes<HTMLGrwExtendedFabElement>;
-            "grw-fab": LocalJSX.GrwFab & JSXBase.HTMLAttributes<HTMLGrwFabElement>;
-            "grw-filter": LocalJSX.GrwFilter & JSXBase.HTMLAttributes<HTMLGrwFilterElement>;
-            "grw-filters": LocalJSX.GrwFilters & JSXBase.HTMLAttributes<HTMLGrwFiltersElement>;
-            "grw-information-desk": LocalJSX.GrwInformationDesk & JSXBase.HTMLAttributes<HTMLGrwInformationDeskElement>;
-            "grw-loader": LocalJSX.GrwLoader & JSXBase.HTMLAttributes<HTMLGrwLoaderElement>;
-            "grw-map": LocalJSX.GrwMap & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
-            "grw-offline-confirm-modal": LocalJSX.GrwOfflineConfirmModal & JSXBase.HTMLAttributes<HTMLGrwOfflineConfirmModalElement>;
-            "grw-outdoor-course-card": LocalJSX.GrwOutdoorCourseCard & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseCardElement>;
-            "grw-outdoor-course-detail": LocalJSX.GrwOutdoorCourseDetail & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseDetailElement>;
-            "grw-outdoor-course-provider": LocalJSX.GrwOutdoorCourseProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseProviderElement>;
-            "grw-outdoor-courses-provider": LocalJSX.GrwOutdoorCoursesProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorCoursesProviderElement>;
-            "grw-outdoor-site-card": LocalJSX.GrwOutdoorSiteCard & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteCardElement>;
-            "grw-outdoor-site-detail": LocalJSX.GrwOutdoorSiteDetail & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteDetailElement>;
-            "grw-outdoor-site-provider": LocalJSX.GrwOutdoorSiteProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteProviderElement>;
-            "grw-outdoor-sites-list": LocalJSX.GrwOutdoorSitesList & JSXBase.HTMLAttributes<HTMLGrwOutdoorSitesListElement>;
-            "grw-outdoor-sites-provider": LocalJSX.GrwOutdoorSitesProvider & JSXBase.HTMLAttributes<HTMLGrwOutdoorSitesProviderElement>;
-            "grw-poi": LocalJSX.GrwPoi & JSXBase.HTMLAttributes<HTMLGrwPoiElement>;
-            "grw-search": LocalJSX.GrwSearch & JSXBase.HTMLAttributes<HTMLGrwSearchElement>;
-            "grw-segmented-segment": LocalJSX.GrwSegmentedSegment & JSXBase.HTMLAttributes<HTMLGrwSegmentedSegmentElement>;
-            "grw-select-language": LocalJSX.GrwSelectLanguage & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
-            "grw-sensitive-area-detail": LocalJSX.GrwSensitiveAreaDetail & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
-            "grw-switch": LocalJSX.GrwSwitch & JSXBase.HTMLAttributes<HTMLGrwSwitchElement>;
-            "grw-toggle-slot-visibility": LocalJSX.GrwToggleSlotVisibility & JSXBase.HTMLAttributes<HTMLGrwToggleSlotVisibilityElement>;
-            "grw-touristic-content-card": LocalJSX.GrwTouristicContentCard & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardElement>;
-            "grw-touristic-content-detail": LocalJSX.GrwTouristicContentDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicContentDetailElement>;
-            "grw-touristic-content-provider": LocalJSX.GrwTouristicContentProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentProviderElement>;
-            "grw-touristic-contents-list": LocalJSX.GrwTouristicContentsList & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsListElement>;
-            "grw-touristic-contents-provider": LocalJSX.GrwTouristicContentsProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsProviderElement>;
-            "grw-touristic-event-card": LocalJSX.GrwTouristicEventCard & JSXBase.HTMLAttributes<HTMLGrwTouristicEventCardElement>;
-            "grw-touristic-event-detail": LocalJSX.GrwTouristicEventDetail & JSXBase.HTMLAttributes<HTMLGrwTouristicEventDetailElement>;
-            "grw-touristic-event-provider": LocalJSX.GrwTouristicEventProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicEventProviderElement>;
-            "grw-touristic-events-list": LocalJSX.GrwTouristicEventsList & JSXBase.HTMLAttributes<HTMLGrwTouristicEventsListElement>;
-            "grw-touristic-events-provider": LocalJSX.GrwTouristicEventsProvider & JSXBase.HTMLAttributes<HTMLGrwTouristicEventsProviderElement>;
-            "grw-trek-card": LocalJSX.GrwTrekCard & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
-            "grw-trek-detail": LocalJSX.GrwTrekDetail & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
-            "grw-trek-provider": LocalJSX.GrwTrekProvider & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;
-            "grw-treks-list": LocalJSX.GrwTreksList & JSXBase.HTMLAttributes<HTMLGrwTreksListElement>;
-            "grw-treks-provider": LocalJSX.GrwTreksProvider & JSXBase.HTMLAttributes<HTMLGrwTreksProviderElement>;
+            "grw-app": LocalJSX.IntrinsicElements["grw-app"] & JSXBase.HTMLAttributes<HTMLGrwAppElement>;
+            "grw-common-button": LocalJSX.IntrinsicElements["grw-common-button"] & JSXBase.HTMLAttributes<HTMLGrwCommonButtonElement>;
+            "grw-details-modal": LocalJSX.IntrinsicElements["grw-details-modal"] & JSXBase.HTMLAttributes<HTMLGrwDetailsModalElement>;
+            "grw-extended-fab": LocalJSX.IntrinsicElements["grw-extended-fab"] & JSXBase.HTMLAttributes<HTMLGrwExtendedFabElement>;
+            "grw-fab": LocalJSX.IntrinsicElements["grw-fab"] & JSXBase.HTMLAttributes<HTMLGrwFabElement>;
+            "grw-filter": LocalJSX.IntrinsicElements["grw-filter"] & JSXBase.HTMLAttributes<HTMLGrwFilterElement>;
+            "grw-filters": LocalJSX.IntrinsicElements["grw-filters"] & JSXBase.HTMLAttributes<HTMLGrwFiltersElement>;
+            "grw-information-desk": LocalJSX.IntrinsicElements["grw-information-desk"] & JSXBase.HTMLAttributes<HTMLGrwInformationDeskElement>;
+            "grw-loader": LocalJSX.IntrinsicElements["grw-loader"] & JSXBase.HTMLAttributes<HTMLGrwLoaderElement>;
+            "grw-map": LocalJSX.IntrinsicElements["grw-map"] & JSXBase.HTMLAttributes<HTMLGrwMapElement>;
+            "grw-offline-confirm-modal": LocalJSX.IntrinsicElements["grw-offline-confirm-modal"] & JSXBase.HTMLAttributes<HTMLGrwOfflineConfirmModalElement>;
+            "grw-outdoor-course-card": LocalJSX.IntrinsicElements["grw-outdoor-course-card"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseCardElement>;
+            "grw-outdoor-course-detail": LocalJSX.IntrinsicElements["grw-outdoor-course-detail"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseDetailElement>;
+            "grw-outdoor-course-provider": LocalJSX.IntrinsicElements["grw-outdoor-course-provider"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorCourseProviderElement>;
+            "grw-outdoor-courses-provider": LocalJSX.IntrinsicElements["grw-outdoor-courses-provider"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorCoursesProviderElement>;
+            "grw-outdoor-site-card": LocalJSX.IntrinsicElements["grw-outdoor-site-card"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteCardElement>;
+            "grw-outdoor-site-detail": LocalJSX.IntrinsicElements["grw-outdoor-site-detail"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteDetailElement>;
+            "grw-outdoor-site-provider": LocalJSX.IntrinsicElements["grw-outdoor-site-provider"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorSiteProviderElement>;
+            "grw-outdoor-sites-list": LocalJSX.IntrinsicElements["grw-outdoor-sites-list"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorSitesListElement>;
+            "grw-outdoor-sites-provider": LocalJSX.IntrinsicElements["grw-outdoor-sites-provider"] & JSXBase.HTMLAttributes<HTMLGrwOutdoorSitesProviderElement>;
+            "grw-poi": LocalJSX.IntrinsicElements["grw-poi"] & JSXBase.HTMLAttributes<HTMLGrwPoiElement>;
+            "grw-search": LocalJSX.IntrinsicElements["grw-search"] & JSXBase.HTMLAttributes<HTMLGrwSearchElement>;
+            "grw-segmented-segment": LocalJSX.IntrinsicElements["grw-segmented-segment"] & JSXBase.HTMLAttributes<HTMLGrwSegmentedSegmentElement>;
+            "grw-select-language": LocalJSX.IntrinsicElements["grw-select-language"] & JSXBase.HTMLAttributes<HTMLGrwSelectLanguageElement>;
+            "grw-sensitive-area-detail": LocalJSX.IntrinsicElements["grw-sensitive-area-detail"] & JSXBase.HTMLAttributes<HTMLGrwSensitiveAreaDetailElement>;
+            "grw-switch": LocalJSX.IntrinsicElements["grw-switch"] & JSXBase.HTMLAttributes<HTMLGrwSwitchElement>;
+            "grw-toggle-slot-visibility": LocalJSX.IntrinsicElements["grw-toggle-slot-visibility"] & JSXBase.HTMLAttributes<HTMLGrwToggleSlotVisibilityElement>;
+            "grw-touristic-content-card": LocalJSX.IntrinsicElements["grw-touristic-content-card"] & JSXBase.HTMLAttributes<HTMLGrwTouristicContentCardElement>;
+            "grw-touristic-content-detail": LocalJSX.IntrinsicElements["grw-touristic-content-detail"] & JSXBase.HTMLAttributes<HTMLGrwTouristicContentDetailElement>;
+            "grw-touristic-content-provider": LocalJSX.IntrinsicElements["grw-touristic-content-provider"] & JSXBase.HTMLAttributes<HTMLGrwTouristicContentProviderElement>;
+            "grw-touristic-contents-list": LocalJSX.IntrinsicElements["grw-touristic-contents-list"] & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsListElement>;
+            "grw-touristic-contents-provider": LocalJSX.IntrinsicElements["grw-touristic-contents-provider"] & JSXBase.HTMLAttributes<HTMLGrwTouristicContentsProviderElement>;
+            "grw-touristic-event-card": LocalJSX.IntrinsicElements["grw-touristic-event-card"] & JSXBase.HTMLAttributes<HTMLGrwTouristicEventCardElement>;
+            "grw-touristic-event-detail": LocalJSX.IntrinsicElements["grw-touristic-event-detail"] & JSXBase.HTMLAttributes<HTMLGrwTouristicEventDetailElement>;
+            "grw-touristic-event-provider": LocalJSX.IntrinsicElements["grw-touristic-event-provider"] & JSXBase.HTMLAttributes<HTMLGrwTouristicEventProviderElement>;
+            "grw-touristic-events-list": LocalJSX.IntrinsicElements["grw-touristic-events-list"] & JSXBase.HTMLAttributes<HTMLGrwTouristicEventsListElement>;
+            "grw-touristic-events-provider": LocalJSX.IntrinsicElements["grw-touristic-events-provider"] & JSXBase.HTMLAttributes<HTMLGrwTouristicEventsProviderElement>;
+            "grw-trek-card": LocalJSX.IntrinsicElements["grw-trek-card"] & JSXBase.HTMLAttributes<HTMLGrwTrekCardElement>;
+            "grw-trek-detail": LocalJSX.IntrinsicElements["grw-trek-detail"] & JSXBase.HTMLAttributes<HTMLGrwTrekDetailElement>;
+            "grw-trek-provider": LocalJSX.IntrinsicElements["grw-trek-provider"] & JSXBase.HTMLAttributes<HTMLGrwTrekProviderElement>;
+            "grw-treks-list": LocalJSX.IntrinsicElements["grw-treks-list"] & JSXBase.HTMLAttributes<HTMLGrwTreksListElement>;
+            "grw-treks-provider": LocalJSX.IntrinsicElements["grw-treks-provider"] & JSXBase.HTMLAttributes<HTMLGrwTreksProviderElement>;
         }
     }
 }

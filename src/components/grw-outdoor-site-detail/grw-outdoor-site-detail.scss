@@ -8,6 +8,11 @@
 }
 
 :host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   --swiper-navigation-size: 24px;
   --swiper-navigation-color: var(--color-on-primary-container);
   --swiper-pagination-color: var(--color-primary-container);
@@ -64,6 +69,7 @@ grw-outdoor-site-detail {
 }
 
 .outdoor-site-options {
+  flex-shrink: 0;
   display: flex;
   position: relative;
   width: 100%;
@@ -127,8 +133,8 @@ grw-outdoor-site-detail {
   color: var(--color-on-surface);
   display: flex;
   flex-direction: column;
-  height: 100%;
-  max-height: 100%;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   .outdoor-site-name {
     color: var(--color-primary-app);
