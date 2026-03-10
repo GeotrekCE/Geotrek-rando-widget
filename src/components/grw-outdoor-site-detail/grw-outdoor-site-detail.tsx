@@ -23,7 +23,7 @@ import { getTouristicContentsNearOutdoorCourse, getTouristicContentsNearOutdoorS
 import { getTouristicEventsNearOutdoorCourse, getTouristicEventsNearOutdoorSite } from 'services/touristic-events.service';
 import { getOutdoorCourse, getPoisNearCourse } from 'services/outdoor-courses.service';
 
-const threshold = 1;
+const observerOptions = { threshold: 0 };
 
 @Component({
   tag: 'grw-outdoor-site-detail',
@@ -218,7 +218,7 @@ export class GrwOutdoorSiteDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.informationPlacesIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.informationPlacesObserver.observe(this.informationPlacesRef);
     }
@@ -229,7 +229,7 @@ export class GrwOutdoorSiteDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.poiIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.poiObserver.observe(this.poiRef);
     }
@@ -240,7 +240,7 @@ export class GrwOutdoorSiteDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.touristicContentsIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.touristicContentObserver.observe(this.touristicContentsRef);
     }
@@ -250,7 +250,7 @@ export class GrwOutdoorSiteDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.touristicEventsIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.touristicEventObserver.observe(this.touristicEventsRef);
     }
@@ -260,7 +260,7 @@ export class GrwOutdoorSiteDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.sitesIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.siteObserver.observe(this.sitesRef);
     }
@@ -270,7 +270,7 @@ export class GrwOutdoorSiteDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.coursesIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.courseObserver.observe(this.coursesRef);
     }
@@ -940,8 +940,8 @@ export class GrwOutdoorSiteDetail {
             {state.currentPois && state.currentPois.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="pois-container" class="pois-container">
-                  <div part="pois-title" class="pois-title" ref={el => (this.poiRef = el)}>
+                <div part="pois-container" class="pois-container" ref={el => (this.poiRef = el)}>
+                  <div part="pois-title" class="pois-title">
                     {translate[state.language].pois(state.currentPois.length)}
                   </div>
                   <div part="swiper-pois" class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>
@@ -990,8 +990,8 @@ export class GrwOutdoorSiteDetail {
             {state.currentRelatedOutdoorSites && state.currentRelatedOutdoorSites.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="related-outdoor-sites-container" class="related-outdoor-sites-container">
-                  <div part="related-outdoor-sites-title" class="related-outdoor-sites-title" ref={el => (this.sitesRef = el)}>
+                <div part="related-outdoor-sites-container" class="related-outdoor-sites-container" ref={el => (this.sitesRef = el)}>
+                  <div part="related-outdoor-sites-title" class="related-outdoor-sites-title">
                     {translate[state.language].relatedOutdoorSites(state.currentRelatedOutdoorSites.length)}
                   </div>
                   <div part="swiper-related-outdoor-sites" class="swiper swiper-related-outdoor-sites" ref={el => (this.swiperRelatedOutdoorSitesRef = el)}>
@@ -1015,8 +1015,8 @@ export class GrwOutdoorSiteDetail {
             {state.currentRelatedOutdoorCourses && state.currentRelatedOutdoorCourses.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="related-outdoor-courses-container" class="related-outdoor-courses-container">
-                  <div part="related-outdoor-courses-title" class="related-outdoor-courses-title" ref={el => (this.coursesRef = el)}>
+                <div part="related-outdoor-courses-container" class="related-outdoor-courses-container" ref={el => (this.coursesRef = el)}>
+                  <div part="related-outdoor-courses-title" class="related-outdoor-courses-title">
                     {translate[state.language].relatedOutdoorCourses(state.currentRelatedOutdoorCourses.length)}
                   </div>
                   <div part="swiper-related-outdoor-courses" class="swiper swiper-related-outdoor-courses" ref={el => (this.swiperRelatedOutdoorCoursesRef = el)}>
@@ -1041,8 +1041,8 @@ export class GrwOutdoorSiteDetail {
               state.currentInformationDesks.filter(currentInformationDesks => this.currentOutdoorSite.information_desks.includes(currentInformationDesks.id)).length > 0 && (
                 <div>
                   <div part="divider" class="divider"></div>
-                  <div part="information-desks-container" class="information-desks-container">
-                    <div part="information-desks-title" class="information-desks-title" ref={el => (this.informationPlacesRef = el)}>
+                  <div part="information-desks-container" class="information-desks-container" ref={el => (this.informationPlacesRef = el)}>
+                    <div part="information-desks-title" class="information-desks-title">
                       {translate[state.language].informationPlaces}
                     </div>
                     <div part="swiper-information-desks" class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
@@ -1066,8 +1066,8 @@ export class GrwOutdoorSiteDetail {
             {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="touristic-content-container" class="touristic-content-container">
-                  <div part="touristic-content-title" class="touristic-content-title" ref={el => (this.touristicContentsRef = el)}>
+                <div part="touristic-content-container" class="touristic-content-container" ref={el => (this.touristicContentsRef = el)}>
+                  <div part="touristic-content-title" class="touristic-content-title">
                     {translate[state.language].touristicContents(state.trekTouristicContents.length)}
                   </div>
                   <div part="swiper-touristic-content" class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
@@ -1092,8 +1092,8 @@ export class GrwOutdoorSiteDetail {
             {state.trekTouristicEvents && state.trekTouristicEvents.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="touristic-event-container" class="touristic-event-container">
-                  <div part="touristic-event-title" class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
+                <div part="touristic-event-container" class="touristic-event-container" ref={el => (this.touristicEventsRef = el)}>
+                  <div part="touristic-event-title" class="touristic-event-title">
                     {translate[state.language].touristicEvents(state.trekTouristicEvents.length)}
                   </div>
                   <div part="swiper-touristic-event" class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>

@@ -11,7 +11,7 @@ import DownloadIcon from '../../assets/download.svg';
 import WarningIcon from '../../assets/warning.svg';
 import { formatAscent, formatDuration, formatLength } from 'utils/utils';
 
-const threshold = 1;
+const observerOptions = { threshold: 0 };
 
 @Component({
   tag: 'grw-outdoor-course-detail',
@@ -172,7 +172,7 @@ export class GrwOutdoorCourseDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.poiIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.poiObserver.observe(this.poiRef);
     }
@@ -183,7 +183,7 @@ export class GrwOutdoorCourseDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.touristicContentsIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.touristicContentObserver.observe(this.touristicContentsRef);
     }
@@ -193,7 +193,7 @@ export class GrwOutdoorCourseDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.touristicEventsIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.touristicEventObserver.observe(this.touristicEventsRef);
     }
@@ -430,8 +430,8 @@ export class GrwOutdoorCourseDetail {
             {state.trekTouristicContents && state.trekTouristicContents.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="touristic-content-container" class="touristic-content-container">
-                  <div part="touristic-content-title" class="touristic-content-title" ref={el => (this.touristicContentsRef = el)}>
+                <div part="touristic-content-container" class="touristic-content-container" ref={el => (this.touristicContentsRef = el)}>
+                  <div part="touristic-content-title" class="touristic-content-title">
                     {translate[state.language].touristicContents(state.trekTouristicContents.length)}
                   </div>
                   <div part="swiper-touristic-content" class="swiper swiper-touristic-content" ref={el => (this.swiperTouristicContentsRef = el)}>
@@ -455,8 +455,8 @@ export class GrwOutdoorCourseDetail {
             {state.trekTouristicEvents && state.trekTouristicEvents.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="touristic-event-container" class="touristic-event-container">
-                  <div part="touristic-event-title" class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
+                <div part="touristic-event-container" class="touristic-event-container" ref={el => (this.touristicEventsRef = el)}>
+                  <div part="touristic-event-title" class="touristic-event-title">
                     {translate[state.language].touristicEvents(state.trekTouristicEvents.length)}
                   </div>
                   <div part="swiper-touristic-event" class="swiper swiper-touristic-event" ref={el => (this.swiperTouristicEventsRef = el)}>
@@ -480,8 +480,8 @@ export class GrwOutdoorCourseDetail {
             {state.currentPois && state.currentPois.length > 0 && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="pois-container" class="pois-container">
-                  <div part="pois-title" class="pois-title" ref={el => (this.poiRef = el)}>
+                <div part="pois-container" class="pois-container" ref={el => (this.poiRef = el)}>
+                  <div part="pois-title" class="pois-title">
                     {translate[state.language].pois(state.currentPois.length)}
                   </div>
                   <div part="swiper-pois" class="swiper swiper-pois" ref={el => (this.swiperPoisRef = el)}>

@@ -21,7 +21,7 @@ import WarningIcon from '../../assets/warning.svg';
 import BackpackIcon from '../../assets/backpack.svg';
 import CallIcon from '../../assets/call.svg';
 
-const threshold = 1;
+const observerOptions = { threshold: 0 };
 const presentation: Option = {
   visible: true,
   indicator: false,
@@ -450,7 +450,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, presentation: { ...this.defaultOptions.presentation, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.presentationObserver.observe(this.presentationRef);
     }
@@ -462,7 +462,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, steps: { ...this.defaultOptions.steps, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.stepsObserver.observe(this.stepsRef);
     }
@@ -474,7 +474,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, description: { ...this.defaultOptions.description, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.descriptionObserver.observe(this.descriptionRef);
     }
@@ -485,7 +485,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, recommendations: { ...this.defaultOptions.recommendations, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.recommendationsObserver.observe(this.recommendationRef);
     }
@@ -495,7 +495,7 @@ export class GrwTrekDetail {
           const isIntersecting = entries[0].isIntersecting;
           this.parkingIsInViewport.emit(isIntersecting);
         },
-        { threshold },
+        observerOptions,
       );
       this.parkingObserver.observe(this.parkingRef);
     }
@@ -508,7 +508,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, sensitiveArea: { ...this.defaultOptions.sensitiveArea, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.sensitiveAreaObserver.observe(this.sensitiveAreaRef);
     }
@@ -521,7 +521,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, informationPlaces: { ...this.defaultOptions.informationPlaces, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.informationPlacesObserver.observe(this.informationPlacesRef);
     }
@@ -533,7 +533,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, accessibility: { ...this.defaultOptions.accessibility, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.accessibilityObserver.observe(this.accessibilityRef);
     }
@@ -546,7 +546,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, pois: { ...this.defaultOptions.pois, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.poiObserver.observe(this.poiRef);
     }
@@ -559,7 +559,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, touristicContents: { ...this.defaultOptions.touristicContents, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.touristicContentObserver.observe(this.touristicContentsRef);
     }
@@ -571,7 +571,7 @@ export class GrwTrekDetail {
           this.options = { ...this.options, touristicEvents: { ...this.defaultOptions.touristicEvents, indicator: isIntersecting } };
           this.handleIndicatorSelectedTrekOption();
         },
-        { threshold },
+        observerOptions,
       );
       this.touristicEventObserver.observe(this.touristicEventsRef);
     }
@@ -691,25 +691,27 @@ export class GrwTrekDetail {
 
   handleIndicatorSelectedTrekOption() {
     let currentOption: Option;
-    let previousVisibleOptions = 0;
-    let previousWidthOptions = 0;
-    let elementWidth = 0;
+    let currentOptionIndex = -1;
 
     const options: Option[] = Object.values(this.options);
-    let index = 0;
-    while (!currentOption && index < options.length) {
-      if (options[index].indicator) {
-        currentOption = options[index];
-      } else {
-        if (options[index].visible) {
+
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].indicator) {
+        currentOption = options[i];
+        currentOptionIndex = i;
+      }
+    }
+
+    if (currentOption && this[currentOption.ref]) {
+      let previousVisibleOptions = 0;
+      let previousWidthOptions = 0;
+      for (let i = 0; i < currentOptionIndex; i++) {
+        if (options[i].visible) {
           previousVisibleOptions += 1;
-          previousWidthOptions += this[options[index].ref].clientWidth;
+          previousWidthOptions += this[options[i].ref].clientWidth;
         }
       }
-      index++;
-    }
-    if (currentOption && this[currentOption.ref]) {
-      elementWidth = this[currentOption.ref].clientWidth;
+      const elementWidth = this[currentOption.ref].clientWidth;
       this.indicatorSelectedTrekOption = {
         translateX: `${previousWidthOptions + 16 * previousVisibleOptions - elementWidth / 2}px`,
         width: `${elementWidth * 2}px`,
@@ -1383,8 +1385,8 @@ export class GrwTrekDetail {
               </div>
             )}
             {state.currentTrekSteps && (
-              <div part="step-container" class="step-container">
-                <div part="step-title" class="step-title" ref={el => (this.stepsRef = el)}>{`${state.currentTrekSteps.length} ${translate[state.language].steps}`}</div>
+              <div part="step-container" class="step-container" ref={el => (this.stepsRef = el)}>
+                <div part="step-title" class="step-title">{`${state.currentTrekSteps.length} ${translate[state.language].steps}`}</div>
                 <div part="swiper-step" class="swiper swiper-step" ref={el => (this.swiperStepRef = el)}>
                   <div part="swiper-wrapper" class="swiper-wrapper">
                     {state.currentTrekSteps &&
@@ -1415,8 +1417,8 @@ export class GrwTrekDetail {
             )}
             <div part="divider" class="divider"></div>
             {this.currentTrek.description && (
-              <div part="description-container" class="description-container">
-                <div part="description-title" class="description-title" ref={el => (this.descriptionRef = el)}>
+              <div part="description-container" class="description-container" ref={el => (this.descriptionRef = el)}>
+                <div part="description-title" class="description-title">
                   {translate[state.language].description}
                 </div>
                 <div part="description" class="description" innerHTML={this.currentTrek.description}></div>
@@ -1449,8 +1451,8 @@ export class GrwTrekDetail {
             {this.options.pois.visible && (
               <div part="divider-and-pois-container" class="divider-and-pois-container">
                 <div part="divider" class="divider"></div>
-                <div part="pois-container" class="pois-container">
-                  <div part="pois-title" class="pois-title" ref={el => (this.poiRef = el)}>
+                <div part="pois-container" class="pois-container" ref={el => (this.poiRef = el)}>
+                  <div part="pois-title" class="pois-title">
                     {translate[state.language].pois(state.poisData)}
                   </div>
                   {!state.currentPois ? (
@@ -1519,8 +1521,8 @@ export class GrwTrekDetail {
             {(this.currentTrek.advice || this.currentTrek.gear || this.labels.length > 0) && (
               <div part="divider-and-advice-container" class="divider-and-advice-container">
                 <div part="divider" class="divider"></div>
-                <div part="advice-container" class="advice-container">
-                  <div part="advice-title" class="advice-title" ref={el => (this.recommendationRef = el)}>
+                <div part="advice-container" class="advice-container" ref={el => (this.recommendationRef = el)}>
+                  <div part="advice-title" class="advice-title">
                     {translate[state.language].recommendations}
                   </div>
                   {this.currentTrek.advice && (
@@ -1550,8 +1552,8 @@ export class GrwTrekDetail {
             {state.currentSensitiveAreas && state.currentSensitiveAreas.length > 0 && (
               <div part="divider-and-sensitive-areas-container" class="divider-and-sensitive-areas-container">
                 <div part="divider" class="divider"></div>
-                <div part="sensitive-areas-container" class="sensitive-areas-container">
-                  <div part="ensitive-areas-title" class="sensitive-areas-title" ref={el => (this.sensitiveAreaRef = el)}>
+                <div part="sensitive-areas-container" class="sensitive-areas-container" ref={el => (this.sensitiveAreaRef = el)}>
+                  <div part="ensitive-areas-title" class="sensitive-areas-title">
                     {translate[state.language].environmentalSensitiveAreas}
                   </div>
                   <div part="sensitive-areas-description" class="sensitive-areas-description">
@@ -1570,8 +1572,8 @@ export class GrwTrekDetail {
               state.currentInformationDesks.filter(currentInformationDesks => this.currentTrek.information_desks.includes(currentInformationDesks.id)).length > 0 && (
                 <div part="divider-and-information-desks-container" class="divider-and-information-desks-container">
                   <div part="divider" class="divider"></div>
-                  <div part="information-desks-container" class="information-desks-container">
-                    <div part="information-desks-title" class="information-desks-title" ref={el => (this.informationPlacesRef = el)}>
+                  <div part="information-desks-container" class="information-desks-container" ref={el => (this.informationPlacesRef = el)}>
+                    <div part="information-desks-title" class="information-desks-title">
                       {translate[state.language].informationPlaces}
                     </div>
                     <div part="swiper-information-desks" class="swiper swiper-information-desks" ref={el => (this.swiperInformationDesksRef = el)}>
@@ -1605,8 +1607,8 @@ export class GrwTrekDetail {
               this.emergencyNumber) && (
                 <div part="divider-and-accessibilities-container" class="divider-and-accessibilities-container">
                   <div part="divider" class="divider"></div>
-                  <div part="accessibilities-container" class="accessibilities-container">
-                    <div part="accessibilities-title" class="accessibilities-title" ref={el => (this.accessibilityRef = el)}>
+                  <div part="accessibilities-container" class="accessibilities-container" ref={el => (this.accessibilityRef = el)}>
+                    <div part="accessibilities-title" class="accessibilities-title">
                       {translate[state.language].accessibility}
                     </div>
                     {this.currentTrek.disabled_infrastructure && <div part="disabled-infrastructure" innerHTML={this.currentTrek.disabled_infrastructure}></div>}
@@ -1699,8 +1701,8 @@ export class GrwTrekDetail {
             {this.options.touristicContents.visible && (
               <div part="divider-and-touristic-content-container" class="divider-and-touristic-content-container">
                 <div part="divider" class="divider"></div>
-                <div part="touristic-content-container" class="touristic-content-container">
-                  <div part="touristic-content-title" class="touristic-content-title" ref={el => (this.touristicContentsRef = el)}>
+                <div part="touristic-content-container" class="touristic-content-container" ref={el => (this.touristicContentsRef = el)}>
+                  <div part="touristic-content-title" class="touristic-content-title">
                     {translate[state.language].touristicContents(state.touristicContentsData)}
                   </div>
                   {!state.trekTouristicContents ? (
@@ -1733,8 +1735,8 @@ export class GrwTrekDetail {
             {this.options.touristicEvents.visible && (
               <div part="divider-and-touristic-event-container" class="divider-and-touristic-event-container">
                 <div part="divider" class="divider"></div>
-                <div part="touristic-event-container" class="touristic-event-container">
-                  <div part="touristic-event-title" class="touristic-event-title" ref={el => (this.touristicEventsRef = el)}>
+                <div part="touristic-event-container" class="touristic-event-container" ref={el => (this.touristicEventsRef = el)}>
+                  <div part="touristic-event-title" class="touristic-event-title">
                     {translate[state.language].touristicEvents(state.touristicEventsData)}
                   </div>
                   {!state.trekTouristicEvents ? (
