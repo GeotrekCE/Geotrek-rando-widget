@@ -79,7 +79,7 @@ export class GrwTreksList {
 
   render() {
     return (
-      <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
+      <Host class={{ 'large-view': this.isLargeView }} style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.treksWithinBounds && (
           <div part="current-treks-within-bounds-length" class="current-treks-within-bounds-length">{`${state.treksWithinBounds.length} ${
             state.treksWithinBounds.length > 1 ? translate[state.language].treks : translate[state.language].trek

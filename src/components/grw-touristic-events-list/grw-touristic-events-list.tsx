@@ -79,7 +79,7 @@ export class GrwTouristicContentsList {
 
   render() {
     return (
-      <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
+      <Host class={{ 'large-view': this.isLargeView }} style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.touristicEventsWithinBounds && (
           <div part="current-touristic-events-within-bounds-length" class="current-touristic-events-within-bounds-length">{`${state.touristicEventsWithinBounds.length} ${
             state.touristicEventsWithinBounds.length > 1 ? translate[state.language].home.touristicEvents : translate[state.language].home.touristicEvent

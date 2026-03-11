@@ -78,7 +78,7 @@ export class GrwOutdoorSitesList {
 
   render() {
     return (
-      <Host style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
+      <Host class={{ 'large-view': this.isLargeView }} style={{ '--font-family': this.fontFamily, '--color-primary-app': this.colorPrimaryApp }}>
         {state.outdoorSitesWithinBounds && (
           <div part="current-outdoor-sites-within-bounds-length" class="current-outdoor-sites-within-bounds-length">{`${state.outdoorSitesWithinBounds.length} ${
             state.outdoorSitesWithinBounds.length > 1 ? translate[state.language].outdoorSites : translate[state.language].outdoorSite

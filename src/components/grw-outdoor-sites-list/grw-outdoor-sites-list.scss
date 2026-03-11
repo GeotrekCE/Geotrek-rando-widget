@@ -5,10 +5,16 @@
 }
 
 grw-outdoor-site-card {
-  width: 100% !important;
   display: flex;
   justify-content: center;
   margin: 0px 8px 16px 8px;
+  flex: 1 1 300px;
+  max-width: 350px;
+}
+
+:host(.large-view) grw-outdoor-site-card {
+  flex: 1 1 100%;
+  max-width: none;
 }
 
 .list-bottom-space {
