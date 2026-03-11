@@ -89,14 +89,9 @@ grw-app {
 .grw-content-container {
   position: relative;
   display: flex;
-}
-
-.grw-content-treks {
-  height: calc(100% - var(--header-height) - var(--header-with-languages) - var(--header-with-offline));
-}
-
-.grw-content-trek {
-  height: calc(100% - var(--header-height) - var(--header-with-languages));
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .grw-large-view-app-list-container,
@@ -148,7 +143,7 @@ grw-treks-list,
 grw-touristic-contents-list,
 grw-touristic-events-list,
 grw-outdoor-sites-list {
-  max-height: calc(100vh - var(--header-height));
+  max-height: 100%;
 }
 
 grw-trek-detail {
@@ -158,7 +153,8 @@ grw-trek-detail {
 
 grw-touristic-content-detail,
 grw-touristic-event-detail,
-grw-outdoor-site-detail {
+grw-outdoor-site-detail,
+grw-outdoor-course-detail {
   position: relative;
   max-height: 100%;
 }

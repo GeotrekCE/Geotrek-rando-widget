@@ -672,11 +672,7 @@ export class GrwApp {
               )}
             </div>
 
-            <div
-              class={`grw-content-container ${
-                this.showTrek || this.showTouristicContent || this.showTouristicEvent || this.showOutdoorSite || this.showOutdoorCourse ? 'grw-content-trek' : 'grw-content-treks'
-              }`}
-            >
+            <div class="grw-content-container">
               {state.networkError && (
                 <div class="grw-error-container">
                   Une erreur est survenue.
