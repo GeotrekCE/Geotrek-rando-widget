@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.31.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.5...0.31.0) (2026-03-11)
+
+
+### Features
+
+* Implement responsive styling for cards by introducing a large-view host class. ([c0552bc](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/c0552bc5d3e40df3df58e0c991ddaca412841d76))
+* Refactor detail component layouts to use flexbox for proper sizing and scrolling ([5db7c79](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/5db7c79aa71e6c1f2391e1dbd7f7d6e31a33b801))
+
+
+### Bug Fixes
+
+* adjust IntersectionObserver threshold to 0 and move target refs to parent containers for improved visibility detection ([2835813](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/2835813a390e14a316dacaf380a5bc6a99785cdb))
+
 ## [0.30.5](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.4...0.30.5) (2026-02-23)
 
 
