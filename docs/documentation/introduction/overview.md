@@ -89,14 +89,6 @@ Ce widget, développé dans le cadre du projet communautaire Geotrek, est **libr
 
 ## Exemples d'intégration sur des sites tiers
 
-Voici des exemples d'intégration du de Geotrek-rando-widget en conditions réelle :
- 
-Voici une proposition structurée, claire et directement intégrable dans ta documentation, avec une séparation nette entre intégrations “standards” et cas particuliers 👇
-
----
-
-## Exemples d’intégration du widget
-
 ### Intégrations standards
 
 Ces exemples illustrent des intégrations classiques du widget dans des sites touristiques ou institutionnels.
@@ -124,6 +116,6 @@ Ces exemples présentent des implémentations plus spécifiques, avec des adapta
 
 Particularités possibles :
 
-* intégration fortement personnalisée dans le design du site
-* structuration différente des contenus (ex : parcours en étapes)
-* usage partiel ou détourné du widget
+* une intégration fortement personnalisée dans le design du site
+* une structuration différente des contenus (ex : parcours en étapes)
+* un usage partiel ou détourné du widget
