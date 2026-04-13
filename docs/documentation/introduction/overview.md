@@ -89,13 +89,33 @@ Ce widget, développé dans le cadre du projet communautaire Geotrek, est **libr
 
 ## Exemples d'intégration sur des sites tiers
 
-Voici des exemples d'intégration du de Geotrek-rando-widget en conditions réelle :
- 
-- [Serre Ponçon Vallées](https://www.serreponconvallees.com/s-aerer/randonnees-balades-pied-velo-vtt) 
-- [Jurabsolu](https://www.jurabsolu.fr/decouvrez-territoire-jura/randonnees-forets-vignes-jura/)
-- [Sidobre Vals et Plateaux](https://sidobre-vallees-tourisme.com/type_activite/balades-et-randonnees-sidobre-vallees/)
-- [Haut Jura Saint-Claude](https://www.haut-jura-saint-claude.com/pause-aventure/randonnee-haut-jura/)
-- [Coeur du Jura - randonnées vélo](https://www.coeurdujura-tourisme.com/parcours-randonnees-velo/)
-- [Coeur du Jura - randonnées pédestre](https://www.coeurdujura-tourisme.com/widget-geotrek/)
-- [La Toscane Occitane](https://www.la-toscane-occitane.com/activites/balades-randonnees/)
-- [Randoxygène](https://randoxygene.departement06.fr/annuaire-des-randonnees)
+### Intégrations standards
+
+Ces exemples illustrent des intégrations classiques du widget dans des sites touristiques ou institutionnels.
+
+* [Serre Ponçon Vallées](https://www.serreponconvallees.com/s-aerer/randonnees-balades-pied-velo-vtt)
+* [Pas-de-Calais - France Olympique](https://pasdecalais.franceolympique.com/sport-nature/)
+* [Jurabsolu](https://www.jurabsolu.fr/decouvrez-territoire-jura/randonnees-forets-vignes-jura/)
+* [Sidobre Vals et Plateaux](https://sidobre-vallees-tourisme.com/type_activite/balades-et-randonnees-sidobre-vallees/)
+* [Haut Jura Saint-Claude](https://www.haut-jura-saint-claude.com/pause-aventure/randonnee-haut-jura/)
+* [La Toscane Occitane](https://www.la-toscane-occitane.com/activites/balades-randonnees/)
+* [Les sentiers Courbet](https://musee-courbet.fr/sentier-site-courbet/les-sentiers-courbet/)
+
+Ces intégrations reposent généralement sur :
+
+* une utilisation standard du widget
+* un affichage catalogue ou liste d’itinéraires
+* une intégration dans une page existante sans adaptation majeure
+
+### Intégrations avancées / personnalisées
+
+Ces exemples présentent des implémentations plus spécifiques, avec des adaptations ou des usages non standards du widget.
+
+* [Randoxygène](https://randoxygene.departement06.fr/annuaire-des-randonnees)
+* [Tour de l'Obiou](https://tourdelobiou.fr/etapes-trace-tour-de-lobiou/)
+
+Particularités possibles :
+
+* une intégration fortement personnalisée dans le design du site
+* une structuration différente des contenus (ex : parcours en étapes)
+* un usage partiel ou détourné du widget
