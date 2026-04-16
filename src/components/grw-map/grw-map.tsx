@@ -127,6 +127,18 @@ export class GrwMap {
   handleTouristicContentsWithinBoundsBind: (event: any) => void = this.handleTouristicContentsWithinBounds.bind(this);
   handleTouristicEventsWithinBoundsBind: (event: any) => void = this.handleTouristicEventsWithinBounds.bind(this);
   handleOutdoorSitesWithinBoundsBind: (event: any) => void = this.handleOutdoorSitesWithinBounds.bind(this);
+  
+  fitBoundsQueued = false;
+
+  componentDidUpdate() {
+    if (this.map) {
+      this.map.invalidateSize();
+      if (this.fitBoundsQueued && this.bounds) {
+        this.map.fitBounds(this.bounds);
+        this.fitBoundsQueued = false;
+      }
+    }
+  }
 
   @Listen('centerOnMap', { target: 'window' })
   onCenterOnMap(event: CustomEvent<{ latitude: number; longitude: number }>) {
@@ -993,8 +1005,7 @@ export class GrwMap {
 
     this.bounds = L.latLngBounds(state.currentTrek.geometry.coordinates.map(coordinate => [coordinate[1], coordinate[0]]));
     this.map.on('eledata_loaded', () => {
-      this.map.invalidateSize();
-      this.bounds && this.map.fitBounds(this.bounds);
+      this.fitBoundsQueued = true;
       !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
     });
   }
