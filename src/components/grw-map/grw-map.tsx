@@ -127,7 +127,14 @@ export class GrwMap {
   handleTouristicContentsWithinBoundsBind: (event: any) => void = this.handleTouristicContentsWithinBounds.bind(this);
   handleTouristicEventsWithinBoundsBind: (event: any) => void = this.handleTouristicEventsWithinBounds.bind(this);
   handleOutdoorSitesWithinBoundsBind: (event: any) => void = this.handleOutdoorSitesWithinBounds.bind(this);
-  
+
+  addTreksController: AbortController = null;
+  addTouristicContentsController: AbortController = null;
+  addTouristicEventsController: AbortController = null;
+  addOutdoorSitesController: AbortController = null;
+  addSelectedCurrentTrekController: AbortController = null;
+  showTrekLineController: AbortController = null;
+
   fitBoundsQueued = false;
 
   componentDidUpdate() {
@@ -530,6 +537,9 @@ export class GrwMap {
   }
 
   async addTreks(resetBounds = false) {
+    this.addTreksController?.abort();
+    this.addTreksController = new AbortController();
+    const { signal } = this.addTreksController;
     state.treksWithinBounds = state.currentTreks;
 
     const treksCurrentDepartureCoordinates = [];
@@ -569,6 +579,11 @@ export class GrwMap {
       }
 
       const treksIcons = await this.getIcons(treksFeatureCollection, 'practice');
+
+      // Abort if a newer addTreks() call or removeTreks() was made during the await
+      if (signal.aborted) {
+        return;
+      }
 
       this.treksLayer = L.geoJSON(treksFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
@@ -655,6 +670,7 @@ export class GrwMap {
   }
 
   removeTreks() {
+    this.addTreksController?.abort();
     if (this.treksLayer) {
       state.currentMapBounds = this.map.getBounds();
       this.map.removeLayer(this.treksMarkerClusterGroup);
@@ -1064,9 +1080,18 @@ export class GrwMap {
     }
 
     this.removeSelectedCurrentTrek();
+    this.addSelectedCurrentTrekController?.abort();
+    this.addSelectedCurrentTrekController = new AbortController();
+    const { signal } = this.addSelectedCurrentTrekController;
     state.selectedTrekId = id;
 
     const treksIcons = await this.getIcons(treksFeatureCollection, 'practice');
+
+    // Abort if a newer hover or removal occurred during the await
+    if (signal.aborted) {
+      return;
+    }
+
     this.selectedCurrentTrekLayer = L.geoJSON(treksFeatureCollection, {
       pointToLayer: (geoJsonPoint, latlng) =>
         L.marker(latlng, {
@@ -1138,6 +1163,7 @@ export class GrwMap {
   }
 
   removeSelectedCurrentTrek() {
+    this.addSelectedCurrentTrekController?.abort();
     state.selectedTrekId = null;
     this.selectedCurrentTrekLayer && this.map.removeLayer(this.selectedCurrentTrekLayer);
     this.selectedCurrentTrekLayer = null;
@@ -1268,7 +1294,16 @@ export class GrwMap {
 
   async showTrekLine(id) {
     this.removeSelectedCurrentTrek();
+    this.showTrekLineController?.abort();
+    this.showTrekLineController = new AbortController();
+    const { signal } = this.showTrekLineController;
     const trekLine = await getTrekGeometry(id);
+
+    // Abort if a newer hover or hideTrekLine occurred during the await
+    if (signal.aborted) {
+      return;
+    }
+
     const currentTrekFeature: Feature = {
       type: 'Feature',
       geometry: trekLine.geometry,
@@ -1284,6 +1319,7 @@ export class GrwMap {
   }
 
   hideTrekLine() {
+    this.showTrekLineController?.abort();
     if (this.currentTrekLayer) {
       this.map.removeLayer(this.currentTrekLayer);
       this.currentTrekLayer = null;
@@ -1344,6 +1380,9 @@ export class GrwMap {
   }
 
   async addTouristicContents(resetBounds = false) {
+    this.addTouristicContentsController?.abort();
+    this.addTouristicContentsController = new AbortController();
+    const { signal } = this.addTouristicContentsController;
     state.touristicContentsWithinBounds = state.currentTouristicContents;
 
     const touristicContentsCurrentCoordinates = [];
@@ -1384,6 +1423,12 @@ export class GrwMap {
         }
       }
       const toutisticContentIcons = await this.getIcons(touristicContentsFeatureCollection, 'practice');
+
+      // Abort if a newer call or removal was made during the await
+      if (signal.aborted) {
+        return;
+      }
+
       this.toutisticContentsLayer = L.geoJSON(touristicContentsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
@@ -1470,6 +1515,7 @@ export class GrwMap {
   }
 
   removeTouristicContents() {
+    this.addTouristicContentsController?.abort();
     if (this.toutisticContentsLayer) {
       state.currentMapBounds = this.map.getBounds();
       this.map.removeLayer(this.touristicContentsMarkerClusterGroup);
@@ -1632,6 +1678,9 @@ export class GrwMap {
   }
 
   async addTouristicEvents(resetBounds = false) {
+    this.addTouristicEventsController?.abort();
+    this.addTouristicEventsController = new AbortController();
+    const { signal } = this.addTouristicEventsController;
     state.touristicEventsWithinBounds = state.currentTouristicEvents;
 
     const touristicEventsCurrentCoordinates = [];
@@ -1672,6 +1721,12 @@ export class GrwMap {
         }
       }
       const touristicEventsIcons = await this.getIcons(touristicEventsFeatureCollection, 'type');
+
+      // Abort if a newer call or removal was made during the await
+      if (signal.aborted) {
+        return;
+      }
+
       this.touristicEventsLayer = L.geoJSON(touristicEventsFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
@@ -1758,6 +1813,7 @@ export class GrwMap {
   }
 
   removeTouristicEvents() {
+    this.addTouristicEventsController?.abort();
     if (this.touristicEventsLayer) {
       state.currentMapBounds = this.map.getBounds();
       this.map.removeLayer(this.touristicEventsMarkerClusterGroup);
@@ -1768,6 +1824,9 @@ export class GrwMap {
   }
 
   async addOutdoorSites(resetBounds = false) {
+    this.addOutdoorSitesController?.abort();
+    this.addOutdoorSitesController = new AbortController();
+    const { signal } = this.addOutdoorSitesController;
     state.outdoorSitesWithinBounds = state.currentOutdoorSites;
 
     const outdoorSitesCurrentCoordinates = [];
@@ -1807,6 +1866,12 @@ export class GrwMap {
         }
       }
       const outdoorSitesIcons = await this.getIcons(outdoorSitesFeatureCollection, 'practice');
+
+      // Abort if a newer call or removal was made during the await
+      if (signal.aborted) {
+        return;
+      }
+
       this.outdoorSitesLayer = L.geoJSON(outdoorSitesFeatureCollection, {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
@@ -1893,6 +1958,7 @@ export class GrwMap {
   }
 
   removeOutdoorSites() {
+    this.addOutdoorSitesController?.abort();
     if (this.outdoorSitesLayer) {
       state.currentMapBounds = this.map.getBounds();
       this.map.removeLayer(this.outdoorSitesMarkerClusterGroup);
