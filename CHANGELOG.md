@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.32.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.31.0...0.32.0) (2026-04-22)
+
+
+### Features
+
+* defer map layer visibility updates until the trek detail component has been scrolled ([b8f6ab3](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/b8f6ab3e7b53ae7e288df25cf0510199a756b42f))
+
+
+### Bug Fixes
+
+* ensure map bounds are applied after invalidating size in componentDidUpdate ([91bbb9b](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/91bbb9baf7e6759f2abe839a362a39515e2c5c78))
+* prevent race conditions in map layer rendering by implementing AbortController for async data fetching and removal operations ([f23e046](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/f23e046f567da02ad2be754d4d44b7a665ca1784))
+
 ## [0.31.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.30.5...0.31.0) (2026-03-11)
 
 
