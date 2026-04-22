@@ -158,6 +158,7 @@ export class GrwTrekDetail {
   @Event() stepsIsInViewport: EventEmitter<boolean>;
   @Event() touristicContentsIsInViewport: EventEmitter<boolean>;
   @Event() touristicEventsIsInViewport: EventEmitter<boolean>;
+  @Event() detailScrolled: EventEmitter<void>;
   @Event() parentTrekPress: EventEmitter<number>;
   @State() currentTrek: Trek;
   @State() difficulty: Difficulty;
@@ -580,6 +581,24 @@ export class GrwTrekDetail {
   componentDidLoad() {
     this.handleObservers();
     this.handleSwipers();
+    this.setupScrollListener();
+  }
+
+  setupScrollListener() {
+    const container = this.trekDetailContainerRef;
+    if (container) {
+      const onScroll = () => {
+        this.detailScrolled.emit();
+        container.removeEventListener('scroll', onScroll);
+      };
+      container.addEventListener('scroll', onScroll);
+    } else {
+      const onScroll = () => {
+        this.detailScrolled.emit();
+        window.removeEventListener('scroll', onScroll);
+      };
+      window.addEventListener('scroll', onScroll);
+    }
   }
 
   async connectedCallback() {
@@ -699,6 +718,7 @@ export class GrwTrekDetail {
       if (options[i].indicator) {
         currentOption = options[i];
         currentOptionIndex = i;
+        break;
       }
     }
 
@@ -1076,7 +1096,7 @@ export class GrwTrekDetail {
             {this.options.steps.visible && (
               <a
                 part="trek-option"
-                class={`steps trek-option${this.options.steps.indicator ? ' selected-trek-option' : ''}`}
+                class={`steps trek-option${this.indicatorSelectedTrekOption.ref === 'stepsOptionRef' ? ' selected-trek-option' : ''}`}
                 ref={el => (this.stepsOptionRef = el)}
                 onClick={() => this.handleScrollTo(this.stepsRef)}
               >

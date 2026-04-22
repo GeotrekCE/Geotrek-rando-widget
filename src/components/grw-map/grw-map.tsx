@@ -135,6 +135,9 @@ export class GrwMap {
   addSelectedCurrentTrekController: AbortController = null;
   showTrekLineController: AbortController = null;
 
+  viewportState: { [key: string]: boolean } = {};
+  hasScrolled = false;
+
   fitBoundsQueued = false;
 
   componentDidUpdate() {
@@ -154,56 +157,64 @@ export class GrwMap {
 
   @Listen('stepsIsInViewport', { target: 'window' })
   stepsIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentStepsLayer && this.layersControl) {
+    this.viewportState.steps = event.detail;
+    if (this.hasScrolled && this.currentStepsLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentStepsLayer);
     }
   }
 
   @Listen('descriptionIsInViewport', { target: 'window' })
   descriptionIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentReferencePointsLayer && this.layersControl) {
+    this.viewportState.description = event.detail;
+    if (this.hasScrolled && this.currentReferencePointsLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentReferencePointsLayer);
     }
   }
 
   @Listen('parkingIsInViewport', { target: 'window' })
   parkingIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentParkingLayer && this.layersControl) {
+    this.viewportState.parking = event.detail;
+    if (this.hasScrolled && this.currentParkingLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentParkingLayer);
     }
   }
 
   @Listen('informationPlacesIsInViewport', { target: 'window' })
   onInformationPlacesIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentInformationDesksLayer && this.layersControl) {
+    this.viewportState.informationPlaces = event.detail;
+    if (this.hasScrolled && this.currentInformationDesksLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentInformationDesksLayer);
     }
   }
 
   @Listen('sensitiveAreaIsInViewport', { target: 'window' })
   sensitiveAreaIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentSensitiveAreasLayer && this.layersControl) {
+    this.viewportState.sensitiveArea = event.detail;
+    if (this.hasScrolled && this.currentSensitiveAreasLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentSensitiveAreasLayer);
     }
   }
 
   @Listen('poiIsInViewport', { target: 'window' })
   poiIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentPoisLayer && this.layersControl) {
+    this.viewportState.pois = event.detail;
+    if (this.hasScrolled && this.currentPoisLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentPoisLayer, !state.currentPois || state.currentPois.length === 0);
     }
   }
 
   @Listen('touristicContentsIsInViewport', { target: 'window' })
   touristicContentsIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentToutisticContentsLayer && this.layersControl) {
+    this.viewportState.touristicContents = event.detail;
+    if (this.hasScrolled && this.currentToutisticContentsLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentToutisticContentsLayer, !state.trekTouristicContents || state.trekTouristicContents.length === 0);
     }
   }
 
   @Listen('touristicEventsIsInViewport', { target: 'window' })
   touristicEventsIsInViewport(event: CustomEvent<boolean>) {
-    if (this.currentTouristicEventsLayer && this.layersControl) {
+    this.viewportState.touristicEvents = event.detail;
+    if (this.hasScrolled && this.currentTouristicEventsLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentTouristicEventsLayer, !state.trekTouristicEvents || state.trekTouristicEvents.length === 0);
     }
   }
@@ -219,6 +230,14 @@ export class GrwMap {
   coursesIsInViewport(event: CustomEvent<boolean>) {
     if (this.currentRelatedOutdoorCoursesLayer && this.layersControl) {
       this.handleLayerVisibility(event.detail, this.currentRelatedOutdoorCoursesLayer);
+    }
+  }
+
+  @Listen('detailScrolled', { target: 'window' })
+  onDetailScrolled() {
+    if (!this.hasScrolled) {
+      this.hasScrolled = true;
+      this.applyCachedViewportState();
     }
   }
 
@@ -2868,7 +2887,30 @@ export class GrwMap {
     this.handleLayersControlEvent();
   }
 
+  applyCachedViewportState() {
+    if (!this.layersControl) return;
+
+    const layerMap: { key: string; layer: L.GeoJSON; loading?: boolean }[] = [
+      { key: 'steps', layer: this.currentStepsLayer },
+      { key: 'description', layer: this.currentReferencePointsLayer },
+      { key: 'parking', layer: this.currentParkingLayer },
+      { key: 'sensitiveArea', layer: this.currentSensitiveAreasLayer },
+      { key: 'informationPlaces', layer: this.currentInformationDesksLayer },
+      { key: 'pois', layer: this.currentPoisLayer, loading: !state.currentPois || state.currentPois.length === 0 },
+      { key: 'touristicContents', layer: this.currentToutisticContentsLayer, loading: !state.trekTouristicContents || state.trekTouristicContents.length === 0 },
+      { key: 'touristicEvents', layer: this.currentTouristicEventsLayer, loading: !state.trekTouristicEvents || state.trekTouristicEvents.length === 0 },
+    ];
+
+    for (const { key, layer, loading } of layerMap) {
+      if (layer && this.viewportState[key] !== undefined) {
+        this.handleLayerVisibility(this.viewportState[key], layer, loading || false);
+      }
+    }
+  }
+
   handleLayersOnRemove() {
+    this.viewportState = {};
+    this.hasScrolled = false;
     if (this.layersControl) {
       if (!(this.layersControl as any)._layers.some(layer => !layer.overlay)) {
         this.map.removeControl(this.layersControl);

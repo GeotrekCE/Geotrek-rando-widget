@@ -1658,6 +1658,7 @@ declare global {
         "stepsIsInViewport": boolean;
         "touristicContentsIsInViewport": boolean;
         "touristicEventsIsInViewport": boolean;
+        "detailScrolled": void;
         "parentTrekPress": number;
         "downloadConfirm": number;
         "downloadedSuccessConfirm": number;
@@ -2891,6 +2892,7 @@ declare namespace LocalJSX {
         "onDeleteErrorConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDeleteSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDescriptionIsInViewport"?: (event: GrwTrekDetailCustomEvent<boolean>) => void;
+        "onDetailScrolled"?: (event: GrwTrekDetailCustomEvent<void>) => void;
         "onDownloadConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDownloadedErrorConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
         "onDownloadedSuccessConfirm"?: (event: GrwTrekDetailCustomEvent<number>) => void;
