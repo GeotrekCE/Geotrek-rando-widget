@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.32.0...0.32.1) (2026-06-05)
+
+
+### Bug Fixes
+
+* optimize city data fetching by querying only required IDs based on provider contents instead of fetching all cities. ([fdd4de4](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/fdd4de44bf82afa0ffb6c89f8118ad05cb7248e6))
+
 ## [0.32.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.31.0...0.32.0) (2026-04-22)
 
 
