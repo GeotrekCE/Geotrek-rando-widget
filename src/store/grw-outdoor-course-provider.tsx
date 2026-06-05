@@ -71,7 +71,6 @@ export class GrwOutdoorCourseProvider {
 
   handleOnlineOutdoorCourse() {
     const requests = [];
-    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.themes ? getThemes(state.api, state.language, this.portals, this.init) : new Response('null'));
     requests.push(!state.outdoorCourseTypes ? getOutdoorCourseTypes(state.api, state.language, this.init) : new Response('null'));
@@ -87,7 +86,6 @@ export class GrwOutdoorCourseProvider {
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(
           async ([
-            cities,
             districts,
             themes,
             outdoorCourseTypes,
@@ -101,9 +99,6 @@ export class GrwOutdoorCourseProvider {
           ]) => {
             state.networkError = false;
 
-            if (cities) {
-              state.cities = cities.results;
-            }
             if (districts) {
               state.districts = districts.results;
             }
@@ -133,6 +128,22 @@ export class GrwOutdoorCourseProvider {
             }
 
             state.currentOutdoorCourse = outdoorCourse;
+
+            let citiesToLoad = [...outdoorCourse.cities];
+            if (state.cities) {
+              const cityIds = state.cities.map(city => city.id);
+              citiesToLoad = citiesToLoad.filter(city => city && !cityIds.includes(city));
+            }
+            if (citiesToLoad.length > 0) {
+              try {
+                const cities = (await getCities(state.api, state.language, this.init, citiesToLoad).then(response => response.json())).results;
+                if (cities) {
+                  state.cities = [...state.cities, ...cities];
+                }
+              } catch (e) {
+                console.error('Failed to load cities', e);
+              }
+            }
           },
         );
     } catch (error) {

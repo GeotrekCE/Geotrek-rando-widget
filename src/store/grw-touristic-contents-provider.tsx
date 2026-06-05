@@ -44,18 +44,14 @@ export class GrwTouristicContentsProvider {
     );
 
     const requests = [];
-    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.touristicContentCategories ? getTouristicContentCategory(state.api, state.language, this.portals, this.init) : new Response('null'));
     try {
       Promise.all([...requests, touristicContentsRequest])
         .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(([cities, districts, touristicContentCategory, touristicContents]) => {
+        .then(async ([districts, touristicContentCategory, touristicContents]) => {
           state.networkError = false;
 
-          if (cities) {
-            state.cities = cities.results;
-          }
           if (districts) {
             state.districts = districts.results;
           }
@@ -64,6 +60,26 @@ export class GrwTouristicContentsProvider {
           }
           state.touristicContents = touristicContents.results;
           state.currentTouristicContents = touristicContents.results;
+
+          if (!state.cities || state.cities.length === 0) {
+            const cityIds = new Set<number>();
+            if (touristicContents && touristicContents.results) {
+              touristicContents.results.forEach(item => {
+                if (item.cities) {
+                  item.cities.forEach(c => cityIds.add(c));
+                }
+              });
+            }
+            if (cityIds.size > 0) {
+              try {
+                const citiesResponse = await getCities(state.api, state.language, this.init, Array.from(cityIds));
+                const citiesData = await citiesResponse.json();
+                state.cities = citiesData.results || [];
+              } catch (e) {
+                console.error('Failed to load cities', e);
+              }
+            }
+          }
         });
     } catch (error) {
       if (!(error.code === DOMException.ABORT_ERR)) {

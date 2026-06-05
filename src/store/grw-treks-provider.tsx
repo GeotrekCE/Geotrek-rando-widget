@@ -107,7 +107,6 @@ export class GrwTreksProvider {
       fetch(`${state.api}trek_route/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,route,pictogram`, this.init),
       fetch(`${state.api}trek_practice/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init),
       fetch(`${state.api}theme/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,label,pictogram`, this.init),
-      getCities(state.api, state.language, this.init),
       getTrekAccessibility(state.api, state.language, this.portals, this.init),
       getLabel(state.api, state.language, this.portals, this.init),
       getDistricts(state.api, state.language, this.init),
@@ -134,19 +133,43 @@ export class GrwTreksProvider {
         });
         return Promise.all(responses.map(response => response.json()));
       })
-      .then(async ([difficulties, routes, practices, themes, cities, accessibility, labels, districts, treks]) => {
+      .then(async ([difficulties, routes, practices, themes, accessibility, labels, districts, treks]) => {
         state.networkError = false;
         state.difficulties = difficulties.results;
         state.routes = routes.results;
         state.practices = practices.results.map(practice => ({ ...practice, selected: false }));
         state.themes = themes.results;
-        state.cities = cities.results;
         state.accessibilities = accessibility.results;
         state.labels = labels.results;
         state.districts = districts.results;
         state.durations = durations;
         state.lengths = lengths;
         state.elevations = elevations;
+
+        const cityIds = new Set<number>();
+        if (treks && treks.results) {
+          treks.results.forEach(trek => {
+            if (trek.departure_city) {
+              cityIds.add(trek.departure_city);
+            }
+            if (trek.cities) {
+              trek.cities.forEach(c => cityIds.add(c));
+            }
+          });
+        }
+
+        let cities = [];
+        if (cityIds.size > 0) {
+          try {
+            const citiesResponse = await getCities(state.api, state.language, this.init, Array.from(cityIds));
+            const citiesData = await citiesResponse.json();
+            cities = citiesData.results || [];
+          } catch (e) {
+            console.error('Failed to load cities', e);
+          }
+        }
+        state.cities = cities;
+
         const treksWithOfflineValue = [];
         const treksWithDeparture = treks.results.filter(trek => trek.departure_geom !== null);
 

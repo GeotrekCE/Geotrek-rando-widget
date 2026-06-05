@@ -34,19 +34,15 @@ export class GrwTouristicEventsProvider {
     let touristicEventsRequest = getTouristicEventsList(state.api, state.language, this.inBbox, this.cities, this.districts, this.structures, this.themes, this.portals, this.init);
 
     const requests = [];
-    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.touristicEventTypes ? getTouristicEventType(state.api, state.language, this.portals, this.init) : new Response('null'));
 
     try {
       Promise.all([...requests, touristicEventsRequest])
         .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(([cities, districts, touristicEventTypes, touristicEvents]) => {
+        .then(async ([districts, touristicEventTypes, touristicEvents]) => {
           state.networkError = false;
 
-          if (cities) {
-            state.cities = cities.results;
-          }
           if (districts) {
             state.districts = districts.results;
           }
@@ -55,6 +51,26 @@ export class GrwTouristicEventsProvider {
           }
           state.touristicEvents = touristicEvents.results;
           state.currentTouristicEvents = touristicEvents.results;
+
+          if (!state.cities || state.cities.length === 0) {
+            const cityIds = new Set<number>();
+            if (touristicEvents && touristicEvents.results) {
+              touristicEvents.results.forEach(item => {
+                if (item.cities) {
+                  item.cities.forEach(c => cityIds.add(c));
+                }
+              });
+            }
+            if (cityIds.size > 0) {
+              try {
+                const citiesResponse = await getCities(state.api, state.language, this.init, Array.from(cityIds));
+                const citiesData = await citiesResponse.json();
+                state.cities = citiesData.results || [];
+              } catch (e) {
+                console.error('Failed to load cities', e);
+              }
+            }
+          }
         });
     } catch (error) {
       if (!(error.code === DOMException.ABORT_ERR)) {

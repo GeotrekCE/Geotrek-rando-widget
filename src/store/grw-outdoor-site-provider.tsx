@@ -98,7 +98,6 @@ export class GrwOutdoorSiteProvider {
 
   handleOnlineOutdoorSite() {
     const requests = [];
-    requests.push(!state.cities ? getCities(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.sources ? getSources(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.themes ? getThemes(state.api, state.language, this.portals, this.init) : new Response('null'));
@@ -124,7 +123,6 @@ export class GrwOutdoorSiteProvider {
         .then(responses => Promise.all(responses.map(response => response.json())))
         .then(
           async ([
-            cities,
             sources,
             districts,
             themes,
@@ -162,9 +160,6 @@ export class GrwOutdoorSiteProvider {
                 outdoorCoursesRequests.push(getOutdoorCourse(state.api, state.language, outdoorCourseId, this.init));
               });
               state.currentRelatedOutdoorCourses = await Promise.all([...outdoorCoursesRequests]).then(responses => Promise.all(responses.map(response => response.json())));
-            }
-            if (cities) {
-              state.cities = cities.results;
             }
             if (sources) {
               state.sources = sources.results;
@@ -213,6 +208,22 @@ export class GrwOutdoorSiteProvider {
             }
 
             state.currentOutdoorSite = outdoorSite;
+
+            let citiesToLoad = [...outdoorSite.cities];
+            if (state.cities) {
+              const cityIds = state.cities.map(city => city.id);
+              citiesToLoad = citiesToLoad.filter(city => city && !cityIds.includes(city));
+            }
+            if (citiesToLoad.length > 0) {
+              try {
+                const cities = (await getCities(state.api, state.language, this.init, citiesToLoad).then(response => response.json())).results;
+                if (cities) {
+                  state.cities = [...state.cities, ...cities];
+                }
+              } catch (e) {
+                console.error('Failed to load cities', e);
+              }
+            }
           },
         );
     } catch (error) {

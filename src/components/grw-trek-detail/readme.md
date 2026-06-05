@@ -40,6 +40,7 @@
 | `deleteErrorConfirm`            |             | `CustomEvent<number>`  |
 | `deleteSuccessConfirm`          |             | `CustomEvent<number>`  |
 | `descriptionIsInViewport`       |             | `CustomEvent<boolean>` |
+| `detailScrolled`                |             | `CustomEvent<void>`    |
 | `downloadConfirm`               |             | `CustomEvent<number>`  |
 | `downloadedErrorConfirm`        |             | `CustomEvent<number>`  |
 | `downloadedSuccessConfirm`      |             | `CustomEvent<number>`  |
@@ -91,6 +92,7 @@
 | `"accessibility-width-title"`                |             |
 | `"advice"`                                   |             |
 | `"advice-container"`                         |             |
+| `"advice-icon"`                              |             |
 | `"advice-title"`                             |             |
 | `"advised-parking"`                          |             |
 | `"advised-parking-title"`                    |             |
@@ -133,6 +135,7 @@
 | `"ensitive-areas-title"`                     |             |
 | `"gear"`                                     |             |
 | `"gear-container"`                           |             |
+| `"gear-icon"`                                |             |
 | `"icon"`                                     |             |
 | `"icon-label"`                               |             |
 | `"icons-labels-container"`                   |             |
