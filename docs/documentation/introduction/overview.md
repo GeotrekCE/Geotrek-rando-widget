@@ -98,7 +98,6 @@ Ces exemples illustrent des intégrations classiques du widget dans des sites to
 * [Jurabsolu](https://www.jurabsolu.fr/decouvrez-territoire-jura/randonnees-forets-vignes-jura/)
 * [Sidobre Vals et Plateaux](https://sidobre-vallees-tourisme.com/type_activite/balades-et-randonnees-sidobre-vallees/)
 * [Haut Jura Saint-Claude](https://www.haut-jura-saint-claude.com/pause-aventure/randonnee-haut-jura/)
-* [La Toscane Occitane](https://www.la-toscane-occitane.com/activites/balades-randonnees/)
 * [Les sentiers Courbet](https://musee-courbet.fr/sentier-site-courbet/les-sentiers-courbet/)
 
 Ces intégrations reposent généralement sur :
