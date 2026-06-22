@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.33.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.32.1...0.33.0) (2026-06-22)
+
+
+### Features
+
+* add support for custom WMS, tile, and GeoJSON layers to grw-map component ([d32e154](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/d32e154a33d534decb3c171139b0ae442453cbc9))
+
+
+### Bug Fixes
+
+* add file existence checks and error handling to compression script ([76ba952](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/76ba9529b5d9a6c8ffaff61742ea7e26d689f030))
+
 ## [0.32.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.32.0...0.32.1) (2026-06-05)
 
 
