@@ -402,6 +402,10 @@
   box-shadow: var(--elevation-2);
 }
 
+.leaflet-popup-tip {
+  background-color: var(--color-background);
+}
+
 .leaflet-popup-content {
   width: 221px;
   margin: 0;

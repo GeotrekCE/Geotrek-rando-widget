@@ -22,6 +22,17 @@
 | `colorSensitiveArea`         | `color-sensitive-area`          |             | `string`  | `'#4974a5'` |
 | `colorTrekLine`              | `color-trek-line`               |             | `string`  | `'#6b0030'` |
 | `commonMarkerSize`           | `common-marker-size`            |             | `number`  | `48`        |
+| `customGeojsonColor`         | `custom-geojson-color`          |             | `string`  | `undefined` |
+| `customGeojsonName`          | `custom-geojson-name`           |             | `string`  | `undefined` |
+| `customGeojsonUrl`           | `custom-geojson-url`            |             | `string`  | `undefined` |
+| `customGeojsonWeight`        | `custom-geojson-weight`         |             | `string`  | `undefined` |
+| `customTileAttribution`      | `custom-tile-attribution`       |             | `string`  | `undefined` |
+| `customTileName`             | `custom-tile-name`              |             | `string`  | `undefined` |
+| `customTileUrl`              | `custom-tile-url`               |             | `string`  | `undefined` |
+| `customWmsAttribution`       | `custom-wms-attribution`        |             | `string`  | `undefined` |
+| `customWmsLayers`            | `custom-wms-layers`             |             | `string`  | `undefined` |
+| `customWmsName`              | `custom-wms-name`               |             | `string`  | `undefined` |
+| `customWmsUrl`               | `custom-wms-url`                |             | `string`  | `undefined` |
 | `departureArrivalMarkerSize` | `departure-arrival-marker-size` |             | `number`  | `14`        |
 | `elevationDefaultState`      | `elevation-default-state`       |             | `string`  | `'visible'` |
 | `elevationHeight`            | `elevation-height`              |             | `number`  | `280`       |
