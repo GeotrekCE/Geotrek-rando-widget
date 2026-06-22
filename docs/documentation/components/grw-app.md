@@ -87,6 +87,24 @@ Ce tableau liste l'ensemble des paramètres inhérents aux fonds de plan (fond d
 | `tilesMaxZoomOffline`       | `tiles-max-zoom-offline`        | Niveau de zoom maximum pour lequel les tuiles de fond de plan sont téléchargées en mode hors ligne sur la carte d'un itinéraire | `number` | `16`        |
 | `tilesMinZoomOffline`       | `tiles-min-zoom-offline`        | Niveau de zoom minimal pour lequel les tuiles de fond de plan sont téléchargées en mode hors ligne sur la carte d'un itinéraire | `number` | `12`        |
 
+### Éléments des couches cartographiques externes (GeoJSON, WMS & Tuiles/WMTS)
+
+Ce tableau liste les paramètres permettant d'ajouter des couches d'informations géographiques externes (fichiers GeoJSON, flux WMS ou couches de tuiles XYZ/WMTS) s'affichant sur la carte détaillée de l'itinéraire.
+
+| Property             | Attribute              | Description                                                                                                                                           | Type     | Default     |
+| -------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ----------- |
+| `customGeojsonUrl`   | `custom-geojson-url`   | URL(s) du ou des fichiers GeoJSON à charger (séparés par des virgules pour charger plusieurs couches)                                                  | `string` | `undefined` |
+| `customGeojsonName`  | `custom-geojson-name`  | Nom(s) d'affichage dans le sélecteur de couches pour chaque GeoJSON (séparés par des virgules)                                                         | `string` | `undefined` |
+| `customGeojsonColor` | `custom-geojson-color` | Couleur(s) par défaut (au format hexadécimal) à appliquer aux lignes et polygones si non spécifiée dans le fichier GeoJSON (séparés par des virgules) | `string` | `'#3388ff'` |
+| `customGeojsonWeight`| `custom-geojson-weight`| Épaisseur(s) par défaut (en pixels) à appliquer aux lignes et polygones si non spécifiée dans le fichier GeoJSON (séparés par des virgules)           | `string` | `3`         |
+| `customWmsUrl`       | `custom-wms-url`       | URL(s) du ou des serveurs WMS à interroger (séparés par des virgules)                                                                                 | `string` | `undefined` |
+| `customWmsLayers`    | `custom-wms-layers`    | Nom(s) des couches WMS à charger depuis le serveur (séparés par des virgules)                                                                         | `string` | `undefined` |
+| `customWmsName`      | `custom-wms-name`      | Nom(s) d'affichage dans le sélecteur de couches pour chaque couche WMS (séparés par des virgules)                                                     | `string` | `undefined` |
+| `customWmsAttribution` | `custom-wms-attribution` | Attribution(s) de droits d'auteur / source pour chaque couche WMS (séparées par des virgules)                                                         | `string` | `undefined` |
+| `customTileUrl`      | `custom-tile-url`      | URL(s) de template du ou des serveurs de tuiles XYZ/WMTS à interroger (séparées par des virgules)                                                     | `string` | `undefined` |
+| `customTileName`     | `custom-tile-name`     | Nom(s) d'affichage dans le sélecteur de couches pour chaque couche de tuiles XYZ/WMTS (séparés par des virgules)                                      | `string` | `undefined` |
+| `customTileAttribution` | `custom-tile-attribution` | Attribution(s) de droits d'auteur / source pour chaque couche de tuiles XYZ/WMTS (séparées par des virgules)                                        | `string` | `undefined` |
+
 ### Éléments de personnalisation de l'apparence
 
 Ce tableau liste l'ensemble des paramètres permettant de personnaliser un thème (couleurs, police). Les paramètres reprennent les variables de [material ui](https://m3.material.io/styles/color/roles).

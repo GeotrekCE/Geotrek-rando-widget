@@ -104,6 +104,17 @@ export namespace Components {
           * @default 48
          */
         "commonMarkerSize": number;
+        "customGeojsonColor": string;
+        "customGeojsonName": string;
+        "customGeojsonUrl": string;
+        "customGeojsonWeight": string;
+        "customTileAttribution": string;
+        "customTileName": string;
+        "customTileUrl": string;
+        "customWmsAttribution": string;
+        "customWmsLayers": string;
+        "customWmsName": string;
+        "customWmsUrl": string;
         /**
           * @default 14
          */
@@ -367,6 +378,17 @@ export namespace Components {
           * @default 48
          */
         "commonMarkerSize": number;
+        "customGeojsonColor": string;
+        "customGeojsonName": string;
+        "customGeojsonUrl": string;
+        "customGeojsonWeight": string;
+        "customTileAttribution": string;
+        "customTileName": string;
+        "customTileUrl": string;
+        "customWmsAttribution": string;
+        "customWmsLayers": string;
+        "customWmsName": string;
+        "customWmsUrl": string;
         /**
           * @default 14
          */
@@ -1841,6 +1863,17 @@ declare namespace LocalJSX {
           * @default 48
          */
         "commonMarkerSize"?: number;
+        "customGeojsonColor"?: string;
+        "customGeojsonName"?: string;
+        "customGeojsonUrl"?: string;
+        "customGeojsonWeight"?: string;
+        "customTileAttribution"?: string;
+        "customTileName"?: string;
+        "customTileUrl"?: string;
+        "customWmsAttribution"?: string;
+        "customWmsLayers"?: string;
+        "customWmsName"?: string;
+        "customWmsUrl"?: string;
         /**
           * @default 14
          */
@@ -2107,6 +2140,17 @@ declare namespace LocalJSX {
           * @default 48
          */
         "commonMarkerSize"?: number;
+        "customGeojsonColor"?: string;
+        "customGeojsonName"?: string;
+        "customGeojsonUrl"?: string;
+        "customGeojsonWeight"?: string;
+        "customTileAttribution"?: string;
+        "customTileName"?: string;
+        "customTileUrl"?: string;
+        "customWmsAttribution"?: string;
+        "customWmsLayers"?: string;
+        "customWmsName"?: string;
+        "customWmsUrl"?: string;
         /**
           * @default 14
          */
@@ -3018,6 +3062,17 @@ declare namespace LocalJSX {
         "nameLayer": string;
         "urlLayer": string;
         "attributionLayer": string;
+        "customGeojsonUrl": string;
+        "customGeojsonName": string;
+        "customGeojsonColor": string;
+        "customGeojsonWeight": string;
+        "customWmsUrl": string;
+        "customWmsLayers": string;
+        "customWmsName": string;
+        "customWmsAttribution": string;
+        "customTileUrl": string;
+        "customTileName": string;
+        "customTileAttribution": string;
         "weather": boolean;
         "emergencyNumber": number;
         "fontFamily": string;
@@ -3112,6 +3167,17 @@ declare namespace LocalJSX {
         "nameLayer": string;
         "urlLayer": string;
         "attributionLayer": string;
+        "customGeojsonUrl": string;
+        "customGeojsonName": string;
+        "customGeojsonColor": string;
+        "customGeojsonWeight": string;
+        "customWmsUrl": string;
+        "customWmsLayers": string;
+        "customWmsName": string;
+        "customWmsAttribution": string;
+        "customTileUrl": string;
+        "customTileName": string;
+        "customTileAttribution": string;
         "fontFamily": string;
         "colorPrimaryApp": string;
         "colorOnSurface": string;

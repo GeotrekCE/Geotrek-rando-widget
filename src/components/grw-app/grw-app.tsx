@@ -48,6 +48,17 @@ export class GrwApp {
   @Prop() nameLayer: string;
   @Prop() urlLayer: string;
   @Prop() attributionLayer: string;
+  @Prop() customGeojsonUrl: string;
+  @Prop() customGeojsonName: string;
+  @Prop() customGeojsonColor: string;
+  @Prop() customGeojsonWeight: string;
+  @Prop() customWmsUrl: string;
+  @Prop() customWmsLayers: string;
+  @Prop() customWmsName: string;
+  @Prop() customWmsAttribution: string;
+  @Prop() customTileUrl: string;
+  @Prop() customTileName: string;
+  @Prop() customTileAttribution: string;
   @Prop() weather = false;
   @Prop() emergencyNumber: number;
 
@@ -895,6 +906,17 @@ export class GrwApp {
                   name-layer={this.nameLayer}
                   url-layer={this.urlLayer}
                   attribution-layer={this.attributionLayer}
+                  custom-geojson-url={this.customGeojsonUrl}
+                  custom-geojson-name={this.customGeojsonName}
+                  custom-geojson-color={this.customGeojsonColor}
+                  custom-geojson-weight={this.customGeojsonWeight}
+                  custom-wms-url={this.customWmsUrl}
+                  custom-wms-layers={this.customWmsLayers}
+                  custom-wms-name={this.customWmsName}
+                  custom-wms-attribution={this.customWmsAttribution}
+                  custom-tile-url={this.customTileUrl}
+                  custom-tile-name={this.customTileName}
+                  custom-tile-attribution={this.customTileAttribution}
                   font-family={this.fontFamily}
                   color-primary-app={this.colorPrimaryApp}
                   color-on-surface={this.colorOnSurface}

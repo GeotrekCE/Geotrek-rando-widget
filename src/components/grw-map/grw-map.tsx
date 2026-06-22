@@ -39,6 +39,17 @@ export class GrwMap {
   @Prop() nameLayer: string;
   @Prop() urlLayer: string;
   @Prop() attributionLayer: string;
+  @Prop() customGeojsonUrl: string;
+  @Prop() customGeojsonName: string;
+  @Prop() customGeojsonColor: string;
+  @Prop() customGeojsonWeight: string;
+  @Prop() customWmsUrl: string;
+  @Prop() customWmsLayers: string;
+  @Prop() customWmsName: string;
+  @Prop() customWmsAttribution: string;
+  @Prop() customTileUrl: string;
+  @Prop() customTileName: string;
+  @Prop() customTileAttribution: string;
 
   @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
@@ -114,6 +125,7 @@ export class GrwMap {
     [key: number]: boolean;
   } = {};
   tileLayer: { key: string; value: TileLayer }[] = [];
+  customLayers: { [name: string]: L.Layer } = {};
   trekPopupIsOpen: boolean;
   stepPopupIsOpen: boolean;
   touristicContentPopupIsOpen: boolean;
@@ -316,6 +328,15 @@ export class GrwMap {
     this.removeSelectedOutdoorSite();
   }
 
+  componentWillLoad() {
+    if (!state.language) {
+      state.language = 'fr';
+    }
+    if (!state.languages) {
+      state.languages = ['fr'];
+    }
+  }
+
   componentDidLoad() {
     this.map = L.map(this.mapRef, { zoom: 4, center: [47, 2], zoomControl: false });
 
@@ -454,6 +475,7 @@ export class GrwMap {
         this.removeTouristicEvent();
         this.addTreks();
       }
+      this.updateCustomLayersVisibility();
     });
 
     onChange('currentOutdoorSite', () => {
@@ -542,6 +564,206 @@ export class GrwMap {
         this.addTouristicEvents(true);
       }
     });
+
+    onChange('mode', () => {
+      this.updateCustomLayersVisibility();
+    });
+
+    this.addCustomLayers();
+  }
+
+  async addCustomLayers() {
+    // 1. Process custom WMS layers
+    if (this.customWmsUrl) {
+      const wmsUrls = this.customWmsUrl.split(',');
+      const wmsLayers = this.customWmsLayers ? this.customWmsLayers.split(',') : [];
+      const wmsNames = this.customWmsName ? this.customWmsName.split(',') : [];
+      const wmsAttributions = this.customWmsAttribution ? this.customWmsAttribution.split(',') : [];
+
+      wmsUrls.forEach((url, index) => {
+        const layerName = wmsLayers[index] || '';
+        const displayName = wmsNames[index] || `WMS Layer ${index + 1}`;
+        const attribution = wmsAttributions[index] || '';
+        try {
+          const wmsLayer = L.tileLayer.wms(url.trim(), {
+            layers: layerName.trim(),
+            format: 'image/png',
+            transparent: true,
+            maxZoom: this.maxZoom,
+            version: '1.3.0',
+            attribution: attribution.trim(),
+          });
+          this.customLayers[displayName.trim()] = wmsLayer;
+        } catch (e) {
+          console.error('Error adding WMS layer:', e);
+        }
+      });
+    }
+    // 1.5. Process custom Tile layers (XYZ / WMTS)
+    if (this.customTileUrl) {
+      const tileUrls = this.customTileUrl.split(',');
+      const tileNames = this.customTileName ? this.customTileName.split(',') : [];
+      const tileAttributions = this.customTileAttribution ? this.customTileAttribution.split(',') : [];
+
+      tileUrls.forEach((url, index) => {
+        const displayName = tileNames[index] || `Tile Layer ${index + 1}`;
+        const attribution = tileAttributions[index] || '';
+        try {
+          const tileLayer = L.tileLayer(url.trim(), {
+            maxZoom: this.maxZoom,
+            attribution: attribution.trim(),
+          });
+          this.customLayers[displayName.trim()] = tileLayer;
+        } catch (e) {
+          console.error('Error adding custom tile layer:', e);
+        }
+      });
+    }
+
+    // 2. Process custom GeoJSON layers
+    if (this.customGeojsonUrl) {
+      const geojsonUrls = this.customGeojsonUrl.split(',');
+      const geojsonNames = this.customGeojsonName ? this.customGeojsonName.split(',') : [];
+      const geojsonColors = this.customGeojsonColor ? this.customGeojsonColor.split(',') : [];
+      const geojsonWeights = this.customGeojsonWeight ? this.customGeojsonWeight.split(',') : [];
+
+      for (let index = 0; index < geojsonUrls.length; index++) {
+        const url = geojsonUrls[index].trim();
+        const displayName = geojsonNames[index] || `GeoJSON Layer ${index + 1}`;
+        const fallbackColor = geojsonColors[index] || '#3388ff';
+        const fallbackWeight = geojsonWeights[index] ? parseInt(geojsonWeights[index], 10) : 3;
+
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const geojsonData = await response.json();
+
+          const geojsonLayer = L.geoJSON(geojsonData, {
+            style: (feature) => {
+              const props = feature?.properties || {};
+              const color = props.stroke || props.color || fallbackColor;
+              const weight = props['stroke-width'] || props.weight || fallbackWeight;
+              const opacity = props['stroke-opacity'] || props.opacity || 1.0;
+              const fillColor = props.fill || props.fillColor || color;
+              const fillOpacity = props['fill-opacity'] || props.fillOpacity || 0.2;
+
+              return {
+                color,
+                weight,
+                opacity,
+                fillColor,
+                fillOpacity,
+              };
+            },
+            pointToLayer: (feature, latlng) => {
+              const props = feature?.properties || {};
+              const iconProp = props.icon || props['marker-symbol'];
+              const nameProp = props.name || props.title || '';
+              const descProp = props.description || props.desc || '';
+
+              let marker;
+              if (iconProp) {
+                const isUrl = iconProp.startsWith('http') || iconProp.startsWith('/') || iconProp.startsWith('assets/');
+                const size = this.commonMarkerSize;
+                if (isUrl) {
+                  const customIcon = L.icon({
+                    iconUrl: iconProp,
+                    iconSize: [size, size],
+                    iconAnchor: [size / 2, size],
+                  });
+                  marker = L.marker(latlng, { icon: customIcon });
+                } else {
+                  const bgColor = props['marker-color'] || props.backgroundColor || 'transparent';
+                  const borderColor = props['marker-stroke'] || props.borderColor || (bgColor !== 'transparent' ? '#ffffff' : 'transparent');
+                  const borderWeight = props['marker-stroke-width'] || (bgColor !== 'transparent' ? 2 : 0);
+                  const borderRadius = props['marker-radius'] || '50%';
+                  const customDivIcon = L.divIcon({
+                    html: `<div style="font-size: ${size * 0.6}px; display: flex; align-items: center; justify-content: center; width: ${size}px; height: ${size}px; background-color: ${bgColor}; border: ${borderWeight}px solid ${borderColor}; border-radius: ${borderRadius}; box-sizing: border-box;">${iconProp}</div>`,
+                    className: '',
+                    iconSize: [size, size],
+                    iconAnchor: [size / 2, size],
+                  });
+                  marker = L.marker(latlng, { icon: customDivIcon });
+                }
+              } else {
+                const color = props.stroke || props.color || fallbackColor;
+                marker = L.circleMarker(latlng, {
+                  radius: 8,
+                  fillColor: color,
+                  color: '#fff',
+                  weight: 2,
+                  opacity: 1,
+                  fillOpacity: 0.8,
+                });
+              }
+
+              if (nameProp || descProp) {
+                let popupContent = `<div class="trek-departure-popup" style="font-family: var(--font-family, sans-serif);">`;
+                if (props.image) {
+                  const imgUrl = props.image;
+                  popupContent += `<img src="${imgUrl}" style="width: 100%; height: auto; border-top-left-radius: var(--border-radius, 8px); border-top-right-radius: var(--border-radius, 8px); max-height: 120px; object-fit: cover;" />`;
+                }
+                if (nameProp) {
+                  popupContent += `<div class="trek-name" style="padding: 12px 12px 4px 12px; margin: 0; color: var(--color-primary-app);">${nameProp}</div>`;
+                }
+                if (descProp) {
+                  popupContent += `<div style="font-size: 12px; color: var(--color-on-surface-variant, #49454e); padding: ${nameProp ? '0px 12px 12px 12px' : '12px'}; line-height: 1.4; word-break: break-word;">${descProp}</div>`;
+                }
+                popupContent += `</div>`;
+                marker.bindPopup(popupContent, { closeButton: false });
+              }
+              return marker;
+            }
+          });
+
+          this.customLayers[displayName.trim()] = geojsonLayer;
+        } catch (e) {
+          console.error(`Error loading GeoJSON from ${url}:`, e);
+        }
+      }
+    }
+
+    this.updateCustomLayersVisibility();
+  }
+
+  updateCustomLayersVisibility() {
+    const shouldShow = !this.grwApp || (state.mode === 'treks' && !!state.currentTrek);
+
+    if (shouldShow && Object.keys(this.customLayers).length > 0 && !this.layersControl) {
+      const baseLayers = {};
+      this.tileLayer.forEach(tl => {
+        baseLayers[tl.key] = tl.value;
+      });
+      this.layersControl = L.control.layers(baseLayers, {}, { collapsed: true }).addTo(this.map);
+    }
+
+    Object.keys(this.customLayers).forEach(name => {
+      const layer = this.customLayers[name];
+      if (shouldShow) {
+        if (!this.map.hasLayer(layer)) {
+          layer.addTo(this.map);
+        }
+        if (this.layersControl) {
+          const hasLayer = (this.layersControl as any)._layers.some(l => l.layer === layer);
+          if (!hasLayer) {
+            this.layersControl.addOverlay(layer, name);
+          }
+        }
+      } else {
+        if (this.map.hasLayer(layer)) {
+          this.map.removeLayer(layer);
+        }
+        if (this.layersControl) {
+          this.layersControl.removeLayer(layer);
+        }
+      }
+    });
+
+    if (shouldShow && Object.keys(this.customLayers).length > 0) {
+      this.handleLayersControlEvent();
+    }
   }
 
   handleLayerVisibility(visible: boolean, layer: L.GeoJSON, loading = false) {
@@ -1297,7 +1519,7 @@ export class GrwMap {
           userLayerState.onchange = event => {
             this.userLayersState[userLayerState.layerId] = (event.target as any).checked;
             const overlay = (this.layersControl as any)._layers.find(layer => layer.layer._leaflet_id === userLayerState.layerId);
-            if (this.userLayersState[userLayerState.layerId] && Object.keys(overlay.layer._layers).length === 0) {
+            if (this.userLayersState[userLayerState.layerId] && overlay.layer._layers && Object.keys(overlay.layer._layers).length === 0) {
               this.layerDataIsLoading = true;
               forceUpdate(this.hostElement);
             }
