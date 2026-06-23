@@ -110,7 +110,16 @@ Vous pouvez également ajouter des fonds de plan ou des overlays sous forme de t
 
 Chaque serveur de tuiles requiert l'URL de template (`custom-tile-url`), un nom d'affichage (`custom-tile-name`), et optionnellement une attribution (`custom-tile-attribution`).
 
-### 4. Exemple de configuration multi-couches (GeoJSON, WMS et Tuiles/WMTS)
+### 4. Rafraîchissement périodique et automatique
+
+Il est possible de configurer un intervalle de rafraîchissement périodique global (exprimé en minutes) pour l'ensemble des couches externes configurées (GeoJSON, WMS, Tuiles) à l'aide de l'attribut `custom-layers-refresh-interval` (ex: `custom-layers-refresh-interval="5"` pour un rafraîchissement toutes les 5 minutes).
+
+Lorsqu'un intervalle est défini :
+- **Optimisation des performances** : Les couches qui ne sont pas actuellement affichées/actives sur la carte ne font l'objet d'aucun appel réseau inutile.
+- **Mise à jour immédiate à l'activation** : Dès que l'utilisateur coche ou active une couche dans le sélecteur, celle-ci est instantanément rafraîchie pour garantir que les données soient immédiatement à jour.
+- **Mise à jour périodique** : Les couches actives sont régulièrement rechargées en arrière-plan à la fréquence indiquée.
+
+### 5. Exemple de configuration multi-couches (GeoJSON, WMS et Tuiles/WMTS)
 
 Vous pouvez charger plusieurs couches de chaque type en séparant les valeurs par des virgules dans les attributs du widget :
 
@@ -129,5 +138,6 @@ Vous pouvez charger plusieurs couches de chaque type en séparant les valeurs pa
   custom-tile-url="https://{s}.tile.mon-serveur.fr/{z}/{x}/{y}.png,https://mon-serveur-wmts.fr/wmts?LAYER=ORTHOIMAGERY&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image/jpeg&SERVICE=WMTS&REQUEST=GetTile"
   custom-tile-name="OpenStreetMap,Orthophotos IGN"
   custom-tile-attribution="© OpenStreetMap,© IGN"
+  custom-layers-refresh-interval="5"
 ></grw-app>
 ```

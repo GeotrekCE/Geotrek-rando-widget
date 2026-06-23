@@ -50,6 +50,7 @@ export class GrwMap {
   @Prop() customTileUrl: string;
   @Prop() customTileName: string;
   @Prop() customTileAttribution: string;
+  @Prop() customLayersRefreshInterval = 0;
 
   @Prop() fontFamily = 'Roboto';
   @Prop() colorPrimaryApp = '#6b0030';
@@ -126,6 +127,7 @@ export class GrwMap {
   } = {};
   tileLayer: { key: string; value: TileLayer }[] = [];
   customLayers: { [name: string]: L.Layer } = {};
+  refreshIntervalId: any;
   trekPopupIsOpen: boolean;
   stepPopupIsOpen: boolean;
   touristicContentPopupIsOpen: boolean;
@@ -339,6 +341,14 @@ export class GrwMap {
 
   componentDidLoad() {
     this.map = L.map(this.mapRef, { zoom: 4, center: [47, 2], zoomControl: false });
+
+    this.map.on('overlayadd', (event: any) => {
+      const layer = event.layer;
+      const isCustom = Object.values(this.customLayers).includes(layer);
+      if (isCustom) {
+        this.refreshSingleLayer(layer);
+      }
+    });
 
     const nameLayers = this.nameLayer ? this.nameLayer.split(',') : [];
 
@@ -570,6 +580,18 @@ export class GrwMap {
     });
 
     this.addCustomLayers();
+
+    if (this.customLayersRefreshInterval > 0) {
+      this.refreshIntervalId = window.setInterval(() => {
+        this.refreshCustomLayers();
+      }, this.customLayersRefreshInterval * 60 * 1000);
+    }
+  }
+
+  disconnectedCallback() {
+    if (this.refreshIntervalId) {
+      window.clearInterval(this.refreshIntervalId);
+    }
   }
 
   async addCustomLayers() {
@@ -613,6 +635,7 @@ export class GrwMap {
             maxZoom: this.maxZoom,
             attribution: attribution.trim(),
           });
+          (tileLayer as any)._originalUrl = url.trim();
           this.customLayers[displayName.trim()] = tileLayer;
         } catch (e) {
           console.error('Error adding custom tile layer:', e);
@@ -718,6 +741,7 @@ export class GrwMap {
             }
           });
 
+          (geojsonLayer as any)._customUrl = url;
           this.customLayers[displayName.trim()] = geojsonLayer;
         } catch (e) {
           console.error(`Error loading GeoJSON from ${url}:`, e);
@@ -726,6 +750,43 @@ export class GrwMap {
     }
 
     this.updateCustomLayersVisibility();
+  }
+
+  refreshCustomLayers() {
+    Object.keys(this.customLayers).forEach(name => {
+      const layer = this.customLayers[name];
+      if (this.map.hasLayer(layer)) {
+        this.refreshSingleLayer(layer);
+      }
+    });
+  }
+
+  async refreshSingleLayer(layer: L.Layer) {
+    if (layer instanceof L.TileLayer.WMS) {
+      layer.setParams({ _t: Date.now() } as any);
+    } else if (layer instanceof L.TileLayer) {
+      const originalUrl = (layer as any)._originalUrl;
+      if (originalUrl) {
+        const separator = originalUrl.includes('?') ? '&' : '?';
+        layer.setUrl(`${originalUrl}${separator}_t=${Date.now()}`);
+      } else {
+        layer.redraw();
+      }
+    } else if (layer instanceof L.GeoJSON) {
+      const url = (layer as any)._customUrl;
+      if (url) {
+        try {
+          const response = await fetch(url, { cache: 'no-store' });
+          if (response.ok) {
+            const newData = await response.json();
+            layer.clearLayers();
+            layer.addData(newData);
+          }
+        } catch (e) {
+          console.error(`Error refreshing GeoJSON layer:`, e);
+        }
+      }
+    }
   }
 
   updateCustomLayersVisibility() {

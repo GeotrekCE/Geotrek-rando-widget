@@ -59,6 +59,7 @@ export class GrwApp {
   @Prop() customTileUrl: string;
   @Prop() customTileName: string;
   @Prop() customTileAttribution: string;
+  @Prop() customLayersRefreshInterval = 0;
   @Prop() weather = false;
   @Prop() emergencyNumber: number;
 
@@ -917,6 +918,7 @@ export class GrwApp {
                   custom-tile-url={this.customTileUrl}
                   custom-tile-name={this.customTileName}
                   custom-tile-attribution={this.customTileAttribution}
+                  custom-layers-refresh-interval={this.customLayersRefreshInterval}
                   font-family={this.fontFamily}
                   color-primary-app={this.colorPrimaryApp}
                   color-on-surface={this.colorOnSurface}

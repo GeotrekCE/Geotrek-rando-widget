@@ -108,6 +108,10 @@ export namespace Components {
         "customGeojsonName": string;
         "customGeojsonUrl": string;
         "customGeojsonWeight": string;
+        /**
+          * @default 0
+         */
+        "customLayersRefreshInterval": number;
         "customTileAttribution": string;
         "customTileName": string;
         "customTileUrl": string;
@@ -382,6 +386,10 @@ export namespace Components {
         "customGeojsonName": string;
         "customGeojsonUrl": string;
         "customGeojsonWeight": string;
+        /**
+          * @default 0
+         */
+        "customLayersRefreshInterval": number;
         "customTileAttribution": string;
         "customTileName": string;
         "customTileUrl": string;
@@ -1867,6 +1875,10 @@ declare namespace LocalJSX {
         "customGeojsonName"?: string;
         "customGeojsonUrl"?: string;
         "customGeojsonWeight"?: string;
+        /**
+          * @default 0
+         */
+        "customLayersRefreshInterval"?: number;
         "customTileAttribution"?: string;
         "customTileName"?: string;
         "customTileUrl"?: string;
@@ -2144,6 +2156,10 @@ declare namespace LocalJSX {
         "customGeojsonName"?: string;
         "customGeojsonUrl"?: string;
         "customGeojsonWeight"?: string;
+        /**
+          * @default 0
+         */
+        "customLayersRefreshInterval"?: number;
         "customTileAttribution"?: string;
         "customTileName"?: string;
         "customTileUrl"?: string;
@@ -3073,6 +3089,7 @@ declare namespace LocalJSX {
         "customTileUrl": string;
         "customTileName": string;
         "customTileAttribution": string;
+        "customLayersRefreshInterval": number;
         "weather": boolean;
         "emergencyNumber": number;
         "fontFamily": string;
@@ -3178,6 +3195,7 @@ declare namespace LocalJSX {
         "customTileUrl": string;
         "customTileName": string;
         "customTileAttribution": string;
+        "customLayersRefreshInterval": number;
         "fontFamily": string;
         "colorPrimaryApp": string;
         "colorOnSurface": string;

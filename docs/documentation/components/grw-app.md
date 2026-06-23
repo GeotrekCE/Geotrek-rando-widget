@@ -104,6 +104,7 @@ Ce tableau liste les paramètres permettant d'ajouter des couches d'informations
 | `customTileUrl`      | `custom-tile-url`      | URL(s) de template du ou des serveurs de tuiles XYZ/WMTS à interroger (séparées par des virgules)                                                     | `string` | `undefined` |
 | `customTileName`     | `custom-tile-name`     | Nom(s) d'affichage dans le sélecteur de couches pour chaque couche de tuiles XYZ/WMTS (séparés par des virgules)                                      | `string` | `undefined` |
 | `customTileAttribution` | `custom-tile-attribution` | Attribution(s) de droits d'auteur / source pour chaque couche de tuiles XYZ/WMTS (séparées par des virgules)                                        | `string` | `undefined` |
+| `customLayersRefreshInterval` | `custom-layers-refresh-interval` | Intervalle de rafraîchissement automatique des couches externes personnalisées (en minutes). `0` ou non renseigné désactive le rafraîchissement. | `number` | `0` |
 
 ### Éléments de personnalisation de l'apparence
 
