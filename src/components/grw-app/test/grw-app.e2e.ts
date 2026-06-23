@@ -9,13 +9,26 @@ const __dirname = dirname(__filename);
 
 test.describe('grw-app', () => {
   test.beforeEach(async ({ page }, testInfo) => {
+    await page.addInitScript(() => {
+      window.indexedDB.deleteDatabase('grw');
+    });
+
+    try {
+      const session = await page.context().newCDPSession(page);
+      await session.send('Network.setCacheDisabled', { cacheDisabled: true });
+    } catch (e) {
+      console.warn('Could not disable cache via CDP:', e);
+    }
+
     const harPath = join(__dirname, '../../../../hars', `grw-app-${testInfo.title.replace(/\s+/g, '-')}.har`);
 
     await page.routeFromHAR(harPath, {
       url: '**/api/v2/**',
       update: process.env.UPDATE_HAR === 'true',
-      updateContent: "embed"
+      updateContent: "embed",
+      notFound: 'abort'
     });
+
     await page.goto('/components/grw-app/test/grw-app.e2e.html');
   });
 
@@ -70,6 +83,8 @@ test.describe('grw-app', () => {
     await expect(page.locator('grw-loader')).toBeHidden();
     await page.getByText('Etape GR09 Étang Rond-Refuge').click();
     await expect(page.getByText('Etape GR09 Étang Rond-Refuge').first()).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('grw-loader')).toBeHidden();
+    await page.waitForLoadState('networkidle');
   });
 
   test('touristic content', async ({ page }) => {
@@ -78,6 +93,8 @@ test.describe('grw-app', () => {
     await expect(page.locator('grw-loader')).toBeHidden();
     await page.locator('grw-touristic-content-card').filter({ hasText: 'Bureau des' }).getByRole('button').click();
     await expect(page.getByText("Bureau des guides d'Ariège")).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('grw-loader')).toBeHidden();
+    await page.waitForLoadState('networkidle');
   });
 
   test('touristic event', async ({ page }) => {
@@ -88,5 +105,7 @@ test.describe('grw-app', () => {
     await expect(page.locator('grw-loader')).toBeHidden();
     await page.getByText('De Bethmale au col de la Core').click();
     await expect(page.getByText("De Bethmale au col de la Core").first()).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('grw-loader')).toBeHidden();
+    await page.waitForLoadState('networkidle');
   });
 });

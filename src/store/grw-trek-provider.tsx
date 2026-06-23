@@ -1,4 +1,4 @@
-import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { handleOfflineProperty, getDataInStore } from 'services/grw-db.service';
 import { getTouristicContentCategory, getTouristicContentsNearTrek, getTouristicContentsNearTrekCount } from 'services/touristic-contents.service';
 import { getTouristicEventsNearTrek, getTouristicEventsNearTrekCount, getTouristicEventType } from 'services/touristic-events.service';
@@ -15,7 +15,7 @@ import {
 } from 'services/treks.service';
 import state from 'store/store';
 import { Trek } from 'types/types';
-import { imagesRegExp, setFilesFromStore } from 'utils/utils';
+import { getCacheMode, imagesRegExp, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-trek-provider',
@@ -40,7 +40,7 @@ export class GrwTrekProvider {
 
   controller = new AbortController();
   signal = this.controller.signal;
-  init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
+  init: RequestInit = { cache: getCacheMode(), signal: this.signal };
 
   connectedCallback() {
     state.poisData = 0;
@@ -244,7 +244,7 @@ export class GrwTrekProvider {
                 state.parentTrek = trek;
                 steps.push(...trek.children);
               } else {
-                const parentTrek = await fetch(`${state.api}trek/${state.parentTrekId}/?language=${state.language}&published=true&fields=name,children`).then(response =>
+                const parentTrek = await fetch(`${state.api}trek/${state.parentTrekId}/?language=${state.language}&published=true&fields=name,children`, this.init).then(response =>
                   response.json(),
                 );
                 state.parentTrek = parentTrek;

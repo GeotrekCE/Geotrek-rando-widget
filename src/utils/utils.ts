@@ -1,3 +1,4 @@
+import { Build } from '@stencil/core';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import state from 'store/store';
@@ -461,4 +462,11 @@ export async function getAllPaginatedResults(url: string, init?: RequestInit): P
   );
 
   return modifiedResponse;
+}
+
+export function getCacheMode(): RequestCache {
+  if (typeof window !== 'undefined' && window.location.href.includes('e2e.html')) {
+    return 'no-store';
+  }
+  return Build.isDev ? 'force-cache' : 'default';
 }

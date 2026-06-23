@@ -1,9 +1,9 @@
-import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { getAllDataInStore } from 'services/grw-db.service';
 import { getCities, getDistricts, getLabel, getTrekAccessibility, getTreksList, trekIsAvailableOffline } from 'services/treks.service';
 import state from 'store/store';
 import { Treks } from 'types/types';
-import { durations, elevations, imagesRegExp, lengths, setFilesFromStore } from 'utils/utils';
+import { durations, elevations, getCacheMode, imagesRegExp, lengths, setFilesFromStore } from 'utils/utils';
 
 @Component({
   tag: 'grw-treks-provider',
@@ -25,7 +25,7 @@ export class GrwTreksProvider {
 
   controller = new AbortController();
   signal = this.controller.signal;
-  init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
+  init: RequestInit = { cache: getCacheMode(), signal: this.signal };
 
   connectedCallback() {
     if (!state.api) {
