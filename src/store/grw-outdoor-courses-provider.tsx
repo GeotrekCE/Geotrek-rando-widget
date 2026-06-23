@@ -1,9 +1,10 @@
-import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { getAllDataInStore, handleOfflineProperty } from 'services/grw-db.service';
 import { getOutdoorCourses } from 'services/outdoor-courses.service';
 import { getCities, getDistricts, getThemes } from 'services/treks.service';
 import state from 'store/store';
 import { OutdoorCourses } from 'types/types';
+import { getCacheMode } from 'utils/utils';
 
 @Component({
   tag: 'grw-outdoor-courses-provider',
@@ -21,7 +22,7 @@ export class GrwOutdoorCoursesProvider {
 
   controller = new AbortController();
   signal = this.controller.signal;
-  init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
+  init: RequestInit = { cache: getCacheMode(), signal: this.signal };
 
   connectedCallback() {
     if (!state.api) {

@@ -54,11 +54,11 @@ export class GrwTrekCard {
   connectedCallback() {
     this.currentTrek = this.trek ? this.trek : state.currentTrek;
     if (this.currentTrek) {
-      this.difficulty = state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty);
-      this.route = state.routes.find(route => route.id === this.currentTrek.route);
-      this.practice = state.practices.find(practice => practice.id === this.currentTrek.practice);
-      this.themes = state.themes.filter(theme => this.currentTrek.themes.includes(theme.id));
-      this.departureCity = state.cities.find(city => city.id === this.currentTrek.departure_city);
+      this.difficulty = this.currentTrek.difficulty && state.difficulties ? state.difficulties.find(difficulty => difficulty.id === this.currentTrek.difficulty) : null;
+      this.route = this.currentTrek.route && state.routes ? state.routes.find(route => route.id === this.currentTrek.route) : null;
+      this.practice = this.currentTrek.practice && state.practices ? state.practices.find(practice => practice.id === this.currentTrek.practice) : null;
+      this.themes = this.currentTrek.themes && state.themes ? state.themes.filter(theme => this.currentTrek.themes.includes(theme.id)) : null;
+      this.departureCity = this.currentTrek.departure_city && state.cities ? state.cities.find(city => city.id === this.currentTrek.departure_city) : null;
       this.handleOffline(this.currentTrek.id);
     }
     onChange('currentTrek', () => {

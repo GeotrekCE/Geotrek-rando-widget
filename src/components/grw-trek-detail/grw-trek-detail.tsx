@@ -3,7 +3,7 @@ import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel, Scrollb
 import { translate } from 'i18n/i18n';
 import state, { onChange } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek, Option, Options, Treks } from 'types/types';
-import { formatDuration, formatLength, formatAscent, formatDescent, imagesRegExp } from 'utils/utils';
+import { formatDuration, formatLength, formatAscent, formatDescent, getCacheMode, imagesRegExp } from 'utils/utils';
 import { getAllDataInStore, getDataInStore, writeOrUpdateDataInStore, writeOrUpdateFilesInStore, writeOrUpdateTilesInStore } from 'services/grw-db.service';
 import { tileLayerOffline } from 'leaflet.offline';
 import L from 'leaflet';
@@ -783,7 +783,7 @@ export class GrwTrekDetail {
       // download treks list data
       const controller = new AbortController();
       const signal = controller.signal;
-      const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+      const init: RequestInit = { cache: getCacheMode(), signal: signal };
       const offlineTreks = (await getAllDataInStore('treks')).filter(trek => trek.offline === true);
       let treks;
       if (!state.treks) {

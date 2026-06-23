@@ -12,7 +12,7 @@ import ExploreIcon from '../../assets/explore.svg';
 import DownloadForOfflineIcon from '../../assets/download_for_offline.svg';
 import DeleteIcon from '../../assets/delete.svg';
 import { getAllDataInStore, getDataInStore, writeOrUpdateDataInStore, writeOrUpdateFilesInStore, writeOrUpdateTilesInStore } from 'services/grw-db.service';
-import { imagesRegExp } from 'utils/utils';
+import { getCacheMode, imagesRegExp } from 'utils/utils';
 import { getOutdoorSite, getOutdoorSites, getPoisNearSite } from 'services/outdoor-sites.service';
 import { tileLayerOffline } from 'leaflet.offline';
 import L from 'leaflet';
@@ -493,7 +493,7 @@ export class GrwOutdoorSiteDetail {
   async downloadRootOutdoorSite() {
     const controller = new AbortController();
     const signal = controller.signal;
-    const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+    const init: RequestInit = { cache: getCacheMode(), signal: signal };
 
     if (!state.outdoorSites) {
       const outdoorSitesList = await getOutdoorSites(
@@ -596,7 +596,7 @@ export class GrwOutdoorSiteDetail {
     try {
       const controller = new AbortController();
       const signal = controller.signal;
-      const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+      const init: RequestInit = { cache: getCacheMode(), signal: signal };
 
       const outdoorSite: OutdoorSite = await getOutdoorSite(state.api, state.language, outdoorSiteId, init).then(response => response.json());
       await this.downloadOutdoorSiteTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution, outdoorSite.geometry);
@@ -650,7 +650,7 @@ export class GrwOutdoorSiteDetail {
   async downloadOutdoorCourse(outdoorCourseId) {
     const controller = new AbortController();
     const signal = controller.signal;
-    const init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: signal };
+    const init: RequestInit = { cache: getCacheMode(), signal: signal };
     const outdoorCourse = await getOutdoorCourse(state.api, state.language, outdoorCourseId, init).then(response => response.json());
     await this.downloadOutdoorSiteTiles(this.defaultBackgroundLayerUrl, this.defaultBackgroundLayerAttribution, outdoorCourse.geometry);
     await writeOrUpdateFilesInStore(outdoorCourse, imagesRegExp, true, ['url']);

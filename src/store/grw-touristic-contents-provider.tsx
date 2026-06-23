@@ -1,7 +1,8 @@
-import { Build, Component, h, Host, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { getTouristicContentCategory, getTouristicContentsList } from 'services/touristic-contents.service';
 import { getCities, getDistricts } from 'services/treks.service';
 import state from 'store/store';
+import { getCacheMode } from 'utils/utils';
 
 @Component({
   tag: 'grw-touristic-contents-provider',
@@ -19,7 +20,7 @@ export class GrwTouristicContentsProvider {
 
   controller = new AbortController();
   signal = this.controller.signal;
-  init: RequestInit = { cache: Build.isDev ? 'force-cache' : 'default', signal: this.signal };
+  init: RequestInit = { cache: getCacheMode(), signal: this.signal };
 
   connectedCallback() {
     if (!state.api) {
