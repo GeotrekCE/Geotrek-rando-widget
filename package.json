@@ -28,6 +28,7 @@
     "docs:preview": "vitepress preview docs",
     "docs:pdf": "press-export-pdf export docs --config docs/pdf-configs.ts",
     "test": "playwright test",
+    "test:update-hars": "UPDATE_HAR=true playwright test",
     "deploy:configurator": "rm -rf configurator-tmp && git clone https://github.com/GeotrekCE/grw-config.git configurator-tmp && cd configurator-tmp && npm install && npm run build -- --base-href=/Geotrek-rando-widget/ && cd .. && npx gh-pages -d configurator-tmp/dist/grw-config/browser"
   },
   "dependencies": {

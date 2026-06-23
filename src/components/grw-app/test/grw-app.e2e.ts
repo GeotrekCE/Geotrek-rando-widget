@@ -13,7 +13,7 @@ test.describe('grw-app', () => {
 
     await page.routeFromHAR(harPath, {
       url: '**/api/v2/**',
-      update: false,
+      update: process.env.UPDATE_HAR === 'true',
       updateContent: "embed"
     });
     await page.goto('/components/grw-app/test/grw-app.e2e.html');
@@ -27,12 +27,12 @@ test.describe('grw-app', () => {
     await searchInput.fill('boucle de');
     await expect(numberOfRoutesDiv).toHaveText('2 itinéraires');
     await searchInput.fill('');
-    await expect(numberOfRoutesDiv).toHaveText('24 itinéraires');
+    await expect(numberOfRoutesDiv).toHaveText('31 itinéraires');
   });
 
   test('filter', async ({ page }) => {
     await page.getByRole('button', { name: 'Filtrer' }).click();
-    await page.getByRole('button', { name: 'VTT' }).click();
+    await page.getByRole('button', { name: 'VTT', exact: true }).click();
     await expect(page.locator('grw-filters')).toContainText('1 itinéraire');
     await expect(page.locator('grw-filters')).toContainText('Itinéraires (1)');
     await page.getByRole('button', { name: 'VALIDER' }).click();
@@ -40,11 +40,11 @@ test.describe('grw-app', () => {
     await expect(page.locator('grw-treks-list')).toContainText('1 itinéraire');
     await page.getByRole('button', { name: 'Filtrer (1)' }).click();
     await page.getByRole('button', { name: 'EFFACER' }).click();
-    await expect(page.locator('grw-filters')).toContainText('24 itinéraires');
+    await expect(page.locator('grw-filters')).toContainText('31 itinéraires');
     await expect(page.locator('grw-filters')).toContainText('Itinéraires');
     await page.getByRole('button', { name: 'VALIDER' }).click();
     await expect(page.locator('grw-common-button')).toContainText('Filtrer');
-    await expect(page.locator('grw-treks-list')).toContainText('24 itinéraires');
+    await expect(page.locator('grw-treks-list')).toContainText('31 itinéraires');
   });
 
   test('trek', async ({ page }) => {
