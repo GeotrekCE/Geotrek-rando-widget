@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.34.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.33.0...0.34.0) (2026-06-23)
+
+
+### Features
+
+* add customLayersRefreshInterval property to automatically refresh custom layers ([29ceca2](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/29ceca259361fb2ba52602bcd6c62c41ae827ae6))
+
 ## [0.33.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.32.1...0.33.0) (2026-06-22)
 
 
