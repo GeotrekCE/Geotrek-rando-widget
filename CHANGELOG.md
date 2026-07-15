@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.0...0.35.1) (2026-07-15)
+
+
+### Bug Fixes
+
+* allow HTML in sensitiveAreasDescription translation ([3b92898](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/3b928986152649100d85020291753399190d02c6))
+
 ## [0.35.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.34.0...0.35.0) (2026-07-15)
 
 
