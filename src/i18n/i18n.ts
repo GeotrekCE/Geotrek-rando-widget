@@ -88,6 +88,7 @@ interface Translation {
   location: string;
   steps: string;
   usefulInformation: string;
+  rules: string;
   contact: string;
   email: string;
   website: string;
@@ -246,6 +247,7 @@ const defaultTranslate: AvailableTranslations = {
     location: 'Localisation',
     steps: 'étapes',
     usefulInformation: 'Informations pratiques',
+    rules: 'Réglementation',
     contact: 'Contact',
     email: 'Email',
     website: 'Site web',
@@ -395,8 +397,9 @@ const defaultTranslate: AvailableTranslations = {
     erase: 'ERASE',
     ok: 'VALIDATE',
     location: 'Location',
-    usefulInformation: 'Useful information',
     steps: 'steps',
+    usefulInformation: 'Useful information',
+    rules: 'Rules',
     contact: 'Contact',
     email: 'Email',
     website: 'Website',
@@ -548,6 +551,7 @@ const defaultTranslate: AvailableTranslations = {
     location: 'Ubicación',
     steps: 'etapas',
     usefulInformation: 'Información práctica',
+    rules: 'Reglas',
     contact: 'Contacto',
     email: 'Correo electrónico',
     website: 'Página web',

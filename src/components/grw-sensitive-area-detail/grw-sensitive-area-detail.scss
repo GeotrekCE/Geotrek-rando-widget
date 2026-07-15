@@ -40,12 +40,13 @@
     margin-top: 0;
   }
 }
-
 .sensitive-area-period-container,
 .sensitive-area-practice-container,
+.sensitive-area-rules-container,
 .sensitive-area-contact-container {
   .sensitive-area-period-title,
   .sensitive-area-practice-title,
+  .sensitive-area-rules-title,
   .sensitive-area-contact-title {
     font-size: 18px;
     line-height: 24px;
@@ -56,5 +57,26 @@
   .sensitive-area-practices {
     display: flex;
     flex-wrap: wrap;
+  }
+}
+
+.sensitive-area-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  .sensitive-area-rule {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+    .sensitive-area-rule-name {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .sensitive-area-rule-description {
+      font-size: 15px;
+      line-height: 22px;
+      margin-top: 4px;
+    }
   }
 }

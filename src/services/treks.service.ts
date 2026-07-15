@@ -51,7 +51,7 @@ export function getPoisNearTrek(api, language, trekId, init) {
 }
 
 export function getSensitiveAreasNearTrek(api, language, trekId, init) {
-  return fetch(`${api}sensitivearea/?language=${language}&published=true&trek=${trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices`, init);
+  return fetch(`${api}sensitivearea/?language=${language}&published=true&trek=${trekId}&period=ignore&fields=id,geometry,name,description,contact,info_url,period,practices,rules`, init);
 }
 
 export function getCities(api, language, init, cities?) {

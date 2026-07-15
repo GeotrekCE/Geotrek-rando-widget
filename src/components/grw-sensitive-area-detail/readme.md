@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property        | Attribute | Description | Type                                                                                                                                                | Default     |
-| --------------- | --------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `sensitiveArea` | --        |             | `{ id: number; geometry: Geometry; name: string; description: string; contact: string; info_url: string; period: boolean[]; practices: number[]; }` | `undefined` |
+| Property        | Attribute | Description | Type                                                                                                                                                                | Default     |
+| --------------- | --------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `sensitiveArea` | --        |             | `{ id: number; geometry: Geometry; name: string; description: string; contact: string; info_url: string; period: boolean[]; practices: number[]; rules?: Rule[]; }` | `undefined` |
 
 
 ## Shadow Parts
@@ -29,6 +29,12 @@
 | `"sensitive-area-practice-container"` |             |
 | `"sensitive-area-practice-title"`     |             |
 | `"sensitive-area-practices"`          |             |
+| `"sensitive-area-rule"`               |             |
+| `"sensitive-area-rule-description"`   |             |
+| `"sensitive-area-rule-name"`          |             |
+| `"sensitive-area-rules"`              |             |
+| `"sensitive-area-rules-container"`    |             |
+| `"sensitive-area-rules-title"`        |             |
 | `"sensitive-area-title"`              |             |
 | `"sensitive-area-title-container"`    |             |
 

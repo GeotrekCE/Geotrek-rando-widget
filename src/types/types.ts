@@ -187,6 +187,13 @@ export type Elevation = {
   selected: boolean;
 };
 
+export type Rule = {
+  id: number;
+  name: string;
+  description: string;
+  url: string;
+};
+
 export type SensitiveAreas = SensitiveArea[];
 
 export type SensitiveArea = {
@@ -198,6 +205,7 @@ export type SensitiveArea = {
   info_url: string;
   period: boolean[];
   practices: number[];
+  rules?: Rule[];
 };
 
 export type Pois = Poi[];

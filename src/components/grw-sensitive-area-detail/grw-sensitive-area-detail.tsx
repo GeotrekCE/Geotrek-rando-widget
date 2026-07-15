@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import state from 'store/store';
 import { SensitiveArea } from 'types/types';
+import { translate } from 'i18n/i18n';
 
 @Component({
   tag: 'grw-sensitive-area-detail',
@@ -21,24 +22,47 @@ export class GrwSensitiveAreaDetail {
         </div>
 
         <div part="sensitive-area-description" class="sensitive-area-description" innerHTML={this.sensitiveArea.description}></div>
+        {this.sensitiveArea.rules && this.sensitiveArea.rules.length > 0 && (
+          <div part="sensitive-area-rules-container" class="sensitive-area-rules-container">
+            <div part="sensitive-area-rules-title" class="sensitive-area-rules-title">
+              {translate[state.language].rules}
+            </div>
+            <div part="sensitive-area-rules" class="sensitive-area-rules">
+              {this.sensitiveArea.rules.map(rule => (
+                <div key={rule.id} part="sensitive-area-rule" class="sensitive-area-rule">
+                  <div part="sensitive-area-rule-name" class="sensitive-area-rule-name">
+                    {rule.url ? (
+                      <a href={rule.url} target="_blank" rel="noopener noreferrer">
+                        {rule.name}
+                      </a>
+                    ) : (
+                      rule.name
+                    )}
+                  </div>
+                  {rule.description && (
+                    <div part="sensitive-area-rule-description" class="sensitive-area-rule-description" innerHTML={rule.description}></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {this.sensitiveArea.practices && this.sensitiveArea.practices.length > 0 && (
           <div part="sensitive-area-practice-container" class="sensitive-area-practice-container">
             <div part="sensitive-area-practice-title" class="sensitive-area-practice-title">
               Domaines d'activités concernés
             </div>
             <div part="sensitive-area-practices" class="sensitive-area-practices">
-              {this.sensitiveArea.practices.map((sensitiveAreaPractice, index) => {
-                const practice = state.practices.find(statePractice => statePractice.id === sensitiveAreaPractice);
-                if (practice) {
-                  return (
-                    <div
-                      part="sensitive-area-practice"
-                      class="sensitive-area-practice"
-                      innerHTML={`${practice.name.toUpperCase()}${index + 1 !== this.sensitiveArea.practices.length ? ' -&nbsp;' : ''}`}
-                    ></div>
-                  );
-                }
-              })}
+              {this.sensitiveArea.practices
+                .map(sensitiveAreaPractice => state.practices.find(statePractice => statePractice.id === sensitiveAreaPractice))
+                .filter(Boolean)
+                .map((practice, index, array) => (
+                  <div
+                    part="sensitive-area-practice"
+                    class="sensitive-area-practice"
+                    innerHTML={`${practice.name.toUpperCase()}${index + 1 !== array.length ? ' -&nbsp;' : ''}`}
+                  ></div>
+                ))}
             </div>
           </div>
         )}
