@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.34.0...0.35.0) (2026-07-15)
+
+
+### Features
+
+* add support for sensitive area rules ([ae5c67c](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/ae5c67c4dd0105e86b883d75ff13e846a2c5819b))
+
 ## [0.34.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.33.0...0.34.0) (2026-06-23)
 
 
