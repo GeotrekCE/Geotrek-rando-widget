@@ -1576,9 +1576,11 @@ export class GrwTrekDetail {
                   <div part="ensitive-areas-title" class="sensitive-areas-title">
                     {translate[state.language].environmentalSensitiveAreas}
                   </div>
-                  <div part="sensitive-areas-description" class="sensitive-areas-description">
-                    {translate[state.language].sensitiveAreasDescription}
-                  </div>
+                  <div
+                    part="sensitive-areas-description"
+                    class="sensitive-areas-description"
+                    innerHTML={translate[state.language].sensitiveAreasDescription}
+                  ></div>
                   {state.currentSensitiveAreas.map(sensitiveArea => (
                     <grw-sensitive-area-detail
                       exportparts="sensitive-area-title-container,sensitive-area-color-container,sensitive-area-title,sensitive-area-description,sensitive-area-practice-container,sensitive-area-practice-title,sensitive-area-practices,sensitive-area-practice,sensitive-area-period-container,sensitive-area-period-title,sensitive-area-periods,sensitive-area-period,sensitive-area-contact-container,sensitive-area-contact-title,sensitive-area-contact-value,sensitive-area-rules-container,sensitive-area-rules-title,sensitive-area-rules,sensitive-area-rule,sensitive-area-rule-name,sensitive-area-rule-description"
