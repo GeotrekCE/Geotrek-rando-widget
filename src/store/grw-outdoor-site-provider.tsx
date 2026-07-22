@@ -2,7 +2,7 @@ import { Component, h, Host, Prop } from '@stencil/core';
 import { OutdoorSite } from 'components';
 import { getDataInStore, handleOfflineProperty } from 'services/grw-db.service';
 import { getOutdoorCourse, getOutdoorCourseTypes } from 'services/outdoor-courses.service';
-import { getOutdoorPractices, getOutdoorSite, getOutdoorSiteTypes, getPoisNearSite } from 'services/outdoor-sites.service';
+import { getOutdoorPractices, getOutdoorRatings, getOutdoorRatingsScale, getOutdoorSite, getOutdoorSiteTypes, getPoisNearSite } from 'services/outdoor-sites.service';
 import { getTouristicContentCategory, getTouristicContentsNearOutdoorSite } from 'services/touristic-contents.service';
 import { getTouristicEventsNearOutdoorSite, getTouristicEventType } from 'services/touristic-events.service';
 import { getCities, getDistricts, getInformationsDesks, getSources, getThemes } from 'services/treks.service';
@@ -103,12 +103,8 @@ export class GrwOutdoorSiteProvider {
     requests.push(!state.themes ? getThemes(state.api, state.language, this.portals, this.init) : new Response('null'));
     requests.push(!state.outdoorSiteTypes ? getOutdoorSiteTypes(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.outdoorPractices ? getOutdoorPractices(state.api, state.language, this.init) : new Response('null'));
-    requests.push(
-      !state.outdoorRatings
-        ? fetch(`${state.api}outdoor_rating/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,scale`, this.init)
-        : new Response('null'),
-    );
-    requests.push(!state.outdoorRatingsScale ? fetch(`${state.api}outdoor_ratingscale/?language=${state.language}&fields=id,name`, this.init) : new Response('null'));
+    requests.push(!state.outdoorRatings ? getOutdoorRatings(state.api, state.language, this.portals, this.init) : new Response('null'));
+    requests.push(!state.outdoorRatingsScale ? getOutdoorRatingsScale(state.api, state.language, this.init) : new Response('null'));
     requests.push(getInformationsDesks(state.api, state.language, this.init));
     requests.push(getTouristicContentsNearOutdoorSite(state.api, state.language, this.outdoorSiteId, this.init));
     requests.push(getTouristicContentCategory(state.api, state.language, null, this.init));

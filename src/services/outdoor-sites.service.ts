@@ -38,3 +38,12 @@ export async function outdoorSiteIsAvailableOffline(outdoorSiteId) {
   const outdoorSites = await getDataInStore('outdoorSites', outdoorSiteId);
   return outdoorSites && outdoorSites.offline;
 }
+
+export function getOutdoorRatings(api: string, language: string, portals: string, init: RequestInit) {
+  return getAllPaginatedResults(`${api}outdoor_rating/?language=${language}${portals ? '&portals='.concat(portals) : ''}&fields=id,name,scale`, init);
+}
+
+export function getOutdoorRatingsScale(api: string, language: string, init: RequestInit) {
+  return getAllPaginatedResults(`${api}outdoor_ratingscale/?language=${language}&fields=id,name`, init);
+}
+

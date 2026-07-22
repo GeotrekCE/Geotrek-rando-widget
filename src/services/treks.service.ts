@@ -92,3 +92,12 @@ export function getTrekAccessibility(api: string, language: string, portals: str
 export function getLabel(api: string, language: string, portals: string, init: RequestInit) {
   return getAllPaginatedResults(`${api}label/?language=${language}${portals ? '&portals='.concat(portals) : ''}&fields=id,name,advice,pictogram,filter&published=true`, init);
 }
+
+export function getTrekRatings(api: string, language: string, portals: string, init: RequestInit) {
+  return getAllPaginatedResults(`${api}trek_rating/?language=${language}${portals ? '&portals='.concat(portals) : ''}&fields=id,name,scale`, init);
+}
+
+export function getTrekRatingsScale(api: string, language: string, init: RequestInit) {
+  return getAllPaginatedResults(`${api}trek_ratingscale/?language=${language}&fields=id,name`, init);
+}
+

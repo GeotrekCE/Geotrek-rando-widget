@@ -12,6 +12,8 @@ import {
   getSources,
   getTrek,
   getTrekNetwork,
+  getTrekRatings,
+  getTrekRatingsScale,
 } from 'services/treks.service';
 import state from 'store/store';
 import { Trek } from 'types/types';
@@ -181,12 +183,8 @@ export class GrwTrekProvider {
         ? fetch(`${state.api}trek_accessibility/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,pictogram`, this.init)
         : new Response('null'),
     );
-    requests.push(
-      !state.ratings
-        ? fetch(`${state.api}trek_rating/?language=${state.language}${this.portals ? '&portals='.concat(this.portals) : ''}&fields=id,name,scale`, this.init)
-        : new Response('null'),
-    );
-    requests.push(!state.ratingsScale ? fetch(`${state.api}trek_ratingscale/?language=${state.language}&fields=id,name`, this.init) : new Response('null'));
+    requests.push(!state.ratings ? getTrekRatings(state.api, state.language, this.portals, this.init) : new Response('null'));
+    requests.push(!state.ratingsScale ? getTrekRatingsScale(state.api, state.language, this.init) : new Response('null'));
 
     requests.push(this.signages ? getSignages(state.api, state.language, this.trekId, this.init) : new Response('null'));
 

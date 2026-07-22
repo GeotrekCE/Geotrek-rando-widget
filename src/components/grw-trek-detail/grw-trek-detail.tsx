@@ -1320,8 +1320,9 @@ export class GrwTrekDetail {
                   </span>
                 </div>
                 <div part="icon-label" class="icon-label networks">
-                  {this.currentTrek.networks.map(networkId => {
-                    const currentNetwork = state.networks.find(network => network.id === networkId);
+                  {this.currentTrek.networks?.map(networkId => {
+                    const currentNetwork = state.networks?.find(network => network.id === networkId);
+                    if (!currentNetwork) return null;
                     return (
                       <div part="network" class="network">
                         <img part="icon" class="icon" src={currentNetwork.pictogram} alt="" />
@@ -1332,12 +1333,20 @@ export class GrwTrekDetail {
                     );
                   })}
                 </div>
-                {this.currentTrek.ratings.map(trekRating => (
-                  <div part="row" class="row">
-                    {`${state.ratingsScale.find(ratingScale => ratingScale.id === state.ratings.find(rating => rating.id === trekRating).scale).name} : ${state.ratings.find(rating => rating.id === trekRating).name
-                      }`}
-                  </div>
-                ))}
+                {this.currentTrek.ratings &&
+                  state.ratings &&
+                  state.ratingsScale &&
+                  this.currentTrek.ratings.map(trekRating => {
+                    const rating = state.ratings.find(r => r.id === trekRating);
+                    if (!rating) return null;
+                    const scale = state.ratingsScale.find(rs => rs.id === rating.scale);
+                    if (!scale) return null;
+                    return (
+                      <div part="row" class="row">
+                        {`${scale.name} : ${rating.name}`}
+                      </div>
+                    );
+                  })}
                 {this.currentTrek.ratings_description && this.currentTrek.ratings_description !== '' && (
                   <div part="row" class="row" innerHTML={this.currentTrek.ratings_description}></div>
                 )}
