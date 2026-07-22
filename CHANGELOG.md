@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.1...0.35.2) (2026-07-22)
+
+
+### Bug Fixes
+
+* fetch all pages for ratings ([a1d224d](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/a1d224d389bcf476d8c4d9a940f44c809f304b73))
+
 ## [0.35.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.0...0.35.1) (2026-07-15)
 
 
