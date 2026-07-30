@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.3](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.2...0.35.3) (2026-07-30)
+
+
+### Bug Fixes
+
+* prevent caching of custom GeoJSON layers ([4e538bb](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/4e538bb8ea156c3084bad0a4f26bc96722a2139e))
+
 ## [0.35.2](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.1...0.35.2) (2026-07-22)
 
 
