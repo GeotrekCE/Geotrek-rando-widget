@@ -657,7 +657,8 @@ export class GrwMap {
         const fallbackWeight = geojsonWeights[index] ? parseInt(geojsonWeights[index], 10) : 3;
 
         try {
-          const response = await fetch(url, { cache: 'no-store' });
+          const separator = url.includes('?') ? '&' : '?';
+          const response = await fetch(`${url}${separator}_t=${Date.now()}`, { cache: 'no-store' });
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
