@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.5](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.4...0.35.5) (2026-08-19)
+
+
+### Bug Fixes
+
+* handle uninitialized cities in outdoor detail view ([131bec0](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/131bec01c67750ae4a91af40ee2375d1ae2c9212))
+
 ## [0.35.4](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.3...0.35.4) (2026-07-30)
 
 
