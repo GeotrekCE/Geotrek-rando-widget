@@ -82,8 +82,12 @@ export class GrwOutdoorCoursesProvider {
               const citiesData = await citiesResponse.json();
               state.cities = citiesData.results || [];
             } catch (e) {
-              console.error('Failed to load cities', e);
+              if (e.name !== 'AbortError') {
+                console.error('Failed to load cities', e);
+              }
             }
+          } else if (!state.cities) {
+            state.cities = [];
           }
         }
       })

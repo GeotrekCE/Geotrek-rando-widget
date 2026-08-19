@@ -384,7 +384,7 @@ export class GrwOutdoorCourseDetail {
                 <div part="description" class="description" innerHTML={this.currentOutdoorCourse.description}></div>
               </div>
             )}
-            {this.currentOutdoorCourse && this.currentOutdoorCourse.cities && this.currentOutdoorCourse.cities.length > 0 && (
+            {this.currentOutdoorCourse && this.currentOutdoorCourse.cities && this.currentOutdoorCourse.cities.length > 0 && city && (
               <div part="departure-container" class="departure-container">
                 <div part="departure-title" class="departure-title">
                   {translate[state.language].departure} :&nbsp;
@@ -392,12 +392,12 @@ export class GrwOutdoorCourseDetail {
                 <div part="departure" innerHTML={city.name}></div>
               </div>
             )}
-            {this.currentOutdoorCourse.cities && this.currentOutdoorCourse.cities.length > 0 && (
+            {this.currentOutdoorCourse.cities && this.currentOutdoorCourse.cities.length > 0 && state.cities && (
               <div part="cities-container" class="cities-container">
                 <div part="cities-title" class="cities-title">
                   {translate[state.language].crossedCities} :&nbsp;
                 </div>
-                <div part="cities" innerHTML={this.currentOutdoorCourse.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name).join(', ')}></div>
+                <div part="cities" innerHTML={this.currentOutdoorCourse.cities.map(currentCity => state.cities?.find(city => city.id === currentCity)?.name).filter(Boolean).join(', ')}></div>
               </div>
             )}
             {this.currentOutdoorCourse.advice && (

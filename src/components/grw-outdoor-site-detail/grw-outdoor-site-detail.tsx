@@ -921,7 +921,7 @@ export class GrwOutdoorSiteDetail {
                 <div part="description" class="description" innerHTML={this.currentOutdoorSite.description}></div>
               </div>
             )}
-            {this.currentOutdoorSite.cities && this.currentOutdoorSite.cities.length > 0 && (
+            {this.currentOutdoorSite.cities && this.currentOutdoorSite.cities.length > 0 && city && (
               <div part="departure-container" class="departure-container">
                 <div part="departure-title" class="departure-title">
                   {translate[state.language].departure} :&nbsp;
@@ -929,12 +929,12 @@ export class GrwOutdoorSiteDetail {
                 <div part="departure" innerHTML={city.name}></div>
               </div>
             )}
-            {this.currentOutdoorSite.cities && this.currentOutdoorSite.cities.length > 0 && (
+            {this.currentOutdoorSite.cities && this.currentOutdoorSite.cities.length > 0 && state.cities && (
               <div part="cities-container" class="cities-container">
                 <div part="cities-title" class="cities-title">
                   {translate[state.language].crossedCities} :&nbsp;
                 </div>
-                <div part="cities" innerHTML={this.currentOutdoorSite.cities.map(currentCity => state.cities.find(city => city.id === currentCity)?.name).join(', ')}></div>
+                <div part="cities" innerHTML={this.currentOutdoorSite.cities.map(currentCity => state.cities?.find(city => city.id === currentCity)?.name).filter(Boolean).join(', ')}></div>
               </div>
             )}
             {state.currentPois && state.currentPois.length > 0 && (

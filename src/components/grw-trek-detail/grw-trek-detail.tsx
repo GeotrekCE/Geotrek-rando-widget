@@ -1055,8 +1055,8 @@ export class GrwTrekDetail {
   }
 
   getDepartureCityCode() {
-    const departureCity = state.cities.find(currentCity => currentCity.id === state.currentTrek.departure_city);
-    return departureCity.code ?? departureCity.id;
+    const departureCity = state.cities?.find(currentCity => currentCity.id === state.currentTrek.departure_city);
+    return departureCity?.code ?? departureCity?.id;
   }
 
   render() {

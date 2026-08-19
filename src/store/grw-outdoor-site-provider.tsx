@@ -214,11 +214,20 @@ export class GrwOutdoorSiteProvider {
               try {
                 const cities = (await getCities(state.api, state.language, this.init, citiesToLoad).then(response => response.json())).results;
                 if (cities) {
-                  state.cities = [...state.cities, ...cities];
+                  if (state.cities) {
+                    state.cities = [...state.cities, ...cities];
+                  } else {
+                    state.cities = cities;
+                  }
                 }
               } catch (e) {
-                console.error('Failed to load cities', e);
+                if (e.name !== 'AbortError') {
+                  console.error('Failed to load cities', e);
+                }
               }
+            }
+            if (!state.cities) {
+              state.cities = [];
             }
           },
         );
