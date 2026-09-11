@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.36.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.5...0.36.0) (2026-09-11)
+
+
+### Features
+
+* sanitize rich text HTML fields with DOMPurify to prevent XSS ([6411643](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/641164381e3a6f7ed1dae334837541b7749bed36))
+
+
+### Bug Fixes
+
+* use textContent and escape names in map popups to prevent XSS ([de812c7](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/de812c71c23b4c6f3e7f0b00a57b751146eca453))
+
 ## [0.35.5](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.4...0.35.5) (2026-08-19)
 
 
