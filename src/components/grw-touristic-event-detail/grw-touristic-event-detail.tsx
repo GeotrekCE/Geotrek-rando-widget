@@ -235,7 +235,7 @@ export class GrwTouristicEventDetail {
                 <div part="cities-title" class="cities-title">
                   {translate[state.language].city} :&nbsp;
                 </div>
-                <div part="cities" class="cities" innerHTML={cities.join(', ')}></div>
+                <div part="cities" class="cities">{cities.join(', ')}</div>
               </div>
             )}
             {state.currentTouristicEvent.practical_info && (
@@ -262,7 +262,7 @@ export class GrwTouristicEventDetail {
                       <div part="email-title" class="email-title">
                         {translate[state.language].email} :&nbsp;
                       </div>
-                      <a href={'mailto:' + state.currentTouristicEvent.email} part="email" class="email" innerHTML={state.currentTouristicEvent.email}></a>
+                      <a href={'mailto:' + state.currentTouristicEvent.email} part="email" class="email">{state.currentTouristicEvent.email}</a>
                     </div>
                   )}
                   {state.currentTouristicEvent.website && (
@@ -270,7 +270,7 @@ export class GrwTouristicEventDetail {
                       <div part="website-title" class="website-title">
                         {translate[state.language].website} :&nbsp;
                       </div>
-                      <a href={state.currentTouristicEvent.website} part="website" class="website" innerHTML={state.currentTouristicEvent.website}></a>
+                      <a href={state.currentTouristicEvent.website} part="website" class="website">{state.currentTouristicEvent.website}</a>
                     </div>
                   )}
                 </div>

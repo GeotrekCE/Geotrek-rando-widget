@@ -926,7 +926,7 @@ export class GrwOutdoorSiteDetail {
                 <div part="departure-title" class="departure-title">
                   {translate[state.language].departure} :&nbsp;
                 </div>
-                <div part="departure" innerHTML={city.name}></div>
+                <div part="departure">{city.name}</div>
               </div>
             )}
             {this.currentOutdoorSite.cities && this.currentOutdoorSite.cities.length > 0 && state.cities && (
@@ -934,7 +934,7 @@ export class GrwOutdoorSiteDetail {
                 <div part="cities-title" class="cities-title">
                   {translate[state.language].crossedCities} :&nbsp;
                 </div>
-                <div part="cities" innerHTML={this.currentOutdoorSite.cities.map(currentCity => state.cities?.find(city => city.id === currentCity)?.name).filter(Boolean).join(', ')}></div>
+                <div part="cities">{this.currentOutdoorSite.cities.map(currentCity => state.cities?.find(city => city.id === currentCity)?.name).filter(Boolean).join(', ')}</div>
               </div>
             )}
             {state.currentPois && state.currentPois.length > 0 && (
@@ -1150,8 +1150,8 @@ export class GrwOutdoorSiteDetail {
                     <div part="source-sub-container" class="source-sub-container">
                       {source.pictogram && <img src={source.pictogram} alt="" />}
                       <div>
-                        <div part="source-name" class="source-name" innerHTML={source.name}></div>
-                        <a part="source-advice" class="source-advice" href={source.website} innerHTML={source.website}></a>
+                        <div part="source-name" class="source-name">{source.name}</div>
+                        <a part="source-advice" class="source-advice" href={source.website}>{source.website}</a>
                       </div>
                     </div>
                   ))}

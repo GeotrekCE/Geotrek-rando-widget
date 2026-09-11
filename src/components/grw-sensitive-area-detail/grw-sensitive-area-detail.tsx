@@ -57,11 +57,10 @@ export class GrwSensitiveAreaDetail {
                 .map(sensitiveAreaPractice => state.practices.find(statePractice => statePractice.id === sensitiveAreaPractice))
                 .filter(Boolean)
                 .map((practice, index, array) => (
-                  <div
-                    part="sensitive-area-practice"
-                    class="sensitive-area-practice"
-                    innerHTML={`${practice.name.toUpperCase()}${index + 1 !== array.length ? ' -&nbsp;' : ''}`}
-                  ></div>
+                  <div part="sensitive-area-practice" class="sensitive-area-practice">
+                    {practice.name.toUpperCase()}
+                    {index + 1 !== array.length ? ' -\u00a0' : ''}
+                  </div>
                 ))}
             </div>
           </div>
@@ -75,13 +74,10 @@ export class GrwSensitiveAreaDetail {
               {this.sensitiveArea.period.map((month, index) => {
                 if (month) {
                   return (
-                    <div
-                      part="sensitive-area-period"
-                      class="sensitive-area-period"
-                      innerHTML={`${new Date(0, index + 1, 0).toLocaleDateString('fr', { month: 'long' }).toUpperCase()}${
-                        this.sensitiveArea.period.slice(index + 1).find(month => month) ? ' -&nbsp;' : ''
-                      }`}
-                    ></div>
+                    <div part="sensitive-area-period" class="sensitive-area-period">
+                      {new Date(0, index + 1, 0).toLocaleDateString('fr', { month: 'long' }).toUpperCase()}
+                      {this.sensitiveArea.period.slice(index + 1).find(month => month) ? ' -\u00a0' : ''}
+                    </div>
                   );
                 }
               })}

@@ -1458,7 +1458,7 @@ export class GrwTrekDetail {
                 <div part="departure-title" class="departure-title">
                   {translate[state.language].departure} :&nbsp;
                 </div>
-                <div part="departure" innerHTML={this.currentTrek.departure}></div>
+                <div part="departure">{this.currentTrek.departure}</div>
               </div>
             )}
             {this.currentTrek.arrival && (
@@ -1466,7 +1466,7 @@ export class GrwTrekDetail {
                 <div part="arrival-title" class="arrival-title">
                   {translate[state.language].arrival} :&nbsp;
                 </div>
-                <div part="arrival" innerHTML={this.currentTrek.arrival}></div>
+                <div part="arrival">{this.currentTrek.arrival}</div>
               </div>
             )}
             {this.cities && this.cities.length > 0 && (
@@ -1474,7 +1474,7 @@ export class GrwTrekDetail {
                 <div part="cities-title" class="cities-title">
                   {translate[state.language].crossedCities} :&nbsp;
                 </div>
-                <div part="cities" innerHTML={this.cities.join(', ')}></div>
+                <div part="cities">{this.cities.join(', ')}</div>
               </div>
             )}
             {this.options.pois.visible && (
@@ -1570,7 +1570,7 @@ export class GrwTrekDetail {
                     <div part="label-container" class="label-container">
                       <div part="label-sub-container" class="label-sub-container">
                         {label.pictogram && <img src={label.pictogram} alt="" />}
-                        <div part="label-name" class="label-name" innerHTML={label.name}></div>
+                        <div part="label-name" class="label-name">{label.name}</div>
                       </div>
                       <div part="label-advice" class="label-advice" innerHTML={label.advice}></div>
                     </div>
@@ -1648,7 +1648,7 @@ export class GrwTrekDetail {
                         {this.accessibilities.map(accessibility => (
                           <div part="accessibility-content-container" class="accessibility-content-container">
                             <img src={accessibility.pictogram} alt=""></img>
-                            <div part="accessibility-name" innerHTML={accessibility.name}></div>
+                            <div part="accessibility-name">{accessibility.name}</div>
                           </div>
                         ))}
                       </div>
@@ -1675,7 +1675,7 @@ export class GrwTrekDetail {
                         <div part="accessibility-level-title" class="accessibility-level-title">
                           {translate[state.language].accessibilityLevel}
                         </div>
-                        <div part="accessibility-level-name" innerHTML={this.accessibilityLevel.name}></div>
+                        <div part="accessibility-level-name">{this.accessibilityLevel.name}</div>
                       </div>
                     )}
                     {this.currentTrek.accessibility_slope && (
@@ -1824,8 +1824,8 @@ export class GrwTrekDetail {
                     <div part="source-sub-container" class="source-sub-container">
                       {source.pictogram && <img src={source.pictogram} alt="" />}
                       <div>
-                        <div part="source-name" class="source-name" innerHTML={source.name}></div>
-                        <a part="source-advice" class="source-advice" href={source.website} innerHTML={source.website}></a>
+                        <div part="source-name" class="source-name">{source.name}</div>
+                        <a part="source-advice" class="source-advice" href={source.website}>{source.website}</a>
                       </div>
                     </div>
                   ))}

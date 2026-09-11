@@ -389,7 +389,7 @@ export class GrwOutdoorCourseDetail {
                 <div part="departure-title" class="departure-title">
                   {translate[state.language].departure} :&nbsp;
                 </div>
-                <div part="departure" innerHTML={city.name}></div>
+                <div part="departure">{city.name}</div>
               </div>
             )}
             {this.currentOutdoorCourse.cities && this.currentOutdoorCourse.cities.length > 0 && state.cities && (
@@ -397,7 +397,7 @@ export class GrwOutdoorCourseDetail {
                 <div part="cities-title" class="cities-title">
                   {translate[state.language].crossedCities} :&nbsp;
                 </div>
-                <div part="cities" innerHTML={this.currentOutdoorCourse.cities.map(currentCity => state.cities?.find(city => city.id === currentCity)?.name).filter(Boolean).join(', ')}></div>
+                <div part="cities">{this.currentOutdoorCourse.cities.map(currentCity => state.cities?.find(city => city.id === currentCity)?.name).filter(Boolean).join(', ')}</div>
               </div>
             )}
             {this.currentOutdoorCourse.advice && (
