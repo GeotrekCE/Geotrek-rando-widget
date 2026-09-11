@@ -7,6 +7,7 @@ import LocationSearchingIcon from '../../assets/location_searching.svg';
 import CallIcon from '../../assets/call.svg';
 import MailIcon from '../../assets/mail.svg';
 import LinkIcon from '../../assets/link.svg';
+import { sanitizeHtml } from 'utils/utils';
 
 @Component({
   tag: 'grw-information-desk',
@@ -125,7 +126,7 @@ export class GrwInformationDeskDetail {
                 <div
                   part="information-desk-description"
                   class="information-desk-description"
-                  innerHTML={this.informationDesk.description}
+                  innerHTML={sanitizeHtml(this.informationDesk.description)}
                   ref={el => (this.descriptionRef = el)}
                 ></div>
               </div>

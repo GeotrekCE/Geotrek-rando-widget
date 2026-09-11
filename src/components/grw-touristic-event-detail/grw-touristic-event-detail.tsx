@@ -1,5 +1,6 @@
 import { Build, Component, Host, Prop, State, getAssetPath, h } from '@stencil/core';
 import { translate } from 'i18n/i18n';
+import { sanitizeHtml } from 'utils/utils';
 import state from 'store/store';
 import Swiper, { FreeMode, Keyboard, Mousewheel, Navigation, Pagination } from 'swiper';
 import CloseIcon from '../../assets/close.svg';
@@ -218,7 +219,7 @@ export class GrwTouristicEventDetail {
             {state.currentTouristicEvent.description_teaser && (
               <div>
                 <div part="divider" class="divider"></div>
-                <div part="description-teaser" class="description-teaser" innerHTML={state.currentTouristicEvent.description_teaser}></div>
+                <div part="description-teaser" class="description-teaser" innerHTML={sanitizeHtml(state.currentTouristicEvent.description_teaser)}></div>
               </div>
             )}
             <div part="divider" class="divider"></div>
@@ -227,7 +228,7 @@ export class GrwTouristicEventDetail {
                 <div part="description-title" class="description-title">
                   {translate[state.language].description}
                 </div>
-                <div part="description" class="description" innerHTML={state.currentTouristicEvent.description}></div>
+                <div part="description" class="description" innerHTML={sanitizeHtml(state.currentTouristicEvent.description)}></div>
               </div>
             )}
             {cities && cities.length > 0 && (
@@ -245,7 +246,7 @@ export class GrwTouristicEventDetail {
                   <div part="useful-information-title" class="useful-information-title">
                     {translate[state.language].usefulInformation} :&nbsp;
                   </div>
-                  <div part="useful-information" class="useful-information" innerHTML={state.currentTouristicEvent.practical_info}></div>
+                  <div part="useful-information" class="useful-information" innerHTML={sanitizeHtml(state.currentTouristicEvent.practical_info)}></div>
                 </div>
               </div>
             )}
@@ -256,7 +257,7 @@ export class GrwTouristicEventDetail {
                   <div part="contact-title" class="contact-title">
                     {translate[state.language].contact} :&nbsp;
                   </div>
-                  {state.currentTouristicEvent.contact && <div part="contact" class="contact" innerHTML={state.currentTouristicEvent.contact}></div>}
+                  {state.currentTouristicEvent.contact && <div part="contact" class="contact" innerHTML={sanitizeHtml(state.currentTouristicEvent.contact)}></div>}
                   {state.currentTouristicEvent.email && (
                     <div part="email-container" class="email-container">
                       <div part="email-title" class="email-title">

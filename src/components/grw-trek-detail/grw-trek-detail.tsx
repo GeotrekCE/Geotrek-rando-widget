@@ -3,7 +3,7 @@ import Swiper, { Navigation, Pagination, Keyboard, FreeMode, Mousewheel, Scrollb
 import { translate } from 'i18n/i18n';
 import state, { onChange } from 'store/store';
 import { Accessibilities, AccessibilityLevel, Difficulty, Labels, Practice, Route, Sources, Themes, Trek, Option, Options, Treks } from 'types/types';
-import { formatDuration, formatLength, formatAscent, formatDescent, getCacheMode, imagesRegExp } from 'utils/utils';
+import { formatDuration, formatLength, formatAscent, formatDescent, getCacheMode, imagesRegExp, sanitizeHtml } from 'utils/utils';
 import { getAllDataInStore, getDataInStore, writeOrUpdateDataInStore, writeOrUpdateFilesInStore, writeOrUpdateTilesInStore } from 'services/grw-db.service';
 import { tileLayerOffline } from 'leaflet.offline';
 import L from 'leaflet';
@@ -1348,7 +1348,7 @@ export class GrwTrekDetail {
                     );
                   })}
                 {this.currentTrek.ratings_description && this.currentTrek.ratings_description !== '' && (
-                  <div part="row" class="row" innerHTML={this.currentTrek.ratings_description}></div>
+                  <div part="row" class="row" innerHTML={sanitizeHtml(this.currentTrek.ratings_description)}></div>
                 )}
               </div>
             </div>
@@ -1400,8 +1400,8 @@ export class GrwTrekDetail {
               </div>
             </div>
             <div part="divider" class="divider"></div>
-            {this.currentTrek.description_teaser && <div part="description-teaser" class="description-teaser" innerHTML={this.currentTrek.description_teaser}></div>}
-            {this.currentTrek.ambiance && <div part="ambiance" class="ambiance" innerHTML={this.currentTrek.ambiance}></div>}
+            {this.currentTrek.description_teaser && <div part="description-teaser" class="description-teaser" innerHTML={sanitizeHtml(this.currentTrek.description_teaser)}></div>}
+            {this.currentTrek.ambiance && <div part="ambiance" class="ambiance" innerHTML={sanitizeHtml(this.currentTrek.ambiance)}></div>}
             {state.parentTrekId && state.parentTrek && this.currentTrek.id !== state.parentTrekId && (
               <div>
                 <div part="divider" class="divider"></div>
@@ -1450,7 +1450,7 @@ export class GrwTrekDetail {
                 <div part="description-title" class="description-title">
                   {translate[state.language].description}
                 </div>
-                <div part="description" class="description" innerHTML={this.currentTrek.description}></div>
+                <div part="description" class="description" innerHTML={sanitizeHtml(this.currentTrek.description)}></div>
               </div>
             )}
             {this.currentTrek.departure && (
@@ -1524,13 +1524,13 @@ export class GrwTrekDetail {
                   <div part="access-title" class="access-title">
                     {translate[state.language].roadAccessAndParking}
                   </div>
-                  <div part="access" class="access" innerHTML={this.currentTrek.access}></div>
+                  <div part="access" class="access" innerHTML={sanitizeHtml(this.currentTrek.access)}></div>
                   {this.currentTrek.advised_parking && (
                     <div>
                       <div part="advised-parking-title" class="advised-parking-title" ref={el => (this.parkingRef = el)}>
                         {translate[state.language].recommendedParking}
                       </div>
-                      <div part="advised-parking" class="advised-parking" innerHTML={this.currentTrek.advised_parking}></div>
+                      <div part="advised-parking" class="advised-parking" innerHTML={sanitizeHtml(this.currentTrek.advised_parking)}></div>
                     </div>
                   )}
                 </div>
@@ -1543,7 +1543,7 @@ export class GrwTrekDetail {
                   <div part="public-transport-title" class="public-transport-title">
                     {translate[state.language].transport}
                   </div>
-                  <div part="public-transport" class="public-transport" innerHTML={this.currentTrek.public_transport}></div>
+                  <div part="public-transport" class="public-transport" innerHTML={sanitizeHtml(this.currentTrek.public_transport)}></div>
                 </div>
               </div>
             )}
@@ -1557,13 +1557,13 @@ export class GrwTrekDetail {
                   {this.currentTrek.advice && (
                     <div part="current-advice-container" class="current-advice-container">
                       <span part="advice-icon" class="icon" innerHTML={WarningIcon}></span>
-                      <div part="advice" class="advice" innerHTML={this.currentTrek.advice}></div>
+                      <div part="advice" class="advice" innerHTML={sanitizeHtml(this.currentTrek.advice)}></div>
                     </div>
                   )}
                   {this.currentTrek.gear && (
                     <div part="gear-container" class="gear-container">
                       <span part="gear-icon" class="icon" innerHTML={BackpackIcon}></span>
-                      <div part="gear" class="gear" innerHTML={this.currentTrek.gear}></div>
+                      <div part="gear" class="gear" innerHTML={sanitizeHtml(this.currentTrek.gear)}></div>
                     </div>
                   )}
                   {this.labels.map(label => (
@@ -1572,7 +1572,7 @@ export class GrwTrekDetail {
                         {label.pictogram && <img src={label.pictogram} alt="" />}
                         <div part="label-name" class="label-name">{label.name}</div>
                       </div>
-                      <div part="label-advice" class="label-advice" innerHTML={label.advice}></div>
+                      <div part="label-advice" class="label-advice" innerHTML={sanitizeHtml(label.advice)}></div>
                     </div>
                   ))}
                 </div>
@@ -1588,7 +1588,7 @@ export class GrwTrekDetail {
                   <div
                     part="sensitive-areas-description"
                     class="sensitive-areas-description"
-                    innerHTML={translate[state.language].sensitiveAreasDescription}
+                    innerHTML={sanitizeHtml(translate[state.language].sensitiveAreasDescription)}
                   ></div>
                   {state.currentSensitiveAreas.map(sensitiveArea => (
                     <grw-sensitive-area-detail
@@ -1642,7 +1642,7 @@ export class GrwTrekDetail {
                     <div part="accessibilities-title" class="accessibilities-title">
                       {translate[state.language].accessibility}
                     </div>
-                    {this.currentTrek.disabled_infrastructure && <div part="disabled-infrastructure" innerHTML={this.currentTrek.disabled_infrastructure}></div>}
+                    {this.currentTrek.disabled_infrastructure && <div part="disabled-infrastructure" innerHTML={sanitizeHtml(this.currentTrek.disabled_infrastructure)}></div>}
                     {this.accessibilities && this.accessibilities.length > 0 && (
                       <div part="accessibilities-content-container" class="accessibilities-content-container">
                         {this.accessibilities.map(accessibility => (
@@ -1683,7 +1683,7 @@ export class GrwTrekDetail {
                         <div part="accessibility-slope-title" class="accessibility-slope-title">
                           {translate[state.language].accessibilitySlope}
                         </div>
-                        <div part="accessibility-slope" innerHTML={this.currentTrek.accessibility_slope}></div>
+                        <div part="accessibility-slope" innerHTML={sanitizeHtml(this.currentTrek.accessibility_slope)}></div>
                       </div>
                     )}
                     {this.currentTrek.accessibility_width && (
@@ -1691,7 +1691,7 @@ export class GrwTrekDetail {
                         <div part="accessibility-width-title" class="accessibility-width-title">
                           {translate[state.language].accessibilityWidth}
                         </div>
-                        <div part="accessibility-width" innerHTML={this.currentTrek.accessibility_width}></div>
+                        <div part="accessibility-width" innerHTML={sanitizeHtml(this.currentTrek.accessibility_width)}></div>
                       </div>
                     )}
                     {this.currentTrek.accessibility_signage && (
@@ -1699,7 +1699,7 @@ export class GrwTrekDetail {
                         <div part="accessibility-signage-title" class="accessibility-signage-title">
                           {translate[state.language].accessibilitySignage}
                         </div>
-                        <div part="accessibility-signage" innerHTML={this.currentTrek.accessibility_signage}></div>
+                        <div part="accessibility-signage" innerHTML={sanitizeHtml(this.currentTrek.accessibility_signage)}></div>
                       </div>
                     )}
                     {this.currentTrek.accessibility_covering && (
@@ -1707,7 +1707,7 @@ export class GrwTrekDetail {
                         <div part="accessibility-covering-title" class="accessibility-covering-title">
                           {translate[state.language].accessibilityCovering}
                         </div>
-                        <div part="accessibility-covering" innerHTML={this.currentTrek.accessibility_covering}></div>
+                        <div part="accessibility-covering" innerHTML={sanitizeHtml(this.currentTrek.accessibility_covering)}></div>
                       </div>
                     )}
                     {this.currentTrek.accessibility_exposure && (
@@ -1715,7 +1715,7 @@ export class GrwTrekDetail {
                         <div part="accessibility-exposure-title" class="accessibility-exposure-title">
                           {translate[state.language].accessibilityExposure}
                         </div>
-                        <div part="accessibility-exposure" innerHTML={this.currentTrek.accessibility_exposure}></div>
+                        <div part="accessibility-exposure" innerHTML={sanitizeHtml(this.currentTrek.accessibility_exposure)}></div>
                       </div>
                     )}
                     {this.currentTrek.accessibility_advice && (
@@ -1723,7 +1723,7 @@ export class GrwTrekDetail {
                         <div part="accessibility-advice-title" class="accessibility-advice-title">
                           {translate[state.language].accessibilityAdvices}
                         </div>
-                        <div part="accessibility-advice" innerHTML={this.currentTrek.accessibility_advice}></div>
+                        <div part="accessibility-advice" innerHTML={sanitizeHtml(this.currentTrek.accessibility_advice)}></div>
                       </div>
                     )}
                   </div>

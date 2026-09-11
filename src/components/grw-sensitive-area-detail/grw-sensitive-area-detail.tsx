@@ -2,6 +2,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
 import state from 'store/store';
 import { SensitiveArea } from 'types/types';
 import { translate } from 'i18n/i18n';
+import { sanitizeHtml } from 'utils/utils';
 
 @Component({
   tag: 'grw-sensitive-area-detail',
@@ -21,7 +22,7 @@ export class GrwSensitiveAreaDetail {
           </div>
         </div>
 
-        <div part="sensitive-area-description" class="sensitive-area-description" innerHTML={this.sensitiveArea.description}></div>
+        <div part="sensitive-area-description" class="sensitive-area-description" innerHTML={sanitizeHtml(this.sensitiveArea.description)}></div>
         {this.sensitiveArea.rules && this.sensitiveArea.rules.length > 0 && (
           <div part="sensitive-area-rules-container" class="sensitive-area-rules-container">
             <div part="sensitive-area-rules-title" class="sensitive-area-rules-title">
@@ -40,7 +41,7 @@ export class GrwSensitiveAreaDetail {
                     )}
                   </div>
                   {rule.description && (
-                    <div part="sensitive-area-rule-description" class="sensitive-area-rule-description" innerHTML={rule.description}></div>
+                    <div part="sensitive-area-rule-description" class="sensitive-area-rule-description" innerHTML={sanitizeHtml(rule.description)}></div>
                   )}
                 </div>
               ))}
@@ -88,7 +89,7 @@ export class GrwSensitiveAreaDetail {
           <div part="sensitive-area-contact-title" class="sensitive-area-contact-title">
             Contact
           </div>
-          <div part="sensitive-area-contact-value" class="sensitive-area-contact-value" innerHTML={this.sensitiveArea.contact}></div>
+          <div part="sensitive-area-contact-value" class="sensitive-area-contact-value" innerHTML={sanitizeHtml(this.sensitiveArea.contact)}></div>
         </div>
       </Host>
     );

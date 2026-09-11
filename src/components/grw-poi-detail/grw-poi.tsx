@@ -4,6 +4,7 @@ import state from 'store/store';
 import { OutdoorSite, Poi, Trek } from 'types/types';
 import { translate } from 'i18n/i18n';
 import { getDataInStore } from 'services/grw-db.service';
+import { sanitizeHtml } from 'utils/utils';
 
 @Component({
   tag: 'grw-poi',
@@ -179,7 +180,7 @@ export class GrwPoiDetail {
           <div
             part="poi-description"
             class={this.displayShortDescription ? 'poi-description poi-description-short' : 'poi-description'}
-            innerHTML={this.poi.description}
+            innerHTML={sanitizeHtml(this.poi.description)}
             ref={el => (this.descriptionRef = el)}
           ></div>
           {this.showPoiDescriptionButton && (

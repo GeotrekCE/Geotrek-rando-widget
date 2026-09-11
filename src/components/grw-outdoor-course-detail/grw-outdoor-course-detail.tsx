@@ -9,7 +9,7 @@ import OpenInFullIcon from '../../assets/open_in_full.svg';
 import MovingIcon from '../../assets/moving.svg';
 import DownloadIcon from '../../assets/download.svg';
 import WarningIcon from '../../assets/warning.svg';
-import { formatAscent, formatDuration, formatLength } from 'utils/utils';
+import { formatAscent, formatDuration, formatLength, sanitizeHtml } from 'utils/utils';
 
 const observerOptions = { threshold: 0 };
 
@@ -381,7 +381,7 @@ export class GrwOutdoorCourseDetail {
                 <div part="description-title" class="description-title" ref={el => (this.descriptionRef = el)}>
                   {translate[state.language].description}
                 </div>
-                <div part="description" class="description" innerHTML={this.currentOutdoorCourse.description}></div>
+                <div part="description" class="description" innerHTML={sanitizeHtml(this.currentOutdoorCourse.description)}></div>
               </div>
             )}
             {this.currentOutdoorCourse && this.currentOutdoorCourse.cities && this.currentOutdoorCourse.cities.length > 0 && city && (
@@ -410,7 +410,7 @@ export class GrwOutdoorCourseDetail {
                   {this.currentOutdoorCourse.advice && (
                     <div part="current-advice-container" class="current-advice-container">
                       <span part="icon" class="icon" innerHTML={WarningIcon}></span>
-                      <div part="advice" class="advice" innerHTML={this.currentOutdoorCourse.advice}></div>
+                      <div part="advice" class="advice" innerHTML={sanitizeHtml(this.currentOutdoorCourse.advice)}></div>
                     </div>
                   )}
                 </div>
@@ -423,7 +423,7 @@ export class GrwOutdoorCourseDetail {
                   <div part="accessibilites-title" class="accessibilities-title">
                     {translate[state.language].accessibility}
                   </div>
-                  <div part="accessibilities" innerHTML={this.currentOutdoorCourse.accessibility}></div>
+                  <div part="accessibilities" innerHTML={sanitizeHtml(this.currentOutdoorCourse.accessibility)}></div>
                 </div>
               </div>
             )}

@@ -12,7 +12,7 @@ import ExploreIcon from '../../assets/explore.svg';
 import DownloadForOfflineIcon from '../../assets/download_for_offline.svg';
 import DeleteIcon from '../../assets/delete.svg';
 import { getAllDataInStore, getDataInStore, writeOrUpdateDataInStore, writeOrUpdateFilesInStore, writeOrUpdateTilesInStore } from 'services/grw-db.service';
-import { getCacheMode, imagesRegExp } from 'utils/utils';
+import { getCacheMode, imagesRegExp, sanitizeHtml } from 'utils/utils';
 import { getOutdoorSite, getOutdoorSites, getPoisNearSite } from 'services/outdoor-sites.service';
 import { tileLayerOffline } from 'leaflet.offline';
 import L from 'leaflet';
@@ -910,15 +910,15 @@ export class GrwOutdoorSiteDetail {
               </div>
             </div>
             <div part="divider" class="divider"></div>
-            {this.currentOutdoorSite.description_teaser && <div part="description-teaser" class="description-teaser" innerHTML={this.currentOutdoorSite.description_teaser}></div>}
-            {this.currentOutdoorSite.ambiance && <div part="ambiance" class="ambiance" innerHTML={this.currentOutdoorSite.ambiance}></div>}
+            {this.currentOutdoorSite.description_teaser && <div part="description-teaser" class="description-teaser" innerHTML={sanitizeHtml(this.currentOutdoorSite.description_teaser)}></div>}
+            {this.currentOutdoorSite.ambiance && <div part="ambiance" class="ambiance" innerHTML={sanitizeHtml(this.currentOutdoorSite.ambiance)}></div>}
             <div part="divider" class="divider"></div>
             {this.currentOutdoorSite.description && (
               <div part="description-container" class="description-container">
                 <div part="description-title" class="description-title" ref={el => (this.descriptionRef = el)}>
                   {translate[state.language].description}
                 </div>
-                <div part="description" class="description" innerHTML={this.currentOutdoorSite.description}></div>
+                <div part="description" class="description" innerHTML={sanitizeHtml(this.currentOutdoorSite.description)}></div>
               </div>
             )}
             {this.currentOutdoorSite.cities && this.currentOutdoorSite.cities.length > 0 && city && (
@@ -970,7 +970,7 @@ export class GrwOutdoorSiteDetail {
                   {this.currentOutdoorSite.advice && (
                     <div part="current-advice-container" class="current-advice-container">
                       <span part="icon" class="icon" innerHTML={WarningIcon}></span>
-                      <div part="advice" class="advice" innerHTML={this.currentOutdoorSite.advice}></div>
+                      <div part="advice" class="advice" innerHTML={sanitizeHtml(this.currentOutdoorSite.advice)}></div>
                     </div>
                   )}
                 </div>
@@ -983,7 +983,7 @@ export class GrwOutdoorSiteDetail {
                   <div part="accessibilites-title" class="accessibilities-title">
                     {translate[state.language].accessibility}
                   </div>
-                  <div part="accessibilities" innerHTML={this.currentOutdoorSite.accessibility}></div>
+                  <div part="accessibilities" innerHTML={sanitizeHtml(this.currentOutdoorSite.accessibility)}></div>
                 </div>
               </div>
             )}

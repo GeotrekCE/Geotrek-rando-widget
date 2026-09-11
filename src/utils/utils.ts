@@ -1,6 +1,7 @@
 import { Build } from '@stencil/core';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
+import DOMPurify from 'dompurify';
 import state from 'store/store';
 import { OutdoorSitesFilters, TouristicContents, TouristicContentsFilters, TouristicEvents, TouristicEventsFilters, TrekFilters, Treks } from 'types/types';
 
@@ -490,3 +491,11 @@ export function escapeHtml(str: string): string {
     }
   });
 }
+
+export function sanitizeHtml(html: string): string {
+  if (!html) return '';
+  return DOMPurify.sanitize(html, {
+    ADD_ATTR: ['target'],
+  });
+}
+
