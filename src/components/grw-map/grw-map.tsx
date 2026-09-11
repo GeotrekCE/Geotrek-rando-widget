@@ -10,7 +10,7 @@ import { translate } from 'i18n/i18n';
 import { getTrekGeometry } from 'services/treks.service';
 import { tileLayerOffline } from 'leaflet.offline';
 import { getDataInStore } from 'services/grw-db.service';
-import { checkFileInStore, getFileInStore } from 'utils/utils';
+import { checkFileInStore, getFileInStore, escapeHtml } from 'utils/utils';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Trek } from 'components';
@@ -918,14 +918,14 @@ export class GrwMap {
               trekDeparturePopup.appendChild(trekImg);
             }
             const trekName = L.DomUtil.create('div');
-            trekName.innerHTML = geoJsonPoint.properties.name;
+            trekName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             trekName.part = 'trek-name';
             trekName.className = 'trek-name';
             trekDeparturePopup.appendChild(trekName);
 
             const trekButton = L.DomUtil.create('button');
-            trekButton.innerHTML = 'Afficher le détail';
+            trekButton.textContent = 'Afficher le détail';
             /* @ts-ignore */
             trekButton.part = 'trek-button';
             trekButton.className = 'trek-button';
@@ -1083,7 +1083,7 @@ export class GrwMap {
             parkingTooltip.part = 'parking-tooltip';
             parkingTooltip.className = 'parking-tooltip';
             const parkingName = L.DomUtil.create('div');
-            parkingName.innerHTML = geoJsonPoint.properties.name;
+            parkingName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             parkingTooltip.part = 'parking-name';
             parkingName.className = 'parking-name';
@@ -1116,7 +1116,7 @@ export class GrwMap {
             sensitiveAreaTooltip.part = 'sensitive-area-tooltip';
             sensitiveAreaTooltip.className = 'sensitive-area-tooltip';
             const sensitiveAreaName = L.DomUtil.create('div');
-            sensitiveAreaName.innerHTML = geoJsonPoint.properties.name;
+            sensitiveAreaName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             sensitiveAreaName.part = 'sensitive-area-name';
             sensitiveAreaName.className = 'sensitive-area-name';
@@ -1222,14 +1222,14 @@ export class GrwMap {
               trekDeparturePopup.appendChild(trekImg);
             }
             const trekName = L.DomUtil.create('div');
-            trekName.innerHTML = geoJsonPoint.properties.name;
+            trekName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             trekDeparturePopup.part = 'trek-name';
             trekName.className = 'trek-name';
             trekDeparturePopup.appendChild(trekName);
 
             const trekButton = L.DomUtil.create('button');
-            trekButton.innerHTML = 'Afficher le détail';
+            trekButton.textContent = 'Afficher le détail';
             /* @ts-ignore */
             trekDeparturePopup.part = 'trek-button';
             trekButton.className = 'trek-button';
@@ -1428,14 +1428,14 @@ export class GrwMap {
             trekDeparturePopup.appendChild(trekImg);
           }
           const trekName = L.DomUtil.create('div');
-          trekName.innerHTML = geoJsonPoint.properties.name;
+          trekName.textContent = geoJsonPoint.properties.name;
           /* @ts-ignore */
           trekName.part = 'trek-name';
           trekName.className = 'trek-name';
           trekDeparturePopup.appendChild(trekName);
 
           const trekButton = L.DomUtil.create('button');
-          trekButton.innerHTML = 'Afficher le détail';
+          trekButton.textContent = 'Afficher le détail';
           /* @ts-ignore */
           trekButton.part = 'trek-button';
           trekButton.className = 'trek-button';
@@ -1530,14 +1530,14 @@ export class GrwMap {
             trekDeparturePopup.appendChild(trekImg);
           }
           const trekName = L.DomUtil.create('div');
-          trekName.innerHTML = geoJsonPoint.properties.name;
+          trekName.textContent = geoJsonPoint.properties.name;
           /* @ts-ignore */
           trekName.part = 'trek-name';
           trekName.className = 'trek-name';
           trekDeparturePopup.appendChild(trekName);
 
           const trekButton = L.DomUtil.create('button');
-          trekButton.innerHTML = 'Afficher le détail';
+          trekButton.textContent = 'Afficher le détail';
           /* @ts-ignore */
           trekButton.part = 'trek-name';
           trekButton.className = 'trek-button';
@@ -1762,14 +1762,14 @@ export class GrwMap {
               touristicContentCoordinatesPopup.appendChild(touristicContentImg);
             }
             const touristicContentName = L.DomUtil.create('div');
-            touristicContentName.innerHTML = geoJsonPoint.properties.name;
+            touristicContentName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             touristicContentCoordinatesPopup.part = 'touristic-content-name';
             touristicContentName.className = 'touristic-content-name';
             touristicContentCoordinatesPopup.appendChild(touristicContentName);
 
             const touristicContentButton = L.DomUtil.create('button');
-            touristicContentButton.innerHTML = 'Afficher le détail';
+            touristicContentButton.textContent = 'Afficher le détail';
             /* @ts-ignore */
             touristicContentButton.part = 'touristic-content-button';
             touristicContentButton.className = 'touristic-content-button';
@@ -1939,14 +1939,14 @@ export class GrwMap {
           }
 
           const touristicContentName = L.DomUtil.create('div');
-          touristicContentName.innerHTML = geoJsonPoint.properties.name;
+          touristicContentName.textContent = geoJsonPoint.properties.name;
           /* @ts-ignore */
           touristicContentName.part = 'touristic-content-name';
           touristicContentName.className = 'touristic-content-name';
           touristicContentDeparturePopup.appendChild(touristicContentName);
 
           const touristicContentButton = L.DomUtil.create('button');
-          touristicContentButton.innerHTML = 'Afficher le détail';
+          touristicContentButton.textContent = 'Afficher le détail';
           /* @ts-ignore */
           touristicContentButton.part = 'touristic-content-button';
           touristicContentButton.className = 'touristic-content-button';
@@ -2060,14 +2060,14 @@ export class GrwMap {
               touristicEventCoordinatesPopup.appendChild(touristicEventImg);
             }
             const touristicEventName = L.DomUtil.create('div');
-            touristicEventName.innerHTML = geoJsonPoint.properties.name;
+            touristicEventName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             touristicEventName.part = 'touristic-event-name';
             touristicEventName.className = 'touristic-event-name';
             touristicEventCoordinatesPopup.appendChild(touristicEventName);
 
             const touristicEventButton = L.DomUtil.create('button');
-            touristicEventButton.innerHTML = 'Afficher le détail';
+            touristicEventButton.textContent = 'Afficher le détail';
             /* @ts-ignore */
             touristicEventButton.part = 'touristic-event-button';
             touristicEventButton.className = 'touristic-event-button';
@@ -2205,14 +2205,14 @@ export class GrwMap {
               outdoorSiteCoordinatesPopup.appendChild(outdoorSiteImg);
             }
             const outdoorSiteName = L.DomUtil.create('div');
-            outdoorSiteName.innerHTML = geoJsonPoint.properties.name;
+            outdoorSiteName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             outdoorSiteName.part = 'outdoor-site-name';
             outdoorSiteName.className = 'outdoor-site-name';
             outdoorSiteCoordinatesPopup.appendChild(outdoorSiteName);
 
             const outdoorSiteButton = L.DomUtil.create('button');
-            outdoorSiteButton.innerHTML = 'Afficher le détail';
+            outdoorSiteButton.textContent = 'Afficher le détail';
             /* @ts-ignore */
             outdoorSiteButton.part = 'outdoor-site-button';
             outdoorSiteButton.className = 'outdoor-site-button';
@@ -2497,14 +2497,14 @@ export class GrwMap {
           }
 
           const touristicEventName = L.DomUtil.create('div');
-          touristicEventName.innerHTML = geoJsonPoint.properties.name;
+          touristicEventName.textContent = geoJsonPoint.properties.name;
           /* @ts-ignore */
           touristicEventName.part = 'touristic-event-name';
           touristicEventName.className = 'touristic-event-name';
           touristicEventDeparturePopup.appendChild(touristicEventName);
 
           const touristicEventButton = L.DomUtil.create('button');
-          touristicEventButton.innerHTML = 'Afficher le détail';
+          touristicEventButton.textContent = 'Afficher le détail';
           /* @ts-ignore */
           touristicEventButton.part = 'touristic-event-button';
           touristicEventButton.className = 'touristic-event-button';
@@ -2659,14 +2659,14 @@ export class GrwMap {
           }
 
           const outdoorSiteName = L.DomUtil.create('div');
-          outdoorSiteName.innerHTML = geoJsonPoint.properties.name;
+          outdoorSiteName.textContent = geoJsonPoint.properties.name;
           /* @ts-ignore */
           outdoorSiteName.part = 'outdoor-site-name';
           outdoorSiteName.className = 'outdoor-site-name';
           outdoorSiteDeparturePopup.appendChild(outdoorSiteName);
 
           const outdoorSiteButton = L.DomUtil.create('button');
-          outdoorSiteButton.innerHTML = 'Afficher le détail';
+          outdoorSiteButton.textContent = 'Afficher le détail';
           /* @ts-ignore */
           outdoorSiteButton.part = 'outdoor-site-button';
           outdoorSiteButton.className = 'outdoor-site-button';
@@ -2762,14 +2762,14 @@ export class GrwMap {
           }
 
           const outdoorCourseName = L.DomUtil.create('div');
-          outdoorCourseName.innerHTML = geoJsonPoint.properties.name;
+          outdoorCourseName.textContent = geoJsonPoint.properties.name;
           /* @ts-ignore */
           outdoorCourseName.part = 'outdoor-course-name';
           outdoorCourseName.className = 'outdoor-course-name';
           outdoorCourseDeparturePopup.appendChild(outdoorCourseName);
 
           const outdoorCourseButton = L.DomUtil.create('button');
-          outdoorCourseButton.innerHTML = 'Afficher le détail';
+          outdoorCourseButton.textContent = 'Afficher le détail';
           /* @ts-ignore */
           outdoorCourseButton.part = 'outdoor-course-button';
           outdoorCourseButton.className = 'outdoor-course-button';
@@ -2830,7 +2830,7 @@ export class GrwMap {
             poiTooltip.part = 'poi-tooltip';
             poiTooltip.className = 'poi-tooltip';
             const poiName = L.DomUtil.create('div');
-            poiName.innerHTML = geoJsonPoint.properties.name;
+            poiName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             poiName.part = 'poi-name';
             poiName.className = 'poi-name';
@@ -2891,7 +2891,9 @@ export class GrwMap {
         pointToLayer: (geoJsonPoint, latlng) =>
           L.marker(latlng, {
             icon: L.divIcon({
-              html: `<div part="signage-marker" class="signage-marker"><img part="signage-img" src=${signageImageSrc} /><div part="signage-name" class="signage-name">${geoJsonPoint.properties.name}</div></div>`,
+              html: `<div part="signage-marker" class="signage-marker"><img part="signage-img" src=${signageImageSrc} /><div part="signage-name" class="signage-name">${escapeHtml(
+                geoJsonPoint.properties.name,
+              )}</div></div>`,
               className: '',
               iconSize: [this.commonMarkerSize * 1.2, this.commonMarkerSize * 0.8],
             } as any),
@@ -2904,7 +2906,7 @@ export class GrwMap {
             signageTooltip.part = 'signage-tooltip';
             signageTooltip.className = 'signage-tooltip';
             const signageName = L.DomUtil.create('div');
-            signageName.innerHTML = geoJsonPoint.properties.name;
+            signageName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             signageName.part = 'signage-name';
             signageName.className = 'signage-name';
@@ -2948,7 +2950,7 @@ export class GrwMap {
             touristicContentTooltip.part = 'touristic-content-tooltip';
             touristicContentTooltip.className = 'touristic-content-tooltip';
             const touristicContentName = L.DomUtil.create('div');
-            touristicContentName.innerHTML = geoJsonPoint.properties.name;
+            touristicContentName.textContent = geoJsonPoint.properties.name;
             /* @ts-ignore */
             touristicContentName.part = 'touristic-content-name';
             touristicContentName.className = 'touristic-content-name';
@@ -3027,7 +3029,7 @@ export class GrwMap {
             const touristicEventName = L.DomUtil.create('div');
             /* @ts-ignore */
             touristicEventName.part = 'touristic-event-name';
-            touristicEventName.innerHTML = geoJsonPoint.properties.name;
+            touristicEventName.textContent = geoJsonPoint.properties.name;
             touristicEventName.className = 'touristic-event-name';
             touristicEventTooltip.appendChild(touristicEventName);
             layer.bindTooltip(touristicEventTooltip).openTooltip();
@@ -3111,7 +3113,7 @@ export class GrwMap {
               const informationDesksName = L.DomUtil.create('div');
               /* @ts-ignore */
               informationDesksName.part = 'information-desks-name';
-              informationDesksName.innerHTML = geoJsonPoint.properties.name;
+              informationDesksName.textContent = geoJsonPoint.properties.name;
               informationDesksName.className = 'information-desks-name';
               informationDesksTooltip.appendChild(informationDesksName);
               layer.bindTooltip(informationDesksTooltip).openTooltip();
