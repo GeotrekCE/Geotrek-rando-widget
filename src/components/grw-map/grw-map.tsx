@@ -15,7 +15,6 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Trek } from 'components';
 import pointOnFeature from '@turf/point-on-feature';
-import bbox from '@turf/bbox';
 import 'leaflet-textpath';
 
 @Component({
@@ -429,7 +428,7 @@ export class GrwMap {
       this.addTouristicContents();
     } else if (state.touristicEvents) {
       this.addTouristicEvents();
-    } else if (state.outdoorSites) {
+    } else if (state.currentOutdoorSites || state.outdoorSites) {
       this.addOutdoorSites();
     }
 
@@ -2142,28 +2141,35 @@ export class GrwMap {
 
     if (state.currentOutdoorSites) {
       for (const currentOutdoorSite of state.currentOutdoorSites) {
-        outdoorSitesFeatureCollection.features.push({
-          type: 'Feature',
-          geometry: { type: 'Point', coordinates: pointOnFeature(currentOutdoorSite.geometry as any).geometry.coordinates },
-          properties: {
-            id: currentOutdoorSite.id,
-            name: currentOutdoorSite.name,
-            practice: state.outdoorPractices.find(practice => practice.id === currentOutdoorSite.practice)?.pictogram,
-            imgSrc:
-              currentOutdoorSite.attachments && currentOutdoorSite.attachments.filter(attachment => attachment.type === 'image').length > 0
-                ? currentOutdoorSite.attachments[0].thumbnail !== ''
-                  ? currentOutdoorSite.attachments[0].thumbnail
-                  : currentOutdoorSite.attachments[0].url
-                : null,
-          },
-        });
+        if (currentOutdoorSite.geometry) {
+          const outdoorSiteCoordinates = pointOnFeature(currentOutdoorSite.geometry as any).geometry.coordinates;
+          outdoorSitesCurrentCoordinates.push(outdoorSiteCoordinates);
+          outdoorSitesFeatureCollection.features.push({
+            type: 'Feature',
+            geometry: { type: 'Point', coordinates: outdoorSiteCoordinates },
+            properties: {
+              id: currentOutdoorSite.id,
+              name: currentOutdoorSite.name,
+              practice: state.outdoorPractices?.find(practice => practice.id === currentOutdoorSite.practice)?.pictogram,
+              imgSrc:
+                currentOutdoorSite.attachments && currentOutdoorSite.attachments.filter(attachment => attachment.type === 'image').length > 0
+                  ? currentOutdoorSite.attachments[0].thumbnail !== ''
+                    ? currentOutdoorSite.attachments[0].thumbnail
+                    : currentOutdoorSite.attachments[0].url
+                  : null,
+            },
+          });
+        }
       }
     }
 
     if (!this.outdoorSitesLayer) {
       if ((outdoorSitesCurrentCoordinates.length > 0 && !state.currentMapBounds) || resetBounds) {
-        const outdoorSitesBbox = bbox(outdoorSitesFeatureCollection);
-        this.bounds = L.latLngBounds([outdoorSitesBbox[1], outdoorSitesBbox[0]], [outdoorSitesBbox[3], outdoorSitesBbox[2]]);
+        if (outdoorSitesCurrentCoordinates.length > 0) {
+          this.bounds = L.latLngBounds(
+            outdoorSitesCurrentCoordinates.map(outdoorSiteCoordinate => [outdoorSiteCoordinate[1], outdoorSiteCoordinate[0]]),
+          );
+        }
       } else {
         if (state.currentMapBounds) {
           this.bounds = state.currentMapBounds;
@@ -2243,7 +2249,9 @@ export class GrwMap {
       this.map.addLayer(this.outdoorSitesMarkerClusterGroup);
     } else {
       if (outdoorSitesCurrentCoordinates.length > 0) {
-        this.bounds = L.latLngBounds(outdoorSitesCurrentCoordinates.map(coordinate => [coordinate[1], coordinate[0]]));
+        this.bounds = L.latLngBounds(
+          outdoorSitesCurrentCoordinates.map(outdoorSiteCoordinate => [outdoorSiteCoordinate[1], outdoorSiteCoordinate[0]]),
+        );
       } else {
         this.map.fire('moveend');
       }
@@ -2254,7 +2262,7 @@ export class GrwMap {
     }
 
     this.map.invalidateSize();
-    this.bounds && this.map.fitBounds(this.bounds);
+    this.bounds && this.bounds._northEast && this.bounds._southWest && this.map.fitBounds(this.bounds);
 
     !this.mapIsReady && (this.mapIsReady = !this.mapIsReady);
 
