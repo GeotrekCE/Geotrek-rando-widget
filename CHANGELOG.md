@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.36.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.36.0...0.36.1) (2026-11-10)
+
+
+### Bug Fixes
+
+* fit map bounds when only outdoor mode is active ([b068bb9](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/b068bb9477a26318c61e53817b0dbdedbc5a34ab))
+
 ## [0.36.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.35.5...0.36.0) (2026-09-11)
 
 
