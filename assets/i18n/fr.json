@@ -26,6 +26,8 @@
         "THEMES": "Thèmes",
         "PRACTICES": "Pratiques",
         "CITIES": "Communes",
+        "CITIES_PLACEHOLDER": "Rechercher une commune...",
+        "NO_RESULTS": "Aucun résultat",
         "STRUCTURES": "Structures",
         "PORTALS": "Portails",
         "ROUTES": "Parcours",
@@ -90,7 +92,9 @@
     "ACTIONS": {
         "GENERATE_CODE": "Générer le code",
         "CLOSE": "Fermer",
-        "COPY_CLIPBOARD": "Copier dans le presse-papier"
+        "COPY_CLIPBOARD": "Copier dans le presse-papier",
+        "REMOVE": "Supprimer",
+        "CLEAR_SEARCH": "Effacer la recherche"
     },
     "PREVIEW": {
         "TITLE": "Aperçu",

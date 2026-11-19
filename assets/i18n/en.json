@@ -26,6 +26,8 @@
         "THEMES": "Themes",
         "PRACTICES": "Practices",
         "CITIES": "Cities",
+        "CITIES_PLACEHOLDER": "Search a city...",
+        "NO_RESULTS": "No results",
         "STRUCTURES": "Structures",
         "PORTALS": "Portals",
         "ROUTES": "Routes",
@@ -90,7 +92,9 @@
     "ACTIONS": {
         "GENERATE_CODE": "Generate Code",
         "CLOSE": "Close",
-        "COPY_CLIPBOARD": "Copy to Clipboard"
+        "COPY_CLIPBOARD": "Copy to Clipboard",
+        "REMOVE": "Remove",
+        "CLEAR_SEARCH": "Clear search"
     },
     "PREVIEW": {
         "TITLE": "Preview",
