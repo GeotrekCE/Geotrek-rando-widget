@@ -15,6 +15,7 @@ Ce composant permet de récupérer les données liées aux sites outdoor. Il con
 - structures : liste d'identifiants des structures séparés par une virgule
 - themes : liste d'identifiants des thèmes séparés par une virgule
 - portals : liste d'identifiants des portails séparés par une virgule
+- outdoor-practices : liste d'identifiants des pratiques outdoor séparés par une virgule
 
 ## Composants graphiques liés
 

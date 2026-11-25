@@ -180,6 +180,7 @@ export namespace Components {
           * @default false
          */
         "outdoor": boolean;
+        "outdoorPractices": string;
         /**
           * @default 24
          */
@@ -737,6 +738,7 @@ export namespace Components {
           * @default false
          */
         "offline": boolean;
+        "outdoorPractices": string;
         "portals": string;
         "structures": string;
         "themes": string;
@@ -1947,6 +1949,7 @@ declare namespace LocalJSX {
           * @default false
          */
         "outdoor"?: boolean;
+        "outdoorPractices"?: string;
         /**
           * @default 24
          */
@@ -2535,6 +2538,7 @@ declare namespace LocalJSX {
           * @default false
          */
         "offline"?: boolean;
+        "outdoorPractices"?: string;
         "portals"?: string;
         "structures"?: string;
         "themes"?: string;
@@ -3074,6 +3078,7 @@ declare namespace LocalJSX {
         "portals": string;
         "routes": string;
         "practices": string;
+        "outdoorPractices": string;
         "labels": string;
         "nameLayer": string;
         "urlLayer": string;
@@ -3323,6 +3328,7 @@ declare namespace LocalJSX {
         "structures": string;
         "themes": string;
         "portals": string;
+        "outdoorPractices": string;
         "offline": boolean;
     }
     interface GrwPoiAttributes {

@@ -103,6 +103,7 @@ const { state, onChange, reset } = createStore<{
   themesFromProviders: string;
   routesFromProviders: string;
   practicesFromProviders: string;
+  outdoorPracticesFromProviders: string;
   labelsFromProviders: string;
   offlineTreks: boolean;
   currentOutdoorSites: OutdoorSites;
@@ -186,6 +187,7 @@ const { state, onChange, reset } = createStore<{
   themesFromProviders: null,
   routesFromProviders: null,
   practicesFromProviders: null,
+  outdoorPracticesFromProviders: null,
   labelsFromProviders: null,
   offlineTreks: false,
   currentOutdoorSites: null,

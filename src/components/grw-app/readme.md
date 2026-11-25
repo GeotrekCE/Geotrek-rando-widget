@@ -66,6 +66,7 @@
 | `mobileElevationHeight`       | `mobile-elevation-height`        |             | `number`  | `280`       |
 | `nameLayer`                   | `name-layer`                     |             | `string`  | `undefined` |
 | `outdoor`                     | `outdoor`                        |             | `boolean` | `false`     |
+| `outdoorPractices`            | `outdoor-practices`              |             | `string`  | `undefined` |
 | `pointReferenceMarkerSize`    | `point-reference-marker-size`    |             | `number`  | `24`        |
 | `portals`                     | `portals`                        |             | `string`  | `undefined` |
 | `practices`                   | `practices`                      |             | `string`  | `undefined` |

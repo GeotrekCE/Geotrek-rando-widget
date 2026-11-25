@@ -44,6 +44,7 @@ export class GrwApp {
   @Prop() portals: string;
   @Prop() routes: string;
   @Prop() practices: string;
+  @Prop() outdoorPractices: string;
   @Prop() labels: string;
   @Prop() nameLayer: string;
   @Prop() urlLayer: string;
@@ -608,6 +609,7 @@ export class GrwApp {
               districts={this.districts}
               structures={this.structures}
               themes={this.themes}
+              outdoor-practices={this.outdoorPractices}
             ></grw-outdoor-sites-provider>
           )}
 

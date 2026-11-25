@@ -61,6 +61,7 @@ Ce tableau liste l'ensemble des paramètres disponibles pour la configuration du
 | `labels`            | `labels`             | Filtrer les itinéraires dans la liste en fonction des étiquettes à partir d'une liste d'identifiants (ex: 1,3)                   | `string`  | `undefined` |
 | `portals`           | `portals`            | Filtrer les contenus de la liste en fonction du ou des portails à partir d'une liste d'identifiants (ex: 2)                      | `string`  | `undefined` |
 | `practices`         | `practices`          | Filtrer les itinéraires de la liste en fonction de leur pratique à partir d'une liste d'identifiants (ex: 1,3,5)                 | `string`  | `undefined` |
+| `outdoorPractices`  | `outdoor-practices`  | Filtrer les sites outdoor de la liste en fonction de leur pratique à partir d'une liste d'identifiants (ex: 1,3,5)               | `string`  | `undefined` |
 | `routes`            | `routes`             | Filtrer les itinéraires de la liste en fonction de leur type de parcours à partir d'une liste d'identifiants (ex: 1,2,3 )        | `string`  | `undefined` |
 | `structures`        | `structures`         | Filtrer les contenus de la liste en fonction de la structure gestionnaire à partir d'une liste d'identifiants (ex: 1,2)          | `string`  | `undefined` |
 | `themes`            | `themes`             | Filtrer les contenus de la liste en fonction d'une sélection de thèmes à partir de l'identifiant sur Geotrek-admin (ex: 1,2,6,8) | `string`  | `undefined` |
