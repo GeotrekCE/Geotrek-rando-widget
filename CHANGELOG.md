@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.37.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.36.1...0.37.0) (2026-11-25)
+
+
+### Features
+
+* add outdoor-practices parameter to filter outdoor sites ([459c5fd](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/459c5fdaf57216f41e11924eb964bd568009d255))
+
 ## [0.36.1](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.36.0...0.36.1) (2026-11-10)
 
 
