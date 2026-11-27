@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.38.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.37.0...0.38.0) (2026-11-27)
+
+
+### Features
+
+* add IDs filter parameters for all modules (closes [#59](https://github.com/GeotrekCE/Geotrek-rando-widget/issues/59), closes [#214](https://github.com/GeotrekCE/Geotrek-rando-widget/issues/214)) ([ac65b1b](https://github.com/GeotrekCE/Geotrek-rando-widget/commit/ac65b1b1833fa45c946ba0e7fb9387f21d813e8f))
+
 ## [0.37.0](https://github.com/GeotrekCE/Geotrek-rando-widget/compare/0.36.1...0.37.0) (2026-11-25)
 
 
