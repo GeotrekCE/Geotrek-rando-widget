@@ -18,6 +18,7 @@ Ce composant permet de récupérer les données liées aux itinéraires. Il conv
 - routes : liste d'identifiants des types de parcours séparés par une virgule
 - practices : liste d'identifiants des pratiques séparés par une virgule
 - labels : liste d'identifiants des étiquettes séparés par une virgule
+- ids : liste d'identifiants d'itinéraires séparés par une virgule (prioritaire sur les autres filtres)
 
 ## Composants graphiques liés
 

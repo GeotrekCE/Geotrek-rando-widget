@@ -1,6 +1,6 @@
 import state from 'store/store';
 import { getDataInStore } from './grw-db.service';
-import { getAllPaginatedResults, getCacheMode } from '../utils/utils';
+import { getAllPaginatedResults, getCacheMode, normalizeIds } from '../utils/utils';
 
 export function getTrekGeometry(id: number) {
   return fetch(`${state.api}trek/${id}/?language=${state.language}&published=true&fields=geometry`, { cache: getCacheMode() }).then(response =>
@@ -8,18 +8,23 @@ export function getTrekGeometry(id: number) {
   );
 }
 
-export function getTreksList(api, language, inBbox, cities, districts, structures, themes, portals, routes, practices, labels, init) {
+export function getTreksList(api, language, inBbox, cities, districts, structures, themes, portals, routes, practices, labels, ids, init) {
   let treksRequest = `${api}trek/?language=${language}&published=true`;
+  const normalizedIds = normalizeIds(ids);
 
-  inBbox && (treksRequest += `&in_bbox=${inBbox}`);
-  cities && (treksRequest += `&cities=${cities}`);
-  districts && (treksRequest += `&districts=${districts}`);
-  structures && (treksRequest += `&structures=${structures}`);
-  themes && (treksRequest += `&themes=${themes}`);
-  portals && (treksRequest += `&portals=${portals}`);
-  routes && (treksRequest += `&routes=${routes}`);
-  practices && (treksRequest += `&practices=${practices}`);
-  labels && (treksRequest += `&labels=${labels}`);
+  if (normalizedIds) {
+    treksRequest += `&ids=${normalizedIds}`;
+  } else {
+    inBbox && (treksRequest += `&in_bbox=${inBbox}`);
+    cities && (treksRequest += `&cities=${cities}`);
+    districts && (treksRequest += `&districts=${districts}`);
+    structures && (treksRequest += `&structures=${structures}`);
+    themes && (treksRequest += `&themes=${themes}`);
+    portals && (treksRequest += `&portals=${portals}`);
+    routes && (treksRequest += `&routes=${routes}`);
+    practices && (treksRequest += `&practices=${practices}`);
+    labels && (treksRequest += `&labels=${labels}`);
+  }
 
   treksRequest += `&fields=id,name,attachments,description_teaser,difficulty,duration,ascent,length_2d,practice,themes,route,departure,departure_city,departure_geom,cities,accessibilities,labels,districts`;
 

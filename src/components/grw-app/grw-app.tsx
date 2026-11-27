@@ -46,6 +46,10 @@ export class GrwApp {
   @Prop() practices: string;
   @Prop() outdoorPractices: string;
   @Prop() labels: string;
+  @Prop() trekIds: string;
+  @Prop() outdoorSiteIds: string;
+  @Prop() touristicContentIds: string;
+  @Prop() touristicEventIds: string;
   @Prop() nameLayer: string;
   @Prop() urlLayer: string;
   @Prop() attributionLayer: string;
@@ -523,6 +527,7 @@ export class GrwApp {
             routes={this.routes}
             practices={this.practices}
             labels={this.labels}
+            ids={this.trekIds}
           ></grw-treks-provider>
         )}
         {this.trekIsLoading() && (
@@ -539,6 +544,7 @@ export class GrwApp {
             routes={this.routes}
             practices={this.practices}
             labels={this.labels}
+            ids={this.trekIds}
             signages={this.signages}
           ></grw-trek-provider>
         )}
@@ -579,6 +585,7 @@ export class GrwApp {
             structures={this.structures}
             themes={this.themes}
             portals={this.portals}
+            ids={this.touristicContentIds}
           ></grw-touristic-contents-provider>
         )}
         {this.touristicEvents && state.mode === 'touristicEvents' && !state.currentTouristicEvents && !this.showTouristicEvent && (
@@ -591,6 +598,7 @@ export class GrwApp {
             structures={this.structures}
             themes={this.themes}
             portals={this.portals}
+            ids={this.touristicEventIds}
           ></grw-touristic-events-provider>
         )}
         {this.outdoor &&
@@ -610,6 +618,7 @@ export class GrwApp {
               structures={this.structures}
               themes={this.themes}
               outdoor-practices={this.outdoorPractices}
+              ids={this.outdoorSiteIds}
             ></grw-outdoor-sites-provider>
           )}
 

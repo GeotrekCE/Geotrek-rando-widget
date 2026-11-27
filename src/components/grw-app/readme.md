@@ -67,6 +67,7 @@
 | `nameLayer`                   | `name-layer`                     |             | `string`  | `undefined` |
 | `outdoor`                     | `outdoor`                        |             | `boolean` | `false`     |
 | `outdoorPractices`            | `outdoor-practices`              |             | `string`  | `undefined` |
+| `outdoorSiteIds`              | `outdoor-site-ids`               |             | `string`  | `undefined` |
 | `pointReferenceMarkerSize`    | `point-reference-marker-size`    |             | `number`  | `24`        |
 | `portals`                     | `portals`                        |             | `string`  | `undefined` |
 | `practices`                   | `practices`                      |             | `string`  | `undefined` |
@@ -78,8 +79,11 @@
 | `themes`                      | `themes`                         |             | `string`  | `undefined` |
 | `tilesMaxZoomOffline`         | `tiles-max-zoom-offline`         |             | `number`  | `16`        |
 | `tilesMinZoomOffline`         | `tiles-min-zoom-offline`         |             | `number`  | `12`        |
+| `touristicContentIds`         | `touristic-content-ids`          |             | `string`  | `undefined` |
 | `touristicContents`           | `touristic-contents`             |             | `boolean` | `false`     |
+| `touristicEventIds`           | `touristic-event-ids`            |             | `string`  | `undefined` |
 | `touristicEvents`             | `touristic-events`               |             | `boolean` | `false`     |
+| `trekIds`                     | `trek-ids`                       |             | `string`  | `undefined` |
 | `treks`                       | `treks`                          |             | `boolean` | `true`      |
 | `urlLayer`                    | `url-layer`                      |             | `string`  | `undefined` |
 | `weather`                     | `weather`                        |             | `boolean` | `false`     |

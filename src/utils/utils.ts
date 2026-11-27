@@ -499,3 +499,12 @@ export function sanitizeHtml(html: string): string {
   });
 }
 
+export function normalizeIds(ids?: string): string {
+  if (!ids) return '';
+  return ids
+    .split(',')
+    .map(rawId => rawId.trim())
+    .filter(cleanedId => /^\d+$/.test(cleanedId))
+    .join(',');
+}
+

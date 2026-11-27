@@ -37,6 +37,7 @@ export class GrwTrekProvider {
   @Prop() routes: string;
   @Prop() practices: string;
   @Prop() labels: string;
+  @Prop() ids: string;
 
   @Prop() signages = false;
 
@@ -67,6 +68,7 @@ export class GrwTrekProvider {
     state.routesFromProviders = this.routes;
     state.practicesFromProviders = this.practices;
     state.labelsFromProviders = this.labels;
+    state.trekIdsFromProviders = this.ids;
 
     this.handleTrek();
   }

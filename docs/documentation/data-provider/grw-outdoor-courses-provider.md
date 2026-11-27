@@ -15,6 +15,7 @@ Ce composant permet de récupérer les données liées aux parcours outdoor. Il 
 - structures : liste d'identifiants des structures séparés par une virgule
 - themes : liste d'identifiants des thèmes séparés par une virgule
 - portals : liste d'identifiants des portails séparés par une virgule
+- ids : liste d'identifiants de parcours outdoor séparés par une virgule (prioritaire sur les autres filtres)
 
 ## Composants graphiques liés
 

@@ -20,6 +20,7 @@ export class GrwOutdoorSitesProvider {
   @Prop() themes: string;
   @Prop() portals: string;
   @Prop() outdoorPractices: string;
+  @Prop() ids: string;
   @Prop() offline = false;
 
   controller = new AbortController();
@@ -40,6 +41,7 @@ export class GrwOutdoorSitesProvider {
     state.structuresFromProviders = this.structures;
     state.themesFromProviders = this.themes;
     state.outdoorPracticesFromProviders = this.outdoorPractices;
+    state.outdoorSiteIdsFromProviders = this.ids;
 
     this.handleOutdoorSites();
   }
@@ -76,7 +78,7 @@ export class GrwOutdoorSitesProvider {
     requests.push(!state.outdoorSiteTypes ? getOutdoorSiteTypes(state.api, state.language, this.init) : new Response('null'));
     requests.push(!state.outdoorPractices ? getOutdoorPractices(state.api, state.language, this.init) : new Response('null'));
     requests.push(
-      getOutdoorSites(state.api, state.language, this.inBbox, this.cities, this.districts, this.structures, this.themes, this.portals, this.outdoorPractices, this.init),
+      getOutdoorSites(state.api, state.language, this.inBbox, this.cities, this.districts, this.structures, this.themes, this.portals, this.outdoorPractices, this.ids, this.init),
     );
     Promise.all([...requests])
       .then(responses => Promise.all(responses.map(response => response.json())))

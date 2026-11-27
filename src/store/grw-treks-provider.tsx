@@ -21,6 +21,7 @@ export class GrwTreksProvider {
   @Prop() routes: string;
   @Prop() practices: string;
   @Prop() labels: string;
+  @Prop() ids: string;
   @Prop() offline = false;
 
   controller = new AbortController();
@@ -43,6 +44,7 @@ export class GrwTreksProvider {
     state.routesFromProviders = this.routes;
     state.practicesFromProviders = this.practices;
     state.labelsFromProviders = this.labels;
+    state.trekIdsFromProviders = this.ids;
 
     this.handleTreks();
   }
@@ -122,6 +124,7 @@ export class GrwTreksProvider {
         this.routes,
         this.practices,
         this.labels,
+        this.ids,
         this.init,
       ),
     ])

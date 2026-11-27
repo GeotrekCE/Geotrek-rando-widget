@@ -1,4 +1,4 @@
-import { getAllPaginatedResults } from '../utils/utils';
+import { getAllPaginatedResults, normalizeIds } from '../utils/utils';
 
 export function getTouristicContents(api, language, init) {
   return fetch(
@@ -46,15 +46,20 @@ export function getTouristicContentCategory(api, language, portals, init) {
   );
 }
 
-export function getTouristicContentsList(api, language, inBbox, cities, districts, structures, themes, portals, init) {
+export function getTouristicContentsList(api, language, inBbox, cities, districts, structures, themes, portals, ids, init) {
   let touristicContentsRequest = `${api}touristiccontent/?language=${language}&published=true`;
+  const normalizedIds = normalizeIds(ids);
 
-  inBbox && (touristicContentsRequest += `&in_bbox=${inBbox}`);
-  cities && (touristicContentsRequest += `&cities=${cities}`);
-  districts && (touristicContentsRequest += `&districts=${districts}`);
-  structures && (touristicContentsRequest += `&structures=${structures}`);
-  themes && (touristicContentsRequest += `&themes=${themes}`);
-  portals && (touristicContentsRequest += `&portals=${portals}`);
+  if (normalizedIds) {
+    touristicContentsRequest += `&ids=${normalizedIds}`;
+  } else {
+    inBbox && (touristicContentsRequest += `&in_bbox=${inBbox}`);
+    cities && (touristicContentsRequest += `&cities=${cities}`);
+    districts && (touristicContentsRequest += `&districts=${districts}`);
+    structures && (touristicContentsRequest += `&structures=${structures}`);
+    themes && (touristicContentsRequest += `&themes=${themes}`);
+    portals && (touristicContentsRequest += `&portals=${portals}`);
+  }
 
   touristicContentsRequest += `&fields=id,name,attachments,category,geometry,cities,districts`;
 

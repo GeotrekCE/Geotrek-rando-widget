@@ -65,6 +65,10 @@ Ce tableau liste l'ensemble des paramètres disponibles pour la configuration du
 | `routes`            | `routes`             | Filtrer les itinéraires de la liste en fonction de leur type de parcours à partir d'une liste d'identifiants (ex: 1,2,3 )        | `string`  | `undefined` |
 | `structures`        | `structures`         | Filtrer les contenus de la liste en fonction de la structure gestionnaire à partir d'une liste d'identifiants (ex: 1,2)          | `string`  | `undefined` |
 | `themes`            | `themes`             | Filtrer les contenus de la liste en fonction d'une sélection de thèmes à partir de l'identifiant sur Geotrek-admin (ex: 1,2,6,8) | `string`  | `undefined` |
+| `trekIds`           | `trek-ids`           | Filtrer les itinéraires de la liste à partir d'une liste d'identifiants (ex: 16496,16457). Prioritaire sur les autres filtres.   | `string`  | `undefined` |
+| `outdoorSiteIds`    | `outdoor-site-ids`   | Filtrer les sites outdoor de la liste à partir d'une liste d'identifiants (ex: 39,46). Prioritaire sur les autres filtres.       | `string`  | `undefined` |
+| `touristicContentIds` | `touristic-content-ids` | Filtrer les contenus touristiques de la liste à partir d'une liste d'identifiants (ex: 10,13). Prioritaire sur les autres filtres. | `string`  | `undefined` |
+| `touristicEventIds` | `touristic-event-ids` | Filtrer les événements touristiques de la liste à partir d'une liste d'identifiants (ex: 4286,4276). Prioritaire sur les autres filtres. | `string`  | `undefined` |
 | `inBbox`            | `in-bbox`            | Filtrer géographiquement les contenus de la liste à partir d'une bounding box (ex: 1.32,43.52,1.53,43.67)                        | `string`  | `undefined` |
 | `emergencyNumber`   | `emergency-number`   | Afficher un numéro de secours sur la fiche détail d'un itinéraire (ex: 114)                                                      | `number`  | `undefined` |
 | `enableOffline`     | `enable-offline`     | Permettre le téléchargement d'un itinéraire pour le mode hors ligne dans une PWA                                                 | `boolean` | `false`     |

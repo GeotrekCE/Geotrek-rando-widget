@@ -506,6 +506,7 @@ export class GrwOutdoorSiteDetail {
         state.themesFromProviders,
         state.portalsFromProviders,
         state.outdoorPracticesFromProviders,
+        state.outdoorSiteIdsFromProviders,
         init,
       );
       state.outdoorSites = (await outdoorSitesList.json()).results;

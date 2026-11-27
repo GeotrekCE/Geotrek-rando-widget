@@ -12,6 +12,7 @@
 | `api`        | `api`        |             | `string`  | `undefined` |
 | `cities`     | `cities`     |             | `string`  | `undefined` |
 | `districts`  | `districts`  |             | `string`  | `undefined` |
+| `ids`        | `ids`        |             | `string`  | `undefined` |
 | `inBbox`     | `in-bbox`    |             | `string`  | `undefined` |
 | `labels`     | `labels`     |             | `string`  | `undefined` |
 | `languages`  | `languages`  |             | `string`  | `'fr'`      |

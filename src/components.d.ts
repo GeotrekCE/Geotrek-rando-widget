@@ -181,6 +181,7 @@ export namespace Components {
          */
         "outdoor": boolean;
         "outdoorPractices": string;
+        "outdoorSiteIds": string;
         /**
           * @default 24
          */
@@ -210,14 +211,17 @@ export namespace Components {
           * @default 12
          */
         "tilesMinZoomOffline": number;
+        "touristicContentIds": string;
         /**
           * @default false
          */
         "touristicContents": boolean;
+        "touristicEventIds": string;
         /**
           * @default false
          */
         "touristicEvents": boolean;
+        "trekIds": string;
         /**
           * @default true
          */
@@ -566,6 +570,7 @@ export namespace Components {
         "api": string;
         "cities": string;
         "districts": string;
+        "ids": string;
         "inBbox": string;
         /**
           * @default 'fr'
@@ -729,6 +734,7 @@ export namespace Components {
         "api": string;
         "cities": string;
         "districts": string;
+        "ids": string;
         "inBbox": string;
         /**
           * @default 'fr'
@@ -921,6 +927,7 @@ export namespace Components {
         "api": string;
         "cities": string;
         "districts": string;
+        "ids": string;
         "inBbox": string;
         /**
           * @default 'fr'
@@ -1038,6 +1045,7 @@ export namespace Components {
         "api": string;
         "cities": string;
         "districts": string;
+        "ids": string;
         "inBbox": string;
         /**
           * @default 'fr'
@@ -1164,6 +1172,7 @@ export namespace Components {
         "api": string;
         "cities": string;
         "districts": string;
+        "ids": string;
         "inBbox": string;
         "labels": string;
         /**
@@ -1223,6 +1232,7 @@ export namespace Components {
         "api": string;
         "cities": string;
         "districts": string;
+        "ids": string;
         "inBbox": string;
         "labels": string;
         /**
@@ -1950,6 +1960,7 @@ declare namespace LocalJSX {
          */
         "outdoor"?: boolean;
         "outdoorPractices"?: string;
+        "outdoorSiteIds"?: string;
         /**
           * @default 24
          */
@@ -1979,14 +1990,17 @@ declare namespace LocalJSX {
           * @default 12
          */
         "tilesMinZoomOffline"?: number;
+        "touristicContentIds"?: string;
         /**
           * @default false
          */
         "touristicContents"?: boolean;
+        "touristicEventIds"?: string;
         /**
           * @default false
          */
         "touristicEvents"?: boolean;
+        "trekIds"?: string;
         /**
           * @default true
          */
@@ -2351,6 +2365,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "cities"?: string;
         "districts"?: string;
+        "ids"?: string;
         "inBbox"?: string;
         /**
           * @default 'fr'
@@ -2529,6 +2544,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "cities"?: string;
         "districts"?: string;
+        "ids"?: string;
         "inBbox"?: string;
         /**
           * @default 'fr'
@@ -2724,6 +2740,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "cities"?: string;
         "districts"?: string;
+        "ids"?: string;
         "inBbox"?: string;
         /**
           * @default 'fr'
@@ -2844,6 +2861,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "cities"?: string;
         "districts"?: string;
+        "ids"?: string;
         "inBbox"?: string;
         /**
           * @default 'fr'
@@ -2989,6 +3007,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "cities"?: string;
         "districts"?: string;
+        "ids"?: string;
         "inBbox"?: string;
         "labels"?: string;
         /**
@@ -3048,6 +3067,7 @@ declare namespace LocalJSX {
         "api"?: string;
         "cities"?: string;
         "districts"?: string;
+        "ids"?: string;
         "inBbox"?: string;
         "labels"?: string;
         /**
@@ -3080,6 +3100,10 @@ declare namespace LocalJSX {
         "practices": string;
         "outdoorPractices": string;
         "labels": string;
+        "trekIds": string;
+        "outdoorSiteIds": string;
+        "touristicContentIds": string;
+        "touristicEventIds": string;
         "nameLayer": string;
         "urlLayer": string;
         "attributionLayer": string;
@@ -3271,6 +3295,7 @@ declare namespace LocalJSX {
         "structures": string;
         "themes": string;
         "portals": string;
+        "ids": string;
     }
     interface GrwOutdoorSiteCardAttributes {
         "fontFamily": string;
@@ -3329,6 +3354,7 @@ declare namespace LocalJSX {
         "themes": string;
         "portals": string;
         "outdoorPractices": string;
+        "ids": string;
         "offline": boolean;
     }
     interface GrwPoiAttributes {
@@ -3398,6 +3424,7 @@ declare namespace LocalJSX {
         "structures": string;
         "themes": string;
         "portals": string;
+        "ids": string;
     }
     interface GrwTouristicEventCardAttributes {
         "fontFamily": string;
@@ -3442,6 +3469,7 @@ declare namespace LocalJSX {
         "structures": string;
         "themes": string;
         "portals": string;
+        "ids": string;
     }
     interface GrwTrekCardAttributes {
         "fontFamily": string;
@@ -3490,6 +3518,7 @@ declare namespace LocalJSX {
         "routes": string;
         "practices": string;
         "labels": string;
+        "ids": string;
         "signages": boolean;
     }
     interface GrwTreksListAttributes {
@@ -3515,6 +3544,7 @@ declare namespace LocalJSX {
         "routes": string;
         "practices": string;
         "labels": string;
+        "ids": string;
         "offline": boolean;
     }
 

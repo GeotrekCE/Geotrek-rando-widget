@@ -17,6 +17,7 @@ export class GrwTouristicContentsProvider {
   @Prop() structures: string;
   @Prop() themes: string;
   @Prop() portals: string;
+  @Prop() ids: string;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -41,6 +42,7 @@ export class GrwTouristicContentsProvider {
       this.structures,
       this.themes,
       this.portals,
+      this.ids,
       this.init,
     );
 

@@ -17,6 +17,7 @@ export class GrwTouristicEventsProvider {
   @Prop() structures: string;
   @Prop() themes: string;
   @Prop() portals: string;
+  @Prop() ids: string;
 
   controller = new AbortController();
   signal = this.controller.signal;
@@ -32,7 +33,18 @@ export class GrwTouristicEventsProvider {
   }
 
   handleTouristicEvents() {
-    let touristicEventsRequest = getTouristicEventsList(state.api, state.language, this.inBbox, this.cities, this.districts, this.structures, this.themes, this.portals, this.init);
+    let touristicEventsRequest = getTouristicEventsList(
+      state.api,
+      state.language,
+      this.inBbox,
+      this.cities,
+      this.districts,
+      this.structures,
+      this.themes,
+      this.portals,
+      this.ids,
+      this.init,
+    );
 
     const requests = [];
     requests.push(!state.districts ? getDistricts(state.api, state.language, this.init) : new Response('null'));

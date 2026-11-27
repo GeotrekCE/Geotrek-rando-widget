@@ -1,4 +1,4 @@
-import { getAllPaginatedResults } from '../utils/utils';
+import { getAllPaginatedResults, normalizeIds } from '../utils/utils';
 
 export function getTouristicEvent(api, language, touristicEventId, init) {
   return fetch(
@@ -27,15 +27,20 @@ export function getTouristicEventType(api, language, portals, init) {
   return getAllPaginatedResults(`${api}touristicevent_type/?language=${language}${portals ? '&portals='.concat(portals) : ''}&published=true&fields=id,type,pictogram`, init);
 }
 
-export function getTouristicEventsList(api, language, inBbox, cities, districts, structures, themes, portals, init) {
+export function getTouristicEventsList(api, language, inBbox, cities, districts, structures, themes, portals, ids, init) {
   let touristicEventsRequest = `${api}touristicevent/?language=${language}&published=true`;
+  const normalizedIds = normalizeIds(ids);
 
-  inBbox && (touristicEventsRequest += `&in_bbox=${inBbox}`);
-  cities && (touristicEventsRequest += `&cities=${cities}`);
-  districts && (touristicEventsRequest += `&districts=${districts}`);
-  structures && (touristicEventsRequest += `&structures=${structures}`);
-  themes && (touristicEventsRequest += `&themes=${themes}`);
-  portals && (touristicEventsRequest += `&portals=${portals}`);
+  if (normalizedIds) {
+    touristicEventsRequest += `&ids=${normalizedIds}`;
+  } else {
+    inBbox && (touristicEventsRequest += `&in_bbox=${inBbox}`);
+    cities && (touristicEventsRequest += `&cities=${cities}`);
+    districts && (touristicEventsRequest += `&districts=${districts}`);
+    structures && (touristicEventsRequest += `&structures=${structures}`);
+    themes && (touristicEventsRequest += `&themes=${themes}`);
+    portals && (touristicEventsRequest += `&portals=${portals}`);
+  }
 
   touristicEventsRequest += `&fields=id,name,attachments,category,geometry,cities,districts,type,begin_date,end_date`;
 
